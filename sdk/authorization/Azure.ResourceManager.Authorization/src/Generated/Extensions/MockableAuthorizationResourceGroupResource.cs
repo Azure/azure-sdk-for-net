@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Threading;
 using Azure;
 using Azure.Core;
@@ -78,7 +79,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             };
             return new AsyncPageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetForResourceGroupAsyncCollectionResultOfT(
                 DenyAssignmentsRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 filter,
                 context,
@@ -113,7 +114,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             };
             return new PageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetForResourceGroupCollectionResultOfT(
                 DenyAssignmentsRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 filter,
                 context,
@@ -149,7 +150,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             };
             return new AsyncPageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentsGetForResourceGroupAsyncCollectionResultOfT(
                 RoleAssignmentsRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 filter,
                 tenantId,
@@ -186,7 +187,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             };
             return new PageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentsGetForResourceGroupCollectionResultOfT(
                 RoleAssignmentsRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
                 filter,
                 tenantId,
@@ -219,7 +220,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PermissionsGetAzurePermissionsForResourceGroupsAsyncCollectionResultOfT(PermissionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups");
+            return new PermissionsGetAzurePermissionsForResourceGroupsAsyncCollectionResultOfT(PermissionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups");
         }
 
         /// <summary>
@@ -247,7 +248,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PermissionsGetAzurePermissionsForResourceGroupsCollectionResultOfT(PermissionsRestClient, Id.SubscriptionId, Id.ResourceGroupName, context, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups");
+            return new PermissionsGetAzurePermissionsForResourceGroupsCollectionResultOfT(PermissionsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "MockableAuthorizationResourceGroupResource.GetAzurePermissionsForResourceGroups");
         }
     }
 }

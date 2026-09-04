@@ -69,7 +69,7 @@ public class StreamingClientResultTests
         MockPipelineResponse response = CreateResponse();
         AsyncStreamingClientResult<int> result = CreateResult([1, 2, 3], response);
 
-        await using (IAsyncEnumerator<int> enumerator = result.GetAsyncEnumerator())
+        await using (IAsyncEnumerator<int> enumerator = ((IAsyncEnumerable<int>)result).GetAsyncEnumerator())
         {
             Assert.IsTrue(await enumerator.MoveNextAsync());
             Assert.AreEqual(1, enumerator.Current);
@@ -87,7 +87,7 @@ public class StreamingClientResultTests
         await result.DisposeAsync();
 
         Assert.IsNull(response.ContentStream);
-        Assert.Throws<ObjectDisposedException>(() => result.GetAsyncEnumerator());
+        Assert.Throws<ObjectDisposedException>(() => ((IAsyncEnumerable<int>)result).GetAsyncEnumerator());
     }
 
     [Test]
@@ -96,7 +96,7 @@ public class StreamingClientResultTests
         AsyncStreamingClientResult<int> result = CreateResult([1], CreateResponse());
 
         Assert.AreEqual(new[] { 1 }, await ToArrayAsync(result));
-        Assert.Throws<InvalidOperationException>(() => result.GetAsyncEnumerator());
+        Assert.Throws<InvalidOperationException>(() => ((IAsyncEnumerable<int>)result).GetAsyncEnumerator());
     }
 
     [Test]
@@ -107,7 +107,7 @@ public class StreamingClientResultTests
             response,
             static (_, _) => throw new InvalidOperationException());
 
-        Assert.Throws<InvalidOperationException>(() => result.GetAsyncEnumerator());
+        Assert.Throws<InvalidOperationException>(() => ((IAsyncEnumerable<int>)result).GetAsyncEnumerator());
         Assert.IsNull(response.ContentStream);
     }
 
@@ -141,7 +141,7 @@ public class StreamingClientResultTests
             },
             operation.Token);
         IAsyncEnumerator<int> enumerator =
-            result.GetAsyncEnumerator(enumeration.Token);
+            ((IAsyncEnumerable<int>)result).GetAsyncEnumerator(enumeration.Token);
         Task<bool> moveNext = enumerator.MoveNextAsync().AsTask();
 
         if (cancelOperationToken)
@@ -166,7 +166,7 @@ public class StreamingClientResultTests
         AsyncStreamingClientResult<int> result = AsyncStreamingClientResult.Create(
             response,
             (_, _) => values);
-        IAsyncEnumerator<int> enumerator = result.GetAsyncEnumerator();
+        IAsyncEnumerator<int> enumerator = ((IAsyncEnumerable<int>)result).GetAsyncEnumerator();
         Assert.IsTrue(await enumerator.MoveNextAsync());
 
         Task firstDisposal = result.DisposeAsync().AsTask();
@@ -193,7 +193,7 @@ public class StreamingClientResultTests
             (_, _) => values);
         values.DisposeResult = result.DisposeAsync;
         values.IsResponseDisposed = () => response.ContentStream is null;
-        IAsyncEnumerator<int> enumerator = result.GetAsyncEnumerator();
+        IAsyncEnumerator<int> enumerator = ((IAsyncEnumerable<int>)result).GetAsyncEnumerator();
         Assert.IsTrue(await enumerator.MoveNextAsync());
 
         await enumerator.DisposeAsync();
@@ -216,7 +216,7 @@ public class StreamingClientResultTests
                 moveNextStarted,
                 moveNextCompleted,
                 cancellationToken));
-        IAsyncEnumerator<int> enumerator = result.GetAsyncEnumerator();
+        IAsyncEnumerator<int> enumerator = ((IAsyncEnumerable<int>)result).GetAsyncEnumerator();
         Task<bool> moveNext = enumerator.MoveNextAsync().AsTask();
         await moveNextStarted.Task;
 
@@ -244,7 +244,7 @@ public class StreamingClientResultTests
                 moveNextStarted,
                 moveNextCompleted,
                 cancellationToken));
-        IAsyncEnumerator<int> enumerator = result.GetAsyncEnumerator();
+        IAsyncEnumerator<int> enumerator = ((IAsyncEnumerable<int>)result).GetAsyncEnumerator();
         Task<bool> moveNext = enumerator.MoveNextAsync().AsTask();
         await moveNextStarted.Task;
 
@@ -278,7 +278,7 @@ public class StreamingClientResultTests
         Assert.IsFalse(secondDisposal.IsCompleted);
         stream.AllowDispose.Set();
         await Task.WhenAll(firstDisposal, secondDisposal);
-        Assert.Throws<ObjectDisposedException>(() => result.GetAsyncEnumerator());
+        Assert.Throws<ObjectDisposedException>(() => ((IAsyncEnumerable<int>)result).GetAsyncEnumerator());
         Assert.IsTrue(stream.IsDisposed);
         Assert.IsNull(response.ContentStream);
     }
@@ -291,7 +291,7 @@ public class StreamingClientResultTests
         AsyncStreamingClientResult<int> result = AsyncStreamingClientResult.Create(
             response,
             (_, _) => values);
-        IAsyncEnumerator<int> enumerator = result.GetAsyncEnumerator();
+        IAsyncEnumerator<int> enumerator = ((IAsyncEnumerable<int>)result).GetAsyncEnumerator();
         Assert.IsTrue(await enumerator.MoveNextAsync());
 
         Task disposal = result.DisposeAsync().AsTask();
@@ -317,7 +317,7 @@ public class StreamingClientResultTests
             response,
             static (content, cancellationToken) =>
                 ReadIgnoringCancellation(content, cancellationToken));
-        IAsyncEnumerator<int> enumerator = result.GetAsyncEnumerator();
+        IAsyncEnumerator<int> enumerator = ((IAsyncEnumerable<int>)result).GetAsyncEnumerator();
         Task<bool> moveNext = enumerator.MoveNextAsync().AsTask();
         await stream.ReadStarted.Task;
 
@@ -347,7 +347,7 @@ public class StreamingClientResultTests
             });
 
         Task<IAsyncEnumerator<int>> enumeration =
-            Task.Run(() => result!.GetAsyncEnumerator());
+            Task.Run(() => ((IAsyncEnumerable<int>)result!).GetAsyncEnumerator());
         Assert.AreSame(
             enumeration,
             await Task.WhenAny(

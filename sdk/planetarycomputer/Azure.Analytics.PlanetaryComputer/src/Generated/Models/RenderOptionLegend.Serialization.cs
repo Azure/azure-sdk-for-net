@@ -73,10 +73,10 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 throw new FormatException($"The model {nameof(RenderOptionLegend)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(Kind.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Labels))
             {
@@ -150,7 +150,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            LegendConfigType? @type = default;
+            LegendConfigKind? kind = default;
             IList<string> labels = default;
             int? trimStart = default;
             int? trimEnd = default;
@@ -164,7 +164,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    @type = new LegendConfigType(prop.Value.GetString());
+                    kind = new LegendConfigKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("labels"u8))
@@ -221,7 +221,7 @@ namespace Azure.Analytics.PlanetaryComputer
                 }
             }
             return new RenderOptionLegend(
-                @type,
+                kind,
                 labels ?? new ChangeTrackingList<string>(),
                 trimStart,
                 trimEnd,

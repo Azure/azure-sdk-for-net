@@ -22,6 +22,151 @@ namespace Azure.ResourceManager.Compute.Recommender.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="skuMixPlacementSupportedResourceTypes"> Describes what resource types are supported by the mix placement scoring service. </param>
+        /// <returns> A new <see cref="Recommender.ComputeSkuMixPlacementData"/> instance for mocking. </returns>
+        public static ComputeSkuMixPlacementData ComputeSkuMixPlacementData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> skuMixPlacementSupportedResourceTypes = default)
+        {
+            return new ComputeSkuMixPlacementData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                skuMixPlacementSupportedResourceTypes is null ? default : new SkuMixPlacementProperties((skuMixPlacementSupportedResourceTypes ?? new ChangeTrackingList<string>()).ToList(), default),
+                default);
+        }
+
+        /// <param name="zones"> Optional logical zones to consider (e.g. ["1","2","3"]). Omitted or empty implies regional deployment. </param>
+        /// <param name="capacityProfile"> All capacity-related properties. </param>
+        /// <param name="instanceDescriptionVmSizes"> The list of VM sizes to consider for placement. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="instanceDescriptionVmSizes"/> is null. </exception>
+        /// <returns> A new <see cref="Models.ComputeSkuMixPlacementGenerateContent"/> instance for mocking. </returns>
+        public static ComputeSkuMixPlacementGenerateContent ComputeSkuMixPlacementGenerateContent(IEnumerable<string> zones = default, SkuMixPlacementCapacityProfile capacityProfile = default, IEnumerable<SkuMixPlacementVMSize> instanceDescriptionVmSizes = default)
+        {
+            zones ??= new ChangeTrackingList<string>();
+
+            return new ComputeSkuMixPlacementGenerateContent((zones ?? new ChangeTrackingList<string>()).ToList(), capacityProfile, instanceDescriptionVmSizes is null ? default : new SkuMixPlacementInstanceDescription((instanceDescriptionVmSizes ?? new ChangeTrackingList<SkuMixPlacementVMSize>()).ToList(), default), default);
+        }
+
+        /// <param name="capacity"> The capacity to run the workload. For VMs: [1..10,000]. For vCPUs: [1..100,000]. </param>
+        /// <param name="capacityType"> The unit type for the capacity value. </param>
+        /// <param name="priority"> The priority of the VMs to allocate. </param>
+        /// <param name="spotPriorityMaxPricePerVm"> Maximum price per VM the customer is willing to pay. Default: -1 (no price restriction). </param>
+        /// <param name="allocationStrategy"> The allocation strategy for determining the optimal SKU split. </param>
+        /// <param name="osType"> The OS type. Required when allocationStrategy is LowestPrice because pricing varies by OS. </param>
+        /// <param name="zoneAllocationPolicy"> Zone allocation policy. Default: BestEffortBalanced. </param>
+        /// <returns> A new <see cref="Models.SkuMixPlacementCapacityProfile"/> instance for mocking. </returns>
+        public static SkuMixPlacementCapacityProfile SkuMixPlacementCapacityProfile(int capacity = default, SkuMixPlacementCapacityType capacityType = default, SkuMixPlacementPriority priority = default, double? spotPriorityMaxPricePerVm = default, SkuMixPlacementAllocationStrategy? allocationStrategy = default, SkuMixPlacementOSType? osType = default, SkuMixPlacementZoneAllocationPolicy zoneAllocationPolicy = default)
+        {
+            return new SkuMixPlacementCapacityProfile(
+                capacity,
+                capacityType,
+                priority,
+                spotPriorityMaxPricePerVm is null ? default : new SkuMixPlacementSpotPriorityProfile(spotPriorityMaxPricePerVm, default),
+                allocationStrategy,
+                osType,
+                zoneAllocationPolicy,
+                default);
+        }
+
+        /// <param name="distributionStrategy"> Distribution strategy for allocating capacity across zones. </param>
+        /// <param name="zonePreferences"> Per-zone allocation preferences. Used with the Prioritized strategy. </param>
+        /// <returns> A new <see cref="Models.SkuMixPlacementZoneAllocationPolicy"/> instance for mocking. </returns>
+        public static SkuMixPlacementZoneAllocationPolicy SkuMixPlacementZoneAllocationPolicy(SkuMixPlacementZonalDistributionStrategy? distributionStrategy = default, IEnumerable<SkuMixPlacementZonePreference> zonePreferences = default)
+        {
+            zonePreferences ??= new ChangeTrackingList<SkuMixPlacementZonePreference>();
+
+            return new SkuMixPlacementZoneAllocationPolicy(distributionStrategy, (zonePreferences ?? new ChangeTrackingList<SkuMixPlacementZonePreference>()).ToList(), default);
+        }
+
+        /// <param name="zone"> Logical zone (e.g. "1", "2", "3"). </param>
+        /// <param name="rank"> Rank of the zone. Lower values = higher priority (0 is highest). </param>
+        /// <param name="targetMaxCapacity"> Best-effort limit to avoid allocating more than this count within the zone. Used with the Prioritized strategy. </param>
+        /// <returns> A new <see cref="Models.SkuMixPlacementZonePreference"/> instance for mocking. </returns>
+        public static SkuMixPlacementZonePreference SkuMixPlacementZonePreference(string zone = default, int? rank = default, int? targetMaxCapacity = default)
+        {
+            return new SkuMixPlacementZonePreference(zone, rank, targetMaxCapacity, default);
+        }
+
+        /// <param name="name"> SKU name (e.g. Standard_D2s_v3). </param>
+        /// <param name="rank"> Rank of the VM size. Lower = higher priority (starting at 0). Only valid with Prioritized strategy. </param>
+        /// <returns> A new <see cref="Models.SkuMixPlacementVMSize"/> instance for mocking. </returns>
+        public static SkuMixPlacementVMSize SkuMixPlacementVMSize(string name = default, int? rank = default)
+        {
+            return new SkuMixPlacementVMSize(name, rank, default);
+        }
+
+        /// <param name="id">
+        /// Unique identifier for this placement response, including responses that contain no placement choices.
+        /// Replaces the per-choice id that was present on placementChoices in earlier API versions.
+        /// </param>
+        /// <param name="placementChoices"> List of placement choice recommendations. </param>
+        /// <param name="validUntilOn"> Date/time until which the recommendations are valid. Callers should request fresh recommendations after this time. </param>
+        /// <param name="partialFulfillmentReason"> Indicates whether the response is a complete or partial fulfillment. </param>
+        /// <param name="capacityLimits">
+        /// Capacity availability for each requested (VM size, zone) combination, independent of the recommended
+        /// placement. An entry is present for every requested combination, including those excluded by capacity
+        /// or quota. Only returned for requests that describe instances by VM sizes.
+        /// </param>
+        /// <returns> A new <see cref="Models.ComputeSkuMixPlacementGenerateResult"/> instance for mocking. </returns>
+        public static ComputeSkuMixPlacementGenerateResult ComputeSkuMixPlacementGenerateResult(string id = default, IEnumerable<ComputeSkuMixPlacementDeploymentChoice> placementChoices = default, DateTimeOffset? validUntilOn = default, SkuMixPlacementPartialFulfillmentReason partialFulfillmentReason = default, IEnumerable<ComputeSkuMixPlacementCapacityLimit> capacityLimits = default)
+        {
+            placementChoices ??= new ChangeTrackingList<ComputeSkuMixPlacementDeploymentChoice>();
+            capacityLimits ??= new ChangeTrackingList<ComputeSkuMixPlacementCapacityLimit>();
+
+            return new ComputeSkuMixPlacementGenerateResult(
+                id,
+                (placementChoices ?? new ChangeTrackingList<ComputeSkuMixPlacementDeploymentChoice>()).ToList(),
+                validUntilOn,
+                partialFulfillmentReason,
+                (capacityLimits ?? new ChangeTrackingList<ComputeSkuMixPlacementCapacityLimit>()).ToList(),
+                default);
+        }
+
+        /// <param name="score"> Placement score from 0 to 9 (inclusive). Higher is better. </param>
+        /// <param name="skuSplit"> The list of VM size / zone allocations that make up this deployment choice. </param>
+        /// <returns> A new <see cref="Models.ComputeSkuMixPlacementDeploymentChoice"/> instance for mocking. </returns>
+        public static ComputeSkuMixPlacementDeploymentChoice ComputeSkuMixPlacementDeploymentChoice(int score = default, IEnumerable<ComputeSkuMixPlacementItem> skuSplit = default)
+        {
+            skuSplit ??= new ChangeTrackingList<ComputeSkuMixPlacementItem>();
+
+            return new ComputeSkuMixPlacementDeploymentChoice(score, (skuSplit ?? new ChangeTrackingList<ComputeSkuMixPlacementItem>()).ToList(), default);
+        }
+
+        /// <param name="name"> VM size name (e.g. Standard_D2s_v3). </param>
+        /// <param name="priority"> Priority of this allocation (Regular or Spot). </param>
+        /// <param name="capacity"> Lower range of recommended allocation capacity. </param>
+        /// <param name="zone"> Logical zone (e.g. "1", "2", "3"). Omitted or empty for regional deployments. </param>
+        /// <returns> A new <see cref="Models.ComputeSkuMixPlacementItem"/> instance for mocking. </returns>
+        public static ComputeSkuMixPlacementItem ComputeSkuMixPlacementItem(string name = default, SkuMixPlacementPriority priority = default, int capacity = default, string zone = default)
+        {
+            return new ComputeSkuMixPlacementItem(name, priority, capacity, zone, default);
+        }
+
+        /// <param name="name"> VM size name (e.g. Standard_D2s_v3). </param>
+        /// <param name="priority"> Priority of this entry (Regular or Spot). </param>
+        /// <param name="zone"> Logical zone (e.g. "1", "2", "3"). Omitted or empty for regional requests. </param>
+        /// <param name="limit">
+        /// Upper bound, in VMs, on how much capacity can be allocated for this (VM size, zone): the smallest of
+        /// the requested capacity, the available capacity, and the available quota, but never below the capacity
+        /// already recommended for the slot. 0 when nothing is available.
+        /// </param>
+        /// <param name="reason"> Why the limit is below the requested capacity, or None when the request is fully available. </param>
+        /// <returns> A new <see cref="Models.ComputeSkuMixPlacementCapacityLimit"/> instance for mocking. </returns>
+        public static ComputeSkuMixPlacementCapacityLimit ComputeSkuMixPlacementCapacityLimit(string name = default, SkuMixPlacementPriority priority = default, string zone = default, int limit = default, SkuMixPlacementCapacityLimitReason reason = default)
+        {
+            return new ComputeSkuMixPlacementCapacityLimit(
+                name,
+                priority,
+                zone,
+                limit,
+                reason,
+                default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="computeRecommenderDiagnosticSupportedResourceTypes"> Describes what are the supported resource types for a diagnostic. </param>
         /// <returns> A new <see cref="Recommender.ComputeRecommenderDiagnosticData"/> instance for mocking. </returns>
         public static ComputeRecommenderDiagnosticData ComputeRecommenderDiagnosticData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> computeRecommenderDiagnosticSupportedResourceTypes = default)

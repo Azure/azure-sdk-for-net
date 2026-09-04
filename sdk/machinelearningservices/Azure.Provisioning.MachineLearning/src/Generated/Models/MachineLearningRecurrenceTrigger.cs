@@ -19,6 +19,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new MachineLearningRecurrenceTrigger. </summary>
         public MachineLearningRecurrenceTrigger()
         {
+            TriggerType.Assign(MachineLearningTriggerType.Recurrence);
         }
 
         /// <summary> Gets or sets the Frequency. </summary>
@@ -70,7 +71,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("triggerType", new string[] { "triggerType" }, defaultValue: "Recurrence");
             _frequency = DefineProperty<MachineLearningRecurrenceFrequency>(nameof(Frequency), new string[] { "frequency" }, isRequired: true);
             _interval = DefineProperty<int>(nameof(Interval), new string[] { "interval" }, isRequired: true);
             _schedule = DefineModelProperty<MachineLearningRecurrenceSchedule>(nameof(Schedule), new string[] { "schedule" });

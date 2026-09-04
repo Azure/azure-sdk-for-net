@@ -94,7 +94,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ResourceProfileRevisionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ResourceProfile>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ResourceProfile>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

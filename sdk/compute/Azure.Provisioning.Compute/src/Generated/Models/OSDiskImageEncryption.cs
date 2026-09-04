@@ -5,17 +5,12 @@
 
 #nullable disable
 
-using Azure.Core;
-using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
-
 namespace Azure.Provisioning.Compute
 {
     /// <summary> Contains encryption settings for an OS disk image. </summary>
-    public partial class OSDiskImageEncryption : ProvisionableConstruct
+    public partial class OSDiskImageEncryption : DiskImageEncryption
     {
         private OSDiskImageSecurityProfile _securityProfile;
-        private BicepValue<ResourceIdentifier> _diskEncryptionSetId;
 
         /// <summary> Creates a new OSDiskImageEncryption. </summary>
         public OSDiskImageEncryption()
@@ -37,27 +32,11 @@ namespace Azure.Provisioning.Compute
             }
         }
 
-        /// <summary> Gets or sets the DiskEncryptionSetId. </summary>
-        public BicepValue<ResourceIdentifier> DiskEncryptionSetId
-        {
-            get
-            {
-                Initialize();
-                return _diskEncryptionSetId;
-            }
-            set
-            {
-                Initialize();
-                _diskEncryptionSetId.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for OSDiskImageEncryption. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _securityProfile = DefineModelProperty<OSDiskImageSecurityProfile>(nameof(SecurityProfile), new string[] { "securityProfile" });
-            _diskEncryptionSetId = DefineProperty<ResourceIdentifier>(nameof(DiskEncryptionSetId), new string[] { "diskEncryptionSetId" });
             DefineAdditionalProperties();
         }
 

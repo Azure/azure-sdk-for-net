@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="status"> Status of the Provisioning for the managed network of a cognitive services account. </param>
         /// <param name="firewallSku"> Firewall Sku used for FQDN Rules. </param>
         /// <param name="managedNetworkKind"> The Kind of the managed network. Users can switch from V1 to V2 for granular access controls, but cannot switch back to V1 once V2 is enabled. </param>
-        /// <param name="firewallPublicIpAddress"> Public IP address assigned to the Azure Firewall. </param>
+        /// <param name="firewallPublicIPAddress"> Public IP address assigned to the Azure Firewall. </param>
         /// <param name="provisioningState"> The provisioning state of the managed network settings. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesManagedNetworkConfiguration(CognitiveServicesIsolationMode? isolationMode, string networkId, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules, CognitiveServicesManagedNetworkProvisionStatus status, CognitiveServicesFirewallSku? firewallSku, CognitiveServicesManagedNetworkKind? managedNetworkKind, string firewallPublicIpAddress, CognitiveServicesManagedNetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesManagedNetworkConfiguration(CognitiveServicesIsolationMode? isolationMode, string networkId, IDictionary<string, CognitiveServicesOutboundRuleBasicProperties> outboundRules, CognitiveServicesManagedNetworkProvisionStatus status, CognitiveServicesFirewallSku? firewallSku, CognitiveServicesManagedNetworkKind? managedNetworkKind, string firewallPublicIPAddress, CognitiveServicesManagedNetworkProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsolationMode = isolationMode;
             NetworkId = networkId;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             Status = status;
             FirewallSku = firewallSku;
             ManagedNetworkKind = managedNetworkKind;
-            FirewallPublicIpAddress = firewallPublicIpAddress;
+            FirewallPublicIPAddress = firewallPublicIPAddress;
             ProvisioningState = provisioningState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> Public IP address assigned to the Azure Firewall. </summary>
         [WirePath("firewallPublicIpAddress")]
-        public string FirewallPublicIpAddress { get; }
+        public string FirewallPublicIPAddress { get; }
 
         /// <summary> The provisioning state of the managed network settings. </summary>
         [WirePath("provisioningState")]

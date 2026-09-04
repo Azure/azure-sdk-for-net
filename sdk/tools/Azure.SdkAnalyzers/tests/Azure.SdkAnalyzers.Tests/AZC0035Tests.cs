@@ -650,6 +650,55 @@ namespace Azure.Test
                 "Got: " + string.Join("; ", azc0035.Select(d => d.ToString())));
         }
 
+        [Test]
+        public async Task AZC0035_NotProducedWhenGenericModelFactoryMethodMatchesConstructedOutputModel()
+        {
+            string source = @"
+using Azure;
+using System.Collections.Generic;
+
+namespace Azure.Test
+{
+    public class PageableList<T>
+    {
+        public IReadOnlyList<T> Data { get; }
+        internal PageableList(IReadOnlyList<T> data) { Data = data; }
+    }
+
+    public class TestModel { }
+
+    public class TestClient
+    {
+        protected TestClient() { }
+
+        public virtual Response<PageableList<TestModel>> GetItems()
+        {
+            return null;
+        }
+    }
+
+    public static class TestModelFactory
+    {
+        public static PageableList<T> PageableList<T>(IReadOnlyList<T> data)
+        {
+            return null;
+        }
+
+        public static TestModel TestModel()
+        {
+            return null;
+        }
+    }
+}";
+
+            var diagnostics = await GetAllAnalyzerDiagnosticsAsync(source);
+
+            var azc0035 = diagnostics.Where(d => d.Id == "AZC0035").ToList();
+            Assert.That(azc0035, Is.Empty,
+                "AZC0035 should not fire when an open generic model factory method covers a constructed output model. " +
+                "Got: " + string.Join("; ", azc0035.Select(d => d.ToString())));
+        }
+
         private static async Task<Microsoft.CodeAnalysis.MetadataReference> CompileToMetadataReferenceAsync(string source, string assemblyName)
         {
             var refAssemblies = await AzureTestReferences.DefaultReferenceAssemblies.ResolveAsync(

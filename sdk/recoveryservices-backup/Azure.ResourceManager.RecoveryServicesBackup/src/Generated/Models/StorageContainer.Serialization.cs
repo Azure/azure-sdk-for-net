@@ -106,6 +106,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("operationType"u8);
                 writer.WriteStringValue(OperationType.Value.ToString());
             }
+            if (Optional.IsDefined(AccessType))
+            {
+                writer.WritePropertyName("accessType"u8);
+                writer.WriteStringValue(AccessType.Value.ToString());
+            }
+            if (Optional.IsDefined(IdentityInfo))
+            {
+                writer.WritePropertyName("identityInfo"u8);
+                writer.WriteObjectValue(IdentityInfo, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -139,6 +149,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             string healthStatus = default;
             ProtectableContainerType containerType = default;
             string protectableObjectType = default;
+            AzureLocation? sourceLocation = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier sourceResourceId = default;
             string storageAccountVersion = default;
@@ -146,6 +157,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             long? protectedItemCount = default;
             AcquireStorageAccountLock? acquireStorageAccountLock = default;
             WorkloadOperationType? operationType = default;
+            AccessType? accessType = default;
+            BackupIdentityInfo identityInfo = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("friendlyName"u8))
@@ -180,6 +193,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 if (prop.NameEquals("protectableObjectType"u8))
                 {
                     protectableObjectType = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("sourceLocation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceLocation = new AzureLocation(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceResourceId"u8))
@@ -228,6 +250,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     operationType = new WorkloadOperationType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("accessType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    accessType = new AccessType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("identityInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identityInfo = BackupIdentityInfo.DeserializeBackupIdentityInfo(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -240,13 +280,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 healthStatus,
                 containerType,
                 protectableObjectType,
+                sourceLocation,
                 additionalBinaryDataProperties,
                 sourceResourceId,
                 storageAccountVersion,
                 resourceGroup,
                 protectedItemCount,
                 acquireStorageAccountLock,
-                operationType);
+                operationType,
+                accessType,
+                identityInfo);
         }
     }
 }

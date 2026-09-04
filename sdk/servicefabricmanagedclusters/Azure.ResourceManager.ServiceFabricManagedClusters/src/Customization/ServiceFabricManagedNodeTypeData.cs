@@ -56,5 +56,24 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 Properties.VmInstanceCount = value.Value;
             }
         }
+
+        // TODO: Remove after https://github.com/microsoft/typespec/issues/11696 is fixed.
+        /// <summary> Specifies whether the node type should use a resilient ephemeral OS disk when using a supported SKU size. </summary>
+        [Microsoft.TypeSpec.Generator.Customizations.CodeGenMember("EnableResilientEphemeralOSDisk")]
+        public bool? EnableResilientEphemeralOsDisk
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableResilientEphemeralOSDisk;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ServiceFabricManagedNodeTypeProperties();
+                }
+                Properties.EnableResilientEphemeralOSDisk = value;
+            }
+        }
     }
 }

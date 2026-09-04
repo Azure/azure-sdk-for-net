@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="provisioningState"> The provisioning state of the express route cross connection peering resource. </param>
         /// <param name="gatewayManagerETag"> The GatewayManager Etag. </param>
         /// <param name="lastModifiedBy"> Who was the last to modify the peering. </param>
-        /// <param name="iPv6PeeringConfig"> The IPv6 peering configuration. </param>
+        /// <param name="ipv6PeeringConfig"> The IPv6 peering configuration. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ExpressRouteCrossConnectionPeeringProperties(ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, NetworkProvisioningState? provisioningState, string gatewayManagerETag, string lastModifiedBy, IPv6ExpressRouteCircuitPeeringConfig iPv6PeeringConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ExpressRouteCrossConnectionPeeringProperties(ExpressRoutePeeringType? peeringType, ExpressRoutePeeringState? state, int? azureASN, long? peerASN, string primaryPeerAddressPrefix, string secondaryPeerAddressPrefix, string primaryAzurePort, string secondaryAzurePort, string sharedKey, int? vlanId, ExpressRouteCircuitPeeringConfig microsoftPeeringConfig, NetworkProvisioningState? provisioningState, string gatewayManagerETag, string lastModifiedBy, IPv6ExpressRouteCircuitPeeringConfig ipv6PeeringConfig, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PeeringType = peeringType;
             State = state;
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Network.Models
             ProvisioningState = provisioningState;
             GatewayManagerETag = gatewayManagerETag;
             LastModifiedBy = lastModifiedBy;
-            IPv6PeeringConfig = iPv6PeeringConfig;
+            IPv6PeeringConfig = ipv6PeeringConfig;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 

@@ -98,7 +98,7 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
             session1 = await projectClient.AgentAdministrationClient.GetSessionAsync(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
         }
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
-        ProjectCreateResponseOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
             InputItems = { ResponseItem.CreateUserMessageItem($"Hello, tell me a joke in session {session1.AgentSessionId}.") },
             SessionId = session1.AgentSessionId
@@ -208,7 +208,7 @@ public class Sample_HostedAgentSessions : ProjectsOpenAITestBase
             session1 = projectClient.AgentAdministrationClient.GetSession(agentName: agentVersion.Name, sessionId: session1.AgentSessionId);
         }
         ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
-        ProjectCreateResponseOptions responseOptions = new()
+        CreateResponseOptions responseOptions = new()
         {
             InputItems = { ResponseItem.CreateUserMessageItem($"Hello, tell me a joke in session {session1.AgentSessionId}.") },
             SessionId = session1.AgentSessionId

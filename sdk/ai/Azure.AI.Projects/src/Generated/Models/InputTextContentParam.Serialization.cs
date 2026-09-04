@@ -79,6 +79,11 @@ namespace Azure.AI.Projects
             writer.WriteStringValue(Type);
             writer.WritePropertyName("text"u8);
             writer.WriteStringValue(Text);
+            if (Optional.IsDefined(PromptCacheBreakpoint))
+            {
+                writer.WritePropertyName("prompt_cache_breakpoint"u8);
+                writer.WriteObjectValue(PromptCacheBreakpoint, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -123,6 +128,7 @@ namespace Azure.AI.Projects
             }
             string @type = default;
             string text = default;
+            PromptCacheBreakpointParam promptCacheBreakpoint = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,12 +142,22 @@ namespace Azure.AI.Projects
                     text = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("prompt_cache_breakpoint"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        promptCacheBreakpoint = null;
+                        continue;
+                    }
+                    promptCacheBreakpoint = PromptCacheBreakpointParam.DeserializePromptCacheBreakpointParam(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InputTextContentParam(@type, text, additionalBinaryDataProperties);
+            return new InputTextContentParam(@type, text, promptCacheBreakpoint, additionalBinaryDataProperties);
         }
     }
 }

@@ -30,17 +30,29 @@ namespace Azure.Security.ConfidentialLedger
             new HashSet<int> { 300, 301, 302, 303, 307, 308 };
 
         private readonly object _primaryNodeLock = new object();
+        private readonly bool _cachePrimaryNode;
         private readonly string _ledgerHostname;
         private readonly int _ledgerPort;
         private Uri _primaryNodeBaseUri;
 
         /// <summary>
-        /// Creates a new redirect policy anchored on the configured ledger endpoint.
+        /// Initializes a new instance of <see cref="ConfidentialLedgerRedirectPolicy"/> anchored on the
+        /// configured ledger endpoint.
         /// </summary>
         /// <param name="endpoint">The configured ledger endpoint used as the trust anchor.</param>
+        /// <param name="cachePrimaryNode">
+        /// When <c>true</c> (the default), the policy remembers the redirect target of the most recent
+        /// non-GET request and routes subsequent non-GET requests directly to that host until a transport
+        /// failure or 5xx response invalidates the cache. This optimization is appropriate when the
+        /// redirect chain always terminates at a single sticky primary node (the default CCF behavior).
+        /// When <c>false</c>, the cache is disabled: 307/308 responses are still followed (and the
+        /// <c>Authorization</c> header is still preserved across the redirect) but no host pinning is
+        /// performed. Use this when the upstream gateway may redirect to any healthy host (for example,
+        /// the Confidential Ledger Gateway).
+        /// </param>
         /// <exception cref="ArgumentNullException"><paramref name="endpoint"/> is null.</exception>
         /// <exception cref="ArgumentException"><paramref name="endpoint"/> is not an absolute URI.</exception>
-        public ConfidentialLedgerRedirectPolicy(Uri endpoint)
+        public ConfidentialLedgerRedirectPolicy(Uri endpoint, bool cachePrimaryNode = true)
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             if (!endpoint.IsAbsoluteUri)
@@ -50,6 +62,7 @@ namespace Azure.Security.ConfidentialLedger
 
             _ledgerHostname = CanonicalHostname(endpoint.IdnHost);
             _ledgerPort = endpoint.IsDefaultPort ? GetDefaultPort(endpoint.Scheme) : endpoint.Port;
+            _cachePrimaryNode = cachePrimaryNode;
         }
 
         /// <inheritdoc/>
@@ -242,6 +255,11 @@ namespace Azure.Security.ConfidentialLedger
 
         private bool TryApplyCachedPrimaryNode(Request request)
         {
+            if (!_cachePrimaryNode)
+            {
+                return false;
+            }
+
             if (request.Method == RequestMethod.Get)
             {
                 return false;
@@ -259,6 +277,11 @@ namespace Azure.Security.ConfidentialLedger
 
         private void CommitPrimaryNode(Uri primaryBase)
         {
+            if (!_cachePrimaryNode)
+            {
+                return;
+            }
+
             if (primaryBase == null)
             {
                 return;
@@ -272,6 +295,11 @@ namespace Azure.Security.ConfidentialLedger
 
         private void InvalidateCachedPrimaryNode()
         {
+            if (!_cachePrimaryNode)
+            {
+                return;
+            }
+
             lock (_primaryNodeLock)
             {
                 _primaryNodeBaseUri = null;

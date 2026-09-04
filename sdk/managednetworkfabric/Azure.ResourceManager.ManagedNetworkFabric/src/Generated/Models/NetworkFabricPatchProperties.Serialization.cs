@@ -225,8 +225,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             string annotation = default;
             int? rackCount = default;
             int? serverCountPerRack = default;
-            string iPv4Prefix = default;
-            string iPv6Prefix = default;
+            string ipv4Prefix = default;
+            string ipv6Prefix = default;
             long? fabricAsn = default;
             NetworkFabricTerminalServerPatchConfiguration terminalServerSettings = default;
             ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration = default;
@@ -266,12 +266,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 if (prop.NameEquals("ipv4Prefix"u8))
                 {
-                    iPv4Prefix = prop.Value.GetString();
+                    ipv4Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("ipv6Prefix"u8))
                 {
-                    iPv6Prefix = prop.Value.GetString();
+                    ipv6Prefix = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("fabricASN"u8))
@@ -411,8 +411,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 annotation,
                 rackCount,
                 serverCountPerRack,
-                iPv4Prefix,
-                iPv6Prefix,
+                ipv4Prefix,
+                ipv6Prefix,
                 fabricAsn,
                 terminalServerSettings,
                 managementNetworkConfiguration,

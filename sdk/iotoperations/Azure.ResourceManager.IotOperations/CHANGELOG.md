@@ -1,14 +1,14 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0 (2026-07-01)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+Upgraded to api-version 2026-07-01:
+- Added `AkriServiceResource` and its collection/operations for managing Akri services under an instance.
+- Added `AkriConnectorTemplateReadinessProbe` support for connector template readiness probes.
+- Added high priority messages backpressure handling for broker configuration.
+- Added `ResourceHealthStatus` and status health state projections for resource health reporting.
 
 ## 1.1.0 (2026-06-13)
 

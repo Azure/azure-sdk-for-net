@@ -8,15 +8,59 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
+    /// <summary>
+    /// Defines the resource properties.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CloudInventoryItem"/>, <see cref="VirtualNetworkInventoryItem"/>, <see cref="VirtualMachineTemplateInventoryItem"/>, and <see cref="VirtualMachineInventoryItem"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownInventoryItemProperties))]
-    public partial class ScVmmInventoryItemProperties : IUtf8JsonSerializable, IJsonModel<ScVmmInventoryItemProperties>
+    public abstract partial class ScVmmInventoryItemProperties : IJsonModel<ScVmmInventoryItemProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ScVmmInventoryItemProperties>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScVmmInventoryItemProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScVmmInventoryItemProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeScVmmInventoryItemProperties(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ScVmmInventoryItemProperties)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ScVmmInventoryItemProperties>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerScVmmContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ScVmmInventoryItemProperties)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ScVmmInventoryItemProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScVmmInventoryItemProperties IPersistableModel<ScVmmInventoryItemProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ScVmmInventoryItemProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ScVmmInventoryItemProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +72,11 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScVmmInventoryItemProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScVmmInventoryItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScVmmInventoryItemProperties)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("inventoryType"u8);
             writer.WriteStringValue(InventoryType.ToString());
             if (options.Format != "W" && Optional.IsDefined(ManagedResourceId))
@@ -56,15 +99,15 @@ namespace Azure.ResourceManager.ScVmm.Models
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -73,68 +116,46 @@ namespace Azure.ResourceManager.ScVmm.Models
             }
         }
 
-        ScVmmInventoryItemProperties IJsonModel<ScVmmInventoryItemProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ScVmmInventoryItemProperties IJsonModel<ScVmmInventoryItemProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ScVmmInventoryItemProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ScVmmInventoryItemProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ScVmmInventoryItemProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ScVmmInventoryItemProperties)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeScVmmInventoryItemProperties(document.RootElement, options);
         }
 
-        internal static ScVmmInventoryItemProperties DeserializeScVmmInventoryItemProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ScVmmInventoryItemProperties DeserializeScVmmInventoryItemProperties(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("inventoryType", out JsonElement discriminator))
+            if (element.TryGetProperty("inventoryType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "Cloud": return CloudInventoryItem.DeserializeCloudInventoryItem(element, options);
-                    case "VirtualMachine": return VirtualMachineInventoryItem.DeserializeVirtualMachineInventoryItem(element, options);
-                    case "VirtualMachineTemplate": return VirtualMachineTemplateInventoryItem.DeserializeVirtualMachineTemplateInventoryItem(element, options);
-                    case "VirtualNetwork": return VirtualNetworkInventoryItem.DeserializeVirtualNetworkInventoryItem(element, options);
+                    case "Cloud":
+                        return CloudInventoryItem.DeserializeCloudInventoryItem(element, options);
+                    case "VirtualNetwork":
+                        return VirtualNetworkInventoryItem.DeserializeVirtualNetworkInventoryItem(element, options);
+                    case "VirtualMachineTemplate":
+                        return VirtualMachineTemplateInventoryItem.DeserializeVirtualMachineTemplateInventoryItem(element, options);
+                    case "VirtualMachine":
+                        return VirtualMachineInventoryItem.DeserializeVirtualMachineInventoryItem(element, options);
                 }
             }
             return UnknownInventoryItemProperties.DeserializeUnknownInventoryItemProperties(element, options);
         }
-
-        BinaryData IPersistableModel<ScVmmInventoryItemProperties>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScVmmInventoryItemProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerScVmmContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(ScVmmInventoryItemProperties)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ScVmmInventoryItemProperties IPersistableModel<ScVmmInventoryItemProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ScVmmInventoryItemProperties>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeScVmmInventoryItemProperties(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ScVmmInventoryItemProperties)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ScVmmInventoryItemProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

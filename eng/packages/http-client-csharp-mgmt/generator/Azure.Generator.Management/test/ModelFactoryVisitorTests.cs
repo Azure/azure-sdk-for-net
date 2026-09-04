@@ -8,16 +8,150 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.SourceInput;
 using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
-using System;
 using System.Reflection;
+using System.Text;
 using static Microsoft.TypeSpec.Generator.Snippets.Snippet;
 
 namespace Azure.Generator.Mgmt.Tests
 {
     internal class ModelFactoryVisitorTests
     {
+        [Test]
+        public void DateTimeFactoryParameterBackCompatKeepsMrwDeserializationLocals()
+        {
+            var dateTimeType = new InputDateTimeType(
+                DateTimeKnownEncoding.Rfc3339,
+                "utcDateTime",
+                "TypeSpec.utcDateTime",
+                InputPrimitiveType.String);
+            var providerLocation = InputFactory.Model(
+                "providerLocation",
+                usage: InputModelTypeUsage.Input | InputModelTypeUsage.Json);
+            var inputModel = InputFactory.Model(
+                "testModel",
+                usage: InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("providerLocation", providerLocation, isRequired: true),
+                    InputFactory.Property("providers", InputFactory.Array(InputPrimitiveType.String)),
+                    InputFactory.Property("azureLocations", InputFactory.Array(InputPrimitiveType.String)),
+                    InputFactory.Property("startTime", dateTimeType, isRequired: true),
+                    InputFactory.Property("endTime", dateTimeType, isRequired: true)
+                ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [inputModel, providerLocation],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                    [("LastContract.cs", LastContractSource)]));
+            var output = plugin.Object.OutputLibrary;
+            var ensureBuilt = typeof(TypeProvider).GetMethod(
+                "EnsureBuilt",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
+            foreach (var type in output.TypeProviders)
+            {
+                ensureBuilt.Invoke(type, null);
+            }
+
+            var modelFactory = output.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var currentFactoryMethod = modelFactory.Methods.Single(m => m.Signature.ReturnType?.Name == "TestModel");
+            var previousFactoryParameters = currentFactoryMethod.Signature.Parameters
+                .Select(p => new ParameterProvider(
+                    p.Name switch
+                    {
+                        "startsOn" => "startOn",
+                        "endsOn" => "endOn",
+                        _ => p.Name
+                    },
+                    p.Description,
+                    p.Type,
+                    p.DefaultValue))
+                .ToArray();
+            var lastContractFactory = new TestModelFactoryView(modelFactory.Name);
+            var previousFactorySignature = new MethodSignature(
+                currentFactoryMethod.Signature.Name,
+                currentFactoryMethod.Signature.Description,
+                currentFactoryMethod.Signature.Modifiers,
+                currentFactoryMethod.Signature.ReturnType,
+                currentFactoryMethod.Signature.ReturnDescription,
+                previousFactoryParameters);
+            lastContractFactory.MethodsToBuild =
+                [new MethodProvider(previousFactorySignature, MethodBodyStatement.Empty, lastContractFactory)];
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractFactory);
+
+            var visitLibrary = typeof(LibraryVisitor).GetMethod(
+                "VisitLibrary",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
+            foreach (var visitor in plugin.Object.Visitors)
+            {
+                visitLibrary.Invoke(visitor, [output]);
+            }
+
+            var testModel = output.TypeProviders.OfType<ModelProvider>().Single(p => p.Name == "TestModel");
+            var rebuiltModel = new Microsoft.TypeSpec.Generator.ClientModel.Providers.ScmModelProvider(inputModel);
+            testModel.Update(
+                constructors: rebuiltModel.Constructors,
+                properties: rebuiltModel.Properties);
+            typeof(ModelProvider).GetField("_fullConstructor", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(testModel, rebuiltModel.FullConstructor);
+
+            var generatorAssembly = typeof(TypeProvider).Assembly;
+            foreach (var type in output.TypeProviders)
+            {
+                ManagementMockHelpers.ProcessTypeForBackCompatibility(type);
+            }
+
+            Assert.That(
+                testModel.SerializationProviders.Single().Methods
+                    .First(m => m.Signature.Name.StartsWith("Deserialize")).BodyStatements!.ToDisplayString(),
+                Does.Contain("global::System.DateTimeOffset startOn = default;"));
+
+            using var referenceMap = (IDisposable)generatorAssembly
+                .GetType("Microsoft.TypeSpec.Generator.ProviderReferenceMapAnalyzer")!
+                .GetMethod("PrepareForGeneration", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)!
+                .Invoke(null, [output.TypeProviders])!;
+            var model = output.TypeProviders.OfType<ModelProvider>().Single(p => p.Name == "TestModel");
+            _ = plugin.Object.GetWriter(model).Write();
+            var serialization = model.SerializationProviders.Single();
+            var generated = plugin.Object.GetWriter(serialization).Write().Content.Replace("\r\n", "\n");
+
+            Assert.That(generated, Does.Contain("global::System.DateTimeOffset startOn = default;"));
+            Assert.That(generated, Does.Contain("global::System.DateTimeOffset endOn = default;"));
+            Assert.That(generated, Does.Contain("startOn = prop.Value.GetDateTimeOffset(\"O\");"));
+            Assert.That(generated, Does.Contain("endOn = prop.Value.GetDateTimeOffset(\"O\");"));
+            Assert.That(generated, Does.Contain("startOn,\n                endOn,"));
+        }
+
+        private const string LastContractSource = """
+            using System;
+            using System.Collections.Generic;
+
+            namespace Samples.Models
+            {
+                public partial class TestModel
+                {
+                    public TestModel(ProviderLocation providerLocation, DateTimeOffset startOn, DateTimeOffset endOn) { }
+
+                    internal TestModel(
+                        ProviderLocation providerLocation,
+                        IList<string> providers,
+                        IList<string> azureLocations,
+                        DateTimeOffset startOn,
+                        DateTimeOffset endOn,
+                        IDictionary<string, BinaryData> additionalBinaryDataProperties) { }
+
+                    public ProviderLocation ProviderLocation { get; }
+                    public IList<string> Providers { get; }
+                    public IList<string> AzureLocations { get; }
+                    public DateTimeOffset StartOn { get; }
+                    public DateTimeOffset EndOn { get; }
+                }
+
+                public partial class ProviderLocation { }
+            }
+            """;
+
         [Test]
         public void ModelFactoryParametersPreserveLastContractNames()
         {
@@ -60,7 +194,7 @@ namespace Azure.Generator.Mgmt.Tests
                 ]);
             lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
 
-            SetLastContractView(modelFactory, lastContractView);
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
             modelFactory.Update(methods: [method]);
 
             var updateParameterNames = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
@@ -132,7 +266,7 @@ namespace Azure.Generator.Mgmt.Tests
                 $"A test model.",
                 [new ParameterProvider("value", $"Value description", typeof(string))]);
             lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
-            SetLastContractView(modelFactory, lastContractView);
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
             modelFactory.Update(methods: []);
 
             var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
@@ -149,6 +283,139 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(rendered, Does.Contain("EditorBrowsable"));
             Assert.That(rendered, Does.Contain("EditorBrowsableState.Never"));
             Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel"));
+        }
+
+        [Test]
+        public void RestoredFactoryMethodRegeneratesDocumentationFromCurrentModel()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            model.FullConstructor.Signature.Parameters.Single(parameter => parameter.Name == "value")
+                .Update(description: $"Current parameter summary.\nCurrent parameter details.");
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previousMethod = CreatePreviousFactoryMethod(
+                modelFactory,
+                model.Type,
+                "value",
+                $"Previous parameter summary.\n            Previous parameter details.");
+
+            Assert.That(
+                Management.Visitors.ModelFactoryBackwardCompatHelper.TryCreateBackwardCompatMethod(
+                    previousMethod,
+                    modelFactory,
+                    out var restoredMethod),
+                Is.True);
+
+            var docs = DescribeDocs(restoredMethod!);
+
+            Assert.That(docs, Does.Contain("TestModel description"));
+            Assert.That(docs, Does.Contain("Current parameter summary."));
+            Assert.That(docs, Does.Contain("Current parameter details."));
+            Assert.That(docs, Does.Not.Contain("Previous model summary."));
+            Assert.That(docs, Does.Not.Contain("Previous parameter summary."));
+            Assert.That(docs, Does.Not.Contain("Previous parameter details."));
+            Assert.That(docs, Does.Contain("A new global::Samples.Models.TestModel instance for mocking."));
+            Assert.That(docs, Does.Not.Contain("Previous return summary."));
+        }
+
+        [Test]
+        public void RestoredFactoryMethodSignatureCarriesCurrentModelDescription()
+        {
+            var restored = BuildRestoredMethodWithUnmatchedParameter(
+                $"Legacy parameter summary.\n            Legacy parameter details.");
+
+            // The signature is the single source of the docs, so it must carry the current model's description.
+            // Leaving it empty is what let a later rebuild silently produce no summary at all.
+            Assert.That(restored.Signature.Description?.ToString(), Is.EqualTo("TestModel description"));
+
+            var docs = DescribeDocs(restored);
+            Assert.That(docs, Does.Contain("TestModel description"));
+            Assert.That(docs, Does.Not.Contain("Legacy parameter details."));
+            Assert.That(docs, Does.Not.Contain("Previous model summary."));
+            Assert.That(docs, Does.Not.Contain("Previous return summary."));
+        }
+
+        [Test]
+        public void RestoredFactoryMethodDocumentationSurvivesBackwardCompatOverloadFixup()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previousMethod = CreatePreviousFactoryMethod(
+                modelFactory,
+                model.Type,
+                "value",
+                $"Previous parameter summary.\n            Previous parameter details.");
+
+            Assert.That(
+                Management.Visitors.ModelFactoryBackwardCompatHelper.TryCreateBackwardCompatMethod(
+                    previousMethod,
+                    modelFactory,
+                    out var restoredMethod),
+                Is.True);
+
+            var primaryMethod = modelFactory.Methods.Single(
+                method => !Management.Visitors.ModelFactoryBackwardCompatHelper.IsBackwardCompatMethod(method)
+                    && method.Signature.Name == "TestModel");
+            var docsBeforeFixup = DescribeDocs(restoredMethod!);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryBackwardCompatOverloads(
+                [primaryMethod, restoredMethod!]);
+
+            Assert.That(DescribeDocs(restoredMethod!), Is.EqualTo(docsBeforeFixup));
+            Assert.That(docsBeforeFixup, Does.Not.Contain("Previous parameter details."));
+        }
+
+        [Test]
+        public void RestoredFactoryMethodDropsUnmatchedLastContractDocumentation()
+        {
+            var restored = BuildRestoredMethodWithUnmatchedParameter(
+                $"Legacy parameter summary.\n            \n             - First item.\n            Legacy parameter details.");
+            var docs = DescribeDocs(restored);
+
+            // The parameter no longer maps to the model, so there is no current description to regenerate. The
+            // previous one is dropped rather than salvaged: it came back out of generated C# with its cref text
+            // already lost and the writer's indentation baked in.
+            Assert.That(docs, Does.Not.Contain("Legacy parameter"));
+            Assert.That(docs, Does.Contain("<param name=\"legacyValue\">"));
+
+            // Model factory methods are for mocking and never validate, so they must not document exceptions.
+            Assert.That(restored.XmlDocs.Exceptions, Is.Empty);
+        }
+
+        [Test]
+        public void RestoredFactoryMethodDocumentationIsIndependentOfLastContractIndentation()
+        {
+            // The indentation is varied on a parameter that still maps to the model as well as one that does not,
+            // so this cannot pass merely because unmatched text is discarded.
+            var firstDocs = DescribeDocs(BuildRestoredMethodWithIndentedLegacyDocs(
+                $"Previous parameter summary.\n            Previous parameter details.",
+                $"Legacy parameter summary.\n             - First item.\n            Legacy parameter details."));
+            var secondDocs = DescribeDocs(BuildRestoredMethodWithIndentedLegacyDocs(
+                $"Previous parameter summary.\n                        Previous parameter details.",
+                $"Legacy parameter summary.\n                         - First item.\n                        Legacy parameter details."));
+
+            Assert.That(secondDocs, Is.EqualTo(firstDocs));
+
+            // The matched parameter is documented from the current model regardless of how the last contract was
+            // indented, and no rendered line carries the writer's indentation. That growth is the #62444 regression.
+            Assert.That(firstDocs, Does.Contain("Current parameter summary."));
+            Assert.That(firstDocs, Does.Contain("Current parameter details."));
+            Assert.That(firstDocs, Does.Not.Contain("Previous parameter details."));
+            Assert.That(
+                firstDocs.Split('\n').Any(line => line.StartsWith("      ")),
+                Is.False,
+                "regenerated documentation must not carry the last contract's continuation indentation");
         }
 
         [Test]
@@ -174,8 +441,120 @@ namespace Azure.Generator.Mgmt.Tests
             lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
             var customCodeView = new TestModelFactoryView(modelFactory.Name);
             customCodeView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, customCodeView)];
-            SetLastContractView(modelFactory, lastContractView);
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
             ManagementMockHelpers.SetCustomCodeView(modelFactory, customCodeView);
+            modelFactory.Update(methods: []);
+
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitType, Is.Not.Null);
+
+            visitType!.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+
+            Assert.That(modelFactory.Methods, Is.Empty);
+        }
+
+        [TestCase("StartTime", "startsOn", "startOn")]
+        [TestCase("EndTime", "endsOn", "endOn")]
+        [TestCase("ExpirationTime", "expiresOn", "expireOn")]
+        [TestCase("AccessTierChangeTime", "accessTierChangedOn", "accessTierChangeOn")]
+        [TestCase("LastSyncTimestamp", "lastSyncOn", "lastSyncTimestamp")]
+        public void RebuildsPrimaryFactoryBodyWithPreservedDateTimeParameterName(
+            string inputName,
+            string normalizedName,
+            string gaName)
+        {
+            var dateTimeType = new InputDateTimeType(
+                DateTimeKnownEncoding.Rfc3339,
+                "utcDateTime",
+                "TypeSpec.utcDateTime",
+                InputPrimitiveType.String);
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property(inputName, dateTimeType, serializedName: "unrelated_wire_name")]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = modelFactory.Methods.Single(m => m.Signature.ReturnType?.Name == "TestModel");
+            method.Signature.Parameters.Single(p => p.Name == normalizedName).Update(name: gaName);
+            method.Update(signature: method.Signature);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain($"global::System.DateTimeOffset? {gaName} = default"));
+            Assert.That(rendered, Does.Contain($"return new global::Samples.Models.TestModel({gaName},"));
+        }
+
+        [Test]
+        public void DoesNotRestoreLastContractFactoryMethodsSuppressedByApiCompatBaseline()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var baseline = ApiCompatBaseline.Parse(
+            [
+                $"MembersMustExist : Member '{ResolveModelFactoryFullName(inputModel)}.TestModel(System.String)' does not exist in the implementation but it does exist in the contract."
+            ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [inputModel],
+                apiCompatBaseline: baseline);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previousSignature = new MethodSignature(
+                "TestModel",
+                $"Creates a test model.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"A test model.",
+                [new ParameterProvider("value", $"Value description", typeof(string))]);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
+            modelFactory.Update(methods: []);
+
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitType, Is.Not.Null);
+
+            visitType!.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+
+            Assert.That(modelFactory.Methods, Is.Empty);
+        }
+
+        [Test]
+        public void DoesNotRestoreLastContractFactoryMethodsReferencingSuppressedTypes()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var baseline = ApiCompatBaseline.Parse(
+            [
+                "TypesMustExist : Type 'Samples.Models.RemovedModel' does not exist in the implementation but it does exist in the contract."
+            ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [inputModel],
+                apiCompatBaseline: baseline);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var removedType = new CSharpType(typeof(global::Samples.Models.RemovedModel));
+            var previousSignature = new MethodSignature(
+                "TestModel",
+                $"Creates a test model.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"A test model.",
+                [new ParameterProvider("removed", $"A parameter typed with a removed model.", removedType)]);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
             modelFactory.Update(methods: []);
 
             var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
@@ -256,6 +635,62 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void RebuildsRenamedDateTimeDeserializeArgumentsAfterConstructorReorder()
+        {
+            var dateTimeType = new InputDateTimeType(
+                DateTimeKnownEncoding.Rfc3339,
+                "utcDateTime",
+                "TypeSpec.utcDateTime",
+                InputPrimitiveType.String);
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Input | InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("startTime", dateTimeType, isRequired: true),
+                    InputFactory.Property("endTime", dateTimeType, isRequired: true)
+                ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var startProperty = model.Properties.Single(p => p.Name == "StartsOn");
+            var endProperty = model.Properties.Single(p => p.Name == "EndsOn");
+            var startVariable = startProperty.AsVariableExpression;
+            var endVariable = endProperty.AsVariableExpression;
+            startProperty.AsParameter.Update(name: "startOn");
+            endProperty.AsParameter.Update(name: "endOn");
+
+            var rebuiltModel = new Microsoft.TypeSpec.Generator.ClientModel.Providers.ScmModelProvider(inputModel);
+            var rebuiltParameters = rebuiltModel.FullConstructor.Signature.Parameters;
+            var rebuiltStartProperty = rebuiltModel.Properties.Single(p => p.Name == "StartsOn");
+            var rebuiltEndProperty = rebuiltModel.Properties.Single(p => p.Name == "EndsOn");
+            var rebuiltStart = new ParameterProvider(
+                "startsOn", rebuiltStartProperty.Description!, rebuiltStartProperty.Type, property: rebuiltStartProperty);
+            var rebuiltEnd = new ParameterProvider(
+                "endsOn", rebuiltEndProperty.Description!, rebuiltEndProperty.Type, property: rebuiltEndProperty);
+            var additionalData = rebuiltParameters.Single(p => p.Name == "additionalBinaryDataProperties");
+            rebuiltModel.FullConstructor.Signature.Update(parameters: [rebuiltEnd, rebuiltStart, additionalData]);
+            typeof(ModelProvider).GetField("_fullConstructor", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(model, rebuiltModel.FullConstructor);
+
+            var additionalDataVariable = new VariableExpression(additionalData.Type, additionalData.Name);
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "DeserializeTestModel",
+                    null,
+                    MethodSignatureModifiers.Internal | MethodSignatureModifiers.Static,
+                    model.Type,
+                    null,
+                    []),
+                Return(new NewInstanceExpression(model.Type, [startVariable, endVariable, additionalDataVariable])),
+                model);
+
+            Management.Visitors.SerializationConstructorCallHelper.FixConstructorCalls([method]);
+
+            var rendered = method.BodyStatements!.ToDisplayString();
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.TestModel(endOn, startOn, additionalBinaryDataProperties)"));
+        }
+
+        [Test]
         public void RebuildsDeserializeConstructorCallFromCurrentConstructor()
         {
             var inputModel = InputFactory.Model(
@@ -292,19 +727,203 @@ namespace Azure.Generator.Mgmt.Tests
                 });
             modelFactory.Update(methods: [method]);
 
-            Management.Visitors.ModelFactoryBackwardCompatHelper.FixConstructorCalls(modelFactory.Methods);
+            Management.Visitors.SerializationConstructorCallHelper.FixConstructorCalls(modelFactory.Methods);
 
             var rendered = new TypeProviderWriter(modelFactory).Write().Content;
             Assert.That(rendered, Does.Not.Contain("name0"));
             Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(id, name, ((global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>)default));"));
         }
 
-        private static void SetLastContractView(TypeProvider typeProvider, TypeProvider lastContractView)
+        [Test]
+        public void RebuildsDeserializeConstructorCallWithCasingOnlyDifference()
         {
-            typeof(TypeProvider).GetField(
-                    "_lastContractView",
-                    BindingFlags.NonPublic | BindingFlags.Instance)!
-                .SetValue(typeProvider, new Lazy<TypeProvider?>(() => lastContractView));
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("vmwareId", InputPrimitiveType.String),
+                ]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            model.FullConstructor.Signature.Parameters[0].Update(name: "vMwareId");
+            var vmwareId = new VariableExpression(typeof(string), "vmwareId");
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "DeserializeTestModel",
+                    null,
+                    MethodSignatureModifiers.Internal | MethodSignatureModifiers.Static,
+                    model.Type,
+                    null,
+                    []),
+                Return(new NewInstanceExpression(model.Type, [vmwareId])),
+                modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            Management.Visitors.SerializationConstructorCallHelper.FixConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(vmwareId, ((global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>)default));"));
+        }
+
+        [Test]
+        public void RebuildsDeserializeConstructorCallPrefersExactCasing()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("vmwareId", InputPrimitiveType.String),
+                ]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var legacyVmwareId = new VariableExpression(typeof(string), "vMwareId");
+            var vmwareId = new VariableExpression(typeof(string), "vmwareId");
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "DeserializeTestModel",
+                    null,
+                    MethodSignatureModifiers.Internal | MethodSignatureModifiers.Static,
+                    model.Type,
+                    null,
+                    []),
+                Return(new NewInstanceExpression(model.Type, [legacyVmwareId, vmwareId])),
+                modelFactory);
+            modelFactory.Update(methods: [method]);
+
+            Management.Visitors.SerializationConstructorCallHelper.FixConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(vmwareId, ((global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>)default));"));
+            Assert.That(rendered, Does.Not.Contain("TestModel(vMwareId"));
+        }
+
+        private static MethodProvider CreatePreviousFactoryMethod(
+            TypeProvider modelFactory,
+            CSharpType returnType,
+            string parameterName,
+            FormattableString parameterDescription)
+        {
+            var previousSignature = new MethodSignature(
+                "TestModel",
+                $"Previous model summary.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                returnType,
+                $"Previous return summary.",
+                [new ParameterProvider(parameterName, parameterDescription, typeof(string))]);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            return new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView);
+        }
+
+        private static MethodProvider BuildRestoredMethodWithUnmatchedParameter(
+            FormattableString parameterDescription)
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previousMethod = CreatePreviousFactoryMethod(
+                modelFactory,
+                model.Type,
+                "legacyValue",
+                parameterDescription);
+
+            Assert.That(
+                Management.Visitors.ModelFactoryBackwardCompatHelper.TryCreateBackwardCompatMethod(
+                    previousMethod,
+                    modelFactory,
+                    out var restoredMethod),
+                Is.True);
+
+            return restoredMethod!;
+        }
+
+        private static MethodProvider BuildRestoredMethodWithIndentedLegacyDocs(
+            FormattableString matchedLegacyDescription,
+            FormattableString unmatchedLegacyDescription)
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            model.FullConstructor.Signature.Parameters.Single(parameter => parameter.Name == "value")
+                .Update(description: $"Current parameter summary.\nCurrent parameter details.");
+
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previousSignature = new MethodSignature(
+                "TestModel",
+                $"Previous model summary.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"Previous return summary.",
+                [
+                    new ParameterProvider("value", matchedLegacyDescription, typeof(string)),
+                    new ParameterProvider("legacyValue", unmatchedLegacyDescription, typeof(string))
+                ]);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            var previousMethod = new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView);
+
+            Assert.That(
+                Management.Visitors.ModelFactoryBackwardCompatHelper.TryCreateBackwardCompatMethod(
+                    previousMethod,
+                    modelFactory,
+                    out var restoredMethod),
+                Is.True);
+
+            return restoredMethod!;
+        }
+
+        private static string DescribeDocs(MethodProvider method)
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine("<summary>");
+            foreach (var line in method.XmlDocs.Summary?.Lines ?? [])
+            {
+                builder.AppendLine(line.ToString());
+            }
+
+            foreach (var parameter in method.XmlDocs.Parameters)
+            {
+                builder.AppendLine($"<param name=\"{parameter.Parameter.Name}\">");
+                foreach (var line in parameter.Lines)
+                {
+                    builder.AppendLine(line.ToString());
+                }
+            }
+
+            if (method.XmlDocs.Returns is not null)
+            {
+                builder.AppendLine("<returns>");
+                foreach (var line in method.XmlDocs.Returns.Lines)
+                {
+                    builder.AppendLine(line.ToString());
+                }
+            }
+
+            return builder.ToString().Replace("\r\n", "\n");
+        }
+
+        /// <summary>
+        /// Loads the mock plugin once purely to discover the fully-qualified name the model factory will be given,
+        /// so a baseline entry can be written for it before the plugin is reloaded with that baseline attached.
+        /// </summary>
+        private static string ResolveModelFactoryFullName(InputModelType inputModel)
+        {
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            return plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single().Type.FullyQualifiedName;
         }
 
         private class TestModelFactoryView : TypeProvider
@@ -324,5 +943,27 @@ namespace Azure.Generator.Mgmt.Tests
 
             protected override MethodProvider[] BuildMethods() => MethodsToBuild;
         }
-    }
+
+        [Test]
+        public void PrimaryFactoryMethodDocumentationSurvivesConstructorCallFixup()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            _ = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+
+            var before = DescribeDocs(modelFactory.Methods.Single());
+            Assert.That(before, Does.Contain("TestModel description"));
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+
+            // Rebuilding the constructor call only changes the body. The summary that core attached to the primary
+            // factory method lives on the XmlDocProvider, not on the (empty) signature description, so a signature
+            // round-trip would silently erase it.
+            Assert.That(DescribeDocs(modelFactory.Methods.Single()), Is.EqualTo(before));
+        }
+}
 }

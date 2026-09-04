@@ -7,583 +7,185 @@
 
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ApplicationInsights.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    internal partial class FavoritesRestOperations
+    internal partial class Favorites
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
-        /// <summary> Initializes a new instance of FavoritesRestOperations. </summary>
+        /// <summary> Initializes a new instance of Favorites for mocking. </summary>
+        protected Favorites()
+        {
+        }
+
+        /// <summary> Initializes a new instance of Favorites. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public FavoritesRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal Favorites(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2015-05-01";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(Favorites).Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateListRequestUri(string subscriptionId, string resourceGroupName, string resourceName, ComponentFavoriteType? favoriteType, FavoriteSourceType? sourceType, bool? canFetchContent, IEnumerable<string> tags)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetFavoritesRequest(Guid subscriptionId, string resourceGroupName, string resourceName, string favoriteType, string sourceType, bool? canFetchContent, IEnumerable<string> tags, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/favorites", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
             if (favoriteType != null)
             {
-                uri.AppendQuery("favoriteType", favoriteType.Value.ToSerialString(), true);
+                uri.AppendQuery("favoriteType", favoriteType, true);
             }
             if (sourceType != null)
             {
-                uri.AppendQuery("sourceType", sourceType.Value.ToString(), true);
+                uri.AppendQuery("sourceType", sourceType, true);
             }
             if (canFetchContent != null)
             {
-                uri.AppendQuery("canFetchContent", canFetchContent.Value, true);
+                uri.AppendQuery("canFetchContent", TypeFormatters.ConvertToString(canFetchContent), true);
             }
             if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
-                uri.AppendQueryDelimited("tags", tags, ",", true);
+                uri.AppendQueryDelimited("tags", tags, ",", escape: true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateListRequest(string subscriptionId, string resourceGroupName, string resourceName, ComponentFavoriteType? favoriteType, FavoriteSourceType? sourceType, bool? canFetchContent, IEnumerable<string> tags)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/favorites", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (favoriteType != null)
-            {
-                uri.AppendQuery("favoriteType", favoriteType.Value.ToSerialString(), true);
-            }
-            if (sourceType != null)
-            {
-                uri.AppendQuery("sourceType", sourceType.Value.ToString(), true);
-            }
-            if (canFetchContent != null)
-            {
-                uri.AppendQuery("canFetchContent", canFetchContent.Value, true);
-            }
-            if (tags != null && !(tags is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
-            {
-                uri.AppendQueryDelimited("tags", tags, ",", true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Method = RequestMethod.Get;
             _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Gets a list of favorites defined within an Application Insights component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="favoriteType"> The type of favorite. Value can be either shared or user. </param>
-        /// <param name="sourceType"> Source type of favorite to return. When left out, the source type defaults to 'other' (not present in this enum). </param>
-        /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable favorite. If false, only return summary content for favorites. </param>
-        /// <param name="tags"> Tags that must be present on each favorite returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<IReadOnlyList<ApplicationInsightsComponentFavorite>>> ListAsync(string subscriptionId, string resourceGroupName, string resourceName, ComponentFavoriteType? favoriteType = null, FavoriteSourceType? sourceType = null, bool? canFetchContent = null, IEnumerable<string> tags = null, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetFavoriteRequest(string resourceGroupName, Guid subscriptionId, string resourceName, string favoriteId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, resourceName, favoriteType, sourceType, canFetchContent, tags);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IReadOnlyList<ApplicationInsightsComponentFavorite> value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        List<ApplicationInsightsComponentFavorite> array = new List<ApplicationInsightsComponentFavorite>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite(item));
-                        }
-                        value = array;
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Gets a list of favorites defined within an Application Insights component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="favoriteType"> The type of favorite. Value can be either shared or user. </param>
-        /// <param name="sourceType"> Source type of favorite to return. When left out, the source type defaults to 'other' (not present in this enum). </param>
-        /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable favorite. If false, only return summary content for favorites. </param>
-        /// <param name="tags"> Tags that must be present on each favorite returned. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="resourceName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<IReadOnlyList<ApplicationInsightsComponentFavorite>> List(string subscriptionId, string resourceGroupName, string resourceName, ComponentFavoriteType? favoriteType = null, FavoriteSourceType? sourceType = null, bool? canFetchContent = null, IEnumerable<string> tags = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-
-            using var message = CreateListRequest(subscriptionId, resourceGroupName, resourceName, favoriteType, sourceType, canFetchContent, tags);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        IReadOnlyList<ApplicationInsightsComponentFavorite> value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        List<ApplicationInsightsComponentFavorite> array = new List<ApplicationInsightsComponentFavorite>();
-                        foreach (var item in document.RootElement.EnumerateArray())
-                        {
-                            array.Add(ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite(item));
-                        }
-                        value = array;
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/favorites/", false);
             uri.AppendPath(favoriteId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/favorites/", false);
-            uri.AppendPath(favoriteId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Method = RequestMethod.Get;
             _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Get a single favorite by its FavoriteId, defined within an Application Insights component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="favoriteId"> The Id of a specific favorite defined in the Application Insights component. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationInsightsComponentFavorite>> GetAsync(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateAddFavoriteRequest(string resourceGroupName, Guid subscriptionId, string resourceName, string favoriteId, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, favoriteId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ApplicationInsightsComponentFavorite value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Get a single favorite by its FavoriteId, defined within an Application Insights component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="favoriteId"> The Id of a specific favorite defined in the Application Insights component. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationInsightsComponentFavorite> Get(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, resourceName, favoriteId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ApplicationInsightsComponentFavorite value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateAddRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, ApplicationInsightsComponentFavorite favoriteProperties)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/favorites/", false);
             uri.AppendPath(favoriteId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateAddRequest(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, ApplicationInsightsComponentFavorite favoriteProperties)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/favorites/", false);
-            uri.AppendPath(favoriteId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(favoriteProperties, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
             _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
 
-        /// <summary> Adds a new favorites to an Application Insights component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="favoriteId"> The Id of a specific favorite defined in the Application Insights component. </param>
-        /// <param name="favoriteProperties"> Properties that need to be specified to create a new favorite and add it to an Application Insights component. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="favoriteId"/> or <paramref name="favoriteProperties"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationInsightsComponentFavorite>> AddAsync(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, ApplicationInsightsComponentFavorite favoriteProperties, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateUpdateFavoriteRequest(string resourceGroupName, Guid subscriptionId, string resourceName, string favoriteId, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
-            Argument.AssertNotNull(favoriteProperties, nameof(favoriteProperties));
-
-            using var message = CreateAddRequest(subscriptionId, resourceGroupName, resourceName, favoriteId, favoriteProperties);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ApplicationInsightsComponentFavorite value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Adds a new favorites to an Application Insights component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="favoriteId"> The Id of a specific favorite defined in the Application Insights component. </param>
-        /// <param name="favoriteProperties"> Properties that need to be specified to create a new favorite and add it to an Application Insights component. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="favoriteId"/> or <paramref name="favoriteProperties"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationInsightsComponentFavorite> Add(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, ApplicationInsightsComponentFavorite favoriteProperties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
-            Argument.AssertNotNull(favoriteProperties, nameof(favoriteProperties));
-
-            using var message = CreateAddRequest(subscriptionId, resourceGroupName, resourceName, favoriteId, favoriteProperties);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ApplicationInsightsComponentFavorite value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, ApplicationInsightsComponentFavorite favoriteProperties)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/favorites/", false);
             uri.AppendPath(favoriteId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, ApplicationInsightsComponentFavorite favoriteProperties)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/favorites/", false);
-            uri.AppendPath(favoriteId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(favoriteProperties, ModelSerializationExtensions.WireOptions);
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Updates a favorite that has already been added to an Application Insights component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="favoriteId"> The Id of a specific favorite defined in the Application Insights component. </param>
-        /// <param name="favoriteProperties"> Properties that need to be specified to update the existing favorite. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="favoriteId"/> or <paramref name="favoriteProperties"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ApplicationInsightsComponentFavorite>> UpdateAsync(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, ApplicationInsightsComponentFavorite favoriteProperties, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateDeleteFavoriteRequest(string resourceGroupName, Guid subscriptionId, string resourceName, string favoriteId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
-            Argument.AssertNotNull(favoriteProperties, nameof(favoriteProperties));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, favoriteId, favoriteProperties);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ApplicationInsightsComponentFavorite value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Updates a favorite that has already been added to an Application Insights component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="favoriteId"> The Id of a specific favorite defined in the Application Insights component. </param>
-        /// <param name="favoriteProperties"> Properties that need to be specified to update the existing favorite. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/>, <paramref name="favoriteId"/> or <paramref name="favoriteProperties"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ApplicationInsightsComponentFavorite> Update(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, ApplicationInsightsComponentFavorite favoriteProperties, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
-            Argument.AssertNotNull(favoriteProperties, nameof(favoriteProperties));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, resourceName, favoriteId, favoriteProperties);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ApplicationInsightsComponentFavorite value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ApplicationInsightsComponentFavorite.DeserializeApplicationInsightsComponentFavorite(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.Insights/components/", false);
             uri.AppendPath(resourceName, true);
             uri.AppendPath("/favorites/", false);
             uri.AppendPath(favoriteId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.Insights/components/", false);
-            uri.AppendPath(resourceName, true);
-            uri.AppendPath("/favorites/", false);
-            uri.AppendPath(favoriteId, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
+            request.Method = RequestMethod.Delete;
             _userAgent.Apply(message);
             return message;
-        }
-
-        /// <summary> Remove a favorite that is associated to an Application Insights component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="favoriteId"> The Id of a specific favorite defined in the Application Insights component. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, favoriteId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Remove a favorite that is associated to an Application Insights component. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="resourceName"> The name of the Application Insights component resource. </param>
-        /// <param name="favoriteId"> The Id of a specific favorite defined in the Application Insights component. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="resourceName"/> or <paramref name="favoriteId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string resourceName, string favoriteId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(resourceName, nameof(resourceName));
-            Argument.AssertNotNullOrEmpty(favoriteId, nameof(favoriteId));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, resourceName, favoriteId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

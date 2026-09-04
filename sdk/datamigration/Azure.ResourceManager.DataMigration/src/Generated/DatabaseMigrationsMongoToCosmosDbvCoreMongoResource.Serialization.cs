@@ -12,28 +12,28 @@ using System.Text.Json;
 namespace Azure.ResourceManager.DataMigration
 {
     /// <summary></summary>
-    public partial class DatabaseMigrationsMongoToCosmosDbvCoreMongoResource : IJsonModel<DatabaseMigrationCosmosDbMongoData>
+    public partial class DatabaseMigrationsMongoToCosmosDbvCoreMongoResource : IJsonModel<DatabaseMigrationCosmosDBMongoData>
     {
-        private static IJsonModel<DatabaseMigrationCosmosDbMongoData> s_dataDeserializationInstance;
+        private static IJsonModel<DatabaseMigrationCosmosDBMongoData> s_dataDeserializationInstance;
 
-        private static IJsonModel<DatabaseMigrationCosmosDbMongoData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DatabaseMigrationCosmosDbMongoData();
+        private static IJsonModel<DatabaseMigrationCosmosDBMongoData> DataDeserializationInstance => s_dataDeserializationInstance ??= new DatabaseMigrationCosmosDBMongoData();
 
         /// <param name="writer"> The writer to serialize the model to. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DatabaseMigrationCosmosDbMongoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseMigrationCosmosDbMongoData>)Data).Write(writer, options);
+        void IJsonModel<DatabaseMigrationCosmosDBMongoData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<DatabaseMigrationCosmosDBMongoData>)Data).Write(writer, options);
 
         /// <param name="reader"> The reader for deserializing the model. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatabaseMigrationCosmosDbMongoData IJsonModel<DatabaseMigrationCosmosDbMongoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
+        DatabaseMigrationCosmosDBMongoData IJsonModel<DatabaseMigrationCosmosDBMongoData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DatabaseMigrationCosmosDbMongoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatabaseMigrationCosmosDbMongoData>(Data, options, AzureResourceManagerDataMigrationContext.Default);
+        BinaryData IPersistableModel<DatabaseMigrationCosmosDBMongoData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<DatabaseMigrationCosmosDBMongoData>(Data, options, AzureResourceManagerDataMigrationContext.Default);
 
         /// <param name="data"> The binary data to be processed. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DatabaseMigrationCosmosDbMongoData IPersistableModel<DatabaseMigrationCosmosDbMongoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseMigrationCosmosDbMongoData>(data, options, AzureResourceManagerDataMigrationContext.Default);
+        DatabaseMigrationCosmosDBMongoData IPersistableModel<DatabaseMigrationCosmosDBMongoData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<DatabaseMigrationCosmosDBMongoData>(data, options, AzureResourceManagerDataMigrationContext.Default);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DatabaseMigrationCosmosDbMongoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
+        string IPersistableModel<DatabaseMigrationCosmosDBMongoData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

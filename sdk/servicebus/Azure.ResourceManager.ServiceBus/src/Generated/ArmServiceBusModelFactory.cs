@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusSqlFilter(sqlExpression, compatibilityLevel, requiresPreprocessing, default);
         }
 
-        /// <param name="applicationProperties"> dictionary object for custom filters. </param>
+        /// <param name="properties"> dictionary object for custom filters. </param>
         /// <param name="correlationId"> Identifier of the correlation. </param>
         /// <param name="messageId"> Identifier of the message. </param>
         /// <param name="sendTo"> Address to send to. </param>
@@ -485,12 +485,12 @@ namespace Azure.ResourceManager.ServiceBus.Models
         /// <param name="contentType"> Content type of the message. </param>
         /// <param name="requiresPreprocessing"> Value that indicates whether the rule action requires preprocessing. </param>
         /// <returns> A new <see cref="Models.ServiceBusCorrelationFilter"/> instance for mocking. </returns>
-        public static ServiceBusCorrelationFilter ServiceBusCorrelationFilter(IDictionary<string, object> applicationProperties = default, string correlationId = default, string messageId = default, string sendTo = default, string replyTo = default, string subject = default, string sessionId = default, string replyToSessionId = default, string contentType = default, bool? requiresPreprocessing = default)
+        public static ServiceBusCorrelationFilter ServiceBusCorrelationFilter(IDictionary<string, string> properties = default, string correlationId = default, string messageId = default, string sendTo = default, string replyTo = default, string subject = default, string sessionId = default, string replyToSessionId = default, string contentType = default, bool? requiresPreprocessing = default)
         {
-            applicationProperties ??= new ChangeTrackingDictionary<string, object>();
+            properties ??= new ChangeTrackingDictionary<string, string>();
 
             return new ServiceBusCorrelationFilter(
-                applicationProperties ?? new ChangeTrackingDictionary<string, object>(),
+                properties ?? new ChangeTrackingDictionary<string, string>(),
                 correlationId,
                 messageId,
                 sendTo,

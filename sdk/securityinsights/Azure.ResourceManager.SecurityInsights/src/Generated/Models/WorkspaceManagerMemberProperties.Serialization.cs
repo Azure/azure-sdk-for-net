@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -125,14 +126,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            string targetWorkspaceResourceId = default;
+            ResourceIdentifier targetWorkspaceResourceId = default;
             string targetWorkspaceTenantId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("targetWorkspaceResourceId"u8))
                 {
-                    targetWorkspaceResourceId = prop.Value.GetString();
+                    targetWorkspaceResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("targetWorkspaceTenantId"u8))

@@ -124,10 +124,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WritePropertyName("create_index"u8);
                 writer.WriteBooleanValue(CreateIndex.Value);
             }
-            if (Optional.IsDefined(DataType))
+            if (Optional.IsDefined(DataKind))
             {
                 writer.WritePropertyName("data_type"u8);
-                writer.WriteStringValue(DataType.Value.ToString());
+                writer.WriteStringValue(DataKind.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -174,7 +174,7 @@ namespace Azure.Analytics.PlanetaryComputer
             string name = default;
             IDictionary<string, BinaryData> definition = default;
             bool? createIndex = default;
-            StacQueryableDefinitionDataType? dataType = default;
+            StacQueryableDefinitionDataKind? dataKind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -215,7 +215,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    dataType = new StacQueryableDefinitionDataType(prop.Value.GetString());
+                    dataKind = new StacQueryableDefinitionDataKind(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -223,7 +223,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new StacQueryable(name, definition, createIndex, dataType, additionalBinaryDataProperties);
+            return new StacQueryable(name, definition, createIndex, dataKind, additionalBinaryDataProperties);
         }
     }
 }

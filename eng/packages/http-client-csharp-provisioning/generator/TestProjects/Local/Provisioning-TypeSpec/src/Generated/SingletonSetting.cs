@@ -114,7 +114,7 @@ namespace Azure.Provisioning.ProvisioningTypeSpec
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "default");
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<SingletonSettingProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ConfigurationStore>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ConfigurationStore>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

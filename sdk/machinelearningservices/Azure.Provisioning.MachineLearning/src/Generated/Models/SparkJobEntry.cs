@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Spark job entry point definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="SparkJobPythonEntry"/> and <see cref="SparkJobScalaEntry"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="SparkJobPythonEntry"/> and <see cref="SparkJobScalaEntry"/>.
     /// </summary>
     public partial class SparkJobEntry : ProvisionableConstruct
     {
+        private BicepValue<SparkJobEntryType> _sparkJobEntryType;
+
         /// <summary> Creates a new SparkJobEntry. </summary>
         public SparkJobEntry()
         {
+        }
+
+        /// <summary> [Required] Type of the job's entry point. </summary>
+        internal BicepValue<SparkJobEntryType> SparkJobEntryType
+        {
+            get
+            {
+                Initialize();
+                return _sparkJobEntryType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for SparkJobEntry. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _sparkJobEntryType = DefineProperty<SparkJobEntryType>(nameof(SparkJobEntryType), new string[] { "sparkJobEntryType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated generation from the reflection-based provisioning generator to the TypeSpec provisioning emitter using the stable `2025-08-01` API.
+
 ## 1.2.0-beta.2 (2026-03-02)
 
 ### Features Added
