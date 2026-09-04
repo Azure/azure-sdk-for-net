@@ -6,26 +6,38 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 
 namespace Azure.Communication.Identity
 {
-    /// <summary> An access token. </summary>
     internal partial class CommunicationIdentityAccessToken
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="CommunicationIdentityAccessToken"/>. </summary>
         /// <param name="token"> The access token issued for the identity. </param>
         /// <param name="expiresOn"> The expiry time of the token. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="token"/> is null. </exception>
         internal CommunicationIdentityAccessToken(string token, DateTimeOffset expiresOn)
         {
-            Argument.AssertNotNull(token, nameof(token));
-
             Token = token;
             ExpiresOn = expiresOn;
         }
 
+        /// <summary> Initializes a new instance of <see cref="CommunicationIdentityAccessToken"/>. </summary>
+        /// <param name="token"> The access token issued for the identity. </param>
+        /// <param name="expiresOn"> The expiry time of the token. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CommunicationIdentityAccessToken(string token, DateTimeOffset expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        {
+            Token = token;
+            ExpiresOn = expiresOn;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
         /// <summary> The access token issued for the identity. </summary>
         public string Token { get; }
+
         /// <summary> The expiry time of the token. </summary>
         public DateTimeOffset ExpiresOn { get; }
     }

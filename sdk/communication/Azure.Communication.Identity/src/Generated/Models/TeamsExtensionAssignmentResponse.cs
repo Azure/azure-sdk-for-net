@@ -8,21 +8,20 @@
 using System;
 using System.Collections.Generic;
 
-namespace Azure.Communication.Identity.Models
+namespace Azure.Communication.Identity
 {
-    /// <summary> The TeamsExtensionAssignmentResponse. </summary>
-    internal partial class TeamsExtensionAssignmentResponse
+    /// <summary> A Teams Extension assignment response. </summary>
+    public partial class TeamsExtensionAssignmentResponse
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="TeamsExtensionAssignmentResponse"/>. </summary>
-        /// <param name="objectId"></param>
-        /// <param name="tenantId"></param>
+        /// <param name="objectId"> The object ID of the assignment. </param>
+        /// <param name="tenantId"> The tenant ID of the assignment. </param>
         /// <param name="principalType"> The type of principal the assignment is for. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> or <paramref name="tenantId"/> is null. </exception>
         internal TeamsExtensionAssignmentResponse(string objectId, string tenantId, TeamsExtensionPrincipalType principalType)
         {
-            Argument.AssertNotNull(objectId, nameof(objectId));
-            Argument.AssertNotNull(tenantId, nameof(tenantId));
-
             ObjectId = objectId;
             TenantId = tenantId;
             PrincipalType = principalType;
@@ -30,25 +29,30 @@ namespace Azure.Communication.Identity.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="TeamsExtensionAssignmentResponse"/>. </summary>
-        /// <param name="objectId"></param>
-        /// <param name="tenantId"></param>
+        /// <param name="objectId"> The object ID of the assignment. </param>
+        /// <param name="tenantId"> The tenant ID of the assignment. </param>
         /// <param name="principalType"> The type of principal the assignment is for. </param>
-        /// <param name="clientIds"></param>
-        internal TeamsExtensionAssignmentResponse(string objectId, string tenantId, TeamsExtensionPrincipalType principalType, IReadOnlyList<string> clientIds)
+        /// <param name="clientIds"> The client IDs for the assignment. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal TeamsExtensionAssignmentResponse(string objectId, string tenantId, TeamsExtensionPrincipalType principalType, IList<string> clientIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ObjectId = objectId;
             TenantId = tenantId;
             PrincipalType = principalType;
             ClientIds = clientIds;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Gets the object id. </summary>
+        /// <summary> The object ID of the assignment. </summary>
         public string ObjectId { get; }
-        /// <summary> Gets the tenant id. </summary>
+
+        /// <summary> The tenant ID of the assignment. </summary>
         public string TenantId { get; }
+
         /// <summary> The type of principal the assignment is for. </summary>
         public TeamsExtensionPrincipalType PrincipalType { get; }
-        /// <summary> Gets the client ids. </summary>
-        public IReadOnlyList<string> ClientIds { get; }
+
+        /// <summary> The client IDs for the assignment. </summary>
+        public IList<string> ClientIds { get; }
     }
 }

@@ -5,26 +5,90 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.Identity.Models
+namespace Azure.Communication.Identity
 {
-    internal partial class CommunicationIdentityCreateRequest : IUtf8JsonSerializable
+    /// <summary> Request to create a new identity with optional access token. </summary>
+    public partial class CommunicationIdentityCreateRequest : IJsonModel<CommunicationIdentityCreateRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CommunicationIdentityCreateRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CommunicationIdentityCreateRequest>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeCommunicationIdentityCreateRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(CommunicationIdentityCreateRequest)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CommunicationIdentityCreateRequest>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureCommunicationIdentityContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(CommunicationIdentityCreateRequest)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<CommunicationIdentityCreateRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CommunicationIdentityCreateRequest IPersistableModel<CommunicationIdentityCreateRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<CommunicationIdentityCreateRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="communicationIdentityCreateRequest"> The <see cref="CommunicationIdentityCreateRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(CommunicationIdentityCreateRequest communicationIdentityCreateRequest)
+        {
+            if (communicationIdentityCreateRequest == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(communicationIdentityCreateRequest, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<CommunicationIdentityCreateRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
-            if (Optional.IsDefined(CustomId))
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<CommunicationIdentityCreateRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
             {
-                writer.WritePropertyName("customId"u8);
-                writer.WriteStringValue(CustomId);
+                throw new FormatException($"The model {nameof(CommunicationIdentityCreateRequest)} does not support writing '{format}' format.");
             }
             if (Optional.IsCollectionDefined(CreateTokenWithScopes))
             {
                 writer.WritePropertyName("createTokenWithScopes"u8);
                 writer.WriteStartArray();
-                foreach (var item in CreateTokenWithScopes)
+                foreach (CommunicationIdentityTokenScope item in CreateTokenWithScopes)
                 {
                     writer.WriteStringValue(item.ToString());
                 }
@@ -35,15 +99,82 @@ namespace Azure.Communication.Identity.Models
                 writer.WritePropertyName("expiresInMinutes"u8);
                 writer.WriteNumberValue(ExpiresInMinutes.Value);
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        CommunicationIdentityCreateRequest IJsonModel<CommunicationIdentityCreateRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual CommunicationIdentityCreateRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
+            string format = options.Format == "W" ? ((IPersistableModel<CommunicationIdentityCreateRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(CommunicationIdentityCreateRequest)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeCommunicationIdentityCreateRequest(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static CommunicationIdentityCreateRequest DeserializeCommunicationIdentityCreateRequest(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            IList<CommunicationIdentityTokenScope> createTokenWithScopes = default;
+            int? expiresInMinutes = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("createTokenWithScopes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CommunicationIdentityTokenScope> array = new List<CommunicationIdentityTokenScope>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new CommunicationIdentityTokenScope(item.GetString()));
+                    }
+                    createTokenWithScopes = array;
+                    continue;
+                }
+                if (prop.NameEquals("expiresInMinutes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    expiresInMinutes = prop.Value.GetInt32();
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new CommunicationIdentityCreateRequest(createTokenWithScopes ?? new ChangeTrackingList<CommunicationIdentityTokenScope>(), expiresInMinutes, additionalBinaryDataProperties);
         }
     }
 }

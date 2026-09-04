@@ -5,37 +5,186 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
+using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
-namespace Azure.Communication.Identity.Models
+namespace Azure.Communication.Identity
 {
-    internal partial class TeamsExtensionAssignmentCreateOrUpdateRequest : IUtf8JsonSerializable
+    /// <summary> A request to create or update a Teams Extension assignment. </summary>
+    public partial class TeamsExtensionAssignmentCreateOrUpdateRequest : IJsonModel<TeamsExtensionAssignmentCreateOrUpdateRequest>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        /// <summary> Initializes a new instance of <see cref="TeamsExtensionAssignmentCreateOrUpdateRequest"/> for deserialization. </summary>
+        internal TeamsExtensionAssignmentCreateOrUpdateRequest()
+        {
+        }
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TeamsExtensionAssignmentCreateOrUpdateRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TeamsExtensionAssignmentCreateOrUpdateRequest>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeTeamsExtensionAssignmentCreateOrUpdateRequest(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TeamsExtensionAssignmentCreateOrUpdateRequest)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TeamsExtensionAssignmentCreateOrUpdateRequest>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureCommunicationIdentityContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(TeamsExtensionAssignmentCreateOrUpdateRequest)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<TeamsExtensionAssignmentCreateOrUpdateRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TeamsExtensionAssignmentCreateOrUpdateRequest IPersistableModel<TeamsExtensionAssignmentCreateOrUpdateRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<TeamsExtensionAssignmentCreateOrUpdateRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="teamsExtensionAssignmentCreateOrUpdateRequest"> The <see cref="TeamsExtensionAssignmentCreateOrUpdateRequest"/> to serialize into <see cref="RequestContent"/>. </param>
+        public static implicit operator RequestContent(TeamsExtensionAssignmentCreateOrUpdateRequest teamsExtensionAssignmentCreateOrUpdateRequest)
+        {
+            if (teamsExtensionAssignmentCreateOrUpdateRequest == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(teamsExtensionAssignmentCreateOrUpdateRequest, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        void IJsonModel<TeamsExtensionAssignmentCreateOrUpdateRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
+            JsonModelWriteCore(writer, options);
+            writer.WriteEndObject();
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<TeamsExtensionAssignmentCreateOrUpdateRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TeamsExtensionAssignmentCreateOrUpdateRequest)} does not support writing '{format}' format.");
+            }
             writer.WritePropertyName("principalType"u8);
             writer.WriteStringValue(PrincipalType.ToString());
             if (Optional.IsCollectionDefined(ClientIds))
             {
                 writer.WritePropertyName("clientIds"u8);
                 writer.WriteStartArray();
-                foreach (var item in ClientIds)
+                foreach (string item in ClientIds)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
             }
-            writer.WriteEndObject();
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
         }
 
-        /// <summary> Convert into a <see cref="RequestContent"/>. </summary>
-        internal virtual RequestContent ToRequestContent()
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        TeamsExtensionAssignmentCreateOrUpdateRequest IJsonModel<TeamsExtensionAssignmentCreateOrUpdateRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual TeamsExtensionAssignmentCreateOrUpdateRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
-            return content;
+            string format = options.Format == "W" ? ((IPersistableModel<TeamsExtensionAssignmentCreateOrUpdateRequest>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TeamsExtensionAssignmentCreateOrUpdateRequest)} does not support reading '{format}' format.");
+            }
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTeamsExtensionAssignmentCreateOrUpdateRequest(document.RootElement, options);
+        }
+
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static TeamsExtensionAssignmentCreateOrUpdateRequest DeserializeTeamsExtensionAssignmentCreateOrUpdateRequest(JsonElement element, ModelReaderWriterOptions options)
+        {
+            if (element.ValueKind == JsonValueKind.Null)
+            {
+                return null;
+            }
+            TeamsExtensionPrincipalType principalType = default;
+            IList<string> clientIds = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
+            {
+                if (prop.NameEquals("principalType"u8))
+                {
+                    principalType = new TeamsExtensionPrincipalType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("clientIds"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    clientIds = array;
+                    continue;
+                }
+                if (options.Format != "W")
+                {
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
+                }
+            }
+            return new TeamsExtensionAssignmentCreateOrUpdateRequest(principalType, clientIds ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }
