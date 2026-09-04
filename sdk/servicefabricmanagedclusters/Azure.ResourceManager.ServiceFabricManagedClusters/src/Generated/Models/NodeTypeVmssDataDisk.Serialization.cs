@@ -87,6 +87,26 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStringValue(DiskType.ToString());
             writer.WritePropertyName("diskLetter"u8);
             writer.WriteStringValue(DiskLetter);
+            if (Optional.IsDefined(Caching))
+            {
+                writer.WritePropertyName("caching"u8);
+                writer.WriteStringValue(Caching.Value.ToString());
+            }
+            if (Optional.IsDefined(IsWriteAcceleratorEnabled))
+            {
+                writer.WritePropertyName("writeAcceleratorEnabled"u8);
+                writer.WriteBooleanValue(IsWriteAcceleratorEnabled.Value);
+            }
+            if (Optional.IsDefined(DiskIopsReadWrite))
+            {
+                writer.WritePropertyName("diskIOPSReadWrite"u8);
+                writer.WriteNumberValue(DiskIopsReadWrite.Value);
+            }
+            if (Optional.IsDefined(DiskMbpsReadWrite))
+            {
+                writer.WritePropertyName("diskMBpsReadWrite"u8);
+                writer.WriteNumberValue(DiskMbpsReadWrite.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,6 +153,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             int diskSizeInGB = default;
             ServiceFabricManagedDataDiskType diskType = default;
             string diskLetter = default;
+            ServiceFabricManagedDiskCachingType? caching = default;
+            bool? isWriteAcceleratorEnabled = default;
+            int? diskIopsReadWrite = default;
+            int? diskMbpsReadWrite = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -156,12 +180,57 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     diskLetter = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("caching"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    caching = new ServiceFabricManagedDiskCachingType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("writeAcceleratorEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isWriteAcceleratorEnabled = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("diskIOPSReadWrite"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskIopsReadWrite = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("diskMBpsReadWrite"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    diskMbpsReadWrite = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NodeTypeVmssDataDisk(lun, diskSizeInGB, diskType, diskLetter, additionalBinaryDataProperties);
+            return new NodeTypeVmssDataDisk(
+                lun,
+                diskSizeInGB,
+                diskType,
+                diskLetter,
+                caching,
+                isWriteAcceleratorEnabled,
+                diskIopsReadWrite,
+                diskMbpsReadWrite,
+                additionalBinaryDataProperties);
         }
     }
 }

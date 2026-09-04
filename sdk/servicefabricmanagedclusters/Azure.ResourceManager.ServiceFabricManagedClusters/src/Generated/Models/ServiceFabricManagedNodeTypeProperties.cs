@@ -96,8 +96,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="enableResilientEphemeralOSDisk"> Specifies whether the node type should use a resilient ephemeral OS disk when using a supported SKU size. A resilient ephemeral OS disk provides improved reliability for ephemeral OS disks by enabling full caching. </param>
         /// <param name="scaleInPolicy"> Specifies the scale in policy for the node type, which will be used when scale in happens on the cluster. If not specified, the default is Default which means the platform will decide which nodes to remove during scale in. </param>
         /// <param name="proxyAgentSettings"> Specifies the settings for the proxy agent on the node type. </param>
+        /// <param name="skuProfile"> Specifies the sku profile for the node type when vmSize is set to Mix. This allows specifying multiple VM sizes and an allocation strategy for Instance Mix scenarios. </param>
+        /// <param name="dataDiskCaching"> Specifies the caching requirements for the primary Service Fabric data disk. Possible values include: None, ReadOnly, ReadWrite. </param>
+        /// <param name="isDataDiskWriteAcceleratorEnabled"> Specifies whether write accelerator should be enabled or disabled on the primary Service Fabric data disk. </param>
+        /// <param name="dataDiskIopsReadWrite"> Specifies the Read-Write IOPS for the primary Service Fabric data disk. </param>
+        /// <param name="dataDiskMbpsReadWrite"> Specifies the bandwidth in MB per second for the primary Service Fabric data disk. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceFabricManagedNodeTypeProperties(bool isPrimary, int vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IList<NodeTypeVaultSecretGroup> vmSecrets, IList<NodeTypeVmssExtension> vmExtensions, VmManagedIdentity vmManagedIdentity, bool? isStateless, bool? hasMultiplePlacementGroups, IList<NodeTypeFrontendConfiguration> frontendConfigurations, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IList<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, SpotNodeVmEvictionPolicyType? evictionPolicy, ResourceIdentifier vmImageResourceId, ResourceIdentifier subnetId, IList<VmSetupAction> vmSetupActions, ServiceFabricManagedClusterSecurityType? securityType, NodeTypeSecurityEncryptionType? securityEncryptionType, bool? isSecureBootEnabled, bool? isNodePublicIPEnabled, bool? isNodePublicIPv6Enabled, ResourceIdentifier vmSharedGalleryImageId, ResourceIdentifier natGatewayId, IList<NodeTypeNatConfig> natConfigurations, VmImagePlan vmImagePlan, ResourceIdentifier serviceArtifactReferenceId, ResourceIdentifier dscpConfigurationId, IList<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations, string computerNamePrefix, IList<ServiceFabricManagedVmApplication> vmApplications, bool? isZoneBalanceEnabled, bool? isOutboundOnly, bool? enableResilientEphemeralOSDisk, ScaleInPolicy scaleInPolicy, ProxyAgentSettings proxyAgentSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ServiceFabricManagedNodeTypeProperties(bool isPrimary, int vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IList<NodeTypeVaultSecretGroup> vmSecrets, IList<NodeTypeVmssExtension> vmExtensions, VmManagedIdentity vmManagedIdentity, bool? isStateless, bool? hasMultiplePlacementGroups, IList<NodeTypeFrontendConfiguration> frontendConfigurations, IList<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IList<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IList<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, SpotNodeVmEvictionPolicyType? evictionPolicy, ResourceIdentifier vmImageResourceId, ResourceIdentifier subnetId, IList<VmSetupAction> vmSetupActions, ServiceFabricManagedClusterSecurityType? securityType, NodeTypeSecurityEncryptionType? securityEncryptionType, bool? isSecureBootEnabled, bool? isNodePublicIPEnabled, bool? isNodePublicIPv6Enabled, ResourceIdentifier vmSharedGalleryImageId, ResourceIdentifier natGatewayId, IList<NodeTypeNatConfig> natConfigurations, VmImagePlan vmImagePlan, ResourceIdentifier serviceArtifactReferenceId, ResourceIdentifier dscpConfigurationId, IList<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations, string computerNamePrefix, IList<ServiceFabricManagedVmApplication> vmApplications, bool? isZoneBalanceEnabled, bool? isOutboundOnly, bool? enableResilientEphemeralOSDisk, ScaleInPolicy scaleInPolicy, ProxyAgentSettings proxyAgentSettings, ServiceFabricManagedNodeTypeSkuProfile skuProfile, ServiceFabricManagedDiskCachingType? dataDiskCaching, bool? isDataDiskWriteAcceleratorEnabled, int? dataDiskIopsReadWrite, int? dataDiskMbpsReadWrite, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsPrimary = isPrimary;
             VmInstanceCount = vmInstanceCount;
@@ -155,6 +160,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             EnableResilientEphemeralOSDisk = enableResilientEphemeralOSDisk;
             ScaleInPolicy = scaleInPolicy;
             ProxyAgentSettings = proxyAgentSettings;
+            SkuProfile = skuProfile;
+            DataDiskCaching = dataDiskCaching;
+            IsDataDiskWriteAcceleratorEnabled = isDataDiskWriteAcceleratorEnabled;
+            DataDiskIopsReadWrite = dataDiskIopsReadWrite;
+            DataDiskMbpsReadWrite = dataDiskMbpsReadWrite;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -325,6 +335,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <summary> Specifies the settings for the proxy agent on the node type. </summary>
         public ProxyAgentSettings ProxyAgentSettings { get; set; }
+
+        /// <summary> Specifies the sku profile for the node type when vmSize is set to Mix. This allows specifying multiple VM sizes and an allocation strategy for Instance Mix scenarios. </summary>
+        public ServiceFabricManagedNodeTypeSkuProfile SkuProfile { get; set; }
+
+        /// <summary> Specifies the caching requirements for the primary Service Fabric data disk. Possible values include: None, ReadOnly, ReadWrite. </summary>
+        public ServiceFabricManagedDiskCachingType? DataDiskCaching { get; set; }
+
+        /// <summary> Specifies whether write accelerator should be enabled or disabled on the primary Service Fabric data disk. </summary>
+        public bool? IsDataDiskWriteAcceleratorEnabled { get; set; }
+
+        /// <summary> Specifies the Read-Write IOPS for the primary Service Fabric data disk. </summary>
+        public int? DataDiskIopsReadWrite { get; set; }
+
+        /// <summary> Specifies the bandwidth in MB per second for the primary Service Fabric data disk. </summary>
+        public int? DataDiskMbpsReadWrite { get; set; }
 
         /// <summary> The list of user identities associated with the virtual machine scale set under the node type. Each entry will be an ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </summary>
         public IList<ResourceIdentifier> VmManagedIdentityUserAssignedIdentities

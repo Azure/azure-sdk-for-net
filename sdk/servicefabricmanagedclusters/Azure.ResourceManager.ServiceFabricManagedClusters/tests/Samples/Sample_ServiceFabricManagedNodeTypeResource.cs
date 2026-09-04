@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Samples
         //     ServiceFabricManagedNodeTypeResource serviceFabricManagedNodeType = client.GetServiceFabricManagedNodeTypeResource(serviceFabricManagedNodeTypeResourceId);
 
         //     // invoke the operation
-        //     FaultSimulationContentWrapper faultSimulationContentWrapper = new FaultSimulationContentWrapper(new ZoneFaultSimulationContent
+        //     StartFaultSimulationContent faultSimulationContentWrapper = new StartFaultSimulationContent(new ZoneFaultSimulationContent
         //     {
         //         Zones = { "2" },
         //     });

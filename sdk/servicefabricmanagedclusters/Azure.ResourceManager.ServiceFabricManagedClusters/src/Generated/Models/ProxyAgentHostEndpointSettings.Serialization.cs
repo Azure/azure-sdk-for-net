@@ -9,72 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.ServiceFabricManagedClusters;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
-    /// <summary> Fault Simulation Request for Start action. </summary>
-    public partial class FaultSimulationContentWrapper : IJsonModel<FaultSimulationContentWrapper>
+    /// <summary> Specifies particular host endpoint settings. </summary>
+    public partial class ProxyAgentHostEndpointSettings : IJsonModel<ProxyAgentHostEndpointSettings>
     {
-        /// <summary> Initializes a new instance of <see cref="FaultSimulationContentWrapper"/> for deserialization. </summary>
-        internal FaultSimulationContentWrapper()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FaultSimulationContentWrapper PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ProxyAgentHostEndpointSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FaultSimulationContentWrapper>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProxyAgentHostEndpointSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeFaultSimulationContentWrapper(document.RootElement, options);
+                        return DeserializeProxyAgentHostEndpointSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FaultSimulationContentWrapper)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProxyAgentHostEndpointSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FaultSimulationContentWrapper>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProxyAgentHostEndpointSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceFabricManagedClustersContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(FaultSimulationContentWrapper)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProxyAgentHostEndpointSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<FaultSimulationContentWrapper>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ProxyAgentHostEndpointSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FaultSimulationContentWrapper IPersistableModel<FaultSimulationContentWrapper>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ProxyAgentHostEndpointSettings IPersistableModel<ProxyAgentHostEndpointSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<FaultSimulationContentWrapper>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="faultSimulationContentWrapper"> The <see cref="FaultSimulationContentWrapper"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(FaultSimulationContentWrapper faultSimulationContentWrapper)
-        {
-            if (faultSimulationContentWrapper == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(faultSimulationContentWrapper, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<ProxyAgentHostEndpointSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<FaultSimulationContentWrapper>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ProxyAgentHostEndpointSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -85,13 +69,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FaultSimulationContentWrapper>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProxyAgentHostEndpointSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FaultSimulationContentWrapper)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ProxyAgentHostEndpointSettings)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue(Parameters, options);
+            if (Optional.IsDefined(Mode))
+            {
+                writer.WritePropertyName("mode"u8);
+                writer.WriteStringValue(Mode);
+            }
+            if (Optional.IsDefined(InVMAccessControlProfileReferenceId))
+            {
+                writer.WritePropertyName("inVMAccessControlProfileReferenceId"u8);
+                writer.WriteStringValue(InVMAccessControlProfileReferenceId);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -111,36 +103,42 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        FaultSimulationContentWrapper IJsonModel<FaultSimulationContentWrapper>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ProxyAgentHostEndpointSettings IJsonModel<ProxyAgentHostEndpointSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual FaultSimulationContentWrapper JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ProxyAgentHostEndpointSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<FaultSimulationContentWrapper>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ProxyAgentHostEndpointSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FaultSimulationContentWrapper)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ProxyAgentHostEndpointSettings)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeFaultSimulationContentWrapper(document.RootElement, options);
+            return DeserializeProxyAgentHostEndpointSettings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static FaultSimulationContentWrapper DeserializeFaultSimulationContentWrapper(JsonElement element, ModelReaderWriterOptions options)
+        internal static ProxyAgentHostEndpointSettings DeserializeProxyAgentHostEndpointSettings(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            FaultSimulationContent parameters = default;
+            string mode = default;
+            string inVMAccessControlProfileReferenceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("parameters"u8))
+                if (prop.NameEquals("mode"u8))
                 {
-                    parameters = FaultSimulationContent.DeserializeFaultSimulationContent(prop.Value, options);
+                    mode = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("inVMAccessControlProfileReferenceId"u8))
+                {
+                    inVMAccessControlProfileReferenceId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -148,7 +146,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FaultSimulationContentWrapper(parameters, additionalBinaryDataProperties);
+            return new ProxyAgentHostEndpointSettings(mode, inVMAccessControlProfileReferenceId, additionalBinaryDataProperties);
         }
     }
 }
