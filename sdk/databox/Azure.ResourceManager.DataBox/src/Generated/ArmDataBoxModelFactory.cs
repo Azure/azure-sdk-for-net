@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                isCancellable is null && isDeletable is null && isShippingAddressEditable is null && isPrepareToShipEnabled is null && deliveryInfoScheduledOn is null && isCancellableWithoutFee is null && areAllDevicesLost is null ? default : new JobProperties(
+                isCancellable is null && isDeletable is null && isShippingAddressEditable is null && isPrepareToShipEnabled is null && startOn is null && deliveryInfoScheduledOn is null && isCancellableWithoutFee is null && areAllDevicesLost is null ? default : new JobProperties(
                     default,
                     isCancellable,
                     isDeletable,
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     isPrepareToShipEnabled,
                     default,
                     default,
-                    default,
+                    startOn,
                     default,
                     default,
                     default,
@@ -81,6 +81,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 default);
         }
 
+        /// <summary>
+        /// Job details.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataBoxCustomerDiskJobDetails"/>, <see cref="Models.DataBoxDiskJobDetails"/>, <see cref="Models.DataBoxHeavyJobDetails"/>, and <see cref="Models.DataBoxJobDetails"/>.
+        /// </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
@@ -134,6 +138,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 default);
         }
 
+        /// <summary> Job stages. </summary>
         /// <param name="stageName"> Name of the job stage. </param>
         /// <param name="displayName"> Display name of the job stage. </param>
         /// <param name="stageStatus"> Status of the job stage. </param>
@@ -155,6 +160,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 default);
         }
 
+        /// <summary> Job Delay Notification details. </summary>
         /// <param name="status"> Status of notification. </param>
         /// <param name="errorCode"> Delay Error code. </param>
         /// <param name="description"> Description of the delay. </param>
@@ -172,6 +178,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 default);
         }
 
+        /// <summary> Contact Details. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <param name="phoneExtension"> Phone extension number of the contact person. </param>
@@ -194,6 +201,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 default);
         }
 
+        /// <summary> Notification preference for a job stage. </summary>
         /// <param name="stageName"> Name of the stage. </param>
         /// <param name="sendNotification"> Notification is required or not. </param>
         /// <returns> A new <see cref="Models.NotificationPreference"/> instance for mocking. </returns>
@@ -202,6 +210,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new NotificationPreference(stageName, sendNotification, default);
         }
 
+        /// <summary> Shipping address where customer wishes to receive the device. </summary>
         /// <param name="streetAddress1"> Street Address line 1. </param>
         /// <param name="streetAddress2"> Street Address line 2. </param>
         /// <param name="streetAddress3"> Street Address line 3. </param>
@@ -233,6 +242,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 default);
         }
 
+        /// <summary> package shipping details. </summary>
         /// <param name="trackingUri"> Url where shipment can be tracked. </param>
         /// <param name="carrierName"> Name of the carrier. </param>
         /// <param name="trackingId"> Tracking Id of shipment. </param>
@@ -242,6 +252,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new PackageShippingDetails(trackingUri, carrierName, trackingId, default);
         }
 
+        /// <summary> Details of the data to be used for importing data to azure. </summary>
         /// <param name="accountDetails"> Account details of the data to be transferred. </param>
         /// <param name="logCollectionLevel"> Level of the logs to be collected. </param>
         /// <returns> A new <see cref="Models.DataImportDetails"/> instance for mocking. </returns>
@@ -250,6 +261,10 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataImportDetails(accountDetails, logCollectionLevel, default);
         }
 
+        /// <summary>
+        /// Account details of the data to be transferred
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ManagedDiskDetails"/> and <see cref="Models.DataBoxStorageAccountDetails"/>.
+        /// </summary>
         /// <param name="dataAccountType"> Account Type of the data to be transferred. </param>
         /// <param name="sharePassword"> Password for all the shares to be created on the device. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
         /// <returns> A new <see cref="Models.DataAccountDetails"/> instance for mocking. </returns>
@@ -258,6 +273,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new UnknownDataAccountDetails(default, sharePassword, default);
         }
 
+        /// <summary> Details of the managed disks. </summary>
         /// <param name="sharePassword"> Password for all the shares to be created on the device. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
         /// <param name="resourceGroupId"> Resource Group Id of the compute disks. </param>
         /// <param name="stagingStorageAccountId"> Resource Id of the storage account that can be used to copy the vhd for staging. </param>
@@ -267,6 +283,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new ManagedDiskDetails(default, sharePassword, default, resourceGroupId, stagingStorageAccountId);
         }
 
+        /// <summary> Details for the storage account. </summary>
         /// <param name="sharePassword"> Password for all the shares to be created on the device. Should not be passed for TransferType:ExportFromAzure jobs. If this is not passed, the service will generate password itself. This will not be returned in Get Call. Password Requirements :  Password must be minimum of 12 and maximum of 64 characters. Password must have at least one uppercase alphabet, one number and one special character. Password cannot have the following characters : IilLoO0 Password can have only alphabets, numbers and these characters : @#\-$%^!+=;:_()]+. </param>
         /// <param name="storageAccountId"> Storage Account Resource Id. </param>
         /// <returns> A new <see cref="Models.DataBoxStorageAccountDetails"/> instance for mocking. </returns>
@@ -275,6 +292,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxStorageAccountDetails(default, sharePassword, default, storageAccountId);
         }
 
+        /// <summary> Details of the data to be used for exporting data from azure. </summary>
         /// <param name="transferConfiguration"> Configuration for the data transfer. </param>
         /// <param name="logCollectionLevel"> Level of the logs to be collected. </param>
         /// <param name="accountDetails"> Account details of the data to be transferred. </param>
@@ -293,6 +311,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new TransferConfiguration(transferConfigurationType, transferFilterDetailsInclude is null ? default : new TransferConfigurationTransferFilterDetails(transferFilterDetailsInclude, default), transferAllDetailsInclude is null ? default : new TransferConfigurationTransferAllDetails(transferAllDetailsInclude, default), default);
         }
 
+        /// <summary> Details of the filtering the transfer of data. </summary>
         /// <param name="dataAccountType"> Type of the account of data. </param>
         /// <param name="blobFilterDetails"> Filter details to transfer blobs. </param>
         /// <param name="azureFileFilterDetails"> Filter details to transfer Azure files. </param>
@@ -305,6 +324,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new TransferFilterDetails(dataAccountType, blobFilterDetails, azureFileFilterDetails, (filterFileDetails ?? new ChangeTrackingList<FilterFileDetails>()).ToList(), default);
         }
 
+        /// <summary> Filter details to transfer Azure Blobs. </summary>
         /// <param name="blobPrefixList"> Prefix list of the Azure blobs to be transferred. </param>
         /// <param name="blobPathList"> List of full path of the blobs to be transferred. </param>
         /// <param name="containerList"> List of blob containers to be transferred. </param>
@@ -318,6 +338,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new BlobFilterDetails((blobPrefixList ?? new ChangeTrackingList<string>()).ToList(), (blobPathList ?? new ChangeTrackingList<string>()).ToList(), (containerList ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Filter details to transfer Azure files. </summary>
         /// <param name="filePrefixList"> Prefix list of the Azure files to be transferred. </param>
         /// <param name="filePathList"> List of full path of the files to be transferred. </param>
         /// <param name="fileShareList"> List of file shares to be transferred. </param>
@@ -331,6 +352,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new AzureFileFilterDetails((filePrefixList ?? new ChangeTrackingList<string>()).ToList(), (filePathList ?? new ChangeTrackingList<string>()).ToList(), (fileShareList ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Details of the filter files to be used for data transfer. </summary>
         /// <param name="filterFileType"> Type of the filter file. </param>
         /// <param name="filterFilePath"> Path of the file that contains the details of all items to transfer. </param>
         /// <returns> A new <see cref="Models.FilterFileDetails"/> instance for mocking. </returns>
@@ -339,6 +361,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new FilterFileDetails(filterFileType, filterFilePath, default);
         }
 
+        /// <summary> Details to transfer all data. </summary>
         /// <param name="dataAccountType"> Type of the account of data. </param>
         /// <param name="transferAllBlobs"> To indicate if all Azure blobs have to be transferred. </param>
         /// <param name="transferAllFiles"> To indicate if all Azure Files have to be transferred. </param>
@@ -348,6 +371,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new TransferAllDetails(dataAccountType, transferAllBlobs, transferAllFiles, default);
         }
 
+        /// <summary> Preferences related to the order. </summary>
         /// <param name="preferredDataCenterRegion"> Preferred data center region. </param>
         /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
         /// <param name="reverseTransportPreferences"> Optional Preferences related to the reverse shipment logistics of the sku. </param>
@@ -368,6 +392,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 default);
         }
 
+        /// <summary> Preferences related to the shipment logistics of the sku. </summary>
         /// <param name="preferredShipmentType"> Indicates Shipment Logistics type that the customer preferred. </param>
         /// <param name="isUpdated"> Read only property which indicates whether transport preferences has been updated or not after device is prepared. </param>
         /// <returns> A new <see cref="Models.TransportPreferences"/> instance for mocking. </returns>
@@ -376,6 +401,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new TransportPreferences(preferredShipmentType, isUpdated, default);
         }
 
+        /// <summary> Preferences related to the Encryption. </summary>
         /// <param name="doubleEncryption"> Defines secondary layer of software-based encryption enablement. </param>
         /// <param name="hardwareEncryption"> Defines Hardware level encryption (Only for disk). </param>
         /// <returns> A new <see cref="Models.DataBoxEncryptionPreferences"/> instance for mocking. </returns>
@@ -384,6 +410,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxEncryptionPreferences(doubleEncryption, hardwareEncryption, default);
         }
 
+        /// <summary> Reverse Shipping Address and contact details for a job. </summary>
         /// <param name="contactDetails"> Contact Info. </param>
         /// <param name="shippingAddress"> Shipping address where customer wishes to receive the device. </param>
         /// <param name="isUpdated">
@@ -396,6 +423,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new ReverseShippingDetails(contactDetails, shippingAddress, isUpdated, default);
         }
 
+        /// <summary> Contact Info. </summary>
         /// <param name="contactName"> Contact name of the person. </param>
         /// <param name="phone"> Phone number of the contact person. </param>
         /// <param name="phoneExtension"> Phone extension number of the contact person. </param>
@@ -406,6 +434,10 @@ namespace Azure.ResourceManager.DataBox.Models
             return new ContactInfo(contactName, phone, phoneExtension, mobile, default);
         }
 
+        /// <summary>
+        /// Details for log generated during copy.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataBoxAccountCopyLogDetails"/>, <see cref="Models.DataBoxCustomerDiskCopyLogDetails"/>, <see cref="Models.DataBoxDiskCopyLogDetails"/>, and <see cref="Models.DataBoxHeavyAccountCopyLogDetails"/>.
+        /// </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
         /// <returns> A new <see cref="Models.CopyLogDetails"/> instance for mocking. </returns>
         public static CopyLogDetails CopyLogDetails(string copyLogDetailsType = default)
@@ -413,6 +445,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new UnknownCopyLogDetails(default, default);
         }
 
+        /// <summary> Copy log details for a storage account of a DataBox job. </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="copyLogLink"> Link for copy logs. </param>
         /// <param name="copyVerboseLogLink"> Link for copy verbose logs. This will be set only when LogCollectionLevel is set to Verbose. </param>
@@ -422,6 +455,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxAccountCopyLogDetails(default, default, accountName, copyLogLink, copyVerboseLogLink);
         }
 
+        /// <summary> Copy Log Details for customer disk. </summary>
         /// <param name="serialNumber"> Disk Serial Number. </param>
         /// <param name="errorLogLink"> Link for copy error logs. </param>
         /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
@@ -431,6 +465,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxCustomerDiskCopyLogDetails(default, default, serialNumber, errorLogLink, verboseLogLink);
         }
 
+        /// <summary> Copy Log Details for a disk. </summary>
         /// <param name="diskSerialNumber"> Disk Serial Number. </param>
         /// <param name="errorLogLink"> Link for copy error logs. </param>
         /// <param name="verboseLogLink"> Link for copy verbose logs. </param>
@@ -440,6 +475,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxDiskCopyLogDetails(default, default, diskSerialNumber, errorLogLink, verboseLogLink);
         }
 
+        /// <summary> Copy log details for a storage account for Databox heavy. </summary>
         /// <param name="accountName"> Account name. </param>
         /// <param name="copyLogLink"> Link for copy logs. </param>
         /// <param name="copyVerboseLogLink"> Link for copy verbose logs. This will be set only when the LogCollectionLevel is set to verbose. </param>
@@ -452,6 +488,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxHeavyAccountCopyLogDetails(default, default, accountName, (copyLogLink ?? new ChangeTrackingList<string>()).ToList(), (copyVerboseLogLink ?? new ChangeTrackingList<string>()).ToList());
         }
 
+        /// <summary> Device erasure details with erasure completion status, secure erasure sas key and erasureordestructionlog sas key. </summary>
         /// <param name="deviceErasureStatus"> Holds the device erasure completion status. </param>
         /// <param name="erasureOrDestructionCertificateSasKey"> Shared access key to download cleanup or destruction certificate for device. </param>
         /// <param name="secureErasureCertificateSasKey"> Shared access key to download secure erasure certificate for the device. </param>
@@ -461,6 +498,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DeviceErasureDetails(deviceErasureStatus, erasureOrDestructionCertificateSasKey, secureErasureCertificateSasKey, default);
         }
 
+        /// <summary> Encryption key containing details about key to encrypt different keys. </summary>
         /// <param name="kekType"> Type of encryption key used for key encryption. </param>
         /// <param name="managedIdentity"> Managed identity properties used for key encryption. </param>
         /// <param name="kekUri"> Key encryption key. It is required in case of Customer managed KekType. </param>
@@ -479,6 +517,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxManagedIdentity(identityType, userAssignedResourceId is null ? default : new DataBoxUserAssignedIdentity(userAssignedResourceId, default), default);
         }
 
+        /// <summary> Last Mitigation Action Performed On Job. </summary>
         /// <param name="actionPerformedOn"> Action performed date time. </param>
         /// <param name="isPerformedByCustomer">
         /// Action performed by customer,
@@ -491,6 +530,10 @@ namespace Azure.ResourceManager.DataBox.Models
             return new LastMitigationActionOnJob(actionPerformedOn, isPerformedByCustomer, customerResolution, default);
         }
 
+        /// <summary>
+        /// Datacenter address for given storage location.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataCenterAddressInstructionResult"/> and <see cref="Models.DataCenterAddressLocationResult"/>.
+        /// </summary>
         /// <param name="datacenterAddressType"> Data center address type. </param>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
@@ -502,6 +545,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new UnknownDataCenterAddressResponse(default, (supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>()).ToList(), dataCenterAzureLocation, default);
         }
 
+        /// <summary> Datacenter instruction for given storage location. </summary>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
         /// <param name="communicationInstruction"> Data center communication instruction. </param>
@@ -513,6 +557,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataCenterAddressInstructionResult(default, (supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>()).ToList(), dataCenterAzureLocation, default, communicationInstruction);
         }
 
+        /// <summary> Datacenter address for given storage location. </summary>
         /// <param name="supportedCarriersForReturnShipment"> List of supported carriers for return shipment. </param>
         /// <param name="dataCenterAzureLocation"> Azure Location where the Data Center serves primarily. </param>
         /// <param name="contactPersonName"> Contact person name. </param>
@@ -553,6 +598,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 additionalShippingInformation);
         }
 
+        /// <summary> Customer disk job details. </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
@@ -620,6 +666,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 enableManifestBackup);
         }
 
+        /// <summary> Import disk details. </summary>
         /// <param name="manifestFile"> The relative path of the manifest file on the disk. </param>
         /// <param name="manifestHash"> The Base16-encoded MD5 hash of the manifest file on the disk. </param>
         /// <param name="bitLockerKey"> BitLocker key used to encrypt the disk. </param>
@@ -630,6 +677,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new ImportDiskDetails(manifestFile, manifestHash, bitLockerKey, backupManifestCloudPath, default);
         }
 
+        /// <summary> Export disk details. </summary>
         /// <param name="manifestFile"> The relative path of the manifest file on the disk. </param>
         /// <param name="manifestHash"> The Base16-encoded MD5 hash of the manifest file on the disk. </param>
         /// <param name="backupManifestCloudPath"> Path to backed up manifest, only returned if enableManifestBackup is true. </param>
@@ -639,6 +687,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new ExportDiskDetails(manifestFile, manifestHash, backupManifestCloudPath, default);
         }
 
+        /// <summary> DataBox CustomerDisk Copy Progress. </summary>
         /// <param name="storageAccountName"> Name of the storage account. This will be empty for data account types other than storage account. </param>
         /// <param name="transferType"> Transfer type of data. </param>
         /// <param name="dataAccountType"> Data Account Type. </param>
@@ -689,6 +738,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 copyStatus);
         }
 
+        /// <summary> Copy progress. </summary>
         /// <param name="storageAccountName"> Name of the storage account. This will be empty for data account types other than storage account. </param>
         /// <param name="transferType"> Transfer type of data. </param>
         /// <param name="dataAccountType"> Data Account Type. </param>
@@ -735,6 +785,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 default);
         }
 
+        /// <summary> package carrier info. </summary>
         /// <param name="carrierName"> Name of the carrier. </param>
         /// <param name="trackingId"> Tracking Id of shipment. </param>
         /// <returns> A new <see cref="Models.PackageCarrierInfo"/> instance for mocking. </returns>
@@ -743,6 +794,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new PackageCarrierInfo(carrierName, trackingId, default);
         }
 
+        /// <summary> Package carrier details. </summary>
         /// <param name="carrierAccountNumber"> Carrier Account Number of customer for customer disk. </param>
         /// <param name="carrierName"> Name of the carrier. </param>
         /// <param name="trackingId"> Tracking Id of shipment. </param>
@@ -752,6 +804,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new PackageCarrierDetails(carrierAccountNumber, carrierName, trackingId, default);
         }
 
+        /// <summary> DataBox Disk Job Details. </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
@@ -821,6 +874,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 passkey);
         }
 
+        /// <summary> DataBox Disk Copy Progress. </summary>
         /// <param name="serialNumber"> The serial number of the disk. </param>
         /// <param name="bytesCopied"> Bytes copied during the copy of disk. </param>
         /// <param name="percentComplete"> Indicates the percentage completed for the copy of the disk. </param>
@@ -842,6 +896,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 default);
         }
 
+        /// <summary> DataBox Disk Granular Copy Progress. </summary>
         /// <param name="storageAccountName"> Name of the storage account. This will be empty for data account types other than storage account. </param>
         /// <param name="transferType"> Transfer type of data. </param>
         /// <param name="dataAccountType"> Data Account Type. </param>
@@ -892,6 +947,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 copyStatus);
         }
 
+        /// <summary> Granular Copy progress. </summary>
         /// <param name="storageAccountName"> Name of the storage account. This will be empty for data account types other than storage account. </param>
         /// <param name="transferType"> Transfer type of data. </param>
         /// <param name="dataAccountType"> Data Account Type. </param>
@@ -938,6 +994,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 default);
         }
 
+        /// <summary> Granular Copy Log Details for customer disk. </summary>
         /// <param name="serialNumber"> Disk Serial Number. </param>
         /// <param name="accountId"> Account id. </param>
         /// <param name="errorLogLink"> Link for copy error logs. </param>
@@ -954,6 +1011,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 verboseLogLink);
         }
 
+        /// <summary>
+        /// Granular Details for log generated during copy.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataBoxDiskGranularCopyLogDetails"/>.
+        /// </summary>
         /// <param name="copyLogDetailsType"> Indicates the type of job details. </param>
         /// <returns> A new <see cref="Models.GranularCopyLogDetails"/> instance for mocking. </returns>
         public static GranularCopyLogDetails GranularCopyLogDetails(string copyLogDetailsType = default)
@@ -961,6 +1022,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new UnknownGranularCopyLogDetails(default, default);
         }
 
+        /// <summary> Databox Heavy Device Job Details. </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
@@ -1018,6 +1080,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 devicePassword);
         }
 
+        /// <summary> Databox Job Details. </summary>
         /// <param name="jobStages"> List of stages that run in the job. </param>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
@@ -1075,6 +1138,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 devicePassword);
         }
 
+        /// <summary> The Sku. </summary>
         /// <param name="name"> The sku name. </param>
         /// <param name="displayName"> The display name of the sku. </param>
         /// <param name="family"> The sku family. </param>
@@ -1096,6 +1160,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxJobPatch(details is null ? default : new UpdateJobProperties(details, default), tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
 
+        /// <summary> Job details for update. </summary>
         /// <param name="contactDetails"> Contact details for notification and shipping. </param>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
         /// <param name="reverseShippingDetails"> Reverse Shipping Address and contact details for a job. </param>
@@ -1115,6 +1180,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 default);
         }
 
+        /// <summary> Shipment pick up request details. </summary>
         /// <param name="startOn"> Minimum date after which the pick up should commence, this must be in local time of pick up area. </param>
         /// <param name="endOn"> Maximum date before which the pick up should commence, this must be in local time of pick up area. </param>
         /// <param name="shipmentLocation"> Shipment Location in the pickup place. Eg.front desk. </param>
@@ -1124,6 +1190,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new ShipmentPickUpContent(startOn, endOn, shipmentLocation, default);
         }
 
+        /// <summary> Shipment pick up response. </summary>
         /// <param name="confirmationNumber"> Confirmation number for the pick up request. </param>
         /// <param name="readyBy"> Time by which shipment should be ready for pick up, this is in local time of pick up area. </param>
         /// <returns> A new <see cref="Models.DataBoxShipmentPickUpResult"/> instance for mocking. </returns>
@@ -1132,6 +1199,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxShipmentPickUpResult(confirmationNumber, readyBy, default);
         }
 
+        /// <summary> Reason for cancellation. </summary>
         /// <param name="reason"> Reason for cancellation. </param>
         /// <returns> A new <see cref="Models.DataBoxJobCancellationReason"/> instance for mocking. </returns>
         public static DataBoxJobCancellationReason DataBoxJobCancellationReason(string reason = default)
@@ -1139,6 +1207,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxJobCancellationReason(reason, default);
         }
 
+        /// <summary> Unencrypted credentials for accessing device. </summary>
         /// <param name="jobName"> Name of the job. </param>
         /// <param name="jobSecrets"> Secrets related to this job. </param>
         /// <returns> A new <see cref="Models.UnencryptedCredentials"/> instance for mocking. </returns>
@@ -1147,6 +1216,10 @@ namespace Azure.ResourceManager.DataBox.Models
             return new UnencryptedCredentials(jobName, jobSecrets, default);
         }
 
+        /// <summary>
+        /// The base class for the secrets
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CustomerDiskJobSecrets"/>, <see cref="Models.DataBoxDiskJobSecrets"/>, <see cref="Models.DataBoxHeavyJobSecrets"/>, and <see cref="Models.DataBoxJobSecrets"/>.
+        /// </summary>
         /// <param name="jobSecretsType"> Used to indicate what type of job secrets object. </param>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
@@ -1156,6 +1229,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new UnknownJobSecrets(default, dataCenterAccessSecurityCode, error, default);
         }
 
+        /// <summary> Dc access security code. </summary>
         /// <param name="reverseDataCenterAccessCode"> Reverse Dc access security code. </param>
         /// <param name="forwardDataCenterAccessCode"> Forward Dc access security code. </param>
         /// <returns> A new <see cref="Models.DataCenterAccessSecurityCode"/> instance for mocking. </returns>
@@ -1164,6 +1238,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataCenterAccessSecurityCode(reverseDataCenterAccessCode, forwardDataCenterAccessCode, default);
         }
 
+        /// <summary> The secrets related to customer disk job. </summary>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="diskSecrets"> Contains the list of secrets object for that device. </param>
@@ -1182,6 +1257,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 carrierAccountNumber);
         }
 
+        /// <summary> Contains all the secrets of a Disk. </summary>
         /// <param name="diskSerialNumber"> Serial number of the assigned disk. </param>
         /// <param name="bitLockerKey"> Bit Locker key of the disk which can be used to unlock the disk to copy data. </param>
         /// <returns> A new <see cref="Models.DataBoxDiskSecret"/> instance for mocking. </returns>
@@ -1190,6 +1266,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxDiskSecret(diskSerialNumber, bitLockerKey, default);
         }
 
+        /// <summary> The secrets related to disk job. </summary>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="diskSecrets"> Contains the list of secrets object for that device. </param>
@@ -1210,6 +1287,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 isPasskeyUserDefined);
         }
 
+        /// <summary> The secrets related to a databox heavy job. </summary>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="cabinetPodSecrets"> Contains the list of secret objects for a databox heavy job. </param>
@@ -1221,6 +1299,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxHeavyJobSecrets(default, dataCenterAccessSecurityCode, error, default, (cabinetPodSecrets ?? new ChangeTrackingList<DataBoxHeavySecret>()).ToList());
         }
 
+        /// <summary> The secrets related to a databox heavy. </summary>
         /// <param name="deviceSerialNumber"> Serial number of the assigned device. </param>
         /// <param name="devicePassword"> Password for out of the box experience on device. </param>
         /// <param name="networkConfigurations"> Network configuration of the appliance. </param>
@@ -1241,6 +1320,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 default);
         }
 
+        /// <summary> The Network Adapter configuration of a DataBox. </summary>
         /// <param name="name"> Name of the network. </param>
         /// <param name="macAddress"> Mac Address. </param>
         /// <returns> A new <see cref="Models.ApplianceNetworkConfiguration"/> instance for mocking. </returns>
@@ -1249,6 +1329,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new ApplianceNetworkConfiguration(name, macAddress, default);
         }
 
+        /// <summary> Credential details of the account. </summary>
         /// <param name="accountName"> Name of the account. </param>
         /// <param name="dataAccountType"> Type of the account. </param>
         /// <param name="accountConnectionString"> Connection string of the account endpoint to use the account as a storage endpoint on the device. </param>
@@ -1261,6 +1342,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxAccountCredentialDetails(accountName, dataAccountType, accountConnectionString, (shareCredentialDetails ?? new ChangeTrackingList<ShareCredentialDetails>()).ToList(), default);
         }
 
+        /// <summary> Credential details of the shares in account. </summary>
         /// <param name="shareName"> Name of the share. </param>
         /// <param name="shareType"> Type of the share. </param>
         /// <param name="userName"> User name for the share. </param>
@@ -1280,6 +1362,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 default);
         }
 
+        /// <summary> The secrets related to a databox job. </summary>
         /// <param name="dataCenterAccessSecurityCode"> Dc Access Security Code for Customer Managed Shipping. </param>
         /// <param name="error"> Error while fetching the secrets. </param>
         /// <param name="podSecrets"> Contains the list of secret objects for a job. </param>
@@ -1291,6 +1374,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxJobSecrets(default, dataCenterAccessSecurityCode, error, default, (podSecrets ?? new ChangeTrackingList<DataBoxSecret>()).ToList());
         }
 
+        /// <summary> The secrets related to a DataBox. </summary>
         /// <param name="deviceSerialNumber"> Serial number of the assigned device. </param>
         /// <param name="devicePassword"> Password for out of the box experience on device. </param>
         /// <param name="networkConfigurations"> Network configuration of the appliance. </param>
@@ -1311,6 +1395,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 default);
         }
 
+        /// <summary> The request body to provide the delivery package details of job. </summary>
         /// <param name="deliverToDataCenterPackageDetails"> Delivery package details. </param>
         /// <returns> A new <see cref="Models.MarkDevicesShippedContent"/> instance for mocking. </returns>
         public static MarkDevicesShippedContent MarkDevicesShippedContent(PackageCarrierInfo deliverToDataCenterPackageDetails = default)
@@ -1318,6 +1403,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new MarkDevicesShippedContent(deliverToDataCenterPackageDetails, default);
         }
 
+        /// <summary> Request body to get the configuration for the region. </summary>
         /// <param name="scheduleAvailabilityRequest"> Request body to get the availability for scheduling orders. </param>
         /// <param name="transportAvailabilityRequest"> Request body to get the transport availability for given sku. </param>
         /// <param name="dataCenterAddressRequest"> Request body to get the datacenter address for given sku. </param>
@@ -1328,6 +1414,10 @@ namespace Azure.ResourceManager.DataBox.Models
             return new RegionConfigurationContent(scheduleAvailabilityRequest, transportAvailabilityRequest, dataCenterAddressRequest, deviceCapabilityRequest, default);
         }
 
+        /// <summary>
+        /// Request body to get the availability for scheduling orders.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataBoxScheduleAvailabilityContent"/>, <see cref="Models.DiskScheduleAvailabilityContent"/>, and <see cref="Models.HeavyScheduleAvailabilityContent"/>.
+        /// </summary>
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="skuName"> Sku Name for which the order is to be scheduled. </param>
         /// <param name="country"> Country in which storage location should be supported. </param>
@@ -1338,6 +1428,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new UnknownScheduleAvailabilityRequest(storageLocation, default, country, model, default);
         }
 
+        /// <summary> Request body to get the availability for scheduling data box orders orders. </summary>
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="country"> Country in which storage location should be supported. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
@@ -1347,6 +1438,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxScheduleAvailabilityContent(storageLocation, default, country, model, default);
         }
 
+        /// <summary> Request body to get the availability for scheduling disk orders. </summary>
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="country"> Country in which storage location should be supported. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
@@ -1363,6 +1455,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 expectedDataSizeInTerabytes);
         }
 
+        /// <summary> Request body to get the availability for scheduling heavy orders. </summary>
         /// <param name="storageLocation"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="country"> Country in which storage location should be supported. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
@@ -1372,6 +1465,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new HeavyScheduleAvailabilityContent(storageLocation, default, country, model, default);
         }
 
+        /// <summary> Request body to get the transport availability for given sku. </summary>
         /// <param name="skuName"> Type of the device. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <returns> A new <see cref="Models.TransportAvailabilityContent"/> instance for mocking. </returns>
@@ -1380,6 +1474,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new TransportAvailabilityContent(skuName, model, default);
         }
 
+        /// <summary> Request body to get the datacenter address. </summary>
         /// <param name="storageLocation"> Storage location. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
         /// <param name="skuName"> Sku Name for which the data center address requested. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
@@ -1389,6 +1484,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataCenterAddressContent(storageLocation, skuName, model, default);
         }
 
+        /// <summary> Request body to get the device capabilities for given sku. </summary>
         /// <param name="skuName"> Type of the device. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <returns> A new <see cref="Models.DeviceCapabilityContent"/> instance for mocking. </returns>
@@ -1407,6 +1503,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new RegionConfigurationResult(scheduleAvailabilityResponseAvailableDates is null ? default : new ScheduleAvailabilityResponse((scheduleAvailabilityResponseAvailableDates ?? new ChangeTrackingList<DateTimeOffset>()).ToList(), default), transportAvailabilityDetails is null ? default : new TransportAvailabilityResponse((transportAvailabilityDetails ?? new ChangeTrackingList<TransportAvailabilityDetails>()).ToList(), default), dataCenterAddressResponse, deviceCapabilityDetails is null ? default : new DeviceCapabilityResponse((deviceCapabilityDetails ?? new ChangeTrackingList<DeviceCapabilityDetails>()).ToList(), default), default);
         }
 
+        /// <summary> Transport options availability details for given region. </summary>
         /// <param name="shipmentType"> Transport Shipment Type supported for given region. </param>
         /// <returns> A new <see cref="Models.TransportAvailabilityDetails"/> instance for mocking. </returns>
         public static TransportAvailabilityDetails TransportAvailabilityDetails(TransportShipmentType? shipmentType = default)
@@ -1414,6 +1511,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new TransportAvailabilityDetails(shipmentType, default);
         }
 
+        /// <summary> Device capability details for a given sku for a given region. </summary>
         /// <param name="hardwareEncryption"> Hardware encryption support for a given sku for a given region. </param>
         /// <returns> A new <see cref="Models.DeviceCapabilityDetails"/> instance for mocking. </returns>
         public static DeviceCapabilityDetails DeviceCapabilityDetails(HardwareEncryption? hardwareEncryption = default)
@@ -1421,6 +1519,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DeviceCapabilityDetails(hardwareEncryption, default);
         }
 
+        /// <summary> The requirements to validate customer address where the device needs to be shipped. </summary>
         /// <param name="shippingAddress"> Shipping address of the customer. </param>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <param name="transportPreferences"> Preferences related to the shipment logistics of the sku. </param>
@@ -1437,6 +1536,10 @@ namespace Azure.ResourceManager.DataBox.Models
                 model);
         }
 
+        /// <summary>
+        /// Minimum fields that must be present in any type of validation request.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DataBoxValidateAddressContent"/>, <see cref="Models.CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="Models.DataTransferDetailsValidationContent"/>, <see cref="Models.PreferencesValidationContent"/>, <see cref="Models.SkuAvailabilityValidationContent"/>, and <see cref="Models.SubscriptionIsAllowedToCreateJobValidationContent"/>.
+        /// </summary>
         /// <param name="validationType"> Identifies the type of validation request. </param>
         /// <returns> A new <see cref="Models.DataBoxValidationInputContent"/> instance for mocking. </returns>
         public static DataBoxValidationInputContent DataBoxValidationInputContent(string validationType = default)
@@ -1444,6 +1547,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new UnknownValidationInputRequest(default, default);
         }
 
+        /// <summary> Request to validate create order limit for current subscription. </summary>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
         /// <returns> A new <see cref="Models.CreateOrderLimitForSubscriptionValidationContent"/> instance for mocking. </returns>
@@ -1452,6 +1556,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new CreateOrderLimitForSubscriptionValidationContent(default, default, deviceType, model);
         }
 
+        /// <summary> Request to validate export and import data details. </summary>
         /// <param name="dataExportDetails"> List of DataTransfer details to be used to export data from azure. </param>
         /// <param name="dataImportDetails"> List of DataTransfer details to be used to import data to azure. </param>
         /// <param name="deviceType"> Device type. </param>
@@ -1473,6 +1578,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 model);
         }
 
+        /// <summary> Request to validate preference of transport and data center. </summary>
         /// <param name="preference"> Preference of transport and data center. </param>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <param name="model"> The customer friendly name of the combination of version and capacity of the device. This field is necessary only at the time of ordering the newer generation device i.e. AzureDataBox120 and AzureDataBox525 as of Feb/2025. </param>
@@ -1482,6 +1588,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new PreferencesValidationContent(default, default, preference, deviceType, model);
         }
 
+        /// <summary> Request to validate sku availability. </summary>
         /// <param name="deviceType"> Device type to be used for the job. </param>
         /// <param name="transferType"> Type of the transfer. </param>
         /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>
@@ -1500,12 +1607,14 @@ namespace Azure.ResourceManager.DataBox.Models
                 model);
         }
 
+        /// <summary> Request to validate subscription permission to create jobs. </summary>
         /// <returns> A new <see cref="Models.SubscriptionIsAllowedToCreateJobValidationContent"/> instance for mocking. </returns>
         public static SubscriptionIsAllowedToCreateJobValidationContent SubscriptionIsAllowedToCreateJobValidationContent()
         {
             return new SubscriptionIsAllowedToCreateJobValidationContent(default, default);
         }
 
+        /// <summary> Output of the address validation api. </summary>
         /// <param name="properties"> The address validation properties. </param>
         /// <returns> A new <see cref="Models.AddressValidationOutput"/> instance for mocking. </returns>
         public static AddressValidationOutput AddressValidationOutput(AddressValidationResult properties = default)
@@ -1513,6 +1622,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new AddressValidationOutput(properties, default);
         }
 
+        /// <summary> The address validation output. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="validationStatus"> The address validation status. </param>
         /// <param name="alternateAddresses"> List of alternate addresses. </param>
@@ -1524,6 +1634,10 @@ namespace Azure.ResourceManager.DataBox.Models
             return new AddressValidationResult(default, error, default, validationStatus, (alternateAddresses ?? new ChangeTrackingList<DataBoxShippingAddress>()).ToList());
         }
 
+        /// <summary>
+        /// Minimum properties that should be present in each individual validation response.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AddressValidationResult"/>, <see cref="Models.CreateOrderLimitForSubscriptionValidationResult"/>, <see cref="Models.DataTransferDetailsValidationResult"/>, <see cref="Models.PreferencesValidationResult"/>, <see cref="Models.SkuAvailabilityValidationResult"/>, and <see cref="Models.SubscriptionIsAllowedToCreateJobValidationResult"/>.
+        /// </summary>
         /// <param name="validationType"> Identifies the type of validation response. </param>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <returns> A new <see cref="Models.DataBoxValidationInputResult"/> instance for mocking. </returns>
@@ -1532,6 +1646,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new UnknownValidationInputResponse(default, error, default);
         }
 
+        /// <summary> Properties of create order limit for subscription validation response. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Create order limit validation status. </param>
         /// <returns> A new <see cref="Models.CreateOrderLimitForSubscriptionValidationResult"/> instance for mocking. </returns>
@@ -1540,6 +1655,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new CreateOrderLimitForSubscriptionValidationResult(default, error, default, status);
         }
 
+        /// <summary> Properties of data transfer details validation response. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Data transfer details validation status. </param>
         /// <returns> A new <see cref="Models.DataTransferDetailsValidationResult"/> instance for mocking. </returns>
@@ -1548,6 +1664,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataTransferDetailsValidationResult(default, error, default, status);
         }
 
+        /// <summary> Properties of data center and transport preference validation response. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Validation status of requested data center and transport. </param>
         /// <returns> A new <see cref="Models.PreferencesValidationResult"/> instance for mocking. </returns>
@@ -1556,6 +1673,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new PreferencesValidationResult(default, error, default, status);
         }
 
+        /// <summary> Properties of sku availability validation response. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Sku availability validation status. </param>
         /// <returns> A new <see cref="Models.SkuAvailabilityValidationResult"/> instance for mocking. </returns>
@@ -1564,6 +1682,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new SkuAvailabilityValidationResult(default, error, default, status);
         }
 
+        /// <summary> Properties of subscription permission to create job validation response. </summary>
         /// <param name="error"> Error code and message of validation response. </param>
         /// <param name="status"> Validation status of subscription permission to create job. </param>
         /// <returns> A new <see cref="Models.SubscriptionIsAllowedToCreateJobValidationResult"/> instance for mocking. </returns>
@@ -1572,6 +1691,10 @@ namespace Azure.ResourceManager.DataBox.Models
             return new SubscriptionIsAllowedToCreateJobValidationResult(default, error, default, status);
         }
 
+        /// <summary>
+        /// Minimum request requirement of any validation category.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CreateJobValidationContent"/>.
+        /// </summary>
         /// <param name="individualRequestDetails"> List of request details contain validationType and its request as key and value respectively. </param>
         /// <returns> A new <see cref="Models.DataBoxValidationContent"/> instance for mocking. </returns>
         public static DataBoxValidationContent DataBoxValidationContent(IEnumerable<DataBoxValidationInputContent> individualRequestDetails = default)
@@ -1581,6 +1704,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new UnknownValidationRequest(default, (individualRequestDetails ?? new ChangeTrackingList<DataBoxValidationInputContent>()).ToList(), default);
         }
 
+        /// <summary> It does all pre-job creation validations. </summary>
         /// <param name="individualRequestDetails"> List of request details contain validationType and its request as key and value respectively. </param>
         /// <returns> A new <see cref="Models.CreateJobValidationContent"/> instance for mocking. </returns>
         public static CreateJobValidationContent CreateJobValidationContent(IEnumerable<DataBoxValidationInputContent> individualRequestDetails = default)
@@ -1598,6 +1722,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxValidationResult(status is null && individualResponseDetails is null ? default : new ValidationResponseProperties(status, (individualResponseDetails ?? new ChangeTrackingList<DataBoxValidationInputResult>()).ToList(), default), default);
         }
 
+        /// <summary> The filters for showing the available skus. </summary>
         /// <param name="transferType"> Type of the transfer. </param>
         /// <param name="country"> ISO country code. Country for hardware shipment. For codes check: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements. </param>
         /// <param name="location"> Location for data transfer. For locations check: https://management.azure.com/subscriptions/SUBSCRIPTIONID/locations?api-version=2018-01-01. </param>
@@ -1635,6 +1760,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 default), default);
         }
 
+        /// <summary> Map of data location to service location. </summary>
         /// <param name="dataLocation"> Location of the data. </param>
         /// <param name="serviceLocation"> Location of the service. </param>
         /// <returns> A new <see cref="Models.DataLocationToServiceLocationMap"/> instance for mocking. </returns>
@@ -1643,6 +1769,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataLocationToServiceLocationMap(dataLocation, serviceLocation, default);
         }
 
+        /// <summary> Capacity of the sku. </summary>
         /// <param name="usable"> Usable capacity in TB. </param>
         /// <param name="maximum"> Maximum capacity in TB. </param>
         /// <param name="individualSkuUsable"> Maximum capacity per device in TB. </param>
@@ -1652,6 +1779,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxSkuCapacity(usable, maximum, individualSkuUsable, default);
         }
 
+        /// <summary> Describes metadata for retrieving price info. </summary>
         /// <param name="meterId"> Meter id of the Sku. </param>
         /// <param name="meterType"> The type of the meter. </param>
         /// <param name="multiplier"> Multiplier specifies the region specific value to be multiplied with 1$ guid. Eg: Our new regions will be using 1$ shipping guid with appropriate multiplier specific to region. </param>
@@ -1661,13 +1789,13 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxSkuCost(meterId, meterType, multiplier, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="DataBox.DataBoxJobData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Job Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="transferType"> Type of the data transfer. </param>
         /// <param name="isCancellable"> Describes whether the job is cancellable or not. </param>
         /// <param name="isDeletable"> Describes whether the job is deletable or not. </param>
@@ -1677,16 +1805,12 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="isPrepareToShipEnabled"> Is Prepare To Ship Enabled on this job. </param>
         /// <param name="status"> Name of the stage which is in progress. </param>
         /// <param name="delayedStage"> Name of the stage where delay might be present. </param>
-        /// <param name="startOn"> Time at which the job was started in UTC ISO 8601 format. </param>
+        /// <param name="startOn"></param>
         /// <param name="error"> Top level error for the job. </param>
-        /// <param name="details">
-        /// Details of a job run. This field will only be sent for expand details filter.
-        ///                                     Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///                                     The available derived classes include , ,  and .
-        /// </param>
+        /// <param name="details"> Details of a job run. This field will only be sent for expand details filter. </param>
         /// <param name="cancellationReason"> Reason for cancellation. </param>
         /// <param name="deliveryType"> Delivery type of Job. </param>
-        /// <param name="deliveryInfoScheduledOn"> Delivery Info of Job. </param>
+        /// <param name="deliveryInfoScheduledOn"> Scheduled date time. </param>
         /// <param name="isCancellableWithoutFee"> Flag to indicate cancellation of scheduled job. </param>
         /// <param name="areAllDevicesLost"> Flag to indicate if all devices associated with the job are lost. </param>
         /// <param name="sku"> The sku type. </param>
@@ -1702,7 +1826,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                isCancellable is null && isDeletable is null && isShippingAddressEditable is null && reverseShippingDetailsUpdate is null && reverseTransportPreferenceUpdate is null && isPrepareToShipEnabled is null && status is null && delayedStage is null && startOn is null && error is null && details is null && cancellationReason is null && deliveryType is null && deliveryInfoScheduledOn is null && isCancellableWithoutFee is null && areAllDevicesLost is null ? default : new JobProperties(
+                isCancellable is null && isDeletable is null && isShippingAddressEditable is null && reverseShippingDetailsUpdate is null && reverseTransportPreferenceUpdate is null && isPrepareToShipEnabled is null && status is null && delayedStage is null && error is null && details is null && cancellationReason is null && deliveryType is null && deliveryInfoScheduledOn is null && isCancellableWithoutFee is null && areAllDevicesLost is null ? default : new JobProperties(
                     transferType,
                     isCancellable,
                     isDeletable,
@@ -1712,7 +1836,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     isPrepareToShipEnabled,
                     status,
                     delayedStage,
-                    startOn,
+                    default,
                     error,
                     details,
                     cancellationReason,
@@ -1726,7 +1850,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DeviceErasureDetails"/>. </summary>
+        /// <summary> Device erasure details with erasure completion status, secure erasure sas key and erasureordestructionlog sas key. </summary>
         /// <param name="deviceErasureStatus"> Holds the device erasure completion status. </param>
         /// <param name="erasureOrDestructionCertificateSasKey"> Shared access key to download cleanup or destruction certificate for device. </param>
         /// <returns> A new <see cref="Models.DeviceErasureDetails"/> instance for mocking. </returns>
@@ -1736,7 +1860,7 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DeviceErasureDetails(deviceErasureStatus, erasureOrDestructionCertificateSasKey, default, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxJobStage"/>. </summary>
+        /// <summary> Job stages. </summary>
         /// <param name="stageName"> Name of the job stage. </param>
         /// <param name="displayName"> Display name of the job stage. </param>
         /// <param name="stageStatus"> Status of the job stage. </param>
@@ -1756,7 +1880,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.DataBoxSkuCapacity"/>. </summary>
+        /// <summary> Capacity of the sku. </summary>
         /// <param name="usable"> Usable capacity in TB. </param>
         /// <param name="maximum"> Maximum capacity in TB. </param>
         /// <returns> A new <see cref="Models.DataBoxSkuCapacity"/> instance for mocking. </returns>
@@ -1766,14 +1890,10 @@ namespace Azure.ResourceManager.DataBox.Models
             return new DataBoxSkuCapacity(usable, maximum, default, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.RegionConfigurationResult"/>. </summary>
-        /// <param name="scheduleAvailabilityResponseAvailableDates"> Schedule availability for given sku in a region. </param>
-        /// <param name="transportAvailabilityDetails"> Transport options available for given sku in a region. </param>
-        /// <param name="dataCenterAddressResponse">
-        /// Datacenter address for given sku in a region.
-        ///                                     Please note  is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        ///                                     The available derived classes include  and .
-        /// </param>
+        /// <summary> Configuration response specific to a region. </summary>
+        /// <param name="scheduleAvailabilityResponseAvailableDates"> List of dates available to schedule. </param>
+        /// <param name="transportAvailabilityDetails"> List of transport availability details for given region. </param>
+        /// <param name="dataCenterAddressResponse"> Datacenter address for given sku in a region. </param>
         /// <returns> A new <see cref="Models.RegionConfigurationResult"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static RegionConfigurationResult RegionConfigurationResult(IEnumerable<DateTimeOffset> scheduleAvailabilityResponseAvailableDates, IEnumerable<TransportAvailabilityDetails> transportAvailabilityDetails, DataCenterAddressResult dataCenterAddressResponse)

@@ -189,15 +189,15 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WritePropertyName("upgradeWave"u8);
                 writer.WriteStringValue(UpgradeWave.Value.ToString());
             }
-            if (Optional.IsDefined(UpgradePauseStartOn))
+            if (Optional.IsDefined(UpgradePauseStartsOn))
             {
                 writer.WritePropertyName("upgradePauseStartTimestampUtc"u8);
-                writer.WriteStringValue(UpgradePauseStartOn.Value, "O");
+                writer.WriteStringValue(UpgradePauseStartsOn.Value, "O");
             }
-            if (Optional.IsDefined(UpgradePauseEndOn))
+            if (Optional.IsDefined(UpgradePauseEndsOn))
             {
                 writer.WritePropertyName("upgradePauseEndTimestampUtc"u8);
-                writer.WriteStringValue(UpgradePauseEndOn.Value, "O");
+                writer.WriteStringValue(UpgradePauseEndsOn.Value, "O");
             }
             if (Optional.IsDefined(IsWaveUpgradePaused))
             {
@@ -279,8 +279,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             VmssZonalUpgradeMode? vmssZonalUpgradeMode = default;
             bool? isInfrastructureServiceManagerEnabled = default;
             ClusterUpgradeCadence? upgradeWave = default;
-            DateTimeOffset? upgradePauseStartOn = default;
-            DateTimeOffset? upgradePauseEndOn = default;
+            DateTimeOffset? upgradePauseStartsOn = default;
+            DateTimeOffset? upgradePauseEndsOn = default;
             bool? isWaveUpgradePaused = default;
             IList<ClusterNotification> notifications = default;
             bool? isHttpGatewayExclusiveAuthModeEnabled = default;
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    upgradePauseStartOn = prop.Value.GetDateTimeOffset("O");
+                    upgradePauseStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("upgradePauseEndTimestampUtc"u8))
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                     {
                         continue;
                     }
-                    upgradePauseEndOn = prop.Value.GetDateTimeOffset("O");
+                    upgradePauseEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("waveUpgradePaused"u8))
@@ -544,8 +544,8 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 vmssZonalUpgradeMode,
                 isInfrastructureServiceManagerEnabled,
                 upgradeWave,
-                upgradePauseStartOn,
-                upgradePauseEndOn,
+                upgradePauseStartsOn,
+                upgradePauseEndsOn,
                 isWaveUpgradePaused,
                 notifications ?? new ChangeTrackingList<ClusterNotification>(),
                 isHttpGatewayExclusiveAuthModeEnabled,

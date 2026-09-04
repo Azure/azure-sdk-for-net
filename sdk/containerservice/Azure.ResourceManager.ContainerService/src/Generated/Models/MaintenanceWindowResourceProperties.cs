@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// Recurrence schedule for the maintenance window. One and only one of the schedule
         /// types should be specified: 'daily', 'weekly', 'absoluteMonthly', or 'relativeMonthly'.
         /// </param>
-        /// <param name="startOn">
+        /// <param name="startsOn">
         /// The date the maintenance window activates. If the current date is before this
         /// date, the maintenance window is inactive and will not be used. If not specified,
         /// the maintenance window will be active right away.
@@ -75,11 +75,11 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// '2026-12-22 22:00' to '2027-01-03 22:00' in UTC time.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceWindowResourceProperties(ContainerServiceProvisioningState? provisioningState, ContainerServiceMaintenanceSchedule schedule, DateTimeOffset? startOn, string startTime, int durationHours, string utcOffset, IList<ContainerServiceDateSpan> notAllowedDates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceWindowResourceProperties(ContainerServiceProvisioningState? provisioningState, ContainerServiceMaintenanceSchedule schedule, DateTimeOffset? startsOn, string startTime, int durationHours, string utcOffset, IList<ContainerServiceDateSpan> notAllowedDates, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Schedule = schedule;
-            StartOn = startOn;
+            StartsOn = startsOn;
             StartTime = startTime;
             DurationHours = durationHours;
             UtcOffset = utcOffset;
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// the maintenance window will be active right away.
         /// </summary>
         [WirePath("startDate")]
-        public DateTimeOffset? StartOn { get; set; }
+        public DateTimeOffset? StartsOn { get; set; }
 
         /// <summary>
         /// The start time of the maintenance window. Accepted values are from '00:00' to

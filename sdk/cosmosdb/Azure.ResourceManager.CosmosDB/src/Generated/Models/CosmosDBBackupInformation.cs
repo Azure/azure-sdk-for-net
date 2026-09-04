@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         {
             get
             {
-                return ContinuousBackupInformation is null ? default : ContinuousBackupInformation.LatestRestorableTimestamp;
+                return ContinuousBackupInformation is null ? default : ContinuousBackupInformation.LatestRestorableOn;
             }
         }
     }
