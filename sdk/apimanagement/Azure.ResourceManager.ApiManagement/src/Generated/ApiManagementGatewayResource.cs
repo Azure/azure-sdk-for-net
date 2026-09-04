@@ -55,9 +55,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string apiManagementGatewayApiVersion);
             _gatewayClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _gatewayRestClient = new Gateway(_gatewayClientDiagnostics, Pipeline, Endpoint, apiManagementGatewayApiVersion ?? "2025-09-01-preview");
+            _gatewayRestClient = new Gateway(_gatewayClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementGatewayApiVersion ?? "2025-09-01-preview");
             _gatewayApiClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _gatewayApiRestClient = new GatewayApi(_gatewayApiClientDiagnostics, Pipeline, Endpoint, apiManagementGatewayApiVersion ?? "2025-09-01-preview");
+            _gatewayApiRestClient = new GatewayApi(_gatewayApiClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, apiManagementGatewayApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

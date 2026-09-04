@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(CassandraDataCenterResource.ResourceType, out string cassandraDataCenterApiVersion);
             _cassandraDataCentersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", CassandraDataCenterResource.ResourceType.Namespace, Diagnostics);
-            _cassandraDataCentersRestClient = new CassandraDataCenters(_cassandraDataCentersClientDiagnostics, Pipeline, Endpoint, cassandraDataCenterApiVersion ?? "2026-03-15");
+            _cassandraDataCentersRestClient = new CassandraDataCenters(_cassandraDataCentersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, cassandraDataCenterApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

@@ -34,7 +34,7 @@ public class Sample_BingGroundingStreaming : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgent_BingGroundingStreaming_Async
         AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
         BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
-            searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
+            searchConfigurations: [new BingGroundingSearchOptions(projectConnectionId: bingConnectionName.Id)]
             )
         );
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)
@@ -104,7 +104,7 @@ public class Sample_BingGroundingStreaming : ProjectsOpenAITestBase
         #region Snippet:Sample_CreateAgent_BingGroundingStreaming_Sync
         AIProjectConnection bingConnectionName = projectClient.Connections.GetConnection(connectionName: connectionName);
         BingGroundingTool bingGroundingAgentTool = new(new BingGroundingSearchToolOptions(
-            searchConfigurations: [new BingGroundingSearchConfiguration(projectConnectionId: bingConnectionName.Id)]
+            searchConfigurations: [new BingGroundingSearchOptions(projectConnectionId: bingConnectionName.Id)]
             )
         );
         DeclarativeAgentDefinition agentDefinition = new(model: modelDeploymentName)

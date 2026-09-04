@@ -44,19 +44,19 @@ namespace Azure.ResourceManager.Reservations.Mocking
 
         private ClientDiagnostics ReservationClientDiagnostics => _reservationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Reservation ReservationRestClient => _reservationRestClient ??= new Reservation(ReservationClientDiagnostics, Pipeline, Endpoint, "2022-11-01");
+        private Reservation ReservationRestClient => _reservationRestClient ??= new Reservation(ReservationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-11-01");
 
         private ClientDiagnostics ReservationOrderClientDiagnostics => _reservationOrderClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReservationOrder ReservationOrderRestClient => _reservationOrderRestClient ??= new ReservationOrder(ReservationOrderClientDiagnostics, Pipeline, Endpoint, "2022-11-01");
+        private ReservationOrder ReservationOrderRestClient => _reservationOrderRestClient ??= new ReservationOrder(ReservationOrderClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-11-01");
 
         private ClientDiagnostics CalculateExchangeClientDiagnostics => _calculateExchangeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CalculateExchange CalculateExchangeRestClient => _calculateExchangeRestClient ??= new CalculateExchange(CalculateExchangeClientDiagnostics, Pipeline, Endpoint, "2022-11-01");
+        private CalculateExchange CalculateExchangeRestClient => _calculateExchangeRestClient ??= new CalculateExchange(CalculateExchangeClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-11-01");
 
         private ClientDiagnostics ExchangeClientDiagnostics => _exchangeClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Reservations.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Exchange ExchangeRestClient => _exchangeRestClient ??= new Exchange(ExchangeClientDiagnostics, Pipeline, Endpoint, "2022-11-01");
+        private Exchange ExchangeRestClient => _exchangeRestClient ??= new Exchange(ExchangeClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-11-01");
 
         /// <summary> Gets a collection of ReservationOrders in the <see cref="TenantResource"/>. </summary>
         /// <returns> An object representing collection of ReservationOrders and their operations over a ReservationOrderResource. </returns>

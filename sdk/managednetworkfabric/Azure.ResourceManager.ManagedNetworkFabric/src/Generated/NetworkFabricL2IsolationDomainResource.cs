@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         {
             TryGetApiVersion(ResourceType, out string networkFabricL2IsolationDomainApiVersion);
             _l2IsolationDomainsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ManagedNetworkFabric", ResourceType.Namespace, Diagnostics);
-            _l2IsolationDomainsRestClient = new L2IsolationDomains(_l2IsolationDomainsClientDiagnostics, Pipeline, Endpoint, networkFabricL2IsolationDomainApiVersion ?? "2025-07-15");
+            _l2IsolationDomainsRestClient = new L2IsolationDomains(_l2IsolationDomainsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkFabricL2IsolationDomainApiVersion ?? "2025-07-15");
             ValidateResourceId(id);
         }
 

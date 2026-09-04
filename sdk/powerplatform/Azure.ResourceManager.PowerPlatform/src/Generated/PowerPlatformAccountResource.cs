@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PowerPlatform
         {
             TryGetApiVersion(ResourceType, out string powerPlatformAccountApiVersion);
             _accountsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PowerPlatform", ResourceType.Namespace, Diagnostics);
-            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Endpoint, powerPlatformAccountApiVersion ?? "2020-10-30-preview");
+            _accountsRestClient = new Accounts(_accountsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, powerPlatformAccountApiVersion ?? "2020-10-30-preview");
             ValidateResourceId(id);
         }
 

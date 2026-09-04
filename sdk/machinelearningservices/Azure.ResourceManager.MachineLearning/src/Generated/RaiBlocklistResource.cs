@@ -52,9 +52,9 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(ResourceType, out string raiBlocklistApiVersion);
             _connectionRaiBlocklistClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _connectionRaiBlocklistRestClient = new ConnectionRaiBlocklist(_connectionRaiBlocklistClientDiagnostics, Pipeline, Endpoint, raiBlocklistApiVersion ?? "2026-03-15-preview");
+            _connectionRaiBlocklistRestClient = new ConnectionRaiBlocklist(_connectionRaiBlocklistClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, raiBlocklistApiVersion ?? "2026-03-15-preview");
             _connectionRaiBlocklistItemClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _connectionRaiBlocklistItemRestClient = new ConnectionRaiBlocklistItem(_connectionRaiBlocklistItemClientDiagnostics, Pipeline, Endpoint, raiBlocklistApiVersion ?? "2026-03-15-preview");
+            _connectionRaiBlocklistItemRestClient = new ConnectionRaiBlocklistItem(_connectionRaiBlocklistItemClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, raiBlocklistApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 

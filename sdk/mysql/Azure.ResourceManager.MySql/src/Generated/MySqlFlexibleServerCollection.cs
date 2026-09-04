@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         {
             TryGetApiVersion(MySqlFlexibleServerResource.ResourceType, out string mySqlFlexibleServerApiVersion);
             _serversClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MySql.FlexibleServers", MySqlFlexibleServerResource.ResourceType.Namespace, Diagnostics);
-            _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Endpoint, mySqlFlexibleServerApiVersion ?? "2024-12-30");
+            _serversRestClient = new Servers(_serversClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mySqlFlexibleServerApiVersion ?? "2024-12-30");
             ValidateResourceId(id);
         }
 

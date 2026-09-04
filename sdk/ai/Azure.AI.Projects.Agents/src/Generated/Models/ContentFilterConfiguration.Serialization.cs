@@ -77,6 +77,11 @@ namespace Azure.AI.Projects.Agents
             }
             writer.WritePropertyName("rai_policy_name"u8);
             writer.WriteStringValue(RaiPolicyName);
+            if (Optional.IsDefined(InvocationsModeration))
+            {
+                writer.WritePropertyName("invocations_moderation"u8);
+                writer.WriteObjectValue(InvocationsModeration, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -120,6 +125,7 @@ namespace Azure.AI.Projects.Agents
                 return null;
             }
             string raiPolicyName = default;
+            RaiInvocationModeration invocationsModeration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -128,12 +134,21 @@ namespace Azure.AI.Projects.Agents
                     raiPolicyName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("invocations_moderation"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    invocationsModeration = RaiInvocationModeration.DeserializeRaiInvocationModeration(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContentFilterConfiguration(raiPolicyName, additionalBinaryDataProperties);
+            return new ContentFilterConfiguration(raiPolicyName, invocationsModeration, additionalBinaryDataProperties);
         }
     }
 }

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Education
         {
             TryGetApiVersion(ResourceType, out string grantDetailsApiVersion);
             _grantsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Education", ResourceType.Namespace, Diagnostics);
-            _grantsRestClient = new Grants(_grantsClientDiagnostics, Pipeline, Endpoint, grantDetailsApiVersion ?? "2021-12-01-preview");
+            _grantsRestClient = new Grants(_grantsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, grantDetailsApiVersion ?? "2021-12-01-preview");
             ValidateResourceId(id);
         }
 

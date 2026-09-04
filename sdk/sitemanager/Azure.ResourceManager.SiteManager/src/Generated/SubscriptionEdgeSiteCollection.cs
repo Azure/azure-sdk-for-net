@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SiteManager
         {
             TryGetApiVersion(SubscriptionEdgeSiteResource.ResourceType, out string subscriptionEdgeSiteApiVersion);
             _subscriptionEdgeSiteClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SiteManager", SubscriptionEdgeSiteResource.ResourceType.Namespace, Diagnostics);
-            _subscriptionEdgeSiteRestClient = new SubscriptionEdgeSite(_subscriptionEdgeSiteClientDiagnostics, Pipeline, Endpoint, subscriptionEdgeSiteApiVersion ?? "2025-06-01");
+            _subscriptionEdgeSiteRestClient = new SubscriptionEdgeSite(_subscriptionEdgeSiteClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionEdgeSiteApiVersion ?? "2025-06-01");
             ValidateResourceId(id);
         }
 

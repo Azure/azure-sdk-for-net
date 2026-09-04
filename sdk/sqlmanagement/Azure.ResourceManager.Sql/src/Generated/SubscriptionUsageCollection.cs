@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Sql
             TryGetApiVersion(SubscriptionUsageResource.ResourceType, out string subscriptionUsageApiVersion);
             _locationName = locationName;
             _subscriptionUsagesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SubscriptionUsageResource.ResourceType.Namespace, Diagnostics);
-            _subscriptionUsagesRestClient = new SubscriptionUsages(_subscriptionUsagesClientDiagnostics, Pipeline, Endpoint, subscriptionUsageApiVersion ?? "2025-02-01-preview");
+            _subscriptionUsagesRestClient = new SubscriptionUsages(_subscriptionUsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionUsageApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(ResourceType, out string networkCloudVolumeApiVersion);
             _volumesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            _volumesRestClient = new Volumes(_volumesClientDiagnostics, Pipeline, Endpoint, networkCloudVolumeApiVersion ?? "2026-05-01-preview");
+            _volumesRestClient = new Volumes(_volumesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudVolumeApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

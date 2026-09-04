@@ -98,11 +98,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
 
         /// <summary> The timestamp when the source update happened. </summary>
         [WirePath("trigger.sourceTrigger.timestamp")]
-        public DateTimeOffset? SourceTriggerTimestamp
+        public DateTimeOffset? SourceTriggerOn
         {
             get
             {
-                return Trigger is null ? default : Trigger.SourceTriggerTimestamp;
+                return Trigger is null ? default : Trigger.SourceTriggerOn;
             }
         }
     }

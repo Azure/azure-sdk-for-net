@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Network.Models
             NetworkSubResource peerExpressRouteCircuitPeering = default;
             string addressPrefix = default;
             string authorizationKey = default;
-            IPv6CircuitConnectionConfig iPv6CircuitConnectionConfig = default;
+            IPv6CircuitConnectionConfig ipv6CircuitConnectionConfig = default;
             CircuitConnectionStatus? circuitConnectionStatus = default;
             NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    iPv6CircuitConnectionConfig = IPv6CircuitConnectionConfig.DeserializeIPv6CircuitConnectionConfig(prop.Value, options);
+                    ipv6CircuitConnectionConfig = IPv6CircuitConnectionConfig.DeserializeIPv6CircuitConnectionConfig(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("circuitConnectionStatus"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Network.Models
                 peerExpressRouteCircuitPeering,
                 addressPrefix,
                 authorizationKey,
-                iPv6CircuitConnectionConfig,
+                ipv6CircuitConnectionConfig,
                 circuitConnectionStatus,
                 provisioningState,
                 additionalBinaryDataProperties);

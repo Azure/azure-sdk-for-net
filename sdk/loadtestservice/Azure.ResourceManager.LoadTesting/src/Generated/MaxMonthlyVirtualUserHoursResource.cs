@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.LoadTesting
         {
             TryGetApiVersion(ResourceType, out string maxMonthlyVirtualUserHoursApiVersion);
             _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.LoadTesting", ResourceType.Namespace, Diagnostics);
-            _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient = new LoadTestsMaxMonthlyVirtualUserHoursLimitsResource(_loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics, Pipeline, Endpoint, maxMonthlyVirtualUserHoursApiVersion ?? "2024-12-01-preview");
+            _loadTestsMaxMonthlyVirtualUserHoursLimitsResourceRestClient = new LoadTestsMaxMonthlyVirtualUserHoursLimitsResource(_loadTestsMaxMonthlyVirtualUserHoursLimitsResourceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, maxMonthlyVirtualUserHoursApiVersion ?? "2024-12-01-preview");
             ValidateResourceId(id);
         }
 

@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sql
             _longTermRetentionServerName = longTermRetentionServerName;
             _longTermRetentionDatabaseName = longTermRetentionDatabaseName;
             _longTermRetentionBackupsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", SubscriptionLongTermRetentionBackupResource.ResourceType.Namespace, Diagnostics);
-            _longTermRetentionBackupsRestClient = new LongTermRetentionBackups(_longTermRetentionBackupsClientDiagnostics, Pipeline, Endpoint, subscriptionLongTermRetentionBackupApiVersion ?? "2025-02-01-preview");
+            _longTermRetentionBackupsRestClient = new LongTermRetentionBackups(_longTermRetentionBackupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, subscriptionLongTermRetentionBackupApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

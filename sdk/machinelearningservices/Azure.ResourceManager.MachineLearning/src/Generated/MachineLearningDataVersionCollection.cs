@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(MachineLearningDataVersionResource.ResourceType, out string machineLearningDataVersionApiVersion);
             _dataVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", MachineLearningDataVersionResource.ResourceType.Namespace, Diagnostics);
-            _dataVersionsRestClient = new DataVersions(_dataVersionsClientDiagnostics, Pipeline, Endpoint, machineLearningDataVersionApiVersion ?? "2026-03-15-preview");
+            _dataVersionsRestClient = new DataVersions(_dataVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningDataVersionApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 
@@ -297,54 +297,6 @@ namespace Azure.ResourceManager.MachineLearning
                 CancellationToken = cancellationToken
             };
             return new AsyncPageableWrapper<MachineLearningDataVersionData, MachineLearningDataVersionResource>(new DataVersionsGetAllAsyncCollectionResultOfT(
-                _dataVersionsRestClient,
-                Id.SubscriptionId,
-                Id.ResourceGroupName,
-                Id.Parent.Name,
-                Id.Name,
-                orderBy,
-                top,
-                skip,
-                tags,
-                listViewType?.ToString(),
-                context,
-                "MachineLearningDataVersionCollection.GetAll"), data => new MachineLearningDataVersionResource(Client, data));
-        }
-
-        /// <summary>
-        /// List data versions in the data container
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.MachineLearningServices/workspaces/{workspaceName}/data/{name}/versions. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> DataVersions_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-03-15-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="orderBy"> Please choose OrderBy value from ['createdtime', 'modifiedtime']. </param>
-        /// <param name="top">
-        /// Top count of results, top count cannot be greater than the page size.
-        /// If topCount &gt; page size, results with be default page size count will be returned
-        /// </param>
-        /// <param name="skip"> Continuation token for pagination. </param>
-        /// <param name="tags"> Comma-separated list of tag names (and optionally values). Example: tag1,tag2=value2. </param>
-        /// <param name="listViewType"> [ListViewType.ActiveOnly, ListViewType.ArchivedOnly, ListViewType.All]View type for including/excluding (for example) archived entities. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="MachineLearningDataVersionResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<MachineLearningDataVersionResource> GetAll(string orderBy = default, int? top = default, string skip = default, string tags = default, MachineLearningListViewType? listViewType = default, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<MachineLearningDataVersionData, MachineLearningDataVersionResource>(new DataVersionsGetAllCollectionResultOfT(
                 _dataVersionsRestClient,
                 Id.SubscriptionId,
                 Id.ResourceGroupName,

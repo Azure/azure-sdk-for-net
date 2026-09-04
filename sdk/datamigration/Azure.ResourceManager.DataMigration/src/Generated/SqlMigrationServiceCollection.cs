@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.DataMigration
         {
             TryGetApiVersion(SqlMigrationServiceResource.ResourceType, out string sqlMigrationServiceApiVersion);
             _sqlMigrationServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DataMigration", SqlMigrationServiceResource.ResourceType.Namespace, Diagnostics);
-            _sqlMigrationServicesRestClient = new SqlMigrationServices(_sqlMigrationServicesClientDiagnostics, Pipeline, Endpoint, sqlMigrationServiceApiVersion ?? "2025-09-01-preview");
+            _sqlMigrationServicesRestClient = new SqlMigrationServices(_sqlMigrationServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlMigrationServiceApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

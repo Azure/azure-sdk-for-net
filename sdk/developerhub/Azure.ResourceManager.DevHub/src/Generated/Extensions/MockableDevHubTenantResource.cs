@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DevHub.Mocking
 
         private ClientDiagnostics OperationsClientDiagnostics => _operationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.DevHub.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Endpoint, "2025-03-01-preview");
+        private Operations OperationsRestClient => _operationsRestClient ??= new Operations(OperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01-preview");
 
         /// <summary>
         /// Returns list of operations.

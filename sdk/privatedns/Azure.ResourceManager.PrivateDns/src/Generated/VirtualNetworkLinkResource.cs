@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.PrivateDns
         {
             TryGetApiVersion(ResourceType, out string virtualNetworkLinkApiVersion);
             _virtualNetworkLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PrivateDns", ResourceType.Namespace, Diagnostics);
-            _virtualNetworkLinksRestClient = new VirtualNetworkLinks(_virtualNetworkLinksClientDiagnostics, Pipeline, Endpoint, virtualNetworkLinkApiVersion ?? "2024-06-01");
+            _virtualNetworkLinksRestClient = new VirtualNetworkLinks(_virtualNetworkLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, virtualNetworkLinkApiVersion ?? "2024-06-01");
             ValidateResourceId(id);
         }
 

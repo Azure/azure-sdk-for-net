@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string staticSiteBasicAuthPropertyApiVersion);
             _staticSiteBasicAuthPropertiesARMResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _staticSiteBasicAuthPropertiesARMResourcesRestClient = new StaticSiteBasicAuthPropertiesARMResources(_staticSiteBasicAuthPropertiesARMResourcesClientDiagnostics, Pipeline, Endpoint, staticSiteBasicAuthPropertyApiVersion ?? "2026-03-15");
+            _staticSiteBasicAuthPropertiesARMResourcesRestClient = new StaticSiteBasicAuthPropertiesARMResources(_staticSiteBasicAuthPropertiesARMResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, staticSiteBasicAuthPropertyApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

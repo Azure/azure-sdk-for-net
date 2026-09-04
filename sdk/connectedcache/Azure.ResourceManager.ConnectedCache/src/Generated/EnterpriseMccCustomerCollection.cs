@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ConnectedCache
         {
             TryGetApiVersion(EnterpriseMccCustomerResource.ResourceType, out string enterpriseMccCustomerApiVersion);
             _enterpriseMccCustomersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ConnectedCache", EnterpriseMccCustomerResource.ResourceType.Namespace, Diagnostics);
-            _enterpriseMccCustomersRestClient = new EnterpriseMccCustomers(_enterpriseMccCustomersClientDiagnostics, Pipeline, Endpoint, enterpriseMccCustomerApiVersion ?? "2024-11-30-preview");
+            _enterpriseMccCustomersRestClient = new EnterpriseMccCustomers(_enterpriseMccCustomersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, enterpriseMccCustomerApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.ConnectedCache
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-30-preview. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

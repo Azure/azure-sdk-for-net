@@ -77,15 +77,15 @@ public class BasicEventGridTests
 
             resource storage 'Microsoft.Storage/storageAccounts@2024-01-01' = {
               name: take('storage${uniqueString(resourceGroup().id)}', 24)
-              kind: 'StorageV2'
               location: location
-              sku: {
-                name: 'Standard_LRS'
-              }
+              kind: 'StorageV2'
               properties: {
                 accessTier: 'Hot'
                 allowBlobPublicAccess: false
                 supportsHttpsTrafficOnly: true
+              }
+              sku: {
+                name: 'Standard_LRS'
               }
             }
 
@@ -103,6 +103,7 @@ public class BasicEventGridTests
 
             resource subscription 'Microsoft.EventGrid/systemTopics/eventSubscriptions@2022-06-15' = {
               name: take('subscription${uniqueString(resourceGroup().id)}', 24)
+              parent: topic
               properties: {
                 destination: {
                   endpointType: 'WebHook'
@@ -117,7 +118,6 @@ public class BasicEventGridTests
                   ]
                 }
               }
-              parent: topic
             }
             """);
     }

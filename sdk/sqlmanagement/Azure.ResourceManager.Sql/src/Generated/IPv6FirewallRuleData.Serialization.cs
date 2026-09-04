@@ -58,14 +58,14 @@ namespace Azure.ResourceManager.Sql
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<IPv6FirewallRuleData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="iPv6FirewallRuleData"> The <see cref="IPv6FirewallRuleData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(IPv6FirewallRuleData iPv6FirewallRuleData)
+        /// <param name="ipv6FirewallRuleData"> The <see cref="IPv6FirewallRuleData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(IPv6FirewallRuleData ipv6FirewallRuleData)
         {
-            if (iPv6FirewallRuleData == null)
+            if (ipv6FirewallRuleData == null)
             {
                 return null;
             }
-            return RequestContent.Create(iPv6FirewallRuleData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(ipv6FirewallRuleData, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="IPv6FirewallRuleData"/> from. </param>

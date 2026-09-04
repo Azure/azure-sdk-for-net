@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.TrafficManager
         {
             TryGetApiVersion(ResourceType, out string trafficManagerHeatMapApiVersion);
             _heatMapClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.TrafficManager", ResourceType.Namespace, Diagnostics);
-            _heatMapRestClient = new HeatMap(_heatMapClientDiagnostics, Pipeline, Endpoint, trafficManagerHeatMapApiVersion ?? "2024-04-01-preview");
+            _heatMapRestClient = new HeatMap(_heatMapClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, trafficManagerHeatMapApiVersion ?? "2024-04-01-preview");
             ValidateResourceId(id);
         }
 

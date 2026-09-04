@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The principal of the request reviewer. Will only be set if request is approved. </summary>
-    public partial class BillingRequestPropertiesReviewedBy : BillingPrincipal
+    internal partial class BillingRequestPropertiesReviewedBy : BillingPrincipal
     {
         /// <summary> Initializes a new instance of <see cref="BillingRequestPropertiesReviewedBy"/>. </summary>
         public BillingRequestPropertiesReviewedBy()

@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.ResilienceManagement
         {
             TryGetApiVersion(GoalAssignmentResource.ResourceType, out string goalAssignmentApiVersion);
             _goalAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ResilienceManagement", GoalAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _goalAssignmentsRestClient = new GoalAssignments(_goalAssignmentsClientDiagnostics, Pipeline, Endpoint, goalAssignmentApiVersion ?? "2026-04-01-preview");
+            _goalAssignmentsRestClient = new GoalAssignments(_goalAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, goalAssignmentApiVersion ?? "2026-04-01-preview");
             ValidateResourceId(id);
         }
 

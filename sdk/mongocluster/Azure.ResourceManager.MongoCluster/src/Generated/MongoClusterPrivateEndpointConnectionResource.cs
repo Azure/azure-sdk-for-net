@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MongoCluster
         {
             TryGetApiVersion(ResourceType, out string mongoClusterPrivateEndpointConnectionResourceApiVersion);
             _privateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MongoCluster", ResourceType.Namespace, Diagnostics);
-            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Endpoint, mongoClusterPrivateEndpointConnectionResourceApiVersion ?? "2026-06-01");
+            _privateEndpointConnectionsRestClient = new PrivateEndpointConnections(_privateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, mongoClusterPrivateEndpointConnectionResourceApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 

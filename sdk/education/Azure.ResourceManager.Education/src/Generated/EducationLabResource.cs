@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Education
         {
             TryGetApiVersion(ResourceType, out string educationLabApiVersion);
             _labsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Education", ResourceType.Namespace, Diagnostics);
-            _labsRestClient = new Labs(_labsClientDiagnostics, Pipeline, Endpoint, educationLabApiVersion ?? "2021-12-01-preview");
+            _labsRestClient = new Labs(_labsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, educationLabApiVersion ?? "2021-12-01-preview");
             ValidateResourceId(id);
         }
 

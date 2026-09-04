@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.ApiManagement
         {
             TryGetApiVersion(ResourceType, out string authorizationContractApiVersion);
             _authorizationClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _authorizationRestClient = new Authorization(_authorizationClientDiagnostics, Pipeline, Endpoint, authorizationContractApiVersion ?? "2025-09-01-preview");
+            _authorizationRestClient = new Authorization(_authorizationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, authorizationContractApiVersion ?? "2025-09-01-preview");
             _authorizationLoginLinksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApiManagement", ResourceType.Namespace, Diagnostics);
-            _authorizationLoginLinksRestClient = new AuthorizationLoginLinks(_authorizationLoginLinksClientDiagnostics, Pipeline, Endpoint, authorizationContractApiVersion ?? "2025-09-01-preview");
+            _authorizationLoginLinksRestClient = new AuthorizationLoginLinks(_authorizationLoginLinksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, authorizationContractApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

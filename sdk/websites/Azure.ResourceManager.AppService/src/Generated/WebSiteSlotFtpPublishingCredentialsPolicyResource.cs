@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(ResourceType, out string webSiteSlotFtpPublishingCredentialsPolicyApiVersion);
             _csmPublishingCredentialsPoliciesEntityFtpAllowedSlotClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", ResourceType.Namespace, Diagnostics);
-            _csmPublishingCredentialsPoliciesEntityFtpAllowedSlotRestClient = new CsmPublishingCredentialsPoliciesEntityFtpAllowedSlot(_csmPublishingCredentialsPoliciesEntityFtpAllowedSlotClientDiagnostics, Pipeline, Endpoint, webSiteSlotFtpPublishingCredentialsPolicyApiVersion ?? "2026-03-15");
+            _csmPublishingCredentialsPoliciesEntityFtpAllowedSlotRestClient = new CsmPublishingCredentialsPoliciesEntityFtpAllowedSlot(_csmPublishingCredentialsPoliciesEntityFtpAllowedSlotClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotFtpPublishingCredentialsPolicyApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

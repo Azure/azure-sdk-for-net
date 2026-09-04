@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Billing
         {
             TryGetApiVersion(ResourceType, out string billingAssociatedTenantApiVersion);
             _associatedTenantsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Billing", ResourceType.Namespace, Diagnostics);
-            _associatedTenantsRestClient = new AssociatedTenants(_associatedTenantsClientDiagnostics, Pipeline, Endpoint, billingAssociatedTenantApiVersion ?? "2024-04-01");
+            _associatedTenantsRestClient = new AssociatedTenants(_associatedTenantsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, billingAssociatedTenantApiVersion ?? "2024-04-01");
             ValidateResourceId(id);
         }
 

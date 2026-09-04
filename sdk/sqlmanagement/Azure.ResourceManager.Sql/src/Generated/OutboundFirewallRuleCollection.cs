@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(OutboundFirewallRuleResource.ResourceType, out string outboundFirewallRuleApiVersion);
             _outboundFirewallRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", OutboundFirewallRuleResource.ResourceType.Namespace, Diagnostics);
-            _outboundFirewallRulesRestClient = new OutboundFirewallRules(_outboundFirewallRulesClientDiagnostics, Pipeline, Endpoint, outboundFirewallRuleApiVersion ?? "2025-02-01-preview");
+            _outboundFirewallRulesRestClient = new OutboundFirewallRules(_outboundFirewallRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, outboundFirewallRuleApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

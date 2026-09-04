@@ -23,19 +23,19 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="CognitiveServicesComputeConnectivityEndpoints"/>. </summary>
-        /// <param name="publicIpAddress"> The public IP address of the compute instance. </param>
+        /// <param name="publicIPAddress"> The public IP address of the compute instance. </param>
         /// <param name="sshPort"> The SSH port for the compute instance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CognitiveServicesComputeConnectivityEndpoints(string publicIpAddress, int? sshPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesComputeConnectivityEndpoints(string publicIPAddress, int? sshPort, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PublicIpAddress = publicIpAddress;
+            PublicIPAddress = publicIPAddress;
             SshPort = sshPort;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The public IP address of the compute instance. </summary>
         [WirePath("publicIpAddress")]
-        public string PublicIpAddress { get; }
+        public string PublicIPAddress { get; }
 
         /// <summary> The SSH port for the compute instance. </summary>
         [WirePath("sshPort")]

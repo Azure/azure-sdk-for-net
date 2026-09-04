@@ -35,6 +35,11 @@ namespace Azure.AI.Agents.Persistent
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="VectorStoreChunkingStrategyResponse"/>. </summary>
+        protected VectorStoreChunkingStrategyResponse() : this(default)
+        {
+        }
+
         /// <summary> The object type. </summary>
         internal VectorStoreChunkingStrategyResponseType Type { get; set; }
     }

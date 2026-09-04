@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.NetworkCloud
         {
             TryGetApiVersion(ResourceType, out string networkCloudBmcKeySetApiVersion);
             _bmcKeySetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.NetworkCloud", ResourceType.Namespace, Diagnostics);
-            _bmcKeySetsRestClient = new BmcKeySets(_bmcKeySetsClientDiagnostics, Pipeline, Endpoint, networkCloudBmcKeySetApiVersion ?? "2026-05-01-preview");
+            _bmcKeySetsRestClient = new BmcKeySets(_bmcKeySetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkCloudBmcKeySetApiVersion ?? "2026-05-01-preview");
             ValidateResourceId(id);
         }
 

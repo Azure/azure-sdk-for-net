@@ -50,27 +50,27 @@ namespace Azure.ResourceManager.ApiManagement.Mocking
 
         private ClientDiagnostics ApiGatewayClientDiagnostics => _apiGatewayClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApiGateway ApiGatewayRestClient => _apiGatewayRestClient ??= new ApiGateway(ApiGatewayClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private ApiGateway ApiGatewayRestClient => _apiGatewayRestClient ??= new ApiGateway(ApiGatewayClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics ApiManagementServiceClientDiagnostics => _apiManagementServiceClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApiManagementService ApiManagementServiceRestClient => _apiManagementServiceRestClient ??= new ApiManagementService(ApiManagementServiceClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private ApiManagementService ApiManagementServiceRestClient => _apiManagementServiceRestClient ??= new ApiManagementService(ApiManagementServiceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics DeletedServicesClientDiagnostics => _deletedServicesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private DeletedServices DeletedServicesRestClient => _deletedServicesRestClient ??= new DeletedServices(DeletedServicesClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private DeletedServices DeletedServicesRestClient => _deletedServicesRestClient ??= new DeletedServices(DeletedServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics ApiManagementSkusClientDiagnostics => _apiManagementSkusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ApiManagementSkus ApiManagementSkusRestClient => _apiManagementSkusRestClient ??= new ApiManagementSkus(ApiManagementSkusClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private ApiManagementSkus ApiManagementSkusRestClient => _apiManagementSkusRestClient ??= new ApiManagementSkus(ApiManagementSkusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics OperationStatusClientDiagnostics => _operationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OperationStatus OperationStatusRestClient => _operationStatusRestClient ??= new OperationStatus(OperationStatusClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private OperationStatus OperationStatusRestClient => _operationStatusRestClient ??= new OperationStatus(OperationStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         private ClientDiagnostics OperationsResultsClientDiagnostics => _operationsResultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.ApiManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private OperationsResults OperationsResultsRestClient => _operationsResultsRestClient ??= new OperationsResults(OperationsResultsClientDiagnostics, Pipeline, Endpoint, "2025-09-01-preview");
+        private OperationsResults OperationsResultsRestClient => _operationsResultsRestClient ??= new OperationsResults(OperationsResultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01-preview");
 
         /// <summary> Gets a collection of ApiManagementDeletedServices in the <see cref="SubscriptionResource"/>. </summary>
         /// <returns> An object representing collection of ApiManagementDeletedServices and their operations over a ApiManagementDeletedServiceResource. </returns>

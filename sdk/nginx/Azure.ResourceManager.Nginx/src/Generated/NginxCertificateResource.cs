@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Nginx
         {
             TryGetApiVersion(ResourceType, out string nginxCertificateApiVersion);
             _nginxCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Nginx", ResourceType.Namespace, Diagnostics);
-            _nginxCertificatesRestClient = new NginxCertificates(_nginxCertificatesClientDiagnostics, Pipeline, Endpoint, nginxCertificateApiVersion ?? "2025-11-01");
+            _nginxCertificatesRestClient = new NginxCertificates(_nginxCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, nginxCertificateApiVersion ?? "2025-11-01");
             ValidateResourceId(id);
         }
 

@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(NotebookWorkspaceResource.ResourceType, out string notebookWorkspaceApiVersion);
             _notebookWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", NotebookWorkspaceResource.ResourceType.Namespace, Diagnostics);
-            _notebookWorkspacesRestClient = new NotebookWorkspaces(_notebookWorkspacesClientDiagnostics, Pipeline, Endpoint, notebookWorkspaceApiVersion ?? "2026-03-15");
+            _notebookWorkspacesRestClient = new NotebookWorkspaces(_notebookWorkspacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, notebookWorkspaceApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

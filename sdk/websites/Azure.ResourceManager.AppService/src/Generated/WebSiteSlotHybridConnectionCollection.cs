@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppService
         {
             TryGetApiVersion(WebSiteSlotHybridConnectionResource.ResourceType, out string webSiteSlotHybridConnectionApiVersion);
             _relayServiceConnectionEntityOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppService", WebSiteSlotHybridConnectionResource.ResourceType.Namespace, Diagnostics);
-            _relayServiceConnectionEntityOperationGroupRestClient = new RelayServiceConnectionEntityOperationGroup(_relayServiceConnectionEntityOperationGroupClientDiagnostics, Pipeline, Endpoint, webSiteSlotHybridConnectionApiVersion ?? "2026-03-15");
+            _relayServiceConnectionEntityOperationGroupRestClient = new RelayServiceConnectionEntityOperationGroup(_relayServiceConnectionEntityOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, webSiteSlotHybridConnectionApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

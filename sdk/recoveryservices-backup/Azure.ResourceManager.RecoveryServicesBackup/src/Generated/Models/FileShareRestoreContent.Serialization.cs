@@ -111,6 +111,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WritePropertyName("targetDetails"u8);
                 writer.WriteObjectValue(TargetDetails, options);
             }
+            if (Optional.IsDefined(IdentityInfo))
+            {
+                writer.WritePropertyName("identityInfo"u8);
+                writer.WriteObjectValue(IdentityInfo, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -147,6 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             FileShareRestoreType? restoreRequestType = default;
             IList<RestoreFileSpecs> restoreFileSpecs = default;
             TargetAfsRestoreInfo targetDetails = default;
+            BackupIdentityInfo identityInfo = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("objectType"u8))
@@ -234,6 +240,15 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                     targetDetails = TargetAfsRestoreInfo.DeserializeTargetAfsRestoreInfo(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("identityInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identityInfo = BackupIdentityInfo.DeserializeBackupIdentityInfo(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -248,7 +263,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 copyOptions,
                 restoreRequestType,
                 restoreFileSpecs ?? new ChangeTrackingList<RestoreFileSpecs>(),
-                targetDetails);
+                targetDetails,
+                identityInfo);
         }
     }
 }

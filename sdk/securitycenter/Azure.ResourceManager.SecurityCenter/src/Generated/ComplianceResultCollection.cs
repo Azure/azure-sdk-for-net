@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.SecurityCenter
         {
             TryGetApiVersion(ComplianceResultResource.ResourceType, out string complianceResultApiVersion);
             _complianceResultsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SecurityCenter", ComplianceResultResource.ResourceType.Namespace, Diagnostics);
-            _complianceResultsRestClient = new ComplianceResults(_complianceResultsClientDiagnostics, Pipeline, Endpoint, complianceResultApiVersion ?? "2017-08-01");
+            _complianceResultsRestClient = new ComplianceResults(_complianceResultsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, complianceResultApiVersion ?? "2017-08-01");
         }
 
         /// <summary>

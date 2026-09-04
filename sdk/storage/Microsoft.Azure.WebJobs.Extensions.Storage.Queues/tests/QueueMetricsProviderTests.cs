@@ -103,22 +103,73 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Queues.Tests
         }
 
         [Test]
-        public async Task GetMetrics_PeekFailure_PreservesApproximateMessageCount()
+        public async Task GetMetrics_NoVisibleMessages_ReturnsZeroQueueLength()
         {
-            // Simulate: GetProperties returns 5 messages, but PeekMessages returns
-            // an empty array (e.g. MessageDecodingFailed handler silently filtered
-            // out un-decodable messages due to encoding mismatch).
-            // The queue length should be preserved as 5, not reset to 0.
+            // GetProperties reports 5 messages but nothing can be peeked. Because the metrics client
+            // reads raw, decoding cannot fail, so this means the messages are not visible: scheduled
+            // with a visibility delay, in-flight on another worker, or a stale count after a drain.
+            // None are dequeueable, so scaling out for them would not reduce the backlog.
             var queueProperties = QueuesModelFactory.QueueProperties(metadata: null, approximateMessagesCount: 5);
 
             _mockQueue.Setup(p => p.GetPropertiesAsync(It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(Response.FromValue(queueProperties, Mock.Of<Response>())));
 
-            // PeekMessages returns empty array (handler swallowed the decode failure)
             _mockQueue.Setup(p => p.PeekMessagesAsync(
                 It.IsAny<int?>(),
                 It.IsAny<CancellationToken>()))
                 .Returns(Task.FromResult(Response.FromValue(Array.Empty<PeekedMessage>(), Mock.Of<Response>())));
+
+            var metrics = await _metricsProvider.GetMetricsAsync();
+
+            Assert.AreEqual(0, metrics.QueueLength);
+            Assert.AreEqual(TimeSpan.Zero, metrics.QueueTime);
+        }
+
+        [Test]
+        public async Task GetMetrics_VisibleMessage_ReturnsApproximateMessageCount()
+        {
+            // A message is visible, so the full ApproximateMessagesCount represents dequeueable work.
+            // Undecodable messages land here too: the raw client returns them, and scaling out lets the
+            // listener receive them and move them to the poison queue.
+            var queueProperties = QueuesModelFactory.QueueProperties(metadata: null, approximateMessagesCount: 5);
+            var peeked = QueuesModelFactory.PeekedMessage(
+                messageId: "1",
+                messageText: "<<<not-base64>>>",
+                dequeueCount: 0,
+                insertedOn: DateTimeOffset.UtcNow.AddMinutes(-2));
+
+            _mockQueue.Setup(p => p.GetPropertiesAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(queueProperties, Mock.Of<Response>())));
+
+            _mockQueue.Setup(p => p.PeekMessagesAsync(
+                It.IsAny<int?>(),
+                It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(new[] { peeked }, Mock.Of<Response>())));
+
+            var metrics = await _metricsProvider.GetMetricsAsync();
+
+            Assert.AreEqual(5, metrics.QueueLength);
+            Assert.Greater(metrics.QueueTime, TimeSpan.Zero);
+        }
+
+        [Test]
+        public async Task GetMetrics_VisibleMessageWithoutInsertedOn_ReturnsApproximateMessageCount()
+        {
+            // A message without a timestamp is still dequeueable work, so only QueueTime is unknown.
+            var queueProperties = QueuesModelFactory.QueueProperties(metadata: null, approximateMessagesCount: 5);
+            var peeked = QueuesModelFactory.PeekedMessage(
+                messageId: "1",
+                messageText: "message",
+                dequeueCount: 0,
+                insertedOn: null);
+
+            _mockQueue.Setup(p => p.GetPropertiesAsync(It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(queueProperties, Mock.Of<Response>())));
+
+            _mockQueue.Setup(p => p.PeekMessagesAsync(
+                It.IsAny<int?>(),
+                It.IsAny<CancellationToken>()))
+                .Returns(Task.FromResult(Response.FromValue(new[] { peeked }, Mock.Of<Response>())));
 
             var metrics = await _metricsProvider.GetMetricsAsync();
 

@@ -27,24 +27,19 @@ namespace Azure.AI.Projects.Agents
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="projectConnectionId"> The ID of the WebIQ project connection. </param>
-        /// <param name="serverLabel"> The label of the WebIQ MCP server to connect to. </param>
-        /// <param name="serverUri"> The URL of the WebIQ MCP server. If not provided, the URL from the project connection will be used. </param>
-        /// <param name="requireApprovalInternal"> Whether the agent requires approval before executing actions. Default is always. </param>
-        internal WebIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectConnectionId, string serverLabel, Uri serverUri, BinaryData requireApprovalInternal) : base(@type, additionalBinaryDataProperties)
+        /// <param name="serverLabel"> The label of the WebIQ MCP server to connect to. When omitted, the service defaults to connection name extracted from project_connection_id. </param>
+        /// <param name="requireApprovalInternal"> Whether the agent requires approval before executing actions. When omitted, the service defaults to "always". </param>
+        internal WebIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectConnectionId, string serverLabel, BinaryData requireApprovalInternal) : base(@type, additionalBinaryDataProperties)
         {
             ProjectConnectionId = projectConnectionId;
             ServerLabel = serverLabel;
-            ServerUri = serverUri;
             RequireApprovalInternal = requireApprovalInternal;
         }
 
         /// <summary> The ID of the WebIQ project connection. </summary>
         public string ProjectConnectionId { get; set; }
 
-        /// <summary> The label of the WebIQ MCP server to connect to. </summary>
+        /// <summary> The label of the WebIQ MCP server to connect to. When omitted, the service defaults to connection name extracted from project_connection_id. </summary>
         public string ServerLabel { get; set; }
-
-        /// <summary> The URL of the WebIQ MCP server. If not provided, the URL from the project connection will be used. </summary>
-        public Uri ServerUri { get; set; }
     }
 }

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB
         {
             TryGetApiVersion(ResourceType, out string gremlinGraphThroughputSettingApiVersion);
             _gremlinResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            _gremlinResourcesRestClient = new GremlinResources(_gremlinResourcesClientDiagnostics, Pipeline, Endpoint, gremlinGraphThroughputSettingApiVersion ?? "2026-03-15");
+            _gremlinResourcesRestClient = new GremlinResources(_gremlinResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, gremlinGraphThroughputSettingApiVersion ?? "2026-03-15");
             ValidateResourceId(id);
         }
 

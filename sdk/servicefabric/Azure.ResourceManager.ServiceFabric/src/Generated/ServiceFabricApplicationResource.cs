@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceFabric
         {
             TryGetApiVersion(ResourceType, out string serviceFabricApplicationApiVersion);
             _applicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ServiceFabric", ResourceType.Namespace, Diagnostics);
-            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Endpoint, serviceFabricApplicationApiVersion ?? "2026-03-01-preview");
+            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceFabricApplicationApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

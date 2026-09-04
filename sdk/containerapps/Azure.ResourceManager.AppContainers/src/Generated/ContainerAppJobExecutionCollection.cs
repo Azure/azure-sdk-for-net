@@ -42,9 +42,9 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ContainerAppJobExecutionResource.ResourceType, out string containerAppJobExecutionApiVersion);
             _containerAppJobsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobExecutionResource.ResourceType.Namespace, Diagnostics);
-            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Endpoint, containerAppJobExecutionApiVersion ?? "2025-10-02-preview");
+            _containerAppJobsRestClient = new ContainerAppJobs(_containerAppJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobExecutionApiVersion ?? "2025-10-02-preview");
             _jobsExecutionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppJobExecutionResource.ResourceType.Namespace, Diagnostics);
-            _jobsExecutionsRestClient = new JobsExecutions(_jobsExecutionsClientDiagnostics, Pipeline, Endpoint, containerAppJobExecutionApiVersion ?? "2025-10-02-preview");
+            _jobsExecutionsRestClient = new JobsExecutions(_jobsExecutionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppJobExecutionApiVersion ?? "2025-10-02-preview");
             ValidateResourceId(id);
         }
 

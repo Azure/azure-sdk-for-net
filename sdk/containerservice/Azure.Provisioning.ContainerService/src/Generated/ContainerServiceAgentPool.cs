@@ -521,12 +521,12 @@ namespace Azure.Provisioning.ContainerService
             }
         }
 
-        /// <summary> Gets or sets the IsNodePublicIpEnabled. </summary>
-        public BicepValue<bool> IsNodePublicIpEnabled
+        /// <summary> Gets or sets the IsNodePublicIPEnabled. </summary>
+        public BicepValue<bool> IsNodePublicIPEnabled
         {
             get
             {
-                return Properties is null ? default : Properties.IsNodePublicIpEnabled;
+                return Properties is null ? default : Properties.IsNodePublicIPEnabled;
             }
             set
             {
@@ -534,7 +534,7 @@ namespace Azure.Provisioning.ContainerService
                 {
                     Properties = new ManagedClusterAgentPoolProfileProperties();
                 }
-                Properties.IsNodePublicIpEnabled = value;
+                Properties.IsNodePublicIPEnabled = value;
             }
         }
 
@@ -1001,7 +1001,7 @@ namespace Azure.Provisioning.ContainerService
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ManagedClusterAgentPoolProfileProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ContainerServiceManagedCluster>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ContainerServiceManagedCluster>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

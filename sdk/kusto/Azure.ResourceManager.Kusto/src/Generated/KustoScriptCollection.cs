@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Kusto
         {
             TryGetApiVersion(KustoScriptResource.ResourceType, out string kustoScriptApiVersion);
             _scriptsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Kusto", KustoScriptResource.ResourceType.Namespace, Diagnostics);
-            _scriptsRestClient = new Scripts(_scriptsClientDiagnostics, Pipeline, Endpoint, kustoScriptApiVersion ?? "2025-02-14");
+            _scriptsRestClient = new Scripts(_scriptsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kustoScriptApiVersion ?? "2025-02-14");
             ValidateResourceId(id);
         }
 

@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.HDInsight
         {
             TryGetApiVersion(ResourceType, out string hdInsightApplicationApiVersion);
             _applicationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HDInsight", ResourceType.Namespace, Diagnostics);
-            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Endpoint, hdInsightApplicationApiVersion ?? "2025-01-15-preview");
+            _applicationsRestClient = new Applications(_applicationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hdInsightApplicationApiVersion ?? "2025-01-15-preview");
             ValidateResourceId(id);
         }
 

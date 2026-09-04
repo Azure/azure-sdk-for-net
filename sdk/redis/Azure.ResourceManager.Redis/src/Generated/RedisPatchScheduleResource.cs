@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Redis
         {
             TryGetApiVersion(ResourceType, out string redisPatchScheduleApiVersion);
             _redisPatchSchedulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Redis", ResourceType.Namespace, Diagnostics);
-            _redisPatchSchedulesRestClient = new RedisPatchSchedules(_redisPatchSchedulesClientDiagnostics, Pipeline, Endpoint, redisPatchScheduleApiVersion ?? "2025-08-01-preview");
+            _redisPatchSchedulesRestClient = new RedisPatchSchedules(_redisPatchSchedulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, redisPatchScheduleApiVersion ?? "2025-08-01-preview");
             ValidateResourceId(id);
         }
 
@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.Redis
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="name"> The name. </param>
-        /// <param name="default"> The default. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName @default)
+        /// <param name="defaultName"> The default. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name, RedisPatchScheduleDefaultName defaultName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/patchSchedules/{@default}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Cache/redis/{name}/patchSchedules/{defaultName}";
             return new ResourceIdentifier(resourceId);
         }
 

@@ -123,14 +123,16 @@ namespace OpenAI
             {
                 switch (discriminator.GetString())
                 {
-                    case "allowed_tools":
-                        return ToolChoiceAllowed.DeserializeToolChoiceAllowed(element, options);
                     case "function":
                         return ToolChoiceFunction.DeserializeToolChoiceFunction(element, options);
                     case "mcp":
                         return ToolChoiceMCP.DeserializeToolChoiceMCP(element, options);
+                    case "allowed_tools":
+                        return ToolChoiceAllowed.DeserializeToolChoiceAllowed(element, options);
                     case "custom":
                         return ToolChoiceCustom.DeserializeToolChoiceCustom(element, options);
+                    case "programmatic_tool_calling":
+                        return SpecificProgrammaticToolCallingParam.DeserializeSpecificProgrammaticToolCallingParam(element, options);
                     case "apply_patch":
                         return SpecificApplyPatchParam.DeserializeSpecificApplyPatchParam(element, options);
                     case "shell":

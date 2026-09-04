@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         {
             TryGetApiVersion(DedicatedCapacityResource.ResourceType, out string dedicatedCapacityApiVersion);
             _capacitiesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PowerBIDedicated", DedicatedCapacityResource.ResourceType.Namespace, Diagnostics);
-            _capacitiesRestClient = new Capacities(_capacitiesClientDiagnostics, Pipeline, Endpoint, dedicatedCapacityApiVersion ?? "2021-01-01");
+            _capacitiesRestClient = new Capacities(_capacitiesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dedicatedCapacityApiVersion ?? "2021-01-01");
             ValidateResourceId(id);
         }
 

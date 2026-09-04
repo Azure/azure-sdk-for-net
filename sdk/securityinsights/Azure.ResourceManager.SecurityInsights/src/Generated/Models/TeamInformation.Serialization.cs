@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("primaryChannelUrl"u8);
                 writer.WriteStringValue(PrimaryChannelUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(TeamCreationTimeUtc))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("teamCreationTimeUtc"u8);
-                writer.WriteStringValue(TeamCreationTimeUtc.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
             string teamId = default;
             string primaryChannelUri = default;
-            DateTimeOffset? teamCreationTimeUtc = default;
+            DateTimeOffset? createdOn = default;
             string name = default;
             string description = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    teamCreationTimeUtc = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             return new TeamInformation(
                 teamId,
                 primaryChannelUri,
-                teamCreationTimeUtc,
+                createdOn,
                 name,
                 description,
                 additionalBinaryDataProperties);

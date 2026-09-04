@@ -18,6 +18,7 @@ namespace Azure.AI.Projects
         private const string WebSearchValue = "web_search";
         private const string McpValue = "mcp";
         private const string CodeInterpreterValue = "code_interpreter";
+        private const string ProgrammaticToolCallingValue = "programmatic_tool_calling";
         private const string ImageGenerationValue = "image_generation";
         private const string LocalShellValue = "local_shell";
         private const string ShellValue = "shell";
@@ -34,8 +35,9 @@ namespace Azure.AI.Projects
         private const string MemorySearchPreviewValue = "memory_search_preview";
         private const string WorkIqPreviewValue = "work_iq_preview";
         private const string FabricIqPreviewValue = "fabric_iq_preview";
-        private const string WebIqPreviewValue = "web_iq_preview";
         private const string ToolboxSearchPreviewValue = "toolbox_search_preview";
+        private const string WebIqPreviewValue = "web_iq_preview";
+        private const string A2aValue = "a2a";
         private const string AzureAiSearchValue = "azure_ai_search";
         private const string AzureFunctionValue = "azure_function";
         private const string BingGroundingValue = "bing_grounding";
@@ -72,6 +74,9 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets the CodeInterpreter. </summary>
         public static ToolType CodeInterpreter { get; } = new ToolType(CodeInterpreterValue);
+
+        /// <summary> Gets the ProgrammaticToolCalling. </summary>
+        public static ToolType ProgrammaticToolCalling { get; } = new ToolType(ProgrammaticToolCallingValue);
 
         /// <summary> Gets the ImageGeneration. </summary>
         public static ToolType ImageGeneration { get; } = new ToolType(ImageGenerationValue);
@@ -121,11 +126,14 @@ namespace Azure.AI.Projects
         /// <summary> Gets the FabricIqPreview. </summary>
         public static ToolType FabricIqPreview { get; } = new ToolType(FabricIqPreviewValue);
 
+        /// <summary> Gets the ToolboxSearchPreview. </summary>
+        public static ToolType ToolboxSearchPreview { get; } = new ToolType(ToolboxSearchPreviewValue);
+
         /// <summary> Gets the WebIqPreview. </summary>
         public static ToolType WebIqPreview { get; } = new ToolType(WebIqPreviewValue);
 
-        /// <summary> Gets the ToolboxSearchPreview. </summary>
-        public static ToolType ToolboxSearchPreview { get; } = new ToolType(ToolboxSearchPreviewValue);
+        /// <summary> Gets the A2a. </summary>
+        public static ToolType A2a { get; } = new ToolType(A2aValue);
 
         /// <summary> Gets the AzureAiSearch. </summary>
         public static ToolType AzureAiSearch { get; } = new ToolType(AzureAiSearchValue);

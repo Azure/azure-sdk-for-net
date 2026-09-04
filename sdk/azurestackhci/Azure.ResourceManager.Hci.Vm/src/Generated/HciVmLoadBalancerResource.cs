@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Hci.Vm
         {
             TryGetApiVersion(ResourceType, out string hciVmLoadBalancerApiVersion);
             _loadBalancersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Hci.Vm", ResourceType.Namespace, Diagnostics);
-            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Endpoint, hciVmLoadBalancerApiVersion ?? "2025-09-01-preview");
+            _loadBalancersRestClient = new LoadBalancers(_loadBalancersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, hciVmLoadBalancerApiVersion ?? "2025-09-01-preview");
             ValidateResourceId(id);
         }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(ResourceType, out string queueServiceApiVersion);
             _queueServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _queueServicesRestClient = new QueueServices(_queueServicesClientDiagnostics, Pipeline, Endpoint, queueServiceApiVersion ?? "2025-08-01");
+            _queueServicesRestClient = new QueueServices(_queueServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, queueServiceApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

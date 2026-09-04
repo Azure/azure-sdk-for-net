@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Extensions
         {
             TryGetApiVersion(KubernetesClusterExtensionResource.ResourceType, out string kubernetesClusterExtensionApiVersion);
             _extensionsInterfaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.KubernetesConfiguration.Extensions", KubernetesClusterExtensionResource.ResourceType.Namespace, Diagnostics);
-            _extensionsInterfaceRestClient = new ExtensionsInterface(_extensionsInterfaceClientDiagnostics, Pipeline, Endpoint, kubernetesClusterExtensionApiVersion ?? "2025-03-01");
+            _extensionsInterfaceRestClient = new ExtensionsInterface(_extensionsInterfaceClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, kubernetesClusterExtensionApiVersion ?? "2025-03-01");
         }
 
         /// <summary>

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Dns
         {
             TryGetApiVersion(ResourceType, out string dnsCnameRecordApiVersion);
             _recordSetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Dns", ResourceType.Namespace, Diagnostics);
-            _recordSetsRestClient = new RecordSets(_recordSetsClientDiagnostics, Pipeline, Endpoint, dnsCnameRecordApiVersion ?? "2023-07-01-preview");
+            _recordSetsRestClient = new RecordSets(_recordSetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dnsCnameRecordApiVersion ?? "2023-07-01-preview");
             ValidateResourceId(id);
         }
 
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.Dns
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="zoneName"> The zoneName. </param>
-        /// <param name="relativeRecordSetName"> The relativeRecordSetName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string relativeRecordSetName)
+        /// <param name="cnameRecordName"> The relativeRecordSetName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string zoneName, string cnameRecordName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/CNAME/{relativeRecordSetName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/dnsZones/{zoneName}/CNAME/{cnameRecordName}";
             return new ResourceIdentifier(resourceId);
         }
 

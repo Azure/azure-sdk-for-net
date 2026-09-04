@@ -7,9 +7,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Net;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
@@ -19,79 +19,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmPostgreSqlFlexibleServersModelFactory
     {
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="migrationId"> Identifier of a migration. </param>
-        /// <param name="currentStatus"> Current status of a migration. </param>
-        /// <param name="migrationInstanceResourceId"> Identifier of the private endpoint migration instance. </param>
-        /// <param name="migrationMode"> Mode used to perform the migration: Online or Offline. </param>
-        /// <param name="migrationOption"> Supported option for a migration. </param>
-        /// <param name="sourceType"> Source server type used for the migration: ApsaraDB_RDS, AWS, AWS_AURORA, AWS_EC2, AWS_RDS, AzureVM, Crunchy_PostgreSQL, Digital_Ocean_Droplets, Digital_Ocean_PostgreSQL, EDB, EDB_Oracle_Server, EDB_PostgreSQL, GCP, GCP_AlloyDB, GCP_CloudSQL, GCP_Compute, Heroku_PostgreSQL, Huawei_Compute, Huawei_RDS, OnPremises, PostgreSQLCosmosDB, PostgreSQLFlexibleServer, PostgreSQLSingleServer, or Supabase_PostgreSQL. </param>
-        /// <param name="sslMode"> SSL mode used by a migration. Default SSL mode for 'PostgreSQLSingleServer' is 'VerifyFull'. Default SSL mode for other source types is 'Prefer'. </param>
-        /// <param name="sourceDbServerMetadata"> Metadata of source database server. </param>
-        /// <param name="targetDbServerMetadata"> Metadata of target database server. </param>
-        /// <param name="sourceDbServerResourceId"> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </param>
-        /// <param name="sourceDbServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </param>
-        /// <param name="targetDbServerResourceId"> Identifier of the target database server resource. </param>
-        /// <param name="targetDbServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server. </param>
-        /// <param name="secretParameters"> Migration secret parameters. </param>
-        /// <param name="dbsToMigrate"> Names of databases to migrate. </param>
-        /// <param name="setupLogicalReplicationOnSourceDbIfNeeded"> Indicates whether to setup logical replication on source server, if needed. </param>
-        /// <param name="overwriteDbsInTarget"> Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </param>
-        /// <param name="migrationWindowStartTimeInUtc"> Start time (UTC) for migration window. </param>
-        /// <param name="migrationWindowEndTimeInUtc"> End time (UTC) for migration window. </param>
-        /// <param name="migrateRoles"> Indicates if roles and permissions must be migrated. </param>
-        /// <param name="startDataMigration"> Indicates if data migration must start right away. </param>
-        /// <param name="triggerCutover"> Indicates if cutover must be triggered for the entire migration. </param>
-        /// <param name="dbsToTriggerCutoverOn"> When you want to trigger cutover for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
-        /// <param name="cancel"> Indicates if cancel must be triggered for the entire migration. </param>
-        /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
-        /// <returns> A new <see cref="FlexibleServers.PostgreSqlMigrationData"/> instance for mocking. </returns>
-        public static PostgreSqlMigrationData PostgreSqlMigrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string migrationId = default, PostgreSqlMigrationStatus currentStatus = default, ResourceIdentifier migrationInstanceResourceId = default, PostgreSqlMigrationMode? migrationMode = default, MigrationOption? migrationOption = default, PostgreSqlFlexibleServersSourceType? sourceType = default, PostgreSqlFlexibleServersSslMode? sslMode = default, PostgreSqlServerMetadata sourceDbServerMetadata = default, PostgreSqlServerMetadata targetDbServerMetadata = default, ResourceIdentifier sourceDbServerResourceId = default, string sourceDbServerFullyQualifiedDomainName = default, ResourceIdentifier targetDbServerResourceId = default, string targetDbServerFullyQualifiedDomainName = default, PostgreSqlMigrationSecretParameters secretParameters = default, IEnumerable<string> dbsToMigrate = default, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default, DateTimeOffset? migrationWindowStartTimeInUtc = default, DateTimeOffset? migrationWindowEndTimeInUtc = default, MigrateRolesEnum? migrateRoles = default, PostgreSqlMigrationStartDataMigration? startDataMigration = default, PostgreSqlMigrationTriggerCutover? triggerCutover = default, IEnumerable<string> dbsToTriggerCutoverOn = default, PostgreSqlMigrationCancel? cancel = default, IEnumerable<string> dbsToCancelMigrationOn = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new PostgreSqlMigrationData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                migrationId is null && currentStatus is null && migrationInstanceResourceId is null && migrationMode is null && migrationOption is null && sourceType is null && sslMode is null && sourceDbServerMetadata is null && targetDbServerMetadata is null && sourceDbServerResourceId is null && sourceDbServerFullyQualifiedDomainName is null && targetDbServerResourceId is null && targetDbServerFullyQualifiedDomainName is null && secretParameters is null && dbsToMigrate is null && setupLogicalReplicationOnSourceDbIfNeeded is null && overwriteDbsInTarget is null && migrationWindowStartTimeInUtc is null && migrationWindowEndTimeInUtc is null && migrateRoles is null && startDataMigration is null && triggerCutover is null && dbsToTriggerCutoverOn is null && cancel is null && dbsToCancelMigrationOn is null ? default : new MigrationProperties(
-                    migrationId,
-                    currentStatus,
-                    migrationInstanceResourceId,
-                    migrationMode,
-                    migrationOption,
-                    sourceType,
-                    sslMode,
-                    sourceDbServerMetadata,
-                    targetDbServerMetadata,
-                    sourceDbServerResourceId,
-                    sourceDbServerFullyQualifiedDomainName,
-                    targetDbServerResourceId,
-                    targetDbServerFullyQualifiedDomainName,
-                    secretParameters,
-                    (dbsToMigrate ?? new ChangeTrackingList<string>()).ToList(),
-                    setupLogicalReplicationOnSourceDbIfNeeded,
-                    overwriteDbsInTarget,
-                    migrationWindowStartTimeInUtc,
-                    migrationWindowEndTimeInUtc,
-                    migrateRoles,
-                    startDataMigration,
-                    triggerCutover,
-                    (dbsToTriggerCutoverOn ?? new ChangeTrackingList<string>()).ToList(),
-                    cancel,
-                    (dbsToCancelMigrationOn ?? new ChangeTrackingList<string>()).ToList(),
-                    default),
-                default);
-        }
 
         /// <param name="state"> State of migration. </param>
         /// <param name="error"> Error message, if any, for the migration state. </param>
@@ -517,10 +444,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="resourceGroupName"> Name of the resource group. </param>
         /// <param name="serverName"> Name of the server. </param>
         /// <param name="state"> State of the network migration operation. </param>
-        /// <returns> A new <see cref="Models.DbMigrateNetworkStatus"/> instance for mocking. </returns>
-        public static DbMigrateNetworkStatus DbMigrateNetworkStatus(Guid? subscriptionId = default, string resourceGroupName = default, string serverName = default, DbNetworkMigrationState? state = default)
+        /// <returns> A new <see cref="Models.DBMigrateNetworkStatus"/> instance for mocking. </returns>
+        public static DBMigrateNetworkStatus DBMigrateNetworkStatus(Guid? subscriptionId = default, string resourceGroupName = default, string serverName = default, DBNetworkMigrationState? state = default)
         {
-            return new DbMigrateNetworkStatus(subscriptionId, resourceGroupName, serverName, state, default);
+            return new DBMigrateNetworkStatus(subscriptionId, resourceGroupName, serverName, state, default);
         }
 
         /// <param name="targetVersion"> The target major version to upgrade to. </param>
@@ -1353,6 +1280,79 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         public static PostgreSqlFlexibleServerDelegatedSubnetUsage PostgreSqlFlexibleServerDelegatedSubnetUsage(string subnetName = default, long? usage = default)
         {
             return new PostgreSqlFlexibleServerDelegatedSubnetUsage(subnetName, usage, default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FlexibleServers.PostgreSqlMigrationData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="migrationId"> Identifier of a migration. </param>
+        /// <param name="currentStatus"> Current status of a migration. </param>
+        /// <param name="migrationInstanceResourceId"> Identifier of the private endpoint migration instance. </param>
+        /// <param name="migrationMode"> Mode used to perform the migration: Online or Offline. </param>
+        /// <param name="migrationOption"> Supported option for a migration. </param>
+        /// <param name="sourceType"> Source server type used for the migration: ApsaraDB_RDS, AWS, AWS_AURORA, AWS_EC2, AWS_RDS, AzureVM, Crunchy_PostgreSQL, Digital_Ocean_Droplets, Digital_Ocean_PostgreSQL, EDB, EDB_Oracle_Server, EDB_PostgreSQL, GCP, GCP_AlloyDB, GCP_CloudSQL, GCP_Compute, Heroku_PostgreSQL, Huawei_Compute, Huawei_RDS, OnPremises, PostgreSQLCosmosDB, PostgreSQLFlexibleServer, PostgreSQLSingleServer, or Supabase_PostgreSQL. </param>
+        /// <param name="sslMode"> SSL mode used by a migration. Default SSL mode for 'PostgreSQLSingleServer' is 'VerifyFull'. Default SSL mode for other source types is 'Prefer'. </param>
+        /// <param name="sourceDbServerMetadata"> Metadata of source database server. </param>
+        /// <param name="targetDbServerMetadata"> Metadata of target database server. </param>
+        /// <param name="sourceDbServerResourceId"> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </param>
+        /// <param name="sourceDbServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </param>
+        /// <param name="targetDbServerResourceId"> Identifier of the target database server resource. </param>
+        /// <param name="targetDbServerFullyQualifiedDomainName"> Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server. </param>
+        /// <param name="secretParameters"> Migration secret parameters. </param>
+        /// <param name="dbsToMigrate"> Names of databases to migrate. </param>
+        /// <param name="setupLogicalReplicationOnSourceDbIfNeeded"> Indicates whether to setup logical replication on source server, if needed. </param>
+        /// <param name="overwriteDbsInTarget"> Indicates if databases on the target server can be overwritten when already present. If set to 'False', when the migration workflow detects that the database already exists on the target server, it will wait for a confirmation. </param>
+        /// <param name="migrationWindowStartTimeInUtc"> Start time (UTC) for migration window. </param>
+        /// <param name="migrationWindowEndTimeInUtc"> End time (UTC) for migration window. </param>
+        /// <param name="migrateRoles"> Indicates if roles and permissions must be migrated. </param>
+        /// <param name="startDataMigration"> Indicates if data migration must start right away. </param>
+        /// <param name="triggerCutover"> Indicates if cutover must be triggered for the entire migration. </param>
+        /// <param name="dbsToTriggerCutoverOn"> When you want to trigger cutover for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
+        /// <param name="cancel"> Indicates if cancel must be triggered for the entire migration. </param>
+        /// <param name="dbsToCancelMigrationOn"> When you want to trigger cancel for specific databases set 'triggerCutover' to 'True' and the names of the specific databases in this array. </param>
+        /// <returns> A new <see cref="FlexibleServers.PostgreSqlMigrationData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static PostgreSqlMigrationData PostgreSqlMigrationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string migrationId = default, PostgreSqlMigrationStatus currentStatus = default, ResourceIdentifier migrationInstanceResourceId = default, PostgreSqlMigrationMode? migrationMode = default, MigrationOption? migrationOption = default, PostgreSqlFlexibleServersSourceType? sourceType = default, PostgreSqlFlexibleServersSslMode? sslMode = default, PostgreSqlServerMetadata sourceDbServerMetadata = default, PostgreSqlServerMetadata targetDbServerMetadata = default, ResourceIdentifier sourceDbServerResourceId = default, string sourceDbServerFullyQualifiedDomainName = default, ResourceIdentifier targetDbServerResourceId = default, string targetDbServerFullyQualifiedDomainName = default, PostgreSqlMigrationSecretParameters secretParameters = default, IEnumerable<string> dbsToMigrate = default, PostgreSqlMigrationLogicalReplicationOnSourceDb? setupLogicalReplicationOnSourceDbIfNeeded = default, PostgreSqlMigrationOverwriteDbsInTarget? overwriteDbsInTarget = default, DateTimeOffset? migrationWindowStartTimeInUtc = default, DateTimeOffset? migrationWindowEndTimeInUtc = default, MigrateRolesEnum? migrateRoles = default, PostgreSqlMigrationStartDataMigration? startDataMigration = default, PostgreSqlMigrationTriggerCutover? triggerCutover = default, IEnumerable<string> dbsToTriggerCutoverOn = default, PostgreSqlMigrationCancel? cancel = default, IEnumerable<string> dbsToCancelMigrationOn = default)
+        {
+            return new PostgreSqlMigrationData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                migrationId is null && currentStatus is null && migrationInstanceResourceId is null && migrationMode is null && migrationOption is null && sourceType is null && sslMode is null && sourceDbServerMetadata is null && targetDbServerMetadata is null && sourceDbServerResourceId is null && sourceDbServerFullyQualifiedDomainName is null && targetDbServerResourceId is null && targetDbServerFullyQualifiedDomainName is null && secretParameters is null && dbsToMigrate is null && setupLogicalReplicationOnSourceDbIfNeeded is null && overwriteDbsInTarget is null && migrationWindowStartTimeInUtc is null && migrationWindowEndTimeInUtc is null && migrateRoles is null && startDataMigration is null && triggerCutover is null && dbsToTriggerCutoverOn is null && cancel is null && dbsToCancelMigrationOn is null ? default : new MigrationProperties(
+                    migrationId,
+                    currentStatus,
+                    migrationInstanceResourceId,
+                    migrationMode,
+                    migrationOption,
+                    sourceType,
+                    sslMode,
+                    sourceDbServerMetadata,
+                    targetDbServerMetadata,
+                    sourceDbServerResourceId,
+                    sourceDbServerFullyQualifiedDomainName,
+                    targetDbServerResourceId,
+                    targetDbServerFullyQualifiedDomainName,
+                    secretParameters,
+                    (dbsToMigrate ?? new ChangeTrackingList<string>()).ToList(),
+                    setupLogicalReplicationOnSourceDbIfNeeded,
+                    overwriteDbsInTarget,
+                    migrationWindowStartTimeInUtc,
+                    migrationWindowEndTimeInUtc,
+                    migrateRoles,
+                    startDataMigration,
+                    triggerCutover,
+                    (dbsToTriggerCutoverOn ?? new ChangeTrackingList<string>()).ToList(),
+                    cancel,
+                    (dbsToCancelMigrationOn ?? new ChangeTrackingList<string>()).ToList(),
+                    default),
+                default);
         }
     }
 }

@@ -463,13 +463,6 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             return new ComputeScheduleManagedDiskConfig(id, default, storageAccountType, diskEncryptionSetId is null ? default : new ComputeScheduleDiskEncryptionSetConfig(diskEncryptionSetId, default), securityProfile);
         }
 
-        /// <param name="id"> The ID of the sub-resource. </param>
-        /// <returns> A new <see cref="Models.ComputeScheduleDiskEncryptionSetConfig"/> instance for mocking. </returns>
-        public static ComputeScheduleDiskEncryptionSetConfig ComputeScheduleDiskEncryptionSetConfig(ResourceIdentifier id = default)
-        {
-            return new ComputeScheduleDiskEncryptionSetConfig(id, default);
-        }
-
         /// <param name="securityEncryptionType"> Specifies the EncryptionType of the managed disk. It is set to DiskWithVMGuestState for encryption of the managed disk along with VMGuestState blob, VMGuestStateOnly for encryption of just the VMGuestState blob, and NonPersistedTPM for not persisting firmware state in the VMGuestState blob.. <b>Note:</b> It can be set for only Confidential VMs. </param>
         /// <param name="diskEncryptionSetId"> The ID of the sub-resource. </param>
         /// <returns> A new <see cref="Models.VirtualMachineDiskSecurityProfile"/> instance for mocking. </returns>
@@ -788,15 +781,15 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
         /// <param name="publicIPAddressVersion"> Available from Api-Version 2019-07-01 onwards, it represents whether the specific ipconfiguration is IPv4 or IPv6. Default is taken as IPv4. Possible values are: 'IPv4' and 'IPv6'. </param>
         /// <param name="publicIPAllocationMethod"> Specify the public IP allocation type. </param>
         /// <returns> A new <see cref="Models.VirtualMachinePublicIPAddressConfigurationProperties"/> instance for mocking. </returns>
-        public static VirtualMachinePublicIPAddressConfigurationProperties VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, DeleteOptions? deleteOption = default, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<VirtualMachineIpTag> ipTags = default, ResourceIdentifier publicIPPrefixId = default, IPVersion? publicIPAddressVersion = default, PublicIPAllocationMethod? publicIPAllocationMethod = default)
+        public static VirtualMachinePublicIPAddressConfigurationProperties VirtualMachinePublicIPAddressConfigurationProperties(int? idleTimeoutInMinutes = default, DeleteOptions? deleteOption = default, VirtualMachinePublicIPAddressDnsSettingsConfiguration dnsSettings = default, IEnumerable<VirtualMachineIPTag> ipTags = default, ResourceIdentifier publicIPPrefixId = default, IPVersion? publicIPAddressVersion = default, PublicIPAllocationMethod? publicIPAllocationMethod = default)
         {
-            ipTags ??= new ChangeTrackingList<VirtualMachineIpTag>();
+            ipTags ??= new ChangeTrackingList<VirtualMachineIPTag>();
 
             return new VirtualMachinePublicIPAddressConfigurationProperties(
                 idleTimeoutInMinutes,
                 deleteOption,
                 dnsSettings,
-                (ipTags ?? new ChangeTrackingList<VirtualMachineIpTag>()).ToList(),
+                (ipTags ?? new ChangeTrackingList<VirtualMachineIPTag>()).ToList(),
                 publicIPPrefixId is null ? default : new SubResource(publicIPPrefixId, default),
                 publicIPAddressVersion,
                 publicIPAllocationMethod,
@@ -813,10 +806,10 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
 
         /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
         /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
-        /// <returns> A new <see cref="Models.VirtualMachineIpTag"/> instance for mocking. </returns>
-        public static VirtualMachineIpTag VirtualMachineIpTag(string ipTagType = default, string tag = default)
+        /// <returns> A new <see cref="Models.VirtualMachineIPTag"/> instance for mocking. </returns>
+        public static VirtualMachineIPTag VirtualMachineIPTag(string ipTagType = default, string tag = default)
         {
-            return new VirtualMachineIpTag(ipTagType, tag, default);
+            return new VirtualMachineIPTag(ipTagType, tag, default);
         }
 
         /// <param name="name"> Specify public IP sku name. </param>

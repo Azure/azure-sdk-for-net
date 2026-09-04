@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Storage
         {
             TryGetApiVersion(ResourceType, out string networkSecurityPerimeterConfigurationApiVersion);
             _networkSecurityPerimeterConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Storage", ResourceType.Namespace, Diagnostics);
-            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Endpoint, networkSecurityPerimeterConfigurationApiVersion ?? "2025-08-01");
+            _networkSecurityPerimeterConfigurationsRestClient = new NetworkSecurityPerimeterConfigurations(_networkSecurityPerimeterConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, networkSecurityPerimeterConfigurationApiVersion ?? "2025-08-01");
             ValidateResourceId(id);
         }
 

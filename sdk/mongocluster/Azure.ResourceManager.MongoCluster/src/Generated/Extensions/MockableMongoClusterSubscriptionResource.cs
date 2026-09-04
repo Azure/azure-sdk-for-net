@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MongoCluster.Mocking
 
         private ClientDiagnostics MongoClustersClientDiagnostics => _mongoClustersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.MongoCluster.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private MongoClusters MongoClustersRestClient => _mongoClustersRestClient ??= new MongoClusters(MongoClustersClientDiagnostics, Pipeline, Endpoint, "2026-06-01");
+        private MongoClusters MongoClustersRestClient => _mongoClustersRestClient ??= new MongoClusters(MongoClustersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         /// <summary>
         /// List all the mongo clusters in a given subscription.

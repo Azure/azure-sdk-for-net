@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Identifies the billing profile that is linked to another billing profile in indirect purchase motion. </summary>
-    public partial class BillingProfilePropertiesIndirectRelationshipInfo : IndirectRelationshipInfo
+    internal partial class BillingProfilePropertiesIndirectRelationshipInfo : IndirectRelationshipInfo
     {
         /// <summary> Initializes a new instance of <see cref="BillingProfilePropertiesIndirectRelationshipInfo"/>. </summary>
         public BillingProfilePropertiesIndirectRelationshipInfo()

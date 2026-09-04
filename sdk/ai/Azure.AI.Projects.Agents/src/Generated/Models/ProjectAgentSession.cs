@@ -28,18 +28,18 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentSessionId"> The session identifier. </param>
         /// <param name="versionIndicator"> The version indicator determining which agent version backs this session. </param>
         /// <param name="status"> The current status of the session. </param>
-        /// <param name="createdAt"> The Unix timestamp (in seconds) when the session was created. </param>
-        /// <param name="lastAccessedAt"> The Unix timestamp (in seconds) when the session was last accessed. </param>
-        /// <param name="expiresAt"> The Unix timestamp (in seconds) when the session expires (rolling, 30 days from last activity). </param>
+        /// <param name="createdOn"> The Unix timestamp (in seconds) when the session was created. </param>
+        /// <param name="lastAccessedOn"> The Unix timestamp (in seconds) when the session was last accessed. </param>
+        /// <param name="expiresOn"> The Unix timestamp (in seconds) when the session expires (rolling, 30 days from last activity). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProjectAgentSession(string agentSessionId, VersionIndicator versionIndicator, AgentSessionStatus status, DateTimeOffset createdAt, DateTimeOffset lastAccessedAt, DateTimeOffset expiresAt, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ProjectAgentSession(string agentSessionId, VersionIndicator versionIndicator, AgentSessionStatus status, DateTimeOffset createdOn, DateTimeOffset lastAccessedOn, DateTimeOffset expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AgentSessionId = agentSessionId;
             VersionIndicator = versionIndicator;
             Status = status;
-            CreatedAt = createdAt;
-            LastAccessedAt = lastAccessedAt;
-            ExpiresAt = expiresAt;
+            CreatedOn = createdOn;
+            LastAccessedOn = lastAccessedOn;
+            ExpiresOn = expiresOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -53,12 +53,12 @@ namespace Azure.AI.Projects.Agents
         public AgentSessionStatus Status { get; }
 
         /// <summary> The Unix timestamp (in seconds) when the session was created. </summary>
-        public DateTimeOffset CreatedAt { get; }
+        public DateTimeOffset CreatedOn { get; }
 
         /// <summary> The Unix timestamp (in seconds) when the session was last accessed. </summary>
-        public DateTimeOffset LastAccessedAt { get; }
+        public DateTimeOffset LastAccessedOn { get; }
 
         /// <summary> The Unix timestamp (in seconds) when the session expires (rolling, 30 days from last activity). </summary>
-        public DateTimeOffset ExpiresAt { get; }
+        public DateTimeOffset ExpiresOn { get; }
     }
 }

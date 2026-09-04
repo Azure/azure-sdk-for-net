@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(ResourceType, out string machineLearningDatastoreApiVersion);
             _datastoresClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ResourceType.Namespace, Diagnostics);
-            _datastoresRestClient = new Datastores(_datastoresClientDiagnostics, Pipeline, Endpoint, machineLearningDatastoreApiVersion ?? "2026-03-15-preview");
+            _datastoresRestClient = new Datastores(_datastoresClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, machineLearningDatastoreApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 

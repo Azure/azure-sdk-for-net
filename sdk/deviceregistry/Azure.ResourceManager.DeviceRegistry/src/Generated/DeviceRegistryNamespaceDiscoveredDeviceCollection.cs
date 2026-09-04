@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(DeviceRegistryNamespaceDiscoveredDeviceResource.ResourceType, out string deviceRegistryNamespaceDiscoveredDeviceApiVersion);
             _namespaceDiscoveredDevicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", DeviceRegistryNamespaceDiscoveredDeviceResource.ResourceType.Namespace, Diagnostics);
-            _namespaceDiscoveredDevicesRestClient = new NamespaceDiscoveredDevices(_namespaceDiscoveredDevicesClientDiagnostics, Pipeline, Endpoint, deviceRegistryNamespaceDiscoveredDeviceApiVersion ?? "2026-03-01-preview");
+            _namespaceDiscoveredDevicesRestClient = new NamespaceDiscoveredDevices(_namespaceDiscoveredDevicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryNamespaceDiscoveredDeviceApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 

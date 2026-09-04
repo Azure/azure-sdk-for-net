@@ -11,6 +11,7 @@ namespace Azure.Storage.Blobs.Models
 {
     internal static partial class AccountKindExtensions
     {
+        /// <param name="value"> The value to serialize. </param>
         public static string ToSerialString(this AccountKind value) => value switch
         {
             AccountKind.Storage => "Storage",
@@ -21,13 +22,29 @@ namespace Azure.Storage.Blobs.Models
             _ => throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccountKind value.")
         };
 
+        /// <param name="value"> The value to deserialize. </param>
         public static AccountKind ToAccountKind(this string value)
         {
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Storage")) return AccountKind.Storage;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BlobStorage")) return AccountKind.BlobStorage;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StorageV2")) return AccountKind.StorageV2;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FileStorage")) return AccountKind.FileStorage;
-            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BlockBlobStorage")) return AccountKind.BlockBlobStorage;
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "Storage"))
+            {
+                return AccountKind.Storage;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BlobStorage"))
+            {
+                return AccountKind.BlobStorage;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "StorageV2"))
+            {
+                return AccountKind.StorageV2;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "FileStorage"))
+            {
+                return AccountKind.FileStorage;
+            }
+            if (StringComparer.OrdinalIgnoreCase.Equals(value, "BlockBlobStorage"))
+            {
+                return AccountKind.BlockBlobStorage;
+            }
             throw new ArgumentOutOfRangeException(nameof(value), value, "Unknown AccountKind value.");
         }
     }

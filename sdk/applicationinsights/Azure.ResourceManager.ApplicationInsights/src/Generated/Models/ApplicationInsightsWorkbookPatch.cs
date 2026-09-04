@@ -7,97 +7,149 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
     /// <summary> The parameters that can be provided when updating workbook properties properties. </summary>
     public partial class ApplicationInsightsWorkbookPatch
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsWorkbookPatch"/>. </summary>
         public ApplicationInsightsWorkbookPatch()
         {
             Tags = new ChangeTrackingDictionary<string, string>();
-            TagsPropertiesTags = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsWorkbookPatch"/>. </summary>
         /// <param name="kind"> The kind of workbook. Only valid value is shared. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="displayName"> The user-defined name (display name) of the workbook. </param>
-        /// <param name="serializedData"> Configuration of this particular workbook. Configuration data is a string containing valid JSON. </param>
-        /// <param name="category"> Workbook category, as defined by the user at creation time. </param>
-        /// <param name="tagsPropertiesTags"> A list of 0 or more tags that are associated with this workbook definition. </param>
-        /// <param name="description"> The description of the workbook. </param>
-        /// <param name="revision"> The unique revision id for this workbook definition. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsWorkbookPatch(WorkbookUpdateSharedTypeKind? kind, IDictionary<string, string> tags, string displayName, string serializedData, string category, IList<string> tagsPropertiesTags, string description, string revision, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="properties"> Metadata describing a workbook for an Azure resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsWorkbookPatch(WorkbookUpdateSharedTypeKind? kind, IDictionary<string, string> tags, WorkbookPropertiesUpdateParameters properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Tags = tags;
-            DisplayName = displayName;
-            SerializedData = serializedData;
-            Category = category;
-            TagsPropertiesTags = tagsPropertiesTags;
-            Description = description;
-            Revision = revision;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The kind of workbook. Only valid value is shared. </summary>
         [WirePath("kind")]
         public WorkbookUpdateSharedTypeKind? Kind { get; set; }
+
         /// <summary> Resource tags. </summary>
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> Metadata describing a workbook for an Azure resource. </summary>
+        [WirePath("properties")]
+        internal WorkbookPropertiesUpdateParameters Properties { get; set; }
+
         /// <summary> The user-defined name (display name) of the workbook. </summary>
         [WirePath("properties.displayName")]
-        public string DisplayName { get; set; }
+        public string DisplayName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.DisplayName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkbookPropertiesUpdateParameters();
+                }
+                Properties.DisplayName = value;
+            }
+        }
+
         /// <summary> Configuration of this particular workbook. Configuration data is a string containing valid JSON. </summary>
         [WirePath("properties.serializedData")]
-        public string SerializedData { get; set; }
+        public string SerializedData
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SerializedData;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkbookPropertiesUpdateParameters();
+                }
+                Properties.SerializedData = value;
+            }
+        }
+
         /// <summary> Workbook category, as defined by the user at creation time. </summary>
         [WirePath("properties.category")]
-        public string Category { get; set; }
+        public string Category
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Category;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkbookPropertiesUpdateParameters();
+                }
+                Properties.Category = value;
+            }
+        }
+
         /// <summary> A list of 0 or more tags that are associated with this workbook definition. </summary>
         [WirePath("properties.tags")]
-        public IList<string> TagsPropertiesTags { get; }
+        public IList<string> TagsPropertiesTags
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkbookPropertiesUpdateParameters();
+                }
+                return Properties.TagsPropertiesTags;
+            }
+        }
+
         /// <summary> The description of the workbook. </summary>
         [WirePath("properties.description")]
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkbookPropertiesUpdateParameters();
+                }
+                Properties.Description = value;
+            }
+        }
+
         /// <summary> The unique revision id for this workbook definition. </summary>
         [WirePath("properties.revision")]
-        public string Revision { get; set; }
+        public string Revision
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Revision;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WorkbookPropertiesUpdateParameters();
+                }
+                Properties.Revision = value;
+            }
+        }
     }
 }

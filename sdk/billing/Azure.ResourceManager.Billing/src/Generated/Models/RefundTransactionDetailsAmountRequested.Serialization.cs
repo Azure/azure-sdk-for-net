@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The amount of refund requested. </summary>
-    public partial class RefundTransactionDetailsAmountRequested : BillingAmount, IJsonModel<RefundTransactionDetailsAmountRequested>
+    internal partial class RefundTransactionDetailsAmountRequested : BillingAmount, IJsonModel<RefundTransactionDetailsAmountRequested>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

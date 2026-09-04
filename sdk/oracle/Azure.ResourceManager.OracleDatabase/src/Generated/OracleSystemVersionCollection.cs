@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.OracleDatabase
             TryGetApiVersion(OracleSystemVersionResource.ResourceType, out string oracleSystemVersionApiVersion);
             _location = location;
             _systemVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleSystemVersionResource.ResourceType.Namespace, Diagnostics);
-            _systemVersionsRestClient = new SystemVersions(_systemVersionsClientDiagnostics, Pipeline, Endpoint, oracleSystemVersionApiVersion ?? "2025-09-01");
+            _systemVersionsRestClient = new SystemVersions(_systemVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleSystemVersionApiVersion ?? "2025-09-01");
             ValidateResourceId(id);
         }
 

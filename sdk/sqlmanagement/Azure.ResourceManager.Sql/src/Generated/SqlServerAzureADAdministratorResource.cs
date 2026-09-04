@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Sql
         {
             TryGetApiVersion(ResourceType, out string sqlServerAzureADAdministratorApiVersion);
             _serverAzureADAdministratorsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Sql", ResourceType.Namespace, Diagnostics);
-            _serverAzureADAdministratorsRestClient = new ServerAzureADAdministrators(_serverAzureADAdministratorsClientDiagnostics, Pipeline, Endpoint, sqlServerAzureADAdministratorApiVersion ?? "2025-02-01-preview");
+            _serverAzureADAdministratorsRestClient = new ServerAzureADAdministrators(_serverAzureADAdministratorsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, sqlServerAzureADAdministratorApiVersion ?? "2025-02-01-preview");
             ValidateResourceId(id);
         }
 

@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Datadog
         {
             TryGetApiVersion(ResourceType, out string dataMonitoringTagRuleApiVersion);
             _tagRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", ResourceType.Namespace, Diagnostics);
-            _tagRulesRestClient = new TagRules(_tagRulesClientDiagnostics, Pipeline, Endpoint, dataMonitoringTagRuleApiVersion ?? "2025-12-26-preview");
+            _tagRulesRestClient = new TagRules(_tagRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, dataMonitoringTagRuleApiVersion ?? "2025-12-26-preview");
             ValidateResourceId(id);
         }
 

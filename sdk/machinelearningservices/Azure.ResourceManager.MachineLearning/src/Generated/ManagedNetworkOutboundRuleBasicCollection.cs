@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning
         {
             TryGetApiVersion(ManagedNetworkOutboundRuleBasicResource.ResourceType, out string managedNetworkOutboundRuleBasicApiVersion);
             _outboundRuleClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.MachineLearning", ManagedNetworkOutboundRuleBasicResource.ResourceType.Namespace, Diagnostics);
-            _outboundRuleRestClient = new OutboundRule(_outboundRuleClientDiagnostics, Pipeline, Endpoint, managedNetworkOutboundRuleBasicApiVersion ?? "2026-03-15-preview");
+            _outboundRuleRestClient = new OutboundRule(_outboundRuleClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedNetworkOutboundRuleBasicApiVersion ?? "2026-03-15-preview");
             ValidateResourceId(id);
         }
 

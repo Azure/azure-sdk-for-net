@@ -172,11 +172,5 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 sku,
                 additionalBinaryDataProperties: null);
         }
-
-        /// <summary> Initializes a new instance of <see cref="Models.MachineLearningSweepJob"/>. </summary>
-        public static MachineLearningSweepJob MachineLearningSweepJob(string description = default, IDictionary<string, string> properties = default, IDictionary<string, string> tags = default, string displayName = default, MachineLearningJobStatus? status = default, string experimentName = default, IDictionary<string, MachineLearningJobService> services = default, ResourceIdentifier computeId = default, bool? isArchived = default, MachineLearningIdentityConfiguration identity = default, ResourceIdentifier componentId = default, NotificationSetting notificationSetting = default, BinaryData searchSpace = default, SamplingAlgorithm samplingAlgorithm = default, MachineLearningSweepJobLimits limits = default, MachineLearningEarlyTerminationPolicy earlyTermination = default, MachineLearningObjective objective = default, MachineLearningTrialComponent trial = default, IDictionary<string, MachineLearningJobInput> inputs = default, IDictionary<string, MachineLearningJobOutput> outputs = default, JobTier? jobTier = default)
-        {
-            return new MachineLearningSweepJob(description, properties, tags, additionalBinaryDataProperties: null, componentId, computeId, displayName, experimentName, identity, isArchived, JobType.Sweep, notificationSetting, parentJobName: null, services, status, earlyTermination, inputs, limits, objective, outputs, queueSettings: jobTier.HasValue ? new QueueSettings(jobTier.Value, additionalBinaryDataProperties: null) : null, samplingAlgorithm, searchSpace, trial);
-        }
     }
 }

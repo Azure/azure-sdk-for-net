@@ -143,7 +143,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            GeometryType @type = default;
+            GeometryKind @type = default;
             IList<float> boundingBox = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             IList<IList<IList<IList<float>>>> coordinates = default;
@@ -151,7 +151,7 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new GeometryType(prop.Value.GetString());
+                    @type = new GeometryKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("bbox"u8))

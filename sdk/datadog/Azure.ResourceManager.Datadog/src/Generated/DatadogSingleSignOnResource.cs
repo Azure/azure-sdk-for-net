@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Datadog
         {
             TryGetApiVersion(ResourceType, out string datadogSingleSignOnApiVersion);
             _singleSignOnConfigurationsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Datadog", ResourceType.Namespace, Diagnostics);
-            _singleSignOnConfigurationsRestClient = new SingleSignOnConfigurations(_singleSignOnConfigurationsClientDiagnostics, Pipeline, Endpoint, datadogSingleSignOnApiVersion ?? "2025-12-26-preview");
+            _singleSignOnConfigurationsRestClient = new SingleSignOnConfigurations(_singleSignOnConfigurationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, datadogSingleSignOnApiVersion ?? "2025-12-26-preview");
             ValidateResourceId(id);
         }
 

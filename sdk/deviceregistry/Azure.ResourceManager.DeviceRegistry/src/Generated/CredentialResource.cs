@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(ResourceType, out string credentialApiVersion);
             _credentialsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
-            _credentialsRestClient = new Credentials(_credentialsClientDiagnostics, Pipeline, Endpoint, credentialApiVersion ?? "2026-03-01-preview");
+            _credentialsRestClient = new Credentials(_credentialsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, credentialApiVersion ?? "2026-03-01-preview");
             ValidateResourceId(id);
         }
 
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// Synchronize
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         }
 
         /// <summary>
-        /// A long-running resource action.
+        /// Synchronize
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

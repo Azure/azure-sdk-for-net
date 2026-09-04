@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.SignalR
         {
             TryGetApiVersion(SignalRCustomCertificateResource.ResourceType, out string signalRCustomCertificateApiVersion);
             _customCertificatesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.SignalR", SignalRCustomCertificateResource.ResourceType.Namespace, Diagnostics);
-            _customCertificatesRestClient = new CustomCertificates(_customCertificatesClientDiagnostics, Pipeline, Endpoint, signalRCustomCertificateApiVersion ?? "2025-01-01-preview");
+            _customCertificatesRestClient = new CustomCertificates(_customCertificatesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, signalRCustomCertificateApiVersion ?? "2025-01-01-preview");
             ValidateResourceId(id);
         }
 

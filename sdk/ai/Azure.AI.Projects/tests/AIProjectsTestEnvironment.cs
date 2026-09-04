@@ -13,6 +13,11 @@ namespace Azure.AI.Projects.Tests
 {
     public class AIProjectsTestEnvironment : TestEnvironment
     {
+        public AIProjectsTestEnvironment()
+        {
+            PathToTestResourceBootstrappingScript = AiTestEnvironmentBootstrap.BootstrappingScriptPath;
+        }
+
         public string FOUNDRY_PROJECT_ENDPOINT => GetRecordedVariable(nameof(FOUNDRY_PROJECT_ENDPOINT), options => options.IsSecret("https://sanitized-host.services.ai.azure.com/api/projects/sanitized-project"));
         public string DATASETNAME => GetRecordedVariable("DATASET_NAME");
         public string DATASETVERSION1 => GetRecordedVariable("DATASET_VERSION_1");

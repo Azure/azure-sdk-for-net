@@ -13,13 +13,13 @@ namespace Azure.Provisioning.BotService
         /// <summary> Creates a new AcsChatChannel. </summary>
         public AcsChatChannel()
         {
+            ChannelName.Assign("AcsChatChannel");
         }
 
         /// <summary> Define all the provisionable properties for AcsChatChannel. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("channelName", new string[] { "channelName" }, defaultValue: "AcsChatChannel");
             DefineAdditionalProperties();
         }
 

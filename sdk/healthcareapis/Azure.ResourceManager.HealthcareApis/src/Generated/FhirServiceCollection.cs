@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.HealthcareApis
         {
             TryGetApiVersion(FhirServiceResource.ResourceType, out string fhirServiceApiVersion);
             _fhirServicesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.HealthcareApis", FhirServiceResource.ResourceType.Namespace, Diagnostics);
-            _fhirServicesRestClient = new FhirServices(_fhirServicesClientDiagnostics, Pipeline, Endpoint, fhirServiceApiVersion ?? "2025-04-01-preview");
+            _fhirServicesRestClient = new FhirServices(_fhirServicesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, fhirServiceApiVersion ?? "2025-04-01-preview");
             ValidateResourceId(id);
         }
 
