@@ -16,11 +16,16 @@ internal sealed class TaskRunState<TOutput>
     private readonly TaskCompletionSource<TOutput> _completion =
         new(TaskCreationOptions.RunContinuationsAsynchronously);
 
-    public TaskRunState(string taskId, string inputId, bool isQueued)
+    public TaskRunState(
+        string taskId,
+        string inputId,
+        bool isQueued,
+        TaskStreamState stream)
     {
         TaskId = taskId;
         InputId = inputId;
         IsQueued = isQueued;
+        StreamState = stream;
     }
 
     public string TaskId { get; }
@@ -28,6 +33,10 @@ internal sealed class TaskRunState<TOutput>
     public string InputId { get; set; }
 
     public bool IsQueued { get; }
+
+    public TaskStreamState StreamState { get; }
+
+    public TaskStream Stream => StreamState.Reader;
 
     /// <summary>
     /// The crash-recovery generation for the run's context (spec §22): mirrors the record's

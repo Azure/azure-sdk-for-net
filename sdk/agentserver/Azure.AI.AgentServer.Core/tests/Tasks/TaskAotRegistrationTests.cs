@@ -6,6 +6,7 @@ using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.AI.AgentServer.Core.Tasks.Engine;
+using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Core.Tests.Tasks;
@@ -84,5 +85,27 @@ public sealed class TaskAotRegistrationTests
                 "aot-null",
                 (ctx, ct) => Task.FromResult(ctx.Input.Value),
                 inputTypeInfo: null!));
+    }
+
+    [Test]
+    public void ClassHandlerRegistrationRetainsSourceGeneratedInputMetadata()
+    {
+        var services = new ServiceCollection();
+        services.AddResilientTask<AotInput, string, AotHandler>(
+            "aot-handler",
+            AotJsonContext.Default.AotInput);
+
+        using ServiceProvider provider = services.BuildServiceProvider();
+        TaskRegistry registry = provider.GetRequiredService<TaskRegistry>();
+        Assert.That(registry.TryGet("aot-handler", out TaskRegistration? registration), Is.True);
+        Assert.That(registration!.InputTypeInfo, Is.SameAs(AotJsonContext.Default.AotInput));
+    }
+
+    private sealed class AotHandler : IResilientTaskHandler<AotInput, string>
+    {
+        public Task<string> RunAsync(
+            TaskContext<AotInput> context,
+            System.Threading.CancellationToken cancellationToken)
+            => Task.FromResult(context.Input.Value);
     }
 }

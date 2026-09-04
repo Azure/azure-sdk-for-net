@@ -43,7 +43,7 @@ What this primitive solves:
   persists the input and surfaces the output through a typed handle.
 - **Cooperative cancellation.** The caller can ask the handler to stop; the handler
   decides how to wind down.
-- **Lightweight, small surface.** A registration builder, a few types, and a handful of
+- **Lightweight, small surface.** Typed registration methods, a few types, and a handful of
   exceptions.
 
 What this primitive deliberately does **not** do:
@@ -173,6 +173,40 @@ string result = await echo.RunAsync("hello again");
 Both return the *same* handle instance; use whichever is convenient at the call site. See §5.2 for
 the full `GetResilientTask` signature and the keyed-registration rationale.
 
+### Constructor-injected handler
+
+Use a class handler when the task needs services from dependency injection:
+
+```C# Snippet:TasksGuide_ScopedHandler
+internal sealed class GreetingPrefix
+{
+    public string Value => "injected: ";
+}
+
+internal sealed class ScopedEchoHandler(
+    GreetingPrefix prefix)
+    : IResilientTaskHandler<string, string>
+{
+    public Task<string> RunAsync(
+        TaskContext<string> context,
+        CancellationToken cancellationToken)
+        => Task.FromResult(prefix.Value + context.Input);
+}
+
+public static TaskDefinition<string, string> RegisterScopedHandler(
+    IServiceCollection services)
+{
+    services.AddScoped<GreetingPrefix>();
+    return services.AddResilientTask<string, string, ScopedEchoHandler>(
+        "scoped-echo");
+}
+```
+
+The framework creates a fresh asynchronous dependency-injection scope for every execution
+attempt. Constructor dependencies therefore follow normal scoped lifetime rules and are disposed
+before a retry starts. Recovered and steered attempts receive new scopes. Delegate registrations
+remain available for handlers that do not need scoped activation.
+
 ### Multi-turn chain
 
 ```csharp
@@ -223,6 +257,10 @@ await chat.DeleteAsync(chatId);
     durable input id matches the wire identity (an invocation id, or the Responses
     `response.id`; this is exactly what the Responses layer supplies per turn). Read the
     id assigned to a turn back from `TaskRun.InputId` / `TaskContext.InputId`.
+  - If the task-bound stream is used, an explicit input id cannot be reused by a different
+    `TaskId` while the stream is retained. The built-in file-backed registry persists this
+    ownership across restarts and rejects cross-task reuse instead of exposing another task's
+    replay history.
 
   `IfLastInputId` requires an explicit `InputId` to be set alongside it.
 
@@ -273,6 +311,7 @@ Every turn receives a `TaskContext<TInput>`:
 |---|---|
 | `Input` | the typed input for this turn |
 | `TaskId` / `InputId` | identifiers for the run / this input |
+| `Stream` | producer access to the event stream keyed by this input's `InputId` |
 | `EntryMode` | fresh, resumed, or recovered |
 | `RetryAttempt` | zero-based retry attempt for the current turn |
 | `RecoveryCount` | zero-based crash-recovery count (mirrors the durable lease generation); a signal, not a guarantee (§4.2) |
@@ -305,6 +344,7 @@ TaskRun<string> run = await echo.StartAsync("hi");
 run.TaskId;            // the run's id
 run.InputId;          // the input id assigned to this run
 run.IsQueued;         // true if this input was queued as steering, not a fresh run
+run.Stream;           // consumer stream for this input
 string r = await run.Completion;                        // await the result
 string c = await run.Completion.WaitAsync(token);       // cancel only your wait
 await run.RequestCancellationAsync();                   // request cancellation of the run
@@ -516,6 +556,19 @@ TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput>(
     Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
     bool steerable = false,
     Action<TaskRegistrationOptions>? configure = null);
+
+TaskDefinition<TInput, TOutput> AddResilientTask<TInput, TOutput, THandler>(
+    this IServiceCollection services,
+    string name,
+    Action<TaskRegistrationOptions>? configure = null)
+    where THandler : class, IResilientTaskHandler<TInput, TOutput>;
+
+TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput, THandler>(
+    this IServiceCollection services,
+    string name,
+    bool steerable = false,
+    Action<TaskRegistrationOptions>? configure = null)
+    where THandler : class, IResilientTaskHandler<TInput, TOutput>;
 ```
 
 `AddResilientTask`/`AddResilientMultiTurnTask` self-initialize the resilient-tasks
@@ -557,8 +610,9 @@ turn's `inputId` and want that turn's handle; it is required for multi-turn task
 
 ### 5.3 `TaskRun<TOutput>`
 
-`TaskId`, `InputId`, `IsQueued`, `Completion` (a `Task<TOutput>` — await it for the result,
-or `Completion.WaitAsync(token)` to cancel only your wait), and `RequestCancellationAsync()`.
+`TaskId`, `InputId`, `IsQueued`, `Stream`, `Completion` (a `Task<TOutput>` — await it for
+the result, or `Completion.WaitAsync(token)` to cancel only your wait), and
+`RequestCancellationAsync()`.
 
 ### 5.4 `TaskContext<TInput>`
 

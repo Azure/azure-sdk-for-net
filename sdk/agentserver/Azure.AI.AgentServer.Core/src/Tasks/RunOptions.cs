@@ -12,7 +12,10 @@ public sealed class RunOptions
     /// <summary>An explicit task id for identity-based convergence; generated when omitted.</summary>
     public string? TaskId { get; init; }
 
-    /// <summary>An explicit per-turn input id; generated when omitted.</summary>
+    /// <summary>
+    /// An explicit per-turn input id; generated when omitted. When the task-bound stream is used,
+    /// the id must not be reused by a different task while that stream is retained.
+    /// </summary>
     public string? InputId { get; init; }
 
     /// <summary>A precondition requiring the task's last input id to equal this value (FR-006).</summary>

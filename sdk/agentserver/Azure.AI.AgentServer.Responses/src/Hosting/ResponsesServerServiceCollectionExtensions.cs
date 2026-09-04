@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System.Linq;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Core.Streaming;
 using Azure.AI.AgentServer.Core.Tasks;
@@ -148,33 +147,31 @@ public static class ResponsesServerServiceCollectionExtensions
         // chosen from the effective options when the registry is resolved: local +
         // ResilientBackground uses a durable file-backed replay so a
         // reconnecting client can replay pre-restart SSE events after a single-sandbox recovery;
-        // otherwise an in-memory replay buffer is sufficient. Core's AddAgentEventStreams selects the
-        // backing exactly once per process and throws on a second configuring call, so only register
-        // when no backing has been chosen yet — a consumer (or test) that registered its own backing
-        // first wins, preserving the prior override semantics.
-        if (!services.Any(d => d.ServiceType == typeof(AgentEventStreamRegistry)))
+        // otherwise an in-memory replay buffer is sufficient. Register this as a protocol default:
+        // an explicit application backing overrides it regardless of registration order, while
+        // conflicting protocol defaults fail when the registry is materialized.
+        services.AddAgentEventStreamsDefault("ResponsesServer", serviceProvider =>
         {
-            services.AddOptions<AgentEventStreamOptions>()
-                .Configure<
-                    IOptions<ResponsesServerOptions>,
-                    IOptions<InMemoryProviderOptions>>(
-                    (streamOptions, responseOptions, providerOptions) =>
-                {
-                    TimeSpan streamTtl = providerOptions.Value.EventStreamTtl;
-                    if (responseOptions.Value.ResilientBackground
-                        && !FoundryEnvironment.IsHosted)
-                    {
-                        streamOptions.UseFileBackedReplay(
-                            storageDirectory: Internal.Resilience.ResponsesStatePaths.StreamsRoot(),
-                            ttl: streamTtl);
-                    }
-                    else
-                    {
-                        streamOptions.UseInMemoryReplay(ttl: streamTtl);
-                    }
-                });
-            services.AddAgentEventStreams();
-        }
+            ResponsesServerOptions responseOptions = serviceProvider
+                .GetRequiredService<IOptions<ResponsesServerOptions>>()
+                .Value;
+            TimeSpan streamTtl = serviceProvider
+                .GetRequiredService<IOptions<InMemoryProviderOptions>>()
+                .Value.EventStreamTtl;
+            var streamOptions = new AgentEventStreamOptions();
+            if (responseOptions.ResilientBackground && !FoundryEnvironment.IsHosted)
+            {
+                streamOptions.UseFileBackedReplay(
+                    storageDirectory: Internal.Resilience.ResponsesStatePaths.StreamsRoot(),
+                    ttl: streamTtl);
+            }
+            else
+            {
+                streamOptions.UseInMemoryReplay(ttl: streamTtl);
+            }
+
+            return streamOptions;
+        });
 
         services.AddSingleton<ResponseExecutionTracker>();
         services.AddHostedService(sp => sp.GetRequiredService<ResponseExecutionTracker>());

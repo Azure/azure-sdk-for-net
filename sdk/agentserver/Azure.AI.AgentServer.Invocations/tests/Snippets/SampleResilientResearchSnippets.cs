@@ -43,8 +43,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
         {
             #region Snippet:ResilientResearch_RegisterServices
 
-            var builder = AgentHost.CreateBuilder();
-            IServiceCollection services = builder.Services;
+            var services = new ServiceCollection();
 
             // Inject a REAL OpenAI Responses client as the upstream model. In production this
             // points at your Foundry/OpenAI endpoint; tests inject a mock transport so the
@@ -59,32 +58,17 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             // (In-memory replay would lose the pre-crash buffer, defeating this sample's resilience.)
             services.AddAgentEventStreams(o => o.UseFileBackedReplay());
 
-            // AddResilientTask/AddResilientMultiTurnTask self-initialize the resilient-tasks
-            // services on first use and register the returned TaskDefinition as a keyed singleton
-            // (keyed by task name), so the handler resolves it with GetResilientTask. The provider-
-            // aware overloads were removed (the service-locator shape is being retired ahead of GA),
-            // so resolve the handler's singleton dependencies from the built container once and
-            // capture them in the plain delegate after the complete service graph is registered.
-            AgentEventStreamRegistry streams = null!;
-            ResponsesClient model = null!;
-
             // The resilient "research" task is session-scoped and steerable: one durable
             // chain per session (TaskId = research-{sessionId}), and a POST while a turn is
             // in flight is enqueued as steering. Each turn streams a real model per sub-call
-            // into the event stream keyed by that turn's invocation id (carried on the input).
-            services.AddResilientMultiTurnTask<ResearchRequest, ResearchResult>(
+            // through TaskContext.Stream. The task engine constructs ResearchTask in a fresh
+            // dependency-injection scope for every execution attempt.
+            services.AddResilientMultiTurnTask<
+                ResearchRequest,
+                ResearchResult,
+                ResearchTask>(
                 "research",
-                (ctx, ct) => RunResearchAsync(
-                    streams,
-                    model,
-                    ModelDeployment,
-                    ctx,
-                    ct: ct),
                 steerable: true);
-
-            var app = builder.Build();
-            streams = app.App.Services.GetRequiredService<AgentEventStreamRegistry>();
-            model = app.App.Services.GetRequiredService<ResponsesClient>();
 
             #endregion
         }
@@ -149,7 +133,6 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
         /// owns its own replayable stream while the durable task spans the whole session.
         /// </summary>
         public static async Task<ResearchResult> RunResearchAsync(
-            AgentEventStreamRegistry registry,
             ResponsesClient model,
             string modelName,
             TaskContext<ResearchRequest> ctx,
@@ -164,7 +147,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             // durable TaskId spans the whole session.
             string invId = ctx.Input.InvocationId;
             string sessionId = ctx.Input.SessionId;
-            AgentEventStream stream = await registry.GetOrCreateAsync(invId, ct);
+            TaskStreamWriter stream = ctx.Stream;
             FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
                 $"resilient-research/{sessionId}",
                 s_credential,
@@ -180,7 +163,6 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             if (checkpoint.TryGetValue("terminal_status", out BinaryData? terminalData))
             {
                 string? terminalStatus = terminalData.ToObjectFromJson<string>();
-                await stream.CloseAsync();
                 if (terminalStatus == "failed")
                 {
                     string error = checkpoint.TryGetValue("error", out BinaryData? errorData)
@@ -242,7 +224,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                     if (ctx.PendingInputCount > 0)
                     {
                         await Emit("wind_down", "Steering: winding down for new topic");
-                        await FinishTurn(store, stream, invId, "suspended");
+                        await FinishTurn(store, invId, "suspended");
                         return new ResearchResult("steered", allFindings.ToArray());
                     }
 
@@ -276,7 +258,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                         if (ctx.PendingInputCount > 0)
                         {
                             await Emit("wind_down", "Steering: winding down mid-phase");
-                            await FinishTurn(store, stream, invId, "suspended");
+                            await FinishTurn(store, invId, "suspended");
                             return new ResearchResult("steered", allFindings.ToArray());
                         }
 
@@ -315,7 +297,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                                   && !ctx.TimeoutExceeded && !ctx.Shutdown.IsCancellationRequested)
                         {
                             await Emit("wind_down", "Steering: winding down mid-stream");
-                            await FinishTurn(store, stream, invId, "suspended");
+                            await FinishTurn(store, invId, "suspended");
                             return new ResearchResult("steered", allFindings.ToArray());
                         }
                         string result = sb.ToString();
@@ -339,7 +321,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                                       && !ctx.TimeoutExceeded && !ctx.Shutdown.IsCancellationRequested)
                             {
                                 await Emit("wind_down", "Steering during cooldown");
-                                await FinishTurn(store, stream, invId, "suspended");
+                                await FinishTurn(store, invId, "suspended");
                                 return new ResearchResult("steered", allFindings.ToArray());
                             }
                         }
@@ -367,15 +349,36 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                                   && !ctx.TimeoutExceeded && !ctx.Shutdown.IsCancellationRequested)
                         {
                             await Emit("wind_down", "Steering between phases");
-                            await FinishTurn(store, stream, invId, "suspended");
+                            await FinishTurn(store, invId, "suspended");
                             return new ResearchResult("steered", allFindings.ToArray());
                         }
                     }
                 }
 
                 await Emit("done", $"Completed {numPhases} phases");
-                await FinishTurn(store, stream, invId, "completed");
+                await FinishTurn(store, invId, "completed");
                 return new ResearchResult("done", allFindings.ToArray());
+            }
+            catch (OperationCanceledException)
+                when (ctx.CancelRequested || ctx.TimeoutExceeded)
+            {
+                string terminalStatus = ctx.TimeoutExceeded ? "timed_out" : "cancelled";
+                string message = ctx.TimeoutExceeded ? "Task timed out." : "Task cancelled.";
+
+                // Explicit cancellation and timeout are terminal for this turn. Emit the
+                // protocol event with a non-cancelable token because the handler's token is
+                // already signaled. Shutdown/lease-loss cancellations intentionally bypass
+                // this branch so Core can defer the turn for recovery.
+                seq++;
+                var failEvt = new ResearchEvent(seq, "run_failed", message);
+                await stream.EmitAsync(
+                    new SseItem<string>(JsonSerializer.Serialize(failEvt), "run_failed")
+                    {
+                        EventId = seq.ToString(CultureInfo.InvariantCulture),
+                    },
+                    cancellationToken: CancellationToken.None);
+                await FinishTurn(store, invId, terminalStatus, message);
+                throw;
             }
             catch (Exception ex) when (ex is not OperationCanceledException)
             {
@@ -388,15 +391,14 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                     {
                         EventId = seq.ToString(CultureInfo.InvariantCulture),
                     },
-                    close: true, cancellationToken: CancellationToken.None);
-                await FinishTurn(store, stream, invId, "failed", ex.Message);
+                    cancellationToken: CancellationToken.None);
+                await FinishTurn(store, invId, "failed", ex.Message);
                 throw;
             }
         }
 
         private static async Task FinishTurn(
             FoundryStateStore store,
-            AgentEventStream stream,
             string invId,
             string terminalStatus,
             string? error = null)
@@ -415,7 +417,20 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 terminal,
                 tags: new Dictionary<string, string> { ["invocation_id"] = invId },
                 cancellationToken: CancellationToken.None);
-            await stream.CloseAsync();
+        }
+
+        internal sealed class ResearchTask(
+            ResponsesClient model)
+            : IResilientTaskHandler<ResearchRequest, ResearchResult>
+        {
+            public Task<ResearchResult> RunAsync(
+                TaskContext<ResearchRequest> context,
+                CancellationToken cancellationToken = default)
+                => RunResearchAsync(
+                    model,
+                    ModelDeployment,
+                    context,
+                    ct: cancellationToken);
         }
 
         private static Task SaveCheckpointAsync(
@@ -438,8 +453,8 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
         ///
         /// <list type="bullet">
         /// <item><b>POST /invocations</b> (<see cref="HandleAsync"/>) — start a new turn (or
-        /// steer an in-flight one). Reserves a stream keyed by the request's invocation id,
-        /// starts the durable task with <c>TaskId = research-{sessionId}</c>, then either
+        /// steer an in-flight one). Starts the durable task with
+        /// <c>TaskId = research-{sessionId}</c> and <c>InputId = invocationId</c>, then either
         /// streams events live (when <c>Accept: text/event-stream</c>) or returns
         /// <c>202 Accepted</c> with the invocation id for later resume.</item>
         /// <item><b>GET /invocations/{id}</b> (<see cref="GetAsync"/>) — RESUME. Re-attaches to
@@ -469,8 +484,6 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 var body = await request.ReadFromJsonAsync<ResearchStartRequest>(cancellationToken)
                     ?? new ResearchStartRequest("general knowledge");
 
-                var registry = request.HttpContext.RequestServices
-                    .GetRequiredService<AgentEventStreamRegistry>();
                 var research = request.HttpContext.RequestServices
                     .GetResilientTask<ResearchRequest, ResearchResult>("research");
 
@@ -478,13 +491,9 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 string invId = context.InvocationId;
                 s_taskIdByInvocation[invId] = taskId;
 
-                // Reserve the per-turn stream BEFORE starting the task so a live subscriber
-                // attaches without missing early events.
-                AgentEventStream stream = await registry.GetOrCreateAsync(invId, cancellationToken);
-
                 // Start a new turn or steer the running one. With the same TaskId, the engine
                 // transparently enqueues this input as steering while a turn is in flight.
-                _ = await research.StartAsync(
+                TaskRun<ResearchResult> run = await research.StartAsync(
                     new ResearchRequest(
                         body.Topic,
                         invId,
@@ -506,7 +515,10 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                     return;
                 }
 
-                await WriteSseAsync(response, stream, after: null, cancellationToken);
+                await WriteSseAsync(
+                    response,
+                    run.Stream.Subscribe(cancellationToken: cancellationToken),
+                    cancellationToken);
             }
 
             // GET /invocations/{id} — RESUME an existing turn (read-only). Never starts a run.
@@ -534,7 +546,10 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 if (AcceptsEventStream(request))
                 {
                     string? after = ResumeEventId(request);
-                    await WriteSseAsync(response, stream, after, cancellationToken);
+                    await WriteSseAsync(
+                        response,
+                        stream.Subscribe(after, cancellationToken),
+                        cancellationToken);
                     return;
                 }
 
@@ -591,7 +606,9 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             }
 
             private static async Task WriteSseAsync(
-                HttpResponse response, AgentEventStream stream, string? after, CancellationToken ct)
+                HttpResponse response,
+                IAsyncEnumerable<SseItem<string>> events,
+                CancellationToken ct)
             {
                 response.ContentType = "text/event-stream";
                 response.Headers.CacheControl = "no-cache";
@@ -601,7 +618,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                     // Delegate SSE framing (id:/event:/data: lines) to the BCL SseFormatter — the
                     // stream already yields SseItem<string> with the event text in Data, the event
                     // name in EventType, and the opaque resume id in EventId.
-                    await SseFormatter.WriteAsync(stream.Subscribe(after, ct), response.Body, ct);
+                    await SseFormatter.WriteAsync(events, response.Body, ct);
 
                     // Clean close: emit a terminal `done` frame so the client can distinguish
                     // end-of-stream from a dropped connection.

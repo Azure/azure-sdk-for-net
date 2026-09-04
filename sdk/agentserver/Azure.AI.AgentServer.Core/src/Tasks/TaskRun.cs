@@ -35,6 +35,9 @@ public class TaskRun<TOutput>
     /// <summary>Whether the input was queued as steering rather than starting a fresh run.</summary>
     public virtual bool IsQueued => State.IsQueued;
 
+    /// <summary>The event stream associated with the input that started this run.</summary>
+    public virtual TaskStream Stream => State.Stream;
+
     /// <summary>
     /// A task that completes with the run's typed result. Await it to observe the result;
     /// use <c>Completion.WaitAsync(cancellationToken)</c> to cancel only your wait. If the run

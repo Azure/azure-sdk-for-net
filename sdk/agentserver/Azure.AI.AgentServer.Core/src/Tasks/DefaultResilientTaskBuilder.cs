@@ -44,7 +44,13 @@ internal sealed class DefaultResilientTaskBuilder
         string name,
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
         Action<TaskRegistrationOptions>? configure = null)
-        => Add(name, handler, multiTurn: false, static () => false, configure);
+        => Add<TInput, TOutput>(name, handler, multiTurn: false, static () => false, configure);
+
+    public TaskDefinition<TInput, TOutput> AddTask<TInput, TOutput>(
+        string name,
+        Func<IServiceProvider, TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
+        Action<TaskRegistrationOptions>? configure = null)
+        => Add<TInput, TOutput>(name, handler, multiTurn: false, static () => false, configure);
 
     /// <summary>Registers a multi-turn task (Python <c>@multi_turn_task</c>), optionally steerable.</summary>
     [RequiresUnreferencedCode(ReflectionTrimWarning)]
@@ -54,7 +60,14 @@ internal sealed class DefaultResilientTaskBuilder
         Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
         bool steerable = false,
         Action<TaskRegistrationOptions>? configure = null)
-        => Add(name, handler, multiTurn: true, () => steerable, configure);
+        => Add<TInput, TOutput>(name, handler, multiTurn: true, () => steerable, configure);
+
+    public TaskDefinition<TInput, TOutput> AddMultiTurnTask<TInput, TOutput>(
+        string name,
+        Func<IServiceProvider, TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
+        bool steerable = false,
+        Action<TaskRegistrationOptions>? configure = null)
+        => Add<TInput, TOutput>(name, handler, multiTurn: true, () => steerable, configure);
 
     /// <summary>Registers a multi-turn task whose steerability is resolved when a run starts.</summary>
     public TaskDefinition<TInput, TOutput> AddMultiTurnTask<TInput, TOutput>(
@@ -64,7 +77,19 @@ internal sealed class DefaultResilientTaskBuilder
         Action<TaskRegistrationOptions>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(isSteerable);
-        return Add(name, handler, multiTurn: true, isSteerable, configure);
+        return Add<TInput, TOutput>(
+            name, handler, multiTurn: true, isSteerable, configure);
+    }
+
+    public TaskDefinition<TInput, TOutput> AddMultiTurnTask<TInput, TOutput>(
+        string name,
+        Func<IServiceProvider, TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
+        Func<bool> isSteerable,
+        Action<TaskRegistrationOptions>? configure = null)
+    {
+        ArgumentNullException.ThrowIfNull(isSteerable);
+        return Add<TInput, TOutput>(
+            name, handler, multiTurn: true, isSteerable, configure);
     }
 
     /// <summary>
@@ -80,7 +105,21 @@ internal sealed class DefaultResilientTaskBuilder
         Action<TaskRegistrationOptions>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(inputTypeInfo);
-        return Add(name, handler, multiTurn: false, static () => false, configure, inputTypeInfo);
+        return Add<TInput, TOutput>(
+            name, handler, multiTurn: false, static () => false, configure, inputTypeInfo);
+    }
+
+    public TaskDefinition<TInput, TOutput> AddTask<TInput, TOutput>(
+        string name,
+        Func<IServiceProvider, TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
+#pragma warning disable AZC0014 // JsonTypeInfo<T> is the sanctioned Native-AOT escape hatch (see Azure.Search.Documents).
+        JsonTypeInfo<TInput> inputTypeInfo,
+#pragma warning restore AZC0014
+        Action<TaskRegistrationOptions>? configure = null)
+    {
+        ArgumentNullException.ThrowIfNull(inputTypeInfo);
+        return Add<TInput, TOutput>(
+            name, handler, multiTurn: false, static () => false, configure, inputTypeInfo);
     }
 
     /// <summary>
@@ -97,12 +136,27 @@ internal sealed class DefaultResilientTaskBuilder
         Action<TaskRegistrationOptions>? configure = null)
     {
         ArgumentNullException.ThrowIfNull(inputTypeInfo);
-        return Add(name, handler, multiTurn: true, () => steerable, configure, inputTypeInfo);
+        return Add<TInput, TOutput>(
+            name, handler, multiTurn: true, () => steerable, configure, inputTypeInfo);
+    }
+
+    public TaskDefinition<TInput, TOutput> AddMultiTurnTask<TInput, TOutput>(
+        string name,
+        Func<IServiceProvider, TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
+#pragma warning disable AZC0014 // JsonTypeInfo<T> is the sanctioned Native-AOT escape hatch (see Azure.Search.Documents).
+        JsonTypeInfo<TInput> inputTypeInfo,
+#pragma warning restore AZC0014
+        bool steerable = false,
+        Action<TaskRegistrationOptions>? configure = null)
+    {
+        ArgumentNullException.ThrowIfNull(inputTypeInfo);
+        return Add<TInput, TOutput>(
+            name, handler, multiTurn: true, () => steerable, configure, inputTypeInfo);
     }
 
     private TaskDefinition<TInput, TOutput> Add<TInput, TOutput>(
         string name,
-        Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
+        Delegate handler,
         bool multiTurn,
         Func<bool> isSteerable,
         Action<TaskRegistrationOptions>? configure,
@@ -145,6 +199,7 @@ internal sealed class DefaultResilientTaskBuilder
             typeof(TInput),
             typeof(TOutput),
             handler,
+            handler is Func<IServiceProvider, TaskContext<TInput>, CancellationToken, Task<TOutput>>,
             multiTurn,
             isSteerable,
             options,

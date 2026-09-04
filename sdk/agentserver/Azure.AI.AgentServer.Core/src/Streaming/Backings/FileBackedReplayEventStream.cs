@@ -19,7 +19,10 @@ namespace Azure.AI.AgentServer.Core.Streaming.Backings;
 /// <see cref="SseItem{T}.EventId"/>, and <see cref="SseItem{T}.EventType"/>); the data is already a
 /// string, so no payload codec is required.
 /// </summary>
-internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposable
+internal sealed class FileBackedReplayEventStream :
+    ReplayEventStream,
+    IDisposable,
+    ITaskOwnedEventStream
 {
     private const string TerminalKey = "__terminal__";
     private const string EmitTimeKey = "emit_time";
@@ -32,26 +35,36 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
     private readonly object _fileGate = new();
     private readonly string _filePath;
     private readonly string _lockPath;
+    private readonly string _ownerPath;
     private FileStream? _lock;
     private FileStream? _data;
     private int _evictionsSinceCompaction;
     private bool _disposed;
+    private string? _taskId;
 
     public FileBackedReplayEventStream(
         string id,
         string storageDirectory,
         TimeSpan? ttl,
-        Action onDestroy)
+        Action onDestroy,
+        string? taskId = null)
         : base(id, ttl, onDestroy)
     {
         Directory.CreateDirectory(storageDirectory);
         string stem = ToSafeFileStem(id);
         _filePath = Path.Combine(storageDirectory, stem + ".jsonl");
         _lockPath = Path.Combine(storageDirectory, stem + ".lock");
+        _ownerPath = Path.Combine(storageDirectory, stem + ".owner");
 
         AcquireWriterLock();
         try
         {
+            LoadTaskOwner();
+            if (taskId is not null)
+            {
+                ValidateOrClaimTask(taskId);
+            }
+
             Rehydrate();
 
             // Open ONE long-lived append handle after any rehydrate-time truncation rewrite, and
@@ -73,6 +86,33 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
 
     private FileStream OpenAppendHandle()
         => new FileStream(_filePath, FileMode.Append, FileAccess.Write, FileShare.Read);
+
+    internal static bool Exists(string id, string storageDirectory)
+        => File.Exists(Path.Combine(storageDirectory, ToSafeFileStem(id) + ".jsonl"));
+
+    public string? TaskId => _taskId;
+
+    public void ValidateOrClaimTask(string taskId)
+    {
+        lock (_fileGate)
+        {
+            if (_taskId is not null)
+            {
+                if (!string.Equals(_taskId, taskId, StringComparison.Ordinal))
+                {
+                    throw new AgentEventStreamException(
+                        $"Task stream '{Id}' is already owned by task '{_taskId}' and " +
+                        $"cannot be reused by task '{taskId}'. Explicit input ids used for " +
+                        "task-bound streams must be unique across tasks.");
+                }
+
+                return;
+            }
+
+            WriteTaskOwner(taskId);
+            _taskId = taskId;
+        }
+    }
 
     // Maps a stream id to a single, safe on-disk filename stem. Well-formed ids (GUIDs and other
     // tokens using [A-Za-z0-9._-], with no "."/".." path segment, that are not already shaped like
@@ -156,7 +196,45 @@ internal sealed class FileBackedReplayEventStream : ReplayEventStream, IDisposab
             _data?.Dispose();
             _data = null;
             TryDeleteFile(_filePath);
+            TryDeleteFile(_ownerPath);
             ReleaseWriterLock();
+        }
+    }
+
+    private void LoadTaskOwner()
+    {
+        if (!File.Exists(_ownerPath))
+        {
+            return;
+        }
+
+        string owner = File.ReadAllText(_ownerPath, Encoding.UTF8).Trim();
+        _taskId = owner.Length == 0 ? null : owner;
+    }
+
+    private void WriteTaskOwner(string taskId)
+    {
+        string tempPath = _ownerPath + ".tmp";
+        byte[] bytes = Encoding.UTF8.GetBytes(taskId);
+        using (var stream = new FileStream(
+            tempPath,
+            FileMode.Create,
+            FileAccess.Write,
+            FileShare.None,
+            bufferSize: 4096,
+            FileOptions.WriteThrough))
+        {
+            stream.Write(bytes, 0, bytes.Length);
+            stream.Flush(flushToDisk: true);
+        }
+
+        try
+        {
+            File.Move(tempPath, _ownerPath, overwrite: true);
+        }
+        finally
+        {
+            TryDeleteFile(tempPath);
         }
     }
 

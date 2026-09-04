@@ -13,9 +13,9 @@ using NUnit.Framework;
 namespace Azure.AI.AgentServer.Core.Tests.Tasks;
 
 /// <summary>
-/// Pay-for-what-you-use / decoupling verifications (SC-009 / FR-038): a non-streaming
-/// handler touches no streaming type, and a non-steerable task allocates no steering queue.
-/// These are inspection-based assertions, not wall-clock timing.
+/// Pay-for-what-you-use / decoupling verifications (SC-009 / FR-038): task APIs do not expose
+/// raw streaming primitives, and a non-steerable task allocates no steering queue. Lazy stream
+/// backing allocation is behavior-tested by <see cref="TaskStreamTests"/>.
 /// </summary>
 [TestFixture]
 public sealed class PayForUseTests
@@ -23,32 +23,40 @@ public sealed class PayForUseTests
     private const string StreamingNamespace = "Azure.AI.AgentServer.Core.Streaming";
 
     [Test]
-    public void TaskTypes_HaveNoStreamingDependencies()
+    public void TaskTypes_DoNotExposeRawStreamingPrimitives()
     {
-        // The task engine, context, and state types must not reference any streaming type,
-        // proving a non-streaming handler pulls in zero streaming machinery.
+        // Task-bound reader/writer capabilities intentionally couple the engine to streaming, but
+        // the raw registry and stream types remain advanced implementation details. Public task
+        // surfaces must reference only types in the Tasks namespace.
         Type[] taskTypes =
         {
-            typeof(TaskEngine),
             typeof(TaskContext<string>),
-            typeof(TaskContextState<string>),
-            typeof(TaskRunState<string>),
+            typeof(TaskRun<string>),
+            typeof(TaskStream),
+            typeof(TaskStreamWriter),
             typeof(RunOptions),
-            typeof(DefaultResilientTaskBuilder),
         };
 
         foreach (Type type in taskTypes)
         {
-            FieldInfo[] fields = type.GetFields(
-                BindingFlags.Instance | BindingFlags.Static |
-                BindingFlags.Public | BindingFlags.NonPublic);
-
-            foreach (FieldInfo field in fields)
+            MemberInfo[] members = type.GetMembers(BindingFlags.Instance | BindingFlags.Public);
+            foreach (MemberInfo member in members)
             {
+                Type? referencedType = member switch
+                {
+                    PropertyInfo property => property.PropertyType,
+                    MethodInfo method => method.ReturnType,
+                    _ => null,
+                };
+                if (referencedType is null)
+                {
+                    continue;
+                }
+
                 Assert.That(
-                    ReferencesStreaming(field.FieldType),
+                    ReferencesStreaming(referencedType),
                     Is.False,
-                    $"{type.Name}.{field.Name} ({field.FieldType.Name}) must not depend on streaming.");
+                    $"{type.Name}.{member.Name} ({referencedType.Name}) must not expose raw streaming.");
             }
         }
     }
