@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 writer.WritePropertyName("sourceVmId"u8);
                 writer.WriteStringValue(SourceVmId);
             }
-            if (Optional.IsDefined(WindowsOsInfo))
+            if (Optional.IsDefined(WindowsOSInfo))
             {
                 writer.WritePropertyName("windowsOsInfo"u8);
-                writer.WriteObjectValue(WindowsOsInfo, options);
+                writer.WriteObjectValue(WindowsOSInfo, options);
             }
-            if (Optional.IsDefined(LinuxOsInfo))
+            if (Optional.IsDefined(LinuxOSInfo))
             {
                 writer.WritePropertyName("linuxOsInfo"u8);
-                writer.WriteObjectValue(LinuxOsInfo, options);
+                writer.WriteObjectValue(LinuxOSInfo, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -132,8 +132,8 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 return null;
             }
             string sourceVmId = default;
-            DevTestLabWindowsOSInfo windowsOsInfo = default;
-            DevTestLabLinuxOSInfo linuxOsInfo = default;
+            DevTestLabWindowsOSInfo windowsOSInfo = default;
+            DevTestLabLinuxOSInfo linuxOSInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    windowsOsInfo = DevTestLabWindowsOSInfo.DeserializeDevTestLabWindowsOSInfo(prop.Value, options);
+                    windowsOSInfo = DevTestLabWindowsOSInfo.DeserializeDevTestLabWindowsOSInfo(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("linuxOsInfo"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    linuxOsInfo = DevTestLabLinuxOSInfo.DeserializeDevTestLabLinuxOSInfo(prop.Value, options);
+                    linuxOSInfo = DevTestLabLinuxOSInfo.DeserializeDevTestLabLinuxOSInfo(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DevTestLabCustomImageVm(sourceVmId, windowsOsInfo, linuxOsInfo, additionalBinaryDataProperties);
+            return new DevTestLabCustomImageVm(sourceVmId, windowsOSInfo, linuxOSInfo, additionalBinaryDataProperties);
         }
     }
 }
