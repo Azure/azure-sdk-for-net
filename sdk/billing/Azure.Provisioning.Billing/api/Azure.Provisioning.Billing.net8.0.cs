@@ -1760,6 +1760,7 @@ namespace Azure.Provisioning.Billing
         public Azure.Provisioning.BicepValue<string> SkuDescription { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SkuId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Billing.BillingSubscriptionStatus> Status { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Billing.BillingProvisioningState> SubscriptionAliasProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SubscriptionAliasSubscriptionId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Billing.SubscriptionEnrollmentAccountStatus> SubscriptionEnrollmentAccountStatus { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> SubscriptionId { get { throw null; } }

@@ -13,6 +13,7 @@ namespace Azure.Provisioning.Billing
     internal partial class BillingSubscriptionAliasProperties : BillingSubscriptionProperties
     {
         private BicepValue<string> _subscriptionAliasSubscriptionId;
+        private BicepValue<BillingProvisioningState> _subscriptionAliasProvisioningState;
 
         /// <summary> Creates a new BillingSubscriptionAliasProperties. </summary>
         public BillingSubscriptionAliasProperties()
@@ -29,11 +30,22 @@ namespace Azure.Provisioning.Billing
             }
         }
 
+        /// <summary> Gets the SubscriptionAliasProvisioningState. </summary>
+        public BicepValue<BillingProvisioningState> SubscriptionAliasProvisioningState
+        {
+            get
+            {
+                Initialize();
+                return _subscriptionAliasProvisioningState;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for BillingSubscriptionAliasProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _subscriptionAliasSubscriptionId = DefineProperty<string>(nameof(SubscriptionAliasSubscriptionId), new string[] { "billingSubscriptionId" }, isOutput: true);
+            _subscriptionAliasProvisioningState = DefineProperty<BillingProvisioningState>(nameof(SubscriptionAliasProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }
 
