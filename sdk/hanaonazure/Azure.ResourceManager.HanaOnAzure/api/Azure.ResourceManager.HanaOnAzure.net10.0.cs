@@ -152,10 +152,6 @@ namespace Azure.ResourceManager.HanaOnAzure.Mocking
         public virtual Azure.Pageable<Azure.ResourceManager.HanaOnAzure.SapMonitorResource> GetSapMonitors(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.HanaOnAzure.SapMonitorResource> GetSapMonitorsAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MockableHanaOnAzureTenantResource : Azure.ResourceManager.ArmResource
-    {
-        protected MockableHanaOnAzureTenantResource() { }
-    }
 }
 namespace Azure.ResourceManager.HanaOnAzure.Models
 {
