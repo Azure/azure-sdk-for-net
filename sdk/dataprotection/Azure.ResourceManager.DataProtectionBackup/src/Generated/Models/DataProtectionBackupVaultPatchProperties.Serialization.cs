@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("featureSettings"u8);
                 writer.WriteObjectValue(FeatureSettings, options);
             }
+            if (Optional.IsDefined(CostManagementSettings))
+            {
+                writer.WritePropertyName("costManagementSettings"u8);
+                writer.WriteObjectValue(CostManagementSettings, options);
+            }
             if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
@@ -149,6 +154,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             MonitoringSettings monitoringSettings = default;
             BackupVaultSecuritySettings securitySettings = default;
             BackupVaultFeatureSettings featureSettings = default;
+            CostManagementSettings costManagementSettings = default;
             IList<string> resourceGuardOperationRequests = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -180,6 +186,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     featureSettings = BackupVaultFeatureSettings.DeserializeBackupVaultFeatureSettings(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("costManagementSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    costManagementSettings = CostManagementSettings.DeserializeCostManagementSettings(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("resourceGuardOperationRequests"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -206,7 +221,13 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataProtectionBackupVaultPatchProperties(monitoringSettings, securitySettings, featureSettings, resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new DataProtectionBackupVaultPatchProperties(
+                monitoringSettings,
+                securitySettings,
+                featureSettings,
+                costManagementSettings,
+                resourceGuardOperationRequests ?? new ChangeTrackingList<string>(),
+                additionalBinaryDataProperties);
         }
     }
 }

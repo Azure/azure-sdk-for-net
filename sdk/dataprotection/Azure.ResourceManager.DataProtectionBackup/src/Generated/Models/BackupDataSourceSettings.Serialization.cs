@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
     /// Parameters for Backup Datasource
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KubernetesClusterBackupDataSourceSettings"/>, <see cref="BlobBackupDataSourceSettings"/>, and <see cref="AdlsBlobBackupDataSourceSettings"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KubernetesClusterBackupDataSourceSettings"/>, <see cref="BlobBackupDataSourceSettings"/>, <see cref="BlobBackupDatasourceParametersForAutoProtection"/>, <see cref="AdlsBlobBackupDataSourceSettings"/>, <see cref="AdlsBlobBackupDatasourceParametersForAutoProtection"/>, and <see cref="GenericBackupDatasourceParameters"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownBackupDatasourceParameters))]
     public abstract partial class BackupDataSourceSettings : IJsonModel<BackupDataSourceSettings>
@@ -129,8 +129,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return KubernetesClusterBackupDataSourceSettings.DeserializeKubernetesClusterBackupDataSourceSettings(element, options);
                     case "BlobBackupDatasourceParameters":
                         return BlobBackupDataSourceSettings.DeserializeBlobBackupDataSourceSettings(element, options);
+                    case "BlobBackupDatasourceParametersForAutoProtection":
+                        return BlobBackupDatasourceParametersForAutoProtection.DeserializeBlobBackupDatasourceParametersForAutoProtection(element, options);
                     case "AdlsBlobBackupDatasourceParameters":
                         return AdlsBlobBackupDataSourceSettings.DeserializeAdlsBlobBackupDataSourceSettings(element, options);
+                    case "AdlsBlobBackupDatasourceParametersForAutoProtection":
+                        return AdlsBlobBackupDatasourceParametersForAutoProtection.DeserializeAdlsBlobBackupDatasourceParametersForAutoProtection(element, options);
+                    case "GenericBackupDatasourceParameters":
+                        return GenericBackupDatasourceParameters.DeserializeGenericBackupDatasourceParameters(element, options);
                 }
             }
             return UnknownBackupDatasourceParameters.DeserializeUnknownBackupDatasourceParameters(element, options);

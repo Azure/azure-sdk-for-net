@@ -241,6 +241,60 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new AdlsBlobBackupDataSourceSettings(default, default, (containersList ?? new ChangeTrackingList<string>()).ToList());
         }
 
+        /// <param name="autoProtectionSettings"> AutoProtection settings. </param>
+        /// <returns> A new <see cref="Models.BlobBackupDatasourceParametersForAutoProtection"/> instance for mocking. </returns>
+        public static BlobBackupDatasourceParametersForAutoProtection BlobBackupDatasourceParametersForAutoProtection(BlobBackupRuleBasedAutoProtectionSettings autoProtectionSettings = default)
+        {
+            return new BlobBackupDatasourceParametersForAutoProtection(default, default, autoProtectionSettings);
+        }
+
+        /// <param name="enabled"> Flag to enable whether auto protection. </param>
+        /// <param name="rules">
+        /// Rules are evaluated in the order provided. Inclusion adds candidates; exclusion removes candidates.
+        /// If no rules are present, all containers are considered eligible when enabled = true.
+        /// </param>
+        /// <returns> A new <see cref="Models.BlobBackupRuleBasedAutoProtectionSettings"/> instance for mocking. </returns>
+        public static BlobBackupRuleBasedAutoProtectionSettings BlobBackupRuleBasedAutoProtectionSettings(bool enabled = default, IEnumerable<BlobBackupAutoProtectionRule> rules = default)
+        {
+            rules ??= new ChangeTrackingList<BlobBackupAutoProtectionRule>();
+
+            return new BlobBackupRuleBasedAutoProtectionSettings(default, enabled, default, (rules ?? new ChangeTrackingList<BlobBackupAutoProtectionRule>()).ToList());
+        }
+
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="mode"> Exclude removes candidates (after inclusion). </param>
+        /// <param name="type"> Pattern type: Prefix, only pattern type supported for now. </param>
+        /// <param name="pattern"> The string pattern to evaluate against container names. For now this accepts literal strings only (no wildcards or regex). </param>
+        /// <returns> A new <see cref="Models.BlobBackupAutoProtectionRule"/> instance for mocking. </returns>
+        public static BlobBackupAutoProtectionRule BlobBackupAutoProtectionRule(string objectType = default, BlobBackupRuleMode mode = default, BlobBackupPatternType @type = default, string pattern = default)
+        {
+            return new BlobBackupAutoProtectionRule(objectType, mode, @type, pattern, default);
+        }
+
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="enabled"> Flag to enable whether auto protection. </param>
+        /// <returns> A new <see cref="Models.BlobBackupAutoProtectionSettings"/> instance for mocking. </returns>
+        public static BlobBackupAutoProtectionSettings BlobBackupAutoProtectionSettings(string objectType = default, bool enabled = default)
+        {
+            return new UnknownBlobBackupAutoProtectionSettings(objectType, enabled, default);
+        }
+
+        /// <param name="autoProtectionSettings"> AutoProtection settings. </param>
+        /// <returns> A new <see cref="Models.AdlsBlobBackupDatasourceParametersForAutoProtection"/> instance for mocking. </returns>
+        public static AdlsBlobBackupDatasourceParametersForAutoProtection AdlsBlobBackupDatasourceParametersForAutoProtection(BlobBackupRuleBasedAutoProtectionSettings autoProtectionSettings = default)
+        {
+            return new AdlsBlobBackupDatasourceParametersForAutoProtection(default, default, autoProtectionSettings);
+        }
+
+        /// <param name="resourceSelectors"> List of resource selectors to be backed up during configuration of backup. </param>
+        /// <returns> A new <see cref="Models.GenericBackupDatasourceParameters"/> instance for mocking. </returns>
+        public static GenericBackupDatasourceParameters GenericBackupDatasourceParameters(IEnumerable<string> resourceSelectors = default)
+        {
+            resourceSelectors ??= new ChangeTrackingList<string>();
+
+            return new GenericBackupDatasourceParameters(default, default, (resourceSelectors ?? new ChangeTrackingList<string>()).ToList());
+        }
+
         /// <param name="protectionStatusErrorDetails"> Specifies the protection status error of the resource. </param>
         /// <param name="status"> Specifies the protection status of the resource. </param>
         /// <returns> A new <see cref="Models.BackupInstanceProtectionStatusDetails"/> instance for mocking. </returns>
@@ -348,6 +402,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <param name="monitoringAlertSettingsForAllJobFailures"> Gets or sets the AlertSettingsForAllJobFailures. </param>
+        /// <param name="costManagementGranularityLevel"> Settings for granularity level. </param>
         /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
         /// <param name="resourceMoveState"> Resource move state for backup vault. </param>
         /// <param name="resourceMoveDetails"> Resource move details for backup vault. </param>
@@ -360,7 +415,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="replicatedRegions"> List of replicated regions for Backup Vault. </param>
         /// <returns> A new <see cref="Models.DataProtectionBackupVaultProperties"/> instance for mocking. </returns>
-        public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures = default, DataProtectionBackupProvisioningState? provisioningState = default, BackupVaultResourceMoveState? resourceMoveState = default, BackupVaultResourceMoveDetails resourceMoveDetails = default, BackupVaultSecuritySettings securitySettings = default, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = default, bool? isVaultProtectedByResourceGuard = default, BackupVaultFeatureSettings featureSettings = default, BackupVaultSecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default, IEnumerable<AzureLocation> replicatedRegions = default)
+        public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures = default, GranularityLevel? costManagementGranularityLevel = default, DataProtectionBackupProvisioningState? provisioningState = default, BackupVaultResourceMoveState? resourceMoveState = default, BackupVaultResourceMoveDetails resourceMoveDetails = default, BackupVaultSecuritySettings securitySettings = default, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = default, bool? isVaultProtectedByResourceGuard = default, BackupVaultFeatureSettings featureSettings = default, BackupVaultSecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default, IEnumerable<AzureLocation> replicatedRegions = default)
         {
             storageSettings ??= new ChangeTrackingList<DataProtectionBackupStorageSetting>();
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
@@ -368,6 +423,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             return new DataProtectionBackupVaultProperties(
                 default,
+                costManagementGranularityLevel is null ? default : new CostManagementSettings(costManagementGranularityLevel, default),
                 provisioningState,
                 resourceMoveState,
                 resourceMoveDetails,
@@ -464,13 +520,20 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="monitoringAlertSettingsForAllJobFailures"> Gets or sets the AlertSettingsForAllJobFailures. </param>
         /// <param name="securitySettings"> Security Settings. </param>
         /// <param name="featureSettings"> Feature Settings. </param>
+        /// <param name="costManagementGranularityLevel"> Settings for granularity level. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <returns> A new <see cref="Models.DataProtectionBackupVaultPatchProperties"/> instance for mocking. </returns>
-        public static DataProtectionBackupVaultPatchProperties DataProtectionBackupVaultPatchProperties(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures = default, BackupVaultSecuritySettings securitySettings = default, BackupVaultFeatureSettings featureSettings = default, IEnumerable<string> resourceGuardOperationRequests = default)
+        public static DataProtectionBackupVaultPatchProperties DataProtectionBackupVaultPatchProperties(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures = default, BackupVaultSecuritySettings securitySettings = default, BackupVaultFeatureSettings featureSettings = default, GranularityLevel? costManagementGranularityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default)
         {
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
 
-            return new DataProtectionBackupVaultPatchProperties(default, securitySettings, featureSettings, (resourceGuardOperationRequests ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new DataProtectionBackupVaultPatchProperties(
+                default,
+                securitySettings,
+                featureSettings,
+                costManagementGranularityLevel is null ? default : new CostManagementSettings(costManagementGranularityLevel, default),
+                (resourceGuardOperationRequests ?? new ChangeTrackingList<string>()).ToList(),
+                default);
         }
 
         /// <param name="backupInstance"> Backup Instance. </param>
@@ -512,6 +575,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         }
 
         /// <param name="monitoringAlertSettingsForAllJobFailures"> Gets or sets the AlertSettingsForAllJobFailures. </param>
+        /// <param name="costManagementGranularityLevel"> Settings for granularity level. </param>
         /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
         /// <param name="resourceMoveState"> Resource move state for backup vault. </param>
         /// <param name="resourceMoveDetails"> Resource move details for backup vault. </param>
@@ -528,7 +592,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="originalBackupVaultResourcePath"> Resource path of the original backup vault. </param>
         /// <param name="resourceDeletionInfo"> Deletion info for the tracked resource (Backup Vault). </param>
         /// <returns> A new <see cref="Models.DataProtectionDeletedBackupVaultProperties"/> instance for mocking. </returns>
-        public static DataProtectionDeletedBackupVaultProperties DataProtectionDeletedBackupVaultProperties(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures = default, DataProtectionBackupProvisioningState? provisioningState = default, BackupVaultResourceMoveState? resourceMoveState = default, BackupVaultResourceMoveDetails resourceMoveDetails = default, BackupVaultSecuritySettings securitySettings = default, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = default, bool? isVaultProtectedByResourceGuard = default, BackupVaultFeatureSettings featureSettings = default, BackupVaultSecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default, IEnumerable<AzureLocation> replicatedRegions = default, string originalBackupVaultId = default, string originalBackupVaultName = default, string originalBackupVaultResourcePath = default, DataProtectionResourceDeletionInfo resourceDeletionInfo = default)
+        public static DataProtectionDeletedBackupVaultProperties DataProtectionDeletedBackupVaultProperties(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures = default, GranularityLevel? costManagementGranularityLevel = default, DataProtectionBackupProvisioningState? provisioningState = default, BackupVaultResourceMoveState? resourceMoveState = default, BackupVaultResourceMoveDetails resourceMoveDetails = default, BackupVaultSecuritySettings securitySettings = default, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = default, bool? isVaultProtectedByResourceGuard = default, BackupVaultFeatureSettings featureSettings = default, BackupVaultSecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default, IEnumerable<AzureLocation> replicatedRegions = default, string originalBackupVaultId = default, string originalBackupVaultName = default, string originalBackupVaultResourcePath = default, DataProtectionResourceDeletionInfo resourceDeletionInfo = default)
         {
             storageSettings ??= new ChangeTrackingList<DataProtectionBackupStorageSetting>();
             resourceGuardOperationRequests ??= new ChangeTrackingList<string>();
@@ -536,6 +600,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             return new DataProtectionDeletedBackupVaultProperties(
                 default,
+                costManagementGranularityLevel is null ? default : new CostManagementSettings(costManagementGranularityLevel, default),
                 provisioningState,
                 resourceMoveState,
                 resourceMoveDetails,
@@ -951,6 +1016,25 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         public static RangeBasedItemLevelRestoreCriteria RangeBasedItemLevelRestoreCriteria(string minMatchingValue = default, string maxMatchingValue = default)
         {
             return new RangeBasedItemLevelRestoreCriteria(default, default, minMatchingValue, maxMatchingValue);
+        }
+
+        /// <param name="resourceSelectors"> List of resource identifiers that need to be restored. </param>
+        /// <returns> A new <see cref="Models.GenericRestoreDatasourceCriteria"/> instance for mocking. </returns>
+        public static GenericRestoreDatasourceCriteria GenericRestoreDatasourceCriteria(ResourceListSelectionCriteria resourceSelectors = default)
+        {
+            return new GenericRestoreDatasourceCriteria(default, default, resourceSelectors);
+        }
+
+        /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
+        /// <param name="resourceIdentifiers"> List of resource identifiers to restore from. </param>
+        /// <param name="resourceNameOverrides"> This is a map of source resource names to target resources names to restore into. Any source name not included in the map will be restored with a default naming format. </param>
+        /// <returns> A new <see cref="Models.ResourceListSelectionCriteria"/> instance for mocking. </returns>
+        public static ResourceListSelectionCriteria ResourceListSelectionCriteria(string objectType = default, IEnumerable<string> resourceIdentifiers = default, IDictionary<string, string> resourceNameOverrides = default)
+        {
+            resourceIdentifiers ??= new ChangeTrackingList<string>();
+            resourceNameOverrides ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ResourceListSelectionCriteria(objectType, (resourceIdentifiers ?? new ChangeTrackingList<string>()).ToList(), resourceNameOverrides ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
         /// <param name="selectedStorageClassName"> Selected storage class name. </param>
@@ -1786,6 +1870,97 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new CrossRegionRestoreJobsContent(sourceRegion, sourceBackupVaultId, default);
         }
 
+        /// <param name="monitoringAlertSettingsForAllJobFailures"> Gets or sets the AlertSettingsForAllJobFailures. </param>
+        /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
+        /// <param name="resourceMoveState"> Resource move state for backup vault. </param>
+        /// <param name="resourceMoveDetails"> Resource move details for backup vault. </param>
+        /// <param name="securitySettings"> Security Settings. </param>
+        /// <param name="storageSettings"> Storage Settings. </param>
+        /// <param name="isVaultProtectedByResourceGuard"> Is vault protected by resource guard. </param>
+        /// <param name="featureSettings"> Feature Settings. </param>
+        /// <param name="secureScore"> Secure Score of Backup Vault. </param>
+        /// <param name="bcdrSecurityLevel"> Security Level of Backup Vault. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
+        /// <param name="replicatedRegions"> List of replicated regions for Backup Vault. </param>
+        /// <returns> A new <see cref="Models.DataProtectionBackupVaultProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataProtectionBackupVaultProperties DataProtectionBackupVaultProperties(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures = default, DataProtectionBackupProvisioningState? provisioningState = default, BackupVaultResourceMoveState? resourceMoveState = default, BackupVaultResourceMoveDetails resourceMoveDetails = default, BackupVaultSecuritySettings securitySettings = default, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = default, bool? isVaultProtectedByResourceGuard = default, BackupVaultFeatureSettings featureSettings = default, BackupVaultSecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default, IEnumerable<AzureLocation> replicatedRegions = default)
+        {
+            return new DataProtectionBackupVaultProperties(
+                default,
+                default,
+                provisioningState,
+                resourceMoveState,
+                resourceMoveDetails,
+                securitySettings,
+                (storageSettings ?? new ChangeTrackingList<DataProtectionBackupStorageSetting>()).ToList(),
+                isVaultProtectedByResourceGuard,
+                featureSettings,
+                secureScore,
+                bcdrSecurityLevel,
+                (resourceGuardOperationRequests ?? new ChangeTrackingList<string>()).ToList(),
+                (replicatedRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(),
+                default);
+        }
+
+        /// <param name="monitoringAlertSettingsForAllJobFailures"> Gets or sets the AlertSettingsForAllJobFailures. </param>
+        /// <param name="securitySettings"> Security Settings. </param>
+        /// <param name="featureSettings"> Feature Settings. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
+        /// <returns> A new <see cref="Models.DataProtectionBackupVaultPatchProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataProtectionBackupVaultPatchProperties DataProtectionBackupVaultPatchProperties(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures = default, BackupVaultSecuritySettings securitySettings = default, BackupVaultFeatureSettings featureSettings = default, IEnumerable<string> resourceGuardOperationRequests = default)
+        {
+            return new DataProtectionBackupVaultPatchProperties(
+                default,
+                securitySettings,
+                featureSettings,
+                default,
+                (resourceGuardOperationRequests ?? new ChangeTrackingList<string>()).ToList(),
+                default);
+        }
+
+        /// <param name="monitoringAlertSettingsForAllJobFailures"> Gets or sets the AlertSettingsForAllJobFailures. </param>
+        /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
+        /// <param name="resourceMoveState"> Resource move state for backup vault. </param>
+        /// <param name="resourceMoveDetails"> Resource move details for backup vault. </param>
+        /// <param name="securitySettings"> Security Settings. </param>
+        /// <param name="storageSettings"> Storage Settings. </param>
+        /// <param name="isVaultProtectedByResourceGuard"> Is vault protected by resource guard. </param>
+        /// <param name="featureSettings"> Feature Settings. </param>
+        /// <param name="secureScore"> Secure Score of Backup Vault. </param>
+        /// <param name="bcdrSecurityLevel"> Security Level of Backup Vault. </param>
+        /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
+        /// <param name="replicatedRegions"> List of replicated regions for Backup Vault. </param>
+        /// <param name="originalBackupVaultId"> Resource Id of the original backup vault. </param>
+        /// <param name="originalBackupVaultName"> Resource name of the original backup vault. </param>
+        /// <param name="originalBackupVaultResourcePath"> Resource path of the original backup vault. </param>
+        /// <param name="resourceDeletionInfo"> Deletion info for the tracked resource (Backup Vault). </param>
+        /// <returns> A new <see cref="Models.DataProtectionDeletedBackupVaultProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DataProtectionDeletedBackupVaultProperties DataProtectionDeletedBackupVaultProperties(AzureMonitorAlertsState? monitoringAlertSettingsForAllJobFailures = default, DataProtectionBackupProvisioningState? provisioningState = default, BackupVaultResourceMoveState? resourceMoveState = default, BackupVaultResourceMoveDetails resourceMoveDetails = default, BackupVaultSecuritySettings securitySettings = default, IEnumerable<DataProtectionBackupStorageSetting> storageSettings = default, bool? isVaultProtectedByResourceGuard = default, BackupVaultFeatureSettings featureSettings = default, BackupVaultSecureScoreLevel? secureScore = default, BcdrSecurityLevel? bcdrSecurityLevel = default, IEnumerable<string> resourceGuardOperationRequests = default, IEnumerable<AzureLocation> replicatedRegions = default, string originalBackupVaultId = default, string originalBackupVaultName = default, string originalBackupVaultResourcePath = default, DataProtectionResourceDeletionInfo resourceDeletionInfo = default)
+        {
+            return new DataProtectionDeletedBackupVaultProperties(
+                default,
+                default,
+                provisioningState,
+                resourceMoveState,
+                resourceMoveDetails,
+                securitySettings,
+                (storageSettings ?? new ChangeTrackingList<DataProtectionBackupStorageSetting>()).ToList(),
+                isVaultProtectedByResourceGuard,
+                featureSettings,
+                secureScore,
+                bcdrSecurityLevel,
+                (resourceGuardOperationRequests ?? new ChangeTrackingList<string>()).ToList(),
+                (replicatedRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(),
+                originalBackupVaultId,
+                originalBackupVaultName,
+                originalBackupVaultResourcePath,
+                resourceDeletionInfo,
+                default);
+        }
+
         /// <summary> Initializes a new instance of DataProtectionBackupVaultProperties. </summary>
         /// <param name="alertSettingsForAllJobFailures"></param>
         /// <param name="provisioningState"></param>
@@ -1801,6 +1976,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             return new DataProtectionBackupVaultProperties(
                 alertSettingsForAllJobFailures is null ? default : new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures, default), default),
+                default,
                 provisioningState,
                 resourceMoveState,
                 resourceMoveDetails,
@@ -1831,6 +2007,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             return new DataProtectionBackupVaultProperties(
                 alertSettingsForAllJobFailures is null ? default : new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures, default), default),
+                default,
                 provisioningState,
                 resourceMoveState,
                 resourceMoveDetails,
@@ -2336,6 +2513,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         {
             return new DataProtectionBackupVaultProperties(
                 alertSettingsForAllJobFailures is null ? default : new MonitoringSettings(new AzureMonitorAlertSettings(alertSettingsForAllJobFailures, default), default),
+                default,
                 provisioningState,
                 resourceMoveState,
                 resourceMoveDetails,

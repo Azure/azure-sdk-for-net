@@ -17,11 +17,6 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
     /// <summary> Deleted Backup Vault - uses composition with BackupVault and additional deletion metadata. </summary>
     public partial class DataProtectionDeletedBackupVaultProperties : IJsonModel<DataProtectionDeletedBackupVaultProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="DataProtectionDeletedBackupVaultProperties"/> for deserialization. </summary>
-        internal DataProtectionDeletedBackupVaultProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual DataProtectionDeletedBackupVaultProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -85,6 +80,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("monitoringSettings"u8);
                 writer.WriteObjectValue(MonitoringSettings, options);
             }
+            if (Optional.IsDefined(CostManagementSettings))
+            {
+                writer.WritePropertyName("costManagementSettings"u8);
+                writer.WriteObjectValue(CostManagementSettings, options);
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -105,13 +105,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WritePropertyName("securitySettings"u8);
                 writer.WriteObjectValue(SecuritySettings, options);
             }
-            writer.WritePropertyName("storageSettings"u8);
-            writer.WriteStartArray();
-            foreach (DataProtectionBackupStorageSetting item in StorageSettings)
+            if (Optional.IsCollectionDefined(StorageSettings))
             {
-                writer.WriteObjectValue(item, options);
+                writer.WritePropertyName("storageSettings"u8);
+                writer.WriteStartArray();
+                foreach (DataProtectionBackupStorageSetting item in StorageSettings)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
             }
-            writer.WriteEndArray();
             if (options.Format != "W" && Optional.IsDefined(IsVaultProtectedByResourceGuard))
             {
                 writer.WritePropertyName("isVaultProtectedByResourceGuard"u8);
@@ -220,6 +223,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 return null;
             }
             MonitoringSettings monitoringSettings = default;
+            CostManagementSettings costManagementSettings = default;
             DataProtectionBackupProvisioningState? provisioningState = default;
             BackupVaultResourceMoveState? resourceMoveState = default;
             BackupVaultResourceMoveDetails resourceMoveDetails = default;
@@ -245,6 +249,15 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         continue;
                     }
                     monitoringSettings = MonitoringSettings.DeserializeMonitoringSettings(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("costManagementSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    costManagementSettings = CostManagementSettings.DeserializeCostManagementSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -285,6 +298,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
                 if (prop.NameEquals("storageSettings"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     List<DataProtectionBackupStorageSetting> array = new List<DataProtectionBackupStorageSetting>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
@@ -391,11 +408,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             }
             return new DataProtectionDeletedBackupVaultProperties(
                 monitoringSettings,
+                costManagementSettings,
                 provisioningState,
                 resourceMoveState,
                 resourceMoveDetails,
                 securitySettings,
-                storageSettings,
+                storageSettings ?? new ChangeTrackingList<DataProtectionBackupStorageSetting>(),
                 isVaultProtectedByResourceGuard,
                 featureSettings,
                 secureScore,
