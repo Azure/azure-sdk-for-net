@@ -21,23 +21,29 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
     public class TasksGuideSnippets
     {
         // §3 Hello world — one-shot registration returns a typed TaskDefinition.
-        public static async Task<string> OneShotHelloWorld(IServiceCollection services)
+        public static async Task<string> OneShotHelloWorld()
         {
-            TaskDefinition<string, string> echo = services.AddResilientTask<string, string>(
+            #region Snippet:Core_TasksGuide_OneShotHelloWorld
+
+            var builder = AgentHost.CreateBuilder();
+
+            TaskDefinition<string, string> echo = builder.Services.AddResilientTask<string, string>(
                 "echo", async (ctx, ct) =>
                 {
                     await Task.Yield();
                     return $"you said: {ctx.Input}";
                 });
 
-            // The handle is late-bound to the TaskEngine the container builds, so invoke it only
-            // once the host is running (in an app that is from a request handler after the host has
-            // started). Here we build the provider and start the hosted services to construct and
-            // bind the engine before the call.
-            await using ServiceProvider provider = services.BuildServiceProvider();
-            await StartHostedServicesAsync(provider);
+            var app = builder.Build();
+            await app.App.StartAsync();
 
             string result = await echo.RunAsync("hello");
+            // result == "you said: hello"
+
+            await app.App.StopAsync();
+
+            #endregion
+
             return result;
         }
 

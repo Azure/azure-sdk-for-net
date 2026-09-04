@@ -45,6 +45,30 @@ public class HostedResilienceFailureTests
     }
 
     [Test]
+    [NonParallelizable]
+    public void HostedMode_ExplicitCoreCredentialReplacesResponsesDefault()
+    {
+        ConfigureHostedEnvironment();
+        var services = new ServiceCollection();
+        services.AddLogging();
+        services.AddResponsesServer(o => o.ResilientBackground = true);
+        var credential = new TestCredential();
+
+        Assert.DoesNotThrow(() => services.AddResilientTasks(credential));
+
+        using ServiceProvider provider = services.BuildServiceProvider();
+        Assert.That(
+            provider.GetRequiredService<TokenCredential>(),
+            Is.SameAs(credential));
+        Assert.That(
+            provider.GetRequiredService<ITaskStore>(),
+            Is.InstanceOf<HostedTaskStore>());
+        Assert.That(
+            provider.GetRequiredService<TaskHostEnvironment>().Credential,
+            Is.SameAs(credential));
+    }
+
+    [Test]
     [TestCase(true)]
     [TestCase(false)]
     [NonParallelizable]

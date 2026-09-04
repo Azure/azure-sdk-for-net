@@ -458,7 +458,7 @@ public class ResilientResearchHandler : InvocationHandler
                 invId,
                 context.SessionId,
                 context.PlatformContext.CallId),
-            new RunOptions { TaskId = taskId },
+            new RunOptions { TaskId = taskId, InputId = invId },
             cancellationToken);
 
         // Non-streaming clients get 202 + the invocation id to resume later via GET.
