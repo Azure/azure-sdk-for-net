@@ -4,3 +4,6 @@ overrides:
   - filename: '**/sdk/provisioning/**/*.cs'
     words:
       - AZPROVISION
+  - filename: '**/sdk/billing/Azure.Provisioning.Billing/tests/*.cs'
+    words:
+      - Trycep
