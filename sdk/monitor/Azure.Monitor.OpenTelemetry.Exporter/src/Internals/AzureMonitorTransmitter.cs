@@ -72,6 +72,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             _applicationInsightsRestClient = InitializeRestClient(options, _connectionVars, out _isAadEnabled);
 
+            // BearerTokenAuthenticationPolicy sits in the shared pipeline, so it would attach a token
+            // for the exporter's own audience to every routed request, including ones addressed to a
+            // host named by an Activity tag. Refuse the combination rather than disclose the token.
+            if (multiTenantEnabled && _isAadEnabled)
+            {
+                throw new NotSupportedException(
+                    "Multi-tenant export cannot be used with Microsoft Entra ID authentication. The credential is scoped to this exporter's audience and would be sent to endpoints supplied by telemetry, so either clear AzureMonitorExporterOptions.Credential or disable the Azure.Monitor.OpenTelemetry.EnableMultiTenantExport switch.");
+            }
+
             _fileBlobProvider = InitializeOfflineStorage(platform, _connectionVars, options.DisableOfflineStorage, options.StorageDirectory, out var storageDirectory);
 
             _storageDirectory = storageDirectory;

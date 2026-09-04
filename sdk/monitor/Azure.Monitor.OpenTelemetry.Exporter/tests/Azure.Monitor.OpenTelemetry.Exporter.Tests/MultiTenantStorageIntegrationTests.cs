@@ -139,9 +139,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             try
             {
-                if (Directory.Exists(_storageDirectory))
+                // Partitions live in a sibling root, so deleting only the host directory leaves the
+                // tenant blobs behind on every run.
+                foreach (var directory in new[] { _storageDirectory, _storageDirectory + MultiTenantStorage.RootDirectorySuffix })
                 {
-                    Directory.Delete(_storageDirectory, recursive: true);
+                    if (Directory.Exists(directory))
+                    {
+                        Directory.Delete(directory, recursive: true);
+                    }
                 }
             }
             catch (IOException)

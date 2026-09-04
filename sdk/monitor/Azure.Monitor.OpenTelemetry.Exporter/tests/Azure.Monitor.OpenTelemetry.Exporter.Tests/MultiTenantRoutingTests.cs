@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
+using Azure.Core;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
@@ -247,10 +248,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// The routing tags are reserved in both modes, so the single-tenant path strips them too.
+        /// Nothing consumes the routing slots outside the multi-tenant conversion, so claiming them
+        /// on the single-tenant path would take these attributes out of custom dimensions and drop
+        /// them entirely. They must survive as ordinary custom dimensions when the gate is off.
         /// </summary>
         [Fact]
-        public void SingleTenantPathAlsoStripsRoutingTagsFromCustomDimensions()
+        public void SingleTenantPathKeepsRoutingTagsAsCustomDimensions()
         {
             var (telemetryItems, _) = TraceHelper.OtelToAzureMonitorTrace(
                 CreateBatch(CreateActivity("ikey-a", EastUs)),
@@ -262,8 +265,42 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("exporter-ikey", telemetryItem.InstrumentationKey);
 
             var properties = ((RequestData)telemetryItem.Data!.BaseData).Properties;
+            Assert.Equal("ikey-a", properties[SemanticConventions.AttributeMicrosoftInstrumentationKey]);
+            Assert.Equal(EastUs, properties[SemanticConventions.AttributeMicrosoftIngestionEndpoint]);
+        }
+
+        /// <summary>
+        /// On the routed path they are consumed, so they must not also appear as dimensions.
+        /// </summary>
+        [Fact]
+        public void RoutedTelemetryDoesNotCarryTheRoutingTagsAsCustomDimensions()
+        {
+            var routeBatch = Convert(CreateActivity("ikey-a", EastUs));
+
+            var properties = ((RequestData)routeBatch[0].TelemetryItems.Single().Data!.BaseData).Properties;
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftInstrumentationKey, properties.Keys);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionEndpoint, properties.Keys);
+        }
+
+        /// <summary>
+        /// The credential is scoped to the exporter's own audience, and the bearer token policy sits
+        /// in the shared pipeline, so it would be attached to requests addressed to hosts named by
+        /// telemetry. The combination is refused rather than disclosing the token.
+        /// </summary>
+        [Fact]
+        public void MultiTenantRefusesToStartWithEntraCredentials()
+        {
+            var options = new AzureMonitorExporterOptions
+            {
+                ConnectionString = $"InstrumentationKey=00000000-0000-0000-0000-000000000001;IngestionEndpoint={EastUs}",
+                Credential = new StubCredential(),
+                DisableOfflineStorage = true,
+            };
+
+            var exception = Assert.Throws<NotSupportedException>(
+                () => new AzureMonitorTransmitter(options, new MockPlatform(), multiTenantEnabled: true));
+
+            Assert.Contains("Entra", exception.Message, StringComparison.Ordinal);
         }
 
         /// <summary>
@@ -438,7 +475,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         /// <summary>
         /// The non-negotiable constraint: with the gate off nothing about the exported payload
-        /// changes, and with it on only the instrumentation key differs.
+        /// changes, and with it on only the instrumentation key and the consumed routing tags differ.
         /// </summary>
         [Fact]
         public void EnvelopesMatchSingleTenantExceptForTheInstrumentationKey()
@@ -450,8 +487,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 () => CreateActivity("ikey-a", EastUs, ActivityKind.Internal),
             };
 
+            // Without the routing tags the two paths see identical input, so any remaining difference
+            // is the conversion itself rather than the tags one path consumes.
             var (singleTenantItems, _) = TraceHelper.OtelToAzureMonitorTrace(
-                CreateBatch(corpus.Select(create => create()).ToArray()),
+                CreateBatch(corpus.Select(create => StripRoutingTags(create())).ToArray()),
                 null,
                 "ikey-a",
                 sampleRate: 100);
@@ -462,6 +501,14 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var multiTenant = Encoding.UTF8.GetString(HttpPipelineHelper.GetSerializedContent(routeBatch[0].TelemetryItems));
 
             Assert.Equal(Normalize(singleTenant), Normalize(multiTenant));
+        }
+
+        private static Activity StripRoutingTags(Activity activity)
+        {
+            activity.SetTag(SemanticConventions.AttributeMicrosoftInstrumentationKey, null);
+            activity.SetTag(SemanticConventions.AttributeMicrosoftIngestionEndpoint, null);
+
+            return activity;
         }
 
         /// <summary>
@@ -575,6 +622,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             ActivitySource.AddActivityListener(listener);
             return listener;
+        }
+
+        /// <summary>Enough of a credential to make the exporter treat Entra as configured.</summary>
+        private sealed class StubCredential : TokenCredential
+        {
+            public override AccessToken GetToken(TokenRequestContext requestContext, CancellationToken cancellationToken)
+                => new("token", DateTimeOffset.UtcNow.AddHours(1));
+
+            public override ValueTask<AccessToken> GetTokenAsync(TokenRequestContext requestContext, CancellationToken cancellationToken)
+                => new(GetToken(requestContext, cancellationToken));
         }
 
         private sealed class SingleTenantOnlyTransmitter : ITransmitter

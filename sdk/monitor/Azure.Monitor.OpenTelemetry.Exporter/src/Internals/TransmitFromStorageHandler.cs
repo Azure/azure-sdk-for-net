@@ -77,7 +77,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         private readonly string? _statsHost;
         private readonly string? _storageDirectory;
         private TaskCompletionSource<bool>? _inFlightDrain;
-        private int _drainInProgress;
         private bool _disposed;
 
         internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars, bool isAadEnabled, NetworkSdkStatsManager? networkSdkStatsManager = null, string? storageDirectory = null, Uri? trackUri = null)
@@ -139,13 +138,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal void Drain()
         {
-            if (Interlocked.CompareExchange(ref _drainInProgress, 1, 0) != 0)
+            var completion = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            // The completion source is the drain slot. Publishing it separately from claiming the
+            // slot left a window where a caller could see no drain in flight, start a second one that
+            // exited immediately, and wait on that instead of the upload still running.
+            if (Interlocked.CompareExchange(ref _inFlightDrain, completion, null) != null)
             {
                 return;
             }
-
-            var completion = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
-            Volatile.Write(ref _inFlightDrain, completion);
 
             try
             {
@@ -165,7 +166,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             finally
             {
                 Volatile.Write(ref _inFlightDrain, null);
-                Interlocked.Exchange(ref _drainInProgress, 0);
                 completion.TrySetResult(true);
             }
         }

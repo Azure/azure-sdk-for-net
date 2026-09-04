@@ -104,7 +104,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             {
                 try
                 {
-                    var activityTagsProcessor = EnumerateActivityTags(activity);
+                    var activityTagsProcessor = EnumerateActivityTags(activity, includeUnmappedTags: true, recognizeRoutingTags: true);
 
                     try
                     {
@@ -267,9 +267,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
         }
 
-        internal static ActivityTagsProcessor EnumerateActivityTags(Activity activity, bool includeUnmappedTags = true)
+        internal static ActivityTagsProcessor EnumerateActivityTags(Activity activity, bool includeUnmappedTags = true, bool recognizeRoutingTags = false)
         {
-            var activityTagsProcessor = new ActivityTagsProcessor(includeUnmappedTags);
+            var activityTagsProcessor = new ActivityTagsProcessor(includeUnmappedTags, recognizeRoutingTags);
 
             try
             {

@@ -119,7 +119,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                 return false;
             }
 
-            if (HasRoomFor(buffer.Length))
+            RecountIfStale();
+
+            if (TryReserve(buffer.Length))
             {
                 return TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
             }
@@ -139,12 +141,40 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                 return false;
             }
 
-            for (int i = 0; i < candidates.Count && !HasRoomFor(buffer.Length); i++)
+            for (int i = 0; i < candidates.Count; i++)
             {
                 TryEvict(candidates[i]);
+
+                if (TryReserve(buffer.Length))
+                {
+                    return TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
+                }
             }
 
-            return HasRoomFor(buffer.Length) && TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
+            return false;
+        }
+
+        /// <summary>
+        /// Claims the bytes before the write, so two callers cannot both see the same room and take
+        /// it. Checking and then incrementing separately let concurrent exports exceed the shared
+        /// budget by one payload each.
+        /// </summary>
+        private bool TryReserve(long length)
+        {
+            while (true)
+            {
+                var current = Interlocked.Read(ref _currentSizeBytes);
+
+                if (current + length > _maxSizeBytes)
+                {
+                    return false;
+                }
+
+                if (Interlocked.CompareExchange(ref _currentSizeBytes, current + length, current) == current)
+                {
+                    return true;
+                }
+            }
         }
 
         private bool TryCreateBlob(FileBlobProvider inner, byte[] buffer, int leasePeriodMilliseconds, out PersistentBlob? blob)
@@ -153,19 +183,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                 ? inner.TryCreateBlob(buffer, leasePeriodMilliseconds, out blob)
                 : inner.TryCreateBlob(buffer, out blob);
 
-            if (created)
+            if (!created)
             {
-                Interlocked.Add(ref _currentSizeBytes, buffer.Length);
+                // Give the reservation back; nothing was written.
+                Interlocked.Add(ref _currentSizeBytes, -buffer.Length);
             }
 
             return created;
-        }
-
-        private bool HasRoomFor(long length)
-        {
-            RecountIfStale();
-
-            return Interlocked.Read(ref _currentSizeBytes) + length <= _maxSizeBytes;
         }
 
         /// <summary>
@@ -419,7 +443,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                     var innerProvider = new FileBlobProvider(directory, maxSizeInBytes: _maxSizeBytes);
                     var blobProvider = new BudgetedBlobProvider(this, innerProvider, ingestionEndpoint);
                     var trackUri = ApplicationInsightsRestClient.CreateTrackUri(ingestionEndpoint);
-                    var transmissionStateManager = new TransmissionStateManager();
+                    var transmissionStateManager = new TransmissionStateManager(ingestionEndpoint);
 
                     var created = new EndpointStorage(
                         directory,
