@@ -33,6 +33,8 @@
 
 ### Other Changes
 
+- Added internal groundwork for future OneSettings dynamic configuration. This does not change exporter behavior.
+
 - Improved activity conversion performance by reading recognized attributes from a fixed index instead of scanning the tag list for each one. Every span shape converts faster, by about a third for spans carrying Application Insights override attributes, and each conversion rents fewer pooled buffers. Standard metrics no longer collect the tags they never read.
   ([#62614](https://github.com/Azure/azure-sdk-for-net/pull/62614))
   - Fixed pooled tag buffers being leaked whenever converting an activity failed, and retaining tag keys and values after being returned to the pool.

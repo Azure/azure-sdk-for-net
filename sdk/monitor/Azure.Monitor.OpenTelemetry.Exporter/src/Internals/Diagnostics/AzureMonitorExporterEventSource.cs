@@ -557,5 +557,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(60, Message = "Ingestion rejected a batch of {0} stored payloads with status code {1}. Retrying them individually to isolate the rejected payload.", Level = EventLevel.Warning)]
         public void CoalescedBatchRejected(int batchSize, int statusCode) => WriteEvent(60, batchSize, statusCode);
+
+        [NonEvent]
+        public void OneSettingsCallbackFailed(Exception ex)
+        {
+            // EventSource cannot serialize Exception; avoid formatting it unless verbose logging is enabled.
+            if (IsEnabled(EventLevel.Verbose))
+            {
+                OneSettingsCallbackFailed(ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(61, Message = "A OneSettings configuration callback failed. This is only for internal configuration and can safely be ignored. {0}", Level = EventLevel.Verbose)]
+        public void OneSettingsCallbackFailed(string exceptionMessage) => WriteEvent(61, exceptionMessage);
     }
 }
