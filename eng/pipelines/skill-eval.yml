@@ -1,0 +1,30 @@
+# Manual probe for running the synced shared skill evals through the common Vally archetype.
+# This starts with one deterministic mock suite; it is report-only and has no CI or PR trigger.
+
+trigger: none
+
+pr: none
+
+resources:
+  repositories:
+    - repository: azure-sdk-tools
+      type: github
+      name: Azure/azure-sdk-tools
+      endpoint: Azure
+      ref: refs/heads/main
+
+variables:
+  - template: /eng/pipelines/templates/variables/image.yml
+  - group: AzSDK_Eval_Variable_group
+
+extends:
+  template: /eng/common/pipelines/templates/stages/archetype-eval.yml
+  parameters:
+    mcpSetupTemplate: /eng/common/pipelines/templates/steps/eval-mcp-setup.yml
+    TestType: mock
+    toolsRepo: azure-sdk-tools
+    vallyRoot: .github/skills
+    evalGlobs:
+      - 'azsdk-common-generate-sdk-locally/evals/eval.yaml'
+    failOnFailedTests: false
+    shardTimeoutInMinutes: 20
