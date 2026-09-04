@@ -86,10 +86,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("primaryResourceId"u8);
                 writer.WriteStringValue(PrimaryResourceId);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endAt"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
             DiscountEntityType entityType = default;
             string productCode = default;
-            DateTimeOffset startOn = default;
+            DateTimeOffset startsOn = default;
             string systemId = default;
             DiscountProvisioningState? provisioningState = default;
             ResourceIdentifier billingAccountResourceId = default;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             DiscountAppliedScopeType? appliedScopeType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ResourceIdentifier primaryResourceId = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? endsOn = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("entityType"u8))
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 if (prop.NameEquals("startAt"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("systemId"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new EntityTypeAffiliateDiscount(
                 entityType,
                 productCode,
-                startOn,
+                startsOn,
                 systemId,
                 provisioningState,
                 billingAccountResourceId,
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 appliedScopeType,
                 additionalBinaryDataProperties,
                 primaryResourceId,
-                endOn);
+                endsOn);
         }
     }
 }

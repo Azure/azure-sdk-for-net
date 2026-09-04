@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Subscription.Models
     public static partial class ArmSubscriptionModelFactory
     {
 
+        /// <summary> Subscription Information with the alias. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -35,6 +36,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 default);
         }
 
+        /// <summary> Put subscription creation result properties. </summary>
         /// <param name="subscriptionId"> Newly created subscription Id. </param>
         /// <param name="displayName"> The display name of the subscription. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
@@ -97,6 +99,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 default), default);
         }
 
+        /// <summary> Put subscription additional properties. </summary>
         /// <param name="managementGroupId"> Management group Id for the subscription. </param>
         /// <param name="subscriptionTenantId"> Tenant Id of the subscription. </param>
         /// <param name="subscriptionOwnerId"> Owner Id of the subscription. </param>
@@ -109,6 +112,7 @@ namespace Azure.ResourceManager.Subscription.Models
             return new SubscriptionAliasAdditionalProperties(managementGroupId, subscriptionTenantId, subscriptionOwnerId, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Tenant policy Information. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -126,6 +130,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 default);
         }
 
+        /// <summary> Tenant policy. </summary>
         /// <param name="policyId"> Policy Id. </param>
         /// <param name="blockSubscriptionsLeavingTenant"> Blocks the leaving of subscriptions from user's tenant. </param>
         /// <param name="blockSubscriptionsIntoTenant"> Blocks the entering of subscriptions into user's tenant. </param>
@@ -138,6 +143,7 @@ namespace Azure.ResourceManager.Subscription.Models
             return new TenantPolicyProperties(policyId, blockSubscriptionsLeavingTenant, blockSubscriptionsIntoTenant, (exemptedPrincipals ?? new ChangeTrackingList<Guid>()).ToList(), default);
         }
 
+        /// <summary> Put tenant policy request properties. </summary>
         /// <param name="blockSubscriptionsLeavingTenant"> Blocks the leaving of subscriptions from user's tenant. </param>
         /// <param name="blockSubscriptionsIntoTenant"> Blocks the entering of subscriptions into user's tenant. </param>
         /// <param name="exemptedPrincipals"> List of user objectIds that are exempted from the set subscription tenant policies for the user's tenant. </param>
@@ -149,6 +155,7 @@ namespace Azure.ResourceManager.Subscription.Models
             return new TenantPolicyCreateOrUpdateContent(blockSubscriptionsLeavingTenant, blockSubscriptionsIntoTenant, (exemptedPrincipals ?? new ChangeTrackingList<Guid>()).ToList(), default);
         }
 
+        /// <summary> Billing account policies information. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -166,6 +173,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 default);
         }
 
+        /// <summary> Put billing account policies response properties. </summary>
         /// <param name="serviceTenants"> Service tenant for the billing account. </param>
         /// <param name="allowTransfers"> Determine if the transfers are allowed for the billing account. </param>
         /// <returns> A new <see cref="Models.BillingAccountPolicyProperties"/> instance for mocking. </returns>
@@ -176,6 +184,7 @@ namespace Azure.ResourceManager.Subscription.Models
             return new BillingAccountPolicyProperties((serviceTenants ?? new ChangeTrackingList<ServiceTenant>()).ToList(), allowTransfers, default);
         }
 
+        /// <summary> Billing account service tenant. </summary>
         /// <param name="tenantId"> Service tenant id. </param>
         /// <param name="tenantName"> Service tenant name. </param>
         /// <returns> A new <see cref="Models.ServiceTenant"/> instance for mocking. </returns>
@@ -184,6 +193,7 @@ namespace Azure.ResourceManager.Subscription.Models
             return new ServiceTenant(tenantId, tenantName, default);
         }
 
+        /// <summary> Subscription Response for Changed Target Directory. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -201,6 +211,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 default);
         }
 
+        /// <summary> Properties of subscription Response for Changed Target Directory. </summary>
         /// <param name="destinationTenantId"> Destination Tenant Id where Subscription will be accepted. </param>
         /// <param name="destinationOwnerId"> Destination Owner Id where Subscription will be accepted. </param>
         /// <param name="subscriptionId"> The id of the subscription being transferred. </param>
@@ -228,6 +239,7 @@ namespace Azure.ResourceManager.Subscription.Models
                 default);
         }
 
+        /// <summary> Subscription Request for Changed Target Directory. </summary>
         /// <param name="properties"> Target Directory request properties. </param>
         /// <returns> A new <see cref="Models.TargetDirectoryContent"/> instance for mocking. </returns>
         public static TargetDirectoryContent TargetDirectoryContent(TargetDirectoryProperties properties = default)
@@ -235,6 +247,7 @@ namespace Azure.ResourceManager.Subscription.Models
             return new TargetDirectoryContent(properties, default);
         }
 
+        /// <summary> Properties of subscription Request for Changed Target Directory. </summary>
         /// <param name="destinationOwnerId"> The destination OwnerId, can be object id or email address. </param>
         /// <param name="destinationTenantId"> The destination Tenant id where subscription needs to be accepted. </param>
         /// <returns> A new <see cref="Models.TargetDirectoryProperties"/> instance for mocking. </returns>
@@ -243,6 +256,7 @@ namespace Azure.ResourceManager.Subscription.Models
             return new TargetDirectoryProperties(destinationOwnerId, destinationTenantId, default);
         }
 
+        /// <summary> The ID of the canceled subscription. </summary>
         /// <param name="subscriptionId"> The ID of the canceled subscription. </param>
         /// <returns> A new <see cref="Models.CanceledSubscriptionId"/> instance for mocking. </returns>
         public static CanceledSubscriptionId CanceledSubscriptionId(string subscriptionId = default)
@@ -250,6 +264,7 @@ namespace Azure.ResourceManager.Subscription.Models
             return new CanceledSubscriptionId(subscriptionId, default);
         }
 
+        /// <summary> The new name of the subscription. </summary>
         /// <param name="subscriptionNameValue"> New subscription name. </param>
         /// <returns> A new <see cref="Models.SubscriptionName"/> instance for mocking. </returns>
         public static SubscriptionName SubscriptionName(string subscriptionNameValue = default)
@@ -257,6 +272,7 @@ namespace Azure.ResourceManager.Subscription.Models
             return new SubscriptionName(subscriptionNameValue, default);
         }
 
+        /// <summary> The ID of the subscriptions that is being renamed. </summary>
         /// <param name="subscriptionId"> The ID of the subscriptions that is being renamed. </param>
         /// <returns> A new <see cref="Models.RenamedSubscriptionId"/> instance for mocking. </returns>
         public static RenamedSubscriptionId RenamedSubscriptionId(string subscriptionId = default)
@@ -264,6 +280,7 @@ namespace Azure.ResourceManager.Subscription.Models
             return new RenamedSubscriptionId(subscriptionId, default);
         }
 
+        /// <summary> The ID of the subscriptions that is being enabled. </summary>
         /// <param name="subscriptionId"> The ID of the subscriptions that is being enabled. </param>
         /// <returns> A new <see cref="Models.EnabledSubscriptionId"/> instance for mocking. </returns>
         public static EnabledSubscriptionId EnabledSubscriptionId(string subscriptionId = default)
@@ -271,6 +288,7 @@ namespace Azure.ResourceManager.Subscription.Models
             return new EnabledSubscriptionId(subscriptionId, default);
         }
 
+        /// <summary> The parameters required to accept subscription ownership. </summary>
         /// <param name="properties"> Accept subscription ownership request properties. </param>
         /// <returns> A new <see cref="Models.AcceptOwnershipContent"/> instance for mocking. </returns>
         public static AcceptOwnershipContent AcceptOwnershipContent(AcceptOwnershipRequestProperties properties = default)
@@ -278,6 +296,7 @@ namespace Azure.ResourceManager.Subscription.Models
             return new AcceptOwnershipContent(properties, default);
         }
 
+        /// <summary> Accept subscription ownership request properties. </summary>
         /// <param name="displayName"> The friendly name of the subscription. </param>
         /// <param name="managementGroupId"> Management group Id for the subscription. </param>
         /// <param name="tags"> Tags for the subscription. </param>
@@ -289,6 +308,7 @@ namespace Azure.ResourceManager.Subscription.Models
             return new AcceptOwnershipRequestProperties(displayName, managementGroupId, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Subscription Accept Ownership Response. </summary>
         /// <param name="subscriptionId"> Newly created subscription Id. </param>
         /// <param name="acceptOwnershipState"> The accept ownership state of the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>

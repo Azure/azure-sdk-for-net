@@ -131,6 +131,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 default);
         }
 
+        /// <summary> Connection state of the private endpoint connection. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -169,6 +170,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 default);
         }
 
+        /// <summary> Live trace configuration of a Microsoft.SignalRService resource. </summary>
         /// <param name="isEnabled">
         /// Indicates whether or not enable live trace.
         /// When it's set to true, live trace client can connect to the service.
@@ -185,6 +187,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new LiveTraceConfiguration(isEnabled, (categories ?? new ChangeTrackingList<LiveTraceCategory>()).ToList(), default);
         }
 
+        /// <summary> Live trace category configuration of a Microsoft.SignalRService resource. </summary>
         /// <param name="name">
         /// Gets or sets the live trace category's name.
         /// Available values: ConnectivityLogs, MessagingLogs.
@@ -201,6 +204,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new LiveTraceCategory(name, isEnabled, default);
         }
 
+        /// <summary> Resource log category configuration of a Microsoft.SignalRService resource. </summary>
         /// <param name="name">
         /// Gets or sets the resource log category's name.
         /// Available values: ConnectivityLogs, MessagingLogs.
@@ -217,6 +221,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new ResourceLogCategory(name, enabled, default);
         }
 
+        /// <summary> Network ACLs for the resource. </summary>
         /// <param name="defaultAction"> Azure Networking ACL Action. </param>
         /// <param name="publicNetwork"> Network ACL. </param>
         /// <param name="privateEndpoints"> ACLs for requests from private endpoints. </param>
@@ -230,6 +235,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubNetworkAcls(defaultAction, publicNetwork, (privateEndpoints ?? new ChangeTrackingList<PrivateEndpointAcl>()).ToList(), (ipRules ?? new ChangeTrackingList<WebPubSubIPRule>()).ToList(), default);
         }
 
+        /// <summary> Network ACL. </summary>
         /// <param name="allow"> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="deny"> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <returns> A new <see cref="Models.PublicNetworkAcls"/> instance for mocking. </returns>
@@ -241,6 +247,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new PublicNetworkAcls((allow ?? new ChangeTrackingList<WebPubSubRequestType>()).ToList(), (deny ?? new ChangeTrackingList<WebPubSubRequestType>()).ToList(), default);
         }
 
+        /// <summary> ACL for a private endpoint. </summary>
         /// <param name="allow"> Allowed request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="deny"> Denied request types. The value can be one or more of: ClientConnection, ServerConnection, RESTAPI. </param>
         /// <param name="name"> Name of the private endpoint connection. </param>
@@ -253,6 +260,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new PrivateEndpointAcl((allow ?? new ChangeTrackingList<WebPubSubRequestType>()).ToList(), (deny ?? new ChangeTrackingList<WebPubSubRequestType>()).ToList(), default, name);
         }
 
+        /// <summary> An IP rule. </summary>
         /// <param name="value"> An IP or CIDR or ServiceTag. </param>
         /// <param name="action"> Azure Networking ACL Action. </param>
         /// <returns> A new <see cref="Models.WebPubSubIPRule"/> instance for mocking. </returns>
@@ -261,6 +269,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubIPRule(value, action, default);
         }
 
+        /// <summary> Application firewall settings for the resource. </summary>
         /// <param name="clientConnectionCountRules"> Rules to control the client connection count. </param>
         /// <param name="clientTrafficControlRules"> Rules to control the client traffic. </param>
         /// <param name="maxClientConnectionLifetimeInSeconds"> Config to control the client connection lifetime in seconds, can be set to 0 to disable the config. </param>
@@ -273,6 +282,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubApplicationFirewallSettings((clientConnectionCountRules ?? new ChangeTrackingList<WebPubSubClientConnectionCountRule>()).ToList(), (clientTrafficControlRules ?? new ChangeTrackingList<WebPubSubClientTrafficControlRule>()).ToList(), maxClientConnectionLifetimeInSeconds, default);
         }
 
+        /// <summary>
+        /// A base class for client connection count rules
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.WebPubSubThrottleByJwtCustomClaimRule"/>, <see cref="Models.WebPubSubThrottleByJwtSignatureRule"/>, and <see cref="Models.WebPubSubThrottleByUserIdRule"/>.
+        /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Models.WebPubSubClientConnectionCountRule"/> instance for mocking. </returns>
         public static WebPubSubClientConnectionCountRule WebPubSubClientConnectionCountRule(string @type = default)
@@ -280,6 +293,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new UnknownWebPubSubClientConnectionCountRule(default, default);
         }
 
+        /// <summary> Throttle the client connection by a custom JWT claim. </summary>
         /// <param name="claimName"> The name of the claim in the JWT token. The client connection with the same claim value will be aggregated. If the claim is not found in the token, the connection will be allowed. </param>
         /// <param name="maxCount"> Maximum connection count allowed for the same Jwt claim value. Clients with the same Jwt claim will get rejected if the connection count exceeds this value. Default value is 20. </param>
         /// <returns> A new <see cref="Models.WebPubSubThrottleByJwtCustomClaimRule"/> instance for mocking. </returns>
@@ -288,6 +302,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubThrottleByJwtCustomClaimRule(default, default, claimName, maxCount);
         }
 
+        /// <summary> Throttle the client connection by the JWT signature. </summary>
         /// <param name="maxCount"> Maximum connection count allowed for the same JWT signature. Clients with the same JWT signature will get rejected if the connection count exceeds this value. Default value is 20. </param>
         /// <returns> A new <see cref="Models.WebPubSubThrottleByJwtSignatureRule"/> instance for mocking. </returns>
         public static WebPubSubThrottleByJwtSignatureRule WebPubSubThrottleByJwtSignatureRule(int? maxCount = default)
@@ -295,6 +310,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubThrottleByJwtSignatureRule(default, default, maxCount);
         }
 
+        /// <summary> Throttle the client connection by the user ID. </summary>
         /// <param name="maxCount"> Maximum connection count allowed for the same user ID. Clients with the same user ID will get rejected if the connection count exceeds this value. Default value is 20. </param>
         /// <returns> A new <see cref="Models.WebPubSubThrottleByUserIdRule"/> instance for mocking. </returns>
         public static WebPubSubThrottleByUserIdRule WebPubSubThrottleByUserIdRule(int? maxCount = default)
@@ -302,6 +318,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubThrottleByUserIdRule(default, default, maxCount);
         }
 
+        /// <summary>
+        /// A base class for client traffic control rules
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.WebPubSubTrafficThrottleByJwtCustomClaimRule"/>, <see cref="Models.WebPubSubTrafficThrottleByJwtSignatureRule"/>, and <see cref="Models.WebPubSubTrafficThrottleByUserIdRule"/>.
+        /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Models.WebPubSubClientTrafficControlRule"/> instance for mocking. </returns>
         public static WebPubSubClientTrafficControlRule WebPubSubClientTrafficControlRule(string @type = default)
@@ -309,6 +329,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new UnknownWebPubSubClientTrafficControlRule(default, default);
         }
 
+        /// <summary> Throttle the client traffic by a custom JWT claim. </summary>
         /// <param name="claimName"> The name of the claim in the JWT token. The message bytes with the same claim value will be aggregated. If the claim is not found in the token, the rule will be skipped. </param>
         /// <param name="maxInboundMessageBytes"> Maximum accumulated inbound message bytes allowed for the same JWT signature within a time window. Clients with the same JWT claim will get disconnected if the message bytes exceeds this value. Default value is 1GB. </param>
         /// <param name="aggregationWindowInSeconds"> The aggregation window for the message bytes. The message bytes will be aggregated in this window and be reset after the window. Default value is 60 seconds. </param>
@@ -318,6 +339,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubTrafficThrottleByJwtCustomClaimRule(default, default, claimName, maxInboundMessageBytes, aggregationWindowInSeconds);
         }
 
+        /// <summary> Throttle the client traffic by the JWT signature. </summary>
         /// <param name="maxInboundMessageBytes"> Maximum accumulated inbound message bytes allowed for the same JWT signature within a time window. Clients with the same JWT signature will get disconnected if the message bytes exceeds this value. Default value is 1GB. </param>
         /// <param name="aggregationWindowInSeconds"> The aggregation window for the message bytes. The message bytes will be aggregated in this window and be reset after the window. Default value is 60 seconds. </param>
         /// <returns> A new <see cref="Models.WebPubSubTrafficThrottleByJwtSignatureRule"/> instance for mocking. </returns>
@@ -326,6 +348,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubTrafficThrottleByJwtSignatureRule(default, default, maxInboundMessageBytes, aggregationWindowInSeconds);
         }
 
+        /// <summary> Throttle the client traffic by the user ID. </summary>
         /// <param name="maxInboundMessageBytes"> Maximum accumulated inbound message bytes allowed for the same user ID within a time window. Clients with the same user ID will get disconnected if the message bytes exceeds this value. Default value is 1GB. </param>
         /// <param name="aggregationWindowInSeconds"> The aggregation window for the message bytes. The message bytes will be aggregated in this window and be reset after the window. Default value is 60 seconds. </param>
         /// <returns> A new <see cref="Models.WebPubSubTrafficThrottleByUserIdRule"/> instance for mocking. </returns>
@@ -334,6 +357,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubTrafficThrottleByUserIdRule(default, default, maxInboundMessageBytes, aggregationWindowInSeconds);
         }
 
+        /// <summary> The billing information of the resource. </summary>
         /// <param name="name">
         /// The name of the SKU. Required.
         /// Allowed values: Standard_S1, Free_F1, Premium_P1, Premium_P2
@@ -365,6 +389,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 default);
         }
 
+        /// <summary> A class represents the access keys of the resource. </summary>
         /// <param name="primaryKey"> The primary access key. </param>
         /// <param name="secondaryKey"> The secondary access key. </param>
         /// <param name="primaryConnectionString"> Connection string constructed via the primaryKey. </param>
@@ -375,6 +400,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString, default);
         }
 
+        /// <summary> Parameters describes the request to regenerate access keys. </summary>
         /// <param name="keyType"> The type of access key. </param>
         /// <returns> A new <see cref="Models.WebPubSubRegenerateKeyContent"/> instance for mocking. </returns>
         public static WebPubSubRegenerateKeyContent WebPubSubRegenerateKeyContent(WebPubSubKeyType? keyType = default)
@@ -382,6 +408,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubRegenerateKeyContent(keyType, default);
         }
 
+        /// <summary> Describes an available sku.". </summary>
         /// <param name="resourceType"> The resource type that this object applies to. </param>
         /// <param name="sku"> The billing information of the resource. </param>
         /// <param name="capacity"> Describes scaling information of a sku. </param>
@@ -391,6 +418,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubSku(resourceType, sku, capacity, default);
         }
 
+        /// <summary> Describes scaling information of a sku. </summary>
         /// <param name="minimum"> The lowest permitted capacity for this resource. </param>
         /// <param name="maximum"> The highest permitted capacity for this resource. </param>
         /// <param name="default"> The default capacity. </param>
@@ -430,6 +458,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 default);
         }
 
+        /// <summary> Describes a  resource type that has been onboarded to private link service. </summary>
         /// <param name="name"> The name of the resource type that has been onboarded to private link service. </param>
         /// <param name="properties"> Describes the properties of a resource type that has been onboarded to private link service. </param>
         /// <returns> A new <see cref="Models.ShareablePrivateLinkType"/> instance for mocking. </returns>
@@ -438,6 +467,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new ShareablePrivateLinkType(name, properties, default);
         }
 
+        /// <summary> Describes the properties of a resource type that has been onboarded to private link service. </summary>
         /// <param name="description"> The description of the resource type that has been onboarded to private link service. </param>
         /// <param name="groupId"> The resource provider group id for the resource that has been onboarded to private link service. </param>
         /// <param name="type"> The resource provider type for the resource that has been onboarded to private link service. </param>
@@ -455,7 +485,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="keyVaultBaseUri"> Base uri of the KeyVault that stores certificate. </param>
         /// <param name="keyVaultSecretName"> Certificate secret name. </param>
         /// <param name="keyVaultSecretVersion"> Certificate secret version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="keyVaultBaseUri"/> or <paramref name="keyVaultSecretName"/> is null. </exception>
         /// <returns> A new <see cref="WebPubSub.WebPubSubCustomCertificateData"/> instance for mocking. </returns>
         public static WebPubSubCustomCertificateData WebPubSubCustomCertificateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WebPubSubProvisioningState? provisioningState = default, Uri keyVaultBaseUri = default, string keyVaultSecretName = default, string keyVaultSecretVersion = default)
         {
@@ -475,7 +504,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="domainName"> The custom domain name. </param>
         /// <param name="customCertificateId"> Resource ID. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> is null. </exception>
         /// <returns> A new <see cref="WebPubSub.WebPubSubCustomDomainData"/> instance for mocking. </returns>
         public static WebPubSubCustomDomainData WebPubSubCustomDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, WebPubSubProvisioningState? provisioningState = default, string domainName = default, ResourceIdentifier customCertificateId = default)
         {
@@ -488,6 +516,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 default);
         }
 
+        /// <summary> A hub setting. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -505,6 +534,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 default);
         }
 
+        /// <summary> Properties of a hub. </summary>
         /// <param name="eventHandlers"> Event handler of a hub. </param>
         /// <param name="eventListeners">
         /// Event listener settings for forwarding your client events to listeners.
@@ -523,6 +553,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubHubProperties((eventHandlers ?? new ChangeTrackingList<WebPubSubEventHandler>()).ToList(), (eventListeners ?? new ChangeTrackingList<WebPubSubEventListener>()).ToList(), anonymousConnectPolicy, webSocketKeepAliveIntervalInSeconds, default);
         }
 
+        /// <summary> Properties of event handler. </summary>
         /// <param name="urlTemplate">
         /// Gets or sets the URL template for the event handler. The actual URL is calculated when the corresponding event is triggered.
         /// The template supports predefined parameters syntax: `{event}`, `{hub}`, and KeyVault reference syntax `{@Microsoft.KeyVault(SecretUri=_your_secret_identifier_)}`
@@ -562,6 +593,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new UpstreamAuthSettings(authType, managedIdentityResource is null ? default : new ManagedIdentitySettings(managedIdentityResource, default), default);
         }
 
+        /// <summary> Represents presence event filters for event handler configuration. </summary>
         /// <param name="eventNames"> The concerning event names. Valid values are "joined", "left". If the value is null or empty, no presence events will be sent to the event handler. </param>
         /// <param name="groupFilters"> The group filters. Only events from these groups will be sent to the event handler. Each element is a pattern that may match multiple groups. If null or empty, events from all groups will be sent (subject to eventNames). </param>
         /// <returns> A new <see cref="Models.WebPubSubGroupPresenceEventFilters"/> instance for mocking. </returns>
@@ -573,6 +605,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubGroupPresenceEventFilters((eventNames ?? new ChangeTrackingList<WebPubSubGroupPresenceEventName>()).ToList(), (groupFilters ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> A setting defines which kinds of events should be sent to which endpoint. </summary>
         /// <param name="filter"> A base class for event filter which determines whether an event should be sent to an event listener. </param>
         /// <param name="endpoint"> An endpoint specifying where Web PubSub should send events to. </param>
         /// <returns> A new <see cref="Models.WebPubSubEventListener"/> instance for mocking. </returns>
@@ -581,6 +614,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubEventListener(filter, endpoint, default);
         }
 
+        /// <summary>
+        /// A base class for event filter which determines whether an event should be sent to an event listener.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.WebPubSubEventNameFilter"/>.
+        /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Models.WebPubSubEventListenerFilter"/> instance for mocking. </returns>
         public static WebPubSubEventListenerFilter WebPubSubEventListenerFilter(string @type = default)
@@ -588,6 +625,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new UnknownWebPubSubEventListenerFilter(default, default);
         }
 
+        /// <summary> Filter events by their name. </summary>
         /// <param name="systemEvents"> Gets or sets a list of system events. Supported events: "connected" and "disconnected". Blocking event "connect" is not supported because it requires a response. </param>
         /// <param name="userEventPattern">
         /// Gets or sets a matching pattern for event names.
@@ -602,6 +640,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubEventNameFilter(default, default, (systemEvents ?? new ChangeTrackingList<string>()).ToList(), userEventPattern);
         }
 
+        /// <summary>
+        /// An endpoint specifying where Web PubSub should send events to.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.WebPubSubEventHubEndpoint"/>.
+        /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Models.WebPubSubEventListenerEndpoint"/> instance for mocking. </returns>
         public static WebPubSubEventListenerEndpoint WebPubSubEventListenerEndpoint(string @type = default)
@@ -609,6 +651,10 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new UnknownWebPubSubEventListenerEndpoint(default, default);
         }
 
+        /// <summary>
+        /// An Event Hub endpoint.
+        /// The managed identity of Web PubSub service must be enabled, and the identity should have the "Azure Event Hubs Data sender" role to access Event Hub.
+        /// </summary>
         /// <param name="fullyQualifiedNamespace"> The fully qualified namespace name of the Event Hub resource. </param>
         /// <param name="eventHubName"> The name of the Event Hub. </param>
         /// <returns> A new <see cref="Models.WebPubSubEventHubEndpoint"/> instance for mocking. </returns>
@@ -651,6 +697,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 default);
         }
 
+        /// <summary> Data POST-ed to the nameAvailability action. </summary>
         /// <param name="resourceType"> The resource type. Can be "Microsoft.SignalRService/SignalR", "Microsoft.SignalRService/WebPubSub", "Microsoft.SignalRService/SignalR/replicas" or "Microsoft.SignalRService/WebPubSub/replicas". </param>
         /// <param name="name"> The resource name to validate. e.g."my-resource-name". </param>
         /// <returns> A new <see cref="Models.WebPubSubNameAvailabilityContent"/> instance for mocking. </returns>
@@ -659,6 +706,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubNameAvailabilityContent(resourceType, name, default);
         }
 
+        /// <summary> Result of the request to check name availability. It contains a flag and possible reason of failure. </summary>
         /// <param name="nameAvailable"> Indicates whether the name is available or not. </param>
         /// <param name="reason"> The reason of the availability. Required if name is not available. </param>
         /// <param name="message"> The message of the operation. </param>
@@ -668,6 +716,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new WebPubSubNameAvailability(nameAvailable, reason, message, default);
         }
 
+        /// <summary> Object that describes a specific usage of the resources. </summary>
         /// <param name="id"> Fully qualified ARM resource id. </param>
         /// <param name="currentValue"> Current value for the usage quota. </param>
         /// <param name="limit"> The maximum permitted value for the usage quota. If there is no limit, this value will be -1. </param>
@@ -685,6 +734,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 default);
         }
 
+        /// <summary> Localizable String object containing the name and a localized value. </summary>
         /// <param name="value"> The identifier of the usage. </param>
         /// <param name="localizedValue"> Localized name of the usage. </param>
         /// <returns> A new <see cref="Models.SignalRServiceUsageName"/> instance for mocking. </returns>
@@ -693,15 +743,15 @@ namespace Azure.ResourceManager.WebPubSub.Models
             return new SignalRServiceUsageName(value, localizedValue, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebPubSub.WebPubSubData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> A class represent a resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> The billing information of the resource. </param>
-        /// <param name="identity"> A class represent managed identities used for request and response. Current supported identity types: None, SystemAssigned, UserAssigned. </param>
+        /// <param name="identity"> A class represent managed identities used for request and response. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="externalIP"> The publicly accessible IP of the resource. </param>
         /// <param name="hostName"> FQDN of the service instance. </param>
@@ -710,25 +760,25 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="version"> Version of the resource. Probably you need the same or higher version of client SDKs. </param>
         /// <param name="privateEndpointConnections"> Private endpoint connections to the resource. </param>
         /// <param name="sharedPrivateLinkResources"> The list of shared private link resources. </param>
-        /// <param name="isClientCertEnabled"> TLS settings for the resource. </param>
+        /// <param name="isClientCertEnabled"> Request client certificate during TLS handshake if enabled. Not supported for free tier. Any input will be ignored for free tier. </param>
         /// <param name="hostNamePrefix"> Deprecated. </param>
         /// <param name="liveTraceConfiguration"> Live trace configuration of a Microsoft.SignalRService resource. </param>
-        /// <param name="resourceLogCategories"> Resource log configuration of a Microsoft.SignalRService resource. </param>
+        /// <param name="resourceLogCategories"> Gets or sets the list of category configurations. </param>
         /// <param name="networkAcls"> Network ACLs for the resource. </param>
         /// <param name="publicNetworkAccess">
         /// Enable or disable public network access. Default to "Enabled".
-        ///             When it's Enabled, network ACLs still apply.
-        ///             When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
+        /// When it's Enabled, network ACLs still apply.
+        /// When it's Disabled, public network access is always disabled no matter what you set in network ACLs.
         /// </param>
         /// <param name="isLocalAuthDisabled">
         /// DisableLocalAuth
-        ///             Enable or disable local auth with AccessKey
-        ///             When set as true, connection with AccessKey=xxx won't work.
+        /// Enable or disable local auth with AccessKey
+        /// When set as true, connection with AccessKey=xxx won't work.
         /// </param>
         /// <param name="isAadAuthDisabled">
         /// DisableLocalAuth
-        ///             Enable or disable aad auth
-        ///             When set as true, connection with AuthType=aad won't work.
+        /// Enable or disable aad auth
+        /// When set as true, connection with AuthType=aad won't work.
         /// </param>
         /// <returns> A new <see cref="WebPubSub.WebPubSubData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -769,13 +819,13 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebPubSub.WebPubSubPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> A private endpoint connection to an azure resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="privateEndpointId"> Private endpoint. </param>
+        /// <param name="privateEndpointId"> Full qualified Id of the private endpoint. </param>
         /// <param name="groupIds"> Group IDs. </param>
         /// <param name="connectionState"> Connection state of the private endpoint connection. </param>
         /// <returns> A new <see cref="WebPubSub.WebPubSubPrivateEndpointConnectionData"/> instance for mocking. </returns>
@@ -791,11 +841,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="WebPubSub.WebPubSubSharedPrivateLinkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Describes a Shared Private Link Resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="groupId"> The group id from the provider of resource the shared private link resource is for. </param>
         /// <param name="privateLinkResourceId"> The resource id of the resource the shared private link resource is for. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -821,11 +871,11 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.WebPubSubPrivateLink"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Private link resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="groupId"> Group Id of the private link resource. </param>
         /// <param name="requiredMembers"> Required members of the private link resource. </param>
         /// <param name="requiredZoneNames"> Required private DNS zone names. </param>

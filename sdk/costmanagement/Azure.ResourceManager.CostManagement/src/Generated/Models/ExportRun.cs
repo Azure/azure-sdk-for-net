@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ProcessingStartOn;
+                return Properties is null ? default : Properties.ProcessingStartsOn;
             }
             set
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.ProcessingStartOn = value;
+                Properties.ProcessingStartsOn = value;
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ProcessingEndOn;
+                return Properties is null ? default : Properties.ProcessingEndsOn;
             }
             set
             {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.ProcessingEndOn = value;
+                Properties.ProcessingEndsOn = value;
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CostManagement.Models
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 {
                     Properties = new ExportRunProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 
