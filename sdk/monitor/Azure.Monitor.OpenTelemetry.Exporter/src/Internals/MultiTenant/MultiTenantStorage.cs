@@ -213,8 +213,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         private bool TryCreateBlob(FileBlobProvider inner, byte[] buffer, int leasePeriodMilliseconds, out PersistentBlob? blob)
         {
             var created = leasePeriodMilliseconds > 0
-                ? inner.TryCreateBlob(buffer, leasePeriodMilliseconds, out blob)
-                : inner.TryCreateBlob(buffer, out blob);
+                ? inner.TryCreateBlob(new ReadOnlySpan<byte>(buffer), leasePeriodMilliseconds, out blob)
+                : inner.TryCreateBlob(new ReadOnlySpan<byte>(buffer), out blob);
 
             if (!created)
             {
