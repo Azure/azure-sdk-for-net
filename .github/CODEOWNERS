@@ -308,7 +308,7 @@
 /sdk/eventgrid/    @Kishp01 @rajeshka @shankarsama
 
 # PRLabel: %Event Grid %Functions
-/sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/    @Kishp01 @rajeshka @shankarsama
+/sdk/eventgrid/Microsoft.Azure.WebJobs.Extensions.EventGrid/    @alrod @fabiocav @Kishp01 @mathewc @rajeshka @shankarsama
 
 # ServiceLabel: %Event Grid
 # ServiceOwners: @Kishp01 @rajeshka @shankarsama
@@ -317,14 +317,14 @@
 /sdk/eventhub/    @axisc @hmlam @j7nw4r @jsquire @sagar0207 @sjkwak @SwayGom
 
 # PRLabel: %Event Hubs %Functions
-/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/    @axisc @hmlam @j7nw4r @jsquire @sagar0207 @sjkwak @SwayGom
+/sdk/eventhub/Microsoft.Azure.WebJobs.Extensions.EventHubs/    @alrod @axisc @fabiocav @hmlam @j7nw4r @jsquire @mathewc @sagar0207 @sjkwak @SwayGom
 
 # AzureSdkOwners: @jsquire
 # ServiceLabel: %Event Hubs
 # ServiceOwners: @axisc @hmlam @j7nw4r @sagar0207 @sjkwak @SwayGom
 
 # PRLabel: %Functions %Service Bus
-/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/    @EldertGrootenboer @j7nw4r @jsquire @sagar0207 @skarri-microsoft @SwayGom
+/sdk/servicebus/Microsoft.Azure.WebJobs.Extensions.ServiceBus/    @alrod @EldertGrootenboer @fabiocav @j7nw4r @jsquire @mathewc @sagar0207 @skarri-microsoft @SwayGom
 
 # AzureSdkOwners: @jsquire
 # ServiceLabel: %Functions
@@ -494,13 +494,16 @@
 /sdk/storage/Azure.Storage.Queues/    @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
 
 # PRLabel: %Storage
-/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs/    @amnguye @fabiocav @jalauzon-msft @jaschrep-msft @mathewc @nickliu-msft @seanmcc-msft @tg-msft
+/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Blobs/    @alrod @amnguye @fabiocav @jalauzon-msft @jaschrep-msft @mathewc @nickliu-msft @seanmcc-msft @tg-msft
 
 # PRLabel: %Storage
-/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Queues/    @amnguye @fabiocav @jalauzon-msft @jaschrep-msft @mathewc @nickliu-msft @seanmcc-msft @tg-msft
+/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Common/    @alrod @amnguye @fabiocav @jalauzon-msft @jaschrep-msft @mathewc @nickliu-msft @seanmcc-msft @tg-msft
 
 # PRLabel: %Storage
-/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage/    @amnguye @fabiocav @jalauzon-msft @jaschrep-msft @mathewc @nickliu-msft @seanmcc-msft @tg-msft
+/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage.Queues/    @alrod @amnguye @fabiocav @jalauzon-msft @jaschrep-msft @mathewc @nickliu-msft @seanmcc-msft @tg-msft
+
+# PRLabel: %Storage
+/sdk/storage/Microsoft.Azure.WebJobs.Extensions.Storage/    @alrod @amnguye @fabiocav @jalauzon-msft @jaschrep-msft @mathewc @nickliu-msft @seanmcc-msft @tg-msft
 
 # PRLabel: %Storage
 /sdk/storagesync/    @ankushbindlish2 @anpint
