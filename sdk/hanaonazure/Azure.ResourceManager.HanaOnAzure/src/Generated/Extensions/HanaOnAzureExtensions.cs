@@ -12,7 +12,6 @@ using Azure;
 using Azure.Core;
 using Azure.ResourceManager;
 using Azure.ResourceManager.HanaOnAzure.Mocking;
-using Azure.ResourceManager.HanaOnAzure.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.HanaOnAzure
@@ -36,12 +35,6 @@ namespace Azure.ResourceManager.HanaOnAzure
         private static MockableHanaOnAzureSubscriptionResource GetMockableHanaOnAzureSubscriptionResource(SubscriptionResource subscriptionResource)
         {
             return subscriptionResource.GetCachedClient(client => new MockableHanaOnAzureSubscriptionResource(client, subscriptionResource.Id));
-        }
-
-        /// <param name="tenantResource"></param>
-        private static MockableHanaOnAzureTenantResource GetMockableHanaOnAzureTenantResource(TenantResource tenantResource)
-        {
-            return tenantResource.GetCachedClient(client => new MockableHanaOnAzureTenantResource(client, tenantResource.Id));
         }
 
         /// <summary>
@@ -169,36 +162,6 @@ namespace Azure.ResourceManager.HanaOnAzure
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableHanaOnAzureSubscriptionResource(subscriptionResource).GetSapMonitors(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of SAP HANA management operations.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHanaOnAzureTenantResource.GetAllAsync(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HanaOnAzureOperationInfo"/> that may take multiple service requests to iterate over. </returns>
-        internal static AsyncPageable<HanaOnAzureOperationInfo> GetAllAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetMockableHanaOnAzureTenantResource(tenantResource).GetAllAsync(cancellationToken);
-        }
-
-        /// <summary>
-        /// Gets a list of SAP HANA management operations.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableHanaOnAzureTenantResource.GetAll(CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="tenantResource"> The <see cref="TenantResource"/> the method will execute against. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="HanaOnAzureOperationInfo"/> that may take multiple service requests to iterate over. </returns>
-        internal static Pageable<HanaOnAzureOperationInfo> GetAll(this TenantResource tenantResource, CancellationToken cancellationToken = default)
-        {
-            return GetMockableHanaOnAzureTenantResource(tenantResource).GetAll(cancellationToken);
         }
     }
 }
