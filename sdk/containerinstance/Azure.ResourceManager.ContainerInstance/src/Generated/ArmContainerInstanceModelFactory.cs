@@ -366,8 +366,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="name"> The name of the volume. </param>
         /// <param name="azureFile"> The Azure File volume. </param>
         /// <param name="emptyDir"> The empty directory volume. </param>
-        /// <param name="secret"> The secret volume. </param>
-        /// <param name="secretReference"> The secret reference volume. </param>
+        /// <param name="secret"> Defines files for a secret volume. Dictionary keys are file names and values are Base64-encoded secret data used as file contents. The values are sensitive, and the service does not return the contents of this property in GET responses. </param>
+        /// <param name="secretReference"> Defines files for a secret reference volume. Dictionary keys are file names and values identify entries in the container group's secretReferences collection. This property contains reference names rather than secret values. </param>
         /// <param name="gitRepo"> The git repo volume. </param>
         /// <returns> A new <see cref="Models.ContainerVolume"/> instance for mocking. </returns>
         public static ContainerVolume ContainerVolume(string name = default, ContainerInstanceAzureFileVolume azureFile = default, BinaryData emptyDir = default, IDictionary<string, string> secret = default, IDictionary<string, string> secretReference = default, ContainerInstanceGitRepoVolume gitRepo = default)
@@ -390,8 +390,9 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <param name="storageAccountName"> The name of the storage account that contains the Azure File share. </param>
         /// <param name="storageAccountKey"> The storage account access key used to access the Azure File share. </param>
         /// <param name="storageAccountKeyReference"> The reference to the storage account access key used to access the Azure File share. </param>
+        /// <param name="userAssignedIdentityClientId"> The client id of the user-assigned managed identity that has access to the Azure File share. </param>
         /// <returns> A new <see cref="Models.ContainerInstanceAzureFileVolume"/> instance for mocking. </returns>
-        public static ContainerInstanceAzureFileVolume ContainerInstanceAzureFileVolume(string shareName = default, bool? isReadOnly = default, string storageAccountName = default, string storageAccountKey = default, string storageAccountKeyReference = default)
+        public static ContainerInstanceAzureFileVolume ContainerInstanceAzureFileVolume(string shareName = default, bool? isReadOnly = default, string storageAccountName = default, string storageAccountKey = default, string storageAccountKeyReference = default, string userAssignedIdentityClientId = default)
         {
             return new ContainerInstanceAzureFileVolume(
                 shareName,
@@ -399,6 +400,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 storageAccountName,
                 storageAccountKey,
                 storageAccountKeyReference,
+                userAssignedIdentityClientId,
                 default);
         }
 
@@ -830,6 +832,66 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             return new ContainerGroupProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="ContainerInstance.ContainerGroupSandboxData"/> instance for mocking. </returns>
+        public static ContainerGroupSandboxData ContainerGroupSandboxData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerGroupSandboxProperties properties = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ContainerGroupSandboxData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                identity,
+                default);
+        }
+
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="networkSubnets"> The list of subnets associated with the SandboxGroup. </param>
+        /// <param name="managementResourceGroupId"> The ARM resource ID of the management resource group associated with this SandboxGroup. </param>
+        /// <returns> A new <see cref="Models.ContainerGroupSandboxProperties"/> instance for mocking. </returns>
+        public static ContainerGroupSandboxProperties ContainerGroupSandboxProperties(ContainerGroupSandboxProvisioningState? provisioningState = default, IEnumerable<ContainerSandboxGroupSubnetReference> networkSubnets = default, ResourceIdentifier managementResourceGroupId = default)
+        {
+            return new ContainerGroupSandboxProperties(provisioningState, networkSubnets is null ? default : new SandboxGroupNetworkProfile((networkSubnets ?? new ChangeTrackingList<ContainerSandboxGroupSubnetReference>()).ToList(), default), managementResourceGroupId, default);
+        }
+
+        /// <param name="id"> The ARM resource ID of the subnet. The caller must have `Microsoft.Network/virtualNetworks/subnets/join/action` permission on this subnet (enforced via a linked access check at create/update time). </param>
+        /// <returns> A new <see cref="Models.ContainerSandboxGroupSubnetReference"/> instance for mocking. </returns>
+        public static ContainerSandboxGroupSubnetReference ContainerSandboxGroupSubnetReference(ResourceIdentifier id = default)
+        {
+            return new ContainerSandboxGroupSubnetReference(id, default);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="identity"> The managed service identities assigned to this resource. </param>
+        /// <returns> A new <see cref="Models.ContainerSandboxGroupPatch"/> instance for mocking. </returns>
+        public static ContainerSandboxGroupPatch ContainerSandboxGroupPatch(IDictionary<string, string> tags = default, ManagedServiceIdentity identity = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new ContainerSandboxGroupPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
+        }
+
+        /// <param name="endpoint"> The endpoint URL to use with the access token. </param>
+        /// <param name="accessToken"> The access token used to authenticate against the endpoint. </param>
+        /// <param name="notAfter"> The UTC date and time at which the access token expires. </param>
+        /// <returns> A new <see cref="Models.ContainerSandboxGroupAccessToken"/> instance for mocking. </returns>
+        public static ContainerSandboxGroupAccessToken ContainerSandboxGroupAccessToken(Uri endpoint = default, string accessToken = default, DateTimeOffset notAfter = default)
+        {
+            return new ContainerSandboxGroupAccessToken(endpoint, accessToken, notAfter, default);
+        }
+
         /// <param name="content"> The content of the log. </param>
         /// <returns> A new <see cref="Models.ContainerLogs"/> instance for mocking. </returns>
         public static ContainerLogs ContainerLogs(string content = default)
@@ -928,6 +990,25 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static ContainerSupportedCapabilities ContainerSupportedCapabilities(float? maxMemoryInGB = default, float? maxCpu = default, float? maxGpuCount = default)
         {
             return new ContainerSupportedCapabilities(maxMemoryInGB, maxCpu, maxGpuCount, default);
+        }
+
+        /// <param name="shareName"> The name of the Azure File share to be mounted as a volume. </param>
+        /// <param name="isReadOnly"> The flag indicating whether the Azure File shared mounted as a volume is read-only. </param>
+        /// <param name="storageAccountName"> The name of the storage account that contains the Azure File share. </param>
+        /// <param name="storageAccountKey"> The storage account access key used to access the Azure File share. </param>
+        /// <param name="storageAccountKeyReference"> The reference to the storage account access key used to access the Azure File share. </param>
+        /// <returns> A new <see cref="Models.ContainerInstanceAzureFileVolume"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ContainerInstanceAzureFileVolume ContainerInstanceAzureFileVolume(string shareName = default, bool? isReadOnly = default, string storageAccountName = default, string storageAccountKey = default, string storageAccountKeyReference = default)
+        {
+            return new ContainerInstanceAzureFileVolume(
+                shareName,
+                isReadOnly,
+                storageAccountName,
+                storageAccountKey,
+                storageAccountKeyReference,
+                default,
+                default);
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerInstance.ContainerGroupData"/>. </summary>
