@@ -8,44 +8,63 @@
 using System;
 using System.ComponentModel;
 
-namespace Azure.Communication.Identity.Models
+namespace Azure.Communication.Identity
 {
     /// <summary> The type of principal the assignment is for. </summary>
-    internal readonly partial struct TeamsExtensionPrincipalType : IEquatable<TeamsExtensionPrincipalType>
+    public readonly partial struct TeamsExtensionPrincipalType : IEquatable<TeamsExtensionPrincipalType>
     {
         private readonly string _value;
+        /// <summary> Resource account principal type. </summary>
+        private const string ResourceAccountValue = "resourceAccount";
+        /// <summary> User principal type. </summary>
+        private const string UserValue = "user";
 
         /// <summary> Initializes a new instance of <see cref="TeamsExtensionPrincipalType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public TeamsExtensionPrincipalType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
+            Argument.AssertNotNull(value, nameof(value));
+
+            _value = value;
         }
 
-        private const string ResourceAccountValue = "resourceAccount";
-        private const string UserValue = "user";
-
-        /// <summary> resourceAccount. </summary>
+        /// <summary> Resource account principal type. </summary>
         public static TeamsExtensionPrincipalType ResourceAccount { get; } = new TeamsExtensionPrincipalType(ResourceAccountValue);
-        /// <summary> user. </summary>
+
+        /// <summary> User principal type. </summary>
         public static TeamsExtensionPrincipalType User { get; } = new TeamsExtensionPrincipalType(UserValue);
+
         /// <summary> Determines if two <see cref="TeamsExtensionPrincipalType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(TeamsExtensionPrincipalType left, TeamsExtensionPrincipalType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="TeamsExtensionPrincipalType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(TeamsExtensionPrincipalType left, TeamsExtensionPrincipalType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="TeamsExtensionPrincipalType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="TeamsExtensionPrincipalType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator TeamsExtensionPrincipalType(string value) => new TeamsExtensionPrincipalType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="TeamsExtensionPrincipalType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator TeamsExtensionPrincipalType?(string value) => value == null ? null : new TeamsExtensionPrincipalType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is TeamsExtensionPrincipalType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(TeamsExtensionPrincipalType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }
