@@ -32,9 +32,10 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// <param name="policyAction"> The effective outcome of the policy evaluation based on both the policy effect and evaluation result. Possible values are Unknown, Allow, Audit, Deny, Error. </param>
         /// <param name="policyEvaluationDetails"> The evaluation details returned by the policy evaluation engine. </param>
         /// <param name="additionalInfo"> The endpoint specific metadata. </param>
+        /// <param name="complianceState"> The compliance state of the resource against the policy. Possible values are NotSpecified, NonCompliant, Conflict, NotApplicable, Compliant, Error, Unknown, and Exempt. </param>
         /// <param name="expiresOn"> The expiration of the results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PolicyExternalEvaluationEndpointInvocationResult(PolicyLogInfo policyInfo, PolicyExternalEndpointResult? result, string endpointKind, string message, DateTimeOffset? retryAfter, BinaryData claims, PolicyAction? policyAction, BinaryData policyEvaluationDetails, BinaryData additionalInfo, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PolicyExternalEvaluationEndpointInvocationResult(PolicyLogInfo policyInfo, PolicyExternalEndpointResult? result, string endpointKind, string message, DateTimeOffset? retryAfter, BinaryData claims, PolicyAction? policyAction, BinaryData policyEvaluationDetails, BinaryData additionalInfo, ComplianceState? complianceState, DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PolicyInfo = policyInfo;
             Result = result;
@@ -45,6 +46,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             PolicyAction = policyAction;
             PolicyEvaluationDetails = policyEvaluationDetails;
             AdditionalInfo = additionalInfo;
+            ComplianceState = complianceState;
             ExpiresOn = expiresOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -150,6 +152,9 @@ namespace Azure.ResourceManager.Resources.Policy.Models
         /// </para>
         /// </summary>
         public BinaryData AdditionalInfo { get; }
+
+        /// <summary> The compliance state of the resource against the policy. Possible values are NotSpecified, NonCompliant, Conflict, NotApplicable, Compliant, Error, Unknown, and Exempt. </summary>
+        public ComplianceState? ComplianceState { get; }
 
         /// <summary> The expiration of the results. </summary>
         public DateTimeOffset? ExpiresOn { get; }
