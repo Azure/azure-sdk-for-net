@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.HybridConnectivity;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
@@ -18,34 +17,42 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorProperties"/>. </summary>
-        /// <param name="awsCloudProfile"> Cloud profile for AWS. </param>
         /// <param name="hostType"> Host cloud the public cloud connector. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="awsCloudProfile"/> is null. </exception>
-        public PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile, PublicCloudHostType hostType)
+        public PublicCloudConnectorProperties(PublicCloudHostType hostType)
         {
-            Argument.AssertNotNull(awsCloudProfile, nameof(awsCloudProfile));
-
-            AwsCloudProfile = awsCloudProfile;
             HostType = hostType;
         }
 
         /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorProperties"/>. </summary>
         /// <param name="awsCloudProfile"> Cloud profile for AWS. </param>
+        /// <param name="gcpCloudProfile"> Cloud profile for GCP. </param>
         /// <param name="hostType"> Host cloud the public cloud connector. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>
         /// <param name="connectorPrimaryIdentifier"> Connector primary identifier. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile, PublicCloudHostType hostType, PublicCloudResourceProvisioningState? provisioningState, string connectorPrimaryIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile, GcpCloudProfile gcpCloudProfile, PublicCloudHostType hostType, PublicCloudResourceProvisioningState? provisioningState, string connectorPrimaryIdentifier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AwsCloudProfile = awsCloudProfile;
+            GcpCloudProfile = gcpCloudProfile;
             HostType = hostType;
             ProvisioningState = provisioningState;
             ConnectorPrimaryIdentifier = connectorPrimaryIdentifier;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorProperties"/>. </summary>
+        /// <param name="awsCloudProfile"> Cloud profile for AWS. </param>
+        /// <param name="hostType"> Host cloud the public cloud connector. </param>
+        public PublicCloudConnectorProperties(AwsCloudProfile awsCloudProfile, PublicCloudHostType hostType) : this(hostType)
+        {
+            AwsCloudProfile = awsCloudProfile;
+        }
+
         /// <summary> Cloud profile for AWS. </summary>
         public AwsCloudProfile AwsCloudProfile { get; set; }
+
+        /// <summary> Cloud profile for GCP. </summary>
+        public GcpCloudProfile GcpCloudProfile { get; set; }
 
         /// <summary> Host cloud the public cloud connector. </summary>
         public PublicCloudHostType HostType { get; set; }

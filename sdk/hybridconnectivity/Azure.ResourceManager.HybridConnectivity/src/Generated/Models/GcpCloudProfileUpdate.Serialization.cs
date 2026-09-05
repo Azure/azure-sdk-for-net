@@ -13,52 +13,52 @@ using Azure.ResourceManager.HybridConnectivity;
 
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
-    /// <summary> Properties of public cloud connectors. </summary>
-    public partial class PublicCloudConnectorPropertiesUpdate : IJsonModel<PublicCloudConnectorPropertiesUpdate>
+    /// <summary> cloud profile for GCP. </summary>
+    internal partial class GcpCloudProfileUpdate : IJsonModel<GcpCloudProfileUpdate>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PublicCloudConnectorPropertiesUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual GcpCloudProfileUpdate PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PublicCloudConnectorPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GcpCloudProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePublicCloudConnectorPropertiesUpdate(document.RootElement, options);
+                        return DeserializeGcpCloudProfileUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PublicCloudConnectorPropertiesUpdate)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GcpCloudProfileUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PublicCloudConnectorPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GcpCloudProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridConnectivityContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PublicCloudConnectorPropertiesUpdate)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GcpCloudProfileUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PublicCloudConnectorPropertiesUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GcpCloudProfileUpdate>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PublicCloudConnectorPropertiesUpdate IPersistableModel<PublicCloudConnectorPropertiesUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        GcpCloudProfileUpdate IPersistableModel<GcpCloudProfileUpdate>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PublicCloudConnectorPropertiesUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GcpCloudProfileUpdate>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PublicCloudConnectorPropertiesUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GcpCloudProfileUpdate>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,15 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PublicCloudConnectorPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GcpCloudProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicCloudConnectorPropertiesUpdate)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GcpCloudProfileUpdate)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(AwsCloudProfile))
+            if (Optional.IsDefined(OrganizationProperties))
             {
-                writer.WritePropertyName("awsCloudProfile"u8);
-                writer.WriteObjectValue(AwsCloudProfile, options);
-            }
-            if (Optional.IsDefined(GcpCloudProfile))
-            {
-                writer.WritePropertyName("gcpCloudProfile"u8);
-                writer.WriteObjectValue(GcpCloudProfile, options);
+                writer.WritePropertyName("organizationProperties"u8);
+                writer.WriteObjectValue(OrganizationProperties, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +98,40 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PublicCloudConnectorPropertiesUpdate IJsonModel<PublicCloudConnectorPropertiesUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        GcpCloudProfileUpdate IJsonModel<GcpCloudProfileUpdate>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PublicCloudConnectorPropertiesUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual GcpCloudProfileUpdate JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PublicCloudConnectorPropertiesUpdate>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GcpCloudProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicCloudConnectorPropertiesUpdate)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GcpCloudProfileUpdate)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePublicCloudConnectorPropertiesUpdate(document.RootElement, options);
+            return DeserializeGcpCloudProfileUpdate(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PublicCloudConnectorPropertiesUpdate DeserializePublicCloudConnectorPropertiesUpdate(JsonElement element, ModelReaderWriterOptions options)
+        internal static GcpCloudProfileUpdate DeserializeGcpCloudProfileUpdate(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            AwsCloudProfileUpdate awsCloudProfile = default;
-            GcpCloudProfileUpdate gcpCloudProfile = default;
+            GcpOrganizationPropertiesUpdate organizationProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("awsCloudProfile"u8))
+                if (prop.NameEquals("organizationProperties"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    awsCloudProfile = AwsCloudProfileUpdate.DeserializeAwsCloudProfileUpdate(prop.Value, options);
-                    continue;
-                }
-                if (prop.NameEquals("gcpCloudProfile"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    gcpCloudProfile = GcpCloudProfileUpdate.DeserializeGcpCloudProfileUpdate(prop.Value, options);
+                    organizationProperties = GcpOrganizationPropertiesUpdate.DeserializeGcpOrganizationPropertiesUpdate(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +139,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PublicCloudConnectorPropertiesUpdate(awsCloudProfile, gcpCloudProfile, additionalBinaryDataProperties);
+            return new GcpCloudProfileUpdate(organizationProperties, additionalBinaryDataProperties);
         }
     }
 }

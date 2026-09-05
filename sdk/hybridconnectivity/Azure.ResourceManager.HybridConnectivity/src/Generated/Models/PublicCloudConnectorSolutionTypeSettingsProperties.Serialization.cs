@@ -99,6 +99,13 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
+            writer.WritePropertyName("hostTypes"u8);
+            writer.WriteStartArray();
+            foreach (PublicCloudHostType item in HostTypes)
+            {
+                writer.WriteStringValue(item.ToString());
+            }
+            writer.WriteEndArray();
             writer.WritePropertyName("defaultValue"u8);
             writer.WriteStringValue(DefaultValue);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -148,6 +155,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             string @type = default;
             string description = default;
             IReadOnlyList<string> allowedValues = default;
+            IList<PublicCloudHostType> hostTypes = default;
             string defaultValue = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -189,6 +197,16 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     allowedValues = array;
                     continue;
                 }
+                if (prop.NameEquals("hostTypes"u8))
+                {
+                    List<PublicCloudHostType> array = new List<PublicCloudHostType>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new PublicCloudHostType(item.GetString()));
+                    }
+                    hostTypes = array;
+                    continue;
+                }
                 if (prop.NameEquals("defaultValue"u8))
                 {
                     defaultValue = prop.Value.GetString();
@@ -205,6 +223,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 @type,
                 description,
                 allowedValues,
+                hostTypes,
                 defaultValue,
                 additionalBinaryDataProperties);
         }

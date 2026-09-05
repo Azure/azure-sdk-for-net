@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.HybridConnectivity.Models
 {
     /// <summary> Properties of public cloud connectors. </summary>
-    internal partial class PublicCloudConnectorPropertiesUpdate
+    public partial class PublicCloudConnectorPropertiesUpdate
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,15 +23,20 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
 
         /// <summary> Initializes a new instance of <see cref="PublicCloudConnectorPropertiesUpdate"/>. </summary>
         /// <param name="awsCloudProfile"> Cloud profile for AWS. </param>
+        /// <param name="gcpCloudProfile"> Cloud profile for GCP. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PublicCloudConnectorPropertiesUpdate(AwsCloudProfileUpdate awsCloudProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PublicCloudConnectorPropertiesUpdate(AwsCloudProfileUpdate awsCloudProfile, GcpCloudProfileUpdate gcpCloudProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AwsCloudProfile = awsCloudProfile;
+            GcpCloudProfile = gcpCloudProfile;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Cloud profile for AWS. </summary>
         internal AwsCloudProfileUpdate AwsCloudProfile { get; set; }
+
+        /// <summary> Cloud profile for GCP. </summary>
+        internal GcpCloudProfileUpdate GcpCloudProfile { get; set; }
 
         /// <summary> List of AWS accounts which need to be excluded. </summary>
         public IList<string> AwsCloudExcludedAccounts
@@ -43,6 +48,23 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     AwsCloudProfile = new AwsCloudProfileUpdate();
                 }
                 return AwsCloudProfile.ExcludedAccounts;
+            }
+        }
+
+        /// <summary> The organization properties of the GCP organization. </summary>
+        public GcpOrganizationPropertiesUpdate GcpCloudOrganizationProperties
+        {
+            get
+            {
+                return GcpCloudProfile is null ? default : GcpCloudProfile.OrganizationProperties;
+            }
+            set
+            {
+                if (GcpCloudProfile is null)
+                {
+                    GcpCloudProfile = new GcpCloudProfileUpdate();
+                }
+                GcpCloudProfile.OrganizationProperties = value;
             }
         }
     }
