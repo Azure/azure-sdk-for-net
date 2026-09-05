@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -17,11 +18,27 @@ namespace Azure.ResourceManager.Network.Models
     [CodeGenSuppress("EffectiveBaseSecurityAdminRule", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(IEnumerable<NetworkManagerSecurityGroupItem>), typeof(IEnumerable<NetworkConfigurationGroup>), typeof(string))]
     [CodeGenSuppress("PeerRouteList", typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(string), typeof(int?))]
     [CodeGenSuppress("EffectiveNetworkSecurityGroup", typeof(ResourceIdentifier), typeof(EffectiveNetworkSecurityGroupAssociation), typeof(IEnumerable<EffectiveNetworkSecurityRule>), typeof(string))]
+    // The generated compatibility overload drops its IPAddress value instead of forwarding it to the wire model.
+    [CodeGenSuppress("PrivateEndpointIPConfiguration", typeof(string), typeof(string), typeof(ETag?), typeof(string), typeof(string), typeof(IPAddress))]
     // The generated factory signature includes the internal ApplicationGatewayForContainersReferenceDefinition helper type,
     // which would make a public method less accessible than one of its parameters.
     [CodeGenSuppress("WebApplicationFirewallPolicyData", typeof(ResourceIdentifier), typeof(string), typeof(string), typeof(AzureLocation?), typeof(IDictionary<string, string>), typeof(PolicySettings), typeof(IEnumerable<WebApplicationFirewallCustomRule>), typeof(IEnumerable<ApplicationGatewayData>), typeof(NetworkProvisioningState?), typeof(WebApplicationFirewallPolicyResourceState?), typeof(ManagedRulesDefinition), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<WritableSubResource>), typeof(IEnumerable<ApplicationGatewayForContainersReferenceDefinition>), typeof(ETag?))]
     public static partial class ArmNetworkModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="Models.PrivateEndpointIPConfiguration"/>. </summary>
+        /// <param name="name"> The name of the resource that is unique within a resource group. </param>
+        /// <param name="privateEndpointIPConfigurationType"> The resource type. </param>
+        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
+        /// <param name="groupId"> The ID of a group obtained from the remote resource that this private endpoint should connect to. </param>
+        /// <param name="memberName"> The member name of a group obtained from the remote resource that this private endpoint should connect to. </param>
+        /// <param name="privateIPAddress"> A private IP address obtained from the private endpoint's subnet. </param>
+        /// <returns> A new <see cref="Models.PrivateEndpointIPConfiguration"/> instance for mocking. </returns>
+        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
+        public static PrivateEndpointIPConfiguration PrivateEndpointIPConfiguration(string name, string privateEndpointIPConfigurationType, ETag? etag, string groupId, string memberName, IPAddress privateIPAddress)
+        {
+            return PrivateEndpointIPConfiguration(groupId, memberName, privateIPAddress?.ToString(), name, privateEndpointIPConfigurationType, etag);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.EffectiveBaseSecurityAdminRule"/>. </summary>
         /// <param name="resourceId"> Resource ID. </param>
         /// <param name="configurationDescription"> A description of the security admin configuration. </param>

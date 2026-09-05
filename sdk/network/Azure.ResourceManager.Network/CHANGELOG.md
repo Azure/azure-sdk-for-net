@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed `PrivateEndpointIPConfiguration.PrivateIPAddress` serialization and deserialization.
+
 ### Other Changes
 
 ## 1.17.0 (2026-08-21)
