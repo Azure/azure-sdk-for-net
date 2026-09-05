@@ -229,16 +229,16 @@ public class ResilientMultiturnHandler : InvocationHandler
             context.InvocationId,
             context.PlatformContext.CallId);
 
-        var invoker = request.HttpContext.RequestServices
-            .GetRequiredService<ITaskInvoker>();
+        var conversation = request.HttpContext.RequestServices
+            .GetResilientTask<ConversationInput, ConversationOutput>("conversation");
 
         // Use the session id as the durable TaskId for multi-turn convergence.
         string taskId = context.SessionId;
 
         // StartAsync with the same TaskId reuses the chain (new turn). While a
         // turn is running, this input is queued as steering (run.IsQueued == true).
-        var run = await invoker.StartAsync<ConversationInput, ConversationOutput>(
-            "conversation", input,
+        var run = await conversation.StartAsync(
+            input,
             new RunOptions { TaskId = taskId },
             cancellationToken);
 
@@ -280,10 +280,10 @@ public record ConversationMessage(string Role, string Content);
 /// <summary>
 /// Demonstrates ending a multi-turn chain with DeleteAsync.
 /// </summary>
-public static async Task EndConversation(IMultiTurnTask multiTurn, string taskId)
+public static async Task EndConversation(TaskDefinition<ConversationInput, ConversationOutput> conversation, string taskId)
 {
     // End the multi-turn chain — cancels any in-flight turn and cleans up.
-    await multiTurn.DeleteAsync(taskId);
+    await conversation.DeleteAsync(taskId);
 }
 ```
 

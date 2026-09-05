@@ -1729,7 +1729,7 @@ public class SampleEndToEndTests
     {
         var model = CreateMockResponsesClient();
 
-        ResilientTaskBuilder? tasks = null;
+        AgentEventStreamRegistry? streamsRef = null;
 
         var env = await CreateTestServerAsync<Snippets.SampleResilientResearchSnippets.ResilientResearchHandler>(
             services =>
@@ -1738,24 +1738,27 @@ public class SampleEndToEndTests
                 services.AddAgentEventStreams(o => o.UseInMemoryReplay(
                     ttl: TimeSpan.FromMinutes(5)));
 
-                tasks = services.AddResilientTasks();
-            },
-            configurePostBuild: app =>
-            {
-                // Provider-aware overloads were removed: resolve the singleton AgentEventStreamRegistry
-                // from the built container and capture it in the plain delegate (the registry is read
-                // lazily at invocation time, so registering post-build is fine).
-                AgentEventStreamRegistry streams = app.Services.GetRequiredService<AgentEventStreamRegistry>();
-                tasks!.AddMultiTurnTask<Snippets.SampleResilientResearchSnippets.ResearchRequest,
+                // AddResilientMultiTurnTask self-initializes the resilient-tasks services and
+                // registers the returned TaskDefinition as a keyed singleton (keyed by task name),
+                // so the handler resolves it via GetResilientTask. The stream registry is a
+                // singleton resolved from the built provider below and read lazily when a turn
+                // actually runs, so capturing it via streamsRef is safe.
+                services.AddResilientMultiTurnTask<Snippets.SampleResilientResearchSnippets.ResearchRequest,
                              Snippets.SampleResilientResearchSnippets.ResearchResult>(
                         "research",
                         (ctx, ct) => Snippets.SampleResilientResearchSnippets.RunResearchAsync(
-                            streams, model, "test-model", ctx,
+                            streamsRef!, model, "test-model", ctx,
                             numPhases: 2, callsPerPhase: 2,
                             interPhaseCooldown: TimeSpan.Zero,
                             intraPhaseCooldown: TimeSpan.Zero,
                             ct: ct),
                         steerable: true);
+            },
+            configurePostBuild: app =>
+            {
+                // Resolve the singleton AgentEventStreamRegistry from the built container so the
+                // captured delegate can reach it (the registry is read lazily at invocation time).
+                streamsRef = app.Services.GetRequiredService<AgentEventStreamRegistry>();
             });
 
         return env;
@@ -1847,8 +1850,7 @@ public class SampleEndToEndTests
         return await CreateTestServerAsync<Snippets.SampleResilientMultiturnSnippets.ResilientMultiturnHandler>(
             services =>
             {
-                services.AddResilientTasks()
-                    .AddMultiTurnTask<Snippets.SampleResilientMultiturnSnippets.ConversationInput,
+                services.AddResilientMultiTurnTask<Snippets.SampleResilientMultiturnSnippets.ConversationInput,
                                       Snippets.SampleResilientMultiturnSnippets.ConversationOutput>(
                         "conversation",
                         (ctx, ct) => Snippets.SampleResilientMultiturnSnippets.RunConversationTurnAsync(

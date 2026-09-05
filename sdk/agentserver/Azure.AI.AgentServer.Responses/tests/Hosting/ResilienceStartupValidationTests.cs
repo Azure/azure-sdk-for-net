@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.Core;
+using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using Microsoft.AspNetCore.Builder;
@@ -104,10 +105,11 @@ public sealed class ResilienceStartupValidationTests
     public void ResilientOptions_Enabled_Via_Separate_Configure_Path_ComposesTaskSubsystem()
     {
         // Issue-4 regression (CR-FINAL), now resolved by construction: the Core task subsystem
-        // (ITaskInvoker) is composed for EVERY local (non-hosted) host, independent of how options are
-        // set — matching Python, whose task subsystem is not option-gated. Enabling steering through a
-        // configuration path OTHER than the AddResponsesServer(configure) delegate therefore can no
-        // longer desync into a missing ITaskInvoker: the host starts and the task subsystem is present.
+        // (exposed as keyed TaskDefinition<TInput,TOutput> singletons) is composed for EVERY local
+        // (non-hosted) host, independent of how options are set — matching Python, whose task
+        // subsystem is not option-gated. Enabling steering through a configuration path OTHER than
+        // the AddResponsesServer(configure) delegate therefore can no longer desync into a missing
+        // task subsystem: the host starts and the resilient task definitions are present.
         using var host = BuildHost(services =>
         {
             services.AddSingleton<ResponseHandler>(new TestHandler());
@@ -119,7 +121,14 @@ public sealed class ResilienceStartupValidationTests
         host.Start();
 
         // The task subsystem is composed regardless of the configuration path.
-        Assert.That(host.Services.GetService<Core.Tasks.ITaskInvoker>(), Is.Not.Null);
+        Assert.That(
+            host.Services.GetRequiredKeyedService<Core.Tasks.TaskDefinition<ResponseTaskInput, ResponseTaskOutput>>(
+                ResponsesResilientTaskHandler.OneShotTaskName),
+            Is.Not.Null);
+        Assert.That(
+            host.Services.GetRequiredKeyedService<Core.Tasks.TaskDefinition<ResponseTaskInput, ResponseTaskOutput>>(
+                ResponsesResilientTaskHandler.MultiTurnTaskName),
+            Is.Not.Null);
     }
 
     private sealed class DurableStubProvider : ResponsesProvider

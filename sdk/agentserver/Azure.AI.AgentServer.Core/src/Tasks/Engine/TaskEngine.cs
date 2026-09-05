@@ -21,9 +21,10 @@ namespace Azure.AI.AgentServer.Core.Tasks.Engine;
 /// The in-process orchestrator for resilient task runs. Owns the create → persist
 /// input → lease → invoke handler → terminal lifecycle, identity convergence,
 /// one-shot auto-cleanup, input-size enforcement, and crash recovery re-invocation.
-/// Implements the public <see cref="ITaskInvoker"/>.
+/// Task runs are surfaced to callers through the typed <see cref="TaskDefinition{TInput, TOutput}"/>
+/// returned at registration.
 /// </summary>
-internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDisposable
+internal sealed partial class TaskEngine : IDisposable
 {
     private readonly ITaskStore _store;
     private readonly TaskWriteSerializer _serializer;
@@ -70,7 +71,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
     internal TaskWriteSerializer Serializer => _serializer;
 
-    /// <inheritdoc/>
+    /// <summary>Starts a task and awaits it to completion, returning the typed result.</summary>
     public async Task<TOutput> RunAsync<TInput, TOutput>(
         string name, TInput input, RunOptions? options = null, CancellationToken cancellationToken = default)
     {
@@ -79,7 +80,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         return await handle.Completion.WaitAsync(cancellationToken).ConfigureAwait(false);
     }
 
-    /// <inheritdoc/>
+    /// <summary>Starts a task and returns an awaitable handle once the creation round-trip succeeds.</summary>
     public async Task<TaskRun<TOutput>> StartAsync<TInput, TOutput>(
         string name, TInput input, RunOptions? options = null, CancellationToken cancellationToken = default)
     {
@@ -125,6 +126,8 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         // turn is done explicitly via GetActiveRunAsync(name, taskId, inputId).
         if (_activeRuns.TryGetValue(taskId, out IActiveRun? existing))
         {
+            EnsureTaskName(existing.Name, name, taskId);
+
             if (!multiTurn)
             {
                 return existing.GetHandle<TOutput>();
@@ -164,6 +167,20 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         return $"{name}:{suffix}";
     }
 
+    private static bool TaskNameMatches(TaskRecord record, string expectedName)
+        => string.Equals(record.Source?.Name, expectedName, StringComparison.Ordinal);
+
+    private static void EnsureTaskName(string? actualName, string expectedName, string taskId)
+    {
+        if (!string.Equals(actualName, expectedName, StringComparison.Ordinal))
+        {
+            throw new ResilientTaskException(
+                ResilientTaskErrorCode.Conflict,
+                $"Task '{taskId}' belongs to registered task '{actualName ?? string.Empty}', " +
+                $"not '{expectedName}'.");
+        }
+    }
+
     private async Task<TaskRun<TOutput>> StartOneShotAsync<TInput, TOutput>(
         TaskRegistration registration, string name, string taskId, string inputId, bool persistInputId, TInput input,
         CancellationToken cancellationToken)
@@ -192,7 +209,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         payload[TaskWireKeys.PayloadSchemaVersion] = TaskWireKeys.SchemaVersionValue;
 
         var runState = new TaskRunState<TOutput>(taskId, inputId, isQueued: false);
-        var activeRun = new ActiveRun<TOutput>(runState);
+        var activeRun = new ActiveRun<TOutput>(name, runState);
 
         EntryMode entryMode = EntryMode.Fresh;
         TaskRecord record;
@@ -222,6 +239,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             // The record already exists: converge or conflict.
             TaskRecord? current = await _store.GetAsync(taskId, cancellationToken).ConfigureAwait(false)
                 ?? throw new ResilientTaskException(ResilientTaskErrorCode.Conflict, $"Task '{taskId}' is gone.") { CurrentStatus = TaskRunStatus.Completed };
+            EnsureTaskName(current.Source?.Name, name, taskId);
             if (current.Status == TaskWireKeys.StatusCompleted)
             {
                 throw new ResilientTaskException(ResilientTaskErrorCode.Conflict,
@@ -251,7 +269,9 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
         if (!_activeRuns.TryAdd(taskId, activeRun))
         {
-            return _activeRuns[taskId].GetHandle<TOutput>();
+            IActiveRun concurrent = _activeRuns[taskId];
+            EnsureTaskName(concurrent.Name, name, taskId);
+            return concurrent.GetHandle<TOutput>();
         }
 
         var handlerCts = new CancellationTokenSource();
@@ -336,6 +356,8 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         }
         else
         {
+            EnsureTaskName(current.Source?.Name, name, taskId);
+
             // ifLastInputId precondition (FR-006).
             if (options?.IfLastInputId is { } expected)
             {
@@ -405,8 +427,9 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
         var runState = new TaskRunState<TOutput>(taskId, inputId, isQueued: false);
         runState.RecoveryCount = (int)(record.Lease?.Generation ?? 0);
-        var activeRun = new ActiveRun<TOutput>(runState) { Steerable = registration.Steerable };
-        if (registration.Steerable && HasPersistedSteering(record))
+        bool steerable = registration.Steerable;
+        var activeRun = new ActiveRun<TOutput>(name, runState) { Steerable = steerable };
+        if (steerable && HasPersistedSteering(record))
         {
             SeedSteeringSeq(activeRun.Steering, record);
             RehydratePendingInputs(activeRun.Steering, record, taskId);
@@ -423,7 +446,9 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         }
         if (!_activeRuns.TryAdd(taskId, activeRun))
         {
-            return _activeRuns[taskId].GetHandle<TOutput>();
+            IActiveRun concurrent = _activeRuns[taskId];
+            EnsureTaskName(concurrent.Name, name, taskId);
+            return concurrent.GetHandle<TOutput>();
         }
 
         var handlerCts = new CancellationTokenSource();
@@ -1271,9 +1296,31 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             cancellationToken).ConfigureAwait(false);
     }
 
-    /// <inheritdoc/>
-    public async Task DeleteAsync(string taskId, CancellationToken cancellationToken = default)
+    /// <summary>Ends a multi-turn chain: cancels any in-flight turn, resolves queued callers as cancelled, and removes the record.</summary>
+    public Task DeleteAsync(string taskId, CancellationToken cancellationToken = default)
+        => DeleteCoreAsync(expectedTaskName: null, taskId, cancellationToken);
+
+    /// <summary>Ends a multi-turn chain after validating its registered task name.</summary>
+    public Task DeleteAsync(
+        string expectedTaskName,
+        string taskId,
+        CancellationToken cancellationToken = default)
+        => DeleteCoreAsync(expectedTaskName, taskId, cancellationToken);
+
+    private async Task DeleteCoreAsync(
+        string? expectedTaskName,
+        string taskId,
+        CancellationToken cancellationToken)
     {
+        if (expectedTaskName is not null)
+        {
+            TaskRecord? record = await _store.GetAsync(taskId, cancellationToken).ConfigureAwait(false);
+            if (record is not null)
+            {
+                EnsureTaskName(record.Source?.Name, expectedTaskName, taskId);
+            }
+        }
+
         // Cancel an in-flight turn and resolve its caller as cancelled.
         if (_activeRuns.TryRemove(taskId, out IActiveRun? run))
         {
@@ -1566,7 +1613,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         // so shutdown/cancel/timeout still interrupt a long delay.
         => retry.Delay.GetNextDelay(null, attempt + 1);
 
-    /// <inheritdoc/>
+    /// <summary>Returns the in-flight run for a one-shot task keyed by <paramref name="taskId"/>, or null.</summary>
     public async Task<TaskRun<TOutput>?> GetActiveRunAsync<TOutput>(
         string name, string taskId, CancellationToken cancellationToken = default)
     {
@@ -1576,7 +1623,8 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
             throw new ArgumentException($"Task '{name}' is multi-turn; the (name, taskId, inputId) overload is required.", nameof(name));
         }
 
-        if (_activeRuns.TryGetValue(taskId, out IActiveRun? run))
+        if (_activeRuns.TryGetValue(taskId, out IActiveRun? run)
+            && string.Equals(run.Name, name, StringComparison.Ordinal))
         {
             return run.GetHandle<TOutput>();
         }
@@ -1589,7 +1637,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         return recovered?.GetHandle<TOutput>();
     }
 
-    /// <inheritdoc/>
+    /// <summary>Returns the in-flight run for a multi-turn task keyed by <paramref name="taskId"/> and <paramref name="inputId"/>, or null.</summary>
     public async Task<TaskRun<TOutput>?> GetActiveRunAsync<TOutput>(
         string name, string taskId, string inputId, CancellationToken cancellationToken = default)
     {
@@ -1600,6 +1648,7 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         }
 
         if (_activeRuns.TryGetValue(taskId, out IActiveRun? run) &&
+            string.Equals(run.Name, name, StringComparison.Ordinal) &&
             string.Equals(run.InputId, inputId, StringComparison.Ordinal))
         {
             return run.GetHandle<TOutput>();
@@ -1639,7 +1688,8 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
         // Only our reserved framework records are recoverable — never adopt a foreign record that
         // happens to share the (agent, session) scope.
-        if (record.Source?.Type != TaskWireKeys.SourceTypeValue)
+        if (record.Source?.Type != TaskWireKeys.SourceTypeValue
+            || !TaskNameMatches(record, name))
         {
             return null;
         }
@@ -1671,7 +1721,10 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         }
 
         _activeRuns.TryGetValue(taskId, out IActiveRun? recovered);
-        return recovered;
+        return recovered is not null
+            && string.Equals(recovered.Name, name, StringComparison.Ordinal)
+                ? recovered
+                : null;
     }
 
     /// <summary>
@@ -1687,7 +1740,13 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
     internal async Task RecoverAsync<TInput, TOutput>(TaskRegistration registration, TaskRecord record)
     {
         string taskId = record.Id;
-        if (_activeRuns.ContainsKey(taskId) || _terminatedOneShot.ContainsKey(taskId))
+        if (_activeRuns.TryGetValue(taskId, out IActiveRun? existing))
+        {
+            EnsureTaskName(existing.Name, registration.Name, taskId);
+            return;
+        }
+
+        if (_terminatedOneShot.ContainsKey(taskId))
         {
             return;
         }
@@ -1718,14 +1777,16 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
         var runState = new TaskRunState<TOutput>(taskId, inputId, isQueued: false);
         runState.RecoveryCount = (int)(record.Lease?.Generation ?? 0);
-        var activeRun = new ActiveRun<TOutput>(runState) { Steerable = registration.Steerable };
-        if (registration.Steerable && HasPersistedSteering(record))
+        bool steerable = registration.Steerable;
+        var activeRun = new ActiveRun<TOutput>(registration.Name, runState) { Steerable = steerable };
+        if (steerable && HasPersistedSteering(record))
         {
             SeedSteeringSeq(activeRun.Steering, record);
             RehydratePendingInputs(activeRun.Steering, record, taskId);
         }
         if (!_activeRuns.TryAdd(taskId, activeRun))
         {
+            EnsureTaskName(_activeRuns[taskId].Name, registration.Name, taskId);
             return;
         }
 
@@ -1964,6 +2025,8 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
 
     private interface IActiveRun
     {
+        string Name { get; }
+
         string TaskId { get; }
 
         string InputId { get; }
@@ -1987,11 +2050,14 @@ internal sealed partial class TaskEngine : ITaskInvoker, IMultiTurnTask, IDispos
         private TaskRunState<TOutput> _state;
         private TaskRunState<TOutput>? _pendingCancel;
 
-        public ActiveRun(TaskRunState<TOutput> state)
+        public ActiveRun(string name, TaskRunState<TOutput> state)
         {
+            Name = name;
             _state = state;
             WireCancel(state);
         }
+
+        public string Name { get; }
 
         /// <summary>The in-process steering coordinator. Lazily created on first access so a
         /// non-steerable task never allocates a steering queue (pay-for-what-you-use, FR-038).

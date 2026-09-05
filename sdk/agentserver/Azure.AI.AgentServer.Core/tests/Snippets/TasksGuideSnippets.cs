@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Azure.AI.AgentServer.Core.Tasks;
 using Azure.Core;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using NUnit.Framework;
 
 namespace Azure.AI.AgentServer.Core.Tests.Snippets
@@ -19,41 +20,77 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
     [Explicit("Snippets are compiled to prevent doc rot; they are not executed.")]
     public class TasksGuideSnippets
     {
-        // §3 Hello world — one-shot registration + RunAsync.
-        public static async Task<string> OneShotHelloWorld(IServiceCollection services, ITaskInvoker invoker)
+        // §3 Hello world — one-shot registration returns a typed TaskDefinition.
+        public static async Task<string> OneShotHelloWorld()
         {
-            services
-                .AddResilientTasks()
-                .AddTask<string, string>("echo", async (ctx, ct) =>
+            #region Snippet:Core_TasksGuide_OneShotHelloWorld
+
+            var builder = AgentHost.CreateBuilder();
+
+            TaskDefinition<string, string> echo = builder.Services.AddResilientTask<string, string>(
+                "echo", async (ctx, ct) =>
                 {
                     await Task.Yield();
                     return $"you said: {ctx.Input}";
                 });
 
-            string result = await invoker.RunAsync<string, string>("echo", "hello");
+            var app = builder.Build();
+            await app.App.StartAsync();
+
+            string result = await echo.RunAsync("hello");
+            // result == "you said: hello"
+
+            await app.App.StopAsync();
+
+            #endregion
+
             return result;
         }
 
-        // §3 Hello world — multi-turn chain.
-        public static async Task MultiTurnChain(IServiceCollection services, ITaskInvoker invoker, IMultiTurnTask multiTurn)
+        // §3 Hello world — resolving a registered task later (e.g. in a request handler), instead
+        // of capturing the handle returned at registration time.
+        public static async Task<string> ResolveRegisteredTaskLater(IServiceCollection services)
         {
-            services
-                .AddResilientTasks()
-                .AddMultiTurnTask<string, string>("chat", async (ctx, ct) =>
+            services.AddResilientTask<string, string>("echo", async (ctx, ct) =>
+            {
+                await Task.Yield();
+                return $"you said: {ctx.Input}";
+            });
+
+            await using ServiceProvider provider = services.BuildServiceProvider();
+            await StartHostedServicesAsync(provider);
+
+            // Elsewhere — e.g. a request handler resolved from DI — get the same task by name.
+            TaskDefinition<string, string> echo = provider.GetResilientTask<string, string>("echo");
+            return await echo.RunAsync("hello again");
+        }
+
+        // §3 Hello world — multi-turn chain.
+        public static async Task MultiTurnChain(IServiceCollection services)
+        {
+            TaskDefinition<string, string> chat = services.AddResilientMultiTurnTask<string, string>(
+                "chat", async (ctx, ct) =>
                 {
                     await Task.Yield();
                     return $"reply to: {ctx.Input}";
                 });
 
-            TaskRun<string> turn1 = await invoker.StartAsync<string, string>("chat", "hi");
+            await using ServiceProvider provider = services.BuildServiceProvider();
+            await StartHostedServicesAsync(provider);
+
+            // A multi-turn chain REQUIRES an explicit TaskId (the chain id) that you own — reuse it
+            // across turns to continue the same chain.
+            string chatId = "chat-1";
+            TaskRun<string> turn1 = await chat.StartAsync(
+                "hi", new RunOptions { TaskId = chatId });
             string a1 = await turn1.Completion;
 
-            TaskRun<string> turn2 = await invoker.StartAsync<string, string>(
-                "chat", "and again",
-                new RunOptions { TaskId = turn1.TaskId });
+            TaskRun<string> turn2 = await chat.StartAsync(
+                "and again",
+                new RunOptions { TaskId = chatId });
             string a2 = await turn2.Completion;
 
-            await multiTurn.DeleteAsync(turn1.TaskId);
+            await chat.DeleteAsync(chatId);
             _ = (a1, a2);
         }
 
@@ -70,9 +107,9 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
         }
 
         // §4.6 The result handle.
-        public static async Task ResultHandle(ITaskInvoker invoker)
+        public static async Task ResultHandle(TaskDefinition<string, string> echo)
         {
-            TaskRun<string> run = await invoker.StartAsync<string, string>("echo", "hi");
+            TaskRun<string> run = await echo.StartAsync("hi");
 
             _ = run.TaskId;
             _ = run.InputId;
@@ -86,16 +123,22 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
         // §4.7 Steering (multi-turn only).
         public static async Task Steering(
             IServiceCollection services,
-            ITaskInvoker invoker,
             Func<TaskContext<string>, CancellationToken, Task<string>> handler)
         {
-            services.AddResilientTasks()
-                .AddMultiTurnTask<string, string>("assistant", handler, steerable: true);
+            TaskDefinition<string, string> assistant = services.AddResilientMultiTurnTask<string, string>(
+                "assistant", handler, steerable: true);
 
-            TaskRun<string> r1 = await invoker.StartAsync<string, string>("assistant", "write a long essay");
-            TaskRun<string> r2 = await invoker.StartAsync<string, string>(
-                "assistant", "actually, just one sentence",
-                new RunOptions { TaskId = r1.TaskId });
+            await using ServiceProvider provider = services.BuildServiceProvider();
+            await StartHostedServicesAsync(provider);
+
+            // Both inputs use the SAME explicit chain id, so the second one steers the running turn
+            // instead of starting a new chain.
+            string chatId = "assistant-1";
+            TaskRun<string> r1 = await assistant.StartAsync(
+                "write a long essay", new RunOptions { TaskId = chatId });
+            TaskRun<string> r2 = await assistant.StartAsync(
+                "actually, just one sentence",
+                new RunOptions { TaskId = chatId });
             _ = r2;
         }
 
@@ -106,8 +149,7 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
         {
             // Retries compose an Azure.Core DelayStrategy — exponential is the default.
             TaskRetryPolicy policy = new() { MaxAttempts = 5 };
-            services.AddResilientTasks()
-                .AddTask<string, string>("charge", handler, o => o.Retry = policy);
+            services.AddResilientTask<string, string>("charge", handler, o => o.Retry = policy);
 
             _ = new TaskRetryPolicy { MaxAttempts = 3, Delay = DelayStrategy.CreateFixedDelayStrategy(TimeSpan.FromSeconds(1)) };
             _ = new TaskRetryPolicy { MaxAttempts = 3, Delay = DelayStrategy.CreateExponentialDelayStrategy(TimeSpan.FromSeconds(1)) };
@@ -119,8 +161,7 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
             IServiceCollection services,
             Func<TaskContext<string>, CancellationToken, Task<string>> handler)
         {
-            services.AddResilientTasks()
-                .AddTask<string, string>("summarize", handler, o => o.Timeout = TimeSpan.FromMinutes(2));
+            services.AddResilientTask<string, string>("summarize", handler, o => o.Timeout = TimeSpan.FromMinutes(2));
         }
 
         // §4.11 Shutdown — leave the work resumable.
@@ -141,6 +182,18 @@ namespace Azure.AI.AgentServer.Core.Tests.Snippets
                 InputId = "input-1",
                 IfLastInputId = "input-0",
             };
+        }
+
+        // Starts the host's IHostedServices, which constructs the TaskEngine (the durability
+        // service depends on it) and late-binds it into every TaskDefinition handle so invocation
+        // works. In a real app the host does this for you; the snippets call it explicitly because
+        // they register and invoke in one method rather than across startup and request handling.
+        private static async Task StartHostedServicesAsync(IServiceProvider provider)
+        {
+            foreach (IHostedService hosted in provider.GetServices<IHostedService>())
+            {
+                await hosted.StartAsync(CancellationToken.None);
+            }
         }
 
         [Test]

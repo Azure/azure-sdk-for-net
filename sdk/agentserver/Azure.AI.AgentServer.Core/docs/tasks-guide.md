@@ -67,7 +67,7 @@ has side effects, or must outlive the process.
 
 ## 2. Mental model
 
-A resilient task is a **named handler** plus an **invoker** that starts runs of it.
+A resilient task is a **named handler** registered at startup; registration returns a typed `TaskDefinition<TInput, TOutput>` handle that starts runs of it.
 
 ```text
 ┌─────────────────────────────────────────────────────────────────┐
@@ -77,10 +77,10 @@ A resilient task is a **named handler** plus an **invoker** that starts runs of 
 │  async (ctx, ct) =>               async (ctx, ct) =>              │
 │      Work(ctx.Input)                  Reply(ctx.Input)            │
 │                                                                   │
-│  await invoker.RunAsync(           await invoker.RunAsync(        │
-│      "summarize", input)               "chat", input,            │
-│                                        new RunOptions {          │
-│                                            TaskId = "c1" })       │
+│  await summarize.RunAsync(input)    await chat.RunAsync(          │
+│                                      input,                       │
+│                                      new RunOptions {             │
+│                                          TaskId = "c1" })         │
 └─────────────────────────────────────────────────────────────────┘
                               ▲
                               │   (your async caller)
@@ -103,8 +103,8 @@ A resilient task is a **named handler** plus an **invoker** that starts runs of 
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-- You **register** handlers once at startup against names.
-- You **invoke** by name with a typed input and get a typed output back.
+- You **register** handlers once at startup against names and capture their typed handles.
+- You **invoke** through the returned `TaskDefinition<TInput, TOutput>` handle with a typed input and get a typed output back.
 - Each invocation becomes a durable **run** identified by a `TaskId`.
 
 There are two shapes:
@@ -132,26 +132,52 @@ conversation) and stays alive between turns until you end it.
 
 ### One-shot
 
-```csharp
-// Startup: register the handler.
-builder.Services
-    .AddResilientTasks()
-    .AddTask<string, string>("echo", async (ctx, ct) =>
+```C# Snippet:Core_TasksGuide_OneShotHelloWorld
+var builder = AgentHost.CreateBuilder();
+
+TaskDefinition<string, string> echo = builder.Services.AddResilientTask<string, string>(
+    "echo", async (ctx, ct) =>
     {
+        await Task.Yield();
         return $"you said: {ctx.Input}";
     });
 
-// Anywhere with the invoker injected:
-string result = await invoker.RunAsync<string, string>("echo", "hello");
+var app = builder.Build();
+await app.App.StartAsync();
+
+string result = await echo.RunAsync("hello");
 // result == "you said: hello"
+
+await app.App.StopAsync();
 ```
+
+The registration-time handle is bound to the task engine when the application host starts.
+When resolving a handle later through `GetResilientTask`, resolution initializes the engine
+even when the caller is using a built service provider outside an `IHost`.
+
+There are two ways to get a task's `TaskDefinition<TInput, TOutput>` handle:
+
+1. **At registration time** — capture the value `AddResilientTask`/`AddResilientMultiTurnTask`
+   returns, as above. Convenient at startup, when the handle is used immediately or stashed in a
+   local.
+2. **Later, at resolution time** — every registered task is also registered as a **keyed
+   singleton** (keyed by its name), so resolve it from `IServiceProvider` wherever you have one
+   (a request handler, a background service, ...) with `GetResilientTask<TInput, TOutput>(name)`:
+
+```csharp
+// Elsewhere — e.g. a request handler resolved from DI — get the same task by name.
+TaskDefinition<string, string> echo = serviceProvider.GetResilientTask<string, string>("echo");
+string result = await echo.RunAsync("hello again");
+```
+
+Both return the *same* handle instance; use whichever is convenient at the call site. See §5.2 for
+the full `GetResilientTask` signature and the keyed-registration rationale.
 
 ### Multi-turn chain
 
 ```csharp
-builder.Services
-    .AddResilientTasks()
-    .AddMultiTurnTask<string, string>("chat", async (ctx, ct) =>
+TaskDefinition<string, string> chat = builder.Services
+    .AddResilientMultiTurnTask<string, string>("chat", async (ctx, ct) =>
     {
         // ctx.Input is this turn's message. Persist application state explicitly.
         return $"reply to: {ctx.Input}";
@@ -160,19 +186,19 @@ builder.Services
 // Turn 1 — a multi-turn chain REQUIRES an explicit TaskId (the chain id) that you
 // own. Choose a stable id from your domain (session id, conversation id, ...).
 string chatId = $"chat-{sessionId}";
-var turn1 = await invoker.StartAsync<string, string>(
-    "chat", "hi",
+var turn1 = await chat.StartAsync(
+    "hi",
     new RunOptions { TaskId = chatId });
-string a1 = await turn1;
+string a1 = await turn1.Completion;
 
 // Turn 2 — reuse the same TaskId to continue the same chain.
-var turn2 = await invoker.StartAsync<string, string>(
-    "chat", "and again",
+var turn2 = await chat.StartAsync(
+    "and again",
     new RunOptions { TaskId = chatId });
-string a2 = await turn2;
+string a2 = await turn2.Completion;
 
 // End the chain when you are done with it.
-await multiTurn.DeleteAsync(chatId);
+await chat.DeleteAsync(chatId);
 ```
 
 ---
@@ -274,7 +300,7 @@ tagging, and recovered-execution patterns.
 `StartAsync` returns a `TaskRun<TOutput>` — an awaitable handle to the run:
 
 ```csharp
-TaskRun<string> run = await invoker.StartAsync<string, string>("echo", "hi");
+TaskRun<string> run = await echo.StartAsync("hi");
 
 run.TaskId;            // the run's id
 run.InputId;          // the input id assigned to this run
@@ -284,8 +310,8 @@ string c = await run.Completion.WaitAsync(token);       // cancel only your wait
 await run.RequestCancellationAsync();                   // request cancellation of the run
 ```
 
-`RunAsync` is the convenience that starts a run and awaits it to completion in one
-call; `StartAsync` hands you the handle so you can await it later or cancel it.
+`RunAsync` is the handle method that starts a run and awaits it to completion in one
+call; `StartAsync` hands you the `TaskRun<TOutput>` so you can await it later or cancel it.
 
 ### 4.7 Steering (multi-turn only)
 
@@ -295,16 +321,17 @@ running*. The new input is queued; the running turn observes
 `steerable: true`:
 
 ```csharp
-builder.AddMultiTurnTask<string, string>("assistant", handler, steerable: true);
+TaskDefinition<string, string> assistant =
+    services.AddResilientMultiTurnTask<string, string>("assistant", handler, steerable: true);
 
 // Caller pivots mid-turn — both inputs use the SAME explicit chain id, so the
 // second one steers the running task.
 string chatId = $"assistant-{sessionId}";
-var r1 = await invoker.StartAsync<string, string>(
-    "assistant", "write a long essay",
+var r1 = await assistant.StartAsync(
+    "write a long essay",
     new RunOptions { TaskId = chatId });
-var r2 = await invoker.StartAsync<string, string>(
-    "assistant", "actually, just one sentence",
+var r2 = await assistant.StartAsync(
+    "actually, just one sentence",
     new RunOptions { TaskId = chatId });
 ```
 
@@ -372,14 +399,14 @@ not counted as an extra retry. Only an actual handler *throw* advances the count
 The counter also resets at every new turn boundary (multi-turn), so each turn starts
 with a fresh budget.
 
-When retries are exhausted the invoker throws a `ResilientTaskException` (`ErrorCode.ExhaustedRetries`;
+When retries are exhausted the task handle throws a `ResilientTaskException` (`ErrorCode.ExhaustedRetries`;
 a single unretried throw uses `ErrorCode.HandlerError`), whose `Failure`
 (`TaskFailureDetail`) reports the `Kind` (`HandlerError` or `ExhaustedRetries`),
 the `ErrorType`, `Message`, `Attempts`, and the last error.
 
 ```csharp
 var policy = new TaskRetryPolicy { MaxAttempts = 5 };
-builder.AddTask<Order, Receipt>("charge", handler, o => o.Retry = policy);
+services.AddResilientTask<Order, Receipt>("charge", handler, o => o.Retry = policy);
 ```
 
 `TaskRetryPolicy` expresses the delay between attempts as an `Azure.Core.DelayStrategy` (the `Delay`
@@ -433,7 +460,7 @@ recovery to reset the clock. When the timeout fires it is **cooperative**: it si
 
 ```csharp
 // Lower the budget to 2 minutes (values above the 1-day cap are rejected at registration).
-builder.AddTask<Doc, Summary>("summarize", handler, o => o.Timeout = TimeSpan.FromMinutes(2));
+services.AddResilientTask<Doc, Summary>("summarize", handler, o => o.Timeout = TimeSpan.FromMinutes(2));
 ```
 
 ### 4.11 Shutdown
@@ -462,10 +489,10 @@ process restarts instead of waiting for the lease to expire on its own.
 
 ### 4.12 Multi-turn chain deletion
 
-A multi-turn chain stays alive between turns; ending it is explicit. Inject
-`IMultiTurnTask` and call `DeleteAsync(taskId)`. It cancels any in-flight turn,
-resolves queued callers as cancelled, and removes the record. It is idempotent — a
-no-op if the chain is already gone.
+A multi-turn chain stays alive between turns; ending it is explicit. Call
+`DeleteAsync(taskId)` on the multi-turn task's `TaskDefinition` handle. It cancels
+any in-flight turn, resolves queued callers as cancelled, and removes the record.
+It is idempotent — a no-op if the chain is already gone.
 
 ---
 
@@ -474,42 +501,59 @@ no-op if the chain is already gone.
 ### 5.1 Registration
 
 ```csharp
-ResilientTaskBuilder AddResilientTasks(this IServiceCollection services,
-                                        TokenCredential? credential = null);
+IServiceCollection AddResilientTasks(this IServiceCollection services,
+                                      TokenCredential? credential = null);
 
-ResilientTaskBuilder AddTask<TInput, TOutput>(
+TaskDefinition<TInput, TOutput> AddResilientTask<TInput, TOutput>(
+    this IServiceCollection services,
     string name,
     Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
     Action<TaskRegistrationOptions>? configure = null);
 
-ResilientTaskBuilder AddMultiTurnTask<TInput, TOutput>(
+TaskDefinition<TInput, TOutput> AddResilientMultiTurnTask<TInput, TOutput>(
+    this IServiceCollection services,
     string name,
     Func<TaskContext<TInput>, CancellationToken, Task<TOutput>> handler,
     bool steerable = false,
     Action<TaskRegistrationOptions>? configure = null);
 ```
 
-`credential` is required when the host is running in Foundry hosted mode and the
-framework selects hosted task storage. Local development uses the file-backed
-store and does not require a credential.
+`AddResilientTask`/`AddResilientMultiTurnTask` self-initialize the resilient-tasks
+services on first use, so `AddResilientTasks()` is optional — call it explicitly only
+when you need to supply a `credential`, or register a `TokenCredential` directly in the
+service collection. Either form may be configured before or after task registrations.
+When both are used, they must resolve to the same credential instance. A credential is
+required when the host is running in Foundry hosted mode and the framework selects
+hosted task storage; local development uses the file-backed store and does not require
+one.
 
-### 5.2 `ITaskInvoker`
+### 5.2 `TaskDefinition<TInput, TOutput>`
 
 ```csharp
-Task<TOutput>          RunAsync<TInput, TOutput>(string name, TInput input, RunOptions? options = null, CancellationToken cancellationToken = default);
-Task<TaskRun<TOutput>> StartAsync<TInput, TOutput>(string name, TInput input, RunOptions? options = null, CancellationToken cancellationToken = default);
-Task<TaskRun<TOutput>?> GetActiveRunAsync<TOutput>(string name, string taskId, CancellationToken cancellationToken = default);
-Task<TaskRun<TOutput>?> GetActiveRunAsync<TOutput>(string name, string taskId, string inputId, CancellationToken cancellationToken = default);
+Task<TOutput>           RunAsync(TInput input, RunOptions? options = null, CancellationToken cancellationToken = default);
+Task<TaskRun<TOutput>>  StartAsync(TInput input, RunOptions? options = null, CancellationToken cancellationToken = default);
+Task<TaskRun<TOutput>?> GetActiveRunAsync(string taskId, CancellationToken cancellationToken = default);
+Task<TaskRun<TOutput>?> GetActiveRunAsync(string taskId, string inputId, CancellationToken cancellationToken = default);
 ```
+
+The handle is returned by `AddResilientTask`/`AddResilientMultiTurnTask`, which also
+register it as a **keyed singleton** service — keyed by `name` — so resolution is never
+ambiguous even when several tasks share the same `<TInput, TOutput>` pair. Resolve it in
+a request handler with `IServiceProvider.GetResilientTask<TInput, TOutput>(name)`
+(equivalent to `GetRequiredKeyedService<TaskDefinition<TInput, TOutput>>(name)`).
+
+For unit tests, derive a substitute from `TaskDefinition<TInput, TOutput>` using its
+protected constructor and override the virtual members needed by the component under
+test.
 
 Both `RunAsync` and `StartAsync` perform a storage round-trip and so are async.
 `StartAsync` returns once the run has been durably created; awaiting the returned
 handle waits for the result.
 
-Use the `(name, taskId)` `GetActiveRunAsync` overload for one-shot tasks. Use the
-`(name, taskId, inputId)` overload for multi-turn chains when you hold the specific
+Use the `(taskId)` `GetActiveRunAsync` overload for one-shot tasks. Use the
+`(taskId, inputId)` overload for multi-turn chains when you hold the specific
 turn's `inputId` and want that turn's handle; it is required for multi-turn tasks
-(the two-argument overload throws for a multi-turn registration).
+(the one-argument overload throws for a multi-turn registration).
 
 ### 5.3 `TaskRun<TOutput>`
 
@@ -563,7 +607,7 @@ is set (§4.8).
 ### 6.1 Multi-turn agent (the common case)
 
 ```csharp
-builder.AddMultiTurnTask<string, string>("agent", async (ctx, ct) =>
+services.AddResilientMultiTurnTask<string, string>("agent", async (ctx, ct) =>
 {
     FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
         $"agent-history/{ctx.TaskId}", credential);
@@ -593,7 +637,7 @@ written, the recovered handler re-charges with the *same* idempotency key, so th
 gateway dedupes it.
 
 ```csharp
-builder.AddTask<Order, Receipt>("charge", async (ctx, ct) =>
+services.AddResilientTask<Order, Receipt>("charge", async (ctx, ct) =>
 {
     FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
         $"billing/{ctx.TaskId}", credential);
@@ -636,7 +680,7 @@ builder.AddTask<Order, Receipt>("charge", async (ctx, ct) =>
 ### 6.3 Steering — interruptible long turn
 
 ```csharp
-builder.AddMultiTurnTask<string, string>("writer", async (ctx, ct) =>
+services.AddResilientMultiTurnTask<string, string>("writer", async (ctx, ct) =>
 {
     var sb = new StringBuilder();
     await foreach (var token in Model.StreamAsync(ctx.Input, ct))
@@ -651,7 +695,7 @@ builder.AddMultiTurnTask<string, string>("writer", async (ctx, ct) =>
 ### 6.4 Graceful shutdown — `ExitForRecoveryAsync`
 
 ```csharp
-builder.AddTask<Job, Result>("batch", async (ctx, ct) =>
+services.AddResilientTask<Job, Result>("batch", async (ctx, ct) =>
 {
     foreach (var item in ctx.Input.Items)
     {
@@ -670,7 +714,7 @@ builder.AddTask<Job, Result>("batch", async (ctx, ct) =>
 
 ```csharp
 // Another caller already started "echo" with this taskId; attach to it.
-TaskRun<string>? existing = await invoker.GetActiveRunAsync<string>("echo", taskId);
+TaskRun<string>? existing = await echo.GetActiveRunAsync(taskId);
 if (existing is not null)
     string result = await existing.Completion;
 ```
@@ -688,7 +732,7 @@ head you are advancing to). Setting both makes the compare-and-swap unambiguous 
 lets a safe retry reuse the same `InputId` idempotently.
 
 ```csharp
-await invoker.StartAsync<string, string>("chat", "next",
+await chat.StartAsync("next",
     new RunOptions
     {
         TaskId = taskId,
@@ -703,7 +747,7 @@ await invoker.StartAsync<string, string>("chat", "next",
 
 - Register all handlers at startup, before the host starts serving.
 - One-shot tasks complete and become terminal automatically; multi-turn chains must
-  be ended explicitly with `IMultiTurnTask.DeleteAsync`.
+  be ended explicitly with the multi-turn `TaskDefinition`'s `DeleteAsync`.
 - Make handlers idempotent with respect to recovery: anything observable outside the
   process (a charge, an email) should be guarded by a durable checkpoint in
   `FoundryStateStore` or another external store.
@@ -744,14 +788,14 @@ side effects, and does not need to survive a restart.
 **How do I do "fire and forget"?** Call `StartAsync(...)` instead of `RunAsync(...)`.
 It returns a `TaskRun<TOutput>` handle as soon as the run is registered; you can drop
 the handle and the task keeps running resiliently. A later caller can attach via
-`GetActiveRunAsync(name, taskId)` if it cares about the outcome.
+`GetActiveRunAsync(taskId)` on the task's handle if it cares about the outcome.
 
 **Can two callers run the same `taskId` concurrently?** No — `taskId` is the identity.
 The second caller either attaches to the first's in-flight run (one-shot convergence),
 gets queued (multi-turn, when steering is enabled), or sees a `ResilientTaskException` (`Conflict`).
 
 **Does the framework retry by default?** No. Configure retry at registration via
-`TaskRegistrationOptions.Retry` (e.g. `builder.AddTask<TIn, TOut>(name, handler,
+`TaskRegistrationOptions.Retry` (e.g. `services.AddResilientTask<TIn, TOut>(name, handler,
 o => o.Retry = new TaskRetryPolicy());`) to opt in. Without a policy a handler
 runs once and surfaces the exception.
 
@@ -762,7 +806,7 @@ record limited to orchestration state.
 **What if my handler ignores `ctx.Cancellation`?** Cooperative cancellation is a
 request; nothing forces a handler to stop. If your handler must be interruptible,
 observe `ctx.Cancellation` in your loop (or pass it to the calls you `await`).
-`IMultiTurnTask.DeleteAsync(taskId)` removes the durable chain record and signals
+`DeleteAsync(taskId)` on the multi-turn handle removes the durable chain record and signals
 cancellation on the in-flight turn — but it does not preempt or abort running user code.
 A non-cooperating handler keeps running until it returns or throws on its own.
 
