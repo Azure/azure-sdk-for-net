@@ -6,7 +6,9 @@ using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.GenAI;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
 using Azure.Monitor.OpenTelemetry.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Microsoft.Extensions.DependencyInjection;
@@ -60,7 +62,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                 // Add a processor manually to the TracerProvider created by the SDK
                 var exporterOptions = serviceProvider!.GetRequiredService<IOptionsMonitor<AzureMonitorExporterOptions>>().Get(Options.DefaultName);
 
-                if (exporterOptions.EnableLiveMetrics)
+                if (exporterOptions.EnableLiveMetrics && LiveMetricsIsSupported())
                 {
                     var manager = serviceProvider!.GetRequiredService<LiveMetricsClientManager>();
                     tracerProvider.AddProcessor(new LiveMetricsActivityProcessor(manager));
@@ -91,7 +93,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 loggerProvider.AddProcessor(new MainAgentAttributionLogProcessor());
 
-                if (exporterOptions.EnableLiveMetrics)
+                if (exporterOptions.EnableLiveMetrics && LiveMetricsIsSupported())
                 {
                     var manager = serviceProvider!.GetRequiredService<LiveMetricsClientManager>();
 
@@ -106,6 +108,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
                     loggerProvider.AddProcessor(baseProcessor);
                 }
             }
+        }
+
+        private static int s_liveMetricsSuppressionReported;
+
+        private static bool LiveMetricsIsSupported()
+        {
+            if (!MultiTenantConfig.Enabled)
+            {
+                return true;
+            }
+
+            // Asked once per signal, but the answer is a property of the process.
+            if (Interlocked.Exchange(ref s_liveMetricsSuppressionReported, 1) == 0)
+            {
+                AzureMonitorExporterEventSource.Log.LiveMetricsDisabledForMultiTenantExport();
+            }
+
+            return false;
         }
     }
 }

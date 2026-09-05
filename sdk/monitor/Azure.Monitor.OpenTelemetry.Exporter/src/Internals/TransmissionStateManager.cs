@@ -27,6 +27,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private readonly System.Timers.Timer _backOffIntervalTimer;
 
+        private readonly string _endpoint;
+
         private double _syncBackOffIntervalCalculation;
 
         private int _consecutiveErrors;
@@ -34,11 +36,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal TransmissionState State { get; private set; }
 
-        internal TransmissionStateManager()
+        /// <param name="endpoint">
+        /// Named in the back-off event. Multi-tenant runs one of these per ingestion endpoint, and
+        /// without it several endpoints backing off are indistinguishable in a trace.
+        /// </param>
+        internal TransmissionStateManager(string? endpoint = null)
         {
             _backOffIntervalTimer = new();
             _backOffIntervalTimer.Elapsed += ResetTransmission;
             _backOffIntervalTimer.AutoReset = false;
+            _endpoint = endpoint ?? string.Empty;
             State = TransmissionState.Closed;
         }
 
@@ -61,6 +68,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             _minIntervalToUpdateConsecutiveErrors = minIntervalToUpdateConsecutiveErrors;
             _nextMinTimeToUpdateConsecutiveErrors = nextMinTimeToUpdateConsecutiveErrors;
             _backOffIntervalTimer = backOffIntervalTimer;
+            _endpoint = string.Empty;
             State = state;
         }
 
@@ -119,7 +127,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
                         _backOffIntervalTimer.Start();
 
-                        AzureMonitorExporterEventSource.Log.BackoffEnabled(backOffTimeInterval.TotalMilliseconds);
+                        AzureMonitorExporterEventSource.Log.BackoffEnabled(backOffTimeInterval.TotalMilliseconds, _endpoint);
                     }
                 }
 

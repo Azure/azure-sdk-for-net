@@ -413,7 +413,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
             var (partialContent, successCounter, retryCounter, droppedCounter) = ProcessPartialSuccessWithCounting(trackResponse, httpMessage.Request.Content, telemetrySchemaTypeCounter);
 
-            if (successCounter != null)
+            // Partial-success counting synthesizes its own counters, so a caller that opted out of
+            // customer SDK stats by passing none would otherwise still publish them.
+            var trackCustomerStats = telemetrySchemaTypeCounter != null;
+
+            if (trackCustomerStats && successCounter != null)
             {
                 CustomerSdkStatsHelper.TrackSuccess(successCounter);
             }
@@ -424,11 +428,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 result.PartialSuccessHandled = true;
 
                 // No retry possible - track everything else as dropped
-                if (retryCounter != null)
+                if (trackCustomerStats && retryCounter != null)
                 {
                     CustomerSdkStatsHelper.TrackDropped(retryCounter, ResponseStatusCodes.PartialSuccess, "Partial success - no retry");
                 }
-                if (droppedCounter != null)
+                if (trackCustomerStats && droppedCounter != null)
                 {
                     CustomerSdkStatsHelper.TrackDropped(droppedCounter, ResponseStatusCodes.PartialSuccess, "Partial success - non-retriable");
                 }
@@ -449,18 +453,21 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             result.SavedToStorage = result.WillRetry;
             result.PartialSuccessHandled = result.WillRetry;
 
-            if (result.WillRetry && retryCounter != null)
+            if (trackCustomerStats && retryCounter != null)
             {
-                CustomerSdkStatsHelper.TrackRetry(retryCounter, ResponseStatusCodes.PartialSuccess, "Partial success");
-            }
-            else if (retryCounter != null)
-            {
-                // Storage failed - track as dropped due to storage issues
-                CustomerSdkStatsHelper.TrackDropped(retryCounter, (int)DropCode.ClientPersistenceIssue, "Storage failure");
+                if (result.WillRetry)
+                {
+                    CustomerSdkStatsHelper.TrackRetry(retryCounter, ResponseStatusCodes.PartialSuccess, "Partial success");
+                }
+                else
+                {
+                    // Storage failed - track as dropped due to storage issues
+                    CustomerSdkStatsHelper.TrackDropped(retryCounter, (int)DropCode.ClientPersistenceIssue, "Storage failure");
+                }
             }
 
             // Track non-retriable errors as dropped
-            if (droppedCounter != null)
+            if (trackCustomerStats && droppedCounter != null)
             {
                 CustomerSdkStatsHelper.TrackDropped(droppedCounter, ResponseStatusCodes.PartialSuccess, "Partial success - non-retriable");
             }

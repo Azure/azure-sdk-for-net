@@ -62,23 +62,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         private readonly ApplicationInsightsRestClient _applicationInsightsRestClient;
         private readonly ConnectionVars _connectionVars;
+        private readonly Uri? _trackUri;
         internal PersistentBlobProvider _blobProvider;
         private readonly TransmissionStateManager _transmissionStateManager;
         private readonly System.Timers.Timer _transmitFromStorageTimer;
         private readonly bool _isAadEnabled;
         private readonly NetworkSdkStatsManager? _networkSdkStatsManager;
+
+        /// <summary>
+        /// Host for failures that never produced a request. Null for the single-tenant handler, where
+        /// the stats manager falls back to the exporter's configured endpoint; a routed partition has
+        /// no such fallback and must name its own.
+        /// </summary>
+        private readonly string? _statsHost;
         private readonly string? _storageDirectory;
-        private int _drainInProgress;
+        private TaskCompletionSource<bool>? _inFlightDrain;
         private bool _disposed;
 
-        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars, bool isAadEnabled, NetworkSdkStatsManager? networkSdkStatsManager = null, string? storageDirectory = null)
+        internal TransmitFromStorageHandler(ApplicationInsightsRestClient applicationInsightsRestClient, PersistentBlobProvider blobProvider, TransmissionStateManager transmissionStateManager, ConnectionVars connectionVars, bool isAadEnabled, NetworkSdkStatsManager? networkSdkStatsManager = null, string? storageDirectory = null, Uri? trackUri = null)
         {
             _applicationInsightsRestClient = applicationInsightsRestClient;
             _connectionVars = connectionVars;
+            _trackUri = trackUri;
             _isAadEnabled = isAadEnabled;
             _blobProvider = blobProvider;
             _transmissionStateManager = transmissionStateManager;
             _networkSdkStatsManager = networkSdkStatsManager;
+            _statsHost = trackUri?.Host;
             _storageDirectory = storageDirectory;
             _transmitFromStorageTimer = new System.Timers.Timer();
             _transmitFromStorageTimer.Elapsed += TransmitFromStorage;
@@ -110,13 +120,47 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
 
         internal void TransmitFromStorage(object? sender, ElapsedEventArgs? e) => Drain();
 
-        internal Task DrainAsync() => DisableShutdownDrainForTesting ? Task.CompletedTask : Task.Run(Drain);
-
-        internal void Drain()
+        /// <remarks>
+        /// Returns the drain already running, if there is one. Starting a fresh task would hand the
+        /// caller something that completes immediately while the real upload is still in flight, and
+        /// shutdown would tear the pipeline down underneath it. The eager drain scheduled when a
+        /// storage partition is created makes that collision routine rather than rare.
+        /// </remarks>
+        internal Task DrainAsync()
         {
-            if (Interlocked.CompareExchange(ref _drainInProgress, 1, 0) != 0)
+            if (DisableShutdownDrainForTesting)
             {
-                return;
+                return Task.CompletedTask;
+            }
+
+            var inFlight = Volatile.Read(ref _inFlightDrain);
+
+            // Reading the slot and starting a drain cannot be atomic, so the started drain reports
+            // back whether it won. Returning without that check handed the caller a task that
+            // completed at once while the real upload was still running.
+            return inFlight != null ? inFlight.Task : Task.Run(DrainCore);
+        }
+
+        internal void Drain() => DrainCore();
+
+        private Task DrainCore()
+        {
+            // Cheap rejection before allocating the completion source that becomes the drain slot.
+            var inFlight = Volatile.Read(ref _inFlightDrain);
+            if (inFlight != null)
+            {
+                return inFlight.Task;
+            }
+
+            var completion = new TaskCompletionSource<bool>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+            // The completion source is the drain slot. Publishing it separately from claiming the
+            // slot left a window where a caller could see no drain in flight, start a second one that
+            // exited immediately, and wait on that instead of the upload still running.
+            var winner = Interlocked.CompareExchange(ref _inFlightDrain, completion, null);
+            if (winner != null)
+            {
+                return winner.Task;
             }
 
             try
@@ -131,13 +175,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             }
             catch (Exception ex)
             {
-                _networkSdkStatsManager?.TrackException(requestHost: null, exceptionType: ex.GetType().FullName);
+                _networkSdkStatsManager?.TrackException(_statsHost, exceptionType: ex.GetType().FullName);
                 AzureMonitorExporterEventSource.Log.FailedToTransmitFromStorage(_isAadEnabled, _connectionVars.InstrumentationKey, ex);
             }
             finally
             {
-                Interlocked.Exchange(ref _drainInProgress, 0);
+                Volatile.Write(ref _inFlightDrain, null);
+                completion.TrySetResult(true);
             }
+
+            return completion.Task;
         }
 
         private void DrainBlobs()
@@ -230,12 +277,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// <returns><see langword="true"/> when draining may continue.</returns>
         private bool TransmitBatch(List<PendingBlob> batch, byte[] payload)
         {
-            var telemetrySchemaTypeCounter = CountTelemetryTypes(payload);
+            // Routed telemetry is excluded from customer SDK stats: a null counter suppresses both
+            // the top-level count and the per-envelope counts synthesized for a 206.
+            var telemetrySchemaTypeCounter = _trackUri == null ? CountTelemetryTypes(payload) : null;
 
             var stopwatch = _networkSdkStatsManager != null ? Stopwatch.StartNew() : null;
 
             using var requestBudget = new CancellationTokenSource(DrainPostBudgetMilliseconds);
-            using var httpMessage = _applicationInsightsRestClient.InternalTrackAsync(payload, requestBudget.Token).Result;
+            using var httpMessage = _trackUri == null
+                ? _applicationInsightsRestClient.InternalTrackAsync(payload, requestBudget.Token).Result
+                : _applicationInsightsRestClient.InternalTrackAsync(payload, _trackUri, requestBudget.Token).Result;
 
             stopwatch?.Stop();
 

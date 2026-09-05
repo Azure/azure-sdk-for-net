@@ -17,7 +17,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 {
     internal partial class ApplicationInsightsRestClient
     {
-        private RawRequestUriBuilder? _rawRequestUriBuilder;
+        private const string TrackPath = "v2.1/track";
+
+        private Uri? _trackUri;
 
         /// <summary> Initializes a new instance of ApplicationInsightsRestClient with pre-built pipeline. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
@@ -117,26 +119,124 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
             return CreateRequest(RequestContent.Create(body));
         }
 
+        /// <summary>
+        /// Builds the absolute track URI for an ingestion endpoint supplied at export time, for
+        /// multi-tenant routing where the destination is not the one this client was built with.
+        /// </summary>
+        internal static Uri CreateTrackUri(string ingestionEndpoint) => new(new Uri(ingestionEndpoint), TrackPath);
+
+        internal async Task<HttpMessage> InternalTrackAsync(IEnumerable<TelemetryItem> body, Uri trackUri, CancellationToken cancellationToken = default)
+        {
+            var message = CreateTrackRequest(body, trackUri);
+
+            try
+            {
+                RedirectPolicy.SetAllowAutoRedirect(message, false);
+                await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.FailedToTransmit(ex);
+                if (ex.InnerException?.Source != "System.Net.Http" && ex.InnerException?.Source != "System")
+                {
+                    message?.Dispose();
+                    throw;
+                }
+            }
+
+            return message;
+        }
+
+        internal async Task<HttpMessage> InternalTrackAsync(ReadOnlyMemory<byte> body, Uri trackUri, CancellationToken cancellationToken = default)
+        {
+#if DEBUG
+            TelemetryDebugWriter.WriteTelemetryFromStorage(body);
+#endif
+
+            var message = CreateRequest(RequestContent.Create(body), trackUri);
+
+            try
+            {
+                RedirectPolicy.SetAllowAutoRedirect(message, false);
+                await Pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                AzureMonitorExporterEventSource.Log.FailedToTransmit(ex);
+                if (ex.InnerException?.Source != "System.Net.Http" && ex.InnerException?.Source != "System")
+                {
+                    message?.Dispose();
+                    throw;
+                }
+            }
+
+            return message;
+        }
+
+        internal HttpMessage CreateTrackRequest(IEnumerable<TelemetryItem> body, Uri trackUri)
+        {
+            using var content = new NDJsonWriter();
+            foreach (var item in body)
+            {
+                content.JsonWriter.WriteObjectValue(item);
+                content.WriteNewLine();
+            }
+
+#if DEBUG
+            TelemetryDebugWriter.WriteTelemetry(content);
+#endif
+
+            return CreateRequest(RequestContent.Create(content.ToBytes()), trackUri);
+        }
+
+        private HttpMessage CreateRequest(RequestContent requestContent, Uri trackUri)
+        {
+            var message = Pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+
+            // A builder per request, because IngestionRedirectPolicy rewrites it and a shared one
+            // would carry one endpoint's redirect onto another endpoint's request.
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(trackUri);
+            request.Uri = uri;
+
+            request.Headers.Add("Content-Type", "application/json");
+            request.Headers.Add("Accept", "application/json");
+            request.Content = requestContent;
+
+            return message;
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private HttpMessage CreateRequest(RequestContent requestContent)
         {
             var message = Pipeline.CreateMessage();
             var request = message.Request;
             request.Method = RequestMethod.Post;
-            request.Uri = LazyInitializer.EnsureInitialized(ref _rawRequestUriBuilder, () =>
-            {
-                var uri = new RawRequestUriBuilder();
-                uri.Reset(_endpoint);
-                uri.AppendPath("/", false);
-                uri.AppendPath(_apiVersion, true);
-                uri.AppendPath("/track", false);
-                return uri;
-            })!;
+
+            // A builder per request. IngestionRedirectPolicy calls Reset on request.Uri, and a shared
+            // instance would carry that rewrite into every later request permanently.
+            var uri = new RawRequestUriBuilder();
+            uri.Reset(_trackUri ??= BuildTrackUri());
+            request.Uri = uri;
+
             request.Headers.Add("Content-Type", "application/json");
             request.Headers.Add("Accept", "application/json");
             request.Content = requestContent;
 
             return message;
+        }
+
+        private Uri BuildTrackUri()
+        {
+            var builder = new RawRequestUriBuilder();
+            builder.Reset(_endpoint);
+            builder.AppendPath("/", false);
+            builder.AppendPath(_apiVersion, true);
+            builder.AppendPath("/track", false);
+
+            return builder.ToUri();
         }
     }
 }
