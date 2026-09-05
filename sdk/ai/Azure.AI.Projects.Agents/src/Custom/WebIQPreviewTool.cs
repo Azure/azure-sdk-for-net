@@ -7,7 +7,7 @@ using OpenAI.Responses;
 
 namespace Azure.AI.Projects.Agents;
 
-public partial class FabricIQPreviewTool
+public partial class WebIQPreviewTool
 {
     /// <summary>
     /// (Optional) Whether the agent requires approval before executing actions. Default is always.
@@ -16,7 +16,7 @@ public partial class FabricIQPreviewTool
     public BinaryData RequireApprovalInternal { get; set; }
 
     /// <summary>
-    /// Approval policy for FabricIQ tools.
+    /// Whether the agent requires approval before executing actions. Default is always.
     /// </summary>
     public McpToolCallApprovalPolicy RequireApproval { get => ModelReaderWriter.Read<McpToolCallApprovalPolicy>(RequireApprovalInternal, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default); set => RequireApprovalInternal = ModelReaderWriter.Write(value, ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default); }
 }

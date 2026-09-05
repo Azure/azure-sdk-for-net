@@ -5,18 +5,21 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A WebIQ server-side tool. </summary>
     [Experimental("AAIP001")]
-    public partial class WebIQPreviewTool : ProjectsAgentTool
+    public partial class WebIQPreviewTool : ResponseTool
     {
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+
         /// <summary> Initializes a new instance of <see cref="WebIQPreviewTool"/>. </summary>
         /// <param name="projectConnectionId"> The ID of the WebIQ project connection. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="projectConnectionId"/> is null. </exception>
-        public WebIQPreviewTool(string projectConnectionId) : base(ToolType.WebIqPreview)
+        public WebIQPreviewTool(string projectConnectionId) : base("web_iq_preview")
         {
             Argument.AssertNotNull(projectConnectionId, nameof(projectConnectionId));
 
@@ -25,15 +28,16 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="WebIQPreviewTool"/>. </summary>
         /// <param name="type"></param>
-        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="projectConnectionId"> The ID of the WebIQ project connection. </param>
         /// <param name="serverLabel"> The label of the WebIQ MCP server to connect to. When omitted, the service defaults to connection name extracted from project_connection_id. </param>
-        /// <param name="requireApprovalInternal"> Whether the agent requires approval before executing actions. When omitted, the service defaults to "always". </param>
-        internal WebIQPreviewTool(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string projectConnectionId, string serverLabel, BinaryData requireApprovalInternal) : base(@type, additionalBinaryDataProperties)
+        /// <param name="requireApproval"> Whether the agent requires approval before executing actions. When omitted, the service defaults to "always". </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal WebIQPreviewTool(ResponseToolKind @type, string projectConnectionId, string serverLabel, WebIQPreviewToolRequireApprovalChoice requireApproval, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type)
         {
             ProjectConnectionId = projectConnectionId;
             ServerLabel = serverLabel;
-            RequireApprovalInternal = requireApprovalInternal;
+            RequireApproval = requireApproval;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The ID of the WebIQ project connection. </summary>

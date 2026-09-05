@@ -178,6 +178,9 @@ namespace Azure.AI.Extensions.OpenAI
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.UserProfileMemoryItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UserProfileMemoryItem))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.UserProfileMemoryItem is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.WebIQPreviewTool is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(WebIQPreviewTool))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.WebIQPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WebSearchConfiguration))]
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.WorkIQPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(WorkIQPreviewTool))]
