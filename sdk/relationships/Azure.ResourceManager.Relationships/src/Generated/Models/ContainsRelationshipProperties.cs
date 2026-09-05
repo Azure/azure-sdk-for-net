@@ -8,35 +8,29 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Relationships;
 
 namespace Azure.ResourceManager.Relationships.Models
 {
-    /// <summary> ServiceGroupMember relationship properties. </summary>
-    public partial class ServiceGroupMemberRelationshipProperties
+    /// <summary> contains relationship properties. </summary>
+    public partial class ContainsRelationshipProperties
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ServiceGroupMemberRelationshipProperties"/>. </summary>
-        /// <param name="targetId"> The relationship target resource id. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="targetId"/> is null. </exception>
-        public ServiceGroupMemberRelationshipProperties(ResourceIdentifier targetId)
+        /// <summary> Initializes a new instance of <see cref="ContainsRelationshipProperties"/>. </summary>
+        internal ContainsRelationshipProperties()
         {
-            Argument.AssertNotNull(targetId, nameof(targetId));
-
-            TargetId = targetId;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceGroupMemberRelationshipProperties"/>. </summary>
-        /// <param name="sourceId"> The relationship source resource id. </param>
+        /// <summary> Initializes a new instance of <see cref="ContainsRelationshipProperties"/>. </summary>
+        /// <param name="sourceId"> The relationship source resource id. Must be a subscription or resource group. </param>
         /// <param name="targetId"> The relationship target resource id. </param>
         /// <param name="targetTenant"> The relationship target tenant id. </param>
         /// <param name="originInformation"> Information about the origin of the relationship. </param>
         /// <param name="metadata"> Metadata about the relationship. </param>
         /// <param name="provisioningState"> The provisioning state of the relationship. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceGroupMemberRelationshipProperties(ResourceIdentifier sourceId, ResourceIdentifier targetId, string targetTenant, RelationshipOriginInformation originInformation, RelationshipMetadata metadata, RelationshipProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainsRelationshipProperties(ResourceIdentifier sourceId, ResourceIdentifier targetId, string targetTenant, RelationshipOriginInformation originInformation, RelationshipMetadata metadata, RelationshipProvisioningState? provisioningState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SourceId = sourceId;
             TargetId = targetId;
@@ -47,14 +41,14 @@ namespace Azure.ResourceManager.Relationships.Models
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> The relationship source resource id. </summary>
+        /// <summary> The relationship source resource id. Must be a subscription or resource group. </summary>
         public ResourceIdentifier SourceId { get; }
 
         /// <summary> The relationship target resource id. </summary>
-        public ResourceIdentifier TargetId { get; set; }
+        public ResourceIdentifier TargetId { get; }
 
         /// <summary> The relationship target tenant id. </summary>
-        public string TargetTenant { get; set; }
+        public string TargetTenant { get; }
 
         /// <summary> Information about the origin of the relationship. </summary>
         public RelationshipOriginInformation OriginInformation { get; }
