@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Consumption
         {
             TryGetApiVersion(ConsumptionBudgetResource.ResourceType, out string consumptionBudgetApiVersion);
             _budgetsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ConsumptionBudgetResource.ResourceType.Namespace, Diagnostics);
-            _budgetsRestClient = new Budgets(_budgetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, consumptionBudgetApiVersion ?? "2024-08-01");
+            _budgetsRestClient = new Budgets(_budgetsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, consumptionBudgetApiVersion ?? "2026-06-01");
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

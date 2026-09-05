@@ -1133,6 +1133,52 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
+        /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
+        /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
+        /// <param name="normalizedSize"> The normalized Size. </param>
+        /// <param name="recommendedQuantityNormalized"> The recommended Quantity Normalized. </param>
+        /// <param name="meterId"> The meter id (GUID). </param>
+        /// <param name="resourceType"> The azure resource type. </param>
+        /// <param name="term"> Term period of the reservation. ex: P1M, P1Y or P3Y. </param>
+        /// <param name="costWithNoReservedInstances"> The total amount of cost without reserved instances. </param>
+        /// <param name="recommendedQuantity"> Recommended quality for reserved instances. </param>
+        /// <param name="totalCostWithReservedInstances"> The total amount of cost with reserved instances. </param>
+        /// <param name="netSavings"> Total estimated savings with reserved instances. </param>
+        /// <param name="firstUsageOn"> The usage date for looking back. </param>
+        /// <param name="skuProperties"> List of sku properties. </param>
+        /// <param name="lastUsageOn"> The last usage date used for looking back for computing the recommendation. </param>
+        /// <param name="totalHours"> The total hours for which the cost is covered. </param>
+        /// <param name="managementGroupId"> Management group id associated with management group scoped recommendation. </param>
+        /// <param name="tenantId"> The tenant ID associated with the management group. </param>
+        /// <returns> A new <see cref="Models.LegacyManagementGroupScopeReservationRecommendationProperties"/> instance for mocking. </returns>
+        public static LegacyManagementGroupScopeReservationRecommendationProperties LegacyManagementGroupScopeReservationRecommendationProperties(string lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, Guid? meterId = default, string resourceType = default, string term = default, decimal? costWithNoReservedInstances = default, decimal? recommendedQuantity = default, decimal? totalCostWithReservedInstances = default, decimal? netSavings = default, DateTimeOffset? firstUsageOn = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default, ResourceIdentifier managementGroupId = default, string tenantId = default)
+        {
+            skuProperties ??= new ChangeTrackingList<ConsumptionSkuProperty>();
+
+            return new LegacyManagementGroupScopeReservationRecommendationProperties(
+                lookBackPeriod,
+                instanceFlexibilityRatio,
+                instanceFlexibilityGroup,
+                normalizedSize,
+                recommendedQuantityNormalized,
+                meterId,
+                resourceType,
+                term,
+                costWithNoReservedInstances,
+                recommendedQuantity,
+                totalCostWithReservedInstances,
+                netSavings,
+                firstUsageOn,
+                default,
+                (skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>()).ToList(),
+                lastUsageOn,
+                totalHours,
+                default,
+                managementGroupId,
+                tenantId);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1302,6 +1348,56 @@ namespace Azure.ResourceManager.Consumption.Models
                 default);
         }
 
+        /// <param name="location"> Resource Location. </param>
+        /// <param name="lookBackPeriod"> The number of days of usage to look back for recommendation. </param>
+        /// <param name="instanceFlexibilityRatio"> The instance Flexibility Ratio. </param>
+        /// <param name="instanceFlexibilityGroup"> The instance Flexibility Group. </param>
+        /// <param name="normalizedSize"> The normalized Size. </param>
+        /// <param name="recommendedQuantityNormalized"> The recommended Quantity Normalized. </param>
+        /// <param name="meterId"> The meter id (GUID). </param>
+        /// <param name="term"> Term period of the reservation. ex: P1M, P1Y or P3Y. </param>
+        /// <param name="costWithNoReservedInstances"> The total amount of cost without reserved instances. </param>
+        /// <param name="recommendedQuantity"> Recommended quality for reserved instances. </param>
+        /// <param name="resourceType"> Resource type. </param>
+        /// <param name="totalCostWithReservedInstances"> The total amount of cost with reserved instances. </param>
+        /// <param name="netSavings"> Total estimated savings with reserved instances. </param>
+        /// <param name="firstUsageOn"> The usage date for looking back. </param>
+        /// <param name="skuProperties"> List of sku properties. </param>
+        /// <param name="skuName"> This is the ARM Sku name. </param>
+        /// <param name="lastUsageOn"> The last usage date used for looking back for computing the recommendation. </param>
+        /// <param name="totalHours"> The total hours for which the cost is covered. </param>
+        /// <param name="managementGroupId"> Management group id associated with management group scoped recommendation. </param>
+        /// <param name="tenantId"> The tenant ID associated with the management group. </param>
+        /// <returns> A new <see cref="Models.ModernManagementGroupScopeReservationRecommendationProperties"/> instance for mocking. </returns>
+        public static ModernManagementGroupScopeReservationRecommendationProperties ModernManagementGroupScopeReservationRecommendationProperties(AzureLocation? location = default, int? lookBackPeriod = default, float? instanceFlexibilityRatio = default, string instanceFlexibilityGroup = default, string normalizedSize = default, float? recommendedQuantityNormalized = default, Guid? meterId = default, string term = default, ConsumptionAmount costWithNoReservedInstances = default, decimal? recommendedQuantity = default, string resourceType = default, ConsumptionAmount totalCostWithReservedInstances = default, ConsumptionAmount netSavings = default, DateTimeOffset? firstUsageOn = default, IEnumerable<ConsumptionSkuProperty> skuProperties = default, string skuName = default, DateTimeOffset? lastUsageOn = default, int? totalHours = default, ResourceIdentifier managementGroupId = default, string tenantId = default)
+        {
+            skuProperties ??= new ChangeTrackingList<ConsumptionSkuProperty>();
+
+            return new ModernManagementGroupScopeReservationRecommendationProperties(
+                location,
+                lookBackPeriod,
+                instanceFlexibilityRatio,
+                instanceFlexibilityGroup,
+                normalizedSize,
+                recommendedQuantityNormalized,
+                meterId,
+                term,
+                costWithNoReservedInstances,
+                recommendedQuantity,
+                resourceType,
+                totalCostWithReservedInstances,
+                netSavings,
+                firstUsageOn,
+                default,
+                (skuProperties ?? new ChangeTrackingList<ConsumptionSkuProperty>()).ToList(),
+                skuName,
+                lastUsageOn,
+                totalHours,
+                default,
+                managementGroupId,
+                tenantId);
+        }
+
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1314,10 +1410,13 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="savings"> Savings information for the recommendation. </param>
         /// <param name="scope"> Scope of the reservation, ex: Single or Shared. </param>
         /// <param name="usage"> Historical usage details used to calculate the estimated savings. </param>
-        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="managementGroupId"> Management group id associated with management group scoped recommendation. </param>
+        /// <param name="tenantId"> The tenant ID associated with the management group. Populated only when managementGroupId is populated. </param>
+        /// <param name="totalRetailUsageInCUs"> Total projected retail usage in commitment units (CUs). </param>
+        /// <param name="eTag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ConsumptionReservationRecommendationDetails"/> instance for mocking. </returns>
-        public static ConsumptionReservationRecommendationDetails ConsumptionReservationRecommendationDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, string sku = default, string currency = default, ConsumptionResourceProperties properties = default, string resourceGroup = default, ConsumptionSavingsProperties savings = default, string scope = default, ConsumptionUsageProperties usage = default, ETag? etag = default, IReadOnlyDictionary<string, string> tags = default)
+        public static ConsumptionReservationRecommendationDetails ConsumptionReservationRecommendationDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, string sku = default, string currency = default, ConsumptionResourceProperties properties = default, string resourceGroup = default, ConsumptionSavingsProperties savings = default, string scope = default, ConsumptionUsageProperties usage = default, ResourceIdentifier managementGroupId = default, string tenantId = default, float? totalRetailUsageInCUs = default, ETag? eTag = default, IReadOnlyDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1328,15 +1427,18 @@ namespace Azure.ResourceManager.Consumption.Models
                 systemData,
                 location,
                 sku,
-                currency is null && properties is null && resourceGroup is null && savings is null && scope is null && usage is null ? default : new ReservationRecommendationDetailsProperties(
+                currency is null && properties is null && resourceGroup is null && savings is null && scope is null && usage is null && managementGroupId is null && tenantId is null && totalRetailUsageInCUs is null ? default : new ReservationRecommendationDetailsProperties(
                     currency,
                     properties,
                     resourceGroup,
                     savings,
                     scope,
                     usage,
+                    managementGroupId,
+                    tenantId,
+                    new ReservationRecommendationDetailsProjectedUsageProperties(totalRetailUsageInCUs, default),
                     default),
-                etag,
+                eTag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
         }
@@ -1766,6 +1868,48 @@ namespace Azure.ResourceManager.Consumption.Models
                     default,
                     (newPurchasesDetails ?? new ChangeTrackingList<ConsumptionBalanceNewPurchasesDetail>()).ToList(),
                     (adjustmentDetails ?? new ChangeTrackingList<ConsumptionBalanceAdjustmentDetail>()).ToList(),
+                    default),
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.ConsumptionReservationRecommendationDetails"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="location"> Resource Location. </param>
+        /// <param name="sku"> Resource sku. </param>
+        /// <param name="currency"> An ISO 4217 currency code identifier for the costs and savings. </param>
+        /// <param name="properties"> Resource specific properties. </param>
+        /// <param name="resourceGroup"> Resource Group. </param>
+        /// <param name="savings"> Savings information for the recommendation. </param>
+        /// <param name="scope"> Scope of the reservation, ex: Single or Shared. </param>
+        /// <param name="usage"> Historical usage details used to calculate the estimated savings. </param>
+        /// <param name="etag"> The etag for the resource. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.ConsumptionReservationRecommendationDetails"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static ConsumptionReservationRecommendationDetails ConsumptionReservationRecommendationDetails(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, string sku = default, string currency = default, ConsumptionResourceProperties properties = default, string resourceGroup = default, ConsumptionSavingsProperties savings = default, string scope = default, ConsumptionUsageProperties usage = default, ETag? etag = default, IReadOnlyDictionary<string, string> tags = default)
+        {
+            return new ConsumptionReservationRecommendationDetails(
+                id,
+                name,
+                resourceType,
+                systemData,
+                location,
+                sku,
+                currency is null && properties is null && resourceGroup is null && savings is null && scope is null && usage is null ? default : new ReservationRecommendationDetailsProperties(
+                    currency,
+                    properties,
+                    resourceGroup,
+                    savings,
+                    scope,
+                    usage,
+                    default,
+                    default,
+                    default,
                     default),
                 etag,
                 tags ?? new ChangeTrackingDictionary<string, string>(),

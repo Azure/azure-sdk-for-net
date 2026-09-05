@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Consumption
         {
             TryGetApiVersion(ResourceType, out string priceSheetApiVersion);
             _priceSheetClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ResourceType.Namespace, Diagnostics);
-            _priceSheetRestClient = new PriceSheet(_priceSheetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, priceSheetApiVersion ?? "2024-08-01");
+            _priceSheetRestClient = new PriceSheet(_priceSheetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, priceSheetApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

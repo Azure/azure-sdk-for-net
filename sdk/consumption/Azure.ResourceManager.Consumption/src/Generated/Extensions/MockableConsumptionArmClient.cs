@@ -63,59 +63,59 @@ namespace Azure.ResourceManager.Consumption.Mocking
 
         private ClientDiagnostics PriceSheetClientDiagnostics => _priceSheetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PriceSheet PriceSheetRestClient => _priceSheetRestClient ??= new PriceSheet(PriceSheetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
+        private PriceSheet PriceSheetRestClient => _priceSheetRestClient ??= new PriceSheet(PriceSheetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics UsageDetailsClientDiagnostics => _usageDetailsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private UsageDetails UsageDetailsRestClient => _usageDetailsRestClient ??= new UsageDetails(UsageDetailsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
+        private UsageDetails UsageDetailsRestClient => _usageDetailsRestClient ??= new UsageDetails(UsageDetailsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics MarketplacesClientDiagnostics => _marketplacesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Marketplaces MarketplacesRestClient => _marketplacesRestClient ??= new Marketplaces(MarketplacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
+        private Marketplaces MarketplacesRestClient => _marketplacesRestClient ??= new Marketplaces(MarketplacesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics TagsClientDiagnostics => _tagsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Tags TagsRestClient => _tagsRestClient ??= new Tags(TagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
+        private Tags TagsRestClient => _tagsRestClient ??= new Tags(TagsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics ChargesClientDiagnostics => _chargesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Charges ChargesRestClient => _chargesRestClient ??= new Charges(ChargesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
+        private Charges ChargesRestClient => _chargesRestClient ??= new Charges(ChargesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics BalancesClientDiagnostics => _balancesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Balances BalancesRestClient => _balancesRestClient ??= new Balances(BalancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
+        private Balances BalancesRestClient => _balancesRestClient ??= new Balances(BalancesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics ReservationsSummariesClientDiagnostics => _reservationsSummariesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReservationsSummaries ReservationsSummariesRestClient => _reservationsSummariesRestClient ??= new ReservationsSummaries(ReservationsSummariesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
+        private ReservationsSummaries ReservationsSummariesRestClient => _reservationsSummariesRestClient ??= new ReservationsSummaries(ReservationsSummariesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics ReservationsDetailsClientDiagnostics => _reservationsDetailsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReservationsDetails ReservationsDetailsRestClient => _reservationsDetailsRestClient ??= new ReservationsDetails(ReservationsDetailsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
+        private ReservationsDetails ReservationsDetailsRestClient => _reservationsDetailsRestClient ??= new ReservationsDetails(ReservationsDetailsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics ReservationRecommendationsClientDiagnostics => _reservationRecommendationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReservationRecommendations ReservationRecommendationsRestClient => _reservationRecommendationsRestClient ??= new ReservationRecommendations(ReservationRecommendationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
+        private ReservationRecommendations ReservationRecommendationsRestClient => _reservationRecommendationsRestClient ??= new ReservationRecommendations(ReservationRecommendationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics ReservationRecommendationDetailsClientDiagnostics => _reservationRecommendationDetailsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReservationRecommendationDetails ReservationRecommendationDetailsRestClient => _reservationRecommendationDetailsRestClient ??= new ReservationRecommendationDetails(ReservationRecommendationDetailsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
+        private ReservationRecommendationDetails ReservationRecommendationDetailsRestClient => _reservationRecommendationDetailsRestClient ??= new ReservationRecommendationDetails(ReservationRecommendationDetailsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics ReservationTransactionsClientDiagnostics => _reservationTransactionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ReservationTransactions ReservationTransactionsRestClient => _reservationTransactionsRestClient ??= new ReservationTransactions(ReservationTransactionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
+        private ReservationTransactions ReservationTransactionsRestClient => _reservationTransactionsRestClient ??= new ReservationTransactions(ReservationTransactionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics AggregatedCostClientDiagnostics => _aggregatedCostClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AggregatedCost AggregatedCostRestClient => _aggregatedCostRestClient ??= new AggregatedCost(AggregatedCostClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
+        private AggregatedCost AggregatedCostRestClient => _aggregatedCostRestClient ??= new AggregatedCost(AggregatedCostClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics EventsClientDiagnostics => _eventsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Events EventsRestClient => _eventsRestClient ??= new Events(EventsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
+        private Events EventsRestClient => _eventsRestClient ??= new Events(EventsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics LotsClientDiagnostics => _lotsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Lots LotsRestClient => _lotsRestClient ??= new Lots(LotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
+        private Lots LotsRestClient => _lotsRestClient ??= new Lots(LotsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         /// <summary> Gets an object representing a <see cref="PriceSheetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -464,7 +464,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -654,7 +654,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -706,7 +706,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -754,7 +754,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -802,7 +802,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -850,7 +850,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -898,7 +898,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -978,7 +978,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1019,7 +1019,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1060,7 +1060,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1108,7 +1108,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1156,7 +1156,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1191,7 +1191,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1226,7 +1226,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1267,7 +1267,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1308,7 +1308,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1354,7 +1354,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1400,7 +1400,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1433,7 +1433,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1466,7 +1466,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1477,10 +1477,11 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="lookBackPeriod"> Filter the time period on which reservation recommendation results are based. </param>
         /// <param name="product"> Filter the products for which reservation recommendation results are generated. Examples: Standard_DS1_v2 (for VM), Premium_SSD_Managed_Disks_P30 (for Managed Disks). </param>
         /// <param name="filter"> Used to filter reservation recommendation details by: properties/subscriptionId can be specified for billing account and billing profile paths. </param>
+        /// <param name="managementGroupId"> Specify the management group ID. Required when recommendation scope is 'ManagementGroup'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="region"/> or <paramref name="product"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/> or <paramref name="product"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ConsumptionReservationRecommendationDetails>> GetConsumptionReservationRecommendationDetailsAsync(ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConsumptionReservationRecommendationDetails>> GetConsumptionReservationRecommendationDetailsAsync(ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = default, string managementGroupId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(region, nameof(region));
@@ -1494,7 +1495,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReservationRecommendationDetailsRestClient.CreateGetConsumptionReservationRecommendationDetailsRequest(scope.ToString(), reservationScope.ToString(), region, term.ToString(), lookBackPeriod.ToString(), product, filter, context);
+                HttpMessage message = ReservationRecommendationDetailsRestClient.CreateGetConsumptionReservationRecommendationDetailsRequest(scope.ToString(), reservationScope.ToString(), region, term.ToString(), lookBackPeriod.ToString(), product, filter, managementGroupId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<ConsumptionReservationRecommendationDetails> response = Response.FromValue(ConsumptionReservationRecommendationDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -1523,7 +1524,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1534,10 +1535,11 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// <param name="lookBackPeriod"> Filter the time period on which reservation recommendation results are based. </param>
         /// <param name="product"> Filter the products for which reservation recommendation results are generated. Examples: Standard_DS1_v2 (for VM), Premium_SSD_Managed_Disks_P30 (for Managed Disks). </param>
         /// <param name="filter"> Used to filter reservation recommendation details by: properties/subscriptionId can be specified for billing account and billing profile paths. </param>
+        /// <param name="managementGroupId"> Specify the management group ID. Required when recommendation scope is 'ManagementGroup'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="region"/> or <paramref name="product"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="region"/> or <paramref name="product"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ConsumptionReservationRecommendationDetails> GetConsumptionReservationRecommendationDetails(ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = default, CancellationToken cancellationToken = default)
+        public virtual Response<ConsumptionReservationRecommendationDetails> GetConsumptionReservationRecommendationDetails(ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = default, string managementGroupId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(scope, nameof(scope));
             Argument.AssertNotNullOrEmpty(region, nameof(region));
@@ -1551,7 +1553,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = ReservationRecommendationDetailsRestClient.CreateGetConsumptionReservationRecommendationDetailsRequest(scope.ToString(), reservationScope.ToString(), region, term.ToString(), lookBackPeriod.ToString(), product, filter, context);
+                HttpMessage message = ReservationRecommendationDetailsRestClient.CreateGetConsumptionReservationRecommendationDetailsRequest(scope.ToString(), reservationScope.ToString(), region, term.ToString(), lookBackPeriod.ToString(), product, filter, managementGroupId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<ConsumptionReservationRecommendationDetails> response = Response.FromValue(ConsumptionReservationRecommendationDetails.FromResponse(result), result);
                 if (response.Value == null)
@@ -1580,7 +1582,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1622,7 +1624,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1664,7 +1666,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1703,7 +1705,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1742,7 +1744,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1790,7 +1792,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1838,7 +1840,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1882,7 +1884,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1926,7 +1928,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1959,7 +1961,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1992,7 +1994,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2024,7 +2026,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2056,7 +2058,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2089,7 +2091,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2122,7 +2124,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2161,7 +2163,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
