@@ -15,121 +15,395 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> The object representing a firmware analysis CVE result resource. </summary>
     public partial class CveResult : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CveResult"/>. </summary>
         public CveResult()
         {
-            CvssScores = new ChangeTrackingList<CvssScore>();
-            Links = new ChangeTrackingList<CveLink>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CveResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="cveId"> ID of the CVE result. </param>
-        /// <param name="componentId"> ID of the affected SBOM component. </param>
-        /// <param name="componentName"> Name of the affected SBOM component. </param>
-        /// <param name="componentVersion"> Version of the affected SBOM component. </param>
-        /// <param name="severity"> Severity of the CVE. </param>
-        /// <param name="cveName"> Name of the CVE. </param>
-        /// <param name="component"> Legacy property for what is now componentName. </param>
-        /// <param name="cvssScore"> Legacy property for the effective CVE score. </param>
-        /// <param name="cvssV2Score"> Legacy property for the CVE CVSS version 2 score, if one existed. </param>
-        /// <param name="cvssV3Score"> Legacy property for the CVE CVSS version 3 score, if one existed. </param>
-        /// <param name="cvssVersion"> Legacy property for the what CVSS version score was stored in the cvssScore property. </param>
-        /// <param name="effectiveCvssScore"> The most recent CVSS score of the CVE. </param>
-        /// <param name="effectiveCvssVersion"> The version of the effectiveCvssScore property. </param>
-        /// <param name="cvssScores"> All known CVSS scores for the CVE. </param>
-        /// <param name="links"> The list of reference links for the CVE. </param>
-        /// <param name="description"> The CVE description. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CveResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string cveId, string componentId, string componentName, string componentVersion, string severity, string cveName, CveComponent component, string cvssScore, string cvssV2Score, string cvssV3Score, string cvssVersion, float? effectiveCvssScore, int? effectiveCvssVersion, IList<CvssScore> cvssScores, IReadOnlyList<CveLink> links, string description, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CveResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CveResultProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            CveId = cveId;
-            ComponentId = componentId;
-            ComponentName = componentName;
-            ComponentVersion = componentVersion;
-            Severity = severity;
-            CveName = cveName;
-            Component = component;
-            CvssScore = cvssScore;
-            CvssV2Score = cvssV2Score;
-            CvssV3Score = cvssV3Score;
-            CvssVersion = cvssVersion;
-            EffectiveCvssScore = effectiveCvssScore;
-            EffectiveCvssVersion = effectiveCvssVersion;
-            CvssScores = cvssScores;
-            Links = links;
-            Description = description;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal CveResultProperties Properties { get; set; }
+
         /// <summary> ID of the CVE result. </summary>
-        public string CveId { get; set; }
+        public string CveId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CveId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.CveId = value;
+            }
+        }
+
         /// <summary> ID of the affected SBOM component. </summary>
-        public string ComponentId { get; set; }
+        public string ComponentId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ComponentId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.ComponentId = value;
+            }
+        }
+
         /// <summary> Name of the affected SBOM component. </summary>
-        public string ComponentName { get; set; }
+        public string ComponentName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ComponentName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.ComponentName = value;
+            }
+        }
+
         /// <summary> Version of the affected SBOM component. </summary>
-        public string ComponentVersion { get; set; }
+        public string ComponentVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ComponentVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.ComponentVersion = value;
+            }
+        }
+
         /// <summary> Severity of the CVE. </summary>
-        public string Severity { get; set; }
+        public string Severity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Severity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.Severity = value;
+            }
+        }
+
         /// <summary> Name of the CVE. </summary>
-        public string CveName { get; set; }
-        /// <summary> Legacy property for the effective CVE score. </summary>
-        public string CvssScore { get; set; }
-        /// <summary> Legacy property for the CVE CVSS version 2 score, if one existed. </summary>
-        public string CvssV2Score { get; set; }
-        /// <summary> Legacy property for the CVE CVSS version 3 score, if one existed. </summary>
-        public string CvssV3Score { get; set; }
-        /// <summary> Legacy property for the what CVSS version score was stored in the cvssScore property. </summary>
-        public string CvssVersion { get; set; }
+        public string CveName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CveName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.CveName = value;
+            }
+        }
+
+        /// <summary> Legacy property for what is now componentName. </summary>
+        public CveComponent Component
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Component;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.Component = value;
+            }
+        }
+
+        /// <summary> Legacy property for the effective CVE score (deprecated). </summary>
+        public string CvssScore
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CvssScore;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.CvssScore = value;
+            }
+        }
+
+        /// <summary> Legacy property for the CVE CVSS version 2 score, if one existed. (deprecated). </summary>
+        public string CvssV2Score
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CvssV2Score;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.CvssV2Score = value;
+            }
+        }
+
+        /// <summary> Legacy property for the CVE CVSS version 3 score, if one existed. (deprecated). </summary>
+        public string CvssV3Score
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CvssV3Score;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.CvssV3Score = value;
+            }
+        }
+
+        /// <summary> Legacy property for the what CVSS version score was stored in the cvssScore property (deprecated). </summary>
+        public string CvssVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CvssVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.CvssVersion = value;
+            }
+        }
+
         /// <summary> The most recent CVSS score of the CVE. </summary>
-        public float? EffectiveCvssScore { get; set; }
+        public float? EffectiveCvssScore
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EffectiveCvssScore;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.EffectiveCvssScore = value;
+            }
+        }
+
         /// <summary> The version of the effectiveCvssScore property. </summary>
-        public int? EffectiveCvssVersion { get; set; }
+        public int? EffectiveCvssVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EffectiveCvssVersion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.EffectiveCvssVersion = value;
+            }
+        }
+
+        /// <summary> The CVSS vector string for the effectiveCvssVersion. </summary>
+        public string EffectiveVectorString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EffectiveVectorString;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.EffectiveVectorString = value;
+            }
+        }
+
+        /// <summary> The CVSS exploit maturity value for the effectiveCvssVersion. </summary>
+        public ExploitMaturityLevel? EffectiveExploitMaturity
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EffectiveExploitMaturity;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.EffectiveExploitMaturity = value;
+            }
+        }
+
         /// <summary> All known CVSS scores for the CVE. </summary>
-        public IList<CvssScore> CvssScores { get; }
+        public IList<CvssScore> CvssScores
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                return Properties.CvssScores;
+            }
+        }
+
         /// <summary> The list of reference links for the CVE. </summary>
-        public IReadOnlyList<CveLink> Links { get; }
+        public IReadOnlyList<CveLink> Links
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                return Properties.Links;
+            }
+        }
+
         /// <summary> The CVE description. </summary>
-        public string Description { get; set; }
+        public string Description
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Description;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.Description = value;
+            }
+        }
+
+        /// <summary> EPSS (Exploit Prediction Scoring System) information related to this CVE. </summary>
+        public EpssProperties Epss
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Epss;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.Epss = value;
+            }
+        }
+
+        /// <summary> CWE (Common Weakness Enumeration) information related to this CVE. </summary>
+        public IList<CweProperties> Cwes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                return Properties.Cwes;
+            }
+        }
+
+        /// <summary> KEV (Known Exploited Vulnerabilities) information related to this CVE. </summary>
+        public KevProperties Kev
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Kev;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                Properties.Kev = value;
+            }
+        }
+
+        /// <summary> The component versions in which this weakness was fixed, if any. </summary>
+        public IList<string> FixedInVersions
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CveResultProperties();
+                }
+                return Properties.FixedInVersions;
+            }
+        }
+
         /// <summary> The status of the last operation. </summary>
-        public FirmwareProvisioningState? ProvisioningState { get; }
+        public FirmwareProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }

@@ -15,78 +15,118 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> The object representing a firmware analysis SBOM component result resource. </summary>
     public partial class SbomComponentResult : ResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="SbomComponentResult"/>. </summary>
         public SbomComponentResult()
         {
-            FilePaths = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="SbomComponentResult"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="componentId"> ID for the component. </param>
-        /// <param name="componentName"> Name for the component. </param>
-        /// <param name="version"> Version for the component. </param>
-        /// <param name="license"> License for the component. </param>
-        /// <param name="filePaths"> File paths related to the component. Note, relatedFiles should be used instead of this property. </param>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SbomComponentResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string componentId, string componentName, string version, string license, IList<string> filePaths, FirmwareProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal SbomComponentResult(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, SbomComponent properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
-            ComponentId = componentId;
-            ComponentName = componentName;
-            Version = version;
-            License = license;
-            FilePaths = filePaths;
-            ProvisioningState = provisioningState;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> The resource-specific properties for this resource. </summary>
+        internal SbomComponent Properties { get; set; }
+
         /// <summary> ID for the component. </summary>
-        public string ComponentId { get; set; }
+        public string ComponentId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ComponentId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SbomComponent();
+                }
+                Properties.ComponentId = value;
+            }
+        }
+
         /// <summary> Name for the component. </summary>
-        public string ComponentName { get; set; }
+        public string ComponentName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ComponentName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SbomComponent();
+                }
+                Properties.ComponentName = value;
+            }
+        }
+
         /// <summary> Version for the component. </summary>
-        public string Version { get; set; }
+        public string Version
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Version;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SbomComponent();
+                }
+                Properties.Version = value;
+            }
+        }
+
         /// <summary> License for the component. </summary>
-        public string License { get; set; }
+        public string License
+        {
+            get
+            {
+                return Properties is null ? default : Properties.License;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SbomComponent();
+                }
+                Properties.License = value;
+            }
+        }
+
         /// <summary> File paths related to the component. Note, relatedFiles should be used instead of this property. </summary>
-        public IList<string> FilePaths { get; }
+        public IList<string> FilePaths
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SbomComponent();
+                }
+                return Properties.FilePaths;
+            }
+        }
+
         /// <summary> The status of the last operation. </summary>
-        public FirmwareProvisioningState? ProvisioningState { get; }
+        public FirmwareProvisioningState? ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
     }
 }
