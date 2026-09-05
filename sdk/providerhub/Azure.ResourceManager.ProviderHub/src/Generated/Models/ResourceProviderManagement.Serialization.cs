@@ -209,6 +209,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("profitCenterProgramId"u8);
                 writer.WriteStringValue(ProfitCenterProgramId);
             }
+            if (Optional.IsCollectionDefined(FeatureManagementOwners))
+            {
+                writer.WritePropertyName("featureManagementOwners"u8);
+                writer.WriteStartArray();
+                foreach (string item in FeatureManagementOwners)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -266,6 +281,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<string> canaryManifestOwners = default;
             string profitCenterCode = default;
             string profitCenterProgramId = default;
+            IList<string> featureManagementOwners = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -454,6 +470,27 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     profitCenterProgramId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("featureManagementOwners"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    featureManagementOwners = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -475,6 +512,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 canaryManifestOwners ?? new ChangeTrackingList<string>(),
                 profitCenterCode,
                 profitCenterProgramId,
+                featureManagementOwners ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

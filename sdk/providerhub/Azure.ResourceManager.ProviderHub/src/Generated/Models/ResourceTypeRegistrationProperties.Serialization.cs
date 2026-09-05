@@ -314,6 +314,36 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("resourceDeletionPolicy"u8);
                 writer.WriteStringValue(ResourceDeletionPolicy.Value.ToString());
             }
+            if (Optional.IsCollectionDefined(ResourceDeletionPolicies))
+            {
+                writer.WritePropertyName("resourceDeletionPolicies"u8);
+                writer.WriteStartArray();
+                foreach (ResourceDeletionPolicyAndProperties item in ResourceDeletionPolicies)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
+            {
+                writer.WritePropertyName("managedResourceGroupConfiguration"u8);
+                writer.WriteObjectValue(ManagedResourceGroupConfiguration, options);
+            }
+            if (Optional.IsDefined(PrivateEndpointConfiguration))
+            {
+                writer.WritePropertyName("privateEndpointConfiguration"u8);
+                writer.WriteObjectValue(PrivateEndpointConfiguration, options);
+            }
+            if (Optional.IsDefined(WriteLock))
+            {
+                writer.WritePropertyName("writeLock"u8);
+                writer.WriteObjectValue(WriteLock, options);
+            }
+            if (Optional.IsDefined(SuperScaleEnabled))
+            {
+                writer.WritePropertyName("superScaleEnabled"u8);
+                writer.WriteBooleanValue(SuperScaleEnabled.Value);
+            }
             if (Optional.IsCollectionDefined(ResourceConcurrencyControlOptions))
             {
                 writer.WritePropertyName("resourceConcurrencyControlOptions"u8);
@@ -697,6 +727,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<ProviderHubExtendedLocationOptions> extendedLocations = default;
             ResourceMovePolicy resourceMovePolicy = default;
             ResourceDeletionPolicy? resourceDeletionPolicy = default;
+            IList<ResourceDeletionPolicyAndProperties> resourceDeletionPolicies = default;
+            ResourceTypeManagedResourceGroupConfiguration managedResourceGroupConfiguration = default;
+            PrivateEndpointConfiguration privateEndpointConfiguration = default;
+            WriteLockConfiguration writeLock = default;
+            bool? superScaleEnabled = default;
             IDictionary<string, ResourceConcurrencyControlOption> resourceConcurrencyControlOptions = default;
             ResourceGraphConfiguration resourceGraphConfiguration = default;
             ResourceProviderManagement management = default;
@@ -1111,6 +1146,56 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         continue;
                     }
                     resourceDeletionPolicy = new ResourceDeletionPolicy(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("resourceDeletionPolicies"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceDeletionPolicyAndProperties> array = new List<ResourceDeletionPolicyAndProperties>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ResourceDeletionPolicyAndProperties.DeserializeResourceDeletionPolicyAndProperties(item, options));
+                    }
+                    resourceDeletionPolicies = array;
+                    continue;
+                }
+                if (prop.NameEquals("managedResourceGroupConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managedResourceGroupConfiguration = ResourceTypeManagedResourceGroupConfiguration.DeserializeResourceTypeManagedResourceGroupConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("privateEndpointConfiguration"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    privateEndpointConfiguration = PrivateEndpointConfiguration.DeserializePrivateEndpointConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("writeLock"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    writeLock = WriteLockConfiguration.DeserializeWriteLockConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("superScaleEnabled"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    superScaleEnabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("resourceConcurrencyControlOptions"u8))
@@ -1613,6 +1698,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 extendedLocations ?? new ChangeTrackingList<ProviderHubExtendedLocationOptions>(),
                 resourceMovePolicy,
                 resourceDeletionPolicy,
+                resourceDeletionPolicies ?? new ChangeTrackingList<ResourceDeletionPolicyAndProperties>(),
+                managedResourceGroupConfiguration,
+                privateEndpointConfiguration,
+                writeLock,
+                superScaleEnabled,
                 resourceConcurrencyControlOptions ?? new ChangeTrackingDictionary<string, ResourceConcurrencyControlOption>(),
                 resourceGraphConfiguration,
                 management,

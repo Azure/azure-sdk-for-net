@@ -34,6 +34,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ServiceTreeInfos = new ChangeTrackingList<ServiceTreeInfo>();
             SubscriptionStateRules = new ChangeTrackingList<ProviderSubscriptionStateRule>();
             ExtendedLocations = new ChangeTrackingList<ProviderHubExtendedLocationOptions>();
+            ResourceDeletionPolicies = new ChangeTrackingList<ResourceDeletionPolicyAndProperties>();
             ResourceConcurrencyControlOptions = new ChangeTrackingDictionary<string, ResourceConcurrencyControlOption>();
             DisallowedEndUserOperations = new ChangeTrackingList<string>();
             Metadata = new ChangeTrackingDictionary<string, BinaryData>();
@@ -81,6 +82,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="extendedLocations"> The extended locations. </param>
         /// <param name="resourceMovePolicy"> The resource move policy. </param>
         /// <param name="resourceDeletionPolicy"> The resource deletion policy. </param>
+        /// <param name="resourceDeletionPolicies"> List of resource deletion policies added. </param>
+        /// <param name="managedResourceGroupConfiguration"> The managed resource group configuration. </param>
+        /// <param name="privateEndpointConfiguration"> The private endpoint configuration. </param>
+        /// <param name="writeLock"> The write lock configuration. </param>
+        /// <param name="superScaleEnabled"> Indicates whether super scale is enabled. </param>
         /// <param name="resourceConcurrencyControlOptions"> The resource concurrency control options. </param>
         /// <param name="resourceGraphConfiguration"> The resource graph configuration. </param>
         /// <param name="management"> The resource provider management. </param>
@@ -125,7 +131,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="resourceSubType"> The resource sub type. </param>
         /// <param name="asyncOperationResourceTypeName"> The async operation resource type name. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ResourceTypeRegistrationProperties(ResourceRoutingType? routingType, AdditionalOptionResourceTypeRegistration? additionalOptions, CrossTenantTokenValidation? crossTenantTokenValidation, ResourceTypeRegistrationRegionality? regionality, IList<ResourceTypeEndpoint> endpoints, ResourceTypeExtensionOptions extensionOptions, MarketplaceType? marketplaceType, IList<SwaggerSpecification> swaggerSpecifications, IList<string> allowedUnauthorizedActions, IList<AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions, IList<AuthorizationActionMapping> authorizationActionMappings, IList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IList<LoggingRule> loggingRules, IList<ThrottlingRule> throttlingRules, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, bool? isAsyncOperationEnabled, ProviderHubProvisioningState? provisioningState, bool? isThirdPartyS2SEnabled, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications, bool? isPureProxy, IdentityManagementProperties identityManagement, CheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications, IList<string> disallowedActionVerbs, IList<ServiceTreeInfo> serviceTreeInfos, ProviderRequestHeaderOptions requestHeaderOptions, IList<ProviderSubscriptionStateRule> subscriptionStateRules, TemplateDeploymentOptions templateDeploymentOptions, IList<ProviderHubExtendedLocationOptions> extendedLocations, ResourceMovePolicy resourceMovePolicy, ResourceDeletionPolicy? resourceDeletionPolicy, IDictionary<string, ResourceConcurrencyControlOption> resourceConcurrencyControlOptions, ResourceGraphConfiguration resourceGraphConfiguration, ResourceProviderManagement management, OpenApiConfiguration openApiConfiguration, ResourceTypeOnBehalfOfToken onBehalfOfTokens, ResourceTypeCategory? category, ResourceValidation? resourceValidation, IList<string> disallowedEndUserOperations, IDictionary<string, BinaryData> metadata, string skuLink, ProviderQuotaRule quotaRule, IList<ProviderNotification> notifications, IList<LinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, TokenAuthConfiguration tokenAuthConfiguration, TemplateDeploymentPolicy templateDeploymentPolicy, bool? isEmptyRoleAssignmentsAllowed, PolicyExecutionType? policyExecutionType, ResourceTypeRegistrationAvailabilityZoneRule availabilityZoneRule, ProviderDstsConfiguration dstsConfiguration, IList<AsyncTimeoutRule> asyncTimeoutRules, IList<string> commonApiVersions, IList<ResourceTypeRegistrationApiProfile> apiProfiles, IList<LinkedOperationRule> linkedOperationRules, string legacyName, IList<string> legacyNames, IList<string> allowedTemplateDeploymentReferenceActions, ResourceTypeRegistrationLegacyPolicy legacyPolicy, string manifestLink, ResourceTypeRegistrationCapacityRule capacityRule, ResourceTypeRegistrationMarketplaceOptions marketplaceOptions, IList<AllowedResourceName> allowedResourceNames, ResourceTypeRegistrationResourceCache resourceCache, ProviderResourceQueryManagement resourceQueryManagement, bool? areTagsSupported, ResourceTypeRegistrationResourceManagementOptions resourceManagementOptions, string groupingTag, bool? isAddResourceListTargetLocationsAllowed, ResourceTypeCommonAttributeManagement resourceTypeCommonAttributeManagement, ResourceTypeRegistrationRoutingRule routingRule, FrontdoorRequestMode? frontdoorRequestMode, ProviderResourceSubType? resourceSubType, string asyncOperationResourceTypeName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ResourceTypeRegistrationProperties(ResourceRoutingType? routingType, AdditionalOptionResourceTypeRegistration? additionalOptions, CrossTenantTokenValidation? crossTenantTokenValidation, ResourceTypeRegistrationRegionality? regionality, IList<ResourceTypeEndpoint> endpoints, ResourceTypeExtensionOptions extensionOptions, MarketplaceType? marketplaceType, IList<SwaggerSpecification> swaggerSpecifications, IList<string> allowedUnauthorizedActions, IList<AllowedUnauthorizedActionsExtension> allowedUnauthorizedActionsExtensions, IList<AuthorizationActionMapping> authorizationActionMappings, IList<LinkedAccessCheck> linkedAccessChecks, string defaultApiVersion, IList<LoggingRule> loggingRules, IList<ThrottlingRule> throttlingRules, IList<string> requiredFeatures, ProviderFeaturesRule featuresRule, bool? isAsyncOperationEnabled, ProviderHubProvisioningState? provisioningState, bool? isThirdPartyS2SEnabled, SubscriptionLifecycleNotificationSpecifications subscriptionLifecycleNotificationSpecifications, bool? isPureProxy, IdentityManagementProperties identityManagement, CheckNameAvailabilitySpecifications checkNameAvailabilitySpecifications, IList<string> disallowedActionVerbs, IList<ServiceTreeInfo> serviceTreeInfos, ProviderRequestHeaderOptions requestHeaderOptions, IList<ProviderSubscriptionStateRule> subscriptionStateRules, TemplateDeploymentOptions templateDeploymentOptions, IList<ProviderHubExtendedLocationOptions> extendedLocations, ResourceMovePolicy resourceMovePolicy, ResourceDeletionPolicy? resourceDeletionPolicy, IList<ResourceDeletionPolicyAndProperties> resourceDeletionPolicies, ResourceTypeManagedResourceGroupConfiguration managedResourceGroupConfiguration, PrivateEndpointConfiguration privateEndpointConfiguration, WriteLockConfiguration writeLock, bool? superScaleEnabled, IDictionary<string, ResourceConcurrencyControlOption> resourceConcurrencyControlOptions, ResourceGraphConfiguration resourceGraphConfiguration, ResourceProviderManagement management, OpenApiConfiguration openApiConfiguration, ResourceTypeOnBehalfOfToken onBehalfOfTokens, ResourceTypeCategory? category, ResourceValidation? resourceValidation, IList<string> disallowedEndUserOperations, IDictionary<string, BinaryData> metadata, string skuLink, ProviderQuotaRule quotaRule, IList<ProviderNotification> notifications, IList<LinkedNotificationRule> linkedNotificationRules, ResourceProviderAuthorizationRules resourceProviderAuthorizationRules, TokenAuthConfiguration tokenAuthConfiguration, TemplateDeploymentPolicy templateDeploymentPolicy, bool? isEmptyRoleAssignmentsAllowed, PolicyExecutionType? policyExecutionType, ResourceTypeRegistrationAvailabilityZoneRule availabilityZoneRule, ProviderDstsConfiguration dstsConfiguration, IList<AsyncTimeoutRule> asyncTimeoutRules, IList<string> commonApiVersions, IList<ResourceTypeRegistrationApiProfile> apiProfiles, IList<LinkedOperationRule> linkedOperationRules, string legacyName, IList<string> legacyNames, IList<string> allowedTemplateDeploymentReferenceActions, ResourceTypeRegistrationLegacyPolicy legacyPolicy, string manifestLink, ResourceTypeRegistrationCapacityRule capacityRule, ResourceTypeRegistrationMarketplaceOptions marketplaceOptions, IList<AllowedResourceName> allowedResourceNames, ResourceTypeRegistrationResourceCache resourceCache, ProviderResourceQueryManagement resourceQueryManagement, bool? areTagsSupported, ResourceTypeRegistrationResourceManagementOptions resourceManagementOptions, string groupingTag, bool? isAddResourceListTargetLocationsAllowed, ResourceTypeCommonAttributeManagement resourceTypeCommonAttributeManagement, ResourceTypeRegistrationRoutingRule routingRule, FrontdoorRequestMode? frontdoorRequestMode, ProviderResourceSubType? resourceSubType, string asyncOperationResourceTypeName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RoutingType = routingType;
             AdditionalOptions = additionalOptions;
@@ -159,6 +165,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             ExtendedLocations = extendedLocations;
             ResourceMovePolicy = resourceMovePolicy;
             ResourceDeletionPolicy = resourceDeletionPolicy;
+            ResourceDeletionPolicies = resourceDeletionPolicies;
+            ManagedResourceGroupConfiguration = managedResourceGroupConfiguration;
+            PrivateEndpointConfiguration = privateEndpointConfiguration;
+            WriteLock = writeLock;
+            SuperScaleEnabled = superScaleEnabled;
             ResourceConcurrencyControlOptions = resourceConcurrencyControlOptions;
             ResourceGraphConfiguration = resourceGraphConfiguration;
             Management = management;
@@ -297,6 +308,21 @@ namespace Azure.ResourceManager.ProviderHub.Models
 
         /// <summary> The resource deletion policy. </summary>
         public ResourceDeletionPolicy? ResourceDeletionPolicy { get; set; }
+
+        /// <summary> List of resource deletion policies added. </summary>
+        public IList<ResourceDeletionPolicyAndProperties> ResourceDeletionPolicies { get; }
+
+        /// <summary> The managed resource group configuration. </summary>
+        public ResourceTypeManagedResourceGroupConfiguration ManagedResourceGroupConfiguration { get; set; }
+
+        /// <summary> The private endpoint configuration. </summary>
+        public PrivateEndpointConfiguration PrivateEndpointConfiguration { get; set; }
+
+        /// <summary> The write lock configuration. </summary>
+        internal WriteLockConfiguration WriteLock { get; set; }
+
+        /// <summary> Indicates whether super scale is enabled. </summary>
+        public bool? SuperScaleEnabled { get; set; }
 
         /// <summary> The resource concurrency control options. </summary>
         public IDictionary<string, ResourceConcurrencyControlOption> ResourceConcurrencyControlOptions { get; }
@@ -479,6 +505,23 @@ namespace Azure.ResourceManager.ProviderHub.Models
             set
             {
                 FeaturesRule = value.HasValue ? new ProviderFeaturesRule(value.Value) : default;
+            }
+        }
+
+        /// <summary> The state of write lock feature. The feature will ensure a deterministic sequence of write-operation within and across the verbs. Also the feature will ensure that the semantics of synchronous and long-running operations are honored. </summary>
+        public WriteLockState? WriteLockState
+        {
+            get
+            {
+                return WriteLock is null ? default : WriteLock.State;
+            }
+            set
+            {
+                if (WriteLock is null)
+                {
+                    WriteLock = new WriteLockConfiguration();
+                }
+                WriteLock.State = value;
             }
         }
 
