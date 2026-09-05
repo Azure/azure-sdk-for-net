@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of <see cref="VirtualMachinePatchProperties"/>. </summary>
         /// <param name="vmImageRepositoryCredentials"> The credentials used to login to the image repository that has access to the specified image. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VirtualMachinePatchProperties(ImageRepositoryCredentials vmImageRepositoryCredentials, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VirtualMachinePatchProperties(ImageRepositoryCredentialsPatch vmImageRepositoryCredentials, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmImageRepositoryCredentials = vmImageRepositoryCredentials;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The credentials used to login to the image repository that has access to the specified image. </summary>
-        public ImageRepositoryCredentials VmImageRepositoryCredentials { get; set; }
+        public ImageRepositoryCredentialsPatch VmImageRepositoryCredentials { get; set; }
     }
 }

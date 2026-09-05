@@ -1,14 +1,14 @@
 # Release History
 
-## 1.4.0-beta.2 (Unreleased)
+## 1.4.0 (2026-08-20)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Added support for API version `2026-07-01`.
 
 ### Other Changes
+
+- The service-side patch payloads for `NetworkCloudClusterPatch` and `NetworkCloudVirtualMachinePatch` now use dedicated `*Patch`-shaped models (for example `NetworkCloudRackDefinitionPatch`, `ValidationThresholdPatch`, `ClusterUpdateStrategyPatch`) internally. The public properties on `NetworkCloudClusterPatch` and `NetworkCloudVirtualMachinePatch` continue to expose the classic model types for backward compatibility.
 
 ## 1.4.0-beta.1 (2026-06-16)
 

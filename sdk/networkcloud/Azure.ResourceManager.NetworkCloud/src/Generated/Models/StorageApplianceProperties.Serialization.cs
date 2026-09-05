@@ -81,16 +81,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 throw new FormatException($"The model {nameof(StorageApplianceProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("administratorCredentials"u8);
-            writer.WriteObjectValue(AdministratorCredentials, options);
             writer.WritePropertyName("rackId"u8);
             writer.WriteStringValue(RackId);
+            writer.WritePropertyName("storageApplianceSkuId"u8);
+            writer.WriteStringValue(StorageApplianceSkuId);
             writer.WritePropertyName("rackSlot"u8);
             writer.WriteNumberValue(RackSlot);
             writer.WritePropertyName("serialNumber"u8);
             writer.WriteStringValue(SerialNumber);
-            writer.WritePropertyName("storageApplianceSkuId"u8);
-            writer.WriteStringValue(StorageApplianceSkuId);
+            writer.WritePropertyName("administratorCredentials"u8);
+            writer.WriteObjectValue(AdministratorCredentials, options);
             if (options.Format != "W" && Optional.IsDefined(CACertificate))
             {
                 writer.WritePropertyName("caCertificate"u8);
@@ -223,11 +223,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            AdministrativeCredentials administratorCredentials = default;
             ResourceIdentifier rackId = default;
+            string storageApplianceSkuId = default;
             long rackSlot = default;
             string serialNumber = default;
-            string storageApplianceSkuId = default;
+            AdministrativeCredentials administratorCredentials = default;
             NetworkCloudCertificateInfo caCertificate = default;
             long? capacity = default;
             long? capacityUsed = default;
@@ -247,14 +247,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("administratorCredentials"u8))
-                {
-                    administratorCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("rackId"u8))
                 {
                     rackId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("storageApplianceSkuId"u8))
+                {
+                    storageApplianceSkuId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("rackSlot"u8))
@@ -267,9 +267,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     serialNumber = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("storageApplianceSkuId"u8))
+                if (prop.NameEquals("administratorCredentials"u8))
                 {
-                    storageApplianceSkuId = prop.Value.GetString();
+                    administratorCredentials = AdministrativeCredentials.DeserializeAdministrativeCredentials(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("caCertificate"u8))
@@ -416,11 +416,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 }
             }
             return new StorageApplianceProperties(
-                administratorCredentials,
                 rackId,
+                storageApplianceSkuId,
                 rackSlot,
                 serialNumber,
-                storageApplianceSkuId,
+                administratorCredentials,
                 caCertificate,
                 capacity,
                 capacityUsed,
