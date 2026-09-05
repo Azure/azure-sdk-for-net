@@ -181,6 +181,153 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="sku"> The Relay cluster SKU. </param>
+        /// <returns> A new <see cref="Relay.RelayClusterData"/> instance for mocking. </returns>
+        public static RelayClusterData RelayClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RelayClusterProperties properties = default, RelayClusterSku sku = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RelayClusterData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                sku,
+                default);
+        }
+
+        /// <param name="provisioningState"> The provisioning state of the Relay cluster. </param>
+        /// <param name="metricId"> The metric ID of the Relay cluster. </param>
+        /// <param name="status"> The status of the Relay cluster. </param>
+        /// <param name="supportsScaling"> Indicates whether the Relay cluster supports capacity scaling. </param>
+        /// <param name="zoneRedundant"> Indicates whether the Relay cluster was created as zone redundant. </param>
+        /// <returns> A new <see cref="Models.RelayClusterProperties"/> instance for mocking. </returns>
+        public static RelayClusterProperties RelayClusterProperties(RelayClusterProvisioningState? provisioningState = default, string metricId = default, string status = default, bool? supportsScaling = default, bool? zoneRedundant = default)
+        {
+            return new RelayClusterProperties(
+                provisioningState,
+                metricId,
+                status,
+                supportsScaling,
+                zoneRedundant,
+                default);
+        }
+
+        /// <param name="name"> Name of the Relay cluster SKU. </param>
+        /// <param name="tier"> Tier of the Relay cluster SKU. </param>
+        /// <param name="capacity"> The number of capacity units assigned to the Relay cluster. </param>
+        /// <returns> A new <see cref="Models.RelayClusterSku"/> instance for mocking. </returns>
+        public static RelayClusterSku RelayClusterSku(RelayClusterSkuName name = default, RelayClusterSkuTier? tier = default, int? capacity = default)
+        {
+            return new RelayClusterSku(name, tier, capacity, default);
+        }
+
+        /// <param name="sku"> The Relay cluster SKU. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.RelayClusterPatch"/> instance for mocking. </returns>
+        public static RelayClusterPatch RelayClusterPatch(RelayClusterSkuUpdate sku = default, IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RelayClusterPatch(sku, tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <param name="name"> Name of the Relay cluster SKU. </param>
+        /// <param name="tier"> Tier of the Relay cluster SKU. </param>
+        /// <param name="capacity"> The number of capacity units assigned to the Relay cluster. </param>
+        /// <returns> A new <see cref="Models.RelayClusterSkuUpdate"/> instance for mocking. </returns>
+        public static RelayClusterSkuUpdate RelayClusterSkuUpdate(RelayClusterSkuName? name = default, RelayClusterSkuTier? tier = default, int? capacity = default)
+        {
+            return new RelayClusterSkuUpdate(name, tier, capacity, default);
+        }
+
+        /// <param name="value"> Relay namespace references assigned to the cluster. </param>
+        /// <returns> A new <see cref="Models.RelayNamespaceIdListResult"/> instance for mocking. </returns>
+        public static RelayNamespaceIdListResult RelayNamespaceIdListResult(IEnumerable<RelayNamespaceReference> value = default)
+        {
+            value ??= new ChangeTrackingList<RelayNamespaceReference>();
+
+            return new RelayNamespaceIdListResult((value ?? new ChangeTrackingList<RelayNamespaceReference>()).ToList(), default);
+        }
+
+        /// <param name="id"> The full Azure resource ID of the Relay namespace. </param>
+        /// <returns> A new <see cref="Models.RelayNamespaceReference"/> instance for mocking. </returns>
+        public static RelayNamespaceReference RelayNamespaceReference(ResourceIdentifier id = default)
+        {
+            return new RelayNamespaceReference(id, default);
+        }
+
+        /// <param name="value"> The SKUs supported by the Relay cluster. </param>
+        /// <returns> A new <see cref="Models.RelayClusterSkuListResult"/> instance for mocking. </returns>
+        public static RelayClusterSkuListResult RelayClusterSkuListResult(IEnumerable<RelayClusterSkuInfo> value = default)
+        {
+            value ??= new ChangeTrackingList<RelayClusterSkuInfo>();
+
+            return new RelayClusterSkuListResult((value ?? new ChangeTrackingList<RelayClusterSkuInfo>()).ToList(), default);
+        }
+
+        /// <param name="resourceType"> The resource type to which the SKU applies. </param>
+        /// <param name="sku"> The SKU name and tier. </param>
+        /// <param name="capacity"> Capacity information for the SKU. </param>
+        /// <returns> A new <see cref="Models.RelayClusterSkuInfo"/> instance for mocking. </returns>
+        public static RelayClusterSkuInfo RelayClusterSkuInfo(string resourceType = default, RelayClusterSkuDetails sku = default, RelayClusterSkuCapacity capacity = default)
+        {
+            return new RelayClusterSkuInfo(resourceType, sku, capacity, default);
+        }
+
+        /// <param name="name"> The SKU name. </param>
+        /// <param name="tier"> The SKU tier. </param>
+        /// <returns> A new <see cref="Models.RelayClusterSkuDetails"/> instance for mocking. </returns>
+        public static RelayClusterSkuDetails RelayClusterSkuDetails(RelayClusterSkuName? name = default, RelayClusterSkuTier? tier = default)
+        {
+            return new RelayClusterSkuDetails(name, tier, default);
+        }
+
+        /// <param name="minimum"> The minimum supported capacity. </param>
+        /// <param name="maximum"> The maximum supported capacity. </param>
+        /// <param name="allowedValues"> The allowed capacity values. </param>
+        /// <param name="default"> The default capacity. </param>
+        /// <param name="scaleType"> The supported scaling mode. </param>
+        /// <returns> A new <see cref="Models.RelayClusterSkuCapacity"/> instance for mocking. </returns>
+        public static RelayClusterSkuCapacity RelayClusterSkuCapacity(int? minimum = default, int? maximum = default, IEnumerable<int> allowedValues = default, int? @default = default, RelayClusterSkuScaleType? scaleType = default)
+        {
+            allowedValues ??= new ChangeTrackingList<int>();
+
+            return new RelayClusterSkuCapacity(
+                minimum,
+                maximum,
+                (allowedValues ?? new ChangeTrackingList<int>()).ToList(),
+                @default,
+                scaleType,
+                default);
+        }
+
+        /// <param name="value"> Regions containing available Relay cluster capacity. </param>
+        /// <returns> A new <see cref="Models.AvailableRelayClustersList"/> instance for mocking. </returns>
+        public static AvailableRelayClustersList AvailableRelayClustersList(IEnumerable<AvailableRelayClusterRegion> value = default)
+        {
+            value ??= new ChangeTrackingList<AvailableRelayClusterRegion>();
+
+            return new AvailableRelayClustersList((value ?? new ChangeTrackingList<AvailableRelayClusterRegion>()).ToList(), default);
+        }
+
+        /// <param name="location"> The Azure region location. </param>
+        /// <returns> A new <see cref="Models.AvailableRelayClusterRegion"/> instance for mocking. </returns>
+        public static AvailableRelayClusterRegion AvailableRelayClusterRegion(string location = default)
+        {
+            return new AvailableRelayClusterRegion(location, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
         /// <param name="status"> Status of the Namespace. </param>
         /// <param name="createdOn"> The time the namespace was created. </param>
@@ -189,9 +336,15 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <param name="minimumTlsVersion">
+        /// The minimum TLS version for the namespace.
+        /// Supported values are 1.2 and 1.3.
+        /// The service defaults to 1.2 when the property is omitted.
+        /// Existing namespaces configured with TLS 1.0 or 1.1 are reported as TLS 1.2.
+        /// </param>
         /// <param name="sku"> SKU of the namespace. </param>
         /// <returns> A new <see cref="Relay.RelayNamespaceData"/> instance for mocking. </returns>
-        public static RelayNamespaceData RelayNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = default, RelayPublicNetworkAccess? publicNetworkAccess = default, RelaySku sku = default)
+        public static RelayNamespaceData RelayNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = default, RelayPublicNetworkAccess? publicNetworkAccess = default, TlsVersion? minimumTlsVersion = default, RelaySku sku = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -202,7 +355,7 @@ namespace Azure.ResourceManager.Relay.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && privateEndpointConnections is null && publicNetworkAccess is null ? default : new RelayNamespaceProperties(
+                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && privateEndpointConnections is null && publicNetworkAccess is null && minimumTlsVersion is null ? default : new RelayNamespaceProperties(
                     provisioningState,
                     status,
                     createdOn,
@@ -211,6 +364,7 @@ namespace Azure.ResourceManager.Relay.Models
                     metricId,
                     (privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>()).ToList(),
                     publicNetworkAccess,
+                    minimumTlsVersion,
                     default),
                 sku,
                 default);
@@ -237,9 +391,15 @@ namespace Azure.ResourceManager.Relay.Models
         /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <param name="minimumTlsVersion">
+        /// The minimum TLS version for the namespace.
+        /// Supported values are 1.2 and 1.3.
+        /// The service defaults to 1.2 when the property is omitted.
+        /// Existing namespaces configured with TLS 1.0 or 1.1 are reported as TLS 1.2.
+        /// </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.RelayNamespacePatch"/> instance for mocking. </returns>
-        public static RelayNamespacePatch RelayNamespacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RelaySku sku = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = default, RelayPublicNetworkAccess? publicNetworkAccess = default, IDictionary<string, string> tags = default)
+        public static RelayNamespacePatch RelayNamespacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RelaySku sku = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = default, RelayPublicNetworkAccess? publicNetworkAccess = default, TlsVersion? minimumTlsVersion = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -249,7 +409,7 @@ namespace Azure.ResourceManager.Relay.Models
                 resourceType,
                 systemData,
                 sku,
-                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && privateEndpointConnections is null && publicNetworkAccess is null ? default : new RelayNamespaceProperties(
+                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && privateEndpointConnections is null && publicNetworkAccess is null && minimumTlsVersion is null ? default : new RelayNamespaceProperties(
                     provisioningState,
                     status,
                     createdOn,
@@ -258,6 +418,7 @@ namespace Azure.ResourceManager.Relay.Models
                     metricId,
                     (privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>()).ToList(),
                     publicNetworkAccess,
+                    minimumTlsVersion,
                     default),
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 default);
@@ -307,6 +468,45 @@ namespace Azure.ResourceManager.Relay.Models
             return new RelayNameAvailabilityResult(message, isNameAvailable, reason, default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="sku"> SKU of the namespace. </param>
+        /// <param name="provisioningState"> Provisioning state of the Namespace. </param>
+        /// <param name="status"> Status of the Namespace. </param>
+        /// <param name="createdOn"> The time the namespace was created. </param>
+        /// <param name="updatedOn"> The time the namespace was updated. </param>
+        /// <param name="serviceBusEndpoint"> Endpoint you can use to perform Service Bus operations. </param>
+        /// <param name="metricId"> Identifier for Azure Insights metrics. </param>
+        /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
+        /// <param name="publicNetworkAccess"> This determines if traffic is allowed over public network. By default it is enabled. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.RelayNamespacePatch"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static RelayNamespacePatch RelayNamespacePatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RelaySku sku = default, string provisioningState = default, string status = default, DateTimeOffset? createdOn = default, DateTimeOffset? updatedOn = default, string serviceBusEndpoint = default, string metricId = default, IEnumerable<RelayPrivateEndpointConnectionData> privateEndpointConnections = default, RelayPublicNetworkAccess? publicNetworkAccess = default, IDictionary<string, string> tags = default)
+        {
+            return new RelayNamespacePatch(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sku,
+                provisioningState is null && status is null && createdOn is null && updatedOn is null && serviceBusEndpoint is null && metricId is null && privateEndpointConnections is null && publicNetworkAccess is null ? default : new RelayNamespaceProperties(
+                    provisioningState,
+                    status,
+                    createdOn,
+                    updatedOn,
+                    serviceBusEndpoint,
+                    metricId,
+                    (privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>()).ToList(),
+                    publicNetworkAccess,
+                    default,
+                    default),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Relay.RelayNamespaceData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
@@ -343,6 +543,7 @@ namespace Azure.ResourceManager.Relay.Models
                     metricId,
                     (privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>()).ToList(),
                     publicNetworkAccess,
+                    default,
                     default),
                 sku,
                 default);

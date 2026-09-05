@@ -119,6 +119,11 @@ namespace Azure.ResourceManager.Relay.Models
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
+            if (Optional.IsDefined(MinimumTlsVersion))
+            {
+                writer.WritePropertyName("minimumTlsVersion"u8);
+                writer.WriteStringValue(MinimumTlsVersion.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -169,6 +174,7 @@ namespace Azure.ResourceManager.Relay.Models
             string metricId = default;
             IList<RelayPrivateEndpointConnectionData> privateEndpointConnections = default;
             RelayPublicNetworkAccess? publicNetworkAccess = default;
+            TlsVersion? minimumTlsVersion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -233,6 +239,15 @@ namespace Azure.ResourceManager.Relay.Models
                     publicNetworkAccess = new RelayPublicNetworkAccess(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("minimumTlsVersion"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    minimumTlsVersion = new TlsVersion(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -247,6 +262,7 @@ namespace Azure.ResourceManager.Relay.Models
                 metricId,
                 privateEndpointConnections ?? new ChangeTrackingList<RelayPrivateEndpointConnectionData>(),
                 publicNetworkAccess,
+                minimumTlsVersion,
                 additionalBinaryDataProperties);
         }
     }
