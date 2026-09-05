@@ -26,15 +26,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         {
         }
 
-        /// <summary> Gets an object representing a <see cref="EndpointDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="EndpointDeploymentResource"/> object. </returns>
-        public virtual EndpointDeploymentResource GetEndpointDeploymentResource(ResourceIdentifier id)
-        {
-            EndpointDeploymentResource.ValidateResourceId(id);
-            return new EndpointDeploymentResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="MachineLearningWorkspaceResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MachineLearningWorkspaceResource"/> object. </returns>
@@ -224,33 +215,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
             return new MachineLearningFeaturestoreEntityVersionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="InferencePoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InferencePoolResource"/> object. </returns>
-        public virtual InferencePoolResource GetInferencePoolResource(ResourceIdentifier id)
-        {
-            InferencePoolResource.ValidateResourceId(id);
-            return new InferencePoolResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="InferenceEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InferenceEndpointResource"/> object. </returns>
-        public virtual InferenceEndpointResource GetInferenceEndpointResource(ResourceIdentifier id)
-        {
-            InferenceEndpointResource.ValidateResourceId(id);
-            return new InferenceEndpointResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="InferenceGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="InferenceGroupResource"/> object. </returns>
-        public virtual InferenceGroupResource GetInferenceGroupResource(ResourceIdentifier id)
-        {
-            InferenceGroupResource.ValidateResourceId(id);
-            return new InferenceGroupResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="MachineLearningMarketplaceSubscriptionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MachineLearningMarketplaceSubscriptionResource"/> object. </returns>
@@ -296,15 +260,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
             return new MachineLearningServerlessEndpointResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="RaiPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RaiPolicyResource"/> object. </returns>
-        public virtual RaiPolicyResource GetRaiPolicyResource(ResourceIdentifier id)
-        {
-            RaiPolicyResource.ValidateResourceId(id);
-            return new RaiPolicyResource(Client, id);
-        }
-
         /// <summary> Gets an object representing a <see cref="MachineLearningPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="MachineLearningPrivateEndpointConnectionResource"/> object. </returns>
@@ -321,15 +276,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         {
             MachineLearningComputeResource.ValidateResourceId(id);
             return new MachineLearningComputeResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningWorkspaceConnectionDeploymentResource"/> object. </returns>
-        public virtual MachineLearningWorkspaceConnectionDeploymentResource GetMachineLearningWorkspaceConnectionDeploymentResource(ResourceIdentifier id)
-        {
-            MachineLearningWorkspaceConnectionDeploymentResource.ValidateResourceId(id);
-            return new MachineLearningWorkspaceConnectionDeploymentResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="MachineLearningRegistryCodeContainerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -438,60 +384,6 @@ namespace Azure.ResourceManager.MachineLearning.Mocking
         {
             MachineLearningWorkspaceConnectionResource.ValidateResourceId(id);
             return new MachineLearningWorkspaceConnectionResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="RaiBlocklistResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RaiBlocklistResource"/> object. </returns>
-        public virtual RaiBlocklistResource GetRaiBlocklistResource(ResourceIdentifier id)
-        {
-            RaiBlocklistResource.ValidateResourceId(id);
-            return new RaiBlocklistResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="RaiBlocklistItemResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="RaiBlocklistItemResource"/> object. </returns>
-        public virtual RaiBlocklistItemResource GetRaiBlocklistItemResource(ResourceIdentifier id)
-        {
-            RaiBlocklistItemResource.ValidateResourceId(id);
-            return new RaiBlocklistItemResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ConnectionRaiPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ConnectionRaiPolicyResource"/> object. </returns>
-        public virtual ConnectionRaiPolicyResource GetConnectionRaiPolicyResource(ResourceIdentifier id)
-        {
-            ConnectionRaiPolicyResource.ValidateResourceId(id);
-            return new ConnectionRaiPolicyResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="MachineLearningEndpointResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningEndpointResource"/> object. </returns>
-        public virtual MachineLearningEndpointResource GetMachineLearningEndpointResource(ResourceIdentifier id)
-        {
-            MachineLearningEndpointResource.ValidateResourceId(id);
-            return new MachineLearningEndpointResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="ManagedNetworkOutboundRuleBasicResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ManagedNetworkOutboundRuleBasicResource"/> object. </returns>
-        public virtual ManagedNetworkOutboundRuleBasicResource GetManagedNetworkOutboundRuleBasicResource(ResourceIdentifier id)
-        {
-            ManagedNetworkOutboundRuleBasicResource.ValidateResourceId(id);
-            return new ManagedNetworkOutboundRuleBasicResource(Client, id);
-        }
-
-        /// <summary> Gets an object representing a <see cref="MachineLearningManagedNetworkSettingsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
-        /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="MachineLearningManagedNetworkSettingsResource"/> object. </returns>
-        public virtual MachineLearningManagedNetworkSettingsResource GetMachineLearningManagedNetworkSettingsResource(ResourceIdentifier id)
-        {
-            MachineLearningManagedNetworkSettingsResource.ValidateResourceId(id);
-            return new MachineLearningManagedNetworkSettingsResource(Client, id);
         }
     }
 }

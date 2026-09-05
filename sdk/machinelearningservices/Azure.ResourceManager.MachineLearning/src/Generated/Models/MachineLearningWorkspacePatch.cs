@@ -55,24 +55,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
-        /// <summary> Gets or sets the AllowRoleAssignmentOnRG. </summary>
-        [WirePath("properties.allowRoleAssignmentOnRG")]
-        public bool? AllowRoleAssignmentOnRG
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AllowRoleAssignmentOnRG;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new MachineLearningWorkspacePropertiesPatch();
-                }
-                Properties.AllowRoleAssignmentOnRG = value;
-            }
-        }
-
         /// <summary> ARM id of the application insights associated with this workspace. </summary>
         [WirePath("properties.applicationInsights")]
         public string ApplicationInsights
@@ -145,24 +127,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        /// <summary> Flag to tell if SoftwareBillOfMaterials should be enabled for this workspace. </summary>
-        [WirePath("properties.enableSoftwareBillOfMaterials")]
-        public bool? EnableSoftwareBillOfMaterials
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableSoftwareBillOfMaterials;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new MachineLearningWorkspacePropertiesPatch();
-                }
-                Properties.EnableSoftwareBillOfMaterials = value;
-            }
-        }
-
         /// <summary> Settings for feature store type workspace. </summary>
         [WirePath("properties.featureStoreSettings")]
         public FeatureStoreSettings FeatureStoreSettings
@@ -217,20 +181,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
         }
 
-        /// <summary> The list of IPv4 addresses that are allowed to access the workspace. </summary>
-        [WirePath("properties.ipAllowlist")]
-        public IList<string> IPAllowlist
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new MachineLearningWorkspacePropertiesPatch();
-                }
-                return Properties.IPAllowlist;
-            }
-        }
-
         /// <summary> Gets or sets the ManagedNetwork. </summary>
         [WirePath("properties.managedNetwork")]
         public ManagedNetworkSettings ManagedNetwork
@@ -246,24 +196,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.ManagedNetwork = value;
-            }
-        }
-
-        /// <summary> A set of rules governing the network accessibility of the workspace. </summary>
-        [WirePath("properties.networkAcls")]
-        public NetworkAcls NetworkAcls
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NetworkAcls;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new MachineLearningWorkspacePropertiesPatch();
-                }
-                Properties.NetworkAcls = value;
             }
         }
 
@@ -318,24 +250,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     Properties = new MachineLearningWorkspacePropertiesPatch();
                 }
                 Properties.ServerlessComputeSettings = value;
-            }
-        }
-
-        /// <summary> Retention time in days after workspace get soft deleted. </summary>
-        [WirePath("properties.softDeleteRetentionInDays")]
-        public int? SoftDeleteRetentionInDays
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SoftDeleteRetentionInDays;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new MachineLearningWorkspacePropertiesPatch();
-                }
-                Properties.SoftDeleteRetentionInDays = value;
             }
         }
 
