@@ -210,7 +210,7 @@ public class AgentsTestBase : ProjectsClientTestBase
         {ToolType.A2A, "a2a_preview_call_output"},
         {ToolType.A2ASpecialConnection, "a2a_preview_call_output"},
         {ToolType.WorkIQTool, "a2a_preview_call_output"},
-        {ToolType.WebIQ, "webiq_preview_call_output"},
+        {ToolType.WebIQ, "mcp_call"},
     };
     #endregion
 
@@ -623,9 +623,9 @@ public class AgentsTestBase : ProjectsClientTestBase
             ToolType.AzureFunction => GetFunctionTool(),
             ToolType.MCPToolbox => await GetToolBoxAsync(projectClient, false),
             ToolType.MCPToolboxWithPreview => await GetToolBoxAsync(projectClient, true),
-            ToolType.WebIQ => new WebIQPreviewTool(projectConnectionId: TestEnvironment.WEB_CONNECTION_ID)
+            ToolType.WebIQ => new global::Azure.AI.Extensions.OpenAI.WebIQPreviewTool(projectConnectionId: TestEnvironment.WEBIQ_CONNECTION_ID)
             {
-                RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
+                RequireApproval = new WebIQPreviewToolRequireApprovalChoice(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
             },
             ToolType.WorkIQTool => new global::Azure.AI.Extensions.OpenAI.WorkIQPreviewTool(TestEnvironment.WORKIQ_CONNECTION_ID),
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")

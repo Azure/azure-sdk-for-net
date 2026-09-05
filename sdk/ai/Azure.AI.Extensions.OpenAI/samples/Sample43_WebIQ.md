@@ -1,6 +1,6 @@
 # Sample for use of an Agent with Web IQ Preview Tool in Azure.AI.Extensions.OpenAI.
 
-This sample demonstrates how to create and run a Prompt Agent that uses the Web IQ preview tool. The Web IQ tool enables the Agent to use less tokens for getting grounded results based on the Web search.
+This sample demonstrates how to create and run a Prompt Agent that uses the Web IQ preview tool. The Web IQ tool enables the Agent to use fewer tokens for getting grounded results based on the Web search.
 
 **Note:** This feature is in preview.
 
@@ -20,15 +20,14 @@ You will need the name of a Web IQ project connection configured in your Microso
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 var WebIQProjectConnectionName = System.Environment.GetEnvironmentVariable("WEB_IQ_PROJECT_CONNECTION_NAME");
-AIProjectClientOptions options = new();
-options.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
-AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential(), options: options);
+AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential());
 ```
 
 2. Resolve the Web IQ connection name to its connection ID and create a `WebIQPreviewTool` using the project connection ID and set `RequireApproval` to `"never"` so the agent can execute queries without manual approval. Then define the agent and create a version.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateAgent_WebIQ_Sync
+string WebIQProjectConnectionId = projectClient.Connections.GetConnection(WebIQProjectConnectionName).Value.Id;
 WebIQPreviewTool WebIQTool = new(projectConnectionId: WebIQProjectConnectionId)
 {
     RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),

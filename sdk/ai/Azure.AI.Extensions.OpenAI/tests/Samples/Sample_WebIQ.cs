@@ -29,9 +29,7 @@ public class Sample_WebIQ : ProjectsOpenAITestBase
         var modelDeploymentName = TestEnvironment.FOUNDRY_MODEL_NAME;
         var WebIQProjectConnectionName = TestEnvironment.WEB_IQ_PROJECT_CONNECTION_NAME;
 #endif
-        AIProjectClientOptions options = new();
-        options.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
-        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential(), options: options);
+        AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential());
         #endregion
         #region Snippet:Sample_CreateAgent_WebIQ_Async
         string WebIQProjectConnectionId = (await projectClient.Connections.GetConnectionAsync(WebIQProjectConnectionName)).Value.Id;
@@ -82,8 +80,8 @@ public class Sample_WebIQ : ProjectsOpenAITestBase
         var WebIQProjectConnectionName = TestEnvironment.WEB_IQ_PROJECT_CONNECTION_NAME;
 #endif
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new AzureCliCredential());
-        string WebIQProjectConnectionId = projectClient.Connections.GetConnection(WebIQProjectConnectionName).Id;
         #region Snippet:Sample_CreateAgent_WebIQ_Sync
+        string WebIQProjectConnectionId = projectClient.Connections.GetConnection(WebIQProjectConnectionName).Value.Id;
         WebIQPreviewTool WebIQTool = new(projectConnectionId: WebIQProjectConnectionId)
         {
             RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
