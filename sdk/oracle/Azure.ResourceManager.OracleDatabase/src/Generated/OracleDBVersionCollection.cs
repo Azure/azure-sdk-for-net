@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.OracleDatabase
             TryGetApiVersion(OracleDBVersionResource.ResourceType, out string oracleDBVersionApiVersion);
             _location = location;
             _dbVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.OracleDatabase", OracleDBVersionResource.ResourceType.Namespace, Diagnostics);
-            _dbVersionsRestClient = new DbVersions(_dbVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBVersionApiVersion ?? "2025-09-01");
+            _dbVersionsRestClient = new DbVersions(_dbVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, oracleDBVersionApiVersion ?? "2025-11-01-preview");
             ValidateResourceId(id);
         }
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.OracleDatabase
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-09-01. </description>
+        /// <description> 2025-11-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

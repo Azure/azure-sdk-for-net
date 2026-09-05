@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -361,7 +362,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
         /// <param name="timeZone"> The time zone of the cloud VM cluster. For details, see [Exadata Infrastructure Time Zones](/Content/Database/References/timezones.htm). </param>
         /// <param name="zoneOcid"> The OCID of the zone the cloud VM cluster is associated with. </param>
-        /// <param name="hostname"> The hostname for the cloud VM cluster. </param>
+        /// <param name="hostname"> The hostname for the cloud VM cluster. Hostname and domain combined length cannot exceed 112 characters. </param>
         /// <param name="domain"> The domain name for the cloud VM cluster. </param>
         /// <param name="cpuCoreCount"> The number of CPU cores enabled on the cloud VM cluster. </param>
         /// <param name="ocpuCount"> The number of OCPU cores to enable on the cloud VM cluster. Only 1 decimal place is allowed for the fractional part. </param>
@@ -2733,12 +2734,13 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="version"> The Oracle Database version of the DB system. </param>
         /// <param name="computeModel"> The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy. </param>
         /// <param name="computeCount"> The number of compute servers for the DB system. </param>
+        /// <param name="dataCollectionOptions"> Indicates user preferences for the various diagnostic collection options for the Base DB. </param>
         /// <param name="databaseEdition"> The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require EnterpriseEditionExtremePerformance. </param>
         /// <param name="adminPassword"> A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -. </param>
         /// <param name="dbVersion"> A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation. </param>
         /// <param name="pluggableDatabaseName"> The name of the pluggable database. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name. </param>
         /// <returns> A new <see cref="Models.OracleDBSystemProperties"/> instance for mocking. </returns>
-        public static OracleDBSystemProperties OracleDBSystemProperties(OracleDatabaseProvisioningState? provisioningState = default, Uri ociUri = default, ResourceIdentifier resourceAnchorId = default, ResourceIdentifier networkAnchorId = default, string clusterName = default, string displayName = default, int? initialDataStorageSizeInGb = default, int? dataStorageSizeInGbs = default, StorageManagementType? dbSystemOptionsStorageManagement = default, DBSystemDiskRedundancyType? diskRedundancy = default, string domainV2 = default, string gridImageOcid = default, string hostname = default, string ocid = default, OracleLicenseModel? licenseModelV2 = default, string lifecycleDetails = default, DBSystemLifecycleState? lifecycleState = default, int? listenerPort = default, int? memorySizeInGbs = default, int? nodeCount = default, string scanDnsName = default, IEnumerable<string> scanIPs = default, string shape = default, IEnumerable<string> sshPublicKeys = default, StorageVolumePerformanceMode? storageVolumePerformanceMode = default, string timeZone = default, string version = default, OracleDatabaseComputeModel? computeModel = default, int? computeCount = default, DBSystemDatabaseEditionType databaseEdition = default, string adminPassword = default, string dbVersion = default, string pluggableDatabaseName = default)
+        public static OracleDBSystemProperties OracleDBSystemProperties(OracleDatabaseProvisioningState? provisioningState = default, Uri ociUri = default, ResourceIdentifier resourceAnchorId = default, ResourceIdentifier networkAnchorId = default, string clusterName = default, string displayName = default, int? initialDataStorageSizeInGb = default, int? dataStorageSizeInGbs = default, StorageManagementType? dbSystemOptionsStorageManagement = default, DBSystemDiskRedundancyType? diskRedundancy = default, string domainV2 = default, string gridImageOcid = default, string hostname = default, string ocid = default, OracleLicenseModel? licenseModelV2 = default, string lifecycleDetails = default, DBSystemLifecycleState? lifecycleState = default, int? listenerPort = default, int? memorySizeInGbs = default, int? nodeCount = default, string scanDnsName = default, IEnumerable<string> scanIPs = default, string shape = default, IEnumerable<string> sshPublicKeys = default, StorageVolumePerformanceMode? storageVolumePerformanceMode = default, string timeZone = default, string version = default, OracleDatabaseComputeModel? computeModel = default, int? computeCount = default, DiagnosticCollectionConfig dataCollectionOptions = default, DBSystemDatabaseEditionType databaseEdition = default, string adminPassword = default, string dbVersion = default, string pluggableDatabaseName = default)
         {
             scanIPs ??= new ChangeTrackingList<string>();
             sshPublicKeys ??= new ChangeTrackingList<string>();
@@ -2774,6 +2776,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 version,
                 computeModel,
                 computeCount,
+                dataCollectionOptions,
                 default,
                 databaseEdition,
                 adminPassword,
@@ -2811,8 +2814,9 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="version"> The Oracle Database version of the DB system. </param>
         /// <param name="computeModel"> The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy. </param>
         /// <param name="computeCount"> The number of compute servers for the DB system. </param>
+        /// <param name="dataCollectionOptions"> Indicates user preferences for the various diagnostic collection options for the Base DB. </param>
         /// <returns> A new <see cref="Models.OracleDBSystemBaseProperties"/> instance for mocking. </returns>
-        public static OracleDBSystemBaseProperties OracleDBSystemBaseProperties(string source = default, OracleDatabaseProvisioningState? provisioningState = default, Uri ociUri = default, ResourceIdentifier resourceAnchorId = default, ResourceIdentifier networkAnchorId = default, string clusterName = default, string displayName = default, int? initialDataStorageSizeInGb = default, int? dataStorageSizeInGbs = default, StorageManagementType? dbSystemOptionsStorageManagement = default, DBSystemDiskRedundancyType? diskRedundancy = default, string domainV2 = default, string gridImageOcid = default, string hostname = default, string ocid = default, OracleLicenseModel? licenseModelV2 = default, string lifecycleDetails = default, DBSystemLifecycleState? lifecycleState = default, int? listenerPort = default, int? memorySizeInGbs = default, int? nodeCount = default, string scanDnsName = default, IEnumerable<string> scanIPs = default, string shape = default, IEnumerable<string> sshPublicKeys = default, StorageVolumePerformanceMode? storageVolumePerformanceMode = default, string timeZone = default, string version = default, OracleDatabaseComputeModel? computeModel = default, int? computeCount = default)
+        public static OracleDBSystemBaseProperties OracleDBSystemBaseProperties(string source = default, OracleDatabaseProvisioningState? provisioningState = default, Uri ociUri = default, ResourceIdentifier resourceAnchorId = default, ResourceIdentifier networkAnchorId = default, string clusterName = default, string displayName = default, int? initialDataStorageSizeInGb = default, int? dataStorageSizeInGbs = default, StorageManagementType? dbSystemOptionsStorageManagement = default, DBSystemDiskRedundancyType? diskRedundancy = default, string domainV2 = default, string gridImageOcid = default, string hostname = default, string ocid = default, OracleLicenseModel? licenseModelV2 = default, string lifecycleDetails = default, DBSystemLifecycleState? lifecycleState = default, int? listenerPort = default, int? memorySizeInGbs = default, int? nodeCount = default, string scanDnsName = default, IEnumerable<string> scanIPs = default, string shape = default, IEnumerable<string> sshPublicKeys = default, StorageVolumePerformanceMode? storageVolumePerformanceMode = default, string timeZone = default, string version = default, OracleDatabaseComputeModel? computeModel = default, int? computeCount = default, DiagnosticCollectionConfig dataCollectionOptions = default)
         {
             scanIPs ??= new ChangeTrackingList<string>();
             sshPublicKeys ??= new ChangeTrackingList<string>();
@@ -2848,6 +2852,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 version,
                 computeModel,
                 computeCount,
+                dataCollectionOptions,
                 default);
         }
 
@@ -2894,6 +2899,151 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 isPreviewDbVersion,
                 isUpgradeSupported,
                 doesSupportPluggableDatabase,
+                default);
+        }
+
+        /// <param name="provisioningState"> dbSystem provisioning state. </param>
+        /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
+        /// <param name="resourceAnchorId"> Azure Resource Anchor ID. </param>
+        /// <param name="networkAnchorId"> Azure Network Anchor ID. </param>
+        /// <param name="clusterName"> The cluster name for Exadata and 2-node RAC virtual machine DB systems. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive. </param>
+        /// <param name="displayName"> The user-friendly name for the DB system. The name does not have to be unique. </param>
+        /// <param name="initialDataStorageSizeInGb"> Size in GB of the initial data volume that will be created and attached to a virtual machine DB system. You can scale up storage after provisioning, as needed. Note that the total storage size attached will be more than the amount you specify to allow for REDO/RECO space and software volume. </param>
+        /// <param name="dataStorageSizeInGbs"> The data storage size, in gigabytes, that is currently available to the DB system. Applies only for virtual machine DB systems. </param>
+        /// <param name="dbSystemOptionsStorageManagement"> The storage option used in DB system. ASM - Automatic storage management, LVM - Logical Volume management. </param>
+        /// <param name="diskRedundancy"> The type of redundancy configured for the DB system. NORMAL is 2-way redundancy. HIGH is 3-way redundancy. </param>
+        /// <param name="domainV2"> The domain name for the DB system. </param>
+        /// <param name="gridImageOcid"> The OCID of a grid infrastructure software image. This is a database software image of the type GRID_IMAGE. </param>
+        /// <param name="hostname"> The hostname for the DB system. </param>
+        /// <param name="ocid"> The OCID of the DB system. </param>
+        /// <param name="licenseModelV2"> The Oracle license model that applies to all the databases on the DB system. The default is LicenseIncluded. </param>
+        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
+        /// <param name="lifecycleState"> The current state of the DB system. </param>
+        /// <param name="listenerPort"> The port number configured for the listener on the DB system. </param>
+        /// <param name="memorySizeInGbs"> Memory allocated to the DB system, in gigabytes. </param>
+        /// <param name="nodeCount"> The number of nodes in the DB system. For RAC DB systems, the value is greater than 1. </param>
+        /// <param name="scanDnsName"> The FQDN of the DNS record for the SCAN IP addresses that are associated with the DB system. </param>
+        /// <param name="scanIPs"> The list of Single Client Access Name (SCAN) IP addresses associated with the DB system. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. Note: For a single-node DB system, this list is empty. </param>
+        /// <param name="shape"> The shape of the DB system. The shape determines resources to allocate to the DB system. For virtual machine shapes, the number of CPU cores and memory. For bare metal and Exadata shapes, the number of CPU cores, storage, and memory. </param>
+        /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the DB system. </param>
+        /// <param name="storageVolumePerformanceMode"> The block storage volume performance level. Valid values are Balanced and HighPerformance. See [Block Volume Performance](/Content/Block/Concepts/blockvolumeperformance.htm) for more information. </param>
+        /// <param name="timeZone"> The time zone of the DB system, e.g., UTC, to set the timeZone as UTC. </param>
+        /// <param name="version"> The Oracle Database version of the DB system. </param>
+        /// <param name="computeModel"> The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy. </param>
+        /// <param name="computeCount"> The number of compute servers for the DB system. </param>
+        /// <param name="databaseEdition"> The Oracle Database Edition that applies to all the databases on the DB system. Exadata DB systems and 2-node RAC DB systems require EnterpriseEditionExtremePerformance. </param>
+        /// <param name="adminPassword"> A strong password for SYS, SYSTEM, and PDB Admin. The password must be at least nine characters and contain at least two uppercase, two lowercase, two numbers, and two special characters. The special characters must be _, #, or -. </param>
+        /// <param name="dbVersion"> A valid Oracle Database version. For a list of supported versions, use the ListDbVersions operation. </param>
+        /// <param name="pluggableDatabaseName"> The name of the pluggable database. The name must begin with an alphabetic character and can contain a maximum of thirty alphanumeric characters. Special characters are not permitted. Pluggable database should not be same as database name. </param>
+        /// <returns> A new <see cref="Models.OracleDBSystemProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OracleDBSystemProperties OracleDBSystemProperties(OracleDatabaseProvisioningState? provisioningState = default, Uri ociUri = default, ResourceIdentifier resourceAnchorId = default, ResourceIdentifier networkAnchorId = default, string clusterName = default, string displayName = default, int? initialDataStorageSizeInGb = default, int? dataStorageSizeInGbs = default, StorageManagementType? dbSystemOptionsStorageManagement = default, DBSystemDiskRedundancyType? diskRedundancy = default, string domainV2 = default, string gridImageOcid = default, string hostname = default, string ocid = default, OracleLicenseModel? licenseModelV2 = default, string lifecycleDetails = default, DBSystemLifecycleState? lifecycleState = default, int? listenerPort = default, int? memorySizeInGbs = default, int? nodeCount = default, string scanDnsName = default, IEnumerable<string> scanIPs = default, string shape = default, IEnumerable<string> sshPublicKeys = default, StorageVolumePerformanceMode? storageVolumePerformanceMode = default, string timeZone = default, string version = default, OracleDatabaseComputeModel? computeModel = default, int? computeCount = default, DBSystemDatabaseEditionType databaseEdition = default, string adminPassword = default, string dbVersion = default, string pluggableDatabaseName = default)
+        {
+            return new OracleDBSystemProperties(
+                default,
+                provisioningState,
+                ociUri,
+                resourceAnchorId,
+                networkAnchorId,
+                clusterName,
+                displayName,
+                initialDataStorageSizeInGb,
+                dataStorageSizeInGbs,
+                dbSystemOptionsStorageManagement is null ? default : new OracleDBSystemOptions(dbSystemOptionsStorageManagement, default),
+                diskRedundancy,
+                domainV2,
+                gridImageOcid,
+                hostname,
+                ocid,
+                licenseModelV2,
+                lifecycleDetails,
+                lifecycleState,
+                listenerPort,
+                memorySizeInGbs,
+                nodeCount,
+                scanDnsName,
+                (scanIPs ?? new ChangeTrackingList<string>()).ToList(),
+                shape,
+                (sshPublicKeys ?? new ChangeTrackingList<string>()).ToList(),
+                storageVolumePerformanceMode,
+                timeZone,
+                version,
+                computeModel,
+                computeCount,
+                default,
+                default,
+                databaseEdition,
+                adminPassword,
+                dbVersion,
+                pluggableDatabaseName);
+        }
+
+        /// <param name="source"> The source of the database: Use `None` for creating a new database. The default is `None`. </param>
+        /// <param name="provisioningState"> dbSystem provisioning state. </param>
+        /// <param name="ociUri"> HTTPS link to OCI resources exposed to Azure Customer via Azure Interface. </param>
+        /// <param name="resourceAnchorId"> Azure Resource Anchor ID. </param>
+        /// <param name="networkAnchorId"> Azure Network Anchor ID. </param>
+        /// <param name="clusterName"> The cluster name for Exadata and 2-node RAC virtual machine DB systems. The cluster name must begin with an alphabetic character, and may contain hyphens (-). Underscores (_) are not permitted. The cluster name can be no longer than 11 characters and is not case sensitive. </param>
+        /// <param name="displayName"> The user-friendly name for the DB system. The name does not have to be unique. </param>
+        /// <param name="initialDataStorageSizeInGb"> Size in GB of the initial data volume that will be created and attached to a virtual machine DB system. You can scale up storage after provisioning, as needed. Note that the total storage size attached will be more than the amount you specify to allow for REDO/RECO space and software volume. </param>
+        /// <param name="dataStorageSizeInGbs"> The data storage size, in gigabytes, that is currently available to the DB system. Applies only for virtual machine DB systems. </param>
+        /// <param name="dbSystemOptionsStorageManagement"> The storage option used in DB system. ASM - Automatic storage management, LVM - Logical Volume management. </param>
+        /// <param name="diskRedundancy"> The type of redundancy configured for the DB system. NORMAL is 2-way redundancy. HIGH is 3-way redundancy. </param>
+        /// <param name="domainV2"> The domain name for the DB system. </param>
+        /// <param name="gridImageOcid"> The OCID of a grid infrastructure software image. This is a database software image of the type GRID_IMAGE. </param>
+        /// <param name="hostname"> The hostname for the DB system. </param>
+        /// <param name="ocid"> The OCID of the DB system. </param>
+        /// <param name="licenseModelV2"> The Oracle license model that applies to all the databases on the DB system. The default is LicenseIncluded. </param>
+        /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
+        /// <param name="lifecycleState"> The current state of the DB system. </param>
+        /// <param name="listenerPort"> The port number configured for the listener on the DB system. </param>
+        /// <param name="memorySizeInGbs"> Memory allocated to the DB system, in gigabytes. </param>
+        /// <param name="nodeCount"> The number of nodes in the DB system. For RAC DB systems, the value is greater than 1. </param>
+        /// <param name="scanDnsName"> The FQDN of the DNS record for the SCAN IP addresses that are associated with the DB system. </param>
+        /// <param name="scanIPs"> The list of Single Client Access Name (SCAN) IP addresses associated with the DB system. SCAN IP addresses are typically used for load balancing and are not assigned to any interface. Oracle Clusterware directs the requests to the appropriate nodes in the cluster. Note: For a single-node DB system, this list is empty. </param>
+        /// <param name="shape"> The shape of the DB system. The shape determines resources to allocate to the DB system. For virtual machine shapes, the number of CPU cores and memory. For bare metal and Exadata shapes, the number of CPU cores, storage, and memory. </param>
+        /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the DB system. </param>
+        /// <param name="storageVolumePerformanceMode"> The block storage volume performance level. Valid values are Balanced and HighPerformance. See [Block Volume Performance](/Content/Block/Concepts/blockvolumeperformance.htm) for more information. </param>
+        /// <param name="timeZone"> The time zone of the DB system, e.g., UTC, to set the timeZone as UTC. </param>
+        /// <param name="version"> The Oracle Database version of the DB system. </param>
+        /// <param name="computeModel"> The compute model for Base Database Service. This is required if using the `computeCount` parameter. If using `cpuCoreCount` then it is an error to specify `computeModel` to a non-null value. The ECPU compute model is the recommended model, and the OCPU compute model is legacy. </param>
+        /// <param name="computeCount"> The number of compute servers for the DB system. </param>
+        /// <returns> A new <see cref="Models.OracleDBSystemBaseProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static OracleDBSystemBaseProperties OracleDBSystemBaseProperties(string source = default, OracleDatabaseProvisioningState? provisioningState = default, Uri ociUri = default, ResourceIdentifier resourceAnchorId = default, ResourceIdentifier networkAnchorId = default, string clusterName = default, string displayName = default, int? initialDataStorageSizeInGb = default, int? dataStorageSizeInGbs = default, StorageManagementType? dbSystemOptionsStorageManagement = default, DBSystemDiskRedundancyType? diskRedundancy = default, string domainV2 = default, string gridImageOcid = default, string hostname = default, string ocid = default, OracleLicenseModel? licenseModelV2 = default, string lifecycleDetails = default, DBSystemLifecycleState? lifecycleState = default, int? listenerPort = default, int? memorySizeInGbs = default, int? nodeCount = default, string scanDnsName = default, IEnumerable<string> scanIPs = default, string shape = default, IEnumerable<string> sshPublicKeys = default, StorageVolumePerformanceMode? storageVolumePerformanceMode = default, string timeZone = default, string version = default, OracleDatabaseComputeModel? computeModel = default, int? computeCount = default)
+        {
+            return new Models.OracleDBSystemBaseProperties(
+                default,
+                provisioningState,
+                ociUri,
+                resourceAnchorId,
+                networkAnchorId,
+                clusterName,
+                displayName,
+                initialDataStorageSizeInGb,
+                dataStorageSizeInGbs,
+                dbSystemOptionsStorageManagement is null ? default : new OracleDBSystemOptions(dbSystemOptionsStorageManagement, default),
+                diskRedundancy,
+                domainV2,
+                gridImageOcid,
+                hostname,
+                ocid,
+                licenseModelV2,
+                lifecycleDetails,
+                lifecycleState,
+                listenerPort,
+                memorySizeInGbs,
+                nodeCount,
+                scanDnsName,
+                (scanIPs ?? new ChangeTrackingList<string>()).ToList(),
+                shape,
+                (sshPublicKeys ?? new ChangeTrackingList<string>()).ToList(),
+                storageVolumePerformanceMode,
+                timeZone,
+                version,
+                computeModel,
+                computeCount,
+                default,
                 default);
         }
     }
