@@ -504,11 +504,18 @@ function assignRemainingOperations(
       sdkMethod?.operation?.verb === "get"
         ? getCollectionItemModelIdLocal(sdkMethod)
         : undefined;
-    const listTarget =
-      itemModelId && identifiedResourceModelIds.has(itemModelId)
-        ? findListTargetResource(resources, operationPath, itemModelId)
-        : undefined;
-    const actionTarget = listTarget
+    const listTargets =
+      sdkMethod &&
+      itemModelId &&
+      identifiedResourceModelIds.has(itemModelId)
+        ? findListTargetResources(
+            resources,
+            operationPath,
+            itemModelId,
+            sdkMethod
+          )
+        : [];
+    const actionTarget = listTargets.length > 0
       ? undefined
       : findLongestPrefixMatch(
           operationPath,
@@ -516,13 +523,26 @@ function assignRemainingOperations(
           (resource) => resource.metadata.resourceIdPattern
         );
 
-    if (listTarget) {
-      listTarget.metadata.methods.push({
-        methodId,
-        kind: ResourceOperationKind.List,
-        operationPath,
-        scope: buildListOperationScope(resources, operationPath)
-      });
+    if (listTargets.length > 0) {
+      for (const listTarget of listTargets) {
+        if (
+          listTarget.metadata.methods.some(
+            (resourceMethod) => resourceMethod.methodId === methodId
+          )
+        ) {
+          continue;
+        }
+        listTarget.metadata.methods.push({
+          methodId,
+          kind: ResourceOperationKind.List,
+          operationPath,
+          scope: buildListOperationScope(
+            resources,
+            operationPath,
+            listTarget
+          )
+        });
+      }
     } else if (actionTarget) {
       const scope = buildScopeInfoFromPath(operationPath);
       const isCollectionAction = isResourceCollectionAction(sdkMethod);
@@ -600,11 +620,12 @@ function getCollectionContextPath(
   );
 }
 
-function findListTargetResource(
+function findListTargetResources(
   resources: ValidArmResourceSchema[],
   operationPath: RequestPath,
-  itemModelId: string
-): ValidArmResourceSchema | undefined {
+  itemModelId: string,
+  sdkMethod: SdkMethod<SdkHttpOperation>
+): ValidArmResourceSchema[] {
   const candidates = resources.filter(
     (resource) => resource.resourceModelId === itemModelId
   );
@@ -613,11 +634,48 @@ function findListTargetResource(
     operationPath.isPrefixOf(resource.metadata.resourceIdPattern)
   );
   if (collectionMatches.length > 0) {
-    return shortestResourcePath(collectionMatches);
+    return selectListTargets(collectionMatches, operationPath, sdkMethod);
+  }
+
+  if (detectDynamicTypeSegments(operationPath).length > 0) {
+    const dynamicCollectionMatches = candidates.filter(
+      (resource) =>
+        matchesDynamicCollectionRoute(resource, operationPath, sdkMethod)
+    );
+    if (dynamicCollectionMatches.length > 0) {
+      return selectListTargets(
+        dynamicCollectionMatches,
+        operationPath,
+        sdkMethod
+      );
+    }
+
+    // Some synthesized list routes do not retain the resource's provider path.
+    // Preserve that fallback only when all candidates represent one route shape.
+    const collectionType = operationPath.segments.at(-1);
+    const compatibleDynamicCollectionMatches = candidates.filter(
+      (resource) =>
+        collectionType !== undefined &&
+        resource.metadata.resourceType.split("/").at(-1) === collectionType &&
+        operationPath.hasSameScopeNesting(resource.metadata.resourceIdPattern)
+    );
+    if (
+      compatibleDynamicCollectionMatches.length > 0 &&
+      hasSingleDynamicCollectionRoute(
+        compatibleDynamicCollectionMatches,
+        operationPath
+      )
+    ) {
+      return selectListTargets(
+        compatibleDynamicCollectionMatches,
+        operationPath,
+        sdkMethod
+      );
+    }
   }
 
   const operationType = operationPath.resourceType;
-  if (operationType === undefined) return undefined;
+  if (operationType === undefined) return [];
 
   const scopeCollectionMatches = candidates.filter(
     (resource) =>
@@ -625,26 +683,162 @@ function findListTargetResource(
       operationPath.hasSameScopeNesting(resource.metadata.resourceIdPattern) &&
       operationPathEndsWithResourceType(operationPath, operationType)
   );
-  return shortestResourcePath(scopeCollectionMatches);
+  return selectListTargets(scopeCollectionMatches, operationPath, sdkMethod);
 }
 
-function shortestResourcePath(
-  resources: ValidArmResourceSchema[]
-): ValidArmResourceSchema | undefined {
-  return resources
-    .slice()
-    .sort(
-      (a, b) =>
-        a.metadata.resourceIdPattern.length -
-        b.metadata.resourceIdPattern.length
-    )[0];
+function matchesDynamicCollectionRoute(
+  resource: ValidArmResourceSchema,
+  operationPath: RequestPath,
+  sdkMethod: SdkMethod<SdkHttpOperation>
+): boolean {
+  const resourceCollectionPath = getResourceCollectionPath(
+    resource.metadata.resourceIdPattern
+  );
+  if (
+    resourceCollectionPath === undefined ||
+    resourceCollectionPath.length !== operationPath.length
+  ) {
+    return false;
+  }
+
+  const resolvedOperationSegments = [...operationPath.segments];
+  for (const segment of detectDynamicTypeSegments(operationPath)) {
+    const parameter = sdkMethod.operation.parameters.find(
+      (candidate) =>
+        candidate.kind === "path" &&
+        candidate.serializedName === segment.typeParamName &&
+        candidate.type.kind === "enum"
+    );
+    if (!parameter || parameter.type.kind !== "enum") {
+      return false;
+    }
+
+    const segmentIndex =
+      operationPath.lastProvidersSegmentIndex + segment.typeIndex + 1;
+    const expandedValue = resourceCollectionPath.segments[segmentIndex];
+    if (
+      expandedValue === undefined ||
+      !parameter.type.values.some(
+        (value) =>
+          typeof value.value === "string" &&
+          value.value.toLowerCase() === expandedValue.toLowerCase()
+      )
+    ) {
+      return false;
+    }
+    resolvedOperationSegments[segmentIndex] = expandedValue;
+  }
+
+  return RequestPath.fromSegments(resolvedOperationSegments).equals(
+    resourceCollectionPath
+  );
+}
+
+function hasSingleDynamicCollectionRoute(
+  resources: ValidArmResourceSchema[],
+  operationPath: RequestPath
+): boolean {
+  const dynamicSegmentIndexes = new Set(
+    detectDynamicTypeSegments(operationPath).map(
+      (segment) =>
+        operationPath.lastProvidersSegmentIndex + segment.typeIndex + 1
+    )
+  );
+  const routeShapes = new Set<string>();
+
+  for (const resource of resources) {
+    const collectionPath = getResourceCollectionPath(
+      resource.metadata.resourceIdPattern
+    );
+    if (collectionPath === undefined) return false;
+
+    routeShapes.add(
+      collectionPath.segments
+        .map((segment, index) =>
+          dynamicSegmentIndexes.has(index)
+            ? "{dynamicType}"
+            : isVariableSegment(segment)
+              ? "{}"
+              : segment.toLowerCase()
+        )
+        .join("/")
+    );
+  }
+
+  return routeShapes.size === 1;
+}
+
+function selectListTargets(
+  resources: ValidArmResourceSchema[],
+  operationPath: RequestPath,
+  sdkMethod: SdkMethod<SdkHttpOperation>
+): ValidArmResourceSchema[] {
+  if (resources.length === 0) return [];
+
+  const shortestLength = Math.min(
+    ...resources.map((resource) => resource.metadata.resourceIdPattern.length)
+  );
+  const shortestResources = resources.filter(
+    (resource) => resource.metadata.resourceIdPattern.length === shortestLength
+  );
+  const dynamicSegments = detectDynamicTypeSegments(operationPath);
+  if (dynamicSegments.length === 0) {
+    return shortestResources.slice(0, 1);
+  }
+
+  return dynamicSegments.reduce((targets, segment) => {
+    const parameter = sdkMethod.operation.parameters.find(
+      (candidate) =>
+        candidate.kind === "path" &&
+        candidate.serializedName === segment.typeParamName &&
+        candidate.type.kind === "enum"
+    );
+    if (!parameter || parameter.type.kind !== "enum") {
+      return targets;
+    }
+
+    const supportedValues = new Set(
+      parameter.type.values
+        .map((value) => value.value)
+        .filter((value): value is string => typeof value === "string")
+        .map((value) => value.toLowerCase())
+    );
+    const segmentIndex =
+      operationPath.lastProvidersSegmentIndex + segment.typeIndex + 1;
+    return targets.filter((resource) => {
+      const expandedValue =
+        resource.metadata.resourceIdPattern.segments[segmentIndex];
+      return (
+        expandedValue !== undefined &&
+        supportedValues.has(expandedValue.toLowerCase())
+      );
+    });
+  }, shortestResources);
 }
 
 function buildListOperationScope(
   resources: ValidArmResourceSchema[],
-  operationPath: RequestPath
+  operationPath: RequestPath,
+  listTarget: ValidArmResourceSchema
 ): ArmScopeInfo {
   const scope = buildScopeInfoFromPath(operationPath);
+  if (detectDynamicTypeSegments(operationPath).length > 0) {
+    const collectionPath = getResourceCollectionPath(
+      listTarget.metadata.resourceIdPattern
+    );
+    const concreteParentPath =
+      listTarget.metadata.parentResourceId ??
+      (collectionPath
+        ? RequestPath.fromSegments(collectionPath.segments.slice(0, -1))
+        : undefined);
+    if (concreteParentPath) {
+      return {
+        ...scope,
+        scopeIdPattern: concreteParentPath
+      };
+    }
+  }
+
   const parentResourcePath = resources
     .map((resource) => resource.metadata.resourceIdPattern)
     .filter((resourcePath) => resourcePath.isPrefixOf(operationPath))
