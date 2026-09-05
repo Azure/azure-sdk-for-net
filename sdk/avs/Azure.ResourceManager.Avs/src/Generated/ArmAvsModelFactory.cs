@@ -309,9 +309,12 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="fqdn"> Fully qualified domain name of the host. </param>
         /// <param name="maintenance"> If provided, the host is in maintenance. The value is the reason for maintenance. </param>
         /// <param name="faultDomain"></param>
+        /// <param name="licenses"> The licenses assigned to the host. </param>
         /// <returns> A new <see cref="Models.AvsHostProperties"/> instance for mocking. </returns>
-        public static AvsHostProperties AvsHostProperties(string kind = default, AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default)
+        public static AvsHostProperties AvsHostProperties(string kind = default, AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default, IEnumerable<HostLicense> licenses = default)
         {
+            licenses ??= new ChangeTrackingList<HostLicense>();
+
             return new UnknownAvsHostProperties(
                 default,
                 provisioningState,
@@ -320,7 +323,21 @@ namespace Azure.ResourceManager.Avs.Models
                 fqdn,
                 maintenance,
                 faultDomain,
+                (licenses ?? new ChangeTrackingList<HostLicense>()).ToList(),
                 default);
+        }
+
+        /// <param name="kind"> License kind. </param>
+        /// <returns> A new <see cref="Models.HostLicense"/> instance for mocking. </returns>
+        public static HostLicense HostLicense(string kind = default)
+        {
+            return new UnknownHostLicense(default, default);
+        }
+
+        /// <returns> A new <see cref="Models.WindowsServerLicense"/> instance for mocking. </returns>
+        public static WindowsServerLicense WindowsServerLicense()
+        {
+            return new WindowsServerLicense(default, default);
         }
 
         /// <param name="provisioningState"> The state of the host provisioning. </param>
@@ -329,9 +346,12 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="fqdn"> Fully qualified domain name of the host. </param>
         /// <param name="maintenance"> If provided, the host is in maintenance. The value is the reason for maintenance. </param>
         /// <param name="faultDomain"></param>
+        /// <param name="licenses"> The licenses assigned to the host. </param>
         /// <returns> A new <see cref="Models.GeneralAvsHostProperties"/> instance for mocking. </returns>
-        public static GeneralAvsHostProperties GeneralAvsHostProperties(AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default)
+        public static GeneralAvsHostProperties GeneralAvsHostProperties(AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default, IEnumerable<HostLicense> licenses = default)
         {
+            licenses ??= new ChangeTrackingList<HostLicense>();
+
             return new GeneralAvsHostProperties(
                 default,
                 provisioningState,
@@ -340,6 +360,7 @@ namespace Azure.ResourceManager.Avs.Models
                 fqdn,
                 maintenance,
                 faultDomain,
+                (licenses ?? new ChangeTrackingList<HostLicense>()).ToList(),
                 default);
         }
 
@@ -349,9 +370,12 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="fqdn"> Fully qualified domain name of the host. </param>
         /// <param name="maintenance"> If provided, the host is in maintenance. The value is the reason for maintenance. </param>
         /// <param name="faultDomain"></param>
+        /// <param name="licenses"> The licenses assigned to the host. </param>
         /// <returns> A new <see cref="Models.SpecializedAvsHostProperties"/> instance for mocking. </returns>
-        public static SpecializedAvsHostProperties SpecializedAvsHostProperties(AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default)
+        public static SpecializedAvsHostProperties SpecializedAvsHostProperties(AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default, IEnumerable<HostLicense> licenses = default)
         {
+            licenses ??= new ChangeTrackingList<HostLicense>();
+
             return new SpecializedAvsHostProperties(
                 default,
                 provisioningState,
@@ -360,7 +384,15 @@ namespace Azure.ResourceManager.Avs.Models
                 fqdn,
                 maintenance,
                 faultDomain,
+                (licenses ?? new ChangeTrackingList<HostLicense>()).ToList(),
                 default);
+        }
+
+        /// <param name="hostUpdateLicenses"> The licenses assigned to the host. </param>
+        /// <returns> A new <see cref="Models.AvsHostPatch"/> instance for mocking. </returns>
+        public static AvsHostPatch AvsHostPatch(IEnumerable<HostLicense> hostUpdateLicenses = default)
+        {
+            return new AvsHostPatch(hostUpdateLicenses is null ? default : new HostUpdateProperties((hostUpdateLicenses ?? new ChangeTrackingList<HostLicense>()).ToList(), default), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -476,6 +508,9 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="component"> type of maintenance. </param>
         /// <param name="displayName"> Display name for maintenance. </param>
         /// <param name="clusterId"> Cluster ID for on which maintenance will be applied. Empty if maintenance is at private cloud level. </param>
+        /// <param name="activities"> Activities performed as part of maintenance. </param>
+        /// <param name="group"> Group details if maintenance is part of a group. </param>
+        /// <param name="relationships"> Relationships with other maintenances like dependencies and prerequisites. </param>
         /// <param name="infoLink"> Link to maintenance info. </param>
         /// <param name="impact"> Impact on the resource during maintenance period. </param>
         /// <param name="isScheduledByMicrosoft"> If maintenance is scheduled by Microsoft. </param>
@@ -486,14 +521,18 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="operations"> Operations on  maintenance. </param>
         /// <param name="maintenanceReadiness"> Indicates whether the maintenance is ready to proceed. </param>
         /// <returns> A new <see cref="Models.AvsMaintenanceProperties"/> instance for mocking. </returns>
-        public static AvsMaintenanceProperties AvsMaintenanceProperties(AvsMaintenanceType? component = default, string displayName = default, int? clusterId = default, string infoLink = default, string impact = default, bool? isScheduledByMicrosoft = default, AvsMaintenanceState state = default, DateTimeOffset? scheduledStartOn = default, long? estimatedDurationInMinutes = default, AvsMaintenanceProvisioningState? provisioningState = default, IEnumerable<AvsMaintenanceManagementOperation> operations = default, AvsMaintenanceReadiness maintenanceReadiness = default)
+        public static AvsMaintenanceProperties AvsMaintenanceProperties(AvsMaintenanceType? component = default, string displayName = default, int? clusterId = default, IEnumerable<MaintenanceActivity> activities = default, MaintenanceGroup @group = default, MaintenanceRelationships relationships = default, string infoLink = default, string impact = default, bool? isScheduledByMicrosoft = default, AvsMaintenanceState state = default, DateTimeOffset? scheduledStartOn = default, long? estimatedDurationInMinutes = default, AvsMaintenanceProvisioningState? provisioningState = default, IEnumerable<AvsMaintenanceManagementOperation> operations = default, AvsMaintenanceReadiness maintenanceReadiness = default)
         {
+            activities ??= new ChangeTrackingList<MaintenanceActivity>();
             operations ??= new ChangeTrackingList<AvsMaintenanceManagementOperation>();
 
             return new AvsMaintenanceProperties(
                 component,
                 displayName,
                 clusterId,
+                (activities ?? new ChangeTrackingList<MaintenanceActivity>()).ToList(),
+                @group,
+                relationships,
                 infoLink,
                 impact,
                 isScheduledByMicrosoft,
@@ -504,6 +543,43 @@ namespace Azure.ResourceManager.Avs.Models
                 (operations ?? new ChangeTrackingList<AvsMaintenanceManagementOperation>()).ToList(),
                 maintenanceReadiness,
                 default);
+        }
+
+        /// <param name="kind"> The type of activity. </param>
+        /// <param name="component"> The component on which the activity is performed. </param>
+        /// <param name="version"> Target version of the component. </param>
+        /// <param name="infoLink"> Optional link containing more details about the activity. </param>
+        /// <param name="impact"> Describes impact of the activity. </param>
+        /// <returns> A new <see cref="Models.MaintenanceActivity"/> instance for mocking. </returns>
+        public static MaintenanceActivity MaintenanceActivity(MaintenanceActivityKind kind = default, string component = default, string version = default, string infoLink = default, string impact = default)
+        {
+            return new MaintenanceActivity(
+                kind,
+                component,
+                version,
+                infoLink,
+                impact,
+                default);
+        }
+
+        /// <param name="id"> Unique identifier of the group. </param>
+        /// <param name="name"> Display name of the group. </param>
+        /// <param name="kind"> Type of the group. </param>
+        /// <returns> A new <see cref="Models.MaintenanceGroup"/> instance for mocking. </returns>
+        public static MaintenanceGroup MaintenanceGroup(string id = default, string name = default, MaintenanceGroupKind kind = default)
+        {
+            return new MaintenanceGroup(id, name, kind, default);
+        }
+
+        /// <param name="dependencies"> List of dependent group identifiers. </param>
+        /// <param name="prerequisites"> List of prerequisite group identifiers. </param>
+        /// <returns> A new <see cref="Models.MaintenanceRelationships"/> instance for mocking. </returns>
+        public static MaintenanceRelationships MaintenanceRelationships(IEnumerable<string> dependencies = default, IEnumerable<string> prerequisites = default)
+        {
+            dependencies ??= new ChangeTrackingList<string>();
+            prerequisites ??= new ChangeTrackingList<string>();
+
+            return new MaintenanceRelationships((dependencies ?? new ChangeTrackingList<string>()).ToList(), (prerequisites ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="name"> Customer presentable maintenance state. </param>
@@ -526,12 +602,19 @@ namespace Azure.ResourceManager.Avs.Models
         /// <param name="isDisabled"> If scheduling is disabled. </param>
         /// <param name="disabledReason"> Reason for schedule disabled. </param>
         /// <param name="constraints"> Constraints for scheduling maintenance. </param>
+        /// <param name="recommendationMaintenanceWindows"> List of recommended maintenance windows. </param>
         /// <returns> A new <see cref="Models.AvsScheduleOperation"/> instance for mocking. </returns>
-        public static AvsScheduleOperation AvsScheduleOperation(bool? isDisabled = default, string disabledReason = default, IEnumerable<AvsScheduleOperationConstraint> constraints = default)
+        public static AvsScheduleOperation AvsScheduleOperation(bool? isDisabled = default, string disabledReason = default, IEnumerable<AvsScheduleOperationConstraint> constraints = default, IEnumerable<MaintenanceWindowRecommendation> recommendationMaintenanceWindows = default)
         {
             constraints ??= new ChangeTrackingList<AvsScheduleOperationConstraint>();
 
-            return new AvsScheduleOperation(default, default, isDisabled, disabledReason, (constraints ?? new ChangeTrackingList<AvsScheduleOperationConstraint>()).ToList());
+            return new AvsScheduleOperation(
+                default,
+                default,
+                isDisabled,
+                disabledReason,
+                (constraints ?? new ChangeTrackingList<AvsScheduleOperationConstraint>()).ToList(),
+                recommendationMaintenanceWindows is null ? default : new MaintenanceRecommendation((recommendationMaintenanceWindows ?? new ChangeTrackingList<MaintenanceWindowRecommendation>()).ToList(), default));
         }
 
         /// <param name="kind"> The kind of operation. </param>
@@ -547,6 +630,14 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsSchedulingWindow AvsSchedulingWindow(DateTimeOffset startsOn = default, DateTimeOffset endsOn = default)
         {
             return new AvsSchedulingWindow(default, default, startsOn, endsOn);
+        }
+
+        /// <param name="isDisabled"> Indicates if scheduling is disabled on weekends. </param>
+        /// <param name="disabledReason"> Reason why weekend scheduling is disabled. </param>
+        /// <returns> A new <see cref="Models.WeekendSchedulingConstraint"/> instance for mocking. </returns>
+        public static WeekendSchedulingConstraint WeekendSchedulingConstraint(bool? isDisabled = default, string disabledReason = default)
+        {
+            return new WeekendSchedulingConstraint(default, default, isDisabled, disabledReason);
         }
 
         /// <param name="startsOn"> Start date time. </param>
@@ -576,15 +667,30 @@ namespace Azure.ResourceManager.Avs.Models
             return new BlockedDatesConstraintTimeRange(startsOn, endsOn, reason, default);
         }
 
+        /// <param name="startOn"> Recommended start time for maintenance. </param>
+        /// <param name="reason"> Reason for recommending this window. </param>
+        /// <returns> A new <see cref="Models.MaintenanceWindowRecommendation"/> instance for mocking. </returns>
+        public static MaintenanceWindowRecommendation MaintenanceWindowRecommendation(DateTimeOffset startOn = default, string reason = default)
+        {
+            return new MaintenanceWindowRecommendation(startOn, reason, default);
+        }
+
         /// <param name="isDisabled"> If rescheduling is disabled. </param>
         /// <param name="disabledReason"> Reason for reschedule disabled. </param>
         /// <param name="constraints"> Constraints for rescheduling maintenance. </param>
+        /// <param name="recommendationMaintenanceWindows"> List of recommended maintenance windows. </param>
         /// <returns> A new <see cref="Models.AvsRescheduleOperation"/> instance for mocking. </returns>
-        public static AvsRescheduleOperation AvsRescheduleOperation(bool? isDisabled = default, string disabledReason = default, IEnumerable<AvsRescheduleOperationConstraint> constraints = default)
+        public static AvsRescheduleOperation AvsRescheduleOperation(bool? isDisabled = default, string disabledReason = default, IEnumerable<AvsRescheduleOperationConstraint> constraints = default, IEnumerable<MaintenanceWindowRecommendation> recommendationMaintenanceWindows = default)
         {
             constraints ??= new ChangeTrackingList<AvsRescheduleOperationConstraint>();
 
-            return new AvsRescheduleOperation(default, default, isDisabled, disabledReason, (constraints ?? new ChangeTrackingList<AvsRescheduleOperationConstraint>()).ToList());
+            return new AvsRescheduleOperation(
+                default,
+                default,
+                isDisabled,
+                disabledReason,
+                (constraints ?? new ChangeTrackingList<AvsRescheduleOperationConstraint>()).ToList(),
+                recommendationMaintenanceWindows is null ? default : new MaintenanceRecommendation((recommendationMaintenanceWindows ?? new ChangeTrackingList<MaintenanceWindowRecommendation>()).ToList(), default));
         }
 
         /// <param name="kind"> The kind of operation. </param>
@@ -592,6 +698,22 @@ namespace Azure.ResourceManager.Avs.Models
         public static AvsRescheduleOperationConstraint AvsRescheduleOperationConstraint(string kind = default)
         {
             return new UnknownAvsRescheduleOperationConstraint(default, default);
+        }
+
+        /// <param name="startsOn"> Start date time. </param>
+        /// <param name="endsOn"> End date Time. </param>
+        /// <returns> A new <see cref="Models.ReschedulingWindowConstraint"/> instance for mocking. </returns>
+        public static ReschedulingWindowConstraint ReschedulingWindowConstraint(DateTimeOffset startsOn = default, DateTimeOffset endsOn = default)
+        {
+            return new ReschedulingWindowConstraint(default, default, startsOn, endsOn);
+        }
+
+        /// <param name="isDisabled"> Indicates if rescheduling is disabled on weekends. </param>
+        /// <param name="disabledReason"> Reason why weekend rescheduling is disabled. </param>
+        /// <returns> A new <see cref="Models.WeekendReschedulingConstraint"/> instance for mocking. </returns>
+        public static WeekendReschedulingConstraint WeekendReschedulingConstraint(bool? isDisabled = default, string disabledReason = default)
+        {
+            return new WeekendReschedulingConstraint(default, default, isDisabled, disabledReason);
         }
 
         /// <param name="startsOn"> Start date time. </param>
@@ -1684,6 +1806,149 @@ namespace Azure.ResourceManager.Avs.Models
                 resourceType,
                 systemData,
                 provisioningState is null && displayName is null && vmType is null ? default : new WorkloadNetworkVirtualMachineProperties(provisioningState, displayName, vmType, default),
+                default);
+        }
+
+        /// <summary>
+        /// The properties of a host.
+        ///             Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.GeneralAvsHostProperties"/> and <see cref="Models.SpecializedAvsHostProperties"/>.
+        /// </summary>
+        /// <param name="kind"> The kind of host. </param>
+        /// <param name="provisioningState"> The state of the host provisioning. </param>
+        /// <param name="displayName"> Display name of the host in VMware vCenter. </param>
+        /// <param name="moRefId"> vCenter managed object reference ID of the host. </param>
+        /// <param name="fqdn"> Fully qualified domain name of the host. </param>
+        /// <param name="maintenance"> If provided, the host is in maintenance. The value is the reason for maintenance. </param>
+        /// <param name="faultDomain"></param>
+        /// <returns> A new <see cref="Models.AvsHostProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsHostProperties AvsHostProperties(string kind = default, AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default)
+        {
+            return new Models.AvsHostProperties(
+                default,
+                provisioningState,
+                displayName,
+                moRefId,
+                fqdn,
+                maintenance,
+                faultDomain,
+                default,
+                default);
+        }
+
+        /// <summary> The properties of a general host. </summary>
+        /// <param name="provisioningState"> The state of the host provisioning. </param>
+        /// <param name="displayName"> Display name of the host in VMware vCenter. </param>
+        /// <param name="moRefId"> vCenter managed object reference ID of the host. </param>
+        /// <param name="fqdn"> Fully qualified domain name of the host. </param>
+        /// <param name="maintenance"> If provided, the host is in maintenance. The value is the reason for maintenance. </param>
+        /// <param name="faultDomain"></param>
+        /// <returns> A new <see cref="Models.GeneralAvsHostProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static GeneralAvsHostProperties GeneralAvsHostProperties(AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default)
+        {
+            return new GeneralAvsHostProperties(
+                default,
+                provisioningState,
+                displayName,
+                moRefId,
+                fqdn,
+                maintenance,
+                faultDomain,
+                default,
+                default);
+        }
+
+        /// <summary> The properties of a specialized host. </summary>
+        /// <param name="provisioningState"> The state of the host provisioning. </param>
+        /// <param name="displayName"> Display name of the host in VMware vCenter. </param>
+        /// <param name="moRefId"> vCenter managed object reference ID of the host. </param>
+        /// <param name="fqdn"> Fully qualified domain name of the host. </param>
+        /// <param name="maintenance"> If provided, the host is in maintenance. The value is the reason for maintenance. </param>
+        /// <param name="faultDomain"></param>
+        /// <returns> A new <see cref="Models.SpecializedAvsHostProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SpecializedAvsHostProperties SpecializedAvsHostProperties(AvsHostProvisioningState? provisioningState = default, string displayName = default, string moRefId = default, string fqdn = default, AvsHostMaintenance? maintenance = default, string faultDomain = default)
+        {
+            return new SpecializedAvsHostProperties(
+                default,
+                provisioningState,
+                displayName,
+                moRefId,
+                fqdn,
+                maintenance,
+                faultDomain,
+                default,
+                default);
+        }
+
+        /// <summary> properties of a maintenance. </summary>
+        /// <param name="component"> type of maintenance. </param>
+        /// <param name="displayName"> Display name for maintenance. </param>
+        /// <param name="clusterId"> Cluster ID for on which maintenance will be applied. Empty if maintenance is at private cloud level. </param>
+        /// <param name="infoLink"> Link to maintenance info. </param>
+        /// <param name="impact"> Impact on the resource during maintenance period. </param>
+        /// <param name="isScheduledByMicrosoft"> If maintenance is scheduled by Microsoft. </param>
+        /// <param name="state"> The state of the maintenance. </param>
+        /// <param name="scheduledStartOn"> Scheduled maintenance start time. </param>
+        /// <param name="estimatedDurationInMinutes"> Estimated time maintenance will take in minutes. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="operations"> Operations on  maintenance. </param>
+        /// <param name="maintenanceReadiness"> Indicates whether the maintenance is ready to proceed. </param>
+        /// <returns> A new <see cref="Models.AvsMaintenanceProperties"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsMaintenanceProperties AvsMaintenanceProperties(AvsMaintenanceType? component = default, string displayName = default, int? clusterId = default, string infoLink = default, string impact = default, bool? isScheduledByMicrosoft = default, AvsMaintenanceState state = default, DateTimeOffset? scheduledStartOn = default, long? estimatedDurationInMinutes = default, AvsMaintenanceProvisioningState? provisioningState = default, IEnumerable<AvsMaintenanceManagementOperation> operations = default, AvsMaintenanceReadiness maintenanceReadiness = default)
+        {
+            return new AvsMaintenanceProperties(
+                component,
+                displayName,
+                clusterId,
+                default,
+                default,
+                default,
+                infoLink,
+                impact,
+                isScheduledByMicrosoft,
+                state,
+                scheduledStartOn,
+                estimatedDurationInMinutes,
+                provisioningState,
+                (operations ?? new ChangeTrackingList<AvsMaintenanceManagementOperation>()).ToList(),
+                maintenanceReadiness,
+                default);
+        }
+
+        /// <summary> Scheduling window constraint. </summary>
+        /// <param name="isDisabled"> If scheduling is disabled. </param>
+        /// <param name="disabledReason"> Reason for schedule disabled. </param>
+        /// <param name="constraints"> Constraints for scheduling maintenance. </param>
+        /// <returns> A new <see cref="Models.AvsScheduleOperation"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsScheduleOperation AvsScheduleOperation(bool? isDisabled = default, string disabledReason = default, IEnumerable<AvsScheduleOperationConstraint> constraints = default)
+        {
+            return new AvsScheduleOperation(
+                default,
+                default,
+                isDisabled,
+                disabledReason,
+                (constraints ?? new ChangeTrackingList<AvsScheduleOperationConstraint>()).ToList(),
+                default);
+        }
+
+        /// <summary> Constraints for rescheduling maintenance. </summary>
+        /// <param name="isDisabled"> If rescheduling is disabled. </param>
+        /// <param name="disabledReason"> Reason for reschedule disabled. </param>
+        /// <param name="constraints"> Constraints for rescheduling maintenance. </param>
+        /// <returns> A new <see cref="Models.AvsRescheduleOperation"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AvsRescheduleOperation AvsRescheduleOperation(bool? isDisabled = default, string disabledReason = default, IEnumerable<AvsRescheduleOperationConstraint> constraints = default)
+        {
+            return new AvsRescheduleOperation(
+                default,
+                default,
+                isDisabled,
+                disabledReason,
+                (constraints ?? new ChangeTrackingList<AvsRescheduleOperationConstraint>()).ToList(),
                 default);
         }
 

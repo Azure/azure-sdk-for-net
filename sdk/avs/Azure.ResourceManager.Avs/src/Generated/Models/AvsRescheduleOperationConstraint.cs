@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Avs.Models
 {
     /// <summary>
     /// Defines constraints for reschedule operation on maintenance
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AvailableWindowForMaintenanceWhileRescheduleOperation"/> and <see cref="BlockedWhileRescheduleOperation"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ReschedulingWindowConstraint"/>, <see cref="WeekendReschedulingConstraint"/>, <see cref="AvailableWindowForMaintenanceWhileRescheduleOperation"/>, and <see cref="BlockedWhileRescheduleOperation"/>.
     /// </summary>
     public abstract partial class AvsRescheduleOperationConstraint
     {
