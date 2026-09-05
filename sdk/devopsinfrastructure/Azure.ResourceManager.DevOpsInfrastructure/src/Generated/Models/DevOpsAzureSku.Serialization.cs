@@ -14,7 +14,7 @@ using Azure.ResourceManager.DevOpsInfrastructure;
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary> The Azure SKU of the machines in the pool. </summary>
-    internal partial class DevOpsAzureSku : IJsonModel<DevOpsAzureSku>
+    public partial class DevOpsAzureSku : IJsonModel<DevOpsAzureSku>
     {
         /// <summary> Initializes a new instance of <see cref="DevOpsAzureSku"/> for deserialization. </summary>
         internal DevOpsAzureSku()
@@ -81,6 +81,26 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
+            if (Optional.IsDefined(WindowsNvmeDrive))
+            {
+                writer.WritePropertyName("windowsNvmeDrive"u8);
+                writer.WriteStringValue(WindowsNvmeDrive);
+            }
+            if (Optional.IsDefined(LinuxNvmePath))
+            {
+                writer.WritePropertyName("linuxNvmePath"u8);
+                writer.WriteStringValue(LinuxNvmePath);
+            }
+            if (Optional.IsCollectionDefined(VmSizes))
+            {
+                writer.WritePropertyName("vmSizes"u8);
+                writer.WriteStartArray();
+                foreach (VmSize item in VmSizes)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -124,6 +144,9 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 return null;
             }
             string name = default;
+            string windowsNvmeDrive = default;
+            string linuxNvmePath = default;
+            IList<VmSize> vmSizes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,12 +155,36 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     name = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("windowsNvmeDrive"u8))
+                {
+                    windowsNvmeDrive = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("linuxNvmePath"u8))
+                {
+                    linuxNvmePath = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("vmSizes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<VmSize> array = new List<VmSize>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(VmSize.DeserializeVmSize(item, options));
+                    }
+                    vmSizes = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DevOpsAzureSku(name, additionalBinaryDataProperties);
+            return new DevOpsAzureSku(name, windowsNvmeDrive, linuxNvmePath, vmSizes ?? new ChangeTrackingList<VmSize>(), additionalBinaryDataProperties);
         }
     }
 }

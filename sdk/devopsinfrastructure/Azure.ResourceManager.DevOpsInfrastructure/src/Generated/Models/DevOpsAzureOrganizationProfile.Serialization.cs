@@ -80,6 +80,16 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 throw new FormatException($"The model {nameof(DevOpsAzureOrganizationProfile)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(Description))
+            {
+                writer.WritePropertyName("description"u8);
+                writer.WriteStringValue(Description);
+            }
+            if (Optional.IsDefined(UpdateDescription))
+            {
+                writer.WritePropertyName("updateDescription"u8);
+                writer.WriteBooleanValue(UpdateDescription.Value);
+            }
             writer.WritePropertyName("organizations"u8);
             writer.WriteStartArray();
             foreach (DevOpsOrganization item in Organizations)
@@ -126,6 +136,8 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             }
             string kind = "AzureDevOps";
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            string description = default;
+            bool? updateDescription = default;
             IList<DevOpsOrganization> organizations = default;
             DevOpsAzurePermissionProfile permissionProfile = default;
             string @alias = default;
@@ -134,6 +146,20 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                 if (prop.NameEquals("kind"u8))
                 {
                     kind = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("description"u8))
+                {
+                    description = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("updateDescription"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    updateDescription = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("organizations"u8))
@@ -165,7 +191,14 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DevOpsAzureOrganizationProfile(kind, additionalBinaryDataProperties, organizations, permissionProfile, @alias);
+            return new DevOpsAzureOrganizationProfile(
+                kind,
+                additionalBinaryDataProperties,
+                description,
+                updateDescription,
+                organizations,
+                permissionProfile,
+                @alias);
         }
     }
 }
