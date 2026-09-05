@@ -14,7 +14,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
     /// Parameters for Backup Datasource
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KubernetesClusterBackupDataSourceSettings"/>, <see cref="BlobBackupDataSourceSettings"/>, <see cref="BlobBackupDatasourceParametersForAutoProtection"/>, <see cref="AdlsBlobBackupDataSourceSettings"/>, and <see cref="AdlsBlobBackupDatasourceParametersForAutoProtection"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KubernetesClusterBackupDataSourceSettings"/>, <see cref="BlobBackupDataSourceSettings"/>, <see cref="BlobBackupDatasourceParametersForAutoProtection"/>, <see cref="AdlsBlobBackupDataSourceSettings"/>, <see cref="AdlsBlobBackupDatasourceParametersForAutoProtection"/>, and <see cref="GenericBackupDatasourceParameters"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownBackupDatasourceParameters))]
     public abstract partial class BackupDataSourceSettings : IJsonModel<BackupDataSourceSettings>
@@ -135,6 +135,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return AdlsBlobBackupDataSourceSettings.DeserializeAdlsBlobBackupDataSourceSettings(element, options);
                     case "AdlsBlobBackupDatasourceParametersForAutoProtection":
                         return AdlsBlobBackupDatasourceParametersForAutoProtection.DeserializeAdlsBlobBackupDatasourceParametersForAutoProtection(element, options);
+                    case "GenericBackupDatasourceParameters":
+                        return GenericBackupDatasourceParameters.DeserializeGenericBackupDatasourceParameters(element, options);
                 }
             }
             return UnknownBackupDatasourceParameters.DeserializeUnknownBackupDatasourceParameters(element, options);

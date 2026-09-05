@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Initializes a new instance of <see cref="DataProtectionBackupVaultProperties"/>. </summary>
         /// <param name="monitoringSettings"> Monitoring Settings. </param>
+        /// <param name="costManagementSettings"> Cost Management Settings of the vault. </param>
         /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
         /// <param name="resourceMoveState"> Resource move state for backup vault. </param>
         /// <param name="resourceMoveDetails"> Resource move details for backup vault. </param>
@@ -40,9 +41,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
         /// <param name="replicatedRegions"> List of replicated regions for Backup Vault. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, IList<AzureLocation> replicatedRegions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataProtectionBackupVaultProperties(MonitoringSettings monitoringSettings, CostManagementSettings costManagementSettings, DataProtectionBackupProvisioningState? provisioningState, BackupVaultResourceMoveState? resourceMoveState, BackupVaultResourceMoveDetails resourceMoveDetails, BackupVaultSecuritySettings securitySettings, IList<DataProtectionBackupStorageSetting> storageSettings, bool? isVaultProtectedByResourceGuard, BackupVaultFeatureSettings featureSettings, BackupVaultSecureScoreLevel? secureScore, BcdrSecurityLevel? bcdrSecurityLevel, IList<string> resourceGuardOperationRequests, IList<AzureLocation> replicatedRegions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MonitoringSettings = monitoringSettings;
+            CostManagementSettings = costManagementSettings;
             ProvisioningState = provisioningState;
             ResourceMoveState = resourceMoveState;
             ResourceMoveDetails = resourceMoveDetails;
@@ -59,6 +61,9 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary> Monitoring Settings. </summary>
         internal MonitoringSettings MonitoringSettings { get; set; }
+
+        /// <summary> Cost Management Settings of the vault. </summary>
+        internal CostManagementSettings CostManagementSettings { get; set; }
 
         /// <summary> Provisioning state of the BackupVault resource. </summary>
         public DataProtectionBackupProvisioningState? ProvisioningState { get; }
@@ -104,6 +109,23 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     MonitoringSettings = new MonitoringSettings();
                 }
                 MonitoringSettings.AlertSettingsForAllJobFailures = value;
+            }
+        }
+
+        /// <summary> Settings for granularity level. </summary>
+        public GranularityLevel? CostManagementGranularityLevel
+        {
+            get
+            {
+                return CostManagementSettings is null ? default : CostManagementSettings.GranularityLevel;
+            }
+            set
+            {
+                if (CostManagementSettings is null)
+                {
+                    CostManagementSettings = new CostManagementSettings();
+                }
+                CostManagementSettings.GranularityLevel = value;
             }
         }
     }
