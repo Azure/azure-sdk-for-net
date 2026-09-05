@@ -241,9 +241,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             string nsName1 = "ns-basic";
             var basicPropagationPolicy = new ContainerServiceFleetPropagationPolicy(ContainerServiceFleetPropagationType.Placement)
             {
-                DefaultClusterResourcePlacementPolicy = new ContainerServiceFleetPlacementPolicy
+                DefaultClusterResourcePlacement = new ClusterResourcePlacementSpec
                 {
-                    PlacementType = ContainerServiceFleetPlacementType.PickAll
+                    Policy = new ContainerServiceFleetPlacementPolicy
+                    {
+                        PlacementType = ContainerServiceFleetPlacementType.PickAll
+                    }
                 }
             };
             var nsData1 = new ContainerServiceFleetManagedNamespaceData(DefaultLocation)
@@ -265,9 +268,12 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
                 DeletePolicy = ContainerServiceFleetDeletePolicy.Delete,
                 PropagationPolicy = new ContainerServiceFleetPropagationPolicy(ContainerServiceFleetPropagationType.Placement)
                 {
-                    DefaultClusterResourcePlacementPolicy = new ContainerServiceFleetPlacementPolicy
+                    DefaultClusterResourcePlacement = new ClusterResourcePlacementSpec
                     {
-                        PlacementType = ContainerServiceFleetPlacementType.PickAll
+                        Policy = new ContainerServiceFleetPlacementPolicy
+                        {
+                            PlacementType = ContainerServiceFleetPlacementType.PickAll
+                        }
                     }
                 },
                 ManagedNamespaceProperties = new ContainerServiceFleetManagedNamespaceProperties
@@ -390,6 +396,51 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             await updateAutoUpgradeProfileResult.DeleteAsync(WaitUntil.Completed, ifMatch: (string)null);
             bool doesAutoUpgradeProfileExist = await autoUpgradeProfileCollection.ExistsAsync(autoUpgradeProfileName);
             Debug.Assert(doesAutoUpgradeProfileExist == false, "AutoUpgradeProfile was not deleted.");
+
+            // ===== ClusterMeshProfile =====
+            // Create ClusterMeshProfile
+            ClusterMeshProfileCollection clusterMeshProfileCollection = fleetResource.GetClusterMeshProfiles();
+            string clusterMeshProfileName = "clustermeshprofile1";
+            ClusterMeshProfileData clusterMeshProfileData = new ClusterMeshProfileData()
+            {
+                MemberSelectorByLabel = "team=fleet"
+            };
+            ArmOperation<ClusterMeshProfileResource> createClusterMeshProfileLRO = await clusterMeshProfileCollection.CreateOrUpdateAsync(WaitUntil.Completed, clusterMeshProfileName, clusterMeshProfileData);
+            ClusterMeshProfileResource clusterMeshProfileResource = createClusterMeshProfileLRO.Value;
+            Assert.IsTrue(clusterMeshProfileResource.HasData, "CreateOrUpdateAsync ClusterMeshProfile data was not valid");
+
+            // List ClusterMeshProfiles
+            int clusterMeshProfileCount = 0;
+            await foreach (ClusterMeshProfileResource item in clusterMeshProfileCollection.GetAllAsync())
+            {
+                clusterMeshProfileCount++;
+            }
+            Assert.AreEqual(1, clusterMeshProfileCount, "Unexpected amount of cluster mesh profiles exist");
+
+            // Get ClusterMeshProfile
+            ClusterMeshProfileResource getClusterMeshProfileResult = await clusterMeshProfileCollection.GetAsync(clusterMeshProfileName);
+            Assert.IsTrue(getClusterMeshProfileResult.HasData, "GetAsync ClusterMeshProfile data was not valid");
+            Assert.AreEqual("team=fleet", getClusterMeshProfileResult.Data.MemberSelectorByLabel, "ClusterMeshProfile MemberSelectorByLabel mismatch");
+
+            // Update ClusterMeshProfile
+            ClusterMeshProfileData updateClusterMeshProfileData = new ClusterMeshProfileData()
+            {
+                MemberSelectorByLabel = "env=production"
+            };
+            ArmOperation<ClusterMeshProfileResource> updateClusterMeshProfileLRO = await clusterMeshProfileResource.UpdateAsync(WaitUntil.Completed, updateClusterMeshProfileData);
+            ClusterMeshProfileResource updateClusterMeshProfileResult = updateClusterMeshProfileLRO.Value;
+            Assert.IsTrue(updateClusterMeshProfileResult.HasData, "UpdateAsync ClusterMeshProfile data was not valid");
+            Assert.AreEqual("env=production", updateClusterMeshProfileResult.Data.MemberSelectorByLabel, "ClusterMeshProfile MemberSelectorByLabel was not successfully updated");
+
+            // Apply ClusterMeshProfile
+            ArmOperation<ClusterMeshProfileResource> applyClusterMeshProfileLRO = await updateClusterMeshProfileResult.ApplyAsync(WaitUntil.Completed);
+            ClusterMeshProfileResource applyClusterMeshProfileResult = applyClusterMeshProfileLRO.Value;
+            Assert.IsTrue(applyClusterMeshProfileResult.HasData, "ApplyAsync ClusterMeshProfile data was not valid");
+
+            // Delete ClusterMeshProfile
+            await applyClusterMeshProfileResult.DeleteAsync(WaitUntil.Completed);
+            bool doesClusterMeshProfileExist = await clusterMeshProfileCollection.ExistsAsync(clusterMeshProfileName);
+            Assert.IsFalse(doesClusterMeshProfileExist, "ClusterMeshProfile was not deleted.");
 
             // Delete UpdateRun
             await updateRunResource.DeleteAsync(WaitUntil.Completed, ifMatch: (string)null);

@@ -25,14 +25,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetManagedNamespacePatch"/>. </summary>
         /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The updatable properties of the fleet managed namespace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetManagedNamespacePatch(IDictionary<string, string> tags, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetManagedNamespacePatch(IDictionary<string, string> tags, FleetManagedNamespacePropertiesPatch properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Tags = tags;
+            Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Resource tags. </summary>
         public IDictionary<string, string> Tags { get; }
+
+        /// <summary> The updatable properties of the fleet managed namespace. </summary>
+        public FleetManagedNamespacePropertiesPatch Properties { get; set; }
     }
 }

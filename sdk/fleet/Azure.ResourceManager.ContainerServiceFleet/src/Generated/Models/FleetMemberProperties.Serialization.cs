@@ -113,6 +113,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteObjectValue(Status, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(MeshProperties))
+            {
+                writer.WritePropertyName("meshProperties"u8);
+                writer.WriteObjectValue(MeshProperties, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -160,6 +165,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             FleetMemberProvisioningState? provisioningState = default;
             IDictionary<string, string> labels = default;
             ContainerServiceFleetMemberStatus status = default;
+            ContainerServiceFleetMeshMemberProperties meshProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -212,6 +218,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     status = ContainerServiceFleetMemberStatus.DeserializeContainerServiceFleetMemberStatus(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("meshProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    meshProperties = ContainerServiceFleetMeshMemberProperties.DeserializeContainerServiceFleetMeshMemberProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -223,6 +238,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 provisioningState,
                 labels ?? new ChangeTrackingDictionary<string, string>(),
                 status,
+                meshProperties,
                 additionalBinaryDataProperties);
         }
     }

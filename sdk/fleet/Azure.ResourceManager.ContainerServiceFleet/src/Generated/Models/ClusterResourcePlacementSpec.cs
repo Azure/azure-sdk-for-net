@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> ClusterResourcePlacementSpec defines the desired state of ClusterResourcePlacement. </summary>
-    internal partial class ClusterResourcePlacementSpec
+    public partial class ClusterResourcePlacementSpec
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
@@ -23,14 +23,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <summary> Initializes a new instance of <see cref="ClusterResourcePlacementSpec"/>. </summary>
         /// <param name="policy"> Policy defines how to select member clusters to place the selected resources. If unspecified, all the joined member clusters are selected. </param>
+        /// <param name="rolloutStrategy"> The rollout strategy configuration for the cluster resource placement. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterResourcePlacementSpec(ContainerServiceFleetPlacementPolicy policy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterResourcePlacementSpec(ContainerServiceFleetPlacementPolicy policy, RolloutStrategy rolloutStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Policy = policy;
+            RolloutStrategy = rolloutStrategy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Policy defines how to select member clusters to place the selected resources. If unspecified, all the joined member clusters are selected. </summary>
         public ContainerServiceFleetPlacementPolicy Policy { get; set; }
+
+        /// <summary> The rollout strategy configuration for the cluster resource placement. </summary>
+        public RolloutStrategy RolloutStrategy { get; set; }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager.ContainerServiceFleet;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> ClusterResourcePlacementSpec defines the desired state of ClusterResourcePlacement. </summary>
-    internal partial class ClusterResourcePlacementSpec : IJsonModel<ClusterResourcePlacementSpec>
+    public partial class ClusterResourcePlacementSpec : IJsonModel<ClusterResourcePlacementSpec>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WritePropertyName("policy"u8);
                 writer.WriteObjectValue(Policy, options);
             }
+            if (Optional.IsDefined(RolloutStrategy))
+            {
+                writer.WritePropertyName("rolloutStrategy"u8);
+                writer.WriteObjectValue(RolloutStrategy, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 return null;
             }
             ContainerServiceFleetPlacementPolicy policy = default;
+            RolloutStrategy rolloutStrategy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +140,21 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     policy = ContainerServiceFleetPlacementPolicy.DeserializeContainerServiceFleetPlacementPolicy(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("rolloutStrategy"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rolloutStrategy = RolloutStrategy.DeserializeRolloutStrategy(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ClusterResourcePlacementSpec(policy, additionalBinaryDataProperties);
+            return new ClusterResourcePlacementSpec(policy, rolloutStrategy, additionalBinaryDataProperties);
         }
     }
 }

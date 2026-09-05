@@ -91,6 +91,11 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
             writer.WritePropertyName("gateType"u8);
             writer.WriteStringValue(GateType.ToString());
+            if (Optional.IsDefined(ScheduledStartProperties))
+            {
+                writer.WritePropertyName("scheduledStartProperties"u8);
+                writer.WriteObjectValue(ScheduledStartProperties, options);
+            }
             writer.WritePropertyName("target"u8);
             writer.WriteObjectValue(Target, options);
             writer.WritePropertyName("state"u8);
@@ -140,6 +145,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             ContainerServiceFleetGateProvisioningState? provisioningState = default;
             string displayName = default;
             ContainerServiceFleetGateType gateType = default;
+            ScheduledStartProperties scheduledStartProperties = default;
             ContainerServiceFleetGateTarget target = default;
             ContainerServiceFleetGateState state = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -164,6 +170,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     gateType = new ContainerServiceFleetGateType(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("scheduledStartProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    scheduledStartProperties = ScheduledStartProperties.DeserializeScheduledStartProperties(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("target"u8))
                 {
                     target = ContainerServiceFleetGateTarget.DeserializeContainerServiceFleetGateTarget(prop.Value, options);
@@ -183,6 +198,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 provisioningState,
                 displayName,
                 gateType,
+                scheduledStartProperties,
                 target,
                 state,
                 additionalBinaryDataProperties);
