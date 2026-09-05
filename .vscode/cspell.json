@@ -1141,7 +1141,7 @@
       "filename": "**/sdk/providerhub/**/*.cs",
       "words": [
         "checkin",
-        "dsts",
+        "ploc",
         "regionality"
       ]
     },

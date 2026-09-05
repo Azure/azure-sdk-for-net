@@ -1,10 +1,24 @@
 # Release History
 
-## 1.3.0-beta.1 (Unreleased)
+## 2.0.0-beta.1 (Unreleased)
 
 ### Features Added
 
+- Regenerated from the relocated ProviderHub TypeSpec (`specification/providerhub/resource-manager/Microsoft.ProviderHub/ProviderHub`), targeting API version `2025-10-01`.
+- Added `ManifestInfo` and `OperationsPutContent` resources, along with the models supporting them.
+
 ### Breaking Changes
+
+The service intentionally removed the following API surface, so it is no longer generated:
+
+- Removed several models that are no longer part of the service contract, along with their corresponding properties on `FanoutLinkedNotificationRule`, `ProviderResourceType`, `ResourceProviderManagement`, `ResourceProviderManifestProperties`, `ResourceTypeEndpoint`, and `ResourceTypeRegistrationProperties`.
+- Removed a resource and its collection, one operation on `ProviderRegistrationResource`, and several supporting models.
+- `ProviderResourceType.ResourceDeletionPolicy` now uses `ResourceDeletionPolicy`, and `ResourceTypeRegistrationProperties.ResourceDeletionPolicy` is now typed `RPaaSResourceDeletionPolicy`.
+- Removed the `Models.OperationsPutContent` model. The put-content operations are now exposed through the `OperationsPutContent` resource and `OperationsPutContentData`.
+- `ResourceAccessPolicy` changed from a closed enum to an extensible enum, and only `NotSpecified` remains a well-known value.
+- `ResourceTypeRegistrationResourceManagementOptions.BatchProvisioningSupportSupportedOperations` was replaced by `ResourceTypeRegistrationResourceManagementOptions.BatchProvisioningSupport`.
+- Removed 17 `ArmProviderHubModelFactory` overloads that existed only to match the shape of the 1.2.x contract. Use the current overload for each model instead.
+- Collection properties on several models, including `ProviderResourceType`, `AsyncOperationPollingRules`, and `ResourceProviderCapabilities`, are now typed `IList<T>` rather than `IReadOnlyList<T>`.
 
 ### Bugs Fixed
 
@@ -68,7 +82,7 @@ Polishing since last public beta release:
 - Prepended `ProviderHub` / `Provider` prefix to all single / simple model names.
 - Corrected the format of all `Guid` type properties / parameters.
 - Corrected the format of all `ResourceIdentifier` type properties / parameters.
-- Corrected the format of all `ResouceType` type properties / parameters.
+- Corrected the format of all `ResourceType` type properties / parameters.
 - Corrected the format of all `ETag` type properties / parameters.
 - Corrected the format of all `AzureLocation` type properties / parameters.
 - Corrected the format of all binary type properties / parameters.

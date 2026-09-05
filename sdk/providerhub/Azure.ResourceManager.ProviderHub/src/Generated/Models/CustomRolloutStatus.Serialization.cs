@@ -101,6 +101,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 writer.WritePropertyName("manifestCheckinStatus"u8);
                 writer.WriteObjectValue(ManifestCheckinStatus, options);
             }
+            if (Optional.IsCollectionDefined(CompletedRegionsInfo))
+            {
+                writer.WritePropertyName("completedRegionsInfo"u8);
+                writer.WriteStartArray();
+                foreach (AppliedManifestInfo item in CompletedRegionsInfo)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -146,6 +156,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             IList<AzureLocation> completedRegions = default;
             IDictionary<string, ExtendedErrorInfo> failedOrSkippedRegions = default;
             CheckinManifestInfo manifestCheckinStatus = default;
+            IList<AppliedManifestInfo> completedRegionsInfo = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -186,12 +197,26 @@ namespace Azure.ResourceManager.ProviderHub.Models
                     manifestCheckinStatus = CheckinManifestInfo.DeserializeCheckinManifestInfo(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("completedRegionsInfo"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<AppliedManifestInfo> array = new List<AppliedManifestInfo>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(AppliedManifestInfo.DeserializeAppliedManifestInfo(item, options));
+                    }
+                    completedRegionsInfo = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CustomRolloutStatus(completedRegions ?? new ChangeTrackingList<AzureLocation>(), failedOrSkippedRegions ?? new ChangeTrackingDictionary<string, ExtendedErrorInfo>(), manifestCheckinStatus, additionalBinaryDataProperties);
+            return new CustomRolloutStatus(completedRegions ?? new ChangeTrackingList<AzureLocation>(), failedOrSkippedRegions ?? new ChangeTrackingDictionary<string, ExtendedErrorInfo>(), manifestCheckinStatus, completedRegionsInfo ?? new ChangeTrackingList<AppliedManifestInfo>(), additionalBinaryDataProperties);
         }
     }
 }
