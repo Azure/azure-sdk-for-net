@@ -27,6 +27,12 @@ namespace Azure.ResourceManager.Quota
             return client.GetCachedClient(client0 => new MockableQuotaArmClient(client0, ResourceIdentifier.Root));
         }
 
+        /// <param name="subscriptionResource"></param>
+        private static MockableQuotaSubscriptionResource GetMockableQuotaSubscriptionResource(SubscriptionResource subscriptionResource)
+        {
+            return subscriptionResource.GetCachedClient(client => new MockableQuotaSubscriptionResource(client, subscriptionResource.Id));
+        }
+
         /// <param name="tenantResource"></param>
         private static MockableQuotaTenantResource GetMockableQuotaTenantResource(TenantResource tenantResource)
         {
@@ -551,6 +557,202 @@ namespace Azure.ResourceManager.Quota
             Argument.AssertNotNull(client, nameof(client));
 
             return await GetMockableQuotaArmClient(client).GetQuotaRequestDetailAsync(scope, id, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="QuotaTransferResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetQuotaTransferResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="QuotaTransferResource"/> object. </returns>
+        public static QuotaTransferResource GetQuotaTransferResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableQuotaArmClient(client).GetQuotaTransferResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="QuotaTransferCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetQuotaTransfers(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="QuotaTransferResource"/> objects. </returns>
+        public static QuotaTransferCollection GetQuotaTransfers(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableQuotaArmClient(client).GetQuotaTransfers(scope);
+        }
+
+        /// <summary>
+        /// Get a quota transfer.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetQuotaTransfer(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="transferName">
+        /// The donor-chosen name segment of the quota transfer. Used as the idempotency key
+        /// for retries on the donor side.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<QuotaTransferResource> GetQuotaTransfer(this ArmClient client, ResourceIdentifier scope, string transferName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableQuotaArmClient(client).GetQuotaTransfer(scope, transferName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a quota transfer.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetQuotaTransferAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="transferName">
+        /// The donor-chosen name segment of the quota transfer. Used as the idempotency key
+        /// for retries on the donor side.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<QuotaTransferResource>> GetQuotaTransferAsync(this ArmClient client, ResourceIdentifier scope, string transferName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableQuotaArmClient(client).GetQuotaTransferAsync(scope, transferName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="IncomingQuotaTransferResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetIncomingQuotaTransferResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="IncomingQuotaTransferResource"/> object. </returns>
+        public static IncomingQuotaTransferResource GetIncomingQuotaTransferResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableQuotaArmClient(client).GetIncomingQuotaTransferResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="IncomingQuotaTransferCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetIncomingQuotaTransfers(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="IncomingQuotaTransferResource"/> objects. </returns>
+        public static IncomingQuotaTransferCollection GetIncomingQuotaTransfers(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableQuotaArmClient(client).GetIncomingQuotaTransfers(scope);
+        }
+
+        /// <summary>
+        /// Get an incoming quota transfer.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetIncomingQuotaTransfer(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="transferId"> Server-generated identifier of the transfer (matches `properties.transferId`). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<IncomingQuotaTransferResource> GetIncomingQuotaTransfer(this ArmClient client, ResourceIdentifier scope, string transferId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableQuotaArmClient(client).GetIncomingQuotaTransfer(scope, transferId, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get an incoming quota transfer.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaArmClient.GetIncomingQuotaTransferAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="transferId"> Server-generated identifier of the transfer (matches `properties.transferId`). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<IncomingQuotaTransferResource>> GetIncomingQuotaTransferAsync(this ArmClient client, ResourceIdentifier scope, string transferId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableQuotaArmClient(client).GetIncomingQuotaTransferAsync(scope, transferId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List incoming quota transfers across every targetProvider and region for the
+        /// subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaSubscriptionResource.GetBySubscriptionAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="IncomingQuotaTransferResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<IncomingQuotaTransferResource> GetBySubscriptionAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableQuotaSubscriptionResource(subscriptionResource).GetBySubscriptionAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List incoming quota transfers across every targetProvider and region for the
+        /// subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableQuotaSubscriptionResource.GetBySubscription(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="IncomingQuotaTransferResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<IncomingQuotaTransferResource> GetBySubscription(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableQuotaSubscriptionResource(subscriptionResource).GetBySubscription(cancellationToken);
         }
 
         /// <summary>
