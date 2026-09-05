@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Playwright;
 
 namespace Azure.ResourceManager.Playwright.Models
@@ -109,6 +110,11 @@ namespace Azure.ResourceManager.Playwright.Models
                 writer.WritePropertyName("storageUri"u8);
                 writer.WriteStringValue(StorageUri.AbsoluteUri);
             }
+            if (Optional.IsDefined(SubnetId))
+            {
+                writer.WritePropertyName("subnetId"u8);
+                writer.WriteStringValue(SubnetId);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -158,6 +164,7 @@ namespace Azure.ResourceManager.Playwright.Models
             string workspaceId = default;
             PlaywrightEnablementStatus? reporting = default;
             Uri storageUri = default;
+            ResourceIdentifier subnetId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -220,6 +227,15 @@ namespace Azure.ResourceManager.Playwright.Models
                     storageUri = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
                     continue;
                 }
+                if (prop.NameEquals("subnetId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    subnetId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -233,6 +249,7 @@ namespace Azure.ResourceManager.Playwright.Models
                 workspaceId,
                 reporting,
                 storageUri,
+                subnetId,
                 additionalBinaryDataProperties);
         }
     }

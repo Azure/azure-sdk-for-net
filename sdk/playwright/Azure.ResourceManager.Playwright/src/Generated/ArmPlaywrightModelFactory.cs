@@ -50,8 +50,9 @@ namespace Azure.ResourceManager.Playwright.Models
         /// <param name="workspaceId"> The workspace ID in GUID format. </param>
         /// <param name="reporting"> Indicates whether reporting is enabled for the workspace. When set to true, reports will be generated and available for the workspace. </param>
         /// <param name="storageUri"> The URI of the Azure storage account used to store workspace artifacts, test results, and reports. </param>
+        /// <param name="subnetId"> The ARM resource ID of the virtual network subnet to inject the workspace into for private network connectivity. This is of the form '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroup}/providers/Microsoft.Network/virtualNetworks/{virtualNetwork}/subnets/{subnet}'. This value cannot be changed after the workspace is created. </param>
         /// <returns> A new <see cref="Models.PlaywrightWorkspaceProperties"/> instance for mocking. </returns>
-        public static PlaywrightWorkspaceProperties PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState = default, Uri dataplaneUri = default, PlaywrightEnablementStatus? regionalAffinity = default, PlaywrightEnablementStatus? localAuth = default, string workspaceId = default, PlaywrightEnablementStatus? reporting = default, Uri storageUri = default)
+        public static PlaywrightWorkspaceProperties PlaywrightWorkspaceProperties(PlaywrightProvisioningState? provisioningState = default, Uri dataplaneUri = default, PlaywrightEnablementStatus? regionalAffinity = default, PlaywrightEnablementStatus? localAuth = default, string workspaceId = default, PlaywrightEnablementStatus? reporting = default, Uri storageUri = default, ResourceIdentifier subnetId = default)
         {
             return new PlaywrightWorkspaceProperties(
                 provisioningState,
@@ -61,6 +62,7 @@ namespace Azure.ResourceManager.Playwright.Models
                 workspaceId,
                 reporting,
                 storageUri,
+                subnetId,
                 default);
         }
 
@@ -217,6 +219,7 @@ namespace Azure.ResourceManager.Playwright.Models
                 regionalAffinity,
                 localAuth,
                 workspaceId,
+                default,
                 default,
                 default,
                 default);
