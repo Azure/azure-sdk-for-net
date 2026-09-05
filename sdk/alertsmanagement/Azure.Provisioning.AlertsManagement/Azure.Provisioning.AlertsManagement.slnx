@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.Provisioning.AlertsManagement.csproj" />
+  <Project Path="tests/Azure.Provisioning.AlertsManagement.Tests.csproj" />
+</Solution>
