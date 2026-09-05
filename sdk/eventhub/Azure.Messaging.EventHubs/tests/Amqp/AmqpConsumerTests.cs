@@ -11,6 +11,7 @@ using Azure.Messaging.EventHubs.Amqp;
 using Azure.Messaging.EventHubs.Authorization;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Core;
+using Azure.Messaging.EventHubs.Diagnostics;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Framing;
 using Moq;
@@ -787,6 +788,193 @@ namespace Azure.Messaging.EventHubs.Tests
             var preservedException = GetActivePartitionStolenException(mockConsumer);
             Assert.That(preservedException, Is.SameAs(terminalException), "The preserved exception should match the terminal exception.");
         }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConsumer.WarnPrefetchSizeLimitIfCreditExhausted" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void WarnPrefetchSizeLimitIfCreditExhaustedLogsWhenCreditIsExhausted()
+        {
+            var mockLogger = new Mock<EventHubsEventSource>();
+            var link = new ReceivingAmqpLink(new AmqpLinkSettings());
+            var consumer = CreateConsumerForPrefetchSizeTests(512);
+
+            consumer.Logger = mockLogger.Object;
+
+            try
+            {
+                consumer.WarnPrefetchSizeLimitIfCreditExhausted(link);
+
+                mockLogger
+                    .Verify(log => log.PrefetchSizeLimitReached("eventHubName", "$DEFAULT", "0", 512, It.IsAny<long>()),
+                    Times.Once,
+                    "The warning should have been logged when the link credit was exhausted.");
+            }
+            finally
+            {
+                link?.SafeClose();
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConsumer.WarnPrefetchSizeLimitIfCreditExhausted" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void WarnPrefetchSizeLimitIfCreditExhaustedIsThrottled()
+        {
+            var mockLogger = new Mock<EventHubsEventSource>();
+            var link = new ReceivingAmqpLink(new AmqpLinkSettings());
+            var consumer = CreateConsumerForPrefetchSizeTests(512);
+
+            consumer.Logger = mockLogger.Object;
+
+            try
+            {
+                consumer.WarnPrefetchSizeLimitIfCreditExhausted(link);
+                consumer.WarnPrefetchSizeLimitIfCreditExhausted(link);
+
+                mockLogger
+                    .Verify(log => log.PrefetchSizeLimitReached(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<long>(), It.IsAny<long>()),
+                    Times.Once,
+                    "The warning should have been logged only once within the throttle interval.");
+            }
+            finally
+            {
+                link?.SafeClose();
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConsumer.WarnPrefetchSizeLimitIfCreditExhausted" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void WarnPrefetchSizeLimitIfCreditExhaustedLogsAgainAfterTheInterval()
+        {
+            var mockLogger = new Mock<EventHubsEventSource>();
+            var link = new ReceivingAmqpLink(new AmqpLinkSettings());
+            var consumer = CreateConsumerForPrefetchSizeTests(512);
+
+            consumer.Logger = mockLogger.Object;
+
+            try
+            {
+                consumer.WarnPrefetchSizeLimitIfCreditExhausted(link);
+                SetLastPrefetchSizeLimitWarningTicks(consumer, DateTime.UtcNow.Ticks - TimeSpan.FromSeconds(61).Ticks);
+                consumer.WarnPrefetchSizeLimitIfCreditExhausted(link);
+
+                mockLogger
+                    .Verify(log => log.PrefetchSizeLimitReached(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<long>(), It.IsAny<long>()),
+                    Times.Exactly(2),
+                    "The warning should have been logged again after the throttle interval elapsed.");
+            }
+            finally
+            {
+                link?.SafeClose();
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConsumer.WarnPrefetchSizeLimitIfCreditExhausted" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void WarnPrefetchSizeLimitIfCreditExhaustedRespectsAvailableCredit()
+        {
+            var mockLogger = new Mock<EventHubsEventSource>();
+            var link = new ReceivingAmqpLink(new AmqpLinkSettings());
+            var consumer = CreateConsumerForPrefetchSizeTests(512);
+
+            consumer.Logger = mockLogger.Object;
+            link.SetTotalLinkCredit(5, true, true);
+
+            try
+            {
+                consumer.WarnPrefetchSizeLimitIfCreditExhausted(link);
+
+                mockLogger
+                    .Verify(log => log.PrefetchSizeLimitReached(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<long>(), It.IsAny<long>()),
+                    Times.Never,
+                    "The warning should not have been logged when link credit was available.");
+            }
+            finally
+            {
+                link?.SafeClose();
+            }
+        }
+
+        /// <summary>
+        ///   Verifies functionality of the <see cref="AmqpConsumer.WarnPrefetchSizeLimitIfCreditExhausted" />
+        ///   method.
+        /// </summary>
+        ///
+        [Test]
+        public void WarnPrefetchSizeLimitIfCreditExhaustedRespectsUnsetPrefetchSize()
+        {
+            var mockLogger = new Mock<EventHubsEventSource>();
+            var link = new ReceivingAmqpLink(new AmqpLinkSettings());
+            var consumer = CreateConsumerForPrefetchSizeTests(null);
+
+            consumer.Logger = mockLogger.Object;
+
+            try
+            {
+                consumer.WarnPrefetchSizeLimitIfCreditExhausted(link);
+
+                mockLogger
+                    .Verify(log => log.PrefetchSizeLimitReached(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<long>(), It.IsAny<long>()),
+                    Times.Never,
+                    "The warning should not have been logged when no prefetch size limit was configured.");
+            }
+            finally
+            {
+                link?.SafeClose();
+            }
+        }
+
+        /// <summary>
+        ///   Creates a consumer for use with the prefetch size limit warning tests.
+        /// </summary>
+        ///
+        /// <param name="prefetchSizeInBytes">The prefetch size limit to configure, in bytes.</param>
+        ///
+        /// <returns>The consumer to test with.</returns>
+        ///
+        private AmqpConsumer CreateConsumerForPrefetchSizeTests(long? prefetchSizeInBytes) =>
+            new AmqpConsumer(
+                "eventHubName",
+                "$DEFAULT",
+                "0",
+                null,
+                EventPosition.Earliest,
+                false,
+                false,
+                null,
+                null,
+                prefetchSizeInBytes,
+                Mock.Of<AmqpConnectionScope>(),
+                Mock.Of<AmqpMessageConverter>(),
+                Mock.Of<EventHubsRetryPolicy>());
+
+        /// <summary>
+        ///   Sets the point at which the prefetch size limit warning was last logged for a
+        ///   consumer, using its private field.
+        /// </summary>
+        ///
+        /// <param name="consumer">The consumer to set the value for.</param>
+        /// <param name="ticks">The UTC ticks to set.</param>
+        ///
+        private void SetLastPrefetchSizeLimitWarningTicks(AmqpConsumer consumer,
+                                                          long ticks) =>
+            typeof(AmqpConsumer)
+                .GetField("_lastPrefetchSizeLimitWarningTicks", BindingFlags.Instance | BindingFlags.NonPublic)
+                .SetValue(consumer, ticks);
 
         /// <summary>
         ///   Gets the active partition stolen exception for a consumer, using its
