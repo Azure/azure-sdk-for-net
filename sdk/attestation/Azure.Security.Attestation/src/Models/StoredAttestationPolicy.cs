@@ -1,11 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Text.Json.Serialization;
-using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Security.Attestation
 {
@@ -13,7 +10,7 @@ namespace Azure.Security.Attestation
     /// Attestation policy stored on the MAA Service.
     /// </summary>
     [JsonConverter(typeof(StoredAttestationPolicyConverter))]
-    [CodeGenModel("StoredAttestationPolicy")]
+    [CodeGenType("StoredAttestationPolicy")]
     public partial class StoredAttestationPolicy
     {
         /// <summary>
