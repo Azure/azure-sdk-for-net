@@ -15,7 +15,7 @@ namespace Azure.AI.ContentSafety
     /// <summary> Client options for clients in this library. </summary>
     public partial class ContentSafetyClientOptions : ClientOptions
     {
-        private const ServiceVersion LatestVersion = ServiceVersion.V2024_09_01;
+        private const ServiceVersion LatestVersion = ServiceVersion.V2026_07_01_Preview;
 
         /// <summary> Initializes a new instance of ContentSafetyClientOptions. </summary>
         /// <param name="version"> The service version. </param>
@@ -25,6 +25,7 @@ namespace Azure.AI.ContentSafety
             {
                 ServiceVersion.V2023_10_01 => "2023-10-01",
                 ServiceVersion.V2024_09_01 => "2024-09-01",
+                ServiceVersion.V2026_07_01_Preview => "2026-07-01-preview",
                 _ => throw new NotSupportedException()
             };
             ConfigureLogging();
@@ -35,7 +36,7 @@ namespace Azure.AI.ContentSafety
         [Experimental("SCME0002")]
         internal ContentSafetyClientOptions(IConfigurationSection section) : base(section, null)
         {
-            Version = "2024-09-01";
+            Version = "2026-07-01-preview";
             if (section is null || !section.Exists())
             {
                 return;
@@ -59,7 +60,9 @@ namespace Azure.AI.ContentSafety
             /// <summary> V2023_10_01. </summary>
             V2023_10_01 = 1,
             /// <summary> V2024_09_01. </summary>
-            V2024_09_01 = 2
+            V2024_09_01 = 2,
+            /// <summary> Public preview that adds asynchronous Content Provenance Detection operations. </summary>
+            V2026_07_01_Preview = 3
         }
     }
 }

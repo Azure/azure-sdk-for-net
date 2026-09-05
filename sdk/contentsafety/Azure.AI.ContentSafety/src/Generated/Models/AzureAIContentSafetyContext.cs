@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 
 namespace Azure.AI.ContentSafety
 {
@@ -20,13 +21,19 @@ namespace Azure.AI.ContentSafety
     [ModelReaderWriterBuildable(typeof(AnalyzeTextOptions))]
     [ModelReaderWriterBuildable(typeof(AnalyzeTextResult))]
     [ModelReaderWriterBuildable(typeof(ContentSafetyImageData))]
+    [ModelReaderWriterBuildable(typeof(DetectedProvenance))]
+    [ModelReaderWriterBuildable(typeof(DetectProvenanceOptions))]
+    [ModelReaderWriterBuildable(typeof(DetectProvenanceResult))]
     [ModelReaderWriterBuildable(typeof(DetectTextProtectedMaterialOptions))]
     [ModelReaderWriterBuildable(typeof(DetectTextProtectedMaterialResult))]
     [ModelReaderWriterBuildable(typeof(DocumentInjectionAnalysisResult))]
     [ModelReaderWriterBuildable(typeof(ImageCategoriesAnalysis))]
     [ModelReaderWriterBuildable(typeof(PagedTextBlocklist))]
     [ModelReaderWriterBuildable(typeof(PagedTextBlocklistItem))]
+    [ModelReaderWriterBuildable(typeof(ProvenanceContent))]
+    [ModelReaderWriterBuildable(typeof(ProvenanceDetectOperation))]
     [ModelReaderWriterBuildable(typeof(RemoveTextBlocklistItemsOptions))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ShieldPromptOptions))]
     [ModelReaderWriterBuildable(typeof(ShieldPromptResult))]
     [ModelReaderWriterBuildable(typeof(TextBlocklist))]
