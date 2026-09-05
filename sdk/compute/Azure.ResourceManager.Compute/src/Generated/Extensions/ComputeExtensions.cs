@@ -441,6 +441,42 @@ namespace Azure.ResourceManager.Compute
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineDiagnosticRunCommandResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineDiagnosticRunCommandResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="VirtualMachineDiagnosticRunCommandResource"/> object. </returns>
+        public static VirtualMachineDiagnosticRunCommandResource GetVirtualMachineDiagnosticRunCommandResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableComputeArmClient(client).GetVirtualMachineDiagnosticRunCommandResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="VirtualMachineScaleSetVMDiagnosticRunCommandResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableComputeArmClient.GetVirtualMachineScaleSetVMDiagnosticRunCommandResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="VirtualMachineScaleSetVMDiagnosticRunCommandResource"/> object. </returns>
+        public static VirtualMachineScaleSetVMDiagnosticRunCommandResource GetVirtualMachineScaleSetVMDiagnosticRunCommandResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableComputeArmClient(client).GetVirtualMachineScaleSetVMDiagnosticRunCommandResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="ManagedDiskResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>

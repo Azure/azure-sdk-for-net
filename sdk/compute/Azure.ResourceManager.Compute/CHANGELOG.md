@@ -1,14 +1,11 @@
 # Release History
 
-## 1.17.0-beta.1 (Unreleased)
+## 1.17.0 (Unreleased)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Upgraded Compute API version to `2026-04-01`.
+- Added the `ReservationType` model for capacity reservation groups.
 
 ## 1.16.0 (2026-07-01)
 

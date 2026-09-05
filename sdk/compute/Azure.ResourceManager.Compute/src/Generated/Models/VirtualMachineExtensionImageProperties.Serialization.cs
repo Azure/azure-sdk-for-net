@@ -95,6 +95,31 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WritePropertyName("supportsMultipleExtensions"u8);
                 writer.WriteBooleanValue(SupportsMultipleExtensions.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(ReleaseNotes))
+            {
+                writer.WritePropertyName("releaseNotes"u8);
+                writer.WriteStringValue(ReleaseNotes);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ReleaseCategory))
+            {
+                writer.WritePropertyName("releaseCategory"u8);
+                writer.WriteStringValue(ReleaseCategory.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(UrgencyLevel))
+            {
+                writer.WritePropertyName("urgencyLevel"u8);
+                writer.WriteStringValue(UrgencyLevel.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(RunProfile))
+            {
+                writer.WritePropertyName("runProfile"u8);
+                writer.WriteStringValue(RunProfile.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExtensionFeatureMetadata))
+            {
+                writer.WritePropertyName("extensionFeatureMetadata"u8);
+                writer.WriteObjectValue(ExtensionFeatureMetadata, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -142,6 +167,11 @@ namespace Azure.ResourceManager.Compute.Models
             string handlerSchema = default;
             bool? virtualMachineScaleSetEnabled = default;
             bool? supportsMultipleExtensions = default;
+            string releaseNotes = default;
+            ReleaseCategory? releaseCategory = default;
+            UrgencyLevel? urgencyLevel = default;
+            RunProfile? runProfile = default;
+            ExtensionFeatureMetadata extensionFeatureMetadata = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -178,6 +208,47 @@ namespace Azure.ResourceManager.Compute.Models
                     supportsMultipleExtensions = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("releaseNotes"u8))
+                {
+                    releaseNotes = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("releaseCategory"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    releaseCategory = new ReleaseCategory(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("urgencyLevel"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    urgencyLevel = new UrgencyLevel(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("runProfile"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    runProfile = new RunProfile(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("extensionFeatureMetadata"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extensionFeatureMetadata = ExtensionFeatureMetadata.DeserializeExtensionFeatureMetadata(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -189,6 +260,11 @@ namespace Azure.ResourceManager.Compute.Models
                 handlerSchema,
                 virtualMachineScaleSetEnabled,
                 supportsMultipleExtensions,
+                releaseNotes,
+                releaseCategory,
+                urgencyLevel,
+                runProfile,
+                extensionFeatureMetadata,
                 additionalBinaryDataProperties);
         }
     }

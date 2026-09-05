@@ -46,8 +46,9 @@ namespace Azure.ResourceManager.Compute.Models
         /// <param name="timeCreated"> Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01. </param>
         /// <param name="virtualMachineResourceId"> Specifies the ARM resource ID of the standalone virtual machine associated with this VMSS VM. This property is only applicable to Virtual Machine Scale Sets with Flexible orchestration mode. Minimum api-version: 2025-11-01. </param>
         /// <param name="interconnectBlockProfile"> Specifies the Interconnect Block related details of a Scale Set VM instance. Minimum api-version: 2026-03-01. </param>
+        /// <param name="capacityReservation"> Specifies information about the capacity reservation that is used to allocate the virtual machine scale set VM instance. The capacity reservation group is inherited from the parent virtual machine scale set and cannot be changed on the individual scale set VM instance. Minimum api-version: 2026-04-01. </param>
         /// <param name="additionalProperties"></param>
-        internal VirtualMachineScaleSetVmProperties(bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, VirtualMachineHardwareProfile hardwareProfile, ResilientVmDeletionStatus? resilientVmDeletionStatus, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, SecurityProfile securityProfile, VirtualMachineNetworkProfile networkProfile, VirtualMachineScaleSetVmNetworkProfileConfiguration networkProfileConfiguration, DiagnosticsProfile diagnosticsProfile, ComputeWriteableSubResourceData availabilitySet, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData, DateTimeOffset? timeCreated, ResourceIdentifier virtualMachineResourceId, InterconnectBlockProfile interconnectBlockProfile, IDictionary<string, BinaryData> additionalProperties)
+        internal VirtualMachineScaleSetVmProperties(bool? latestModelApplied, string vmId, VirtualMachineScaleSetVmInstanceView instanceView, VirtualMachineHardwareProfile hardwareProfile, ResilientVmDeletionStatus? resilientVmDeletionStatus, VirtualMachineStorageProfile storageProfile, AdditionalCapabilities additionalCapabilities, VirtualMachineOSProfile osProfile, SecurityProfile securityProfile, VirtualMachineNetworkProfile networkProfile, VirtualMachineScaleSetVmNetworkProfileConfiguration networkProfileConfiguration, DiagnosticsProfile diagnosticsProfile, ComputeWriteableSubResourceData availabilitySet, string provisioningState, string licenseType, string modelDefinitionApplied, VirtualMachineScaleSetVmProtectionPolicy protectionPolicy, string userData, DateTimeOffset? timeCreated, ResourceIdentifier virtualMachineResourceId, InterconnectBlockProfile interconnectBlockProfile, CapacityReservationProfile capacityReservation, IDictionary<string, BinaryData> additionalProperties)
         {
             LatestModelApplied = latestModelApplied;
             VmId = vmId;
@@ -70,6 +71,7 @@ namespace Azure.ResourceManager.Compute.Models
             TimeCreated = timeCreated;
             VirtualMachineResourceId = virtualMachineResourceId;
             InterconnectBlockProfile = interconnectBlockProfile;
+            CapacityReservation = capacityReservation;
             _additionalBinaryDataProperties = additionalProperties;
         }
 
@@ -135,6 +137,9 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> Specifies the Interconnect Block related details of a Scale Set VM instance. Minimum api-version: 2026-03-01. </summary>
         internal InterconnectBlockProfile InterconnectBlockProfile { get; set; }
+
+        /// <summary> Specifies information about the capacity reservation that is used to allocate the virtual machine scale set VM instance. The capacity reservation group is inherited from the parent virtual machine scale set and cannot be changed on the individual scale set VM instance. Minimum api-version: 2026-04-01. </summary>
+        public CapacityReservationProfile CapacityReservation { get; set; }
 
         /// <summary> Gets the AdditionalProperties. </summary>
         public IDictionary<string, BinaryData> AdditionalProperties => _additionalBinaryDataProperties;

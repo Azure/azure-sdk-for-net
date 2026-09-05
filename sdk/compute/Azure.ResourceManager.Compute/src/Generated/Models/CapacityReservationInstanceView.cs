@@ -26,11 +26,13 @@ namespace Azure.ResourceManager.Compute.Models
         /// <summary> Initializes a new instance of <see cref="CapacityReservationInstanceView"/>. </summary>
         /// <param name="utilizationInfo"> Unutilized capacity of the capacity reservation. </param>
         /// <param name="statuses"> The resource status information. </param>
+        /// <param name="reservationStateInfo"> The reservation state information for a capacity reservation, this detail is primarily provided for Future capacity reservations. Minimum API version: 2026-04-01. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CapacityReservationInstanceView(CapacityReservationUtilization utilizationInfo, IReadOnlyList<InstanceViewStatus> statuses, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CapacityReservationInstanceView(CapacityReservationUtilization utilizationInfo, IReadOnlyList<InstanceViewStatus> statuses, CapacityReservationStateInfo reservationStateInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             UtilizationInfo = utilizationInfo;
             Statuses = statuses;
+            ReservationStateInfo = reservationStateInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -39,5 +41,17 @@ namespace Azure.ResourceManager.Compute.Models
 
         /// <summary> The resource status information. </summary>
         public IReadOnlyList<InstanceViewStatus> Statuses { get; }
+
+        /// <summary> The reservation state information for a capacity reservation, this detail is primarily provided for Future capacity reservations. Minimum API version: 2026-04-01. </summary>
+        internal CapacityReservationStateInfo ReservationStateInfo { get; }
+
+        /// <summary> The current state of the capacity reservation. </summary>
+        public ReservationState? ReservationState
+        {
+            get
+            {
+                return ReservationStateInfo is null ? default : ReservationStateInfo.ReservationState;
+            }
+        }
     }
 }
