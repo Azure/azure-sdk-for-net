@@ -12,7 +12,7 @@ using Azure.ResourceManager.CostManagement;
 namespace Azure.ResourceManager.CostManagement.Models
 {
     /// <summary> Setting list result. It contains a list of settings. </summary>
-    internal partial class SettingsListResult
+    public partial class SettingsListResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

@@ -22,6 +22,8 @@ namespace Azure.ResourceManager.CostManagement.Mocking
     {
         private ClientDiagnostics _scheduledActionsClientDiagnostics;
         private ScheduledActions _scheduledActionsRestClient;
+        private ClientDiagnostics _settingsClientDiagnostics;
+        private Settings _settingsRestClient;
         private ClientDiagnostics _generateCostDetailsReportClientDiagnostics;
         private GenerateCostDetailsReport _generateCostDetailsReportRestClient;
         private ClientDiagnostics _costAllocationRulesClientDiagnostics;
@@ -59,51 +61,55 @@ namespace Azure.ResourceManager.CostManagement.Mocking
 
         private ClientDiagnostics ScheduledActionsClientDiagnostics => _scheduledActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledActions ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActions(ScheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private ScheduledActions ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActions(ScheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
+
+        private ClientDiagnostics SettingsClientDiagnostics => _settingsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private Settings SettingsRestClient => _settingsRestClient ??= new Settings(SettingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics GenerateCostDetailsReportClientDiagnostics => _generateCostDetailsReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GenerateCostDetailsReport GenerateCostDetailsReportRestClient => _generateCostDetailsReportRestClient ??= new GenerateCostDetailsReport(GenerateCostDetailsReportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private GenerateCostDetailsReport GenerateCostDetailsReportRestClient => _generateCostDetailsReportRestClient ??= new GenerateCostDetailsReport(GenerateCostDetailsReportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics CostAllocationRulesClientDiagnostics => _costAllocationRulesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private CostAllocationRules CostAllocationRulesRestClient => _costAllocationRulesRestClient ??= new CostAllocationRules(CostAllocationRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private CostAllocationRules CostAllocationRulesRestClient => _costAllocationRulesRestClient ??= new CostAllocationRules(CostAllocationRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics BenefitRecommendationsClientDiagnostics => _benefitRecommendationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BenefitRecommendations BenefitRecommendationsRestClient => _benefitRecommendationsRestClient ??= new BenefitRecommendations(BenefitRecommendationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private BenefitRecommendations BenefitRecommendationsRestClient => _benefitRecommendationsRestClient ??= new BenefitRecommendations(BenefitRecommendationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics BenefitUtilizationSummariesClientDiagnostics => _benefitUtilizationSummariesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BenefitUtilizationSummaries BenefitUtilizationSummariesRestClient => _benefitUtilizationSummariesRestClient ??= new BenefitUtilizationSummaries(BenefitUtilizationSummariesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private BenefitUtilizationSummaries BenefitUtilizationSummariesRestClient => _benefitUtilizationSummariesRestClient ??= new BenefitUtilizationSummaries(BenefitUtilizationSummariesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics GenerateBenefitUtilizationSummariesReportClientDiagnostics => _generateBenefitUtilizationSummariesReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GenerateBenefitUtilizationSummariesReport GenerateBenefitUtilizationSummariesReportRestClient => _generateBenefitUtilizationSummariesReportRestClient ??= new GenerateBenefitUtilizationSummariesReport(GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private GenerateBenefitUtilizationSummariesReport GenerateBenefitUtilizationSummariesReportRestClient => _generateBenefitUtilizationSummariesReportRestClient ??= new GenerateBenefitUtilizationSummariesReport(GenerateBenefitUtilizationSummariesReportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics GenerateDetailedCostReportClientDiagnostics => _generateDetailedCostReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GenerateDetailedCostReport GenerateDetailedCostReportRestClient => _generateDetailedCostReportRestClient ??= new GenerateDetailedCostReport(GenerateDetailedCostReportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private GenerateDetailedCostReport GenerateDetailedCostReportRestClient => _generateDetailedCostReportRestClient ??= new GenerateDetailedCostReport(GenerateDetailedCostReportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics ForecastClientDiagnostics => _forecastClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Forecast ForecastRestClient => _forecastRestClient ??= new Forecast(ForecastClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private Forecast ForecastRestClient => _forecastRestClient ??= new Forecast(ForecastClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics DimensionsClientDiagnostics => _dimensionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Dimensions DimensionsRestClient => _dimensionsRestClient ??= new Dimensions(DimensionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private Dimensions DimensionsRestClient => _dimensionsRestClient ??= new Dimensions(DimensionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics QueryClientDiagnostics => _queryClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Query QueryRestClient => _queryRestClient ??= new Query(QueryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private Query QueryRestClient => _queryRestClient ??= new Query(QueryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics GenerateReservationDetailsReportClientDiagnostics => _generateReservationDetailsReportClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private GenerateReservationDetailsReport GenerateReservationDetailsReportRestClient => _generateReservationDetailsReportRestClient ??= new GenerateReservationDetailsReport(GenerateReservationDetailsReportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private GenerateReservationDetailsReport GenerateReservationDetailsReportRestClient => _generateReservationDetailsReportRestClient ??= new GenerateReservationDetailsReport(GenerateReservationDetailsReportClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         private ClientDiagnostics PriceSheetClientDiagnostics => _priceSheetClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.CostManagement.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private PriceSheet PriceSheetRestClient => _priceSheetRestClient ??= new PriceSheet(PriceSheetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-03-01");
+        private PriceSheet PriceSheetRestClient => _priceSheetRestClient ??= new PriceSheet(PriceSheetClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         /// <summary> Gets an object representing a <see cref="GenerateDetailedCostReportOperationStatusesResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -479,6 +485,51 @@ namespace Azure.ResourceManager.CostManagement.Mocking
             return await GetCostManagementSettings(scope).GetAsync(@type, cancellationToken).ConfigureAwait(false);
         }
 
+        /// <summary> Gets an object representing a <see cref="MarkupRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="MarkupRuleResource"/> object. </returns>
+        public virtual MarkupRuleResource GetMarkupRuleResource(ResourceIdentifier id)
+        {
+            MarkupRuleResource.ValidateResourceId(id);
+            return new MarkupRuleResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="MarkupRuleCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="MarkupRuleResource"/> objects. </returns>
+        public virtual MarkupRuleCollection GetMarkupRules(ResourceIdentifier scope)
+        {
+            return new MarkupRuleCollection(Client, scope);
+        }
+
+        /// <summary> Get a markup rule by name for a billing account and billing profile. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="ruleName"> Markup rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<MarkupRuleResource> GetMarkupRule(ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            return GetMarkupRules(scope).Get(ruleName, cancellationToken);
+        }
+
+        /// <summary> Get a markup rule by name for a billing account and billing profile. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="ruleName"> Markup rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<MarkupRuleResource>> GetMarkupRuleAsync(ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
+
+            return await GetMarkupRules(scope).GetAsync(ruleName, cancellationToken).ConfigureAwait(false);
+        }
+
         /// <summary> Gets an object representing a <see cref="CostAllocationRuleResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="CostAllocationRuleResource"/> object. </returns>
@@ -537,7 +588,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -587,7 +638,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -625,6 +676,102 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         }
 
         /// <summary>
+        /// List all cost management settings in the requested scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/settings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Settings_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual async Task<Response<SettingsListResult>> GetAllAsync(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = SettingsClientDiagnostics.CreateScope("MockableCostManagementArmClient.GetAll");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SettingsRestClient.CreateGetAllRequest(scope.ToString(), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<SettingsListResult> response = Response.FromValue(SettingsListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// List all cost management settings in the requested scope.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{scope}/providers/Microsoft.CostManagement/settings. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Settings_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-06-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
+        public virtual Response<SettingsListResult> GetAll(ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(scope, nameof(scope));
+
+            using DiagnosticScope scope0 = SettingsClientDiagnostics.CreateScope("MockableCostManagementArmClient.GetAll");
+            scope0.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SettingsRestClient.CreateGetAllRequest(scope.ToString(), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<SettingsListResult> response = Response.FromValue(SettingsListResult.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope0.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Get the result of the specified operation. This link is provided in the CostDetails creation request response Location header.
         /// <list type="bullet">
         /// <item>
@@ -637,7 +784,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -695,7 +842,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -753,7 +900,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -810,7 +957,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -867,7 +1014,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -917,7 +1064,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -967,7 +1114,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1009,7 +1156,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1051,7 +1198,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1091,7 +1238,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1131,7 +1278,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1172,7 +1319,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1213,7 +1360,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1253,7 +1400,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1293,7 +1440,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1334,7 +1481,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1375,7 +1522,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1432,7 +1579,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1489,7 +1636,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1546,7 +1693,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1603,7 +1750,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1660,7 +1807,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1717,7 +1864,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1774,7 +1921,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1831,7 +1978,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1888,7 +2035,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1945,7 +2092,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2002,7 +2149,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2059,7 +2206,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2116,7 +2263,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2173,7 +2320,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2224,7 +2371,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2275,7 +2422,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2319,7 +2466,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2363,7 +2510,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2413,7 +2560,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2463,7 +2610,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2523,7 +2670,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2583,7 +2730,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2643,7 +2790,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2703,7 +2850,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2758,7 +2905,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2815,7 +2962,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2872,7 +3019,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2934,7 +3081,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -2996,7 +3143,7 @@ namespace Azure.ResourceManager.CostManagement.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

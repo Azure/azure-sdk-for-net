@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A class representing a collection of <see cref="CostAllocationRuleResource"/> and their operations.
-    /// Each <see cref="CostAllocationRuleResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
-    /// To get a <see cref="CostAllocationRuleCollection"/> instance call the GetCostAllocationRules method from an instance of <see cref="ArmResource"/>.
+    /// A class representing a collection of <see cref="MarkupRuleResource"/> and their operations.
+    /// Each <see cref="MarkupRuleResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
+    /// To get a <see cref="MarkupRuleCollection"/> instance call the GetMarkupRules method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class CostAllocationRuleCollection : ArmCollection, IEnumerable<CostAllocationRuleResource>, IAsyncEnumerable<CostAllocationRuleResource>
+    public partial class MarkupRuleCollection : ArmCollection, IEnumerable<MarkupRuleResource>, IAsyncEnumerable<MarkupRuleResource>
     {
-        private readonly ClientDiagnostics _costAllocationRulesClientDiagnostics;
-        private readonly CostAllocationRules _costAllocationRulesRestClient;
+        private readonly ClientDiagnostics _markupRulesClientDiagnostics;
+        private readonly MarkupRules _markupRulesRestClient;
 
-        /// <summary> Initializes a new instance of CostAllocationRuleCollection for mocking. </summary>
-        protected CostAllocationRuleCollection()
+        /// <summary> Initializes a new instance of MarkupRuleCollection for mocking. </summary>
+        protected MarkupRuleCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CostAllocationRuleCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarkupRuleCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal CostAllocationRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MarkupRuleCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(CostAllocationRuleResource.ResourceType, out string costAllocationRuleApiVersion);
-            _costAllocationRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostAllocationRuleResource.ResourceType.Namespace, Diagnostics);
-            _costAllocationRulesRestClient = new CostAllocationRules(_costAllocationRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, costAllocationRuleApiVersion ?? "2026-06-01");
+            TryGetApiVersion(MarkupRuleResource.ResourceType, out string markupRuleApiVersion);
+            _markupRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", MarkupRuleResource.ResourceType.Namespace, Diagnostics);
+            _markupRulesRestClient = new MarkupRules(_markupRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, markupRuleApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -48,22 +48,22 @@ namespace Azure.ResourceManager.CostManagement
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != "microsoft.Billing/billingAccounts")
+            if (id.ResourceType != "Microsoft.Billing/billingAccounts/billingProfiles")
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "microsoft.Billing/billingAccounts"), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, "Microsoft.Billing/billingAccounts/billingProfiles"), nameof(id));
             }
         }
 
         /// <summary>
-        /// Create/Update a rule to allocate cost between different resources within a billing account or enterprise enrollment.
+        /// Create or update a markup rule for a billing account and billing profile.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/markupRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostAllocationRuleDefinitions_CreateOrUpdate. </description>
+        /// <description> MarkupRules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -72,17 +72,17 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ruleName"> Cost allocation rule name. The name cannot include spaces or any non alphanumeric characters other than '_' and '-'. The max length is 260 characters. </param>
-        /// <param name="data"> Cost allocation rule to be created or updated. </param>
+        /// <param name="ruleName"> Markup rule name. </param>
+        /// <param name="data"> The markup rule to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<CostAllocationRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleName, CostAllocationRuleData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MarkupRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleName, MarkupRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _markupRulesClientDiagnostics.CreateScope("MarkupRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -90,12 +90,12 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costAllocationRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, ruleName, CostAllocationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _markupRulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, ruleName, MarkupRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CostAllocationRuleData> response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
+                Response<MarkupRuleData> response = Response.FromValue(MarkupRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                CostManagementArmOperation<CostAllocationRuleResource> operation = new CostManagementArmOperation<CostAllocationRuleResource>(Response.FromValue(new CostAllocationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                CostManagementArmOperation<MarkupRuleResource> operation = new CostManagementArmOperation<MarkupRuleResource>(Response.FromValue(new MarkupRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -110,15 +110,15 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Create/Update a rule to allocate cost between different resources within a billing account or enterprise enrollment.
+        /// Create or update a markup rule for a billing account and billing profile.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/markupRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostAllocationRuleDefinitions_CreateOrUpdate. </description>
+        /// <description> MarkupRules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -127,17 +127,17 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="ruleName"> Cost allocation rule name. The name cannot include spaces or any non alphanumeric characters other than '_' and '-'. The max length is 260 characters. </param>
-        /// <param name="data"> Cost allocation rule to be created or updated. </param>
+        /// <param name="ruleName"> Markup rule name. </param>
+        /// <param name="data"> The markup rule to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<CostAllocationRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleName, CostAllocationRuleData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MarkupRuleResource> CreateOrUpdate(WaitUntil waitUntil, string ruleName, MarkupRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _markupRulesClientDiagnostics.CreateScope("MarkupRuleCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -145,12 +145,12 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costAllocationRulesRestClient.CreateCreateOrUpdateRequest(Id.Name, ruleName, CostAllocationRuleData.ToRequestContent(data), context);
+                HttpMessage message = _markupRulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Name, Id.Name, ruleName, MarkupRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CostAllocationRuleData> response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
+                Response<MarkupRuleData> response = Response.FromValue(MarkupRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                CostManagementArmOperation<CostAllocationRuleResource> operation = new CostManagementArmOperation<CostAllocationRuleResource>(Response.FromValue(new CostAllocationRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                CostManagementArmOperation<MarkupRuleResource> operation = new CostManagementArmOperation<MarkupRuleResource>(Response.FromValue(new MarkupRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -165,15 +165,15 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Get a cost allocation rule by rule name and billing account or enterprise enrollment.
+        /// Get a markup rule by name for a billing account and billing profile.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/markupRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostAllocationRuleDefinitions_Get. </description>
+        /// <description> MarkupRules_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -181,15 +181,15 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleName"> Cost allocation rule name. The name cannot include spaces or any non alphanumeric characters other than '_' and '-'. The max length is 260 characters. </param>
+        /// <param name="ruleName"> Markup rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<CostAllocationRuleResource>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MarkupRuleResource>> GetAsync(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleCollection.Get");
+            using DiagnosticScope scope = _markupRulesClientDiagnostics.CreateScope("MarkupRuleCollection.Get");
             scope.Start();
             try
             {
@@ -197,14 +197,14 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
+                HttpMessage message = _markupRulesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, ruleName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CostAllocationRuleData> response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
+                Response<MarkupRuleData> response = Response.FromValue(MarkupRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CostAllocationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarkupRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -214,15 +214,15 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Get a cost allocation rule by rule name and billing account or enterprise enrollment.
+        /// Get a markup rule by name for a billing account and billing profile.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/markupRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostAllocationRuleDefinitions_Get. </description>
+        /// <description> MarkupRules_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -230,15 +230,15 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleName"> Cost allocation rule name. The name cannot include spaces or any non alphanumeric characters other than '_' and '-'. The max length is 260 characters. </param>
+        /// <param name="ruleName"> Markup rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<CostAllocationRuleResource> Get(string ruleName, CancellationToken cancellationToken = default)
+        public virtual Response<MarkupRuleResource> Get(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleCollection.Get");
+            using DiagnosticScope scope = _markupRulesClientDiagnostics.CreateScope("MarkupRuleCollection.Get");
             scope.Start();
             try
             {
@@ -246,14 +246,14 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
+                HttpMessage message = _markupRulesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, ruleName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CostAllocationRuleData> response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
+                Response<MarkupRuleData> response = Response.FromValue(MarkupRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new CostAllocationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarkupRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -263,15 +263,15 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Get the list of all cost allocation rules for a billing account or enterprise enrollment.
+        /// List all markup rules for a billing account and billing profile.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/markupRules. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostAllocationRuleDefinitions_List. </description>
+        /// <description> MarkupRules_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -280,26 +280,26 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CostAllocationRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CostAllocationRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MarkupRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<MarkupRuleResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<CostAllocationRuleData, CostAllocationRuleResource>(new CostAllocationRulesGetAllAsyncCollectionResultOfT(_costAllocationRulesRestClient, Id.Name, context, "CostAllocationRuleCollection.GetAll"), data => new CostAllocationRuleResource(Client, data));
+            return new AsyncPageableWrapper<MarkupRuleData, MarkupRuleResource>(new MarkupRulesGetAllAsyncCollectionResultOfT(_markupRulesRestClient, Id.Parent.Name, Id.Name, context, "MarkupRuleCollection.GetAll"), data => new MarkupRuleResource(Client, data));
         }
 
         /// <summary>
-        /// Get the list of all cost allocation rules for a billing account or enterprise enrollment.
+        /// List all markup rules for a billing account and billing profile.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/markupRules. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostAllocationRuleDefinitions_List. </description>
+        /// <description> MarkupRules_List. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -308,14 +308,14 @@ namespace Azure.ResourceManager.CostManagement
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CostAllocationRuleResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CostAllocationRuleResource> GetAll(CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="MarkupRuleResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<MarkupRuleResource> GetAll(CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<CostAllocationRuleData, CostAllocationRuleResource>(new CostAllocationRulesGetAllCollectionResultOfT(_costAllocationRulesRestClient, Id.Name, context, "CostAllocationRuleCollection.GetAll"), data => new CostAllocationRuleResource(Client, data));
+            return new PageableWrapper<MarkupRuleData, MarkupRuleResource>(new MarkupRulesGetAllCollectionResultOfT(_markupRulesRestClient, Id.Parent.Name, Id.Name, context, "MarkupRuleCollection.GetAll"), data => new MarkupRuleResource(Client, data));
         }
 
         /// <summary>
@@ -323,11 +323,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/markupRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostAllocationRuleDefinitions_Get. </description>
+        /// <description> MarkupRules_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleName"> Cost allocation rule name. The name cannot include spaces or any non alphanumeric characters other than '_' and '-'. The max length is 260 characters. </param>
+        /// <param name="ruleName"> Markup rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleCollection.Exists");
+            using DiagnosticScope scope = _markupRulesClientDiagnostics.CreateScope("MarkupRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -351,17 +351,17 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
+                HttpMessage message = _markupRulesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, ruleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<CostAllocationRuleData> response = default;
+                Response<MarkupRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
+                        response = Response.FromValue(MarkupRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CostAllocationRuleData)null, result);
+                        response = Response.FromValue((MarkupRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -380,11 +380,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/markupRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostAllocationRuleDefinitions_Get. </description>
+        /// <description> MarkupRules_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleName"> Cost allocation rule name. The name cannot include spaces or any non alphanumeric characters other than '_' and '-'. The max length is 260 characters. </param>
+        /// <param name="ruleName"> Markup rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleCollection.Exists");
+            using DiagnosticScope scope = _markupRulesClientDiagnostics.CreateScope("MarkupRuleCollection.Exists");
             scope.Start();
             try
             {
@@ -408,17 +408,17 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
+                HttpMessage message = _markupRulesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, ruleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<CostAllocationRuleData> response = default;
+                Response<MarkupRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
+                        response = Response.FromValue(MarkupRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CostAllocationRuleData)null, result);
+                        response = Response.FromValue((MarkupRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -437,11 +437,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/markupRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostAllocationRuleDefinitions_Get. </description>
+        /// <description> MarkupRules_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -449,15 +449,15 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleName"> Cost allocation rule name. The name cannot include spaces or any non alphanumeric characters other than '_' and '-'. The max length is 260 characters. </param>
+        /// <param name="ruleName"> Markup rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<CostAllocationRuleResource>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<MarkupRuleResource>> GetIfExistsAsync(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _markupRulesClientDiagnostics.CreateScope("MarkupRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -465,26 +465,26 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
+                HttpMessage message = _markupRulesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, ruleName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<CostAllocationRuleData> response = default;
+                Response<MarkupRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
+                        response = Response.FromValue(MarkupRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CostAllocationRuleData)null, result);
+                        response = Response.FromValue((MarkupRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<CostAllocationRuleResource>(response.GetRawResponse());
+                    return new NoValueResponse<MarkupRuleResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new CostAllocationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarkupRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -498,11 +498,11 @@ namespace Azure.ResourceManager.CostManagement
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /providers/microsoft.Billing/billingAccounts/{billingAccountId}/providers/Microsoft.CostManagement/costAllocationRules/{ruleName}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/markupRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> CostAllocationRuleDefinitions_Get. </description>
+        /// <description> MarkupRules_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -510,15 +510,15 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="ruleName"> Cost allocation rule name. The name cannot include spaces or any non alphanumeric characters other than '_' and '-'. The max length is 260 characters. </param>
+        /// <param name="ruleName"> Markup rule name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="ruleName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<CostAllocationRuleResource> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<MarkupRuleResource> GetIfExists(string ruleName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(ruleName, nameof(ruleName));
 
-            using DiagnosticScope scope = _costAllocationRulesClientDiagnostics.CreateScope("CostAllocationRuleCollection.GetIfExists");
+            using DiagnosticScope scope = _markupRulesClientDiagnostics.CreateScope("MarkupRuleCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -526,26 +526,26 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _costAllocationRulesRestClient.CreateGetRequest(Id.Name, ruleName, context);
+                HttpMessage message = _markupRulesRestClient.CreateGetRequest(Id.Parent.Name, Id.Name, ruleName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<CostAllocationRuleData> response = default;
+                Response<MarkupRuleData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(CostAllocationRuleData.FromResponse(result), result);
+                        response = Response.FromValue(MarkupRuleData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((CostAllocationRuleData)null, result);
+                        response = Response.FromValue((MarkupRuleData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<CostAllocationRuleResource>(response.GetRawResponse());
+                    return new NoValueResponse<MarkupRuleResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new CostAllocationRuleResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarkupRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.CostManagement
             }
         }
 
-        IEnumerator<CostAllocationRuleResource> IEnumerable<CostAllocationRuleResource>.GetEnumerator()
+        IEnumerator<MarkupRuleResource> IEnumerable<MarkupRuleResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<CostAllocationRuleResource> IAsyncEnumerable<CostAllocationRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<MarkupRuleResource> IAsyncEnumerable<MarkupRuleResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

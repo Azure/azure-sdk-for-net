@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.CostManagement.Models
         private const string SingleValue = "Single";
         /// <summary> Shared scope recommendation. </summary>
         private const string SharedValue = "Shared";
+        /// <summary> Management group scope recommendation. </summary>
+        private const string ManagementGroupValue = "ManagementGroup";
 
         /// <summary> Initializes a new instance of <see cref="BenefitRecommendationScope"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,6 +37,9 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <summary> Shared scope recommendation. </summary>
         public static BenefitRecommendationScope Shared { get; } = new BenefitRecommendationScope(SharedValue);
+
+        /// <summary> Management group scope recommendation. </summary>
+        public static BenefitRecommendationScope ManagementGroup { get; } = new BenefitRecommendationScope(ManagementGroupValue);
 
         /// <summary> Determines if two <see cref="BenefitRecommendationScope"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

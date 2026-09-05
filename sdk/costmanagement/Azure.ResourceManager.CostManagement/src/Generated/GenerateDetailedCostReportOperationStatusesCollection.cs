@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             TryGetApiVersion(GenerateDetailedCostReportOperationStatusesResource.ResourceType, out string generateDetailedCostReportOperationStatusesApiVersion);
             _generateDetailedCostReportOperationStatusClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", GenerateDetailedCostReportOperationStatusesResource.ResourceType.Namespace, Diagnostics);
-            _generateDetailedCostReportOperationStatusRestClient = new GenerateDetailedCostReportOperationStatus(_generateDetailedCostReportOperationStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, generateDetailedCostReportOperationStatusesApiVersion ?? "2025-03-01");
+            _generateDetailedCostReportOperationStatusRestClient = new GenerateDetailedCostReportOperationStatus(_generateDetailedCostReportOperationStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, generateDetailedCostReportOperationStatusesApiVersion ?? "2026-06-01");
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>

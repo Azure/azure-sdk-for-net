@@ -960,6 +960,57 @@ namespace Azure.ResourceManager.CostManagement.Models
                 preferContainerTags is null ? default : new TagInheritanceProperties(preferContainerTags.GetValueOrDefault(), default));
         }
 
+        /// <param name="value"> The list of settings. </param>
+        /// <returns> A new <see cref="Models.SettingsListResult"/> instance for mocking. </returns>
+        public static SettingsListResult SettingsListResult(IEnumerable<CostManagementSettingData> value = default)
+        {
+            value ??= new ChangeTrackingList<CostManagementSettingData>();
+
+            return new SettingsListResult((value ?? new ChangeTrackingList<CostManagementSettingData>()).ToList(), default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Markup rule properties. </param>
+        /// <returns> A new <see cref="CostManagement.MarkupRuleData"/> instance for mocking. </returns>
+        public static MarkupRuleData MarkupRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, MarkupRuleProperties properties = default)
+        {
+            return new MarkupRuleData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                default);
+        }
+
+        /// <param name="description"> The description of the markup rule. </param>
+        /// <param name="percentage"> The markup percentage of the rule. </param>
+        /// <param name="startOn"> Starting date of the markup rule. </param>
+        /// <param name="endOn"> Ending date of the markup rule. </param>
+        /// <param name="customerDetails"> Customer information for the markup rule. </param>
+        /// <returns> A new <see cref="Models.MarkupRuleProperties"/> instance for mocking. </returns>
+        public static MarkupRuleProperties MarkupRuleProperties(string description = default, double percentage = default, DateTimeOffset startOn = default, DateTimeOffset? endOn = default, CustomerMetadata customerDetails = default)
+        {
+            return new MarkupRuleProperties(
+                description,
+                percentage,
+                startOn,
+                endOn,
+                customerDetails,
+                default);
+        }
+
+        /// <param name="billingAccountId"> Customer billing account id. </param>
+        /// <param name="billingProfileId"> Customer billing profile id. </param>
+        /// <returns> A new <see cref="Models.CustomerMetadata"/> instance for mocking. </returns>
+        public static CustomerMetadata CustomerMetadata(string billingAccountId = default, string billingProfileId = default)
+        {
+            return new CustomerMetadata(billingAccountId, billingProfileId, default);
+        }
+
         /// <param name="id"> The id of the long running operation. </param>
         /// <param name="name"> The name of the long running operation. </param>
         /// <param name="type"> The type of the long running operation. </param>
@@ -1286,6 +1337,42 @@ namespace Azure.ResourceManager.CostManagement.Models
                 allRecommendationDetails,
                 default,
                 default);
+        }
+
+        /// <param name="firstConsumptionOn"> The first usage date used for looking back for computing the recommendations. </param>
+        /// <param name="lastConsumptionOn"> The last usage date used for looking back for computing the recommendations. </param>
+        /// <param name="lookBackPeriod"> The number of days of usage evaluated for computing the recommendations. </param>
+        /// <param name="totalHours"> The total hours for which the cost is covered. Its equal to number of records in a property 'properties/usage/charges'. </param>
+        /// <param name="usage"> On-demand charges between firstConsumptionDate and lastConsumptionDate that were used for computing benefit recommendations. </param>
+        /// <param name="armSkuName"> ARM SKU name. 'Compute_Savings_Plan' for SavingsPlan. </param>
+        /// <param name="term"> Term period of the benefit. For example, P1Y or P3Y. </param>
+        /// <param name="commitmentGranularity"> Grain of the proposed commitment amount. Supported values: 'Hourly'. </param>
+        /// <param name="currencyCode"> An ISO 4217 currency code identifier for the costs and savings amounts. </param>
+        /// <param name="costWithoutBenefit"> The current cost without benefit, corresponds to 'totalHours' in the look-back period. </param>
+        /// <param name="recommendationDetails"> The details of the proposed recommendation. </param>
+        /// <param name="allRecommendationDetails"> The list of all benefit recommendations with the recommendation details. </param>
+        /// <param name="managementGroupId"> Fully-qualified identifier of the management group that this management group scope recommendation is for, of the format /providers/Microsoft.Management/managementGroups/{managementGroupId}. Applicable only if recommendation is for 'ManagementGroup' scope. </param>
+        /// <param name="tenantId"> The tenant ID associated with the management group. Populated only when managementGroupId is populated. </param>
+        /// <returns> A new <see cref="Models.ManagementGroupScopeBenefitRecommendationProperties"/> instance for mocking. </returns>
+        public static ManagementGroupScopeBenefitRecommendationProperties ManagementGroupScopeBenefitRecommendationProperties(DateTimeOffset? firstConsumptionOn = default, DateTimeOffset? lastConsumptionOn = default, LookBackPeriod? lookBackPeriod = default, int? totalHours = default, RecommendationUsageDetails usage = default, string armSkuName = default, BenefitRecommendationPeriodTerm? term = default, BenefitRecommendationUsageGrain? commitmentGranularity = default, string currencyCode = default, decimal? costWithoutBenefit = default, AllSavingsBenefitDetails recommendationDetails = default, AllSavingsList allRecommendationDetails = default, ResourceIdentifier managementGroupId = default, string tenantId = default)
+        {
+            return new ManagementGroupScopeBenefitRecommendationProperties(
+                firstConsumptionOn,
+                lastConsumptionOn,
+                lookBackPeriod,
+                totalHours,
+                usage,
+                armSkuName,
+                term,
+                commitmentGranularity,
+                currencyCode,
+                costWithoutBenefit,
+                recommendationDetails,
+                allRecommendationDetails,
+                default,
+                default,
+                managementGroupId,
+                tenantId);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

@@ -6,8 +6,6 @@
 #nullable disable
 
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -23,7 +21,7 @@ namespace Azure.ResourceManager.CostManagement
     /// Each <see cref="CostManagementSettingResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
     /// To get a <see cref="CostManagementSettingCollection"/> instance call the GetCostManagementSettings method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class CostManagementSettingCollection : ArmCollection, IEnumerable<CostManagementSettingResource>, IAsyncEnumerable<CostManagementSettingResource>
+    public partial class CostManagementSettingCollection : ArmCollection
     {
         private readonly ClientDiagnostics _settingsClientDiagnostics;
         private readonly Settings _settingsRestClient;
@@ -40,7 +38,7 @@ namespace Azure.ResourceManager.CostManagement
         {
             TryGetApiVersion(CostManagementSettingResource.ResourceType, out string costManagementSettingApiVersion);
             _settingsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", CostManagementSettingResource.ResourceType.Namespace, Diagnostics);
-            _settingsRestClient = new Settings(_settingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, costManagementSettingApiVersion ?? "2025-03-01");
+            _settingsRestClient = new Settings(_settingsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, costManagementSettingApiVersion ?? "2026-06-01");
         }
 
         /// <summary>
@@ -56,7 +54,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -109,7 +107,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -162,7 +160,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -207,7 +205,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -240,62 +238,6 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// List all cost management settings in the requested scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/settings. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Settings_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CostManagementSettingResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CostManagementSettingResource> GetAllAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<CostManagementSettingData, CostManagementSettingResource>(new SettingsGetAllAsyncCollectionResultOfT(_settingsRestClient, Id.ToString(), context, "CostManagementSettingCollection.GetAll"), data => new CostManagementSettingResource(Client, data));
-        }
-
-        /// <summary>
-        /// List all cost management settings in the requested scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/settings. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Settings_List. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="CostManagementSettingResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CostManagementSettingResource> GetAll(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<CostManagementSettingData, CostManagementSettingResource>(new SettingsGetAllCollectionResultOfT(_settingsRestClient, Id.ToString(), context, "CostManagementSettingCollection.GetAll"), data => new CostManagementSettingResource(Client, data));
-        }
-
-        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -308,7 +250,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -361,7 +303,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -414,7 +356,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -471,7 +413,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-03-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -513,22 +455,6 @@ namespace Azure.ResourceManager.CostManagement
                 scope.Failed(e);
                 throw;
             }
-        }
-
-        IEnumerator<CostManagementSettingResource> IEnumerable<CostManagementSettingResource>.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetAll().GetEnumerator();
-        }
-
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<CostManagementSettingResource> IAsyncEnumerable<CostManagementSettingResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
-        {
-            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }
