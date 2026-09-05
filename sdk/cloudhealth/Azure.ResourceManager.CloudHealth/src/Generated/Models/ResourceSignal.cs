@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. </param>
         /// <param name="aggregationType"> Type of aggregation to apply to the metric. </param>
-        /// <param name="dimensionFilter"> Optional: Dimension filter to apply to the dimension. Must only be set if also Dimension is set. </param>
+        /// <param name="dimensionFilter"> Optional: Dimension filter to apply to the dimension. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <summary> Type of aggregation to apply to the metric. </summary>
         public MetricAggregationType? AggregationType { get; set; }
 
-        /// <summary> Optional: Dimension filter to apply to the dimension. Must only be set if also Dimension is set. </summary>
+        /// <summary> Optional: Dimension filter to apply to the dimension. </summary>
         public string DimensionFilter { get; set; }
 
         /// <summary> Display name. </summary>

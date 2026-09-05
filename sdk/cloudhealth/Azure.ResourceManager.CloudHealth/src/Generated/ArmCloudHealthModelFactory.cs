@@ -104,11 +104,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="signalOperator"> Operator how to compare the signal value with the threshold. </param>
         /// <param name="threshold"> Threshold value. </param>
         /// <param name="sensitivity"> Sensitivity level for dynamic threshold detection. Only applicable when operator is Dynamic. </param>
-        /// <param name="lookBackWindow"> ISO 8601 duration for the historical look-back window used by dynamic threshold computation. Only applicable when operator is Dynamic. </param>
         /// <returns> A new <see cref="Models.EntitySignalThresholdRuleV2"/> instance for mocking. </returns>
-        public static EntitySignalThresholdRuleV2 EntitySignalThresholdRuleV2(EntitySignalOperator signalOperator = default, double? threshold = default, EntityDynamicThresholdSensitivity? sensitivity = default, DynamicThresholdLookBackWindow? lookBackWindow = default)
+        public static EntitySignalThresholdRuleV2 EntitySignalThresholdRuleV2(EntitySignalOperator signalOperator = default, double? threshold = default, EntityDynamicThresholdSensitivity? sensitivity = default)
         {
-            return new EntitySignalThresholdRuleV2(signalOperator, threshold, sensitivity, lookBackWindow, default);
+            return new EntitySignalThresholdRuleV2(signalOperator, threshold, sensitivity, default);
         }
 
         /// <param name="provisioningState"> The status of the last operation. </param>
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. </param>
         /// <param name="aggregationType"> Type of aggregation to apply to the metric. </param>
-        /// <param name="dimensionFilter"> Optional: Dimension filter to apply to the dimension. Must only be set if also Dimension is set. </param>
+        /// <param name="dimensionFilter"> Optional: Dimension filter to apply to the dimension. </param>
         /// <returns> A new <see cref="Models.ResourceMetricSignalDefinitionProperties"/> instance for mocking. </returns>
         public static ResourceMetricSignalDefinitionProperties ResourceMetricSignalDefinitionProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, EntitySignalRefreshInterval? refreshInterval = default, IDictionary<string, string> tags = default, string dataUnit = default, EntitySignalEvaluationRule evaluationRules = default, string metricNamespace = default, string metricName = default, string timeGrain = default, MetricAggregationType aggregationType = default, string dimensionFilter = default)
         {
@@ -257,13 +256,15 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="impact"> Impact of the entity in health state propagation. </param>
         /// <param name="tags"> Optional set of tags (key-value pairs). </param>
         /// <param name="signalGroups"> Signal groups which are assigned to this entity. </param>
+        /// <param name="signalAggregationGroups"> Logical aggregation groups over the signals on this entity. Overlap is allowed: the same signal may appear in more than one group's members. Each group is evaluated independently according to its strategy, and a shared signal can contribute to multiple group states and related per-group telemetry. Group states contribute alongside any ungrouped signals and the dependency-aggregated child health to the entity's overall worst-of composite. </param>
         /// <param name="discoveredBy"> Discovered by which discovery rule. If set, the entity cannot be deleted manually. </param>
         /// <param name="healthState"> Health state of this entity. </param>
         /// <param name="alerts"> Alert configuration for this entity. </param>
         /// <returns> A new <see cref="Models.HealthModelEntityProperties"/> instance for mocking. </returns>
-        public static HealthModelEntityProperties HealthModelEntityProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, EntityCoordinates canvasPosition = default, EntityIcon icon = default, float? healthObjective = default, EntityImpact? impact = default, IDictionary<string, string> tags = default, EntitySignalGroups signalGroups = default, string discoveredBy = default, EntityHealthState? healthState = default, EntityAlerts alerts = default)
+        public static HealthModelEntityProperties HealthModelEntityProperties(HealthModelProvisioningState? provisioningState = default, string displayName = default, EntityCoordinates canvasPosition = default, EntityIcon icon = default, float? healthObjective = default, EntityImpact? impact = default, IDictionary<string, string> tags = default, EntitySignalGroups signalGroups = default, IEnumerable<SignalAggregationGroup> signalAggregationGroups = default, string discoveredBy = default, EntityHealthState? healthState = default, EntityAlerts alerts = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
+            signalAggregationGroups ??= new ChangeTrackingList<SignalAggregationGroup>();
 
             return new HealthModelEntityProperties(
                 provisioningState,
@@ -274,6 +275,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 impact,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 signalGroups,
+                (signalAggregationGroups ?? new ChangeTrackingList<SignalAggregationGroup>()).ToList(),
                 discoveredBy,
                 healthState,
                 alerts,
@@ -339,7 +341,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. </param>
         /// <param name="aggregationType"> Type of aggregation to apply to the metric. </param>
-        /// <param name="dimensionFilter"> Optional: Dimension filter to apply to the dimension. Must only be set if also Dimension is set. </param>
+        /// <param name="dimensionFilter"> Optional: Dimension filter to apply to the dimension. </param>
         /// <param name="displayName"> Display name. </param>
         /// <param name="refreshInterval"> Interval in which the signal is being evaluated. Defaults to PT1M (1 minute). </param>
         /// <param name="dataUnit"> Unit of the signal result (e.g. Bytes, MilliSeconds, Percent, Count)). </param>
@@ -529,7 +531,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="unit"> Unit type for the aggregation thresholds. Required when aggregationType is MinHealthy or MaxNotHealthy. </param>
         /// <param name="shouldIgnoreUnknown"> If true, children with Unknown health state are excluded from aggregation calculations. Defaults to true. </param>
         /// <returns> A new <see cref="Models.DependenciesSignalGroupV2"/> instance for mocking. </returns>
-        public static DependenciesSignalGroupV2 DependenciesSignalGroupV2(DependenciesAggregationType aggregationType = default, double? degradedThreshold = default, double? unhealthyThreshold = default, DependenciesAggregationUnit? unit = default, bool? shouldIgnoreUnknown = default)
+        public static DependenciesSignalGroupV2 DependenciesSignalGroupV2(AggregationType aggregationType = default, double? degradedThreshold = default, double? unhealthyThreshold = default, AggregationUnit? unit = default, bool? shouldIgnoreUnknown = default)
         {
             return new DependenciesSignalGroupV2(
                 aggregationType,
@@ -537,6 +539,36 @@ namespace Azure.ResourceManager.CloudHealth.Models
                 unhealthyThreshold,
                 unit,
                 shouldIgnoreUnknown,
+                default);
+        }
+
+        /// <param name="name"> Name of the aggregation group. Unique within the entity. </param>
+        /// <param name="displayName"> Display name. </param>
+        /// <param name="aggregationType"> Aggregation strategy applied across the members of this group. </param>
+        /// <param name="members"> Names of signals on this entity which are members of the group. Members are matched by name; references to signals that do not currently exist on the entity are accepted (typically for pre-declared external signals) and surfaced via 'unresolvedMembers'. A signal may be listed in multiple groups; no duplicates within this list. </param>
+        /// <param name="degradedThreshold"> Degraded threshold for threshold-bearing strategies (MinHealthy, MaxNotHealthy). For MinHealthy: group is degraded when the healthy member count/percentage falls to or below this value. For MaxNotHealthy: group is degraded when the not-healthy member count/percentage reaches or exceeds this value. Optional — if not set, the group transitions directly between Healthy and Unhealthy. MUST NOT be set when aggregationType is WorstOf or BestOf. </param>
+        /// <param name="unhealthyThreshold"> Unhealthy threshold for threshold-bearing strategies. Required when aggregationType is MinHealthy or MaxNotHealthy; MUST NOT be set otherwise. </param>
+        /// <param name="unit"> Unit type for the thresholds. Required when aggregationType is MinHealthy or MaxNotHealthy; MUST NOT be set otherwise. </param>
+        /// <param name="shouldIgnoreUnknown"> If true (default), members reporting Unknown are excluded from the aggregation. For MinHealthy and MaxNotHealthy this flag affects the denominator/count and is meaningful. For WorstOf and BestOf the flag has no observable effect: under WorstOf, Unknown=0 is the lowest severity and can never beat any non-Unknown member in a Max() so filtering it changes nothing observable; under BestOf, Unknown is unconditionally excluded by the strategy itself irrespective of the flag. The flag is retained on the contract for vocabulary symmetry across all four strategies. </param>
+        /// <param name="aggregatedHealthState"> Computed aggregated health state of the group as of the last entity evaluation. Unknown if no resolvable members or all members filtered out. </param>
+        /// <param name="unresolvedMembers"> Members listed in 'members' that do not currently resolve to a signal on this entity at the time of the last entity evaluation. Treated as Unknown during aggregation. Empty/omitted when every member resolves. </param>
+        /// <returns> A new <see cref="Models.SignalAggregationGroup"/> instance for mocking. </returns>
+        public static SignalAggregationGroup SignalAggregationGroup(string name = default, string displayName = default, AggregationType? aggregationType = default, IEnumerable<string> members = default, double? degradedThreshold = default, double? unhealthyThreshold = default, AggregationUnit? unit = default, bool? shouldIgnoreUnknown = default, EntityHealthState? aggregatedHealthState = default, IEnumerable<string> unresolvedMembers = default)
+        {
+            members ??= new ChangeTrackingList<string>();
+            unresolvedMembers ??= new ChangeTrackingList<string>();
+
+            return new SignalAggregationGroup(
+                name,
+                displayName,
+                aggregationType,
+                (members ?? new ChangeTrackingList<string>()).ToList(),
+                degradedThreshold,
+                unhealthyThreshold,
+                unit,
+                shouldIgnoreUnknown,
+                aggregatedHealthState,
+                (unresolvedMembers ?? new ChangeTrackingList<string>()).ToList(),
                 default);
         }
 
