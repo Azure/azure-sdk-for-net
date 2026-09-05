@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Relay
         {
             TryGetApiVersion(ResourceType, out string relayPrivateLinkResourceApiVersion);
             _privateLinkResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", ResourceType.Namespace, Diagnostics);
-            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, relayPrivateLinkResourceApiVersion ?? "2024-01-01");
+            _privateLinkResourcesRestClient = new PrivateLinkResources(_privateLinkResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, relayPrivateLinkResourceApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
