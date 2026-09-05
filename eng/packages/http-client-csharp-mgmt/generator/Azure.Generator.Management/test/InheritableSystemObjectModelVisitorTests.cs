@@ -273,6 +273,107 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(propertyNames.Contains("CustomProp"), Is.True, "CustomProp should remain as model-specific property");
         }
 
+        [Test]
+        public void CustomCodeBaseTypeOverride_UsesCustomBaseTypeWithoutDroppingTrackedResourceProperties()
+        {
+            var resourceDataInputModel = InputFactory.Model(
+                "ResourceData",
+                properties: [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+
+            var trackedResourceInputModel = InputFactory.Model(
+                "TrackedResource",
+                properties: [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("location", InputPrimitiveType.String),
+                    InputFactory.Property("tags", InputPrimitiveType.String),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+
+            var inputModel = InputFactory.Model(
+                "MyTrackedModel",
+                properties: [
+                    InputFactory.Property("customProp", InputPrimitiveType.String),
+                ],
+                baseModel: trackedResourceInputModel,
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [resourceDataInputModel, trackedResourceInputModel, inputModel]);
+
+            var resourceDataType = new CSharpType(typeof(ResourceData));
+            var trackedResourceType = new CSharpType(typeof(TrackedResourceData));
+            var typeMap = ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap;
+            typeMap[resourceDataType] = new SystemObjectModelProvider(resourceDataType, resourceDataInputModel);
+            typeMap[trackedResourceType] = new SystemObjectModelProvider(trackedResourceType, trackedResourceInputModel);
+
+            var model = new ModelProvider(inputModel);
+            SetCustomCodeView(model, new ResourceDataCustomCodeView());
+
+            var visitor = new TestableInheritableSystemObjectModelVisitor();
+            var result = visitor.InvokePreVisitModel(inputModel, model);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result!.BaseType?.Name, Is.EqualTo(nameof(ResourceData)));
+
+            var propertyNames = result.Properties.Select(p => p.Name).ToList();
+            Assert.That(propertyNames.Contains("Location"), Is.True, "Location should be materialized from the TypeSpec base when the custom base is narrower");
+            Assert.That(propertyNames.Contains("Tags"), Is.True, "Tags should be materialized from the TypeSpec base when the custom base is narrower");
+            Assert.That(propertyNames.Contains("CustomProp"), Is.True, "CustomProp should remain");
+            Assert.That(propertyNames.Contains("Id"), Is.False, "Id should still be filtered because ResourceData already supplies it");
+        }
+
+        [Test]
+        public void CustomCodeBaseTypeOverride_WithoutTypeSpecBase_StillUsesCustomBaseForFiltering()
+        {
+            var resourceDataInputModel = InputFactory.Model(
+                "ResourceData",
+                properties: [
+                    InputFactory.Property("id", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("name", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("type", InputPrimitiveType.String, isReadOnly: true),
+                    InputFactory.Property("systemData", InputPrimitiveType.String, isReadOnly: true),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+
+            var inputModel = InputFactory.Model(
+                "MyCustomBaseModel",
+                properties: [
+                    InputFactory.Property("location", InputPrimitiveType.String),
+                    InputFactory.Property("tags", InputPrimitiveType.String),
+                    InputFactory.Property("customProp", InputPrimitiveType.String),
+                ],
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Json);
+
+            ManagementMockHelpers.LoadMockPlugin(inputModels: () => [resourceDataInputModel, inputModel]);
+
+            var resourceDataType = new CSharpType(typeof(ResourceData));
+            ManagementClientGenerator.Instance.TypeFactory.CSharpTypeMap[resourceDataType] =
+                new SystemObjectModelProvider(resourceDataType, resourceDataInputModel);
+
+            var model = new ModelProvider(inputModel);
+            SetCustomCodeView(model, new ResourceDataCustomCodeView());
+
+            var visitor = new TestableInheritableSystemObjectModelVisitor();
+            var result = visitor.InvokePreVisitModel(inputModel, model);
+
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result!.BaseType?.Name, Is.EqualTo(nameof(ResourceData)));
+
+            var propertyNames = result.Properties.Select(p => p.Name).ToList();
+            Assert.That(propertyNames.Contains("Location"), Is.True, "Location should remain when custom ResourceData base has no TypeSpec base");
+            Assert.That(propertyNames.Contains("Tags"), Is.True, "Tags should remain when custom ResourceData base has no TypeSpec base");
+            Assert.That(propertyNames.Contains("CustomProp"), Is.True, "CustomProp should remain");
+        }
+
         private static void SetCustomCodeView(TypeProvider typeProvider, TypeProvider customCodeTypeProvider)
         {
             typeProvider.GetType().BaseType!.GetField(
@@ -288,6 +389,13 @@ namespace Azure.Generator.Mgmt.Tests
         private class TrackedResourceDataCustomCodeView : TypeProvider
         {
             protected override CSharpType BuildBaseType() => new CSharpType(typeof(TrackedResourceData));
+            protected override string BuildName() => "MyTrackedModel";
+            protected override string BuildRelativeFilePath() => "MyTrackedModel.cs";
+        }
+
+        private class ResourceDataCustomCodeView : TypeProvider
+        {
+            protected override CSharpType BuildBaseType() => new CSharpType(typeof(ResourceData));
             protected override string BuildName() => "MyTrackedModel";
             protected override string BuildRelativeFilePath() => "MyTrackedModel.cs";
         }
