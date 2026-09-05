@@ -84,11 +84,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("sharedKey"u8);
                 writer.WriteStringValue(SharedKey);
             }
-            if (Optional.IsDefined(UseDynamicJsonColumns))
-            {
-                writer.WritePropertyName("dynamicJsonColumns"u8);
-                writer.WriteBooleanValue(UseDynamicJsonColumns.Value);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -133,7 +128,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             string customerId = default;
             string sharedKey = default;
-            bool? useDynamicJsonColumns = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,21 +141,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                     sharedKey = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("dynamicJsonColumns"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    useDynamicJsonColumns = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerAppLogAnalyticsConfiguration(customerId, sharedKey, useDynamicJsonColumns, additionalBinaryDataProperties);
+            return new ContainerAppLogAnalyticsConfiguration(customerId, sharedKey, additionalBinaryDataProperties);
         }
     }
 }

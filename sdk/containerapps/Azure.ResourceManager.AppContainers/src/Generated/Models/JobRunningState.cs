@@ -15,11 +15,11 @@ namespace Azure.ResourceManager.AppContainers.Models
     public readonly partial struct JobRunningState : IEquatable<JobRunningState>
     {
         private readonly string _value;
-        /// <summary> Ready. </summary>
+        /// <summary> The job is ready to run. </summary>
         private const string ReadyValue = "Ready";
-        /// <summary> Progressing. </summary>
+        /// <summary> The job is transitioning to its target state. </summary>
         private const string ProgressingValue = "Progressing";
-        /// <summary> Suspended. </summary>
+        /// <summary> The job is suspended. </summary>
         private const string SuspendedValue = "Suspended";
 
         /// <summary> Initializes a new instance of <see cref="JobRunningState"/>. </summary>
@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.AppContainers.Models
             _value = value;
         }
 
-        /// <summary> Ready. </summary>
+        /// <summary> The job is ready to run. </summary>
         public static JobRunningState Ready { get; } = new JobRunningState(ReadyValue);
 
-        /// <summary> Progressing. </summary>
+        /// <summary> The job is transitioning to its target state. </summary>
         public static JobRunningState Progressing { get; } = new JobRunningState(ProgressingValue);
 
-        /// <summary> Suspended. </summary>
+        /// <summary> The job is suspended. </summary>
         public static JobRunningState Suspended { get; } = new JobRunningState(SuspendedValue);
 
         /// <summary> Determines if two <see cref="JobRunningState"/> values are the same. </summary>

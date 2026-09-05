@@ -141,16 +141,6 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> Private Link Default Domain Name for the environment. </summary>
-        [WirePath("properties.privateLinkDefaultDomain")]
-        public string PrivateLinkDefaultDomain
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateLinkDefaultDomain;
-            }
-        }
-
         /// <summary> Static IP of the Environment. </summary>
         [WirePath("properties.staticIp")]
         public IPAddress StaticIP
@@ -212,20 +202,6 @@ namespace Azure.ResourceManager.AppContainers
                     Properties = new ManagedEnvironmentProperties();
                 }
                 Properties.IsZoneRedundant = value;
-            }
-        }
-
-        /// <summary> The list of availability zones to use for managed environment. </summary>
-        [WirePath("properties.availabilityZones")]
-        public IList<string> AvailabilityZones
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedEnvironmentProperties();
-                }
-                return Properties.AvailabilityZones;
             }
         }
 
@@ -304,6 +280,24 @@ namespace Azure.ResourceManager.AppContainers
                     Properties = new ManagedEnvironmentProperties();
                 }
                 Properties.IngressConfiguration = value;
+            }
+        }
+
+        /// <summary> Mode of the environment. Allowed Values: 'ConsumptionOnly', 'WorkloadProfiles', 'Express', 'Archived'. </summary>
+        [WirePath("properties.environmentMode")]
+        public ManagedEnvironmentMode? EnvironmentMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnvironmentMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedEnvironmentProperties();
+                }
+                Properties.EnvironmentMode = value;
             }
         }
 
@@ -410,24 +404,6 @@ namespace Azure.ResourceManager.AppContainers
                     Properties = new ManagedEnvironmentProperties();
                 }
                 Properties.IsEnabled = value;
-            }
-        }
-
-        /// <summary> The Key Vault that contains your key to use for disk encryption. The Key Vault must be in the same region as the Managed Environment. </summary>
-        [WirePath("properties.diskEncryptionConfiguration.keyVaultConfiguration")]
-        public DiskEncryptionConfigurationKeyVaultConfiguration DiskEncryptionKeyVaultConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DiskEncryptionKeyVaultConfiguration;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedEnvironmentProperties();
-                }
-                Properties.DiskEncryptionKeyVaultConfiguration = value;
             }
         }
     }

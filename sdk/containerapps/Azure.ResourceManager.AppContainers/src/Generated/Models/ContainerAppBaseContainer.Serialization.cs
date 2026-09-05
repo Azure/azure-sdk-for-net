@@ -79,11 +79,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (Optional.IsDefined(ImageType))
-            {
-                writer.WritePropertyName("imageType"u8);
-                writer.WriteStringValue(ImageType.Value.ToString());
-            }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -187,7 +182,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             string image = default;
-            ImageType? imageType = default;
             string name = default;
             IList<string> command = default;
             IList<string> args = default;
@@ -200,15 +194,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (prop.NameEquals("image"u8))
                 {
                     image = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("imageType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    imageType = new ImageType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -302,7 +287,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             return new ContainerAppBaseContainer(
                 image,
-                imageType,
                 name,
                 command ?? new ChangeTrackingList<string>(),
                 args ?? new ChangeTrackingList<string>(),

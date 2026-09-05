@@ -113,7 +113,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             string image = default;
-            ImageType? imageType = default;
             string name = default;
             IList<string> command = default;
             IList<string> args = default;
@@ -127,15 +126,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 if (prop.NameEquals("image"u8))
                 {
                     image = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("imageType"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    imageType = new ImageType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("name"u8))
@@ -243,7 +233,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             return new ContainerAppContainer(
                 image,
-                imageType,
                 name,
                 command ?? new ChangeTrackingList<string>(),
                 args ?? new ChangeTrackingList<string>(),

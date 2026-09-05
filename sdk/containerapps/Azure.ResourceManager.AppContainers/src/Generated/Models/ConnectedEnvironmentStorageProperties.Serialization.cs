@@ -89,11 +89,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("azureFile"u8);
                 writer.WriteObjectValue(AzureFile, options);
             }
-            if (Optional.IsDefined(Smb))
-            {
-                writer.WritePropertyName("smb"u8);
-                writer.WriteObjectValue(Smb, options);
-            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -139,7 +134,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             ConnectedEnvironmentStorageProvisioningState? provisioningState = default;
             string deploymentErrors = default;
             ContainerAppAzureFileProperties azureFile = default;
-            SmbStorage smb = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -166,21 +160,12 @@ namespace Azure.ResourceManager.AppContainers.Models
                     azureFile = ContainerAppAzureFileProperties.DeserializeContainerAppAzureFileProperties(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("smb"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    smb = SmbStorage.DeserializeSmbStorage(prop.Value, options);
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConnectedEnvironmentStorageProperties(provisioningState, deploymentErrors, azureFile, smb, additionalBinaryDataProperties);
+            return new ConnectedEnvironmentStorageProperties(provisioningState, deploymentErrors, azureFile, additionalBinaryDataProperties);
         }
     }
 }

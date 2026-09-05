@@ -86,11 +86,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("runningStatus"u8);
                 writer.WriteStringValue(RunningStatus.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(DeploymentErrors))
-            {
-                writer.WritePropertyName("deploymentErrors"u8);
-                writer.WriteStringValue(DeploymentErrors);
-            }
             if (Optional.IsDefined(ManagedEnvironmentId))
             {
                 writer.WritePropertyName("managedEnvironmentId"u8);
@@ -101,15 +96,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
+            if (Optional.IsDefined(Networking))
+            {
+                writer.WritePropertyName("networking"u8);
+                writer.WriteObjectValue(Networking, options);
+            }
             if (Optional.IsDefined(WorkloadProfileName))
             {
                 writer.WritePropertyName("workloadProfileName"u8);
                 writer.WriteStringValue(WorkloadProfileName);
-            }
-            if (Optional.IsDefined(PatchingConfiguration))
-            {
-                writer.WritePropertyName("patchingConfiguration"u8);
-                writer.WriteObjectValue(PatchingConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(LatestRevisionName))
             {
@@ -205,11 +200,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             ContainerAppProvisioningState? provisioningState = default;
             ContainerAppRunningStatus? runningStatus = default;
-            string deploymentErrors = default;
             ResourceIdentifier managedEnvironmentId = default;
             ResourceIdentifier environmentId = default;
+            ContainerAppNetworkingConfiguration networking = default;
             string workloadProfileName = default;
-            ContainerAppPropertiesPatchingConfiguration patchingConfiguration = default;
             string latestRevisionName = default;
             string latestReadyRevisionName = default;
             string latestRevisionFqdn = default;
@@ -239,11 +233,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                     runningStatus = new ContainerAppRunningStatus(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("deploymentErrors"u8))
-                {
-                    deploymentErrors = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("managedEnvironmentId"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -262,18 +251,18 @@ namespace Azure.ResourceManager.AppContainers.Models
                     environmentId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("workloadProfileName"u8))
-                {
-                    workloadProfileName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("patchingConfiguration"u8))
+                if (prop.NameEquals("networking"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    patchingConfiguration = ContainerAppPropertiesPatchingConfiguration.DeserializeContainerAppPropertiesPatchingConfiguration(prop.Value, options);
+                    networking = ContainerAppNetworkingConfiguration.DeserializeContainerAppNetworkingConfiguration(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("workloadProfileName"u8))
+                {
+                    workloadProfileName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("latestRevisionName"u8))
@@ -352,11 +341,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppProperties(
                 provisioningState,
                 runningStatus,
-                deploymentErrors,
                 managedEnvironmentId,
                 environmentId,
+                networking,
                 workloadProfileName,
-                patchingConfiguration,
                 latestRevisionName,
                 latestReadyRevisionName,
                 latestRevisionFqdn,
