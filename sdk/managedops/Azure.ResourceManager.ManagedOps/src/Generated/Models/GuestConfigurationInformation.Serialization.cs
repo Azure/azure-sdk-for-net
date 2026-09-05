@@ -14,7 +14,7 @@ using Azure.ResourceManager.ManagedOps;
 namespace Azure.ResourceManager.ManagedOps.Models
 {
     /// <summary> Azure Policy and Machine Configuration service information. </summary>
-    internal partial class GuestConfigurationInformation : IJsonModel<GuestConfigurationInformation>
+    public partial class GuestConfigurationInformation : IJsonModel<GuestConfigurationInformation>
     {
         /// <summary> Initializes a new instance of <see cref="GuestConfigurationInformation"/> for deserialization. </summary>
         internal GuestConfigurationInformation()
@@ -81,6 +81,11 @@ namespace Azure.ResourceManager.ManagedOps.Models
             }
             writer.WritePropertyName("enablementStatus"u8);
             writer.WriteStringValue(EnablementStatus.ToString());
+            if (Optional.IsDefined(ErrorDetails))
+            {
+                writer.WritePropertyName("errorDetails"u8);
+                writer.WriteObjectValue(ErrorDetails, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -124,6 +129,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
                 return null;
             }
             ManagedOpsEnablementStatus enablementStatus = default;
+            ErrorDetails errorDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -132,12 +138,21 @@ namespace Azure.ResourceManager.ManagedOps.Models
                     enablementStatus = new ManagedOpsEnablementStatus(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("errorDetails"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    errorDetails = ErrorDetails.DeserializeErrorDetails(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GuestConfigurationInformation(enablementStatus, additionalBinaryDataProperties);
+            return new GuestConfigurationInformation(enablementStatus, errorDetails, additionalBinaryDataProperties);
         }
     }
 }

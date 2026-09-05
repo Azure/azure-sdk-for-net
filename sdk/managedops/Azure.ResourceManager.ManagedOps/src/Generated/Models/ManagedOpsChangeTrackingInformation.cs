@@ -29,11 +29,13 @@ namespace Azure.ResourceManager.ManagedOps.Models
         /// <summary> Initializes a new instance of <see cref="ManagedOpsChangeTrackingInformation"/>. </summary>
         /// <param name="dcrId"> ID of Data Collection Rule (DCR) associated with this service. </param>
         /// <param name="enablementStatus"> Indicates whether the service is enabled. </param>
+        /// <param name="errorDetails"> Optional error message if the service is in Failed state. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedOpsChangeTrackingInformation(ResourceIdentifier dcrId, ManagedOpsEnablementStatus enablementStatus, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedOpsChangeTrackingInformation(ResourceIdentifier dcrId, ManagedOpsEnablementStatus enablementStatus, ErrorDetails errorDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DcrId = dcrId;
             EnablementStatus = enablementStatus;
+            ErrorDetails = errorDetails;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -42,5 +44,8 @@ namespace Azure.ResourceManager.ManagedOps.Models
 
         /// <summary> Indicates whether the service is enabled. </summary>
         public ManagedOpsEnablementStatus EnablementStatus { get; }
+
+        /// <summary> Optional error message if the service is in Failed state. </summary>
+        public ErrorDetails ErrorDetails { get; }
     }
 }

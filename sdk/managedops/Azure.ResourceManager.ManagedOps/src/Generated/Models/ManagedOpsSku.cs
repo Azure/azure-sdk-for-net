@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
         /// <summary> Initializes a new instance of <see cref="ManagedOpsSku"/>. </summary>
         /// <param name="name"> Name of the SKU. </param>
         /// <param name="tier"> Pricing tier of the SKU. </param>
-        internal ManagedOpsSku(string name, string tier)
+        public ManagedOpsSku(ManagedOpsSkuName name, ManagedOpsSkuTier tier)
         {
             Name = name;
             Tier = tier;
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
         /// <param name="name"> Name of the SKU. </param>
         /// <param name="tier"> Pricing tier of the SKU. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedOpsSku(string name, string tier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ManagedOpsSku(ManagedOpsSkuName name, ManagedOpsSkuTier tier, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Tier = tier;
@@ -37,9 +37,9 @@ namespace Azure.ResourceManager.ManagedOps.Models
         }
 
         /// <summary> Name of the SKU. </summary>
-        public string Name { get; }
+        public ManagedOpsSkuName Name { get; set; }
 
         /// <summary> Pricing tier of the SKU. </summary>
-        public string Tier { get; }
+        public ManagedOpsSkuTier Tier { get; set; }
     }
 }

@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagedOps.Models
             {
                 throw new FormatException($"The model {nameof(ManagedOpsProperties)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Sku))
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteObjectValue(Sku, options);
