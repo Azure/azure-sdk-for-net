@@ -14,52 +14,62 @@ using Azure.ResourceManager.ResilienceManagement;
 
 namespace Azure.ResourceManager.ResilienceManagement.Models
 {
-    /// <summary> MoboBroker resource. </summary>
-    public partial class ManagedBrokerTarget : IJsonModel<ManagedBrokerTarget>
+    /// <summary> Request body for Reprotect API. </summary>
+    public partial class DrillRunReprotectContent : IJsonModel<DrillRunReprotectContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedBrokerTarget PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DrillRunReprotectContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedBrokerTarget>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DrillRunReprotectContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeManagedBrokerTarget(document.RootElement, options);
+                        return DeserializeDrillRunReprotectContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedBrokerTarget)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DrillRunReprotectContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedBrokerTarget>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DrillRunReprotectContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerResilienceManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedBrokerTarget)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DrillRunReprotectContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ManagedBrokerTarget>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DrillRunReprotectContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedBrokerTarget IPersistableModel<ManagedBrokerTarget>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DrillRunReprotectContent IPersistableModel<DrillRunReprotectContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ManagedBrokerTarget>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DrillRunReprotectContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="drillRunReprotectContent"> The <see cref="DrillRunReprotectContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(DrillRunReprotectContent drillRunReprotectContent)
+        {
+            if (drillRunReprotectContent == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(drillRunReprotectContent, ModelSerializationExtensions.WireOptions);
+        }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ManagedBrokerTarget>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DrillRunReprotectContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -70,16 +80,13 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedBrokerTarget>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DrillRunReprotectContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedBrokerTarget)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DrillRunReprotectContent)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
+            writer.WritePropertyName("reprotectProperties"u8);
+            writer.WriteObjectValue(ReprotectProperties, options);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -99,40 +106,36 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ManagedBrokerTarget IJsonModel<ManagedBrokerTarget>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DrillRunReprotectContent IJsonModel<DrillRunReprotectContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ManagedBrokerTarget JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DrillRunReprotectContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ManagedBrokerTarget>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DrillRunReprotectContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedBrokerTarget)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DrillRunReprotectContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeManagedBrokerTarget(document.RootElement, options);
+            return DeserializeDrillRunReprotectContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ManagedBrokerTarget DeserializeManagedBrokerTarget(JsonElement element, ModelReaderWriterOptions options)
+        internal static DrillRunReprotectContent DeserializeDrillRunReprotectContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ResourceIdentifier id = default;
+            ReprotectContent reprotectProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
+                if (prop.NameEquals("reprotectProperties"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    id = new ResourceIdentifier(prop.Value.GetString());
+                    reprotectProperties = ReprotectContent.DeserializeReprotectContent(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -140,7 +143,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedBrokerTarget(id, additionalBinaryDataProperties);
+            return new DrillRunReprotectContent(reprotectProperties, additionalBinaryDataProperties);
         }
     }
 }

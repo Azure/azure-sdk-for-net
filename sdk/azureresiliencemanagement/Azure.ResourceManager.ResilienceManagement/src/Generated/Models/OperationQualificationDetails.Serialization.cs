@@ -96,6 +96,16 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(ResourceFeasibilityReviews))
+            {
+                writer.WritePropertyName("resourceFeasibilityReviews"u8);
+                writer.WriteStartArray();
+                foreach (ResourceFeasibilityReview item in ResourceFeasibilityReviews)
+                {
+                    writer.WriteObjectValue(item, options);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -140,6 +150,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             QualificationState qualificationState = default;
             IList<string> notQualifiedReasons = default;
+            IList<ResourceFeasibilityReview> resourceFeasibilityReviews = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -169,12 +180,26 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     notQualifiedReasons = array;
                     continue;
                 }
+                if (prop.NameEquals("resourceFeasibilityReviews"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResourceFeasibilityReview> array = new List<ResourceFeasibilityReview>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(ResourceFeasibilityReview.DeserializeResourceFeasibilityReview(item, options));
+                    }
+                    resourceFeasibilityReviews = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OperationQualificationDetails(qualificationState, notQualifiedReasons ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new OperationQualificationDetails(qualificationState, notQualifiedReasons ?? new ChangeTrackingList<string>(), resourceFeasibilityReviews ?? new ChangeTrackingList<ResourceFeasibilityReview>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -23,16 +23,19 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         {
             QualificationState = qualificationState;
             NotQualifiedReasons = new ChangeTrackingList<string>();
+            ResourceFeasibilityReviews = new ChangeTrackingList<ResourceFeasibilityReview>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationQualificationDetails"/>. </summary>
         /// <param name="qualificationState"> Resource qualification state for the operation. </param>
         /// <param name="notQualifiedReasons"> Reasons for resource not qualified for the operation. </param>
+        /// <param name="resourceFeasibilityReviews"> Advisory resource feasibility reviews. Absent when no review was evaluated for this resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationQualificationDetails(QualificationState qualificationState, IList<string> notQualifiedReasons, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationQualificationDetails(QualificationState qualificationState, IList<string> notQualifiedReasons, IList<ResourceFeasibilityReview> resourceFeasibilityReviews, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             QualificationState = qualificationState;
             NotQualifiedReasons = notQualifiedReasons;
+            ResourceFeasibilityReviews = resourceFeasibilityReviews;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -41,5 +44,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Reasons for resource not qualified for the operation. </summary>
         public IList<string> NotQualifiedReasons { get; }
+
+        /// <summary> Advisory resource feasibility reviews. Absent when no review was evaluated for this resource. </summary>
+        public IList<ResourceFeasibilityReview> ResourceFeasibilityReviews { get; }
     }
 }

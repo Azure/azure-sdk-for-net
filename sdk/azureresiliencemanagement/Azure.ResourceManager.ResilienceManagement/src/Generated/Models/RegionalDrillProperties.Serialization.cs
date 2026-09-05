@@ -118,9 +118,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             LastRunProperties lastRunProperties = default;
             DateTimeOffset? lastSyncOn = default;
             DateTimeOffset? lastResyncReadinessCheckOn = default;
-            ManagedOnBehalfOfConfiguration managedOnBehalfOfConfiguration = default;
             DrillType drillType = default;
             MonitoringPropertiesOfDrill monitoringProperties = default;
+            HealthModelMonitoringProperties healthModelMonitoringProperties = default;
+            SliMonitoringProperties sliMonitoringProperties = default;
             ResponseError errorDetails = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -242,15 +243,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     lastResyncReadinessCheckOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (prop.NameEquals("managedOnBehalfOfConfiguration"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    managedOnBehalfOfConfiguration = ManagedOnBehalfOfConfiguration.DeserializeManagedOnBehalfOfConfiguration(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("drillType"u8))
                 {
                     drillType = new DrillType(prop.Value.GetString());
@@ -263,6 +255,24 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                         continue;
                     }
                     monitoringProperties = MonitoringPropertiesOfDrill.DeserializeMonitoringPropertiesOfDrill(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("healthModelMonitoringProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    healthModelMonitoringProperties = HealthModelMonitoringProperties.DeserializeHealthModelMonitoringProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("sliMonitoringProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sliMonitoringProperties = SliMonitoringProperties.DeserializeSliMonitoringProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("errorDetails"u8))
@@ -293,9 +303,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 lastRunProperties,
                 lastSyncOn,
                 lastResyncReadinessCheckOn,
-                managedOnBehalfOfConfiguration,
                 drillType,
                 monitoringProperties,
+                healthModelMonitoringProperties,
+                sliMonitoringProperties,
                 errorDetails,
                 additionalBinaryDataProperties);
         }

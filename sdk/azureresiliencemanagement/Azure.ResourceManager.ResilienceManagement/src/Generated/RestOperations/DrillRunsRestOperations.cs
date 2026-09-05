@@ -134,13 +134,16 @@ namespace Azure.ResourceManager.ResilienceManagement
             request.Method = RequestMethod.Post;
             _userAgent.Apply(message);
             request.Headers.SetValue("operation-id", operationId);
-            request.Headers.SetValue("Content-Type", "application/json");
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json");
+            }
             request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
             return message;
         }
 
-        internal HttpMessage CreateReprotectRequest(string serviceGroupName, string drillName, string drillRunName, string operationId, RequestContext context)
+        internal HttpMessage CreateReprotectRequest(string serviceGroupName, string drillName, string drillRunName, string operationId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -161,7 +164,12 @@ namespace Azure.ResourceManager.ResilienceManagement
             request.Method = RequestMethod.Post;
             _userAgent.Apply(message);
             request.Headers.SetValue("operation-id", operationId);
+            if (content != null)
+            {
+                request.Headers.SetValue("Content-Type", "application/json");
+            }
             request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
 
@@ -228,6 +236,58 @@ namespace Azure.ResourceManager.ResilienceManagement
             uri.AppendPath("/drillRuns/", false);
             uri.AppendPath(drillRunName, true);
             uri.AppendPath("/markAsComplete", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("operation-id", operationId);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateGenerateReportRequest(string serviceGroupName, string drillName, string drillRunName, string operationId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
+            uri.AppendPath(serviceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureResilienceManagement/drills/", false);
+            uri.AppendPath(drillName, true);
+            uri.AppendPath("/drillRuns/", false);
+            uri.AppendPath(drillRunName, true);
+            uri.AppendPath("/generateReport", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("operation-id", operationId);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetReportDownloadUriRequest(string serviceGroupName, string drillName, string drillRunName, string operationId, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
+            uri.AppendPath(serviceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.AzureResilienceManagement/drills/", false);
+            uri.AppendPath(drillName, true);
+            uri.AppendPath("/drillRuns/", false);
+            uri.AppendPath(drillRunName, true);
+            uri.AppendPath("/listReportDownloadUrl", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);

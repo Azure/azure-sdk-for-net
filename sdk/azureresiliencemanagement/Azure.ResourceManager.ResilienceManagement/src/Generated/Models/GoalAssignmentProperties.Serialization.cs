@@ -19,11 +19,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
     /// <summary> Definition of goal assignment property. </summary>
     public partial class GoalAssignmentProperties : IJsonModel<GoalAssignmentProperties>
     {
-        /// <summary> Initializes a new instance of <see cref="GoalAssignmentProperties"/> for deserialization. </summary>
-        internal GoalAssignmentProperties()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual GoalAssignmentProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -82,10 +77,21 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 throw new FormatException($"The model {nameof(GoalAssignmentProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("goalTemplateId"u8);
-            writer.WriteStringValue(GoalTemplateId);
-            writer.WritePropertyName("goalAssignmentType"u8);
-            writer.WriteStringValue(GoalAssignmentType.ToString());
+            if (Optional.IsDefined(GoalTemplateId))
+            {
+                writer.WritePropertyName("goalTemplateId"u8);
+                writer.WriteStringValue(GoalTemplateId);
+            }
+            if (Optional.IsDefined(GoalAssignmentType))
+            {
+                writer.WritePropertyName("goalAssignmentType"u8);
+                writer.WriteStringValue(GoalAssignmentType.Value.ToString());
+            }
+            if (Optional.IsDefined(RequireZonalResiliency))
+            {
+                writer.WritePropertyName("requireZonalResiliency"u8);
+                writer.WriteBooleanValue(RequireZonalResiliency.Value);
+            }
             if (Optional.IsCollectionDefined(ServiceLevelResources))
             {
                 writer.WritePropertyName("serviceLevelResources"u8);
@@ -149,7 +155,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             ResourceIdentifier goalTemplateId = default;
-            GoalAssignmentType goalAssignmentType = default;
+            GoalAssignmentType? goalAssignmentType = default;
+            bool? requireZonalResiliency = default;
             IList<ServiceLevelTarget> serviceLevelResources = default;
             ResilienceManagementProvisioningState? provisioningState = default;
             ResponseError errorDetails = default;
@@ -158,12 +165,29 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 if (prop.NameEquals("goalTemplateId"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     goalTemplateId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("goalAssignmentType"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     goalAssignmentType = new GoalAssignmentType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("requireZonalResiliency"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    requireZonalResiliency = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("serviceLevelResources"u8))
@@ -206,6 +230,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             return new GoalAssignmentProperties(
                 goalTemplateId,
                 goalAssignmentType,
+                requireZonalResiliency,
                 serviceLevelResources ?? new ChangeTrackingList<ServiceLevelTarget>(),
                 provisioningState,
                 errorDetails,
