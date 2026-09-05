@@ -129,6 +129,11 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WritePropertyName("endDate"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
+            if (Optional.IsDefined(RepeatInterval))
+            {
+                writer.WritePropertyName("repeatInterval"u8);
+                writer.WriteStringValue(RepeatInterval);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -179,6 +184,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             IList<int> daysOfMonth = default;
             string cronExpression = default;
             DateTimeOffset? endOn = default;
+            string repeatInterval = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -267,6 +273,11 @@ namespace Azure.ResourceManager.StorageMover.Models
                     endOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (prop.NameEquals("repeatInterval"u8))
+                {
+                    repeatInterval = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -281,6 +292,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 daysOfMonth ?? new ChangeTrackingList<int>(),
                 cronExpression,
                 endOn,
+                repeatInterval,
                 additionalBinaryDataProperties);
         }
     }

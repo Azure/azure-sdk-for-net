@@ -89,6 +89,11 @@ namespace Azure.ResourceManager.StorageMover.Models
             }
             writer.WritePropertyName("export"u8);
             writer.WriteStringValue(Export);
+            if (Optional.IsDefined(SourceType))
+            {
+                writer.WritePropertyName("sourceType"u8);
+                writer.WriteStringValue(SourceType.Value.ToString());
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -124,6 +129,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             string host = default;
             NfsVersion? nfsVersion = default;
             string export = default;
+            NfsMountSourceType? sourceType = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("endpointType"u8))
@@ -173,6 +179,15 @@ namespace Azure.ResourceManager.StorageMover.Models
                     export = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("sourceType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sourceType = new NfsMountSourceType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -186,7 +201,8 @@ namespace Azure.ResourceManager.StorageMover.Models
                 additionalBinaryDataProperties,
                 host,
                 nfsVersion,
-                export);
+                export,
+                sourceType);
         }
     }
 }

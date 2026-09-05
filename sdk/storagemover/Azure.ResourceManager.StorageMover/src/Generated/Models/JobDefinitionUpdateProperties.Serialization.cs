@@ -115,6 +115,16 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteObjectValue(Schedule, options);
             }
+            if (Optional.IsDefined(SyncMode))
+            {
+                writer.WritePropertyName("syncMode"u8);
+                writer.WriteStringValue(SyncMode);
+            }
+            if (Optional.IsDefined(MoverSyncedUntil))
+            {
+                writer.WritePropertyName("moverSyncedUntil"u8);
+                writer.WriteStringValue(MoverSyncedUntil.Value, "O");
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -163,6 +173,8 @@ namespace Azure.ResourceManager.StorageMover.Models
             IList<ResourceIdentifier> connections = default;
             StorageMoverDataIntegrityValidation? dataIntegrityValidation = default;
             StorageMoverScheduleInfo schedule = default;
+            string syncMode = default;
+            DateTimeOffset? moverSyncedUntil = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -224,6 +236,20 @@ namespace Azure.ResourceManager.StorageMover.Models
                     schedule = StorageMoverScheduleInfo.DeserializeStorageMoverScheduleInfo(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("syncMode"u8))
+                {
+                    syncMode = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("moverSyncedUntil"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    moverSyncedUntil = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -236,6 +262,8 @@ namespace Azure.ResourceManager.StorageMover.Models
                 connections ?? new ChangeTrackingList<ResourceIdentifier>(),
                 dataIntegrityValidation,
                 schedule,
+                syncMode,
+                moverSyncedUntil,
                 additionalBinaryDataProperties);
         }
     }
