@@ -155,6 +155,10 @@ steps:
         $(DiagnosticArguments)
       displayName: "Build and Package Service Directory"
 
+  - template: /eng/pipelines/templates/steps/sdk-api-changes.yml
+    parameters:
+      Mode: collect
+
   # save package properties again, this time honoring the dev version number
   - ${{ if ne(parameters.ServiceDirectory, 'auto') }}:
     - template: /eng/common/pipelines/templates/steps/save-package-properties.yml
@@ -219,3 +223,7 @@ steps:
   - template: /eng/common/pipelines/templates/steps/validate-all-packages.yml
     parameters:
       Artifacts: ${{ parameters.Artifacts }}
+
+  - template: /eng/pipelines/templates/steps/sdk-api-changes.yml
+    parameters:
+      Mode: enforce

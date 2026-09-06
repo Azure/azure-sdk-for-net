@@ -215,6 +215,44 @@ jobs:
         - pwsh: ./eng/scripts/Test-NoWarnValidation.ps1
           displayName: Validate NoWarn enforcement targets
 
+        - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
+          - task: NuGetAuthenticate@1
+
+          - task: UseDotNet@2
+            displayName: Use .NET 8 SDK for compatibility fixtures
+            retryCountOnTaskFailure: 3
+            inputs:
+              packageType: sdk
+              performMultiLevelLookup: true
+              version: "8.0.x"
+
+          - pwsh: |
+              . (Join-Path "$(Build.SourcesDirectory)" eng common scripts Helpers PSModule-Helpers.ps1)
+              Install-ModuleIfNotInstalled "powershell-yaml" "0.4.7" | Import-Module
+            displayName: Install compatibility test YAML dependency
+
+          - template: /eng/common/pipelines/templates/steps/run-pester-tests.yml
+            parameters:
+              TargetDirectory: eng/scripts/compatibility
+              CustomTestSteps:
+                - pwsh: |
+                    $config = New-PesterConfiguration
+                    $config.Run.Path = @('tests', 'ci-tests')
+                    $config.Run.PassThru = $true
+                    $config.Run.Exit = $true
+                    $config.TestResult.Enabled = $true
+                    $config.CodeCoverage.Enabled = $true
+                    $config.CodeCoverage.Path = @(
+                      'Get-SdkChanges.ps1',
+                      'Get-SdkChanges.Helpers.ps1',
+                      'Invoke-SdkChangesCI.ps1',
+                      'Assert-SdkChangesCI.ps1',
+                      'SdkChangesCI.Helpers.ps1'
+                    )
+                    Invoke-Pester -Configuration $config
+                  displayName: Test SDK API extraction and CI reporting
+                  workingDirectory: $(Build.SourcesDirectory)/eng/scripts/compatibility
+
     - template: /eng/common/pipelines/templates/jobs/generate-job-matrix.yml
       parameters:
         GenerateJobName: generate_target_service_test_matrix
