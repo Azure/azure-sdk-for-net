@@ -17886,56 +17886,6 @@ namespace Azure.ResourceManager.Network.Models
             return new PrivateDnsZoneGroupData(id, default, name, default, provisioningState is null && privateDnsZoneConfigs is null ? default : new PrivateDnsZoneGroupPropertiesFormat(provisioningState, (privateDnsZoneConfigs ?? new ChangeTrackingList<PrivateDnsZoneConfig>()).ToList(), default));
         }
 
-        /// <summary> Initializes a new instance of <see cref="Network.PublicIPPrefixData"/>. </summary>
-        /// <param name="id"> Resource ID. </param>
-        /// <param name="name"> Resource name. </param>
-        /// <param name="resourceType"> Resource type. </param>
-        /// <param name="location"> Resource location. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="extendedLocation"> The extended location of the public ip address. </param>
-        /// <param name="sku"> The public IP prefix SKU. </param>
-        /// <param name="etag"> A unique read-only string that changes whenever the resource is updated. </param>
-        /// <param name="zones"> A list of availability zones denoting the IP allocated for the resource needs to come from. </param>
-        /// <param name="publicIPAddressVersion"> The public IP address version. </param>
-        /// <param name="ipTags"> The list of tags associated with the public IP prefix. </param>
-        /// <param name="prefixLength"> The Length of the Public IP Prefix. </param>
-        /// <param name="ipPrefix"> The allocated Prefix. </param>
-        /// <param name="publicIPAddresses"> The list of all referenced PublicIPAddresses. </param>
-        /// <param name="loadBalancerFrontendIPConfigurationId"> The reference to load balancer frontend IP configuration associated with the public IP prefix. </param>
-        /// <param name="customIPPrefixId"> The customIpPrefix that this prefix is associated with. </param>
-        /// <param name="resourceGuid"> The resource GUID property of the public IP prefix resource. </param>
-        /// <param name="provisioningState"> The provisioning state of the public IP prefix resource. </param>
-        /// <param name="natGateway"> NatGateway of Public IP Prefix. </param>
-        /// <returns> A new <see cref="Network.PublicIPPrefixData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static PublicIPPrefixData PublicIPPrefixData(ResourceIdentifier id = default, string name = default, ResourceType? resourceType = default, AzureLocation? location = default, IDictionary<string, string> tags = default, ExtendedLocation extendedLocation = default, PublicIPPrefixSku sku = default, ETag? etag = default, IEnumerable<string> zones = default, NetworkIPVersion? publicIPAddressVersion = default, IEnumerable<IPTag> ipTags = default, int? prefixLength = default, string ipPrefix = default, IEnumerable<SubResource> publicIPAddresses = default, ResourceIdentifier loadBalancerFrontendIPConfigurationId = default, ResourceIdentifier customIPPrefixId = default, Guid? resourceGuid = default, NetworkProvisioningState? provisioningState = default, NatGatewayData natGateway = default)
-        {
-            return new PublicIPPrefixData(
-                id,
-                name,
-                default,
-                location,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                default,
-                publicIPAddressVersion is null && ipTags is null && prefixLength is null && ipPrefix is null && loadBalancerFrontendIPConfigurationId is null && customIPPrefixId is null && resourceGuid is null && provisioningState is null && natGateway is null ? default : new PublicIPPrefixPropertiesFormat(
-                    publicIPAddressVersion,
-                    (ipTags ?? new ChangeTrackingList<IPTag>()).ToList(),
-                    prefixLength,
-                    ipPrefix,
-                    default,
-                    new NetworkSubResource(loadBalancerFrontendIPConfigurationId, default),
-                    new NetworkSubResource(customIPPrefixId, default),
-                    resourceGuid,
-                    provisioningState,
-                    natGateway,
-                    default,
-                    default),
-                extendedLocation,
-                sku,
-                etag,
-                (zones ?? new ChangeTrackingList<string>()).ToList());
-        }
-
         /// <summary> Initializes a new instance of <see cref="Network.RouteFilterData"/>. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
