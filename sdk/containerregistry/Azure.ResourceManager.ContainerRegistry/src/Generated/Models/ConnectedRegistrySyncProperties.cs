@@ -19,14 +19,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ConnectedRegistrySyncProperties"/>. </summary>
-        /// <param name="tokenId"> The resource ID of the ACR token used to authenticate the connected registry to its parent during sync. </param>
         /// <param name="messageTtl"> The period of time for which a message is available to sync before it is expired. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="tokenId"/> is null. </exception>
-        public ConnectedRegistrySyncProperties(ResourceIdentifier tokenId, TimeSpan messageTtl)
+        public ConnectedRegistrySyncProperties(TimeSpan messageTtl)
         {
-            Argument.AssertNotNull(tokenId, nameof(tokenId));
-
-            TokenId = tokenId;
             MessageTtl = messageTtl;
         }
 
@@ -37,8 +32,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="messageTtl"> The period of time for which a message is available to sync before it is expired. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
         /// <param name="lastSyncOn"> The last time a sync occurred between the connected registry and its parent. </param>
         /// <param name="gatewayEndpoint"> The gateway endpoint used by the connected registry to communicate with its parent. </param>
+        /// <param name="authType"> The authentication type used for the connected registry to sync with its parent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedRegistrySyncProperties(ResourceIdentifier tokenId, string schedule, TimeSpan? syncWindow, TimeSpan messageTtl, DateTimeOffset? lastSyncOn, string gatewayEndpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedRegistrySyncProperties(ResourceIdentifier tokenId, string schedule, TimeSpan? syncWindow, TimeSpan messageTtl, DateTimeOffset? lastSyncOn, string gatewayEndpoint, AuthType? authType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             TokenId = tokenId;
             Schedule = schedule;
@@ -46,7 +42,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             MessageTtl = messageTtl;
             LastSyncOn = lastSyncOn;
             GatewayEndpoint = gatewayEndpoint;
+            AuthType = authType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ConnectedRegistrySyncProperties"/>. </summary>
+        /// <param name="tokenId"> The resource ID of the ACR token used to authenticate the connected registry to its parent during sync. </param>
+        /// <param name="messageTtl"> The period of time for which a message is available to sync before it is expired. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
+        public ConnectedRegistrySyncProperties(ResourceIdentifier tokenId, TimeSpan messageTtl) : this(messageTtl)
+        {
+            TokenId = tokenId;
         }
 
         /// <summary> The resource ID of the ACR token used to authenticate the connected registry to its parent during sync. </summary>
@@ -72,5 +77,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The gateway endpoint used by the connected registry to communicate with its parent. </summary>
         [WirePath("gatewayEndpoint")]
         public string GatewayEndpoint { get; }
+
+        /// <summary> The authentication type used for the connected registry to sync with its parent. </summary>
+        [WirePath("authType")]
+        public AuthType? AuthType { get; set; }
     }
 }

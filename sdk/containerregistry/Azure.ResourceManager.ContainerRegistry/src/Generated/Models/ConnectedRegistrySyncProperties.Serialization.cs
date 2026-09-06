@@ -80,8 +80,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 throw new FormatException($"The model {nameof(ConnectedRegistrySyncProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("tokenId"u8);
-            writer.WriteStringValue(TokenId);
+            if (Optional.IsDefined(TokenId))
+            {
+                writer.WritePropertyName("tokenId"u8);
+                writer.WriteStringValue(TokenId);
+            }
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
@@ -103,6 +106,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 writer.WritePropertyName("gatewayEndpoint"u8);
                 writer.WriteStringValue(GatewayEndpoint);
+            }
+            if (Optional.IsDefined(AuthType))
+            {
+                writer.WritePropertyName("authType"u8);
+                writer.WriteStringValue(AuthType.Value.ToString());
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -152,11 +160,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             TimeSpan messageTtl = default;
             DateTimeOffset? lastSyncOn = default;
             string gatewayEndpoint = default;
+            AuthType? authType = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("tokenId"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     tokenId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
@@ -193,6 +206,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     gatewayEndpoint = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("authType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authType = new AuthType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -205,6 +227,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 messageTtl,
                 lastSyncOn,
                 gatewayEndpoint,
+                authType,
                 additionalBinaryDataProperties);
         }
     }

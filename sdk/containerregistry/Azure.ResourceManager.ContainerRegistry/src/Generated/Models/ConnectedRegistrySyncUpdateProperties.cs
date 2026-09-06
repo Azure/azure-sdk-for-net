@@ -26,12 +26,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="schedule"> The cron expression indicating the schedule that the connected registry will sync with its parent. </param>
         /// <param name="syncWindow"> The time window during which sync is enabled for each schedule occurrence. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
         /// <param name="messageTtl"> The period of time for which a message is available to sync before it is expired. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
+        /// <param name="authType"> The authentication type used for the connected registry to sync with its parent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConnectedRegistrySyncUpdateProperties(string schedule, TimeSpan? syncWindow, TimeSpan? messageTtl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConnectedRegistrySyncUpdateProperties(string schedule, TimeSpan? syncWindow, TimeSpan? messageTtl, AuthType? authType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Schedule = schedule;
             SyncWindow = syncWindow;
             MessageTtl = messageTtl;
+            AuthType = authType;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -46,5 +48,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <summary> The period of time for which a message is available to sync before it is expired. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </summary>
         [WirePath("messageTtl")]
         public TimeSpan? MessageTtl { get; set; }
+
+        /// <summary> The authentication type used for the connected registry to sync with its parent. </summary>
+        [WirePath("authType")]
+        public AuthType? AuthType { get; set; }
     }
 }
