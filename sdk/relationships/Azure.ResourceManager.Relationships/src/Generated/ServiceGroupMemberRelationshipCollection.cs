@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -20,7 +22,7 @@ namespace Azure.ResourceManager.Relationships
     /// Each <see cref="ServiceGroupMemberRelationshipResource"/> in the collection will belong to the same instance of <see cref="ArmResource"/>.
     /// To get a <see cref="ServiceGroupMemberRelationshipCollection"/> instance call the GetServiceGroupMemberRelationships method from an instance of <see cref="ArmResource"/>.
     /// </summary>
-    public partial class ServiceGroupMemberRelationshipCollection : ArmCollection
+    public partial class ServiceGroupMemberRelationshipCollection : ArmCollection, IEnumerable<ServiceGroupMemberRelationshipResource>, IAsyncEnumerable<ServiceGroupMemberRelationshipResource>
     {
         private readonly ClientDiagnostics _serviceGroupMemberRelationshipsClientDiagnostics;
         private readonly ServiceGroupMemberRelationships _serviceGroupMemberRelationshipsRestClient;
@@ -37,7 +39,7 @@ namespace Azure.ResourceManager.Relationships
         {
             TryGetApiVersion(ServiceGroupMemberRelationshipResource.ResourceType, out string serviceGroupMemberRelationshipApiVersion);
             _serviceGroupMemberRelationshipsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relationships", ServiceGroupMemberRelationshipResource.ResourceType.Namespace, Diagnostics);
-            _serviceGroupMemberRelationshipsRestClient = new ServiceGroupMemberRelationships(_serviceGroupMemberRelationshipsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGroupMemberRelationshipApiVersion ?? "2023-09-01-preview");
+            _serviceGroupMemberRelationshipsRestClient = new ServiceGroupMemberRelationships(_serviceGroupMemberRelationshipsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, serviceGroupMemberRelationshipApiVersion ?? "2026-08-01");
         }
 
         /// <summary>
@@ -53,7 +55,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -111,7 +113,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -169,7 +171,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -218,7 +220,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -255,6 +257,62 @@ namespace Azure.ResourceManager.Relationships
         }
 
         /// <summary>
+        /// List ServiceGroupMemberRelationship resources by parent
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGroupMemberRelationships_ListByParent. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceGroupMemberRelationshipResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ServiceGroupMemberRelationshipResource> GetAllAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ServiceGroupMemberRelationshipData, ServiceGroupMemberRelationshipResource>(new ServiceGroupMemberRelationshipsGetByParentAsyncCollectionResultOfT(_serviceGroupMemberRelationshipsRestClient, Id.ToString(), context, "ServiceGroupMemberRelationshipCollection.GetAll"), data => new ServiceGroupMemberRelationshipResource(Client, data));
+        }
+
+        /// <summary>
+        /// List ServiceGroupMemberRelationship resources by parent
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /{resourceUri}/providers/Microsoft.Relationships/serviceGroupMember. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> ServiceGroupMemberRelationships_ListByParent. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-08-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="ServiceGroupMemberRelationshipResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ServiceGroupMemberRelationshipResource> GetAll(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ServiceGroupMemberRelationshipData, ServiceGroupMemberRelationshipResource>(new ServiceGroupMemberRelationshipsGetByParentCollectionResultOfT(_serviceGroupMemberRelationshipsRestClient, Id.ToString(), context, "ServiceGroupMemberRelationshipCollection.GetAll"), data => new ServiceGroupMemberRelationshipResource(Client, data));
+        }
+
+        /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
@@ -267,7 +325,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -324,7 +382,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -381,7 +439,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -442,7 +500,7 @@ namespace Azure.ResourceManager.Relationships
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2023-09-01-preview. </description>
+        /// <description> 2026-08-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -488,6 +546,22 @@ namespace Azure.ResourceManager.Relationships
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        IEnumerator<ServiceGroupMemberRelationshipResource> IEnumerable<ServiceGroupMemberRelationshipResource>.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetAll().GetEnumerator();
+        }
+
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        IAsyncEnumerator<ServiceGroupMemberRelationshipResource> IAsyncEnumerable<ServiceGroupMemberRelationshipResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        {
+            return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }
     }
 }

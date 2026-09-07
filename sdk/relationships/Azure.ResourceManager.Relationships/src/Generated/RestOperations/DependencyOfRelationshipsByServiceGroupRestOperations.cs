@@ -12,30 +12,30 @@ using Azure.Core.Pipeline;
 
 namespace Azure.ResourceManager.Relationships
 {
-    internal partial class ServiceGroupMemberRelationships
+    internal partial class DependencyOfRelationshipsByServiceGroup
     {
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
         private readonly TelemetryDetails _userAgent;
 
-        /// <summary> Initializes a new instance of ServiceGroupMemberRelationships for mocking. </summary>
-        protected ServiceGroupMemberRelationships()
+        /// <summary> Initializes a new instance of DependencyOfRelationshipsByServiceGroup for mocking. </summary>
+        protected DependencyOfRelationshipsByServiceGroup()
         {
         }
 
-        /// <summary> Initializes a new instance of ServiceGroupMemberRelationships. </summary>
+        /// <summary> Initializes a new instance of DependencyOfRelationshipsByServiceGroup. </summary>
         /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
         /// <param name="endpoint"> Service endpoint. </param>
         /// <param name="apiVersion"></param>
-        internal ServiceGroupMemberRelationships(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
+        internal DependencyOfRelationshipsByServiceGroup(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _endpoint = endpoint;
             Pipeline = pipeline;
             _apiVersion = apiVersion;
-            _userAgent = new TelemetryDetails(typeof(ServiceGroupMemberRelationships).Assembly, applicationId);
+            _userAgent = new TelemetryDetails(typeof(DependencyOfRelationshipsByServiceGroup).Assembly, applicationId);
         }
 
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
@@ -44,13 +44,34 @@ namespace Azure.ResourceManager.Relationships
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateCreateOrUpdateRequest(string resourceUri, string name, RequestContent content, RequestContext context)
+        internal HttpMessage CreateGetRequest(string serviceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/Microsoft.Relationships/serviceGroupMember/", false);
+            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
+            uri.AppendPath(serviceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Relationships/dependencyOf/", false);
+            uri.AppendPath(name, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateCreateOrUpdateRequest(string serviceGroupName, string name, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
+            uri.AppendPath(serviceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Relationships/dependencyOf/", false);
             uri.AppendPath(name, true);
             if (_apiVersion != null)
             {
@@ -67,34 +88,13 @@ namespace Azure.ResourceManager.Relationships
             return message;
         }
 
-        internal HttpMessage CreateGetRequest(string resourceUri, string name, RequestContext context)
+        internal HttpMessage CreateDeleteRequest(string serviceGroupName, string name, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/Microsoft.Relationships/serviceGroupMember/", false);
-            uri.AppendPath(name, true);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage();
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Get;
-            _userAgent.Apply(message);
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string resourceUri, string name, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/Microsoft.Relationships/serviceGroupMember/", false);
+            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
+            uri.AppendPath(serviceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Relationships/dependencyOf/", false);
             uri.AppendPath(name, true);
             if (_apiVersion != null)
             {
@@ -108,13 +108,13 @@ namespace Azure.ResourceManager.Relationships
             return message;
         }
 
-        internal HttpMessage CreateGetByParentRequest(string resourceUri, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(string serviceGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
-            uri.AppendPath("/", false);
-            uri.AppendPath(resourceUri, false);
-            uri.AppendPath("/providers/Microsoft.Relationships/serviceGroupMember", false);
+            uri.AppendPath("/providers/Microsoft.Management/serviceGroups/", false);
+            uri.AppendPath(serviceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.Relationships/dependencyOf", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Relationships
             return message;
         }
 
-        internal HttpMessage CreateNextGetByParentRequest(Uri nextPage, string resourceUri, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string serviceGroupName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
