@@ -94,6 +94,11 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WritePropertyName("pollingInterval"u8);
                 writer.WriteNumberValue(PollingInterval.Value);
             }
+            if (Optional.IsDefined(AllowScalingRuleOverride))
+            {
+                writer.WritePropertyName("allowScalingRuleOverride"u8);
+                writer.WriteBooleanValue(AllowScalingRuleOverride.Value);
+            }
             if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
@@ -150,6 +155,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             int? maxReplicas = default;
             int? cooldownPeriod = default;
             int? pollingInterval = default;
+            bool? allowScalingRuleOverride = default;
             IList<ContainerAppScaleRule> rules = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -190,6 +196,15 @@ namespace Azure.ResourceManager.AppContainers.Models
                     pollingInterval = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("allowScalingRuleOverride"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    allowScalingRuleOverride = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (prop.NameEquals("rules"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -214,6 +229,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 maxReplicas,
                 cooldownPeriod,
                 pollingInterval,
+                allowScalingRuleOverride,
                 rules ?? new ChangeTrackingList<ContainerAppScaleRule>(),
                 additionalBinaryDataProperties);
         }

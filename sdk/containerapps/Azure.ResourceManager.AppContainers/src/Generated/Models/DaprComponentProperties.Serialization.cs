@@ -134,16 +134,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsCollectionDefined(ServiceComponentBind))
-            {
-                writer.WritePropertyName("serviceComponentBind"u8);
-                writer.WriteStartArray();
-                foreach (DaprComponentServiceBinding item in ServiceComponentBind)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
-            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -204,7 +194,6 @@ namespace Azure.ResourceManager.AppContainers.Models
             string secretStoreComponent = default;
             IList<ContainerAppDaprMetadata> metadata = default;
             IList<string> scopes = default;
-            IList<DaprComponentServiceBinding> serviceComponentBind = default;
             DaprComponentProvisioningState? provisioningState = default;
             string deploymentErrors = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -288,20 +277,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                     scopes = array;
                     continue;
                 }
-                if (prop.NameEquals("serviceComponentBind"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<DaprComponentServiceBinding> array = new List<DaprComponentServiceBinding>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(DaprComponentServiceBinding.DeserializeDaprComponentServiceBinding(item, options));
-                    }
-                    serviceComponentBind = array;
-                    continue;
-                }
                 if (prop.NameEquals("provisioningState"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -330,7 +305,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 secretStoreComponent,
                 metadata ?? new ChangeTrackingList<ContainerAppDaprMetadata>(),
                 scopes ?? new ChangeTrackingList<string>(),
-                serviceComponentBind ?? new ChangeTrackingList<DaprComponentServiceBinding>(),
                 provisioningState,
                 deploymentErrors,
                 additionalBinaryDataProperties);

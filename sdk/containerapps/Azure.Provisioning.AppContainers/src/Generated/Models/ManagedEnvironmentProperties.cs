@@ -20,13 +20,11 @@ namespace Azure.Provisioning.AppContainers
         private ContainerAppVnetConfiguration _vnetConfiguration;
         private BicepValue<string> _deploymentErrors;
         private BicepValue<string> _defaultDomain;
-        private BicepValue<string> _privateLinkDefaultDomain;
         private BicepValue<IPAddress> _staticIP;
         private ContainerAppLogsConfiguration _appLogsConfiguration;
         private AppInsightsConfiguration _appInsightsConfiguration;
         private OpenTelemetryConfiguration _openTelemetryConfiguration;
         private BicepValue<bool> _isZoneRedundant;
-        private BicepList<string> _availabilityZones;
         private ContainerAppCustomDomainConfiguration _customDomainConfiguration;
         private BicepValue<string> _eventStreamEndpoint;
         private BicepList<ContainerAppWorkloadProfile> _workloadProfiles;
@@ -36,9 +34,9 @@ namespace Azure.Provisioning.AppContainers
         private ManagedEnvironmentPropertiesPeerAuthentication _peerAuthentication;
         private ManagedEnvironmentPropertiesPeerTrafficConfiguration _peerTrafficConfiguration;
         private ManagedEnvironmentIngressConfiguration _ingressConfiguration;
-        private BicepList<ContainerAppPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepValue<ManagedEnvironmentMode> _environmentMode;
+        private BicepList<ContainerAppContainerPrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<ContainerAppPublicNetworkAccess> _publicNetworkAccess;
-        private DiskEncryptionConfiguration _diskEncryptionConfiguration;
 
         /// <summary> Creates a new ManagedEnvironmentProperties. </summary>
         public ManagedEnvironmentProperties()
@@ -120,16 +118,6 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
-        /// <summary> Gets the PrivateLinkDefaultDomain. </summary>
-        public BicepValue<string> PrivateLinkDefaultDomain
-        {
-            get
-            {
-                Initialize();
-                return _privateLinkDefaultDomain;
-            }
-        }
-
         /// <summary> Gets the StaticIP. </summary>
         public BicepValue<IPAddress> StaticIP
         {
@@ -197,21 +185,6 @@ namespace Azure.Provisioning.AppContainers
             {
                 Initialize();
                 _isZoneRedundant.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the AvailabilityZones. </summary>
-        public BicepList<string> AvailabilityZones
-        {
-            get
-            {
-                Initialize();
-                return _availabilityZones;
-            }
-            set
-            {
-                Initialize();
-                _availabilityZones.Assign(value);
             }
         }
 
@@ -345,8 +318,23 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets or sets the EnvironmentMode. </summary>
+        public BicepValue<ManagedEnvironmentMode> EnvironmentMode
+        {
+            get
+            {
+                Initialize();
+                return _environmentMode;
+            }
+            set
+            {
+                Initialize();
+                _environmentMode.Assign(value);
+            }
+        }
+
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<ContainerAppPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<ContainerAppContainerPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -367,21 +355,6 @@ namespace Azure.Provisioning.AppContainers
             {
                 Initialize();
                 _publicNetworkAccess.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the DiskEncryptionConfiguration. </summary>
-        internal DiskEncryptionConfiguration DiskEncryptionConfiguration
-        {
-            get
-            {
-                Initialize();
-                return _diskEncryptionConfiguration;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _diskEncryptionConfiguration, value);
             }
         }
 
@@ -462,23 +435,6 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
-        /// <summary> Gets or sets the KeyVaultConfiguration. </summary>
-        public DiskEncryptionConfigurationKeyVaultConfiguration DiskEncryptionKeyVaultConfiguration
-        {
-            get
-            {
-                return DiskEncryptionConfiguration is null ? default : DiskEncryptionConfiguration.KeyVaultConfiguration;
-            }
-            set
-            {
-                if (DiskEncryptionConfiguration is null)
-                {
-                    DiskEncryptionConfiguration = new DiskEncryptionConfiguration();
-                }
-                DiskEncryptionConfiguration.KeyVaultConfiguration = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for ManagedEnvironmentProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -489,13 +445,11 @@ namespace Azure.Provisioning.AppContainers
             _vnetConfiguration = DefineModelProperty<ContainerAppVnetConfiguration>(nameof(VnetConfiguration), new string[] { "vnetConfiguration" });
             _deploymentErrors = DefineProperty<string>(nameof(DeploymentErrors), new string[] { "deploymentErrors" }, isOutput: true);
             _defaultDomain = DefineProperty<string>(nameof(DefaultDomain), new string[] { "defaultDomain" }, isOutput: true);
-            _privateLinkDefaultDomain = DefineProperty<string>(nameof(PrivateLinkDefaultDomain), new string[] { "privateLinkDefaultDomain" }, isOutput: true);
             _staticIP = DefineProperty<IPAddress>(nameof(StaticIP), new string[] { "staticIp" }, isOutput: true);
             _appLogsConfiguration = DefineModelProperty<ContainerAppLogsConfiguration>(nameof(AppLogsConfiguration), new string[] { "appLogsConfiguration" });
             _appInsightsConfiguration = DefineModelProperty<AppInsightsConfiguration>(nameof(AppInsightsConfiguration), new string[] { "appInsightsConfiguration" });
             _openTelemetryConfiguration = DefineModelProperty<OpenTelemetryConfiguration>(nameof(OpenTelemetryConfiguration), new string[] { "openTelemetryConfiguration" });
             _isZoneRedundant = DefineProperty<bool>(nameof(IsZoneRedundant), new string[] { "zoneRedundant" });
-            _availabilityZones = DefineListProperty<string>(nameof(AvailabilityZones), new string[] { "availabilityZones" });
             _customDomainConfiguration = DefineModelProperty<ContainerAppCustomDomainConfiguration>(nameof(CustomDomainConfiguration), new string[] { "customDomainConfiguration" });
             _eventStreamEndpoint = DefineProperty<string>(nameof(EventStreamEndpoint), new string[] { "eventStreamEndpoint" }, isOutput: true);
             _workloadProfiles = DefineListProperty<ContainerAppWorkloadProfile>(nameof(WorkloadProfiles), new string[] { "workloadProfiles" });
@@ -505,9 +459,9 @@ namespace Azure.Provisioning.AppContainers
             _peerAuthentication = DefineModelProperty<ManagedEnvironmentPropertiesPeerAuthentication>(nameof(PeerAuthentication), new string[] { "peerAuthentication" });
             _peerTrafficConfiguration = DefineModelProperty<ManagedEnvironmentPropertiesPeerTrafficConfiguration>(nameof(PeerTrafficConfiguration), new string[] { "peerTrafficConfiguration" });
             _ingressConfiguration = DefineModelProperty<ManagedEnvironmentIngressConfiguration>(nameof(IngressConfiguration), new string[] { "ingressConfiguration" });
-            _privateEndpointConnections = DefineListProperty<ContainerAppPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _environmentMode = DefineProperty<ManagedEnvironmentMode>(nameof(EnvironmentMode), new string[] { "environmentMode" });
+            _privateEndpointConnections = DefineListProperty<ContainerAppContainerPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _publicNetworkAccess = DefineProperty<ContainerAppPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
-            _diskEncryptionConfiguration = DefineModelProperty<DiskEncryptionConfiguration>(nameof(DiskEncryptionConfiguration), new string[] { "diskEncryptionConfiguration" });
             DefineAdditionalProperties();
         }
 

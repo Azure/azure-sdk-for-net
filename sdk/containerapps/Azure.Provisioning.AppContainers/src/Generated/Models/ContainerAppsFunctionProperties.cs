@@ -18,6 +18,7 @@ namespace Azure.Provisioning.AppContainers
         private BicepValue<string> _triggerType;
         private BicepValue<string> _language;
         private BicepValue<bool> _isDisabled;
+        private BicepValue<ContainerAppsFunctionState> _state;
 
         /// <summary> Creates a new ContainerAppsFunctionProperties. </summary>
         public ContainerAppsFunctionProperties()
@@ -64,6 +65,16 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets the State. </summary>
+        public BicepValue<ContainerAppsFunctionState> State
+        {
+            get
+            {
+                Initialize();
+                return _state;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ContainerAppsFunctionProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -72,6 +83,7 @@ namespace Azure.Provisioning.AppContainers
             _triggerType = DefineProperty<string>(nameof(TriggerType), new string[] { "triggerType" }, isOutput: true);
             _language = DefineProperty<string>(nameof(Language), new string[] { "language" }, isOutput: true);
             _isDisabled = DefineProperty<bool>(nameof(IsDisabled), new string[] { "isDisabled" }, isOutput: true);
+            _state = DefineProperty<ContainerAppsFunctionState>(nameof(State), new string[] { "state" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

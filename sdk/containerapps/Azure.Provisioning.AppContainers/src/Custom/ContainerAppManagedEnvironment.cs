@@ -3,11 +3,41 @@
 
 using System;
 using System.ComponentModel;
+using Azure.Provisioning;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.AppContainers
 {
     public partial class ContainerAppManagedEnvironment
     {
+        private BicepList<ContainerAppPrivateEndpointConnection> _privateEndpointConnections;
+
+        // Keep the new stable resource list available under a distinct name while preserving the released property below.
+        /// <summary> Gets the container app private endpoint connection resources. </summary>
+        [CodeGenMember("PrivateEndpointConnections")]
+        public BicepList<ContainerAppContainerPrivateEndpointConnection> PrivateEndpointConnectionResources
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedEnvironmentProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
+        // Preserve the released managed-environment private endpoint connection list type.
+        /// <summary> Gets the managed environment private endpoint connections. </summary>
+        public BicepList<ContainerAppPrivateEndpointConnection> PrivateEndpointConnections
+        {
+            get
+            {
+                Initialize();
+                return _privateEndpointConnections;
+            }
+        }
+
         /// <summary> Gets or sets whether peer traffic encryption is enabled. </summary>
         // The TypeSpec generator uses the improved PeerTrafficEncryptionIsEnabled name after https://github.com/Azure/azure-sdk-for-net/issues/60921.
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -26,6 +56,11 @@ namespace Azure.Provisioning.AppContainers
         {
             get => PeerAuthenticationIsMtlsEnabled;
             set => PeerAuthenticationIsMtlsEnabled = value;
+        }
+
+        partial void DefineAdditionalProperties()
+        {
+            _privateEndpointConnections = DefineListProperty<ContainerAppPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "properties", "privateEndpointConnections" }, isOutput: true);
         }
 
         public static partial class ResourceVersions

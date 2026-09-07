@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ContainerAppsFunctionResource.ResourceType, out string containerAppsFunctionApiVersion);
             _containerAppsFunctionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppsFunctionResource.ResourceType.Namespace, Diagnostics);
-            _containerAppsFunctionsRestClient = new ContainerAppsFunctions(_containerAppsFunctionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppsFunctionApiVersion ?? "2025-10-02-preview");
+            _containerAppsFunctionsRestClient = new ContainerAppsFunctions(_containerAppsFunctionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppsFunctionApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -64,6 +64,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> ContainerAppsFunctions_GetAzureFunctionsOnContainerApps. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -110,6 +114,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <term> Operation Id. </term>
         /// <description> ContainerAppsFunctions_GetAzureFunctionsOnContainerApps. </description>
         /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="functionName"> Name of the Function. </param>
@@ -155,6 +163,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <term> Operation Id. </term>
         /// <description> ContainerAppsFunctions_ListAzureFunctionsOnContainerApps. </description>
         /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -185,6 +197,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <term> Operation Id. </term>
         /// <description> ContainerAppsFunctions_ListAzureFunctionsOnContainerApps. </description>
         /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -214,6 +230,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> ContainerAppsFunctions_GetAzureFunctionsOnContainerApps. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -268,6 +288,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <term> Operation Id. </term>
         /// <description> ContainerAppsFunctions_GetAzureFunctionsOnContainerApps. </description>
         /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
         /// </list>
         /// </summary>
         /// <param name="functionName"> Name of the Function. </param>
@@ -320,6 +344,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> ContainerAppsFunctions_GetAzureFunctionsOnContainerApps. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -377,6 +405,10 @@ namespace Azure.ResourceManager.AppContainers
         /// <item>
         /// <term> Operation Id. </term>
         /// <description> ContainerAppsFunctions_GetAzureFunctionsOnContainerApps. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
