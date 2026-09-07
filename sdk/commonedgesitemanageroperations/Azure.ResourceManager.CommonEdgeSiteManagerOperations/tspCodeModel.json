@@ -1,0 +1,1383 @@
+{
+  "name": "Azure.ResourceManager.CommonEdgeSiteManagerOperations",
+  "apiVersions": [
+    "2024-02-01-preview",
+    "2025-03-01-preview",
+    "2025-06-01"
+  ],
+  "enums": [
+    {
+      "$id": "1",
+      "kind": "enum",
+      "name": "Origin",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Origin",
+      "valueType": {
+        "$id": "2",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "3",
+          "kind": "enumvalue",
+          "name": "user",
+          "value": "user",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Indicates the operation is initiated by a user.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "4",
+          "kind": "enumvalue",
+          "name": "system",
+          "value": "system",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Indicates the operation is initiated by a system.",
+          "decorators": [],
+          "isExactName": false
+        },
+        {
+          "$id": "5",
+          "kind": "enumvalue",
+          "name": "user,system",
+          "value": "user,system",
+          "valueType": {
+            "$ref": "2"
+          },
+          "enumType": {
+            "$ref": "1"
+          },
+          "doc": "Indicates the operation is initiated by a user or system.",
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "namespace": "Azure.ResourceManager.CommonEdgeSiteManagerOperations",
+      "doc": "The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is \"user,system\"",
+      "isFixed": false,
+      "isFlags": false,
+      "usage": "Output,Json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "6",
+      "kind": "enum",
+      "name": "ActionType",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ActionType",
+      "valueType": {
+        "$id": "7",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "8",
+          "kind": "enumvalue",
+          "name": "Internal",
+          "value": "Internal",
+          "valueType": {
+            "$ref": "7"
+          },
+          "enumType": {
+            "$ref": "6"
+          },
+          "doc": "Actions are for internal-only APIs.",
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "namespace": "Azure.ResourceManager.CommonEdgeSiteManagerOperations",
+      "doc": "Extensible enum. Indicates the action type. \"Internal\" refers to actions that are for internal only APIs.",
+      "isFixed": false,
+      "isFlags": false,
+      "usage": "Output,Json",
+      "decorators": [],
+      "isExactName": false
+    },
+    {
+      "$id": "9",
+      "kind": "enum",
+      "name": "Versions",
+      "crossLanguageDefinitionId": "Microsoft.Edge.Versions",
+      "valueType": {
+        "$id": "10",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "values": [
+        {
+          "$id": "11",
+          "kind": "enumvalue",
+          "name": "v2025_06_01",
+          "value": "2025-06-01",
+          "valueType": {
+            "$ref": "10"
+          },
+          "enumType": {
+            "$ref": "9"
+          },
+          "doc": "The 2025-06-01 API version.",
+          "decorators": [],
+          "isExactName": false
+        }
+      ],
+      "namespace": "Azure.ResourceManager.CommonEdgeSiteManagerOperations",
+      "doc": "The available API versions.",
+      "isFixed": true,
+      "isFlags": false,
+      "usage": "ApiVersionEnum",
+      "decorators": [],
+      "isExactName": false
+    }
+  ],
+  "constants": [
+    {
+      "$id": "12",
+      "kind": "constant",
+      "name": "ListAccept",
+      "namespace": "",
+      "usage": "None",
+      "valueType": {
+        "$id": "13",
+        "kind": "string",
+        "name": "string",
+        "crossLanguageDefinitionId": "TypeSpec.string",
+        "decorators": []
+      },
+      "value": "application/json",
+      "decorators": [],
+      "isExactName": false
+    }
+  ],
+  "models": [
+    {
+      "$id": "14",
+      "kind": "model",
+      "name": "OperationListResult",
+      "namespace": "Azure.ResourceManager.CommonEdgeSiteManagerOperations",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationListResult",
+      "usage": "Output,Json",
+      "doc": "A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results.",
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        }
+      ],
+      "serializationOptions": {
+        "json": {
+          "name": "OperationListResult"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "15",
+          "kind": "property",
+          "name": "value",
+          "serializedName": "value",
+          "doc": "The Operation items on this page",
+          "type": {
+            "$id": "16",
+            "kind": "array",
+            "name": "ArrayOperation",
+            "valueType": {
+              "$id": "17",
+              "kind": "model",
+              "name": "Operation",
+              "namespace": "Azure.ResourceManager.CommonEdgeSiteManagerOperations",
+              "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation",
+              "usage": "Output,Json",
+              "doc": "Details of a REST API operation, returned from the Resource Provider Operations API",
+              "summary": "REST API Operation",
+              "decorators": [
+                {
+                  "name": "Azure.ResourceManager.@armProviderNamespace",
+                  "arguments": {}
+                }
+              ],
+              "serializationOptions": {
+                "json": {
+                  "name": "Operation"
+                }
+              },
+              "isExactName": false,
+              "properties": [
+                {
+                  "$id": "18",
+                  "kind": "property",
+                  "name": "name",
+                  "serializedName": "name",
+                  "doc": "The name of the operation, as per Resource-Based Access Control (RBAC). Examples: \"Microsoft.Compute/virtualMachines/write\", \"Microsoft.Compute/virtualMachines/capture/action\"",
+                  "type": {
+                    "$id": "19",
+                    "kind": "string",
+                    "name": "string",
+                    "crossLanguageDefinitionId": "TypeSpec.string",
+                    "decorators": []
+                  },
+                  "optional": true,
+                  "readOnly": true,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.name",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "name"
+                    }
+                  },
+                  "isHttpMetadata": false,
+                  "isExactName": false
+                },
+                {
+                  "$id": "20",
+                  "kind": "property",
+                  "name": "isDataAction",
+                  "serializedName": "isDataAction",
+                  "doc": "Whether the operation applies to data-plane. This is \"true\" for data-plane operations and \"false\" for Azure Resource Manager/control-plane operations.",
+                  "type": {
+                    "$id": "21",
+                    "kind": "boolean",
+                    "name": "boolean",
+                    "crossLanguageDefinitionId": "TypeSpec.boolean",
+                    "decorators": []
+                  },
+                  "optional": true,
+                  "readOnly": true,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.isDataAction",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "isDataAction"
+                    }
+                  },
+                  "isHttpMetadata": false,
+                  "isExactName": false
+                },
+                {
+                  "$id": "22",
+                  "kind": "property",
+                  "name": "display",
+                  "serializedName": "display",
+                  "doc": "Localized display information for this particular operation.",
+                  "type": {
+                    "$id": "23",
+                    "kind": "model",
+                    "name": "OperationDisplay",
+                    "namespace": "Azure.ResourceManager.CommonEdgeSiteManagerOperations",
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay",
+                    "usage": "Output,Json",
+                    "doc": "Localized display information for an operation.",
+                    "decorators": [
+                      {
+                        "name": "Azure.ResourceManager.@armProviderNamespace",
+                        "arguments": {}
+                      }
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": "OperationDisplay"
+                      }
+                    },
+                    "isExactName": false,
+                    "properties": [
+                      {
+                        "$id": "24",
+                        "kind": "property",
+                        "name": "provider",
+                        "serializedName": "provider",
+                        "doc": "The localized friendly form of the resource provider name, e.g. \"Microsoft Monitoring Insights\" or \"Microsoft Compute\".",
+                        "type": {
+                          "$id": "25",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": true,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay.provider",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "provider"
+                          }
+                        },
+                        "isHttpMetadata": false,
+                        "isExactName": false
+                      },
+                      {
+                        "$id": "26",
+                        "kind": "property",
+                        "name": "resource",
+                        "serializedName": "resource",
+                        "doc": "The localized friendly name of the resource type related to this operation. E.g. \"Virtual Machines\" or \"Job Schedule Collections\".",
+                        "type": {
+                          "$id": "27",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": true,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay.resource",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "resource"
+                          }
+                        },
+                        "isHttpMetadata": false,
+                        "isExactName": false
+                      },
+                      {
+                        "$id": "28",
+                        "kind": "property",
+                        "name": "operation",
+                        "serializedName": "operation",
+                        "doc": "The concise, localized friendly name for the operation; suitable for dropdowns. E.g. \"Create or Update Virtual Machine\", \"Restart Virtual Machine\".",
+                        "type": {
+                          "$id": "29",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": true,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay.operation",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "operation"
+                          }
+                        },
+                        "isHttpMetadata": false,
+                        "isExactName": false
+                      },
+                      {
+                        "$id": "30",
+                        "kind": "property",
+                        "name": "description",
+                        "serializedName": "description",
+                        "doc": "The short, localized friendly description of the operation; suitable for tool tips and detailed views.",
+                        "type": {
+                          "$id": "31",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": true,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationDisplay.description",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "description"
+                          }
+                        },
+                        "isHttpMetadata": false,
+                        "isExactName": false
+                      }
+                    ]
+                  },
+                  "optional": true,
+                  "readOnly": false,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.display",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "display"
+                    }
+                  },
+                  "isHttpMetadata": false,
+                  "isExactName": false
+                },
+                {
+                  "$id": "32",
+                  "kind": "property",
+                  "name": "origin",
+                  "serializedName": "origin",
+                  "doc": "The intended executor of the operation; as in Resource Based Access Control (RBAC) and audit logs UX. Default value is \"user,system\"",
+                  "type": {
+                    "$ref": "1"
+                  },
+                  "optional": true,
+                  "readOnly": true,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.origin",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "origin"
+                    }
+                  },
+                  "isHttpMetadata": false,
+                  "isExactName": false
+                },
+                {
+                  "$id": "33",
+                  "kind": "property",
+                  "name": "actionType",
+                  "serializedName": "actionType",
+                  "doc": "Extensible enum. Indicates the action type. \"Internal\" refers to actions that are for internal only APIs.",
+                  "type": {
+                    "$ref": "6"
+                  },
+                  "optional": true,
+                  "readOnly": true,
+                  "discriminator": false,
+                  "flatten": false,
+                  "decorators": [],
+                  "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Operation.actionType",
+                  "serializationOptions": {
+                    "json": {
+                      "name": "actionType"
+                    }
+                  },
+                  "isHttpMetadata": false,
+                  "isExactName": false
+                }
+              ]
+            },
+            "crossLanguageDefinitionId": "TypeSpec.Array",
+            "decorators": []
+          },
+          "optional": false,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationListResult.value",
+          "serializationOptions": {
+            "json": {
+              "name": "value"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        },
+        {
+          "$id": "34",
+          "kind": "property",
+          "name": "nextLink",
+          "serializedName": "nextLink",
+          "doc": "The link to the next page of items",
+          "type": {
+            "$id": "35",
+            "kind": "url",
+            "name": "ResourceLocation",
+            "crossLanguageDefinitionId": "TypeSpec.Rest.ResourceLocation",
+            "baseType": {
+              "$id": "36",
+              "kind": "url",
+              "name": "url",
+              "crossLanguageDefinitionId": "TypeSpec.url",
+              "decorators": []
+            },
+            "decorators": []
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.OperationListResult.nextLink",
+          "serializationOptions": {
+            "json": {
+              "name": "nextLink"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$ref": "17"
+    },
+    {
+      "$ref": "23"
+    },
+    {
+      "$id": "37",
+      "kind": "model",
+      "name": "ErrorResponse",
+      "namespace": "Azure.ResourceManager.CommonEdgeSiteManagerOperations",
+      "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse",
+      "usage": "Json,Exception",
+      "doc": "Common error response for all Azure Resource Manager APIs to return error details for failed operations.",
+      "summary": "Error response",
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        }
+      ],
+      "serializationOptions": {
+        "json": {
+          "name": "ErrorResponse"
+        }
+      },
+      "isExactName": false,
+      "properties": [
+        {
+          "$id": "38",
+          "kind": "property",
+          "name": "error",
+          "serializedName": "error",
+          "doc": "The error object.",
+          "type": {
+            "$id": "39",
+            "kind": "model",
+            "name": "ErrorDetail",
+            "namespace": "Azure.ResourceManager.CommonEdgeSiteManagerOperations",
+            "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail",
+            "usage": "Json,Exception",
+            "doc": "The error detail.",
+            "decorators": [
+              {
+                "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {}
+              }
+            ],
+            "serializationOptions": {
+              "json": {
+                "name": "ErrorDetail"
+              }
+            },
+            "isExactName": false,
+            "properties": [
+              {
+                "$id": "40",
+                "kind": "property",
+                "name": "code",
+                "serializedName": "code",
+                "doc": "The error code.",
+                "type": {
+                  "$id": "41",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.code",
+                "serializationOptions": {
+                  "json": {
+                    "name": "code"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "42",
+                "kind": "property",
+                "name": "message",
+                "serializedName": "message",
+                "doc": "The error message.",
+                "type": {
+                  "$id": "43",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.message",
+                "serializationOptions": {
+                  "json": {
+                    "name": "message"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "44",
+                "kind": "property",
+                "name": "target",
+                "serializedName": "target",
+                "doc": "The error target.",
+                "type": {
+                  "$id": "45",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.target",
+                "serializationOptions": {
+                  "json": {
+                    "name": "target"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "46",
+                "kind": "property",
+                "name": "details",
+                "serializedName": "details",
+                "doc": "The error details.",
+                "type": {
+                  "$id": "47",
+                  "kind": "array",
+                  "name": "ArrayErrorDetail",
+                  "valueType": {
+                    "$ref": "39"
+                  },
+                  "crossLanguageDefinitionId": "TypeSpec.Array",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.details",
+                "serializationOptions": {
+                  "json": {
+                    "name": "details"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              },
+              {
+                "$id": "48",
+                "kind": "property",
+                "name": "additionalInfo",
+                "serializedName": "additionalInfo",
+                "doc": "The error additional info.",
+                "type": {
+                  "$id": "49",
+                  "kind": "array",
+                  "name": "ArrayErrorAdditionalInfo",
+                  "valueType": {
+                    "$id": "50",
+                    "kind": "model",
+                    "name": "ErrorAdditionalInfo",
+                    "namespace": "Azure.ResourceManager.CommonEdgeSiteManagerOperations",
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo",
+                    "usage": "Json,Exception",
+                    "doc": "The resource management error additional info.",
+                    "decorators": [
+                      {
+                        "name": "Azure.ResourceManager.@armProviderNamespace",
+                        "arguments": {}
+                      }
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": "ErrorAdditionalInfo"
+                      }
+                    },
+                    "isExactName": false,
+                    "properties": [
+                      {
+                        "$id": "51",
+                        "kind": "property",
+                        "name": "type",
+                        "serializedName": "type",
+                        "doc": "The additional info type.",
+                        "type": {
+                          "$id": "52",
+                          "kind": "string",
+                          "name": "string",
+                          "crossLanguageDefinitionId": "TypeSpec.string",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": true,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.type",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "type"
+                          }
+                        },
+                        "isHttpMetadata": false,
+                        "isExactName": false
+                      },
+                      {
+                        "$id": "53",
+                        "kind": "property",
+                        "name": "info",
+                        "serializedName": "info",
+                        "doc": "The additional info.",
+                        "type": {
+                          "$id": "54",
+                          "kind": "unknown",
+                          "name": "unknown",
+                          "crossLanguageDefinitionId": "",
+                          "decorators": []
+                        },
+                        "optional": true,
+                        "readOnly": true,
+                        "discriminator": false,
+                        "flatten": false,
+                        "decorators": [],
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo.info",
+                        "serializationOptions": {
+                          "json": {
+                            "name": "info"
+                          }
+                        },
+                        "isHttpMetadata": false,
+                        "isExactName": false
+                      }
+                    ]
+                  },
+                  "crossLanguageDefinitionId": "TypeSpec.Array",
+                  "decorators": []
+                },
+                "optional": true,
+                "readOnly": true,
+                "discriminator": false,
+                "flatten": false,
+                "decorators": [],
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail.additionalInfo",
+                "serializationOptions": {
+                  "json": {
+                    "name": "additionalInfo"
+                  }
+                },
+                "isHttpMetadata": false,
+                "isExactName": false
+              }
+            ]
+          },
+          "optional": true,
+          "readOnly": false,
+          "discriminator": false,
+          "flatten": false,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse.error",
+          "serializationOptions": {
+            "json": {
+              "name": "error"
+            }
+          },
+          "isHttpMetadata": false,
+          "isExactName": false
+        }
+      ]
+    },
+    {
+      "$ref": "39"
+    },
+    {
+      "$ref": "50"
+    }
+  ],
+  "clients": [
+    {
+      "$id": "55",
+      "kind": "client",
+      "name": "EdgeClient",
+      "isExactName": false,
+      "namespace": "Azure.ResourceManager.CommonEdgeSiteManagerOperations",
+      "methods": [],
+      "parameters": [
+        {
+          "$id": "56",
+          "kind": "endpoint",
+          "name": "endpoint",
+          "serializedName": "endpoint",
+          "doc": "Service host",
+          "type": {
+            "$id": "57",
+            "kind": "url",
+            "name": "endpoint",
+            "crossLanguageDefinitionId": "TypeSpec.url"
+          },
+          "isApiVersion": false,
+          "optional": false,
+          "scope": "Client",
+          "isEndpoint": true,
+          "defaultValue": {
+            "type": {
+              "$id": "58",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "https://management.azure.com"
+          },
+          "serverUrlTemplate": "{endpoint}",
+          "skipUrlEncoding": false,
+          "readOnly": false,
+          "crossLanguageDefinitionId": "Microsoft.Edge.endpoint",
+          "isExactName": false
+        },
+        {
+          "$id": "59",
+          "kind": "method",
+          "name": "apiVersion",
+          "serializedName": "apiVersion",
+          "doc": "The API version to use for this operation.",
+          "type": {
+            "$id": "60",
+            "kind": "string",
+            "name": "string",
+            "crossLanguageDefinitionId": "TypeSpec.string",
+            "decorators": []
+          },
+          "location": "",
+          "isApiVersion": true,
+          "defaultValue": {
+            "type": {
+              "$id": "61",
+              "kind": "string",
+              "name": "string",
+              "crossLanguageDefinitionId": "TypeSpec.string"
+            },
+            "value": "2025-06-01"
+          },
+          "optional": true,
+          "scope": "Method",
+          "crossLanguageDefinitionId": "Azure.ResourceManager.Operations.list.apiVersion",
+          "readOnly": false,
+          "access": "public",
+          "decorators": [
+            {
+              "name": "TypeSpec.@minLength",
+              "arguments": {
+                "value": {
+                  "isInteger": true
+                }
+              }
+            }
+          ],
+          "isExactName": false
+        }
+      ],
+      "initializedBy": 1,
+      "decorators": [
+        {
+          "name": "Azure.ResourceManager.@armProviderNamespace",
+          "arguments": {}
+        },
+        {
+          "name": "Azure.ClientGenerator.Core.@armProviderSchema",
+          "arguments": {
+            "resources": [],
+            "nonResourceMethods": [
+              {
+                "methodId": "Azure.ResourceManager.Operations.list",
+                "operationPath": "/providers/Microsoft.Edge/operations",
+                "scope": {
+                  "$id": "62",
+                  "kind": "Tenant",
+                  "scopeIdPattern": "",
+                  "scopeResourceType": "Microsoft.Resources/tenants"
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "crossLanguageDefinitionId": "Microsoft.Edge",
+      "apiVersions": [
+        "2024-02-01-preview",
+        "2025-03-01-preview",
+        "2025-06-01"
+      ],
+      "children": [
+        {
+          "$id": "63",
+          "kind": "client",
+          "name": "Operations",
+          "isExactName": false,
+          "namespace": "Azure.ResourceManager.CommonEdgeSiteManagerOperations",
+          "methods": [
+            {
+              "$id": "64",
+              "kind": "paging",
+              "name": "list",
+              "isExactName": false,
+              "accessibility": "public",
+              "apiVersions": [
+                "2024-02-01-preview",
+                "2025-03-01-preview",
+                "2025-06-01"
+              ],
+              "doc": "List the operations for the provider",
+              "operation": {
+                "$id": "65",
+                "name": "list",
+                "isExactName": false,
+                "resourceName": "Operations",
+                "doc": "List the operations for the provider",
+                "accessibility": "public",
+                "parameters": [
+                  {
+                    "$id": "66",
+                    "kind": "query",
+                    "name": "apiVersion",
+                    "serializedName": "api-version",
+                    "doc": "The API version to use for this operation.",
+                    "type": {
+                      "$id": "67",
+                      "kind": "string",
+                      "name": "string",
+                      "crossLanguageDefinitionId": "TypeSpec.string",
+                      "decorators": []
+                    },
+                    "isApiVersion": true,
+                    "explode": false,
+                    "defaultValue": {
+                      "type": {
+                        "$id": "68",
+                        "kind": "string",
+                        "name": "string",
+                        "crossLanguageDefinitionId": "TypeSpec.string"
+                      },
+                      "value": "2025-06-01"
+                    },
+                    "optional": false,
+                    "scope": "Client",
+                    "decorators": [
+                      {
+                        "name": "TypeSpec.@minLength",
+                        "arguments": {
+                          "value": {
+                            "isInteger": true
+                          }
+                        }
+                      }
+                    ],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.Operations.list.apiVersion",
+                    "readOnly": false,
+                    "methodParameterSegments": [
+                      {
+                        "$ref": "59"
+                      }
+                    ],
+                    "isExactName": false
+                  },
+                  {
+                    "$id": "69",
+                    "kind": "header",
+                    "name": "accept",
+                    "serializedName": "Accept",
+                    "type": {
+                      "$ref": "12"
+                    },
+                    "isApiVersion": false,
+                    "optional": false,
+                    "isContentType": false,
+                    "scope": "Constant",
+                    "readOnly": false,
+                    "decorators": [],
+                    "crossLanguageDefinitionId": "Azure.ResourceManager.Operations.list.accept",
+                    "methodParameterSegments": [
+                      {
+                        "$id": "70",
+                        "kind": "method",
+                        "name": "accept",
+                        "serializedName": "Accept",
+                        "type": {
+                          "$ref": "12"
+                        },
+                        "location": "Header",
+                        "isApiVersion": false,
+                        "optional": false,
+                        "scope": "Constant",
+                        "crossLanguageDefinitionId": "Azure.ResourceManager.Operations.list.accept",
+                        "readOnly": false,
+                        "access": "public",
+                        "decorators": [],
+                        "isExactName": false
+                      }
+                    ],
+                    "isExactName": false
+                  }
+                ],
+                "responses": [
+                  {
+                    "statusCodes": [
+                      200
+                    ],
+                    "bodyType": {
+                      "$ref": "14"
+                    },
+                    "headers": [],
+                    "isErrorResponse": false,
+                    "contentTypes": [
+                      "application/json"
+                    ],
+                    "serializationOptions": {
+                      "json": {
+                        "name": ""
+                      }
+                    }
+                  }
+                ],
+                "httpMethod": "GET",
+                "uri": "{endpoint}",
+                "path": "/providers/Microsoft.Edge/operations",
+                "bufferResponse": true,
+                "generateProtocolMethod": true,
+                "generateConvenienceMethod": true,
+                "crossLanguageDefinitionId": "Azure.ResourceManager.Operations.list",
+                "decorators": [],
+                "examples": [
+                  {
+                    "$id": "71",
+                    "kind": "http",
+                    "name": "Operations_List_MaximumSet_Gen - generated by [MaximumSet] rule",
+                    "description": "Operations_List_MaximumSet_Gen - generated by [MaximumSet] rule",
+                    "filePath": "2025-06-01/Operations_List_MaximumSet_Gen.json",
+                    "parameters": [
+                      {
+                        "parameter": {
+                          "$ref": "66"
+                        },
+                        "value": {
+                          "$id": "72",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "67"
+                          },
+                          "value": "2025-06-01"
+                        }
+                      }
+                    ],
+                    "responses": [
+                      {
+                        "response": {
+                          "statusCodes": [
+                            200
+                          ],
+                          "bodyType": {
+                            "$ref": "14"
+                          },
+                          "headers": [],
+                          "isErrorResponse": false,
+                          "contentTypes": [
+                            "application/json"
+                          ],
+                          "serializationOptions": {
+                            "json": {
+                              "name": ""
+                            }
+                          }
+                        },
+                        "statusCode": 200,
+                        "bodyValue": {
+                          "$id": "73",
+                          "kind": "model",
+                          "type": {
+                            "$ref": "14"
+                          },
+                          "value": {
+                            "value": {
+                              "$id": "74",
+                              "kind": "array",
+                              "type": {
+                                "$ref": "16"
+                              },
+                              "value": [
+                                {
+                                  "$id": "75",
+                                  "kind": "model",
+                                  "type": {
+                                    "$ref": "17"
+                                  },
+                                  "value": {
+                                    "name": {
+                                      "$id": "76",
+                                      "kind": "string",
+                                      "type": {
+                                        "$ref": "19"
+                                      },
+                                      "value": "jaczxpiqtdkz"
+                                    },
+                                    "isDataAction": {
+                                      "$id": "77",
+                                      "kind": "boolean",
+                                      "type": {
+                                        "$ref": "21"
+                                      },
+                                      "value": true
+                                    },
+                                    "display": {
+                                      "$id": "78",
+                                      "kind": "model",
+                                      "type": {
+                                        "$ref": "23"
+                                      },
+                                      "value": {
+                                        "provider": {
+                                          "$id": "79",
+                                          "kind": "string",
+                                          "type": {
+                                            "$ref": "25"
+                                          },
+                                          "value": "oapgkefpoeegxjy"
+                                        },
+                                        "resource": {
+                                          "$id": "80",
+                                          "kind": "string",
+                                          "type": {
+                                            "$ref": "27"
+                                          },
+                                          "value": "zyprevbuvdzgvb"
+                                        },
+                                        "operation": {
+                                          "$id": "81",
+                                          "kind": "string",
+                                          "type": {
+                                            "$ref": "29"
+                                          },
+                                          "value": "heesmjbscdhwik"
+                                        },
+                                        "description": {
+                                          "$id": "82",
+                                          "kind": "string",
+                                          "type": {
+                                            "$ref": "31"
+                                          },
+                                          "value": "ezjkmigqsov"
+                                        }
+                                      }
+                                    },
+                                    "origin": {
+                                      "$id": "83",
+                                      "kind": "string",
+                                      "type": {
+                                        "$ref": "1"
+                                      },
+                                      "value": "user"
+                                    },
+                                    "actionType": {
+                                      "$id": "84",
+                                      "kind": "string",
+                                      "type": {
+                                        "$ref": "6"
+                                      },
+                                      "value": "Internal"
+                                    }
+                                  }
+                                }
+                              ]
+                            },
+                            "nextLink": {
+                              "$id": "85",
+                              "kind": "string",
+                              "type": {
+                                "$ref": "35"
+                              },
+                              "value": "https://microsoft.com/a"
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "$id": "86",
+                    "kind": "http",
+                    "name": "Operations_List_MaximumSet_Gen - generated by [MinimumSet] rule",
+                    "description": "Operations_List_MaximumSet_Gen - generated by [MinimumSet] rule",
+                    "filePath": "2025-06-01/Operations_List_MinimumSet_Gen.json",
+                    "parameters": [
+                      {
+                        "parameter": {
+                          "$ref": "66"
+                        },
+                        "value": {
+                          "$id": "87",
+                          "kind": "string",
+                          "type": {
+                            "$ref": "67"
+                          },
+                          "value": "2025-06-01"
+                        }
+                      }
+                    ],
+                    "responses": [
+                      {
+                        "response": {
+                          "statusCodes": [
+                            200
+                          ],
+                          "bodyType": {
+                            "$ref": "14"
+                          },
+                          "headers": [],
+                          "isErrorResponse": false,
+                          "contentTypes": [
+                            "application/json"
+                          ],
+                          "serializationOptions": {
+                            "json": {
+                              "name": ""
+                            }
+                          }
+                        },
+                        "statusCode": 200,
+                        "bodyValue": {
+                          "$id": "88",
+                          "kind": "model",
+                          "type": {
+                            "$ref": "14"
+                          },
+                          "value": {}
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "namespace": "Azure.ResourceManager.CommonEdgeSiteManagerOperations"
+              },
+              "parameters": [
+                {
+                  "$ref": "70"
+                }
+              ],
+              "response": {
+                "type": {
+                  "$ref": "16"
+                },
+                "resultSegments": [
+                  "value"
+                ]
+              },
+              "isOverride": false,
+              "generateConvenient": true,
+              "generateProtocol": true,
+              "crossLanguageDefinitionId": "Azure.ResourceManager.Operations.list",
+              "pagingMetadata": {
+                "itemPropertySegments": [
+                  "value"
+                ],
+                "nextLink": {
+                  "responseSegments": [
+                    "nextLink"
+                  ],
+                  "responseLocation": "Body"
+                },
+                "pageSizeParameterSegments": []
+              }
+            }
+          ],
+          "parameters": [
+            {
+              "$id": "89",
+              "kind": "endpoint",
+              "name": "endpoint",
+              "serializedName": "endpoint",
+              "doc": "Service host",
+              "type": {
+                "$id": "90",
+                "kind": "url",
+                "name": "endpoint",
+                "crossLanguageDefinitionId": "TypeSpec.url"
+              },
+              "isApiVersion": false,
+              "optional": false,
+              "scope": "Client",
+              "isEndpoint": true,
+              "defaultValue": {
+                "type": {
+                  "$id": "91",
+                  "kind": "string",
+                  "name": "string",
+                  "crossLanguageDefinitionId": "TypeSpec.string"
+                },
+                "value": "https://management.azure.com"
+              },
+              "serverUrlTemplate": "{endpoint}",
+              "skipUrlEncoding": false,
+              "readOnly": false,
+              "crossLanguageDefinitionId": "Microsoft.Edge.Operations.endpoint",
+              "isExactName": false
+            },
+            {
+              "$ref": "59"
+            }
+          ],
+          "initializedBy": 0,
+          "decorators": [],
+          "crossLanguageDefinitionId": "Microsoft.Edge.Operations",
+          "apiVersions": [
+            "2024-02-01-preview",
+            "2025-03-01-preview",
+            "2025-06-01"
+          ],
+          "parent": {
+            "$ref": "55"
+          },
+          "isMultiServiceClient": false
+        }
+      ],
+      "isMultiServiceClient": false
+    }
+  ],
+  "auth": {
+    "oAuth2": {
+      "flows": [
+        {
+          "scopes": [
+            "https://management.azure.com/.default"
+          ],
+          "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
+        }
+      ]
+    }
+  }
+}
