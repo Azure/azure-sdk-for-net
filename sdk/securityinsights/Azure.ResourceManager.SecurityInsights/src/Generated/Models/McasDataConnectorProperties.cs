@@ -16,9 +16,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
     {
         /// <summary> Initializes a new instance of <see cref="McasDataConnectorProperties"/>. </summary>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        public McasDataConnectorProperties(Guid tenantId) : base(tenantId)
+        /// <param name="dataTypes"> The available data types for the connector. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="dataTypes"/> is null. </exception>
+        public McasDataConnectorProperties(Guid tenantId, McasDataConnectorDataTypes dataTypes) : base(tenantId)
         {
+            Argument.AssertNotNull(dataTypes, nameof(dataTypes));
 
+            DataTypes = dataTypes;
         }
 
         /// <summary> Initializes a new instance of <see cref="McasDataConnectorProperties"/>. </summary>
@@ -32,24 +36,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
 
         /// <summary> The available data types for the connector. </summary>
         [WirePath("dataTypes")]
-        internal McasDataConnectorDataTypes DataTypes { get; set; }
-
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        [WirePath("dataTypes.discoveryLogs.state")]
-        public SecurityInsightsDataTypeConnectionState? DataTypesDiscoveryLogsState
-        {
-            get
-            {
-                return DataTypes is null ? default : DataTypes.DiscoveryLogsState;
-            }
-            set
-            {
-                if (DataTypes is null)
-                {
-                    DataTypes = new McasDataConnectorDataTypes();
-                }
-                DataTypes.DiscoveryLogsState = value;
-            }
-        }
+        public McasDataConnectorDataTypes DataTypes { get; set; }
     }
 }

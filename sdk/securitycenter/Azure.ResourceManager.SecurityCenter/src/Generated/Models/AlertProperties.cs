@@ -169,19 +169,6 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public IReadOnlyList<string> SubTechniques { get; } = new ChangeTrackingList<string>();
 
         /// <summary> Changing set of properties depending on the supportingEvidence type. </summary>
-        internal SecurityAlertSupportingEvidence SupportingEvidence { get; set; }
-
-        /// <summary> Type of the supportingEvidence. </summary>
-        public string SecurityAlertSupportingEvidenceType
-        {
-            get
-            {
-                return SupportingEvidence is null ? default : SupportingEvidence.SecurityAlertSupportingEvidenceType;
-            }
-            set
-            {
-                SupportingEvidence = new SecurityAlertSupportingEvidence(value);
-            }
-        }
+        public SecurityAlertSupportingEvidence SupportingEvidence { get; set; }
     }
 }

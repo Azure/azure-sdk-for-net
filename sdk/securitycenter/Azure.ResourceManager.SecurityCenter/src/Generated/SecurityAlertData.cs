@@ -296,22 +296,5 @@ namespace Azure.ResourceManager.SecurityCenter
                 return Properties.SubTechniques;
             }
         }
-
-        /// <summary> Type of the supportingEvidence. </summary>
-        public string SecurityAlertSupportingEvidenceType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SecurityAlertSupportingEvidenceType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new AlertProperties();
-                }
-                Properties.SecurityAlertSupportingEvidenceType = value;
-            }
-        }
     }
 }

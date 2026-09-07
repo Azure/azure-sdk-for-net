@@ -806,24 +806,6 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> The administrator username to use for Linux VMs. </summary>
-        [WirePath("properties.linuxProfile.adminUsername")]
-        public string LinuxAdminUsername
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LinuxAdminUsername;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterProperties();
-                }
-                Properties.LinuxAdminUsername = value;
-            }
-        }
-
         /// <summary> The restriction level applied to the cluster's node resource group. If not specified, the default is 'Unrestricted'. </summary>
         [WirePath("properties.nodeResourceGroupProfile.restrictionLevel")]
         public ManagedClusterNodeResourceGroupRestrictionLevel? NodeResourceGroupRestrictionLevel

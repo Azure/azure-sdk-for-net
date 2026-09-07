@@ -442,12 +442,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="groupId"> Group Id of the private link resource. </param>
         /// <param name="requiredMembers"> Required members of the private link resource. </param>
         /// <param name="requiredZoneNames"> Required private DNS zone names. </param>
         /// <param name="shareablePrivateLinkTypes"> The list of resources that are onboarded to private link service. </param>
-        /// <param name="groupId"> Group Id of the private link resource. </param>
         /// <returns> A new <see cref="Models.WebPubSubPrivateLink"/> instance for mocking. </returns>
-        public static WebPubSubPrivateLink WebPubSubPrivateLink(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default, IEnumerable<ShareablePrivateLinkType> shareablePrivateLinkTypes = default, string groupId = default)
+        public static WebPubSubPrivateLink WebPubSubPrivateLink(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default, IEnumerable<ShareablePrivateLinkType> shareablePrivateLinkTypes = default)
         {
             return new WebPubSubPrivateLink(
                 id,
@@ -868,28 +868,6 @@ namespace Azure.ResourceManager.WebPubSub.Models
                     default,
                     status,
                     default),
-                default);
-        }
-
-        /// <summary> Private link resource. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="groupId"> Group Id of the private link resource. </param>
-        /// <param name="requiredMembers"> Required members of the private link resource. </param>
-        /// <param name="requiredZoneNames"> Required private DNS zone names. </param>
-        /// <param name="shareablePrivateLinkTypes"> The list of resources that are onboarded to private link service. </param>
-        /// <returns> A new <see cref="Models.WebPubSubPrivateLink"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static WebPubSubPrivateLink WebPubSubPrivateLink(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string groupId = default, IEnumerable<string> requiredMembers = default, IEnumerable<string> requiredZoneNames = default, IEnumerable<ShareablePrivateLinkType> shareablePrivateLinkTypes = default)
-        {
-            return new WebPubSubPrivateLink(
-                id,
-                name,
-                resourceType,
-                systemData,
-                groupId is null && requiredMembers is null && requiredZoneNames is null && shareablePrivateLinkTypes is null ? default : new WebPubSubPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), (shareablePrivateLinkTypes ?? new ChangeTrackingList<ShareablePrivateLinkType>()).ToList(), default),
                 default);
         }
     }
