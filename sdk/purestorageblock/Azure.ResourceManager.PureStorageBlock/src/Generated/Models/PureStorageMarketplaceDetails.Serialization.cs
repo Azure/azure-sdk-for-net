@@ -16,11 +16,6 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
     /// <summary> Marketplace details. </summary>
     public partial class PureStorageMarketplaceDetails : IJsonModel<PureStorageMarketplaceDetails>
     {
-        /// <summary> Initializes a new instance of <see cref="PureStorageMarketplaceDetails"/> for deserialization. </summary>
-        internal PureStorageMarketplaceDetails()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual PureStorageMarketplaceDetails PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -89,8 +84,16 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 writer.WritePropertyName("subscriptionStatus"u8);
                 writer.WriteStringValue(SubscriptionStatus.Value.ToString());
             }
-            writer.WritePropertyName("offerDetails"u8);
-            writer.WriteObjectValue(OfferDetails, options);
+            if (Optional.IsDefined(OfferDetails))
+            {
+                writer.WritePropertyName("offerDetails"u8);
+                writer.WriteObjectValue(OfferDetails, options);
+            }
+            if (Optional.IsDefined(SaaSResourceId))
+            {
+                writer.WritePropertyName("saaSResourceId"u8);
+                writer.WriteStringValue(SaaSResourceId);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -136,6 +139,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             string subscriptionId = default;
             PureStorageMarketplaceSubscriptionStatus? subscriptionStatus = default;
             PureStorageOfferDetails offerDetails = default;
+            string saaSResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,7 +159,16 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 }
                 if (prop.NameEquals("offerDetails"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     offerDetails = PureStorageOfferDetails.DeserializePureStorageOfferDetails(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("saaSResourceId"u8))
+                {
+                    saaSResourceId = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +176,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PureStorageMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, additionalBinaryDataProperties);
+            return new PureStorageMarketplaceDetails(subscriptionId, subscriptionStatus, offerDetails, saaSResourceId, additionalBinaryDataProperties);
         }
     }
 }

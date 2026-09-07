@@ -113,6 +113,11 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             }
             writer.WritePropertyName("reservationResourceId"u8);
             writer.WriteStringValue(ReservationResourceId);
+            if (Optional.IsDefined(PlatformConsoleSettings))
+            {
+                writer.WritePropertyName("platformConsoleSettings"u8);
+                writer.WriteObjectValue(PlatformConsoleSettings, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -164,6 +169,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
             PureStorageAvs avs = default;
             PureStorageProvisioningState? provisioningState = default;
             ResourceIdentifier reservationResourceId = default;
+            PlatformConsoleSettings platformConsoleSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -228,6 +234,15 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                     reservationResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
+                if (prop.NameEquals("platformConsoleSettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    platformConsoleSettings = PlatformConsoleSettings.DeserializePlatformConsoleSettings(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -243,6 +258,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
                 avs,
                 provisioningState,
                 reservationResourceId,
+                platformConsoleSettings,
                 additionalBinaryDataProperties);
         }
     }

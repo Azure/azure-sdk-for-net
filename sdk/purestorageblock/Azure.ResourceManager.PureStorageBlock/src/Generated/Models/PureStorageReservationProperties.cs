@@ -19,15 +19,12 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <summary> Initializes a new instance of <see cref="PureStorageReservationProperties"/>. </summary>
         /// <param name="marketplace"> Marketplace details. </param>
-        /// <param name="user"> User details. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/> or <paramref name="user"/> is null. </exception>
-        public PureStorageReservationProperties(PureStorageMarketplaceDetails marketplace, PureStorageUserDetails user)
+        /// <exception cref="ArgumentNullException"> <paramref name="marketplace"/> is null. </exception>
+        public PureStorageReservationProperties(PureStorageMarketplaceDetails marketplace)
         {
             Argument.AssertNotNull(marketplace, nameof(marketplace));
-            Argument.AssertNotNull(user, nameof(user));
 
             Marketplace = marketplace;
-            User = user;
         }
 
         /// <summary> Initializes a new instance of <see cref="PureStorageReservationProperties"/>. </summary>

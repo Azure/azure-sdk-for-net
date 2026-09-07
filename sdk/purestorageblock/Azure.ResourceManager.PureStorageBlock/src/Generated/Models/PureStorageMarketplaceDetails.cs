@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.PureStorageBlock;
 
 namespace Azure.ResourceManager.PureStorageBlock.Models
 {
@@ -18,25 +17,22 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="PureStorageMarketplaceDetails"/>. </summary>
-        /// <param name="offerDetails"> Offer details of the marketplace subscription. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="offerDetails"/> is null. </exception>
-        public PureStorageMarketplaceDetails(PureStorageOfferDetails offerDetails)
+        public PureStorageMarketplaceDetails()
         {
-            Argument.AssertNotNull(offerDetails, nameof(offerDetails));
-
-            OfferDetails = offerDetails;
         }
 
         /// <summary> Initializes a new instance of <see cref="PureStorageMarketplaceDetails"/>. </summary>
         /// <param name="subscriptionId"> Marketplace subscription ID. </param>
         /// <param name="subscriptionStatus"> Marketplace subscription status. </param>
         /// <param name="offerDetails"> Offer details of the marketplace subscription. </param>
+        /// <param name="saaSResourceId"> ARM ID of the Marketplace SaaS resource. Only used in Create operations. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PureStorageMarketplaceDetails(string subscriptionId, PureStorageMarketplaceSubscriptionStatus? subscriptionStatus, PureStorageOfferDetails offerDetails, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PureStorageMarketplaceDetails(string subscriptionId, PureStorageMarketplaceSubscriptionStatus? subscriptionStatus, PureStorageOfferDetails offerDetails, string saaSResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionId = subscriptionId;
             SubscriptionStatus = subscriptionStatus;
             OfferDetails = offerDetails;
+            SaaSResourceId = saaSResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,5 +44,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Models
 
         /// <summary> Offer details of the marketplace subscription. </summary>
         public PureStorageOfferDetails OfferDetails { get; set; }
+
+        /// <summary> ARM ID of the Marketplace SaaS resource. Only used in Create operations. </summary>
+        public string SaaSResourceId { get; set; }
     }
 }

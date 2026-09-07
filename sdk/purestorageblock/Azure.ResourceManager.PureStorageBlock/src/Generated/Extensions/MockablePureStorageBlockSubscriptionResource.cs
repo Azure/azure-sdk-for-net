@@ -7,11 +7,13 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager;
 using Azure.ResourceManager.PureStorageBlock;
+using Azure.ResourceManager.PureStorageBlock.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PureStorageBlock.Mocking
@@ -23,6 +25,8 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         private Reservations _reservationsRestClient;
         private ClientDiagnostics _storagePoolsClientDiagnostics;
         private StoragePools _storagePoolsRestClient;
+        private ClientDiagnostics _saaSOperationGroupClientDiagnostics;
+        private SaaSOperationGroup _saaSOperationGroupRestClient;
 
         /// <summary> Initializes a new instance of MockablePureStorageBlockSubscriptionResource for mocking. </summary>
         protected MockablePureStorageBlockSubscriptionResource()
@@ -38,11 +42,15 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
 
         private ClientDiagnostics ReservationsClientDiagnostics => _reservationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Reservations ReservationsRestClient => _reservationsRestClient ??= new Reservations(ReservationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-11-01");
+        private Reservations ReservationsRestClient => _reservationsRestClient ??= new Reservations(ReservationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         private ClientDiagnostics StoragePoolsClientDiagnostics => _storagePoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private StoragePools StoragePoolsRestClient => _storagePoolsRestClient ??= new StoragePools(StoragePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-11-01");
+        private StoragePools StoragePoolsRestClient => _storagePoolsRestClient ??= new StoragePools(StoragePoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
+
+        private ClientDiagnostics SaaSOperationGroupClientDiagnostics => _saaSOperationGroupClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.PureStorageBlock.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SaaSOperationGroup SaaSOperationGroupRestClient => _saaSOperationGroupRestClient ??= new SaaSOperationGroup(SaaSOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-05-01-preview");
 
         /// <summary>
         /// List reservations by Azure subscription ID
@@ -57,7 +65,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -85,7 +93,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -113,7 +121,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -141,7 +149,7 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-11-01. </description>
+        /// <description> 2026-05-01-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -154,6 +162,116 @@ namespace Azure.ResourceManager.PureStorageBlock.Mocking
                 CancellationToken = cancellationToken
             };
             return new PageableWrapper<PureStoragePoolData, PureStoragePoolResource>(new StoragePoolsGetBySubscriptionCollectionResultOfT(StoragePoolsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockablePureStorageBlockSubscriptionResource.GetPureStoragePools"), data => new PureStoragePoolResource(Client, data));
+        }
+
+        /// <summary>
+        /// Activate the SaaS resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/PureStorage.Block/activateSaaS. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SaaSOperationGroup_ActivateResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<SaaSResourceDetailsResponse>> ActivateResourceAsync(WaitUntil waitUntil, ActivateSaaSRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = SaaSOperationGroupClientDiagnostics.CreateScope("MockablePureStorageBlockSubscriptionResource.ActivateResource");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSRequest.ToRequestContent(content), context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                PureStorageBlockArmOperation<SaaSResourceDetailsResponse> operation = new PureStorageBlockArmOperation<SaaSResourceDetailsResponse>(
+                    new SaaSResourceDetailsResponseOperationSource(),
+                    SaaSOperationGroupClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Activate the SaaS resource
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/PureStorage.Block/activateSaaS. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SaaSOperationGroup_ActivateResource. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-05-01-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
+        /// <param name="content"> The request body. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<SaaSResourceDetailsResponse> ActivateResource(WaitUntil waitUntil, ActivateSaaSRequest content, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(content, nameof(content));
+
+            using DiagnosticScope scope = SaaSOperationGroupClientDiagnostics.CreateScope("MockablePureStorageBlockSubscriptionResource.ActivateResource");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = SaaSOperationGroupRestClient.CreateActivateResourceRequest(Guid.Parse(Id.SubscriptionId), ActivateSaaSRequest.ToRequestContent(content), context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                PureStorageBlockArmOperation<SaaSResourceDetailsResponse> operation = new PureStorageBlockArmOperation<SaaSResourceDetailsResponse>(
+                    new SaaSResourceDetailsResponseOperationSource(),
+                    SaaSOperationGroupClientDiagnostics,
+                    Pipeline,
+                    message.Request,
+                    response,
+                    OperationFinalStateVia.Location);
+                if (waitUntil == WaitUntil.Completed)
+                {
+                    operation.WaitForCompletion(cancellationToken);
+                }
+                return operation;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
     }
 }
