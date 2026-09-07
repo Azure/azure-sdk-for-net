@@ -10,12 +10,19 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Sql
 {
+    /// <summary> Properties of a sensitivity label. </summary>
     internal partial class SensitivityLabelProperties : ProvisionableConstruct
     {
         private BicepValue<string> _schemaName;
         private BicepValue<string> _tableName;
         private BicepValue<string> _columnName;
+        private BicepValue<string> _labelName;
+        private BicepValue<string> _labelId;
+        private BicepValue<string> _informationType;
+        private BicepValue<string> _informationTypeId;
         private BicepValue<bool> _isDisabled;
+        private BicepValue<SensitivityLabelRank> _rank;
+        private BicepValue<ClientClassificationSource> _clientClassificationSource;
 
         /// <summary> Creates a new SensitivityLabelProperties. </summary>
         public SensitivityLabelProperties()
@@ -52,6 +59,46 @@ namespace Azure.Provisioning.Sql
             }
         }
 
+        /// <summary> Gets the LabelName. </summary>
+        public BicepValue<string> LabelName
+        {
+            get
+            {
+                Initialize();
+                return _labelName;
+            }
+        }
+
+        /// <summary> Gets the LabelId. </summary>
+        public BicepValue<string> LabelId
+        {
+            get
+            {
+                Initialize();
+                return _labelId;
+            }
+        }
+
+        /// <summary> Gets the InformationType. </summary>
+        public BicepValue<string> InformationType
+        {
+            get
+            {
+                Initialize();
+                return _informationType;
+            }
+        }
+
+        /// <summary> Gets the InformationTypeId. </summary>
+        public BicepValue<string> InformationTypeId
+        {
+            get
+            {
+                Initialize();
+                return _informationTypeId;
+            }
+        }
+
         /// <summary> Gets the IsDisabled. </summary>
         public BicepValue<bool> IsDisabled
         {
@@ -62,6 +109,26 @@ namespace Azure.Provisioning.Sql
             }
         }
 
+        /// <summary> Gets the Rank. </summary>
+        public BicepValue<SensitivityLabelRank> Rank
+        {
+            get
+            {
+                Initialize();
+                return _rank;
+            }
+        }
+
+        /// <summary> Gets the ClientClassificationSource. </summary>
+        public BicepValue<ClientClassificationSource> ClientClassificationSource
+        {
+            get
+            {
+                Initialize();
+                return _clientClassificationSource;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for SensitivityLabelProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -69,7 +136,13 @@ namespace Azure.Provisioning.Sql
             _schemaName = DefineProperty<string>(nameof(SchemaName), new string[] { "schemaName" }, isOutput: true);
             _tableName = DefineProperty<string>(nameof(TableName), new string[] { "tableName" }, isOutput: true);
             _columnName = DefineProperty<string>(nameof(ColumnName), new string[] { "columnName" }, isOutput: true);
+            _labelName = DefineProperty<string>(nameof(LabelName), new string[] { "labelName" });
+            _labelId = DefineProperty<string>(nameof(LabelId), new string[] { "labelId" });
+            _informationType = DefineProperty<string>(nameof(InformationType), new string[] { "informationType" });
+            _informationTypeId = DefineProperty<string>(nameof(InformationTypeId), new string[] { "informationTypeId" });
             _isDisabled = DefineProperty<bool>(nameof(IsDisabled), new string[] { "isDisabled" }, isOutput: true);
+            _rank = DefineProperty<SensitivityLabelRank>(nameof(Rank), new string[] { "rank" });
+            _clientClassificationSource = DefineProperty<ClientClassificationSource>(nameof(ClientClassificationSource), new string[] { "clientClassificationSource" });
             DefineAdditionalProperties();
         }
 

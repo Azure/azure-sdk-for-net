@@ -18,6 +18,7 @@ namespace Azure.Provisioning.Sql
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
+        private SensitivityLabelProperties _properties;
         private BicepValue<string> _managedBy;
         private ResourceReference<SqlDatabaseColumn> _parent;
 
@@ -56,6 +57,16 @@ namespace Azure.Provisioning.Sql
             }
         }
 
+        /// <summary> Gets the Properties. </summary>
+        internal SensitivityLabelProperties Properties
+        {
+            get
+            {
+                Initialize();
+                return _properties;
+            }
+        }
+
         /// <summary> Gets the ManagedBy. </summary>
         public BicepValue<string> ManagedBy
         {
@@ -86,10 +97,6 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new SensitivityLabelProperties();
-                }
                 return Properties.SchemaName;
             }
         }
@@ -99,10 +106,6 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new SensitivityLabelProperties();
-                }
                 return Properties.TableName;
             }
         }
@@ -112,10 +115,6 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new SensitivityLabelProperties();
-                }
                 return Properties.ColumnName;
             }
         }
@@ -125,10 +124,6 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new SensitivityLabelProperties();
-                }
                 return Properties.IsDisabled;
             }
         }
@@ -140,6 +135,7 @@ namespace Azure.Provisioning.Sql
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _properties = DefineModelProperty<SensitivityLabelProperties>(nameof(Properties), new string[] { "properties" });
             _managedBy = DefineProperty<string>(nameof(ManagedBy), new string[] { "managedBy" }, isOutput: true);
             _parent = DefineResource<SqlDatabaseColumn>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();

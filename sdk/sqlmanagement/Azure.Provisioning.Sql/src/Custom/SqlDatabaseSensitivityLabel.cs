@@ -10,41 +10,23 @@ namespace Azure.Provisioning.Sql;
 
 public partial class SqlDatabaseSensitivityLabel
 {
-    private SensitivityLabelProperties _writableProperties;
-
-    // The missing PUT association also makes the generated properties construct read-only.
-    // Replace its definition until https://github.com/Azure/azure-sdk-for-net/issues/62742
-    // provides a supported metadata override.
-    [CodeGenMember("Properties")]
-    internal SensitivityLabelProperties Properties
-    {
-        get
-        {
-            Initialize();
-            return _writableProperties;
-        }
-        set
-        {
-            Initialize();
-            AssignOrReplace(ref _writableProperties, value);
-        }
-    }
-
-    private SensitivityLabelProperties WritableProperties
-    {
-        get
-        {
-            if (Properties is null)
-            {
-                Properties = new SensitivityLabelProperties();
-            }
-            return Properties;
-        }
-    }
+    private BicepValue<string> _labelName;
+    private BicepValue<string> _labelId;
+    private BicepValue<string> _informationType;
+    private BicepValue<string> _informationTypeId;
+    private BicepValue<SensitivityLabelRank> _rank;
+    private BicepValue<ClientClassificationSource> _clientClassificationSource;
 
     partial void DefineAdditionalProperties()
     {
-        _writableProperties = DefineModelProperty<SensitivityLabelProperties>(nameof(Properties), new string[] { "properties" });
+        // Define these writable properties directly until
+        // https://github.com/Azure/azure-sdk-for-net/issues/62742 provides a metadata override.
+        _labelName = DefineProperty<string>(nameof(LabelName), new string[] { "properties", "labelName" });
+        _labelId = DefineProperty<string>(nameof(LabelId), new string[] { "properties", "labelId" });
+        _informationType = DefineProperty<string>(nameof(InformationType), new string[] { "properties", "informationType" });
+        _informationTypeId = DefineProperty<string>(nameof(InformationTypeId), new string[] { "properties", "informationTypeId" });
+        _rank = DefineProperty<SensitivityLabelRank>(nameof(Rank), new string[] { "properties", "rank" });
+        _clientClassificationSource = DefineProperty<ClientClassificationSource>(nameof(ClientClassificationSource), new string[] { "properties", "clientClassificationSource" });
     }
 
     // This resource is writable, but its PUT operation is not currently associated with the
@@ -66,47 +48,95 @@ public partial class SqlDatabaseSensitivityLabel
     [CodeGenMember("LabelName")]
     public BicepValue<string> LabelName
     {
-        get => WritableProperties.LabelName;
-        set => WritableProperties.LabelName.Assign(value);
+        get
+        {
+            Initialize();
+            return _labelName;
+        }
+        set
+        {
+            Initialize();
+            _labelName.Assign(value);
+        }
     }
 
     /// <summary> Gets or sets the label ID. </summary>
     [CodeGenMember("LabelId")]
     public BicepValue<string> LabelId
     {
-        get => WritableProperties.LabelId;
-        set => WritableProperties.LabelId.Assign(value);
+        get
+        {
+            Initialize();
+            return _labelId;
+        }
+        set
+        {
+            Initialize();
+            _labelId.Assign(value);
+        }
     }
 
     /// <summary> Gets or sets the information type. </summary>
     [CodeGenMember("InformationType")]
     public BicepValue<string> InformationType
     {
-        get => WritableProperties.InformationType;
-        set => WritableProperties.InformationType.Assign(value);
+        get
+        {
+            Initialize();
+            return _informationType;
+        }
+        set
+        {
+            Initialize();
+            _informationType.Assign(value);
+        }
     }
 
     /// <summary> Gets or sets the information type ID. </summary>
     [CodeGenMember("InformationTypeId")]
     public BicepValue<string> InformationTypeId
     {
-        get => WritableProperties.InformationTypeId;
-        set => WritableProperties.InformationTypeId.Assign(value);
+        get
+        {
+            Initialize();
+            return _informationTypeId;
+        }
+        set
+        {
+            Initialize();
+            _informationTypeId.Assign(value);
+        }
     }
 
     /// <summary> Gets or sets the sensitivity label rank. </summary>
     [CodeGenMember("Rank")]
     public BicepValue<SensitivityLabelRank> Rank
     {
-        get => WritableProperties.Rank;
-        set => WritableProperties.Rank.Assign(value);
+        get
+        {
+            Initialize();
+            return _rank;
+        }
+        set
+        {
+            Initialize();
+            _rank.Assign(value);
+        }
     }
 
     /// <summary> Gets or sets the client classification source. </summary>
     [CodeGenMember("ClientClassificationSource")]
     public BicepValue<ClientClassificationSource> ClientClassificationSource
     {
-        get => WritableProperties.ClientClassificationSource;
-        set => WritableProperties.ClientClassificationSource.Assign(value);
+        get
+        {
+            Initialize();
+            return _clientClassificationSource;
+        }
+        set
+        {
+            Initialize();
+            _clientClassificationSource.Assign(value);
+        }
     }
 }
