@@ -930,11 +930,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> The result of getting an access token for a SandboxGroup. </summary>
         /// <param name="endpoint"> The endpoint URL to use with the access token. </param>
         /// <param name="accessToken"> The access token used to authenticate against the endpoint. </param>
-        /// <param name="notAfter"> The UTC date and time at which the access token expires. </param>
+        /// <param name="notAfterOn"> The UTC date and time at which the access token expires. </param>
         /// <returns> A new <see cref="Models.ContainerSandboxGroupAccessToken"/> instance for mocking. </returns>
-        public static ContainerSandboxGroupAccessToken ContainerSandboxGroupAccessToken(Uri endpoint = default, string accessToken = default, DateTimeOffset notAfter = default)
+        public static ContainerSandboxGroupAccessToken ContainerSandboxGroupAccessToken(Uri endpoint = default, string accessToken = default, DateTimeOffset notAfterOn = default)
         {
-            return new ContainerSandboxGroupAccessToken(endpoint, accessToken, notAfter, default);
+            return new ContainerSandboxGroupAccessToken(endpoint, accessToken, notAfterOn, default);
         }
 
         /// <summary> The logs. </summary>

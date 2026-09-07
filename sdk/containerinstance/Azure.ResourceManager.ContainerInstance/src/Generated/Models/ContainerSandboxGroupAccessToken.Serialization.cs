@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             writer.WritePropertyName("accessToken"u8);
             writer.WriteStringValue(AccessToken);
             writer.WritePropertyName("notAfter"u8);
-            writer.WriteStringValue(NotAfter, "O");
+            writer.WriteStringValue(NotAfterOn, "O");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             }
             Uri endpoint = default;
             string accessToken = default;
-            DateTimeOffset notAfter = default;
+            DateTimeOffset notAfterOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 if (prop.NameEquals("notAfter"u8))
                 {
-                    notAfter = prop.Value.GetDateTimeOffset("O");
+                    notAfterOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContainerSandboxGroupAccessToken(endpoint, accessToken, notAfter, additionalBinaryDataProperties);
+            return new ContainerSandboxGroupAccessToken(endpoint, accessToken, notAfterOn, additionalBinaryDataProperties);
         }
     }
 }

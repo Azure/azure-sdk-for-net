@@ -19,24 +19,24 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         /// <summary> Initializes a new instance of <see cref="ContainerSandboxGroupAccessToken"/>. </summary>
         /// <param name="endpoint"> The endpoint URL to use with the access token. </param>
         /// <param name="accessToken"> The access token used to authenticate against the endpoint. </param>
-        /// <param name="notAfter"> The UTC date and time at which the access token expires. </param>
-        internal ContainerSandboxGroupAccessToken(Uri endpoint, string accessToken, DateTimeOffset notAfter)
+        /// <param name="notAfterOn"> The UTC date and time at which the access token expires. </param>
+        internal ContainerSandboxGroupAccessToken(Uri endpoint, string accessToken, DateTimeOffset notAfterOn)
         {
             Endpoint = endpoint;
             AccessToken = accessToken;
-            NotAfter = notAfter;
+            NotAfterOn = notAfterOn;
         }
 
         /// <summary> Initializes a new instance of <see cref="ContainerSandboxGroupAccessToken"/>. </summary>
         /// <param name="endpoint"> The endpoint URL to use with the access token. </param>
         /// <param name="accessToken"> The access token used to authenticate against the endpoint. </param>
-        /// <param name="notAfter"> The UTC date and time at which the access token expires. </param>
+        /// <param name="notAfterOn"> The UTC date and time at which the access token expires. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerSandboxGroupAccessToken(Uri endpoint, string accessToken, DateTimeOffset notAfter, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerSandboxGroupAccessToken(Uri endpoint, string accessToken, DateTimeOffset notAfterOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
             AccessToken = accessToken;
-            NotAfter = notAfter;
+            NotAfterOn = notAfterOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -47,6 +47,6 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public string AccessToken { get; }
 
         /// <summary> The UTC date and time at which the access token expires. </summary>
-        public DateTimeOffset NotAfter { get; }
+        public DateTimeOffset NotAfterOn { get; }
     }
 }

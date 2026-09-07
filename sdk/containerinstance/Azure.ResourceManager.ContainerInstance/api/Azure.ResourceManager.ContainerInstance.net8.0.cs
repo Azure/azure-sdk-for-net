@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerResourceLimits ContainerResourceLimits(double? memoryInGB = default(double?), double? cpu = default(double?), Azure.ResourceManager.ContainerInstance.Models.ContainerGpuResourceInfo gpu = null) { throw null; }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequestsContent ContainerResourceRequestsContent(double memoryInGB = 0, double cpu = 0, Azure.ResourceManager.ContainerInstance.Models.ContainerGpuResourceInfo gpu = null) { throw null; }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequirements ContainerResourceRequirements(Azure.ResourceManager.ContainerInstance.Models.ContainerResourceRequestsContent requests = null, Azure.ResourceManager.ContainerInstance.Models.ContainerResourceLimits limits = null) { throw null; }
-        public static Azure.ResourceManager.ContainerInstance.Models.ContainerSandboxGroupAccessToken ContainerSandboxGroupAccessToken(System.Uri endpoint = null, string accessToken = null, System.DateTimeOffset notAfter = default(System.DateTimeOffset)) { throw null; }
+        public static Azure.ResourceManager.ContainerInstance.Models.ContainerSandboxGroupAccessToken ContainerSandboxGroupAccessToken(System.Uri endpoint = null, string accessToken = null, System.DateTimeOffset notAfterOn = default(System.DateTimeOffset)) { throw null; }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerSandboxGroupPatch ContainerSandboxGroupPatch(System.Collections.Generic.IDictionary<string, string> tags = null, Azure.ResourceManager.Models.ManagedServiceIdentity identity = null) { throw null; }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerSandboxGroupSubnetReference ContainerSandboxGroupSubnetReference(Azure.Core.ResourceIdentifier id = null) { throw null; }
         public static Azure.ResourceManager.ContainerInstance.Models.ContainerSecurityContextCapabilitiesDefinition ContainerSecurityContextCapabilitiesDefinition(System.Collections.Generic.IEnumerable<string> add = null, System.Collections.Generic.IEnumerable<string> drop = null) { throw null; }
@@ -1521,7 +1521,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
         internal ContainerSandboxGroupAccessToken() { }
         public string AccessToken { get { throw null; } }
         public System.Uri Endpoint { get { throw null; } }
-        public System.DateTimeOffset NotAfter { get { throw null; } }
+        public System.DateTimeOffset NotAfterOn { get { throw null; } }
         protected virtual Azure.ResourceManager.ContainerInstance.Models.ContainerSandboxGroupAccessToken JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.ContainerInstance.Models.ContainerSandboxGroupAccessToken PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
