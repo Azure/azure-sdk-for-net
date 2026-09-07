@@ -10,11 +10,11 @@ namespace Azure.Provisioning.AppContainers
     /// <summary> Status of the label history record. </summary>
     public enum Status
     {
-        /// <summary> Succeeded. </summary>
+        /// <summary> The label operation completed successfully. </summary>
         Succeeded = 0,
-        /// <summary> Failed. </summary>
+        /// <summary> The label operation failed. </summary>
         Failed = 1,
-        /// <summary> Starting. </summary>
+        /// <summary> The label operation is starting. </summary>
         Starting = 2
     }
 }

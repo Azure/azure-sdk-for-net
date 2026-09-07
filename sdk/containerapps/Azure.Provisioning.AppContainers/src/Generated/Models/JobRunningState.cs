@@ -10,11 +10,11 @@ namespace Azure.Provisioning.AppContainers
     /// <summary> Current running state of the job. </summary>
     public enum JobRunningState
     {
-        /// <summary> Ready. </summary>
+        /// <summary> The job is ready to run. </summary>
         Ready = 0,
-        /// <summary> Progressing. </summary>
+        /// <summary> The job is transitioning to its target state. </summary>
         Progressing = 1,
-        /// <summary> Suspended. </summary>
+        /// <summary> The job is suspended. </summary>
         Suspended = 2
     }
 }

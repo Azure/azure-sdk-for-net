@@ -3767,7 +3767,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 default);
         }
 
-        /// <summary> Advanced Ingress routing for path/header based routing for a Container App Environment. </summary>
+        /// <summary> A set of host names and http request routing rules for a Container App Environment. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -3807,7 +3807,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 default);
         }
 
-        /// <summary> List of provisioning errors for a http route config object. </summary>
+        /// <summary> List of provisioning errors for a Http Route Config object. </summary>
         /// <param name="errorOccurredOn"> Timestamp error occured at. </param>
         /// <param name="message"> Description or error message. </param>
         /// <returns> A new <see cref="Models.ContainerAppHttpRouteProvisioningErrors"/> instance for mocking. </returns>
@@ -3816,7 +3816,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             return new ContainerAppHttpRouteProvisioningErrors(errorOccurredOn, message, default);
         }
 
-        /// <summary> Http Route rule. </summary>
+        /// <summary> A set of routing conditions and targets. </summary>
         /// <param name="targets"> Targets- container apps, revisions, labels. </param>
         /// <param name="routes"> Routing configuration that will allow matches on specific paths/headers. </param>
         /// <param name="description"> Description of rule. Optional. </param>
@@ -4167,42 +4167,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                 identity,
                 managedBy,
                 kind,
-                default);
-        }
-
-        /// <summary> Container App Ingress configuration. </summary>
-        /// <param name="fqdn"> Hostname. </param>
-        /// <param name="external"> Bool indicating if app exposes an external http endpoint. </param>
-        /// <param name="targetPort"> Target Port in containers for traffic from ingress. </param>
-        /// <param name="exposedPort"> Exposed Port in containers for TCP traffic from ingress. </param>
-        /// <param name="transport"> Ingress transport protocol. </param>
-        /// <param name="traffic"> Traffic weights for app's revisions. </param>
-        /// <param name="customDomains"> custom domain bindings for Container Apps' hostnames. </param>
-        /// <param name="allowInsecure"> Bool indicating if HTTP connections to is allowed. If set to false HTTP connections are automatically redirected to HTTPS connections. </param>
-        /// <param name="ipSecurityRestrictions"> Rules to restrict incoming IP address. </param>
-        /// <param name="stickySessionsAffinity"> Sticky Session Affinity. </param>
-        /// <param name="clientCertificateMode"> Client certificate mode for mTLS authentication. Ignore indicates server drops client certificate on forwarding. Accept indicates server forwards client certificate but does not require a client certificate. Require indicates server requires a client certificate. </param>
-        /// <param name="corsPolicy"> CORS policy for container app. </param>
-        /// <param name="additionalPortMappings"> Settings to expose additional ports on container app. </param>
-        /// <returns> A new <see cref="Models.ContainerAppIngressConfiguration"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerAppIngressConfiguration ContainerAppIngressConfiguration(string fqdn = default, bool? external = default, int? targetPort = default, int? exposedPort = default, ContainerAppIngressTransportMethod? transport = default, IEnumerable<ContainerAppRevisionTrafficWeight> traffic = default, IEnumerable<ContainerAppCustomDomain> customDomains = default, bool? allowInsecure = default, IEnumerable<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions = default, Affinity? stickySessionsAffinity = default, ContainerAppIngressClientCertificateMode? clientCertificateMode = default, ContainerAppCorsPolicy corsPolicy = default, IEnumerable<IngressPortMapping> additionalPortMappings = default)
-        {
-            return new ContainerAppIngressConfiguration(
-                fqdn,
-                external,
-                targetPort,
-                exposedPort,
-                transport,
-                (traffic ?? new ChangeTrackingList<ContainerAppRevisionTrafficWeight>()).ToList(),
-                (customDomains ?? new ChangeTrackingList<ContainerAppCustomDomain>()).ToList(),
-                allowInsecure,
-                (ipSecurityRestrictions ?? new ChangeTrackingList<ContainerAppIPSecurityRestrictionRule>()).ToList(),
-                stickySessionsAffinity is null ? default : new IngressStickySessions(stickySessionsAffinity, default),
-                clientCertificateMode,
-                corsPolicy,
-                (additionalPortMappings ?? new ChangeTrackingList<IngressPortMapping>()).ToList(),
-                default,
                 default);
         }
 
@@ -4959,41 +4923,6 @@ namespace Azure.ResourceManager.AppContainers.Models
                     httpSettings,
                     default,
                     default),
-                default);
-        }
-
-        /// <summary> Container App Ingress configuration. </summary>
-        /// <param name="fqdn"> Hostname. </param>
-        /// <param name="external"> Bool indicating if app exposes an external http endpoint. </param>
-        /// <param name="targetPort"> Target Port in containers for traffic from ingress. </param>
-        /// <param name="exposedPort"> Exposed Port in containers for TCP traffic from ingress. </param>
-        /// <param name="transport"> Ingress transport protocol. </param>
-        /// <param name="traffic"> Traffic weights for app's revisions. </param>
-        /// <param name="customDomains"> custom domain bindings for Container Apps' hostnames. </param>
-        /// <param name="allowInsecure"> Bool indicating if HTTP connections to is allowed. If set to false HTTP connections are automatically redirected to HTTPS connections. </param>
-        /// <param name="ipSecurityRestrictions"> Rules to restrict incoming IP address. </param>
-        /// <param name="stickySessionsAffinity"> Sticky Session Affinity. </param>
-        /// <param name="clientCertificateMode"> Client certificate mode for mTLS authentication. Ignore indicates server drops client certificate on forwarding. Accept indicates server forwards client certificate but does not require a client certificate. Require indicates server requires a client certificate. </param>
-        /// <param name="corsPolicy"> CORS policy for container app. </param>
-        /// <returns> A new <see cref="Models.ContainerAppIngressConfiguration"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static ContainerAppIngressConfiguration ContainerAppIngressConfiguration(string fqdn, bool? external, int? targetPort, int? exposedPort, ContainerAppIngressTransportMethod? transport, IEnumerable<ContainerAppRevisionTrafficWeight> traffic, IEnumerable<ContainerAppCustomDomain> customDomains, bool? allowInsecure, IEnumerable<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions, Affinity? stickySessionsAffinity, ContainerAppIngressClientCertificateMode? clientCertificateMode, ContainerAppCorsPolicy corsPolicy)
-        {
-            return new ContainerAppIngressConfiguration(
-                fqdn,
-                external,
-                targetPort,
-                exposedPort,
-                transport,
-                (traffic ?? new ChangeTrackingList<ContainerAppRevisionTrafficWeight>()).ToList(),
-                (customDomains ?? new ChangeTrackingList<ContainerAppCustomDomain>()).ToList(),
-                allowInsecure,
-                (ipSecurityRestrictions ?? new ChangeTrackingList<ContainerAppIPSecurityRestrictionRule>()).ToList(),
-                stickySessionsAffinity is null ? default : new IngressStickySessions(stickySessionsAffinity, default),
-                clientCertificateMode,
-                corsPolicy,
-                default,
-                default,
                 default);
         }
 

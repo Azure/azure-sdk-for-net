@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a specific function of a Container App Revision.
+        /// Gets the details of a specific function in a Container App revision.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get a specific function of a Container App Revision.
+        /// Gets the details of a specific function in a Container App revision.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// List the functions for a given Container App Revision.
+        /// Lists the functions available in a specific Container App revision.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// List the functions for a given Container App Revision.
+        /// Lists the functions available in a specific Container App revision.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

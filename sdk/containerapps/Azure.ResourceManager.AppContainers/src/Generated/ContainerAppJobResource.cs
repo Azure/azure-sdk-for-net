@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Resumes a suspended job
+        /// Resumes execution for a suspended Container Apps job.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Resumes a suspended job
+        /// Resumes execution for a suspended Container Apps job.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Suspends a job
+        /// Suspends execution for a running Container Apps job.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -869,7 +869,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Suspends a job
+        /// Suspends execution for a running Container Apps job.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>

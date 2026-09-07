@@ -10,7 +10,7 @@ namespace Azure.Provisioning.AppContainers
     /// <summary> Type of the .NET Component. </summary>
     public enum DotNetComponentType
     {
-        /// <summary> AspireDashboard. </summary>
+        /// <summary> An Aspire dashboard component. </summary>
         AspireDashboard = 0
     }
 }

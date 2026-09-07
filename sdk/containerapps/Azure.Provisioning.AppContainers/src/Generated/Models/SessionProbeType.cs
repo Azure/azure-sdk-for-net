@@ -10,9 +10,9 @@ namespace Azure.Provisioning.AppContainers
     /// <summary> Denotes the type of probe. Can be Liveness or Startup, Readiness probe is not supported in sessions. Type must be unique for each probe within the context of a list of probes (SessionProbes). </summary>
     public enum SessionProbeType
     {
-        /// <summary> Liveness. </summary>
+        /// <summary> Checks whether the session is still running and healthy. </summary>
         Liveness = 0,
-        /// <summary> Startup. </summary>
+        /// <summary> Checks whether the session has started successfully. </summary>
         Startup = 1
     }
 }

@@ -10,15 +10,15 @@ namespace Azure.Provisioning.AppContainers
     /// <summary> Provisioning state of the .NET Component. </summary>
     public enum DotNetComponentProvisioningState
     {
-        /// <summary> Succeeded. </summary>
+        /// <summary> The .NET component was provisioned successfully. </summary>
         Succeeded = 0,
-        /// <summary> Failed. </summary>
+        /// <summary> The .NET component failed to provision. </summary>
         Failed = 1,
-        /// <summary> Canceled. </summary>
+        /// <summary> Provisioning of the .NET component was canceled. </summary>
         Canceled = 2,
-        /// <summary> Deleting. </summary>
+        /// <summary> The .NET component is being deleted. </summary>
         Deleting = 3,
-        /// <summary> InProgress. </summary>
+        /// <summary> The .NET component is being provisioned. </summary>
         InProgress = 4
     }
 }
