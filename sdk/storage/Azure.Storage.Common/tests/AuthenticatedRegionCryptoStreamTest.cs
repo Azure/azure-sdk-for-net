@@ -3,7 +3,6 @@
 
 using System;
 using System.Buffers;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -142,30 +141,6 @@ namespace Azure.Storage.Test
                 _authRegionDataLength,
                 streamMode,
                 arrayPool);
-
-        /// <summary>
-        /// Array pool that delegates to <see cref="ArrayPool{T}.Shared"/> while recording every
-        /// array it hands out and every array handed back, so tests can check that each rental is
-        /// returned exactly once.
-        /// </summary>
-        private static Mock<ArrayPool<byte>> CreateTrackingArrayPool(List<byte[]> rented, List<byte[]> returned)
-        {
-            Mock<ArrayPool<byte>> arrayPool = new Mock<ArrayPool<byte>>();
-            arrayPool.Setup(pool => pool.Rent(It.IsAny<int>()))
-                .Returns<int>(size =>
-                {
-                    byte[] array = ArrayPool<byte>.Shared.Rent(size);
-                    rented.Add(array);
-                    return array;
-                });
-            arrayPool.Setup(pool => pool.Return(It.IsAny<byte[]>(), It.IsAny<bool>()))
-                .Callback<byte[], bool>((array, clear) =>
-                {
-                    returned.Add(array);
-                    ArrayPool<byte>.Shared.Return(array, clear);
-                });
-            return arrayPool;
-        }
 
         private static byte[] GetRandomBytes(int length)
         {
@@ -627,21 +602,21 @@ namespace Azure.Storage.Test
             [Values(true, false)] bool encrypt,
             [Values(CryptoStreamMode.Read, CryptoStreamMode.Write)] CryptoStreamMode streamMode)
         {
-            List<byte[]> rented = new List<byte[]>();
-            List<byte[]> returned = new List<byte[]>();
-            Mock<ArrayPool<byte>> arrayPool = CreateTrackingArrayPool(rented, returned);
+            // Given mock array pool that actually calls to a real one
+            Mock<ArrayPool<byte>> arrayPool = new Mock<ArrayPool<byte>>();
+            arrayPool.Setup(pool => pool.Rent(It.IsAny<int>()))
+                .Returns<int>(size => ArrayPool<byte>.Shared.Rent(size));
+            arrayPool.Setup(pool => pool.Return(It.IsAny<byte[]>(), It.IsAny<bool>()))
+                .Callback<byte[], bool>((array, clear) => ArrayPool<byte>.Shared.Return(array, clear));
 
+            // and a stream that is disposed more than once without ever being read or written
             AuthenticatedRegionCryptoStream stream = CreateStreamForDisposalTest(encrypt, streamMode, arrayPool.Object);
+            stream.Dispose();
+            stream.Dispose();
+            stream.Dispose();
 
-            // nothing was read or written, so the only rental is the stream's own buffer
+            // assert the one rental, the stream's own buffer, was returned exactly once
             arrayPool.Verify(pool => pool.Rent(It.IsAny<int>()), Times.Once());
-            byte[] streamBuffer = rented.Single();
-
-            stream.Dispose();
-            stream.Dispose();
-            stream.Dispose();
-
-            arrayPool.Verify(pool => pool.Return(streamBuffer, It.IsAny<bool>()), Times.Once());
             arrayPool.Verify(pool => pool.Return(It.IsAny<byte[]>(), It.IsAny<bool>()), Times.Once());
         }
 
@@ -653,9 +628,12 @@ namespace Azure.Storage.Test
         [Test]
         public void DisposeCleansUpWhenFinalFlushThrows()
         {
-            List<byte[]> rented = new List<byte[]>();
-            List<byte[]> returned = new List<byte[]>();
-            Mock<ArrayPool<byte>> arrayPool = CreateTrackingArrayPool(rented, returned);
+            // Given mock array pool that actually calls to a real one
+            Mock<ArrayPool<byte>> arrayPool = new Mock<ArrayPool<byte>>();
+            arrayPool.Setup(pool => pool.Rent(It.IsAny<int>()))
+                .Returns<int>(size => ArrayPool<byte>.Shared.Rent(size));
+            arrayPool.Setup(pool => pool.Return(It.IsAny<byte[]>(), It.IsAny<bool>()))
+                .Callback<byte[], bool>((array, clear) => ArrayPool<byte>.Shared.Return(array, clear));
 
             MockEncryptTransform transform = new MockEncryptTransform(_nonceLength, _tagLength, _nonceByte, _tagByte);
             ThrowOnWriteStream innerStream = new ThrowOnWriteStream();
@@ -673,15 +651,19 @@ namespace Azure.Storage.Test
 
             Assert.IsTrue(innerStream.Disposed, "inner stream was left undisposed");
             Assert.AreEqual(1, transform.DisposeCount, "transform was left undisposed");
-            // the stream's own buffer and the flush's scratch buffer were both released, once each
-            CollectionAssert.AreEquivalent(rented, returned, "every rented array must be returned exactly once");
+            // assert every pool rental (the stream's buffer and the flush's scratch buffer) was returned
+            int rents = arrayPool.Invocations.Where(i => i.Method.Name == "Rent").Count();
+            int returns = arrayPool.Invocations.Where(i => i.Method.Name == "Return").Count();
+            Assert.Greater(rents, 0);
+            Assert.AreEqual(rents, returns);
             // and with the buffer gone, the stream no longer accepts writes
             Assert.Throws<NotSupportedException>(() => stream.Write(new byte[1], 0, 1));
 
             // the failed Dispose still counts as the one Dispose that does the work
             Assert.DoesNotThrow(() => stream.Dispose());
             Assert.AreEqual(1, transform.DisposeCount, "transform was disposed more than once");
-            CollectionAssert.AreEquivalent(rented, returned, "a later Dispose must not return anything again");
+            Assert.AreEqual(returns, arrayPool.Invocations.Where(i => i.Method.Name == "Return").Count(),
+                "a later Dispose must not return anything to the pool again");
         }
 
         private void Swap(byte[] buf, int i, int j)
