@@ -1272,6 +1272,109 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void TestModelFactoryForwardsCustomizedUnflattenedProperty()
+        {
+            var exportPolicyProperty = InputFactory.Property(
+                "exportPolicy",
+                InputPrimitiveType.String,
+                serializedName: "exportPolicy");
+            var routePolicyModel = InputFactory.Model(
+                "TestRoutePolicy",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [exportPolicyProperty]);
+            var routePolicyProperty = InputFactory.Property(
+                "routePolicy",
+                routePolicyModel,
+                serializedName: "routePolicy");
+            var annotationProperty = InputFactory.Property(
+                "annotation",
+                InputPrimitiveType.String,
+                serializedName: "annotation");
+            var networkFabricIdProperty = InputFactory.Property(
+                "networkFabricId",
+                InputPrimitiveType.String,
+                serializedName: "networkFabricId");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [annotationProperty, routePolicyProperty, networkFabricIdProperty]);
+            var propertiesProperty = InputFactory.Property(
+                "properties",
+                propertiesModel,
+                serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel, routePolicyModel]);
+            var routePolicyProvider = plugin.Object.TypeFactory.CreateModel(routePolicyModel)!;
+            var customCodeView = new TestTypeView(routePolicyProvider.Name)
+            {
+                PropertiesToBuild =
+                [
+                    new PropertyProvider(
+                        null,
+                        MethodSignatureModifiers.Public,
+                        typeof(string),
+                        "LegacyExportPolicyId",
+                        new AutoPropertyBody(true),
+                        routePolicyProvider)
+                ]
+            };
+            ManagementMockHelpers.SetCustomCodeView(routePolicyProvider, customCodeView);
+
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var propertiesProvider = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            propertiesProvider.Properties.Single(property => property.Name == "RoutePolicy").Update(
+                modifiers: MethodSignatureModifiers.Internal);
+            propertiesProvider.Properties.Single(property => property.Name == "NetworkFabricId").Update(
+                modifiers: MethodSignatureModifiers.Internal);
+            var parentCustomCodeView = new TestTypeView(parentProvider.Name)
+            {
+                PropertiesToBuild =
+                [
+                    new PropertyProvider(
+                        null,
+                        MethodSignatureModifiers.Public,
+                        routePolicyProvider.Type,
+                        "RoutePolicy",
+                        new AutoPropertyBody(true),
+                        parentProvider)
+                ]
+            };
+            ManagementMockHelpers.SetCustomCodeView(parentProvider, parentCustomCodeView);
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var originalFactoryMethod = modelFactory.Methods.Single(method => method.Signature.ReturnType == parentProvider.Type);
+            // Customized and otherwise pre-existing outer properties are already exposed as separate model-factory
+            // parameters when the flatten visitor rewrites the generated properties parameter.
+            originalFactoryMethod.Signature.Update(parameters:
+                [
+                    .. originalFactoryMethod.Signature.Parameters,
+                    parentCustomCodeView.Properties.Single().AsParameter,
+                    new ParameterProvider("networkFabricId", $"", typeof(string), Default)
+                ]);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance)!;
+            var flattenVisitor = new FlattenPropertyVisitor();
+            visitTypeCore.Invoke(flattenVisitor, [parentProvider]);
+            visitTypeCore.Invoke(flattenVisitor, [modelFactory]);
+
+            var factoryMethod = modelFactory.Methods.Single(method => method.Signature.ReturnType == parentProvider.Type);
+            Assert.That(factoryMethod.Signature.Parameters.Select(parameter => parameter.Name), Does.Contain("routePolicy"));
+            Assert.That(factoryMethod.Signature.Parameters.Select(parameter => parameter.Name), Does.Contain("networkFabricId"));
+
+            var body = factoryMethod.BodyStatements!.ToDisplayString();
+            Assert.That(body, Does.Contain("routePolicy is null"));
+            Assert.That(body, Does.Contain("networkFabricId is null"));
+            Assert.That(body, Does.Match(@"new\s+(?:global::Samples\.Models\.)?TestProperties\s*\(\s*annotation,\s*routePolicy,\s*networkFabricId,"));
+        }
+
+        [Test]
         public void TestSafeFlattenCountsIndependentCustomPropertyWithoutWireInfo()
         {
             var valueProperty = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");
