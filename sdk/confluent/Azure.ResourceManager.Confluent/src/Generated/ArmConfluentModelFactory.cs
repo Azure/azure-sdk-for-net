@@ -28,6 +28,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new ConfluentApiKeyRecord(kind, id, metadata is null && spec is null ? default : new APIKeyProperties(metadata, spec, default), default);
         }
 
+        /// <summary> Metadata of the data record. </summary>
         /// <param name="self"> Self lookup url. </param>
         /// <param name="resourceName"> Resource name of the record. </param>
         /// <param name="createdOn"> Created Date Time. </param>
@@ -45,6 +46,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary> Spec of the API Key record. </summary>
         /// <param name="description"> The description of the API Key. </param>
         /// <param name="name"> The name of the API Key. </param>
         /// <param name="secret"> API Key Secret. </param>
@@ -62,6 +64,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary> API Key Resource details which can be kafka cluster or schema registry cluster. </summary>
         /// <param name="id"> Id of the resource. </param>
         /// <param name="environment"> The environment of the api key. </param>
         /// <param name="related"> API URL for accessing or modifying the api key resource object. </param>
@@ -79,6 +82,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary> API Key Owner details which can be a user or service account. </summary>
         /// <param name="id"> API Key owner id. </param>
         /// <param name="related"> API URL for accessing or modifying the referred object. </param>
         /// <param name="resourceName"> CRN reference to the referred resource. </param>
@@ -102,7 +106,6 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="offerDetail"> Confluent offer detail. </param>
         /// <param name="userDetail"> Subscriber detail. </param>
         /// <param name="linkOrganizationToken"> User auth token. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="offerDetail"/> or <paramref name="userDetail"/> is null. </exception>
         /// <returns> A new <see cref="Confluent.ConfluentOrganizationData"/> instance for mocking. </returns>
         public static ConfluentOrganizationData ConfluentOrganizationData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DateTimeOffset? createdOn = default, ConfluentProvisionState? provisioningState = default, Guid? organizationId = default, Uri ssoUri = default, ConfluentOfferDetail offerDetail = default, ConfluentUserDetail userDetail = default, string linkOrganizationToken = default)
         {
@@ -127,6 +130,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary> Confluent Offer detail. </summary>
         /// <param name="publisherId"> Publisher Id. </param>
         /// <param name="id"> Offer Id. </param>
         /// <param name="planId"> Offer Plan Id. </param>
@@ -154,6 +158,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary> Subscriber detail. </summary>
         /// <param name="firstName"> First name. </param>
         /// <param name="lastName"> Last name. </param>
         /// <param name="emailAddress"> Email address. </param>
@@ -171,6 +176,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary> Organization Resource update. </summary>
         /// <param name="tags"> ARM resource tags. </param>
         /// <returns> A new <see cref="Models.ConfluentOrganizationPatch"/> instance for mocking. </returns>
         public static ConfluentOrganizationPatch ConfluentOrganizationPatch(IDictionary<string, string> tags = default)
@@ -180,6 +186,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new ConfluentOrganizationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> List Access Request Model. </summary>
         /// <param name="searchFilters"> Search filters for the request. </param>
         /// <returns> A new <see cref="Models.AccessListContent"/> instance for mocking. </returns>
         public static AccessListContent AccessListContent(IDictionary<string, string> searchFilters = default)
@@ -189,6 +196,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new AccessListContent(searchFilters ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Result of POST request to list regions supported by confluent. </summary>
         /// <param name="data"> List of regions supported by confluent. </param>
         /// <returns> A new <see cref="Models.ConfluentRegionListResult"/> instance for mocking. </returns>
         public static ConfluentRegionListResult ConfluentRegionListResult(IEnumerable<ConfluentRegionRecord> data = default)
@@ -208,6 +216,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new ConfluentRegionRecord(kind, id, metadata is null && spec is null ? default : new RegionProperties(metadata, spec, default), default);
         }
 
+        /// <summary> Region spec details. </summary>
         /// <param name="name"> Display Name of the region. </param>
         /// <param name="cloud"> Cloud provider name. </param>
         /// <param name="regionName"> Region name. </param>
@@ -220,6 +229,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new RegionSpecEntity(name, cloud, regionName, (packages ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> List users success response. </summary>
         /// <param name="kind"> Type of response. </param>
         /// <param name="metadata"> Metadata of the list. </param>
         /// <param name="data"> Data of the users list. </param>
@@ -231,6 +241,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new AccessUserListResult(kind, metadata, (data ?? new ChangeTrackingList<AccessUserRecord>()).ToList(), default);
         }
 
+        /// <summary> Metadata of the list. </summary>
         /// <param name="first"> First page of the list. </param>
         /// <param name="last"> Last page of the list. </param>
         /// <param name="prev"> Previous page of the list. </param>
@@ -248,6 +259,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary> Record of the user. </summary>
         /// <param name="kind"> Type of account. </param>
         /// <param name="id"> Id of the user. </param>
         /// <param name="metadata"> Metadata of the record. </param>
@@ -267,6 +279,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary> Metadata of the data record. </summary>
         /// <param name="self"> Self lookup url. </param>
         /// <param name="resourceName"> Resource name of the record. </param>
         /// <param name="createdOn"> Created Date Time. </param>
@@ -284,6 +297,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary> List service accounts success response. </summary>
         /// <param name="kind"> Type of response. </param>
         /// <param name="metadata"> Metadata of the list. </param>
         /// <param name="data"> Data of the service accounts list. </param>
@@ -295,6 +309,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new AccessServiceAccountListResult(kind, metadata, (data ?? new ChangeTrackingList<AccessServiceAccountRecord>()).ToList(), default);
         }
 
+        /// <summary> Record of the service account. </summary>
         /// <param name="kind"> Type of account. </param>
         /// <param name="id"> Id of the service account. </param>
         /// <param name="metadata"> Metadata of the record. </param>
@@ -312,6 +327,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary> List invitations success response. </summary>
         /// <param name="kind"> Type of response. </param>
         /// <param name="metadata"> Metadata of the list. </param>
         /// <param name="data"> Data of the invitations list. </param>
@@ -323,6 +339,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new AccessInvitationListResult(kind, metadata, (data ?? new ChangeTrackingList<AccessInvitationRecord>()).ToList(), default);
         }
 
+        /// <summary> Record of the invitation. </summary>
         /// <param name="kind"> Type of account. </param>
         /// <param name="id"> Id of the invitation. </param>
         /// <param name="metadata"> Metadata of the record. </param>
@@ -346,6 +363,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary> Invite User Account model. </summary>
         /// <param name="organizationId"> Id of the organization. </param>
         /// <param name="email"> Email of the logged in user. </param>
         /// <param name="upn"> Upn of the logged in user. </param>
@@ -356,6 +374,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new AccessInvitationContent(organizationId, email, upn, invitedUserDetails, default);
         }
 
+        /// <summary> Details of the user being invited. </summary>
         /// <param name="invitedEmail"> UPN/Email of the user who is being invited. </param>
         /// <param name="authType"> Auth type of the user. </param>
         /// <returns> A new <see cref="Models.AccessInvitedUserDetails"/> instance for mocking. </returns>
@@ -364,6 +383,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new AccessInvitedUserDetails(invitedEmail, authType, default);
         }
 
+        /// <summary> Details of the environments returned on successful response. </summary>
         /// <param name="kind"> Type of response. </param>
         /// <param name="metadata"> Metadata of the  environment list. </param>
         /// <param name="data"> Environment list data. </param>
@@ -375,6 +395,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new AccessEnvironmentListResult(kind, metadata, (data ?? new ChangeTrackingList<AccessEnvironmentRecord>()).ToList(), default);
         }
 
+        /// <summary> Details about environment name, metadata and environment id of an environment. </summary>
         /// <param name="kind"> Type of environment. </param>
         /// <param name="id"> Id of the environment. </param>
         /// <param name="metadata"> Metadata of the record. </param>
@@ -385,6 +406,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new AccessEnvironmentRecord(kind, id, metadata, displayName, default);
         }
 
+        /// <summary> Details of the clusters returned on successful response. </summary>
         /// <param name="kind"> Type of response. </param>
         /// <param name="metadata"> Metadata of the list. </param>
         /// <param name="data"> List of clusters. </param>
@@ -396,6 +418,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new AccessClusterListResult(kind, metadata, (data ?? new ChangeTrackingList<AccessClusterRecord>()).ToList(), default);
         }
 
+        /// <summary> Details of cluster record. </summary>
         /// <param name="kind"> Type of cluster. </param>
         /// <param name="id"> Id of the cluster. </param>
         /// <param name="metadata"> Metadata of the record. </param>
@@ -446,6 +469,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary> The environment to which cluster belongs. </summary>
         /// <param name="id"> ID of the referred resource. </param>
         /// <param name="environment"> Environment of the referred resource. </param>
         /// <param name="related"> API URL for accessing or modifying the referred object. </param>
@@ -456,6 +480,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new ClusterEnvironmentEntity(id, environment, related, resourceName, default);
         }
 
+        /// <summary> The network associated with this object. </summary>
         /// <param name="id"> ID of the referred resource. </param>
         /// <param name="environment"> Environment of the referred resource. </param>
         /// <param name="related"> API URL for accessing or modifying the referred object. </param>
@@ -466,6 +491,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new ClusterNetworkEntity(id, environment, related, resourceName, default);
         }
 
+        /// <summary> The network associated with this object. </summary>
         /// <param name="id"> ID of the referred resource. </param>
         /// <param name="related"> API URL for accessing or modifying the referred object. </param>
         /// <param name="resourceName"> CRN reference to the referred resource. </param>
@@ -475,6 +501,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new ClusterByokEntity(id, related, resourceName, default);
         }
 
+        /// <summary> Status of the cluster record. </summary>
         /// <param name="phase"> The lifecycle phase of the cluster. </param>
         /// <param name="cku"> The number of Confluent Kafka Units. </param>
         /// <returns> A new <see cref="Models.ClusterStatusEntity"/> instance for mocking. </returns>
@@ -483,6 +510,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new ClusterStatusEntity(phase, cku, default);
         }
 
+        /// <summary> Details of the role bindings returned on successful response. </summary>
         /// <param name="kind"> Type of response. </param>
         /// <param name="metadata"> Metadata of the list. </param>
         /// <param name="data"> List of role binding. </param>
@@ -494,6 +522,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new AccessRoleBindingListResult(kind, metadata, (data ?? new ChangeTrackingList<AccessRoleBindingRecord>()).ToList(), default);
         }
 
+        /// <summary> Details on principal, role name and crn pattern of a role binding. </summary>
         /// <param name="kind"> The type of the resource. </param>
         /// <param name="id"> Id of the role binding. </param>
         /// <param name="metadata"> Metadata of the record. </param>
@@ -513,6 +542,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary> Create role binding request model. </summary>
         /// <param name="principal"> The principal User or Group to bind the role to. </param>
         /// <param name="roleName"> The name of the role to bind to the principal. </param>
         /// <param name="crnPattern"> A CRN that specifies the scope and resource patterns necessary for the role to bind. </param>
@@ -522,6 +552,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new AccessRoleBindingCreateContent(principal, roleName, crnPattern, default);
         }
 
+        /// <summary> Details of the role binding names returned on successful response. </summary>
         /// <param name="kind"> Type of response. </param>
         /// <param name="metadata"> Metadata of the list. </param>
         /// <param name="data"> List of role binding names. </param>
@@ -564,6 +595,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new SchemaRegistryClusterRecord(kind, id, metadata is null && spec is null && statusPhase is null ? default : new SchemaRegistryClusterProperties(metadata, spec, new SchemaRegistryClusterStatusEntity(statusPhase, default), default), default);
         }
 
+        /// <summary> Details of schema registry cluster spec. </summary>
         /// <param name="name"> Name of the schema registry cluster. </param>
         /// <param name="httpEndpoint"> Http endpoint of the cluster. </param>
         /// <param name="package"> Type of the cluster package Advanced, essentials. </param>
@@ -583,6 +615,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary> The environment associated with this object. </summary>
         /// <param name="id"> ID of the referred resource. </param>
         /// <param name="related"> API URL for accessing or modifying the referred object. </param>
         /// <param name="resourceName"> CRN reference to the referred resource. </param>
@@ -646,6 +679,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary> The environment or the network to which cluster belongs. </summary>
         /// <param name="id"> ID of the referred resource. </param>
         /// <param name="environment"> Environment of the referred resource. </param>
         /// <param name="related"> API URL for accessing or modifying the referred object. </param>
@@ -656,6 +690,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new SCClusterNetworkEnvironmentEntity(id, environment, related, resourceName, default);
         }
 
+        /// <summary> The network associated with this object. </summary>
         /// <param name="id"> ID of the referred resource. </param>
         /// <param name="related"> API URL for accessing or modifying the referred object. </param>
         /// <param name="resourceName"> CRN reference to the referred resource. </param>
@@ -665,6 +700,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new SCClusterByokEntity(id, related, resourceName, default);
         }
 
+        /// <summary> Create API Key model. </summary>
         /// <param name="name"> Name of the API Key. </param>
         /// <param name="description"> Description of the API Key. </param>
         /// <returns> A new <see cref="Models.ConfluentApiKeyCreateContent"/> instance for mocking. </returns>
@@ -692,6 +728,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary> Connector Info Base properties. </summary>
         /// <param name="connectorType"> Connector Type. </param>
         /// <param name="connectorClass"> Connector Class. </param>
         /// <param name="connectorName"> Connector Name. </param>
@@ -709,6 +746,10 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary>
+        /// The connector service type info
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureBlobStorageSinkConnectorServiceInfo"/>, <see cref="Models.AzureBlobStorageSourceConnectorServiceInfo"/>, <see cref="Models.AzureCosmosDBSinkConnectorServiceInfo"/>, <see cref="Models.AzureCosmosDBSourceConnectorServiceInfo"/>, and <see cref="Models.AzureSynapseAnalyticsSinkConnectorServiceInfo"/>.
+        /// </summary>
         /// <param name="connectorServiceType"> The connector service type. </param>
         /// <returns> A new <see cref="Models.ConnectorServiceTypeInfoBase"/> instance for mocking. </returns>
         public static ConnectorServiceTypeInfoBase ConnectorServiceTypeInfoBase(string connectorServiceType = default)
@@ -716,6 +757,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new UnknownConnectorServiceTypeInfoBase(default, default);
         }
 
+        /// <summary> The authentication info when auth_type is azureBlobStorageSinkConnector. </summary>
         /// <param name="storageAccountName"> Azure Blob Storage Account Name. </param>
         /// <param name="storageAccountKey"> Azure Blob Storage Account Key. </param>
         /// <param name="storageContainerName"> Azure Blob Storage Account Container Name. </param>
@@ -725,6 +767,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new AzureBlobStorageSinkConnectorServiceInfo(default, default, storageAccountName, storageAccountKey, storageContainerName);
         }
 
+        /// <summary> The connector service type is AzureBlobStorageSourceConnector. </summary>
         /// <param name="storageAccountName"> Azure Blob Storage Account Name. </param>
         /// <param name="storageAccountKey"> Azure Blob Storage Account Key. </param>
         /// <param name="storageContainerName"> Azure Blob Storage Account Container Name. </param>
@@ -734,6 +777,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new AzureBlobStorageSourceConnectorServiceInfo(default, default, storageAccountName, storageAccountKey, storageContainerName);
         }
 
+        /// <summary> The authentication info when auth_type is AzureCosmosDBSinkConnector. </summary>
         /// <param name="cosmosDatabaseName"> Azure Cosmos Database Name. </param>
         /// <param name="cosmosMasterKey"> Azure Cosmos Database Master Key. </param>
         /// <param name="cosmosConnectionEndpoint"> Azure Cosmos Database Connection Endpoint. </param>
@@ -754,6 +798,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 cosmosWriteDetails);
         }
 
+        /// <summary> The authentication info when auth_type is AzureCosmosDBSourceConnector. </summary>
         /// <param name="cosmosDatabaseName"> Azure Cosmos Database Name. </param>
         /// <param name="cosmosMasterKey"> Azure Cosmos Database Master Key. </param>
         /// <param name="cosmosConnectionEndpoint"> Azure Cosmos Database Connection Endpoint. </param>
@@ -776,6 +821,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 cosmosIncludeAllContainers);
         }
 
+        /// <summary> The authentication info when auth_type is AzureSynapseAnalyticsSinkConnector. </summary>
         /// <param name="synapseSqlServerName"> Azure Synapse Analytics SQL Server Name. </param>
         /// <param name="synapseSqlUser"> Azure Synapse SQL login details. </param>
         /// <param name="synapseSqlPassword"> Azure Synapse SQL login details. </param>
@@ -792,6 +838,10 @@ namespace Azure.ResourceManager.Confluent.Models
                 synapseSqlDatabaseName);
         }
 
+        /// <summary>
+        /// The partner info base
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.KafkaAzureBlobStorageSinkConnectorInfo"/>, <see cref="Models.KafkaAzureBlobStorageSourceConnectorInfo"/>, <see cref="Models.KafkaAzureCosmosDBSinkConnectorInfo"/>, <see cref="Models.KafkaAzureCosmosDBSourceConnectorInfo"/>, and <see cref="Models.KafkaAzureSynapseAnalyticsSinkConnectorInfo"/>.
+        /// </summary>
         /// <param name="partnerConnectorType"> The partner connector type. </param>
         /// <returns> A new <see cref="Models.PartnerInfoBase"/> instance for mocking. </returns>
         public static PartnerInfoBase PartnerInfoBase(string partnerConnectorType = default)
@@ -799,6 +849,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new UnknownPartnerInfoBase(default, default);
         }
 
+        /// <summary> The partner connector type is KafkaAzureBlobStorageSink. </summary>
         /// <param name="authType"> Kafka Auth Type. </param>
         /// <param name="inputFormat"> Kafka Input Data Format Type. </param>
         /// <param name="outputFormat"> Kafka Output Data Format Type. </param>
@@ -833,6 +884,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 timeInterval);
         }
 
+        /// <summary> The partner connector type is KafkaAzureBlobStorageSource. </summary>
         /// <param name="authType"> Kafka Auth Type. </param>
         /// <param name="inputFormat"> Kafka Input Data Format Type. </param>
         /// <param name="outputFormat"> Kafka Output Data Format Type. </param>
@@ -861,6 +913,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 maxTasks);
         }
 
+        /// <summary> The partner connector type is KafkaAzureCosmosDBSink. </summary>
         /// <param name="authType"> Kafka Auth Type. </param>
         /// <param name="inputFormat"> Kafka Input Data Format Type. </param>
         /// <param name="outputFormat"> Kafka Output Data Format Type. </param>
@@ -895,6 +948,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 timeInterval);
         }
 
+        /// <summary> The partner connector type is KafkaAzureCosmosDBSource. </summary>
         /// <param name="authType"> Kafka Auth Type. </param>
         /// <param name="inputFormat"> Kafka Input Data Format Type. </param>
         /// <param name="outputFormat"> Kafka Output Data Format Type. </param>
@@ -923,6 +977,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 maxTasks);
         }
 
+        /// <summary> The partner connector type is KafkaAzureSynapseAnalyticsSink. </summary>
         /// <param name="authType"> Kafka Auth Type. </param>
         /// <param name="inputFormat"> Kafka Input Data Format Type. </param>
         /// <param name="outputFormat"> Kafka Output Data Format Type. </param>
@@ -992,6 +1047,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary> Metadata of the data record. </summary>
         /// <param name="self"> Self lookup url. </param>
         /// <param name="resourceName"> Resource name of the record. </param>
         /// <returns> A new <see cref="Models.TopicMetadataEntity"/> instance for mocking. </returns>
@@ -1000,6 +1056,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new TopicMetadataEntity(self, resourceName, default);
         }
 
+        /// <summary> Topics input config. </summary>
         /// <param name="name"> Name of the topic input config. </param>
         /// <param name="value"> Value of the topic input config. </param>
         /// <returns> A new <see cref="Models.TopicsInputConfig"/> instance for mocking. </returns>
@@ -1041,6 +1098,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
+        /// <summary> Validation response from the provider. </summary>
         /// <param name="info"> Info from the response. </param>
         /// <returns> A new <see cref="Models.ConfluentOrganizationValidationResult"/> instance for mocking. </returns>
         public static ConfluentOrganizationValidationResult ConfluentOrganizationValidationResult(IReadOnlyDictionary<string, string> info = default)
@@ -1050,7 +1108,7 @@ namespace Azure.ResourceManager.Confluent.Models
             return new ConfluentOrganizationValidationResult(info ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SCClusterSpecEntity"/>. </summary>
+        /// <summary> Spec of the cluster record. </summary>
         /// <param name="name"> The name of the cluster. </param>
         /// <param name="availability"> The availability zone configuration of the cluster. </param>
         /// <param name="cloud"> The cloud service provider. </param>
@@ -1059,7 +1117,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="kafkaBootstrapEndpoint"> The bootstrap endpoint used by Kafka clients to connect to the cluster. </param>
         /// <param name="httpEndpoint"> The cluster HTTP request URL. </param>
         /// <param name="apiEndpoint"> The Kafka API cluster endpoint. </param>
-        /// <param name="configKind"> Specification of the cluster configuration. </param>
+        /// <param name="configKind"> The lifecycle phase of the cluster. </param>
         /// <param name="environment"> Specification of the cluster environment. </param>
         /// <param name="network"> Specification of the cluster network. </param>
         /// <param name="byok"> Specification of the cluster byok. </param>
@@ -1084,13 +1142,13 @@ namespace Azure.ResourceManager.Confluent.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of ConfluentOrganizationData. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Organization resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="createdOn"> The creation time of the resource. </param>
         /// <param name="provisioningState"> Provision states for confluent RP. </param>
         /// <param name="organizationId"> Id of the Confluent organization. </param>

@@ -2,6 +2,7 @@ $repoRoot = Resolve-Path (Join-Path $PSScriptRoot '..')
 
 $supportedSpecs = @(
     "http/azure/resource-manager/large-header"
+    "http/azure/resource-manager/non-resource"
     "http/azure/resource-manager/operation-templates"
 )
 

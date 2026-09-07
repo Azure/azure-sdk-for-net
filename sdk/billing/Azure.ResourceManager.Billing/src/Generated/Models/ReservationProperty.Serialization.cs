@@ -134,25 +134,25 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WritePropertyName("effectiveDateTime"u8);
                 writer.WriteStringValue(EffectiveOn.Value, "O");
             }
-            if (Optional.IsDefined(BenefitStartOn))
+            if (Optional.IsDefined(BenefitStartsOn))
             {
                 writer.WritePropertyName("benefitStartTime"u8);
-                writer.WriteStringValue(BenefitStartOn.Value, "O");
+                writer.WriteStringValue(BenefitStartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedDateTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiryDate"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
-            if (Optional.IsDefined(ReservationExpireOn))
+            if (Optional.IsDefined(ReservationExpiresOn))
             {
                 writer.WritePropertyName("expiryDateTime"u8);
-                writer.WriteStringValue(ReservationExpireOn.Value, "O");
+                writer.WriteStringValue(ReservationExpiresOn.Value, "O");
             }
             if (Optional.IsDefined(ReviewOn))
             {
@@ -316,10 +316,10 @@ namespace Azure.ResourceManager.Billing.Models
             float? quantity = default;
             string provisioningState = default;
             DateTimeOffset? effectiveOn = default;
-            DateTimeOffset? benefitStartOn = default;
+            DateTimeOffset? benefitStartsOn = default;
             DateTimeOffset? lastUpdatedOn = default;
-            DateTimeOffset? expireOn = default;
-            DateTimeOffset? reservationExpireOn = default;
+            DateTimeOffset? expiresOn = default;
+            DateTimeOffset? reservationExpiresOn = default;
             DateTimeOffset? reviewOn = default;
             string skuDescription = default;
             ReservationExtendedStatusInfo extendedStatusInfo = default;
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    benefitStartOn = prop.Value.GetDateTimeOffset("O");
+                    benefitStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastUpdatedDateTime"u8))
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expiryDateTime"u8))
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Billing.Models
                     {
                         continue;
                     }
-                    reservationExpireOn = prop.Value.GetDateTimeOffset("O");
+                    reservationExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("reviewDateTime"u8))
@@ -637,10 +637,10 @@ namespace Azure.ResourceManager.Billing.Models
                 quantity,
                 provisioningState,
                 effectiveOn,
-                benefitStartOn,
+                benefitStartsOn,
                 lastUpdatedOn,
-                expireOn,
-                reservationExpireOn,
+                expiresOn,
+                reservationExpiresOn,
                 reviewOn,
                 skuDescription,
                 extendedStatusInfo,

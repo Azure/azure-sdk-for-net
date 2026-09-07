@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         internal FaultSimulationConstraints Constraints { get; set; }
 
         /// <summary> The absolute expiration timestamp (UTC) after which this fault simulation should be stopped if it's still active. </summary>
-        public DateTimeOffset? ConstraintsExpireOn
+        public DateTimeOffset? ConstraintsExpiresOn
         {
             get
             {
-                return Constraints is null ? default : Constraints.ExpireOn;
+                return Constraints is null ? default : Constraints.ExpiresOn;
             }
             set
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 {
                     Constraints = new FaultSimulationConstraints();
                 }
-                Constraints.ExpireOn = value;
+                Constraints.ExpiresOn = value;
             }
         }
     }

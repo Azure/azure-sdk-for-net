@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("startDateTime"u8);
-            writer.WriteStringValue(StartOn, "O");
-            if (Optional.IsDefined(EndOn))
+            writer.WriteStringValue(StartsOn, "O");
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endDateTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             writer.WritePropertyName("impactedResourceId"u8);
             writer.WriteStringValue(ImpactedResourceId);
@@ -232,8 +232,8 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 return null;
             }
             ImpactReportingProvisioningState? provisioningState = default;
-            DateTimeOffset startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset? endsOn = default;
             ResourceIdentifier impactedResourceId = default;
             string impactUniqueId = default;
             DateTimeOffset? reportedTimeUtc = default;
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                 }
                 if (prop.NameEquals("startDateTime"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endDateTime"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.ImpactReporting.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("impactedResourceId"u8))
@@ -416,8 +416,8 @@ namespace Azure.ResourceManager.ImpactReporting.Models
             }
             return new WorkloadImpactProperties(
                 provisioningState,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 impactedResourceId,
                 impactUniqueId,
                 reportedTimeUtc,
