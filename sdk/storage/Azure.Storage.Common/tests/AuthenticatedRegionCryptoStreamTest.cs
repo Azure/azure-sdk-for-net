@@ -652,8 +652,8 @@ namespace Azure.Storage.Test
             Assert.IsTrue(innerStream.Disposed, "inner stream was left undisposed");
             Assert.AreEqual(1, transform.DisposeCount, "transform was left undisposed");
             // assert every pool rental (the stream's buffer and the flush's scratch buffer) was returned
-            int rents = arrayPool.Invocations.Where(i => i.Method.Name == "Rent").Count();
-            int returns = arrayPool.Invocations.Where(i => i.Method.Name == "Return").Count();
+            int rents = arrayPool.Invocations.Where(i => i.Method.Name == nameof(ArrayPool<byte>.Rent)).Count();
+            int returns = arrayPool.Invocations.Where(i => i.Method.Name == nameof(ArrayPool<byte>.Return)).Count();
             Assert.Greater(rents, 0);
             Assert.AreEqual(rents, returns);
             // and with the buffer gone, the stream no longer accepts writes
@@ -662,7 +662,7 @@ namespace Azure.Storage.Test
             // the failed Dispose still counts as the one Dispose that does the work
             Assert.DoesNotThrow(() => stream.Dispose());
             Assert.AreEqual(1, transform.DisposeCount, "transform was disposed more than once");
-            Assert.AreEqual(returns, arrayPool.Invocations.Where(i => i.Method.Name == "Return").Count(),
+            Assert.AreEqual(returns, arrayPool.Invocations.Where(i => i.Method.Name == nameof(ArrayPool<byte>.Return)).Count(),
                 "a later Dispose must not return anything to the pool again");
         }
 
