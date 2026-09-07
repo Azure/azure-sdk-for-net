@@ -1375,6 +1375,56 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void TestModelFactoryAlwaysConstructsWrapperForDirectRequiredValueTypeParameter()
+        {
+            var annotationProperty = InputFactory.Property(
+                "annotation",
+                InputPrimitiveType.String,
+                serializedName: "annotation");
+            var countProperty = InputFactory.Property(
+                "count",
+                InputPrimitiveType.Int32,
+                isRequired: true,
+                serializedName: "count");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [annotationProperty, countProperty]);
+            var propertiesProperty = InputFactory.Property(
+                "properties",
+                propertiesModel,
+                serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var propertiesProvider = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            propertiesProvider.Properties.Single(property => property.Name == "Count").Update(
+                modifiers: MethodSignatureModifiers.Internal);
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var originalFactoryMethod = modelFactory.Methods.Single(method => method.Signature.ReturnType == parentProvider.Type);
+            originalFactoryMethod.Signature.Update(parameters:
+                [.. originalFactoryMethod.Signature.Parameters, new ParameterProvider("count", $"", typeof(int), Default)]);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance)!;
+            var flattenVisitor = new FlattenPropertyVisitor();
+            visitTypeCore.Invoke(flattenVisitor, [parentProvider]);
+            visitTypeCore.Invoke(flattenVisitor, [modelFactory]);
+
+            var factoryMethod = modelFactory.Methods.Single(method => method.Signature.ReturnType == parentProvider.Type);
+            var body = factoryMethod.BodyStatements!.ToDisplayString();
+            Assert.That(body, Does.Not.Contain("annotation is null"));
+            Assert.That(body, Does.Match(@"new\s+(?:global::Samples\.Models\.)?TestProperties\s*\(\s*annotation,\s*count,"));
+        }
+
+        [Test]
         public void TestSafeFlattenCountsIndependentCustomPropertyWithoutWireInfo()
         {
             var valueProperty = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");

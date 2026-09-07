@@ -361,6 +361,14 @@ namespace Azure.Generator.Management.Visitors
                 return null;
             }
 
+            // A direct non-nullable value-type parameter is always present, so the wrapper must always be
+            // constructed. Omitting it from an otherwise nullable guard would discard its value whenever all
+            // nullable parameters are null.
+            if (directParameters?.Any(parameter => parameter.Type.IsValueType && !parameter.Type.IsNullable) == true)
+            {
+                return null;
+            }
+
             ScopedApi<bool>? result = null;
             foreach (var (flattenProperty, _) in flattenedProperties)
             {
