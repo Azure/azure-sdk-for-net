@@ -7,11 +7,9 @@
 
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
-using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Dns
 {
-    /// <summary> Represents the properties of the zone. </summary>
     internal partial class ZoneProperties : ProvisionableConstruct
     {
         private BicepValue<long> _maxNumberOfRecords;
@@ -19,8 +17,8 @@ namespace Azure.Provisioning.Dns
         private BicepValue<long> _numberOfRecords;
         private BicepList<string> _nameServers;
         private BicepValue<DnsZoneType> _zoneType;
-        private BicepList<WritableSubResource> _registrationVirtualNetworks;
-        private BicepList<WritableSubResource> _resolutionVirtualNetworks;
+        private BicepList<DnsSubResourceInfo> _registrationVirtualNetworkReferences;
+        private BicepList<DnsSubResourceInfo> _resolutionVirtualNetworkReferences;
         private BicepList<DnsSigningKey> _signingKeys;
 
         /// <summary> Creates a new ZoneProperties. </summary>
@@ -83,33 +81,33 @@ namespace Azure.Provisioning.Dns
             }
         }
 
-        /// <summary> Gets or sets the RegistrationVirtualNetworks. </summary>
-        public BicepList<WritableSubResource> RegistrationVirtualNetworks
+        /// <summary> Gets or sets the RegistrationVirtualNetworkReferences. </summary>
+        public BicepList<DnsSubResourceInfo> RegistrationVirtualNetworkReferences
         {
             get
             {
                 Initialize();
-                return _registrationVirtualNetworks;
+                return _registrationVirtualNetworkReferences;
             }
             set
             {
                 Initialize();
-                _registrationVirtualNetworks.Assign(value);
+                _registrationVirtualNetworkReferences.Assign(value);
             }
         }
 
-        /// <summary> Gets or sets the ResolutionVirtualNetworks. </summary>
-        public BicepList<WritableSubResource> ResolutionVirtualNetworks
+        /// <summary> Gets or sets the ResolutionVirtualNetworkReferences. </summary>
+        public BicepList<DnsSubResourceInfo> ResolutionVirtualNetworkReferences
         {
             get
             {
                 Initialize();
-                return _resolutionVirtualNetworks;
+                return _resolutionVirtualNetworkReferences;
             }
             set
             {
                 Initialize();
-                _resolutionVirtualNetworks.Assign(value);
+                _resolutionVirtualNetworkReferences.Assign(value);
             }
         }
 
@@ -132,8 +130,8 @@ namespace Azure.Provisioning.Dns
             _numberOfRecords = DefineProperty<long>(nameof(NumberOfRecords), new string[] { "numberOfRecordSets" }, isOutput: true);
             _nameServers = DefineListProperty<string>(nameof(NameServers), new string[] { "nameServers" }, isOutput: true);
             _zoneType = DefineProperty<DnsZoneType>(nameof(ZoneType), new string[] { "zoneType" });
-            _registrationVirtualNetworks = DefineListProperty<WritableSubResource>(nameof(RegistrationVirtualNetworks), new string[] { "registrationVirtualNetworks" });
-            _resolutionVirtualNetworks = DefineListProperty<WritableSubResource>(nameof(ResolutionVirtualNetworks), new string[] { "resolutionVirtualNetworks" });
+            _registrationVirtualNetworkReferences = DefineListProperty<DnsSubResourceInfo>(nameof(RegistrationVirtualNetworkReferences), new string[] { "registrationVirtualNetworks" });
+            _resolutionVirtualNetworkReferences = DefineListProperty<DnsSubResourceInfo>(nameof(ResolutionVirtualNetworkReferences), new string[] { "resolutionVirtualNetworks" });
             _signingKeys = DefineListProperty<DnsSigningKey>(nameof(SigningKeys), new string[] { "signingKeys" }, isOutput: true);
             DefineAdditionalProperties();
         }

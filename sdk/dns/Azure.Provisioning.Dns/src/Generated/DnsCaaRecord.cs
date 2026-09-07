@@ -171,12 +171,12 @@ namespace Azure.Provisioning.Dns
             }
         }
 
-        /// <summary> Gets or sets the TargetResource. </summary>
-        public WritableSubResource TargetResource
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> TargetResourceId
         {
             get
             {
-                return Properties is null ? default : Properties.TargetResource;
+                return Properties is null ? default : Properties.TargetResourceId;
             }
             set
             {
@@ -184,16 +184,16 @@ namespace Azure.Provisioning.Dns
                 {
                     Properties = new DnsRecordSetProperties();
                 }
-                Properties.TargetResource = value;
+                Properties.TargetResourceId = value;
             }
         }
 
-        /// <summary> Gets or sets the TrafficManagementProfile. </summary>
-        public WritableSubResource TrafficManagementProfile
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> TrafficManagementProfileId
         {
             get
             {
-                return Properties is null ? default : Properties.TrafficManagementProfile;
+                return Properties is null ? default : Properties.TrafficManagementProfileId;
             }
             set
             {
@@ -201,7 +201,7 @@ namespace Azure.Provisioning.Dns
                 {
                     Properties = new DnsRecordSetProperties();
                 }
-                Properties.TrafficManagementProfile = value;
+                Properties.TrafficManagementProfileId = value;
             }
         }
 

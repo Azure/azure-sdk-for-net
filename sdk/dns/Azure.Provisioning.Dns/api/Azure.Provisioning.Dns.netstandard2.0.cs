@@ -20,8 +20,8 @@ namespace Azure.Provisioning.Dns
         public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.Resources.WritableSubResource TargetResource { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.WritableSubResource TrafficManagementProfile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Dns.DnsAaaaRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -54,8 +54,8 @@ namespace Azure.Provisioning.Dns
         public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.Resources.WritableSubResource TargetResource { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.WritableSubResource TrafficManagementProfile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Dns.DnsARecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -88,8 +88,8 @@ namespace Azure.Provisioning.Dns
         public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.Resources.WritableSubResource TargetResource { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.WritableSubResource TrafficManagementProfile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Dns.DnsCaaRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -121,8 +121,8 @@ namespace Azure.Provisioning.Dns
         public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.Resources.WritableSubResource TargetResource { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.WritableSubResource TrafficManagementProfile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Dns.DnsCnameRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -147,8 +147,8 @@ namespace Azure.Provisioning.Dns
         public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.Resources.WritableSubResource TargetResource { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.WritableSubResource TrafficManagementProfile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Dns.DnsDSRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -181,8 +181,8 @@ namespace Azure.Provisioning.Dns
         public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.Resources.WritableSubResource TargetResource { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.WritableSubResource TrafficManagementProfile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Dns.DnsMXRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -214,8 +214,8 @@ namespace Azure.Provisioning.Dns
         public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.Resources.WritableSubResource TargetResource { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.WritableSubResource TrafficManagementProfile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Dns.DnsNaptrRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -253,8 +253,8 @@ namespace Azure.Provisioning.Dns
         public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.Resources.WritableSubResource TargetResource { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.WritableSubResource TrafficManagementProfile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Dns.DnsNSRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -285,8 +285,8 @@ namespace Azure.Provisioning.Dns
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsPtrRecordInfo> PtrRecords { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.Resources.WritableSubResource TargetResource { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.WritableSubResource TrafficManagementProfile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Dns.DnsPtrRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -347,8 +347,8 @@ namespace Azure.Provisioning.Dns
         public Azure.Provisioning.Dns.DnsSoaRecordInfo SoaRecord { get { throw null; } set { } }
         public Azure.Provisioning.Dns.DnsSoaRecordInfo SoaRecordInfo { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.Resources.WritableSubResource TargetResource { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.WritableSubResource TrafficManagementProfile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Dns.DnsSoaRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -385,8 +385,8 @@ namespace Azure.Provisioning.Dns
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsSrvRecordInfo> SrvRecords { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.Resources.WritableSubResource TargetResource { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.WritableSubResource TrafficManagementProfile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Dns.DnsSrvRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -408,6 +408,12 @@ namespace Azure.Provisioning.Dns
         public Azure.Provisioning.BicepValue<int> Weight { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public partial class DnsSubResourceInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public DnsSubResourceInfo() { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class DnsTlsaRecord : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DnsTlsaRecord(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -419,9 +425,9 @@ namespace Azure.Provisioning.Dns
         public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.Resources.WritableSubResource TargetResource { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsTlsaRecordInfo> TlsaRecords { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.WritableSubResource TrafficManagementProfile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Dns.DnsTlsaRecord FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
@@ -454,8 +460,8 @@ namespace Azure.Provisioning.Dns
         public Azure.Provisioning.Dns.DnsZone Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.Resources.WritableSubResource TargetResource { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.WritableSubResource TrafficManagementProfile { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TargetResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> TrafficManagementProfileId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> TtlInSeconds { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsTxtRecordInfo> TxtRecords { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -486,7 +492,11 @@ namespace Azure.Provisioning.Dns
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> NameServers { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> NumberOfRecords { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsSubResourceInfo> RegistrationVirtualNetworkReferences { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use RegistrationVirtualNetworkReferences instead.")]
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> RegistrationVirtualNetworks { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsSubResourceInfo> ResolutionVirtualNetworkReferences { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use ResolutionVirtualNetworkReferences instead.")]
         public Azure.Provisioning.BicepList<Azure.Provisioning.Resources.WritableSubResource> ResolutionVirtualNetworks { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Dns.DnsSigningKey> SigningKeys { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }

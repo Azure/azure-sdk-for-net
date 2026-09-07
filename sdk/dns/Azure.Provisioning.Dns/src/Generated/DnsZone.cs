@@ -196,12 +196,12 @@ namespace Azure.Provisioning.Dns
             }
         }
 
-        /// <summary> Gets or sets the RegistrationVirtualNetworks. </summary>
-        public BicepList<WritableSubResource> RegistrationVirtualNetworks
+        /// <summary> Gets or sets the RegistrationVirtualNetworkReferences. </summary>
+        public BicepList<DnsSubResourceInfo> RegistrationVirtualNetworkReferences
         {
             get
             {
-                return Properties is null ? default : Properties.RegistrationVirtualNetworks;
+                return Properties is null ? default : Properties.RegistrationVirtualNetworkReferences;
             }
             set
             {
@@ -209,16 +209,16 @@ namespace Azure.Provisioning.Dns
                 {
                     Properties = new ZoneProperties();
                 }
-                Properties.RegistrationVirtualNetworks = value;
+                Properties.RegistrationVirtualNetworkReferences = value;
             }
         }
 
-        /// <summary> Gets or sets the ResolutionVirtualNetworks. </summary>
-        public BicepList<WritableSubResource> ResolutionVirtualNetworks
+        /// <summary> Gets or sets the ResolutionVirtualNetworkReferences. </summary>
+        public BicepList<DnsSubResourceInfo> ResolutionVirtualNetworkReferences
         {
             get
             {
-                return Properties is null ? default : Properties.ResolutionVirtualNetworks;
+                return Properties is null ? default : Properties.ResolutionVirtualNetworkReferences;
             }
             set
             {
@@ -226,7 +226,7 @@ namespace Azure.Provisioning.Dns
                 {
                     Properties = new ZoneProperties();
                 }
-                Properties.ResolutionVirtualNetworks = value;
+                Properties.ResolutionVirtualNetworkReferences = value;
             }
         }
 

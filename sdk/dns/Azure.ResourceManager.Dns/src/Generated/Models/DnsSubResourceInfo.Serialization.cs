@@ -9,56 +9,57 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Dns;
 
 namespace Azure.ResourceManager.Dns.Models
 {
-    /// <summary> Represents the properties of the Dns Resource Reference Request. </summary>
-    internal partial class DnsResourceReferenceRequestProperties : IJsonModel<DnsResourceReferenceRequestProperties>
+    /// <summary> A reference to a another resource. </summary>
+    public partial class DnsSubResourceInfo : IJsonModel<DnsSubResourceInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DnsResourceReferenceRequestProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual DnsSubResourceInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DnsResourceReferenceRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DnsSubResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeDnsResourceReferenceRequestProperties(document.RootElement, options);
+                        return DeserializeDnsSubResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsResourceReferenceRequestProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsSubResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DnsResourceReferenceRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DnsSubResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDnsContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(DnsResourceReferenceRequestProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsSubResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<DnsResourceReferenceRequestProperties>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<DnsSubResourceInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DnsResourceReferenceRequestProperties IPersistableModel<DnsResourceReferenceRequestProperties>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        DnsSubResourceInfo IPersistableModel<DnsSubResourceInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<DnsResourceReferenceRequestProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<DnsSubResourceInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<DnsResourceReferenceRequestProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<DnsSubResourceInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +70,15 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DnsResourceReferenceRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DnsSubResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsResourceReferenceRequestProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsSubResourceInfo)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(TargetResourceReferences))
+            if (Optional.IsDefined(Id))
             {
-                writer.WritePropertyName("targetResources"u8);
-                writer.WriteStartArray();
-                foreach (DnsSubResourceInfo item in TargetResourceReferences)
-                {
-                    writer.WriteObjectValue(item, options);
-                }
-                writer.WriteEndArray();
+                writer.WritePropertyName("id"u8);
+                writer.WriteStringValue(Id);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,45 +99,40 @@ namespace Azure.ResourceManager.Dns.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        DnsResourceReferenceRequestProperties IJsonModel<DnsResourceReferenceRequestProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        DnsSubResourceInfo IJsonModel<DnsSubResourceInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual DnsResourceReferenceRequestProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual DnsSubResourceInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<DnsResourceReferenceRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<DnsSubResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsResourceReferenceRequestProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsSubResourceInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeDnsResourceReferenceRequestProperties(document.RootElement, options);
+            return DeserializeDnsSubResourceInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static DnsResourceReferenceRequestProperties DeserializeDnsResourceReferenceRequestProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static DnsSubResourceInfo DeserializeDnsSubResourceInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IList<DnsSubResourceInfo> targetResourceReferences = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("targetResources"u8))
+                if (prop.NameEquals("id"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<DnsSubResourceInfo> array = new List<DnsSubResourceInfo>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        array.Add(DnsSubResourceInfo.DeserializeDnsSubResourceInfo(item, options));
-                    }
-                    targetResourceReferences = array;
+                    id = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +140,7 @@ namespace Azure.ResourceManager.Dns.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DnsResourceReferenceRequestProperties(targetResourceReferences ?? new ChangeTrackingList<DnsSubResourceInfo>(), additionalBinaryDataProperties);
+            return new DnsSubResourceInfo(id, additionalBinaryDataProperties);
         }
     }
 }

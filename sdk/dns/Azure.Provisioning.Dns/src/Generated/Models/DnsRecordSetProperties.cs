@@ -5,9 +5,9 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
-using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Dns
 {
@@ -18,8 +18,8 @@ namespace Azure.Provisioning.Dns
         private BicepValue<long> _ttlInSeconds;
         private BicepValue<string> _fqdn;
         private BicepValue<string> _provisioningState;
-        private WritableSubResource _targetResource;
-        private WritableSubResource _trafficManagementProfile;
+        private DnsSubResourceInfo _targetResource;
+        private DnsSubResourceInfo _trafficManagementProfile;
         private BicepList<DnsARecordInfo> _dnsARecords;
         private BicepList<DnsAaaaRecordInfo> _dnsAaaaRecords;
         private BicepList<DnsMXRecordInfo> _dnsMXRecords;
@@ -90,7 +90,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the TargetResource. </summary>
-        public WritableSubResource TargetResource
+        internal DnsSubResourceInfo TargetResource
         {
             get
             {
@@ -105,7 +105,7 @@ namespace Azure.Provisioning.Dns
         }
 
         /// <summary> Gets or sets the TrafficManagementProfile. </summary>
-        public WritableSubResource TrafficManagementProfile
+        internal DnsSubResourceInfo TrafficManagementProfile
         {
             get
             {
@@ -314,6 +314,40 @@ namespace Azure.Provisioning.Dns
             }
         }
 
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> TargetResourceId
+        {
+            get
+            {
+                return TargetResource is null ? default : TargetResource.Id;
+            }
+            set
+            {
+                if (TargetResource is null)
+                {
+                    TargetResource = new DnsSubResourceInfo();
+                }
+                TargetResource.Id = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> TrafficManagementProfileId
+        {
+            get
+            {
+                return TrafficManagementProfile is null ? default : TrafficManagementProfile.Id;
+            }
+            set
+            {
+                if (TrafficManagementProfile is null)
+                {
+                    TrafficManagementProfile = new DnsSubResourceInfo();
+                }
+                TrafficManagementProfile.Id = value;
+            }
+        }
+
         /// <summary> Gets or sets the Cname. </summary>
         public BicepValue<string> Cname
         {
@@ -339,8 +373,8 @@ namespace Azure.Provisioning.Dns
             _ttlInSeconds = DefineProperty<long>(nameof(TtlInSeconds), new string[] { "TTL" });
             _fqdn = DefineProperty<string>(nameof(Fqdn), new string[] { "fqdn" }, isOutput: true);
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _targetResource = DefineModelProperty<WritableSubResource>(nameof(TargetResource), new string[] { "targetResource" });
-            _trafficManagementProfile = DefineModelProperty<WritableSubResource>(nameof(TrafficManagementProfile), new string[] { "trafficManagementProfile" });
+            _targetResource = DefineModelProperty<DnsSubResourceInfo>(nameof(TargetResource), new string[] { "targetResource" });
+            _trafficManagementProfile = DefineModelProperty<DnsSubResourceInfo>(nameof(TrafficManagementProfile), new string[] { "trafficManagementProfile" });
             _dnsARecords = DefineListProperty<DnsARecordInfo>(nameof(DnsARecords), new string[] { "ARecords" });
             _dnsAaaaRecords = DefineListProperty<DnsAaaaRecordInfo>(nameof(DnsAaaaRecords), new string[] { "AAAARecords" });
             _dnsMXRecords = DefineListProperty<DnsMXRecordInfo>(nameof(DnsMXRecords), new string[] { "MXRecords" });
