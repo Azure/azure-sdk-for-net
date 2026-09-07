@@ -99,6 +99,16 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(HostTypes))
+            {
+                writer.WritePropertyName("hostTypes"u8);
+                writer.WriteStartArray();
+                foreach (PublicCloudHostType item in HostTypes)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsCollectionDefined(SolutionSettings))
             {
                 writer.WritePropertyName("solutionSettings"u8);
@@ -154,6 +164,7 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
             string solutionType = default;
             string description = default;
             IReadOnlyList<string> supportedAzureRegions = default;
+            IList<PublicCloudHostType> hostTypes = default;
             IReadOnlyList<PublicCloudConnectorSolutionTypeSettingsProperties> solutionSettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -189,6 +200,20 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     supportedAzureRegions = array;
                     continue;
                 }
+                if (prop.NameEquals("hostTypes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<PublicCloudHostType> array = new List<PublicCloudHostType>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new PublicCloudHostType(item.GetString()));
+                    }
+                    hostTypes = array;
+                    continue;
+                }
                 if (prop.NameEquals("solutionSettings"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -208,7 +233,13 @@ namespace Azure.ResourceManager.HybridConnectivity.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PublicCloudConnectorSolutionTypeProperties(solutionType, description, supportedAzureRegions ?? new ChangeTrackingList<string>(), solutionSettings ?? new ChangeTrackingList<PublicCloudConnectorSolutionTypeSettingsProperties>(), additionalBinaryDataProperties);
+            return new PublicCloudConnectorSolutionTypeProperties(
+                solutionType,
+                description,
+                supportedAzureRegions ?? new ChangeTrackingList<string>(),
+                hostTypes ?? new ChangeTrackingList<PublicCloudHostType>(),
+                solutionSettings ?? new ChangeTrackingList<PublicCloudConnectorSolutionTypeSettingsProperties>(),
+                additionalBinaryDataProperties);
         }
     }
 }
