@@ -238,6 +238,44 @@ public class FoundryActivityHostingTests
         await app.StopAsync();
     }
 
+    [TestCase(400, Core.PlatformHeaders.ErrorSourceUser)]
+    [TestCase(500, Core.PlatformHeaders.ErrorSourceUpstream)]
+    public async Task MapFoundryActivity_RawHandler_ErrorStatus_AddsFallbackErrorSource(
+        int statusCode,
+        string expectedSource)
+    {
+        using var app = await CreateRawAppAsync(context =>
+        {
+            context.Response.StatusCode = statusCode;
+            return Task.CompletedTask;
+        });
+        var response = await app.GetTestClient().PostAsync(
+            "/activity/messages",
+            new StringContent("{\"type\":\"message\"}", System.Text.Encoding.UTF8, "application/json"));
+
+        Assert.That(response.Headers.GetValues(Core.PlatformHeaders.ErrorSource).Single(), Is.EqualTo(expectedSource));
+
+        await app.StopAsync();
+    }
+
+    [Test]
+    public async Task MapFoundryActivity_RawHandler_PreservesHandlerErrorSource()
+    {
+        using var app = await CreateRawAppAsync(context =>
+        {
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+            context.Response.Headers[Core.PlatformHeaders.ErrorSource] = Core.PlatformHeaders.ErrorSourcePlatform;
+            return Task.CompletedTask;
+        });
+        var response = await app.GetTestClient().PostAsync(
+            "/activity/messages",
+            new StringContent("{\"type\":\"message\"}", System.Text.Encoding.UTF8, "application/json"));
+
+        Assert.That(response.Headers.GetValues(Core.PlatformHeaders.ErrorSource).Single(), Is.EqualTo(Core.PlatformHeaders.ErrorSourcePlatform));
+
+        await app.StopAsync();
+    }
+
     [Test]
     public void MapFoundryActivity_RawHandler_NullHandler_Throws()
     {
@@ -247,5 +285,18 @@ public class FoundryActivityHostingTests
 
         Assert.Throws<ArgumentNullException>(
             () => ((Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)app).MapFoundryActivity((Microsoft.AspNetCore.Http.RequestDelegate)null!));
+    }
+
+    private static async Task<WebApplication> CreateRawAppAsync(RequestDelegate requestHandler)
+    {
+        var builder = WebApplication.CreateBuilder();
+        builder.WebHost.UseTestServer();
+        builder.Services.AddActivityServer();
+
+        var app = builder.Build();
+        app.UseAgentServerCore();
+        ((Microsoft.AspNetCore.Routing.IEndpointRouteBuilder)app).MapFoundryActivity(requestHandler);
+        await app.StartAsync();
+        return app;
     }
 }

@@ -57,9 +57,9 @@ public class ActivityServerOptions
 
     /// <summary>
     /// Optional callback to register additional services into the host's dependency-injection
-    /// container before the Microsoft 365 Agents SDK services are added. Because the SDK registers
-    /// its defaults only when a service is not already present, anything registered here wins — use
-    /// it to plug in a custom adapter, authorization, channel-service factory, or any other service.
+    /// container after the Microsoft 365 Agents SDK defaults are added. Normal Microsoft DI
+    /// last-registration semantics ensure registrations here win — use it to plug in a custom
+    /// adapter, authorization, channel-service factory, or any other service.
     /// To supply a custom outbound-auth provider, prefer <see cref="Connections"/> — a value there is
     /// substituted after this callback runs and takes precedence over any
     /// <see cref="Microsoft.Agents.Authentication.IConnections"/> registered here.

@@ -151,7 +151,7 @@ curl http://localhost:8088/
 curl -X POST http://localhost:8088/activity/messages \
   -H "Content-Type: application/json" \
   -d '{"type":"message","text":"hello","from":{"id":"u1"},"recipient":{"id":"b1"},"conversation":{"id":"c1"},"channelId":"msteams","serviceUrl":"http://localhost:9099/","id":"a1"}'
-# -> HTTP/1.1 202 Accepted (the reply is delivered asynchronously to serviceUrl)
+# -> HTTP/1.1 200 OK with the handler-written response body
 ```
 
 ## When to use Tier 3

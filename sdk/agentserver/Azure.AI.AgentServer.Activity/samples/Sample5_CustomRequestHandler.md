@@ -20,4 +20,4 @@ ActivityServer.Run(
     args);
 ```
 
-The host still stamps the platform response headers (session id) and correlation baggage around your handler, so you get the Foundry platform contract without the M365 stack.
+The host still stamps the platform response headers (session id and error source) and correlation baggage around your handler, so you get the Foundry platform contract without the M365 stack.

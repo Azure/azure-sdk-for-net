@@ -5,8 +5,11 @@ using System.Collections.Generic;
 using System.Security.Claims;
 using Azure.AI.AgentServer.Activity.Internal;
 using Microsoft.Agents.Authentication;
+using Microsoft.Agents.Builder;
 using Microsoft.Agents.Core.Models;
+using Microsoft.Agents.Hosting.AspNetCore;
 using Microsoft.Agents.Storage;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NUnit.Framework;
@@ -95,8 +98,31 @@ public class ActivityStackOptionsTests
         Assert.That(provider.GetRequiredService<Marker>(), Is.SameAs(marker));
     }
 
+    [Test]
+    public void RegisterM365Services_PreservesConfigureServicesAdapterOverride()
+    {
+        var adapter = new StubAdapter();
+        var options = new ActivityServerOptions
+        {
+            ConfigureServices = services => services.AddSingleton<IAgentHttpAdapter>(adapter),
+        };
+
+        using var provider = BuildProvider(options);
+
+        Assert.That(provider.GetRequiredService<IAgentHttpAdapter>(), Is.SameAs(adapter));
+    }
+
     private sealed class Marker
     {
+    }
+
+    private sealed class StubAdapter : IAgentHttpAdapter
+    {
+        public Task ProcessAsync(
+            HttpRequest httpRequest,
+            HttpResponse httpResponse,
+            IAgent agent,
+            CancellationToken cancellationToken = default) => Task.CompletedTask;
     }
 
     private sealed class StubConnections : IConnections

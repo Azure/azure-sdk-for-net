@@ -64,11 +64,6 @@ internal static class ActivityStack
         // IHttpClientFactory for its outbound connector calls.
         services.AddHttpClient();
 
-        // Let the caller register overrides first. AddAgentCore only registers its defaults when a
-        // service is not already present, so anything registered here (custom adapter, channel
-        // factory, ...) takes precedence over the SDK defaults below.
-        options.ConfigureServices?.Invoke(services);
-
         // Storage backend for the SDK turn state: the caller-supplied instance, else an in-memory
         // store. TryAdd respects any override the caller already registered (for example the
         // canonical M365 `services.AddSingleton<IStorage, MemoryStorage>()`).
@@ -87,6 +82,10 @@ internal static class ActivityStack
         // caller's own AgentApplicationOptions registered above via ConfigureServices.
         services.AddAgentApplicationOptions(replaceExisting: false);
         services.AddAgentCore<CloudAdapter>();
+
+        // Apply caller registrations after SDK defaults. Microsoft DI resolves the last
+        // registration for a single service, so custom adapters and other overrides win reliably.
+        options.ConfigureServices?.Invoke(services);
 
         // Only substitute the connection provider when the caller supplies their own. RemoveAll + add
         // (rather than TryAdd or Replace) guarantees it wins even though AddAgentCore already

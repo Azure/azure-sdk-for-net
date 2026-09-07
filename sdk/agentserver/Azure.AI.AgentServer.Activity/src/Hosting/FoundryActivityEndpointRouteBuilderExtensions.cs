@@ -114,6 +114,19 @@ public static class FoundryActivityEndpointRouteBuilderExtensions
                 // Apply the Foundry platform response contract (session-id header + baggage) around
                 // the caller's handler; the caller owns reading the request and writing the response.
                 await handler.StampSessionAndBaggageAsync(context).ConfigureAwait(false);
+                context.Response.OnStarting(static state =>
+                {
+                    var response = (HttpResponse)state;
+                    if (response.StatusCode >= StatusCodes.Status400BadRequest
+                        && !response.Headers.ContainsKey(PlatformHeaders.ErrorSource))
+                    {
+                        response.Headers[PlatformHeaders.ErrorSource] = response.StatusCode >= StatusCodes.Status500InternalServerError
+                            ? PlatformHeaders.ErrorSourceUpstream
+                            : PlatformHeaders.ErrorSourceUser;
+                    }
+
+                    return Task.CompletedTask;
+                }, context.Response);
                 await requestHandler(context).ConfigureAwait(false);
             }).AddEndpointFilter<ActivityErrorSourceFilter>();
         }
