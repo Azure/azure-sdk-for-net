@@ -14,7 +14,7 @@ using Azure.ResourceManager.CosmosDB;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> The metadata related to an access key for a given database account. </summary>
-    internal partial class AccountKeyMetadata : IJsonModel<AccountKeyMetadata>
+    public partial class AccountKeyMetadata : IJsonModel<AccountKeyMetadata>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("generationTime"u8);
                 writer.WriteStringValue(GeneratedOn.Value, "O");
             }
+            if (options.Format != "W" && Optional.IsDefined(ApproximateLastUsageOn))
+            {
+                writer.WritePropertyName("approximateLastUsageTime"u8);
+                writer.WriteStringValue(ApproximateLastUsageOn.Value, "O");
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +127,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             DateTimeOffset? generatedOn = default;
+            DateTimeOffset? approximateLastUsageOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +140,21 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     generatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (prop.NameEquals("approximateLastUsageTime"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    approximateLastUsageOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AccountKeyMetadata(generatedOn, additionalBinaryDataProperties);
+            return new AccountKeyMetadata(generatedOn, approximateLastUsageOn, additionalBinaryDataProperties);
         }
     }
 }
