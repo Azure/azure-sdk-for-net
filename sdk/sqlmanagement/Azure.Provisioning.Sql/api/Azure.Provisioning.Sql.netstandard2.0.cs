@@ -1111,18 +1111,18 @@ namespace Azure.Provisioning.Sql
     public partial class ManagedDatabaseSensitivityLabel : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ManagedDatabaseSensitivityLabel(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ClientClassificationSource> ClientClassificationSource { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ClientClassificationSource> ClientClassificationSource { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ColumnName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> InformationType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> InformationTypeId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> InformationType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> InformationTypeId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsDisabled { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> LabelId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> LabelName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> LabelId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> LabelName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ManagedBy { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.ManagedDatabaseColumn Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SensitivityLabelRank> Rank { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SensitivityLabelRank> Rank { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SchemaName { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } }
@@ -2609,18 +2609,18 @@ namespace Azure.Provisioning.Sql
     public partial class SqlDatabaseSensitivityLabel : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public SqlDatabaseSensitivityLabel(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ClientClassificationSource> ClientClassificationSource { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.ClientClassificationSource> ClientClassificationSource { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ColumnName { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> InformationType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> InformationTypeId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> InformationType { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> InformationTypeId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsDisabled { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> LabelId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> LabelName { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> LabelId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> LabelName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ManagedBy { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.SqlDatabaseColumn Parent { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SensitivityLabelRank> Rank { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SensitivityLabelRank> Rank { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SchemaName { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } }

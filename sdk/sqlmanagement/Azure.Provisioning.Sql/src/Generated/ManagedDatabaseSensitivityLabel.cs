@@ -119,66 +119,12 @@ namespace Azure.Provisioning.Sql
             }
         }
 
-        /// <summary> Gets the LabelName. </summary>
-        public BicepValue<string> LabelName
-        {
-            get
-            {
-                return Properties.LabelName;
-            }
-        }
-
-        /// <summary> Gets the LabelId. </summary>
-        public BicepValue<string> LabelId
-        {
-            get
-            {
-                return Properties.LabelId;
-            }
-        }
-
-        /// <summary> Gets the InformationType. </summary>
-        public BicepValue<string> InformationType
-        {
-            get
-            {
-                return Properties.InformationType;
-            }
-        }
-
-        /// <summary> Gets the InformationTypeId. </summary>
-        public BicepValue<string> InformationTypeId
-        {
-            get
-            {
-                return Properties.InformationTypeId;
-            }
-        }
-
         /// <summary> Gets the IsDisabled. </summary>
         public BicepValue<bool> IsDisabled
         {
             get
             {
                 return Properties.IsDisabled;
-            }
-        }
-
-        /// <summary> Gets the Rank. </summary>
-        public BicepValue<SensitivityLabelRank> Rank
-        {
-            get
-            {
-                return Properties.Rank;
-            }
-        }
-
-        /// <summary> Gets the ClientClassificationSource. </summary>
-        public BicepValue<ClientClassificationSource> ClientClassificationSource
-        {
-            get
-            {
-                return Properties.ClientClassificationSource;
             }
         }
 
