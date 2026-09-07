@@ -125,14 +125,47 @@ namespace Azure.Storage.Test
             }
         }
 
-        private static AuthenticatedRegionCryptoStream CreateStreamForDisposalTest(CryptoStreamMode mode)
+        /// <summary>
+        /// The stream accepts every pairing of transform direction (encrypt/decrypt) and stream
+        /// direction (read/write), and sizes its buffer differently depending on the pairing, so
+        /// disposal tests cover all four.
+        /// </summary>
+        private static AuthenticatedRegionCryptoStream CreateStreamForDisposalTest(
+            bool encrypt,
+            CryptoStreamMode streamMode,
+            ArrayPool<byte> arrayPool = default)
             => new AuthenticatedRegionCryptoStream(
                 new MemoryStream(GetRandomBytes(_totalAuthRegionLength)),
-                mode == CryptoStreamMode.Read
-                    ? (IAuthenticatedCryptographicTransform)new MockDecryptTransform(_nonceLength, _tagLength)
-                    : new MockEncryptTransform(_nonceLength, _tagLength, _nonceByte, _tagByte),
+                encrypt
+                    ? new MockEncryptTransform(_nonceLength, _tagLength, _nonceByte, _tagByte)
+                    : (IAuthenticatedCryptographicTransform)new MockDecryptTransform(_nonceLength, _tagLength),
                 _authRegionDataLength,
-                mode);
+                streamMode,
+                arrayPool);
+
+        /// <summary>
+        /// Array pool that delegates to <see cref="ArrayPool{T}.Shared"/> while recording every
+        /// array it hands out and every array handed back, so tests can check that each rental is
+        /// returned exactly once.
+        /// </summary>
+        private static Mock<ArrayPool<byte>> CreateTrackingArrayPool(List<byte[]> rented, List<byte[]> returned)
+        {
+            Mock<ArrayPool<byte>> arrayPool = new Mock<ArrayPool<byte>>();
+            arrayPool.Setup(pool => pool.Rent(It.IsAny<int>()))
+                .Returns<int>(size =>
+                {
+                    byte[] array = ArrayPool<byte>.Shared.Rent(size);
+                    rented.Add(array);
+                    return array;
+                });
+            arrayPool.Setup(pool => pool.Return(It.IsAny<byte[]>(), It.IsAny<bool>()))
+                .Callback<byte[], bool>((array, clear) =>
+                {
+                    returned.Add(array);
+                    ArrayPool<byte>.Shared.Return(array, clear);
+                });
+            return arrayPool;
+        }
 
         private static byte[] GetRandomBytes(int length)
         {
@@ -570,10 +603,12 @@ namespace Azure.Storage.Test
         /// Disposal must be idempotent, per .NET conventions.
         /// </summary>
         [Test]
+        [Combinatorial]
         public void MultipleDisposeDoesNotThrow(
-            [Values(CryptoStreamMode.Read, CryptoStreamMode.Write)] CryptoStreamMode mode)
+            [Values(true, false)] bool encrypt,
+            [Values(CryptoStreamMode.Read, CryptoStreamMode.Write)] CryptoStreamMode streamMode)
         {
-            AuthenticatedRegionCryptoStream stream = CreateStreamForDisposalTest(mode);
+            AuthenticatedRegionCryptoStream stream = CreateStreamForDisposalTest(encrypt, streamMode);
 
             stream.Dispose();
 
@@ -582,49 +617,32 @@ namespace Azure.Storage.Test
         }
 
         /// <summary>
-        /// A repeated Dispose used to return the rented buffer to the shared
-        /// <see cref="ArrayPool{T}"/> more than once, which lets two unrelated callers rent
-        /// the same array instance and silently corrupt each other's data.
+        /// A repeated Dispose used to return the rented buffer to the <see cref="ArrayPool{T}"/>
+        /// more than once, which lets two unrelated callers rent the same array instance and
+        /// silently corrupt each other's data.
         /// </summary>
         [Test]
+        [Combinatorial]
         public void MultipleDisposeReturnsBufferToPoolOnce(
-            [Values(CryptoStreamMode.Read, CryptoStreamMode.Write)] CryptoStreamMode mode)
+            [Values(true, false)] bool encrypt,
+            [Values(CryptoStreamMode.Read, CryptoStreamMode.Write)] CryptoStreamMode streamMode)
         {
-            const int rentAttempts = 128;
+            List<byte[]> rented = new List<byte[]>();
+            List<byte[]> returned = new List<byte[]>();
+            Mock<ArrayPool<byte>> arrayPool = CreateTrackingArrayPool(rented, returned);
 
-            AuthenticatedRegionCryptoStream stream = CreateStreamForDisposalTest(mode);
+            AuthenticatedRegionCryptoStream stream = CreateStreamForDisposalTest(encrypt, streamMode, arrayPool.Object);
+
+            // nothing was read or written, so the only rental is the stream's own buffer
+            arrayPool.Verify(pool => pool.Rent(It.IsAny<int>()), Times.Once());
+            byte[] streamBuffer = rented.Single();
 
             stream.Dispose();
             stream.Dispose();
             stream.Dispose();
 
-            // The pool must never hand out the same array instance to two callers at once.
-            ArrayPool<byte> pool = ArrayPool<byte>.Shared;
-            var rented = new List<byte[]>(rentAttempts);
-            try
-            {
-                foreach (int _ in Enumerable.Range(0, rentAttempts))
-                {
-                    // same bucket the stream's buffer was rented from
-                    byte[] array = pool.Rent(_authRegionDataLength);
-                    foreach (byte[] existing in rented)
-                    {
-                        if (ReferenceEquals(existing, array))
-                        {
-                            Assert.Fail("Rented the same array instance twice; the stream buffer " +
-                                "was returned to the pool more than once.");
-                        }
-                    }
-                    rented.Add(array);
-                }
-            }
-            finally
-            {
-                foreach (byte[] array in rented)
-                {
-                    pool.Return(array);
-                }
-            }
+            arrayPool.Verify(pool => pool.Return(streamBuffer, It.IsAny<bool>()), Times.Once());
+            arrayPool.Verify(pool => pool.Return(It.IsAny<byte[]>(), It.IsAny<bool>()), Times.Once());
         }
 
         /// <summary>
@@ -635,13 +653,18 @@ namespace Azure.Storage.Test
         [Test]
         public void DisposeCleansUpWhenFinalFlushThrows()
         {
-            var transform = new MockEncryptTransform(_nonceLength, _tagLength, _nonceByte, _tagByte);
-            var innerStream = new ThrowOnWriteStream();
-            var stream = new AuthenticatedRegionCryptoStream(
+            List<byte[]> rented = new List<byte[]>();
+            List<byte[]> returned = new List<byte[]>();
+            Mock<ArrayPool<byte>> arrayPool = CreateTrackingArrayPool(rented, returned);
+
+            MockEncryptTransform transform = new MockEncryptTransform(_nonceLength, _tagLength, _nonceByte, _tagByte);
+            ThrowOnWriteStream innerStream = new ThrowOnWriteStream();
+            AuthenticatedRegionCryptoStream stream = new AuthenticatedRegionCryptoStream(
                 innerStream,
                 transform,
                 _authRegionDataLength,
-                CryptoStreamMode.Write);
+                CryptoStreamMode.Write,
+                arrayPool.Object);
 
             // partial region, so nothing is written until Dispose forces the final flush
             stream.Write(GetRandomBytes(16), 0, 16);
@@ -650,12 +673,15 @@ namespace Azure.Storage.Test
 
             Assert.IsTrue(innerStream.Disposed, "inner stream was left undisposed");
             Assert.AreEqual(1, transform.DisposeCount, "transform was left undisposed");
-            // the buffer was released alongside them, so the stream no longer accepts writes
+            // the stream's own buffer and the flush's scratch buffer were both released, once each
+            CollectionAssert.AreEquivalent(rented, returned, "every rented array must be returned exactly once");
+            // and with the buffer gone, the stream no longer accepts writes
             Assert.Throws<NotSupportedException>(() => stream.Write(new byte[1], 0, 1));
 
-            // and the failed Dispose still counts as the one Dispose that does the work
+            // the failed Dispose still counts as the one Dispose that does the work
             Assert.DoesNotThrow(() => stream.Dispose());
             Assert.AreEqual(1, transform.DisposeCount, "transform was disposed more than once");
+            CollectionAssert.AreEquivalent(rented, returned, "a later Dispose must not return anything again");
         }
 
         private void Swap(byte[] buf, int i, int j)
