@@ -237,6 +237,11 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("computeCount"u8);
                 writer.WriteNumberValue(ComputeCount.Value);
             }
+            if (Optional.IsDefined(DataCollectionOptions))
+            {
+                writer.WritePropertyName("dataCollectionOptions"u8);
+                writer.WriteObjectValue(DataCollectionOptions, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

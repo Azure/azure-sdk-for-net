@@ -152,6 +152,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
             string version = default;
             OracleDatabaseComputeModel? computeModel = default;
             int? computeCount = default;
+            DiagnosticCollectionConfig dataCollectionOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             DBSystemDatabaseEditionType databaseEdition = default;
             string adminPassword = default;
@@ -397,6 +398,15 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                     computeCount = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("dataCollectionOptions"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    dataCollectionOptions = DiagnosticCollectionConfig.DeserializeDiagnosticCollectionConfig(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("databaseEdition"u8))
                 {
                     databaseEdition = new DBSystemDatabaseEditionType(prop.Value.GetString());
@@ -453,6 +463,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 version,
                 computeModel,
                 computeCount,
+                dataCollectionOptions,
                 additionalBinaryDataProperties,
                 databaseEdition,
                 adminPassword,

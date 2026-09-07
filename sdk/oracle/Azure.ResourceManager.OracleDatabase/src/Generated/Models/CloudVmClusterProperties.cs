@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CloudVmClusterProperties"/>. </summary>
-        /// <param name="hostname"> The hostname for the cloud VM cluster. </param>
+        /// <param name="hostname"> The hostname for the cloud VM cluster. Hostname and domain combined length cannot exceed 112 characters. </param>
         /// <param name="cpuCoreCount"> The number of CPU cores enabled on the cloud VM cluster. </param>
         /// <param name="cloudExadataInfrastructureId"> Cloud Exadata Infrastructure ID. </param>
         /// <param name="sshPublicKeys"> The public key portion of one or more key pairs used for SSH access to the cloud VM cluster. </param>
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <param name="lifecycleDetails"> Additional information about the current lifecycle state. </param>
         /// <param name="timeZone"> The time zone of the cloud VM cluster. For details, see [Exadata Infrastructure Time Zones](/Content/Database/References/timezones.htm). </param>
         /// <param name="zoneOcid"> The OCID of the zone the cloud VM cluster is associated with. </param>
-        /// <param name="hostname"> The hostname for the cloud VM cluster. </param>
+        /// <param name="hostname"> The hostname for the cloud VM cluster. Hostname and domain combined length cannot exceed 112 characters. </param>
         /// <param name="domain"> The domain name for the cloud VM cluster. </param>
         /// <param name="cpuCoreCount"> The number of CPU cores enabled on the cloud VM cluster. </param>
         /// <param name="ocpuCount"> The number of OCPU cores to enable on the cloud VM cluster. Only 1 decimal place is allowed for the fractional part. </param>
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.OracleDatabase.Models
         /// <summary> The OCID of the zone the cloud VM cluster is associated with. </summary>
         public string ZoneOcid { get; set; }
 
-        /// <summary> The hostname for the cloud VM cluster. </summary>
+        /// <summary> The hostname for the cloud VM cluster. Hostname and domain combined length cannot exceed 112 characters. </summary>
         public string Hostname { get; set; }
 
         /// <summary> The domain name for the cloud VM cluster. </summary>
