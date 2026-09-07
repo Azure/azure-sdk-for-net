@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Resources.Policy
         {
             TryGetApiVersion(PolicyAssignmentResource.ResourceType, out string policyAssignmentApiVersion);
             _policyAssignmentsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Resources.Policy", PolicyAssignmentResource.ResourceType.Namespace, Diagnostics);
-            _policyAssignmentsRestClient = new PolicyAssignments(_policyAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policyAssignmentApiVersion ?? "2025-12-01-preview");
+            _policyAssignmentsRestClient = new PolicyAssignments(_policyAssignmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, policyAssignmentApiVersion ?? "2026-07-01");
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.Resources.Policy
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-12-01-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>

@@ -94,30 +94,15 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 writer.WritePropertyName("policySetDefinitionName"u8);
                 writer.WriteStringValue(PolicySetDefinitionName);
             }
-            if (Optional.IsDefined(PolicySetDefinitionDisplayName))
-            {
-                writer.WritePropertyName("policySetDefinitionDisplayName"u8);
-                writer.WriteStringValue(PolicySetDefinitionDisplayName);
-            }
             if (Optional.IsDefined(PolicySetDefinitionVersion))
             {
                 writer.WritePropertyName("policySetDefinitionVersion"u8);
                 writer.WriteStringValue(PolicySetDefinitionVersion);
             }
-            if (Optional.IsDefined(PolicySetDefinitionCategory))
-            {
-                writer.WritePropertyName("policySetDefinitionCategory"u8);
-                writer.WriteStringValue(PolicySetDefinitionCategory);
-            }
             if (Optional.IsDefined(PolicyDefinitionName))
             {
                 writer.WritePropertyName("policyDefinitionName"u8);
                 writer.WriteStringValue(PolicyDefinitionName);
-            }
-            if (Optional.IsDefined(PolicyDefinitionDisplayName))
-            {
-                writer.WritePropertyName("policyDefinitionDisplayName"u8);
-                writer.WriteStringValue(PolicyDefinitionDisplayName);
             }
             if (Optional.IsDefined(PolicyDefinitionVersion))
             {
@@ -129,21 +114,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 writer.WritePropertyName("policyDefinitionEffect"u8);
                 writer.WriteStringValue(PolicyDefinitionEffect);
             }
-            if (Optional.IsCollectionDefined(PolicyDefinitionGroupNames))
-            {
-                writer.WritePropertyName("policyDefinitionGroupNames"u8);
-                writer.WriteStartArray();
-                foreach (string item in PolicyDefinitionGroupNames)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
-            }
             if (Optional.IsDefined(PolicyAssignmentId))
             {
                 writer.WritePropertyName("policyAssignmentId"u8);
@@ -154,11 +124,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 writer.WritePropertyName("policyAssignmentName"u8);
                 writer.WriteStringValue(PolicyAssignmentName);
             }
-            if (Optional.IsDefined(PolicyAssignmentDisplayName))
-            {
-                writer.WritePropertyName("policyAssignmentDisplayName"u8);
-                writer.WriteStringValue(PolicyAssignmentDisplayName);
-            }
             if (Optional.IsDefined(PolicyAssignmentVersion))
             {
                 writer.WritePropertyName("policyAssignmentVersion"u8);
@@ -168,36 +133,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             {
                 writer.WritePropertyName("policyAssignmentScope"u8);
                 writer.WriteStringValue(PolicyAssignmentScope);
-            }
-            if (Optional.IsDefined(ResourceLocation))
-            {
-                writer.WritePropertyName("resourceLocation"u8);
-                writer.WriteStringValue(ResourceLocation);
-            }
-            if (Optional.IsDefined(Ancestors))
-            {
-                writer.WritePropertyName("ancestors"u8);
-                writer.WriteStringValue(Ancestors);
-            }
-            if (Optional.IsDefined(ComplianceReasonCode))
-            {
-                writer.WritePropertyName("complianceReasonCode"u8);
-                writer.WriteStringValue(ComplianceReasonCode);
-            }
-            if (Optional.IsCollectionDefined(PolicyExemptionIds))
-            {
-                writer.WritePropertyName("policyExemptionIds"u8);
-                writer.WriteStartArray();
-                foreach (string item in PolicyExemptionIds)
-                {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    writer.WriteStringValue(item);
-                }
-                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -245,23 +180,14 @@ namespace Azure.ResourceManager.Resources.Policy.Models
             string policySetDefinitionId = default;
             string policyDefinitionReferenceId = default;
             string policySetDefinitionName = default;
-            string policySetDefinitionDisplayName = default;
             string policySetDefinitionVersion = default;
-            string policySetDefinitionCategory = default;
             string policyDefinitionName = default;
-            string policyDefinitionDisplayName = default;
             string policyDefinitionVersion = default;
             string policyDefinitionEffect = default;
-            IList<string> policyDefinitionGroupNames = default;
             string policyAssignmentId = default;
             string policyAssignmentName = default;
-            string policyAssignmentDisplayName = default;
             string policyAssignmentVersion = default;
             string policyAssignmentScope = default;
-            string resourceLocation = default;
-            string ancestors = default;
-            string complianceReasonCode = default;
-            IList<string> policyExemptionIds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -285,29 +211,14 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     policySetDefinitionName = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("policySetDefinitionDisplayName"u8))
-                {
-                    policySetDefinitionDisplayName = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("policySetDefinitionVersion"u8))
                 {
                     policySetDefinitionVersion = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("policySetDefinitionCategory"u8))
-                {
-                    policySetDefinitionCategory = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("policyDefinitionName"u8))
                 {
                     policyDefinitionName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("policyDefinitionDisplayName"u8))
-                {
-                    policyDefinitionDisplayName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("policyDefinitionVersion"u8))
@@ -320,27 +231,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     policyDefinitionEffect = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("policyDefinitionGroupNames"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    policyDefinitionGroupNames = array;
-                    continue;
-                }
                 if (prop.NameEquals("policyAssignmentId"u8))
                 {
                     policyAssignmentId = prop.Value.GetString();
@@ -349,11 +239,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 if (prop.NameEquals("policyAssignmentName"u8))
                 {
                     policyAssignmentName = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("policyAssignmentDisplayName"u8))
-                {
-                    policyAssignmentDisplayName = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("policyAssignmentVersion"u8))
@@ -366,42 +251,6 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                     policyAssignmentScope = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("resourceLocation"u8))
-                {
-                    resourceLocation = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("ancestors"u8))
-                {
-                    ancestors = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("complianceReasonCode"u8))
-                {
-                    complianceReasonCode = prop.Value.GetString();
-                    continue;
-                }
-                if (prop.NameEquals("policyExemptionIds"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in prop.Value.EnumerateArray())
-                    {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(item.GetString());
-                        }
-                    }
-                    policyExemptionIds = array;
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -412,23 +261,14 @@ namespace Azure.ResourceManager.Resources.Policy.Models
                 policySetDefinitionId,
                 policyDefinitionReferenceId,
                 policySetDefinitionName,
-                policySetDefinitionDisplayName,
                 policySetDefinitionVersion,
-                policySetDefinitionCategory,
                 policyDefinitionName,
-                policyDefinitionDisplayName,
                 policyDefinitionVersion,
                 policyDefinitionEffect,
-                policyDefinitionGroupNames ?? new ChangeTrackingList<string>(),
                 policyAssignmentId,
                 policyAssignmentName,
-                policyAssignmentDisplayName,
                 policyAssignmentVersion,
                 policyAssignmentScope,
-                resourceLocation,
-                ancestors,
-                complianceReasonCode,
-                policyExemptionIds ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

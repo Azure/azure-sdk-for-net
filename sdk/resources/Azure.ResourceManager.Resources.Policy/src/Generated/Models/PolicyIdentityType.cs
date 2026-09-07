@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Resources.Policy.Models
     {
         /// <summary> Indicates that a system assigned identity is associated with the resource. </summary>
         SystemAssigned,
-        /// <summary> Indicates that a system assigned identity is associated with the resource. </summary>
+        /// <summary> Indicates that a user assigned identity is associated with the resource. </summary>
         UserAssigned,
         /// <summary> Indicates that no identity is associated with the resource or that the existing identity should be removed. </summary>
         None
