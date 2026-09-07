@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         /// <param name="nameServers"> Name servers. </param>
         /// <param name="isDomainPrivacyEnabled"> &lt;code&gt;true&lt;/code&gt; if domain privacy is enabled for this domain; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="createdOn"> Domain creation timestamp. </param>
-        /// <param name="expireOn"> Domain expiration timestamp. </param>
+        /// <param name="expiresOn"> Domain expiration timestamp. </param>
         /// <param name="lastRenewedOn"> Timestamp when the domain was renewed last time. </param>
         /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isDnsRecordManagementReady"> &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and \n it is hosted on name servers Azure has programmatic access to. </param>
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         /// <param name="authCode"> Authorization code for the domain. </param>
         /// <param name="kind"> Kind of resource. </param>
         /// <returns> A new <see cref="DomainRegistration.AppServiceDomainData"/> instance for mocking. </returns>
-        public static AppServiceDomainData AppServiceDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RegistrationContactInfo contactAdmin = default, RegistrationContactInfo contactBilling = default, RegistrationContactInfo contactRegistrant = default, RegistrationContactInfo contactTech = default, AppServiceDomainStatus? registrationStatus = default, AppServiceDomainProvisioningState? provisioningState = default, IEnumerable<string> nameServers = default, bool? isDomainPrivacyEnabled = default, DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? lastRenewedOn = default, bool? isAutoRenew = default, bool? isDnsRecordManagementReady = default, IEnumerable<AppServiceHostName> managedHostNames = default, DomainPurchaseConsent consent = default, IEnumerable<DomainNotRenewableReason> domainNotRenewableReasons = default, AppServiceDnsType? dnsType = default, ResourceIdentifier dnsZoneId = default, AppServiceDnsType? targetDnsType = default, string authCode = default, string kind = default)
+        public static AppServiceDomainData AppServiceDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RegistrationContactInfo contactAdmin = default, RegistrationContactInfo contactBilling = default, RegistrationContactInfo contactRegistrant = default, RegistrationContactInfo contactTech = default, AppServiceDomainStatus? registrationStatus = default, AppServiceDomainProvisioningState? provisioningState = default, IEnumerable<string> nameServers = default, bool? isDomainPrivacyEnabled = default, DateTimeOffset? createdOn = default, DateTimeOffset? expiresOn = default, DateTimeOffset? lastRenewedOn = default, bool? isAutoRenew = default, bool? isDnsRecordManagementReady = default, IEnumerable<AppServiceHostName> managedHostNames = default, DomainPurchaseConsent consent = default, IEnumerable<DomainNotRenewableReason> domainNotRenewableReasons = default, AppServiceDnsType? dnsType = default, ResourceIdentifier dnsZoneId = default, AppServiceDnsType? targetDnsType = default, string authCode = default, string kind = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                contactAdmin is null && contactBilling is null && contactRegistrant is null && contactTech is null && registrationStatus is null && provisioningState is null && nameServers is null && isDomainPrivacyEnabled is null && createdOn is null && expireOn is null && lastRenewedOn is null && isAutoRenew is null && isDnsRecordManagementReady is null && managedHostNames is null && consent is null && domainNotRenewableReasons is null && dnsType is null && dnsZoneId is null && targetDnsType is null && authCode is null ? default : new DomainProperties(
+                contactAdmin is null && contactBilling is null && contactRegistrant is null && contactTech is null && registrationStatus is null && provisioningState is null && nameServers is null && isDomainPrivacyEnabled is null && createdOn is null && expiresOn is null && lastRenewedOn is null && isAutoRenew is null && isDnsRecordManagementReady is null && managedHostNames is null && consent is null && domainNotRenewableReasons is null && dnsType is null && dnsZoneId is null && targetDnsType is null && authCode is null ? default : new DomainProperties(
                     contactAdmin,
                     contactBilling,
                     contactRegistrant,
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                     (nameServers ?? new ChangeTrackingList<string>()).ToList(),
                     isDomainPrivacyEnabled,
                     createdOn,
-                    expireOn,
+                    expiresOn,
                     lastRenewedOn,
                     isAutoRenew,
                     isDnsRecordManagementReady,
@@ -83,6 +83,10 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 default);
         }
 
+        /// <summary>
+        /// Contact information for domain registration. If 'Domain Privacy' option is not selected then the contact information is made publicly available through the Whois
+        /// directories as per ICANN requirements.
+        /// </summary>
         /// <param name="addressMailing"> Mailing address. </param>
         /// <param name="email"> Email address. </param>
         /// <param name="fax"> Fax number. </param>
@@ -108,6 +112,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 default);
         }
 
+        /// <summary> Address information for domain registration. </summary>
         /// <param name="address1"> First line of an Address. </param>
         /// <param name="address2"> The second line of the Address. Optional. </param>
         /// <param name="city"> The city for the address. </param>
@@ -127,6 +132,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 default);
         }
 
+        /// <summary> Details of a hostname derived from a domain. </summary>
         /// <param name="name"> Name of the hostname. </param>
         /// <param name="siteNames"> List of apps the hostname is assigned to. This list will have more than one app only if the hostname is pointing to a Traffic Manager. </param>
         /// <param name="azureResourceName"> Name of the Azure resource the hostname is assigned to. If it is assigned to a Traffic Manager then it will be the Traffic Manager name otherwise it will be the app name. </param>
@@ -148,6 +154,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 default);
         }
 
+        /// <summary> Domain purchase consent object, representing acceptance of applicable legal agreements. </summary>
         /// <param name="agreementKeys"> List of applicable legal agreement keys. This list can be retrieved using ListLegalAgreements API under &lt;code&gt;TopLevelDomain&lt;/code&gt; resource. </param>
         /// <param name="agreedBy"> Client IP address. </param>
         /// <param name="agreedOn"> Timestamp when the agreements were accepted. </param>
@@ -172,7 +179,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         /// <param name="nameServers"> Name servers. </param>
         /// <param name="isDomainPrivacyEnabled"> &lt;code&gt;true&lt;/code&gt; if domain privacy is enabled for this domain; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="createdOn"> Domain creation timestamp. </param>
-        /// <param name="expireOn"> Domain expiration timestamp. </param>
+        /// <param name="expiresOn"> Domain expiration timestamp. </param>
         /// <param name="lastRenewedOn"> Timestamp when the domain was renewed last time. </param>
         /// <param name="isAutoRenew"> &lt;code&gt;true&lt;/code&gt; if the domain should be automatically renewed; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isDnsRecordManagementReady"> &lt;code&gt;true&lt;/code&gt; if Azure can assign this domain to App Service apps; otherwise, &lt;code&gt;false&lt;/code&gt;. This value will be &lt;code&gt;true&lt;/code&gt; if domain registration status is active and \n it is hosted on name servers Azure has programmatic access to. </param>
@@ -186,7 +193,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
         /// <param name="kind"> Kind of resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.AppServiceDomainPatch"/> instance for mocking. </returns>
-        public static AppServiceDomainPatch AppServiceDomainPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RegistrationContactInfo contactAdmin = default, RegistrationContactInfo contactBilling = default, RegistrationContactInfo contactRegistrant = default, RegistrationContactInfo contactTech = default, AppServiceDomainStatus? registrationStatus = default, AppServiceDomainProvisioningState? provisioningState = default, IEnumerable<string> nameServers = default, bool? isDomainPrivacyEnabled = default, DateTimeOffset? createdOn = default, DateTimeOffset? expireOn = default, DateTimeOffset? lastRenewedOn = default, bool? isAutoRenew = default, bool? isDnsRecordManagementReady = default, IEnumerable<AppServiceHostName> managedHostNames = default, DomainPurchaseConsent consent = default, IEnumerable<DomainNotRenewableReason> domainNotRenewableReasons = default, AppServiceDnsType? dnsType = default, ResourceIdentifier dnsZoneId = default, AppServiceDnsType? targetDnsType = default, string authCode = default, string kind = default, IDictionary<string, string> tags = default)
+        public static AppServiceDomainPatch AppServiceDomainPatch(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, RegistrationContactInfo contactAdmin = default, RegistrationContactInfo contactBilling = default, RegistrationContactInfo contactRegistrant = default, RegistrationContactInfo contactTech = default, AppServiceDomainStatus? registrationStatus = default, AppServiceDomainProvisioningState? provisioningState = default, IEnumerable<string> nameServers = default, bool? isDomainPrivacyEnabled = default, DateTimeOffset? createdOn = default, DateTimeOffset? expiresOn = default, DateTimeOffset? lastRenewedOn = default, bool? isAutoRenew = default, bool? isDnsRecordManagementReady = default, IEnumerable<AppServiceHostName> managedHostNames = default, DomainPurchaseConsent consent = default, IEnumerable<DomainNotRenewableReason> domainNotRenewableReasons = default, AppServiceDnsType? dnsType = default, ResourceIdentifier dnsZoneId = default, AppServiceDnsType? targetDnsType = default, string authCode = default, string kind = default, IDictionary<string, string> tags = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -195,7 +202,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 name,
                 resourceType,
                 systemData,
-                contactAdmin is null && contactBilling is null && contactRegistrant is null && contactTech is null && registrationStatus is null && provisioningState is null && nameServers is null && isDomainPrivacyEnabled is null && createdOn is null && expireOn is null && lastRenewedOn is null && isAutoRenew is null && isDnsRecordManagementReady is null && managedHostNames is null && consent is null && domainNotRenewableReasons is null && dnsType is null && dnsZoneId is null && targetDnsType is null && authCode is null ? default : new DomainPatchResourceProperties(
+                contactAdmin is null && contactBilling is null && contactRegistrant is null && contactTech is null && registrationStatus is null && provisioningState is null && nameServers is null && isDomainPrivacyEnabled is null && createdOn is null && expiresOn is null && lastRenewedOn is null && isAutoRenew is null && isDnsRecordManagementReady is null && managedHostNames is null && consent is null && domainNotRenewableReasons is null && dnsType is null && dnsZoneId is null && targetDnsType is null && authCode is null ? default : new DomainPatchResourceProperties(
                     contactAdmin,
                     contactBilling,
                     contactRegistrant,
@@ -205,7 +212,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                     (nameServers ?? new ChangeTrackingList<string>()).ToList(),
                     isDomainPrivacyEnabled,
                     createdOn,
-                    expireOn,
+                    expiresOn,
                     lastRenewedOn,
                     isAutoRenew,
                     isDnsRecordManagementReady,
@@ -260,6 +267,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
                 default);
         }
 
+        /// <summary> Options for retrieving the list of top level domain legal agreements. </summary>
         /// <param name="isPrivacyIncluded"> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain privacy as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="isForTransfer"> If &lt;code&gt;true&lt;/code&gt;, then the list of agreements will include agreements for domain transfer as well; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <returns> A new <see cref="Models.TopLevelDomainAgreementContent"/> instance for mocking. </returns>
@@ -268,6 +276,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             return new TopLevelDomainAgreementContent(isPrivacyIncluded, isForTransfer, default);
         }
 
+        /// <summary> Legal agreement for a top level domain. </summary>
         /// <param name="agreementKey"> Unique identifier for the agreement. </param>
         /// <param name="title"> Agreement title. </param>
         /// <param name="content"> Agreement details. </param>
@@ -278,6 +287,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             return new TopLevelDomainLegalAgreement(agreementKey, title, content, uri, default);
         }
 
+        /// <summary> Identifies an object. </summary>
         /// <param name="name"> Name of the object. </param>
         /// <returns> A new <see cref="Models.AppServiceDomainNameIdentifier"/> instance for mocking. </returns>
         public static AppServiceDomainNameIdentifier AppServiceDomainNameIdentifier(string name = default)
@@ -285,6 +295,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             return new AppServiceDomainNameIdentifier(name, default);
         }
 
+        /// <summary> Domain availability check result. </summary>
         /// <param name="name"> Name of the domain. </param>
         /// <param name="isAvailable"> &lt;code&gt;true&lt;/code&gt; if domain can be purchased using CreateDomain API; otherwise, &lt;code&gt;false&lt;/code&gt;. </param>
         /// <param name="domainType"> Valid values are Regular domain: Azure will charge the full price of domain registration, SoftDeleted: Purchasing this domain will simply restore it and this operation will not cost anything. </param>
@@ -294,6 +305,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             return new DomainAvailabilityCheckResult(name, isAvailable, domainType, default);
         }
 
+        /// <summary> Single sign-on request information for domain management. </summary>
         /// <param name="uri"> URL where the single sign-on request is to be made. </param>
         /// <param name="postParameterKey"> Post parameter key. </param>
         /// <param name="postParameterValue"> Post parameter value. Client should use 'application/x-www-form-urlencoded' encoding for this value. </param>
@@ -303,6 +315,7 @@ namespace Azure.ResourceManager.DomainRegistration.Models
             return new DomainControlCenterSsoRequestInfo(uri, postParameterKey, postParameterValue, default);
         }
 
+        /// <summary> Domain recommendation search parameters. </summary>
         /// <param name="keywords"> Keywords to be used for generating domain recommendations. </param>
         /// <param name="maxDomainRecommendations"> Maximum number of recommendations. </param>
         /// <returns> A new <see cref="Models.DomainRecommendationSearchContent"/> instance for mocking. </returns>

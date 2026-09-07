@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
     public static partial class ArmResourceGraphModelFactory
     {
 
+        /// <summary> Error details. </summary>
         /// <param name="code"> Error code identifying the specific error. </param>
         /// <param name="message"> A human readable error message. </param>
         /// <param name="additionalProperties"></param>
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new FacetErrorDetails(code, message, additionalProperties ?? new ChangeTrackingDictionary<string, BinaryData>());
         }
 
+        /// <summary> The parameters for a specific changes request. </summary>
         /// <param name="resourceIds"> Specifies the list of resources for a changes request. </param>
         /// <param name="subscriptionId"> The subscription id of resources to query the changes from. </param>
         /// <param name="interval"> Specifies the date and time interval for a changes request. </param>
@@ -55,6 +57,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 default);
         }
 
+        /// <summary> Specifies the date and time interval for a changes request. </summary>
         /// <param name="startOn"> A datetime indicating the inclusive/closed start of the time interval, i.e. `[`<b>`start`</b>`, end)`. Specifying a `start` that occurs chronologically after `end` will result in an error. </param>
         /// <param name="endOn"> A datetime indicating the exclusive/open end of the time interval, i.e. `[start, `<b>`end`</b>`)`. Specifying an `end` that occurs chronologically before `start` will result in an error. </param>
         /// <returns> A new <see cref="Models.ResourceChangesRequestParametersInterval"/> instance for mocking. </returns>
@@ -63,6 +66,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new ResourceChangesRequestParametersInterval(startOn, endOn, default);
         }
 
+        /// <summary> An interval in time specifying the date and time for the inclusive start and exclusive end, i.e. `[start, end)`. </summary>
         /// <param name="startOn"> A datetime indicating the inclusive/closed start of the time interval, i.e. `[`<b>`start`</b>`, end)`. Specifying a `start` that occurs chronologically after `end` will result in an error. </param>
         /// <param name="endOn"> A datetime indicating the exclusive/open end of the time interval, i.e. `[start, `<b>`end`</b>`)`. Specifying an `end` that occurs chronologically before `start` will result in an error. </param>
         /// <returns> A new <see cref="Models.DateTimeInterval"/> instance for mocking. </returns>
@@ -71,6 +75,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new DateTimeInterval(startOn, endOn, default);
         }
 
+        /// <summary> A list of changes associated with a resource over a specific time interval. </summary>
         /// <param name="changes">
         /// The pageable value returned by the operation, i.e. a list of changes to the resource.
         /// <list type="bullet"><item><description>The list is ordered from the most recent changes to the least recent changes.</description></item><item><description>This list will be empty if there were no changes during the requested interval.</description></item><item><description>The `Before` snapshot timestamp value of the oldest change can be outside of the specified time interval.</description></item></list>
@@ -84,6 +89,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new ResourceChangeList((changes ?? new ChangeTrackingList<ResourceChangeData>()).ToList(), skipToken, default);
         }
 
+        /// <summary> Data on a specific change, represented by a pair of before and after resource snapshots. </summary>
         /// <param name="resourceId"> The resource for a change. </param>
         /// <param name="changeId"> The change ID. Valid and unique within the specified resource only. </param>
         /// <param name="beforeSnapshot"> The snapshot before the change. </param>
@@ -105,6 +111,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 default);
         }
 
+        /// <summary> The snapshot before the change. </summary>
         /// <param name="snapshotId"> The ID of the snapshot. </param>
         /// <param name="timestamp">
         /// The time when the snapshot was created.
@@ -117,6 +124,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new ResourceChangeDataBeforeSnapshot(snapshotId, timestamp, content, default);
         }
 
+        /// <summary> Data on a specific resource snapshot. </summary>
         /// <param name="snapshotId"> The ID of the snapshot. </param>
         /// <param name="timestamp">
         /// The time when the snapshot was created.
@@ -129,6 +137,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new ResourceSnapshotData(snapshotId, timestamp, content, default);
         }
 
+        /// <summary> The snapshot after the change. </summary>
         /// <param name="snapshotId"> The ID of the snapshot. </param>
         /// <param name="timestamp">
         /// The time when the snapshot was created.
@@ -141,6 +150,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new ResourceChangeDataAfterSnapshot(snapshotId, timestamp, content, default);
         }
 
+        /// <summary> The resource property change. </summary>
         /// <param name="propertyName"> The property name. </param>
         /// <param name="beforeValue"> The property value in before snapshot. </param>
         /// <param name="afterValue"> The property value in after snapshot. </param>
@@ -158,6 +168,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 default);
         }
 
+        /// <summary> The parameters for a specific change details request. </summary>
         /// <param name="resourceIds"> Specifies the list of resources for a change details request. </param>
         /// <param name="changeIds"> Specifies the list of change IDs for a change details request. </param>
         /// <returns> A new <see cref="Models.ResourceChangeDetailsRequestParameters"/> instance for mocking. </returns>
@@ -169,6 +180,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new ResourceChangeDetailsRequestParameters((resourceIds ?? new ChangeTrackingList<string>()).ToList(), (changeIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Describes a query to be executed. </summary>
         /// <param name="subscriptions"> Azure subscriptions against which to execute the query. </param>
         /// <param name="managementGroups"> Azure management groups against which to execute the query. Example: [ 'mg1', 'mg2' ]. </param>
         /// <param name="query"> The resources query. </param>
@@ -190,6 +202,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 default);
         }
 
+        /// <summary> The options for query evaluation. </summary>
         /// <param name="skipToken"> Continuation token for pagination, capturing the next page size and offset, as well as the context of the query. </param>
         /// <param name="top"> The maximum number of rows that the query should return. Overrides the page size when ```$skipToken``` property is present. </param>
         /// <param name="skip"> The number of rows to skip from the beginning of the results. Overrides the next page offset when ```$skipToken``` property is present. </param>
@@ -209,6 +222,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 default);
         }
 
+        /// <summary> A request to compute additional statistics (facets) over the query results. </summary>
         /// <param name="expression"> The column or list of columns to summarize by. </param>
         /// <param name="options"> The options for facet evaluation. </param>
         /// <returns> A new <see cref="Models.FacetRequest"/> instance for mocking. </returns>
@@ -217,6 +231,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new FacetRequest(expression, options, default);
         }
 
+        /// <summary> The options for facet evaluation. </summary>
         /// <param name="sortBy"> The column name or query expression to sort on. Defaults to count if not present. </param>
         /// <param name="sortOrder"> The sorting order by the selected column (count by default). </param>
         /// <param name="filter"> Specifies the filter condition for the 'where' clause which will be run on main query's result, just before the actual faceting. </param>
@@ -227,6 +242,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new FacetRequestOptions(sortBy, sortOrder, filter, top, default);
         }
 
+        /// <summary> Query result. </summary>
         /// <param name="totalRecords"> Number of total records matching the query. </param>
         /// <param name="count"> Number of records returned in the current response. In the case of paging, this is the number of records in the current page. </param>
         /// <param name="resultTruncated"> Indicates whether the query results are truncated. </param>
@@ -248,6 +264,10 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 default);
         }
 
+        /// <summary>
+        /// A facet containing additional statistics on the response of a query. Can be either FacetResult or FacetError.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.FacetResult"/> and <see cref="Models.FacetError"/>.
+        /// </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="resultType"> Result type. </param>
         /// <returns> A new <see cref="Models.Facet"/> instance for mocking. </returns>
@@ -256,6 +276,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new UnknownFacet(expression, resultType, default);
         }
 
+        /// <summary> Successfully executed facet containing additional statistics on the response of a query. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="totalRecords"> Number of total records in the facet results. </param>
         /// <param name="count"> Number of records returned in the facet response. </param>
@@ -272,6 +293,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 data);
         }
 
+        /// <summary> A facet whose execution resulted in an error. </summary>
         /// <param name="expression"> Facet expression, same as in the corresponding facet request. </param>
         /// <param name="errors"> An array containing detected facet errors with details. </param>
         /// <returns> A new <see cref="Models.FacetError"/> instance for mocking. </returns>
@@ -282,6 +304,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new FacetError(expression, default, default, (errors ?? new ChangeTrackingList<FacetErrorDetails>()).ToList());
         }
 
+        /// <summary> Describes a history request to be executed. </summary>
         /// <param name="subscriptions"> Azure subscriptions against which to execute the query. </param>
         /// <param name="query"> The resources query. </param>
         /// <param name="options"> The history request evaluation options. </param>
@@ -295,6 +318,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             return new ResourcesHistoryRequest((subscriptions ?? new ChangeTrackingList<string>()).ToList(), query, options, (managementGroups ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The options for history request evaluation. </summary>
         /// <param name="interval"> The time interval used to fetch history. </param>
         /// <param name="top"> The maximum number of rows that the query should return. Overrides the page size when ```$skipToken``` property is present. </param>
         /// <param name="skip"> The number of rows to skip from the beginning of the results. Overrides the next page offset when ```$skipToken``` property is present. </param>

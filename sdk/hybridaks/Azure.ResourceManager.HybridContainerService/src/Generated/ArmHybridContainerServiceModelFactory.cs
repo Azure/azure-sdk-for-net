@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     public static partial class ArmHybridContainerServiceModelFactory
     {
 
+        /// <summary> The provisioned cluster resource definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -73,6 +74,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 default);
         }
 
+        /// <summary> Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers. </summary>
         /// <param name="keyData"> Certificate public key used to authenticate with VMs through SSH. The certificate must be in PEM format with or without headers. </param>
         /// <returns> A new <see cref="Models.LinuxSshPublicKey"/> instance for mocking. </returns>
         public static LinuxSshPublicKey LinuxSshPublicKey(string keyData = default)
@@ -116,6 +118,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ProvisionedClusterSecurityProfile((customCATrustCertificates ?? new ChangeTrackingList<BinaryData>()).ToList(), isFipsImageEnabled is null ? default : new SecurityProfileFipsImage(isFipsImageEnabled, default), default);
         }
 
+        /// <summary> Profile of the default agent pool along with a name parameter. </summary>
         /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
         /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
         /// <param name="nodeLabels"> The node labels to be persisted across all nodes in agent pool. </param>
@@ -164,6 +167,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ProvisionedClusterStatus((controlPlaneStatus ?? new ChangeTrackingList<ProvisionedClusterAddonStatusProfile>()).ToList(), currentState, keyRotationStatus is null ? default : new FeaturesStatus(keyRotationStatus, default), errorMessage, default);
         }
 
+        /// <summary> The status profile of the addons and other kubernetes components. </summary>
         /// <param name="name"> Name of the addon or component. </param>
         /// <param name="phase"> Observed phase of the addon or component on the provisioned cluster. Possible values include: 'pending', 'provisioning', 'provisioning {HelmChartInstalled}', 'provisioning {MSICertificateDownloaded}', 'provisioned', 'deleting', 'failed', 'upgrading'. </param>
         /// <param name="ready"> Indicates whether the addon or component is ready. </param>
@@ -174,6 +178,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ProvisionedClusterAddonStatusProfile(name, phase, ready, errorMessage, default);
         }
 
+        /// <summary> The status of workload identity key rotation. </summary>
         /// <param name="keyAdditionAt"> Timestamp when the new key was added to the system. </param>
         /// <param name="nextScheduledRotation"> Timestamp when the next scheduled key rotation will occur. </param>
         /// <param name="previousKeyExpiresAt"> Timestamp for when old public key is rotated out. This breaks static tokens, which must be rotated before this deadline. </param>
@@ -191,6 +196,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 default);
         }
 
+        /// <summary> Parameters to be applied to the cluster-autoscaler when auto scaling is enabled for the provisioned cluster. </summary>
         /// <param name="balanceSimilarNodeGroups"> Valid values are 'true' and 'false'. </param>
         /// <param name="expander"> If not specified, the default is 'random'. See [expanders](https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#what-are-expanders) for more information. </param>
         /// <param name="maxEmptyBulkDelete"> The default is 10. </param>
@@ -232,6 +238,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 default);
         }
 
+        /// <summary> Extended location pointing to the underlying infrastructure. </summary>
         /// <param name="extendedLocationType"> The extended location type. Allowed value: 'CustomLocation'. </param>
         /// <param name="name"> ARM Id of the extended location. </param>
         /// <returns> A new <see cref="Models.HybridContainerServiceExtendedLocation"/> instance for mocking. </returns>
@@ -259,6 +266,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 default);
         }
 
+        /// <summary> The error listing the kubeconfig credential response. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="message"> The error message. </param>
         /// <returns> A new <see cref="Models.HybridContainerServiceCredentialListError"/> instance for mocking. </returns>
@@ -267,6 +275,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new HybridContainerServiceCredentialListError(code, message, default);
         }
 
+        /// <summary> The credential result response. </summary>
         /// <param name="name"> The name of the credential. </param>
         /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
         /// <returns> A new <see cref="Models.HybridContainerServiceCredential"/> instance for mocking. </returns>
@@ -293,6 +302,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 default);
         }
 
+        /// <summary> The list of available kubernetes versions for upgrade. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
         /// <param name="upgrades"> List of available kubernetes versions for upgrade. </param>
@@ -304,6 +314,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ProvisionedClusterPoolUpgradeProfile(kubernetesVersion, osType, (upgrades ?? new ChangeTrackingList<ProvisionedClusterPoolUpgradeProfileProperties>()).ToList(), default);
         }
 
+        /// <summary> The upgrade properties. </summary>
         /// <param name="kubernetesVersion"> The Kubernetes version (major.minor.patch). </param>
         /// <param name="isPreview"> Whether the Kubernetes version is currently in preview. </param>
         /// <returns> A new <see cref="Models.ProvisionedClusterPoolUpgradeProfileProperties"/> instance for mocking. </returns>
@@ -378,6 +389,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 default);
         }
 
+        /// <summary> The observed status of the agent pool. </summary>
         /// <param name="currentState"> The current state of the agent pool. </param>
         /// <param name="errorMessage"> Error messages during an agent pool operation or steady state. </param>
         /// <param name="readyReplicas"> The agent pools that are ready. </param>
@@ -389,6 +401,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new AgentPoolProvisioningStatus(currentState, errorMessage, (readyReplicas ?? new ChangeTrackingList<AgentPoolUpdateProfile>()).ToList(), default);
         }
 
+        /// <summary> Profile for agent pool properties that can be updated. </summary>
         /// <param name="count"> Number of nodes in the agent pool. The default value is 1. </param>
         /// <param name="vmSize"> The VM sku size of the agent pool node VMs. </param>
         /// <param name="kubernetesVersion"> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </param>
@@ -399,6 +412,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new AgentPoolUpdateProfile(count, vmSize, kubernetesVersion, gpuCountPerNode, default);
         }
 
+        /// <summary> The supported kubernetes versions. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -418,6 +432,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 default);
         }
 
+        /// <summary> Base64-encoded Kubernetes configuration file. </summary>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="values"> List of supported Kubernetes versions. </param>
         /// <returns> A new <see cref="Models.KubernetesVersionProfileProperties"/> instance for mocking. </returns>
@@ -428,6 +443,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new KubernetesVersionProfileProperties(provisioningState, (values ?? new ChangeTrackingList<KubernetesVersionProperties>()).ToList(), default);
         }
 
+        /// <summary> Kubernetes version profile for given major.minor release. </summary>
         /// <param name="version"> major.minor version of Kubernetes release. </param>
         /// <param name="isPreview"> Whether this version is in preview mode. </param>
         /// <param name="patchVersions"> Patch versions of a Kubernetes release. </param>
@@ -439,6 +455,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new KubernetesVersionProperties(version, isPreview, patchVersions ?? new ChangeTrackingDictionary<string, KubernetesPatchVersions>(), default);
         }
 
+        /// <summary> Kubernetes Patch Version profile. </summary>
         /// <param name="readiness"> Indicates whether the kubernetes version image is ready or not. </param>
         /// <param name="upgrades"> Possible upgrade paths for given patch version. </param>
         /// <returns> A new <see cref="Models.KubernetesPatchVersions"/> instance for mocking. </returns>
@@ -450,6 +467,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new KubernetesPatchVersions((readiness ?? new ChangeTrackingList<KubernetesVersionReadiness>()).ToList(), (upgrades ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Indicates whether the kubernetes version image is ready or not. </summary>
         /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
         /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
         /// <param name="ready"> Whether the kubernetes version image is ready or not. </param>
@@ -480,6 +498,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 default);
         }
 
+        /// <summary> The properties of a supported VM SKU. </summary>
         /// <param name="resourceType"> The type of resource the SKU applies to. </param>
         /// <param name="capabilities"> The list of name-value pairs to describe VM SKU capabilities like MemoryGB, vCPUs, etc. </param>
         /// <param name="name"> The name of the VM SKU. </param>
@@ -499,6 +518,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 default);
         }
 
+        /// <summary> Describes the VM SKU capabilities like MemoryGB, vCPUs, etc. </summary>
         /// <param name="name"> Name of the VM SKU capability. </param>
         /// <param name="value"> Value of the VM SKU capability. </param>
         /// <returns> A new <see cref="Models.HybridContainerServiceVmSkuCapabilities"/> instance for mocking. </returns>
@@ -507,6 +527,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new HybridContainerServiceVmSkuCapabilities(name, value, default);
         }
 
+        /// <summary> The Virtual Network resource definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -561,6 +582,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 default);
         }
 
+        /// <summary> Infrastructure network profile for HCI platform. </summary>
         /// <param name="mocGroup"> Group in MOC(Microsoft On-premises Cloud). </param>
         /// <param name="mocLocation"> Location in MOC(Microsoft On-premises Cloud). </param>
         /// <param name="mocVnetName"> Virtual Network name in MOC(Microsoft On-premises Cloud). </param>
@@ -570,6 +592,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new HciInfraVnetProfile(mocGroup, mocLocation, mocVnetName, default);
         }
 
+        /// <summary> Range of IP Addresses for Kubernetes API Server and services if using HA Proxy load balancer. </summary>
         /// <param name="startIP"> Starting IP address for the IP Pool. </param>
         /// <param name="endIP"> Ending IP address for the IP Pool. </param>
         /// <returns> A new <see cref="Models.KubernetesVirtualIPItem"/> instance for mocking. </returns>
@@ -578,6 +601,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new KubernetesVirtualIPItem(startIP, endIP, default);
         }
 
+        /// <summary> Range of IP Addresses for Kubernetes node VMs. </summary>
         /// <param name="startIP"> Starting IP address for the IP Pool. </param>
         /// <param name="endIP"> Ending IP address for the IP Pool. </param>
         /// <returns> A new <see cref="Models.VirtualMachineIPItem"/> instance for mocking. </returns>
@@ -586,6 +610,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new VirtualMachineIPItem(startIP, endIP, default);
         }
 
+        /// <summary> The detailed status of the long running operation. </summary>
         /// <param name="error"> The error if any from the operation. </param>
         /// <param name="operationId"> The identifier of the operation. </param>
         /// <param name="status"> The status of the operation. </param>
@@ -595,6 +620,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new VirtualNetworkPropertiesStatusOperationStatus(error, operationId, status, default);
         }
 
+        /// <summary> The error if any from the operation. </summary>
         /// <param name="code"> The error code from the operation. </param>
         /// <param name="message"> The error message from the operation. </param>
         /// <returns> A new <see cref="Models.HybridContainerServiceNetworkOperationError"/> instance for mocking. </returns>
@@ -603,6 +629,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new HybridContainerServiceNetworkOperationError(code, message, default);
         }
 
+        /// <summary> The Virtual Network resource patch definition. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.HybridContainerServiceVirtualNetworkPatch"/> instance for mocking. </returns>
         public static HybridContainerServiceVirtualNetworkPatch HybridContainerServiceVirtualNetworkPatch(IDictionary<string, string> tags = default)
@@ -612,6 +639,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new HybridContainerServiceVirtualNetworkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Profile for agent pool properties specified during creation. </summary>
         /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
         /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
         /// <param name="nodeLabels"> The node labels to be persisted across all nodes in agent pool. </param>
@@ -638,18 +666,18 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClusterProperties"/>. </summary>
-        /// <param name="sshPublicKeys"> The profile for Linux VMs in the provisioned cluster. </param>
+        /// <summary> Properties of the provisioned cluster. </summary>
+        /// <param name="sshPublicKeys"> The list of SSH public keys used to authenticate with VMs. A maximum of 1 key may be specified. </param>
         /// <param name="controlPlane"> The profile for control plane of the provisioned cluster. </param>
         /// <param name="kubernetesVersion"> The version of Kubernetes in use by the provisioned cluster. </param>
         /// <param name="networkProfile"> The network configuration profile for the provisioned cluster. </param>
         /// <param name="storageProfile"> The storage configuration profile for the provisioned cluster. </param>
-        /// <param name="clusterVmAccessAuthorizedIPRanges"> The SSH restricted access profile for the VMs in the provisioned cluster. </param>
+        /// <param name="clusterVmAccessAuthorizedIPRanges"> IP Address or CIDR for SSH access to VMs in the provisioned cluster. </param>
         /// <param name="agentPoolProfiles"> The agent pool properties for the provisioned cluster. </param>
-        /// <param name="infraNetworkVnetSubnetIds"> The profile for the underlying cloud infrastructure provider for the provisioned cluster. </param>
+        /// <param name="infraNetworkVnetSubnetIds"> List of ARM resource Ids (maximum 1) for the infrastructure network object e.g. /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzureStackHCI/logicalNetworks/{logicalNetworkName}. </param>
         /// <param name="provisioningState"> The status of the latest long running operation for the provisioned cluster. </param>
         /// <param name="status"> The observed status of the provisioned cluster. </param>
-        /// <param name="licenseAzureHybridBenefit"> The license profile of the provisioned cluster. </param>
+        /// <param name="licenseAzureHybridBenefit"> Indicates whether Azure Hybrid Benefit is opted in. Default value is false. </param>
         /// <param name="autoScalerProfile"> Parameters to be applied to the cluster-autoscaler when auto scaling is enabled for the provisioned cluster. </param>
         /// <returns> A new <see cref="Models.ProvisionedClusterProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -672,7 +700,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.HybridContainerServiceNamedAgentPoolProfile"/>. </summary>
+        /// <summary> Profile of the default agent pool along with a name parameter. </summary>
         /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
         /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
         /// <param name="nodeLabels"> The node labels to be persisted across all nodes in agent pool. </param>
@@ -706,7 +734,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 name);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.AgentPoolUpdateProfile"/>. </summary>
+        /// <summary> Profile for agent pool properties that can be updated. </summary>
         /// <param name="count"> Number of nodes in the agent pool. The default value is 1. </param>
         /// <param name="vmSize"> The VM sku size of the agent pool node VMs. </param>
         /// <param name="kubernetesVersion"> Version of Kubernetes in use by the agent pool. This is inherited from the kubernetesVersion of the provisioned cluster. </param>
@@ -717,7 +745,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new AgentPoolUpdateProfile(count, vmSize, kubernetesVersion, default, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProvisionedClusterStatus"/>. </summary>
+        /// <summary> The observed status of the provisioned cluster. </summary>
         /// <param name="controlPlaneStatus"> The detailed status of the provisioned cluster components including addons. </param>
         /// <param name="currentState"> The current state of the provisioned cluster. </param>
         /// <param name="errorMessage"> Error messages during a provisioned cluster operation or steady state. </param>
@@ -728,12 +756,12 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             return new ProvisionedClusterStatus((controlPlaneStatus ?? new ChangeTrackingList<ProvisionedClusterAddonStatusProfile>()).ToList(), currentState, default, errorMessage, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridContainerService.HybridContainerServiceAgentPoolData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> Resource tags. </param>
+        /// <summary> The agentPool resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"></param>
         /// <param name="extendedLocation"> Extended location pointing to the underlying infrastructure. </param>
         /// <param name="osType"> The particular KubernetesVersion Image OS Type (Linux, Windows). </param>
         /// <param name="osSku"> Specifies the OS SKU used by the agent pool. The default is CBLMariner if OSType is Linux. The default is Windows2019 when OSType is Windows. </param>
@@ -777,13 +805,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridContainerService.KubernetesVersionProfileData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> The supported kubernetes versions. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="extendedLocation"> Extended location pointing to the underlying infrastructure. </param>
-        /// <param name="properties"></param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="HybridContainerService.KubernetesVersionProfileData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KubernetesVersionProfileData KubernetesVersionProfileData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HybridContainerServiceExtendedLocation extendedLocation = default, KubernetesVersionProfileProperties properties = default)
@@ -798,11 +826,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="HybridContainerService.HybridContainerServiceVmSkuData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> The list of supported VM SKUs. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="extendedLocation"> Extended location pointing to the underlying infrastructure. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="values"> List of supported VM SKUs. </param>

@@ -25,16 +25,16 @@ namespace Azure.ResourceManager.AppService.Models
         /// <summary> Initializes a new instance of <see cref="MSDeployStatusProperties"/>. </summary>
         /// <param name="deployer"> Username of deployer. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
-        /// <param name="startOn"> Start time of deploy operation. </param>
-        /// <param name="endOn"> End time of deploy operation. </param>
+        /// <param name="startsOn"> Start time of deploy operation. </param>
+        /// <param name="endsOn"> End time of deploy operation. </param>
         /// <param name="isComplete"> Whether the deployment operation has completed. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MSDeployStatusProperties(string deployer, MSDeployProvisioningState? provisioningState, DateTimeOffset? startOn, DateTimeOffset? endOn, bool? isComplete, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MSDeployStatusProperties(string deployer, MSDeployProvisioningState? provisioningState, DateTimeOffset? startsOn, DateTimeOffset? endsOn, bool? isComplete, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Deployer = deployer;
             ProvisioningState = provisioningState;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             IsComplete = isComplete;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -49,11 +49,11 @@ namespace Azure.ResourceManager.AppService.Models
 
         /// <summary> Start time of deploy operation. </summary>
         [WirePath("startTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End time of deploy operation. </summary>
         [WirePath("endTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> Whether the deployment operation has completed. </summary>
         [WirePath("complete")]

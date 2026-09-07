@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Authorization
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     Properties = new RoleAssignmentScheduleRequestProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Authorization
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     Properties = new RoleAssignmentScheduleRequestProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 

@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
     public static partial class ArmDeviceRegistryModelFactory
     {
 
+        /// <summary> Asset definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the asset properties. </summary>
         /// <param name="uuid"> Globally unique, immutable, non-reusable id. </param>
         /// <param name="isEnabled"> Enabled/Disabled status of the asset. </param>
         /// <param name="externalAssetId"> Asset id provided by the customer. </param>
@@ -104,6 +106,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Object that describes the topic information. </summary>
         /// <param name="path"> The topic path for messages published to an MQTT broker. </param>
         /// <param name="retain"> When set to 'Keep', messages published to an MQTT broker will have the retain flag set. Default: 'Never'. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryTopic"/> instance for mocking. </returns>
@@ -112,6 +115,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryTopic(path, retain, default);
         }
 
+        /// <summary> Defines the dataset properties. </summary>
         /// <param name="name"> Name of the dataset. </param>
         /// <param name="datasetConfiguration"> Stringified JSON that contains connector-specific JSON string that describes configuration for the specific dataset. </param>
         /// <param name="topic"> Object that describes the topic information for the specific dataset. </param>
@@ -124,6 +128,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryDataset(name, datasetConfiguration, topic, (dataPoints ?? new ChangeTrackingList<DeviceRegistryDataPoint>()).ToList(), default);
         }
 
+        /// <summary> Defines the data point properties. </summary>
         /// <param name="name"> The name of the data point. </param>
         /// <param name="dataSource"> The address of the source of the data in the asset (e.g. URL) so that a client can access the data source on the asset. </param>
         /// <param name="dataPointConfiguration"> Stringified JSON that contains connector-specific configuration for the data point. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </param>
@@ -134,6 +139,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryDataPoint(name, dataSource, dataPointConfiguration, default, observabilityMode);
         }
 
+        /// <summary> Defines the data point properties. </summary>
         /// <param name="name"> The name of the data point. </param>
         /// <param name="dataSource"> The address of the source of the data in the asset (e.g. URL) so that a client can access the data source on the asset. </param>
         /// <param name="dataPointConfiguration"> Stringified JSON that contains connector-specific configuration for the data point. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </param>
@@ -143,6 +149,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryDataPointBase(name, dataSource, dataPointConfiguration, default);
         }
 
+        /// <summary> Defines the event properties. </summary>
         /// <param name="name"> The name of the event. </param>
         /// <param name="eventNotifier"> The address of the notifier of the event in the asset (e.g. URL) so that a client can access the event on the asset. </param>
         /// <param name="eventConfiguration"> Stringified JSON that contains connector-specific configuration for the event. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </param>
@@ -160,6 +167,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 observabilityMode);
         }
 
+        /// <summary> Defines the event properties. </summary>
         /// <param name="name"> The name of the event. </param>
         /// <param name="eventNotifier"> The address of the notifier of the event in the asset (e.g. URL) so that a client can access the event on the asset. </param>
         /// <param name="eventConfiguration"> Stringified JSON that contains connector-specific configuration for the event. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </param>
@@ -170,6 +178,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryEventBase(name, eventNotifier, eventConfiguration, topic, default);
         }
 
+        /// <summary> Defines the asset status properties. </summary>
         /// <param name="errors"> Array object to transfer and persist errors that originate from the Edge. </param>
         /// <param name="version"> A read only incremental counter indicating the number of times the configuration has been modified from the perspective of the current actual (Edge) state of the Asset. Edge would be the only writer of this value and would sync back up to the cloud. In steady state, this should equal version. </param>
         /// <param name="datasets"> Array of dataset statuses that describe the status of each dataset. </param>
@@ -184,6 +193,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryAssetStatus((errors ?? new ChangeTrackingList<DeviceRegistryAssetStatusError>()).ToList(), version, (datasets ?? new ChangeTrackingList<DeviceRegistryAssetStatusDataset>()).ToList(), (events ?? new ChangeTrackingList<DeviceRegistryAssetStatusEvent>()).ToList(), default);
         }
 
+        /// <summary> Defines the asset status error properties. </summary>
         /// <param name="code"> Error code for classification of errors (ex: 400, 404, 500, etc.). </param>
         /// <param name="message"> Human readable helpful error message to provide additional context for error (ex: “capability Id 'foo' does not exist”). </param>
         /// <returns> A new <see cref="Models.DeviceRegistryAssetStatusError"/> instance for mocking. </returns>
@@ -192,6 +202,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryAssetStatusError(code, message, default);
         }
 
+        /// <summary> Defines the asset status dataset properties. </summary>
         /// <param name="name"> The name of the dataset. Must be unique within the status.datasets array. This name is used to correlate between the spec and status dataset information. </param>
         /// <param name="messageSchemaReference"> The message schema reference object. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryAssetStatusDataset"/> instance for mocking. </returns>
@@ -200,6 +211,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryAssetStatusDataset(name, messageSchemaReference, default);
         }
 
+        /// <summary> Defines the message schema reference properties. </summary>
         /// <param name="schemaRegistryNamespace"> The message schema registry namespace. </param>
         /// <param name="schemaName"> The message schema name. </param>
         /// <param name="schemaVersion"> The message schema version. </param>
@@ -209,6 +221,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new MessageSchemaReference(schemaRegistryNamespace, schemaName, schemaVersion, default);
         }
 
+        /// <summary> Defines the asset status event properties. </summary>
         /// <param name="name"> The name of the event. Must be unique within the status.events array. This name is used to correlate between the spec and status event information. </param>
         /// <param name="messageSchemaReference"> The message schema reference object. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryAssetStatusEvent"/> instance for mocking. </returns>
@@ -217,6 +230,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryAssetStatusEvent(name, messageSchemaReference, default);
         }
 
+        /// <summary> The extended location. </summary>
         /// <param name="extendedLocationType"> The extended location type. </param>
         /// <param name="name"> The extended location name. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryExtendedLocation"/> instance for mocking. </returns>
@@ -225,6 +239,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryExtendedLocation(extendedLocationType, name, default);
         }
 
+        /// <summary> The type used for update operations of the Asset. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryAssetPatch"/> instance for mocking. </returns>
@@ -235,6 +250,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryAssetPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> The updatable properties of the Asset. </summary>
         /// <param name="isEnabled"> Enabled/Disabled status of the asset. </param>
         /// <param name="displayName"> Human-readable display name. </param>
         /// <param name="description"> Human-readable description of the asset. </param>
@@ -280,6 +296,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Asset Endpoint Profile definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -337,6 +354,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryAuthentication(@method, usernamePasswordCredentials, x509CredentialsCertificateSecretName is null ? default : new DeviceRegistryX509Credentials(x509CredentialsCertificateSecretName, default), default);
         }
 
+        /// <summary> The credentials for authentication mode UsernamePassword. </summary>
         /// <param name="usernameSecretName"> The name of the secret containing the username. </param>
         /// <param name="passwordSecretName"> The name of the secret containing the password. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryUsernamePasswordCredentials"/> instance for mocking. </returns>
@@ -345,6 +363,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryUsernamePasswordCredentials(usernameSecretName, passwordSecretName, default);
         }
 
+        /// <summary> Defines the asset endpoint profile status error properties. </summary>
         /// <param name="code"> Error code for classification of errors (ex: 400, 404, 500, etc.). </param>
         /// <param name="message"> Human readable helpful error message to provide additional context for error (ex: “targetAddress 'foo' is not a valid url”). </param>
         /// <returns> A new <see cref="Models.AssetEndpointProfileStatusError"/> instance for mocking. </returns>
@@ -353,6 +372,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new AssetEndpointProfileStatusError(code, message, default);
         }
 
+        /// <summary> The type used for update operations of the AssetEndpointProfile. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryAssetEndpointProfilePatch"/> instance for mocking. </returns>
@@ -363,6 +383,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryAssetEndpointProfilePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> The updatable properties of the AssetEndpointProfile. </summary>
         /// <param name="targetAddress"> The local valid URI specifying the network address/DNS name of a southbound device. The scheme part of the targetAddress URI specifies the type of the device. The additionalConfiguration field holds further connector type specific configuration. </param>
         /// <param name="endpointProfileType"> Defines the configuration for the connector type that is being used with the endpoint profile. </param>
         /// <param name="authentication"> Defines the client authentication mechanism to the server. </param>
@@ -392,6 +413,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Namespace definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -426,6 +448,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryNamespaceProperties(uuid, messagingEndpoints is null ? default : new Messaging(messagingEndpoints ?? new ChangeTrackingDictionary<string, MessagingEndpoint>(), default), provisioningState, default);
         }
 
+        /// <summary> Namespace messaging endpoint model used by a device to connect to a service. </summary>
         /// <param name="endpointType"> Type of connection used for messaging endpoint. </param>
         /// <param name="address"> The endpoint address to connect to. </param>
         /// <param name="resourceId"> The messaging endpoint Azure resource Id. </param>
@@ -435,6 +458,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new MessagingEndpoint(endpointType, address, resourceId, default);
         }
 
+        /// <summary> Managed service identity (either system assigned, or none). </summary>
         /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
         /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
         /// <param name="type"> The type of managed identity assigned to this resource. </param>
@@ -455,6 +479,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryNamespacePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), namespaceUpdateMessagingEndpoints is null ? default : new NamespaceUpdateProperties(new Messaging(namespaceUpdateMessagingEndpoints ?? new ChangeTrackingDictionary<string, MessagingEndpoint>(), default), default), default);
         }
 
+        /// <summary> Request body for the migrate resources operation in to Namespace resource. </summary>
         /// <param name="scope"> Scope of the migrate resources operation. </param>
         /// <param name="resourceIds"> List of asset resources to be migrated. </param>
         /// <returns> A new <see cref="Models.NamespaceMigrateContent"/> instance for mocking. </returns>
@@ -465,6 +490,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new NamespaceMigrateContent(scope, (resourceIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Defines the error details properties. </summary>
         /// <param name="code"> Multi-part error code for classification and root causing of errors (ex: 400.200.100.432). </param>
         /// <param name="message"> Human-readable helpful error message to provide additional context for error (ex: “Authentication method not supported”). </param>
         /// <param name="info"> Human-readable helpful detailed text context for debugging (ex: “The following mechanisms are supported...”). </param>
@@ -498,6 +524,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> The type used for update operations of the Credential. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.CredentialPatch"/> instance for mocking. </returns>
         public static CredentialPatch CredentialPatch(IDictionary<string, string> tags = default)
@@ -507,6 +534,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new CredentialPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> A Credential Policy. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -524,6 +552,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Details of the Credential Policy. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="certificate"> The certificate configuration. </param>
         /// <returns> A new <see cref="Models.PolicyProperties"/> instance for mocking. </returns>
@@ -540,6 +569,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new CertificateConfiguration(certificateAuthorityConfiguration, new LeafCertificateConfiguration(leafCertificateValidityPeriodInDays, default), default);
         }
 
+        /// <summary> The configuration to set up an ICA. </summary>
         /// <param name="keyType"> Crypto type: ECC. </param>
         /// <param name="subject"> Certificate subject. </param>
         /// <param name="validityNotBefore"> Certificate is valid not before this date. Format ISO8601. Generated based on on validity period. </param>
@@ -557,6 +587,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Configuration for Bring Your Own Root. When enabled, customers provide their own CA-signed certificates instead of using the service-managed CA. </summary>
         /// <param name="enabled"> Indicates whether Bring Your Own Root is enabled. This can only be set at creation time and cannot be changed afterward. </param>
         /// <param name="certificateSigningRequest"> Certificate Signing Request (CSR) in PEM format, generated by the service. Sign this CSR with your Certificate Authority and activate via the activateBringYourOwnRoot action. A new CSR is generated at policy creation and when certificates near expiration. </param>
         /// <param name="issuingCertificateThumbprint"> Thumbprint of the issuing certificate. </param>
@@ -574,6 +605,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new PolicyPatch(policyUpdateCertificate is null ? default : new PolicyUpdateProperties(policyUpdateCertificate, default), default);
         }
 
+        /// <summary> Request payload for activating a Bring Your Own Root policy with a customer-provided signed certificate. </summary>
         /// <param name="certificateChain"> Certificate chain in PEM format, including the signed certificate. The first certificate must be the signed certificate (matching the CSR generated by the service), followed by any intermediate CAs, and optionally the root CA. Certificates must be ordered from leaf to root and concatenated in PEM format. </param>
         /// <returns> A new <see cref="Models.ActivateBringYourOwnRootContent"/> instance for mocking. </returns>
         public static ActivateBringYourOwnRootContent ActivateBringYourOwnRootContent(string certificateChain = default)
@@ -581,6 +613,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new ActivateBringYourOwnRootContent(certificateChain, default);
         }
 
+        /// <summary> Asset definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -606,6 +639,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the asset properties. </summary>
         /// <param name="uuid"> Globally unique, immutable, non-reusable ID. </param>
         /// <param name="enabled"> Enabled/disabled status of the asset. </param>
         /// <param name="externalAssetId"> Asset ID provided by the customer. </param>
@@ -688,6 +722,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines which device and endpoint to use for this asset. </summary>
         /// <param name="deviceName"> Name of the device resource. </param>
         /// <param name="endpointName"> The name of endpoint to use. </param>
         /// <returns> A new <see cref="Models.DeviceRef"/> instance for mocking. </returns>
@@ -696,6 +731,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRef(deviceName, endpointName, default);
         }
 
+        /// <summary>
+        /// The type of the destination.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.DatasetMqttDestination"/>, <see cref="Models.DatasetBrokerStateStoreDestination"/>, and <see cref="Models.DatasetStorageDestination"/>.
+        /// </summary>
         /// <param name="target"> Target destination. </param>
         /// <returns> A new <see cref="Models.DatasetDestination"/> instance for mocking. </returns>
         public static DatasetDestination DatasetDestination(string target = default)
@@ -703,6 +742,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new UnknownDatasetDestination(default, default);
         }
 
+        /// <summary> The type for a MQTT destination. </summary>
         /// <param name="configuration"> The MQTT destination configuration. </param>
         /// <returns> A new <see cref="Models.DatasetMqttDestination"/> instance for mocking. </returns>
         public static DatasetMqttDestination DatasetMqttDestination(MqttDestinationConfiguration configuration = default)
@@ -710,6 +750,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DatasetMqttDestination(default, default, configuration);
         }
 
+        /// <summary> The configuration for a MQTT destination. </summary>
         /// <param name="topic"> The MQTT topic. </param>
         /// <param name="retain"> When set to 'Keep', messages published to an MQTT broker will have the retain flag set. Default: 'Never'. </param>
         /// <param name="qos"> The MQTT QoS setting. Defaults to QoS 1. </param>
@@ -736,6 +777,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DatasetStorageDestination(default, default, path is null ? default : new StorageDestinationConfiguration(path, default));
         }
 
+        /// <summary>
+        /// The type of the destination.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.EventMqttDestination"/> and <see cref="Models.EventStorageDestination"/>.
+        /// </summary>
         /// <param name="target"> Target destination. </param>
         /// <returns> A new <see cref="Models.EventDestination"/> instance for mocking. </returns>
         public static EventDestination EventDestination(string target = default)
@@ -743,6 +788,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new UnknownEventDestination(default, default);
         }
 
+        /// <summary> The type for a MQTT destination. </summary>
         /// <param name="configuration"> The MQTT destination configuration. </param>
         /// <returns> A new <see cref="Models.EventMqttDestination"/> instance for mocking. </returns>
         public static EventMqttDestination EventMqttDestination(MqttDestinationConfiguration configuration = default)
@@ -758,6 +804,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new EventStorageDestination(default, default, path is null ? default : new StorageDestinationConfiguration(path, default));
         }
 
+        /// <summary>
+        /// The type of the destination.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.StreamMqttDestination"/> and <see cref="Models.StreamStorageDestination"/>.
+        /// </summary>
         /// <param name="target"> Target destination. </param>
         /// <returns> A new <see cref="Models.StreamDestination"/> instance for mocking. </returns>
         public static StreamDestination StreamDestination(string target = default)
@@ -765,6 +815,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new UnknownStreamDestination(default, default);
         }
 
+        /// <summary> The type for a MQTT destination. </summary>
         /// <param name="configuration"> The MQTT destination configuration. </param>
         /// <returns> A new <see cref="Models.StreamMqttDestination"/> instance for mocking. </returns>
         public static StreamMqttDestination StreamMqttDestination(MqttDestinationConfiguration configuration = default)
@@ -780,6 +831,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new StreamStorageDestination(default, default, path is null ? default : new StorageDestinationConfiguration(path, default));
         }
 
+        /// <summary> Defines the dataset properties. </summary>
         /// <param name="name"> Name of the dataset. </param>
         /// <param name="dataSource"> Reference to a data source for a given dataset. </param>
         /// <param name="typeRef"> URI or type definition ID. </param>
@@ -802,6 +854,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the dataset data point properties. </summary>
         /// <param name="name"> The name of the data point. </param>
         /// <param name="dataSource"> The address of the source of the data in the asset (e.g. URL) so that a client can access the data source on the asset. </param>
         /// <param name="dataPointConfiguration"> Stringified JSON that contains connector-specific configuration for the data point. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </param>
@@ -812,6 +865,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new NamespaceDatasetDataPoint(name, dataSource, dataPointConfiguration, typeRef, default);
         }
 
+        /// <summary> Defines the event group properties. </summary>
         /// <param name="name"> The name of the event group. </param>
         /// <param name="dataSource"> The address of the notifier of the event group in the asset (e.g. URL) so that a client can access the event group on the asset. </param>
         /// <param name="eventGroupConfiguration"> Stringified JSON that contains connector-specific configuration for the event group. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </param>
@@ -834,6 +888,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the event properties. </summary>
         /// <param name="name"> The name of the event. </param>
         /// <param name="dataSource"> Reference to a data source for a given event. </param>
         /// <param name="eventConfiguration"> Stringified JSON that contains connector-specific configuration for the event. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </param>
@@ -853,6 +908,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the stream properties. </summary>
         /// <param name="name"> Name of the stream definition. </param>
         /// <param name="streamConfiguration"> Stringified JSON that contains connector-specific configuration for the specific stream. </param>
         /// <param name="typeRef"> URI or type definition ID. </param>
@@ -865,6 +921,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new NamespaceStream(name, streamConfiguration, typeRef, (destinations ?? new ChangeTrackingList<StreamDestination>()).ToList(), default);
         }
 
+        /// <summary> Defines the management group properties. </summary>
         /// <param name="name"> Name of the management group. </param>
         /// <param name="dataSource"> Reference to a data source for a given management group. </param>
         /// <param name="managementGroupConfiguration"> Stringified JSON that contains connector-specific configuration for the management group. </param>
@@ -888,6 +945,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the action properties. </summary>
         /// <param name="name"> Name of the action. </param>
         /// <param name="actionConfiguration"> Stringified JSON that contains connector-specific configuration for the action. </param>
         /// <param name="targetUri"> The target URI on which a client can invoke the specific action. </param>
@@ -909,6 +967,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the asset status properties. </summary>
         /// <param name="config"> Defines the asset status config properties. </param>
         /// <param name="datasets"> Array of dataset statuses that describe the status of each dataset. </param>
         /// <param name="eventGroups"> Array of event group statuses that describe the status of each event group. </param>
@@ -931,6 +990,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the status config properties. </summary>
         /// <param name="version"> A read-only incremental counter indicating the number of times the configuration has been modified from the perspective of the current actual (edge) state of the CRD. Edge would be the only writer of this value and would sync back up to the cloud. In steady state, this should equal version. </param>
         /// <param name="lastTransitionOn"> A read-only timestamp indicating the last time the configuration has been modified from the perspective of the current actual (edge) state of the CRD. Edge would be the only writer of this value and would sync back up to the cloud. </param>
         /// <param name="error"> Object to transfer and persist errors that originate from the edge. </param>
@@ -940,6 +1000,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryStatusConfig(version, lastTransitionOn, error, default);
         }
 
+        /// <summary> Defines the status config error properties. </summary>
         /// <param name="code"> Error code for classification of errors (ex: '400', '404', '500', etc.). </param>
         /// <param name="message"> Human-readable helpful error message to provide additional context for error (e.g.,: “Capability ID 'foo' does not exist”). </param>
         /// <param name="details"> Array of error details that describe the status of each error. </param>
@@ -951,6 +1012,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryStatusError(code, message, (details ?? new ChangeTrackingList<DeviceRegistryErrorDetails>()).ToList(), default);
         }
 
+        /// <summary> Defines the asset status dataset properties. </summary>
         /// <param name="name"> The name of the dataset. Must be unique within the status.datasets array. This name is used to correlate between the spec and status dataset information. </param>
         /// <param name="messageSchemaReference"> The message schema reference object. </param>
         /// <param name="error"> Object to transfer and persist errors that originate from the edge. </param>
@@ -960,6 +1022,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryNamespaceAssetStatusDataset(name, messageSchemaReference, error, default);
         }
 
+        /// <summary> Defines the message schema reference properties. </summary>
         /// <param name="schemaRegistryNamespace"> The message schema registry namespace. </param>
         /// <param name="schemaName"> The message schema name. </param>
         /// <param name="schemaVersion"> The message schema version. </param>
@@ -969,6 +1032,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryNamespaceMessageSchemaReference(schemaRegistryNamespace, schemaName, schemaVersion, default);
         }
 
+        /// <summary> Defines the asset status event group properties. </summary>
         /// <param name="name"> The name of the event group. Must be unique within the status.eventGroups array. This name is used to correlate between the spec and status event group information. </param>
         /// <param name="events"> Array of event statuses that describe the status of each event in the event group. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryNamespaceAssetStatusEventGroup"/> instance for mocking. </returns>
@@ -979,6 +1043,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryNamespaceAssetStatusEventGroup(name, (events ?? new ChangeTrackingList<DeviceRegistryNamespaceAssetStatusEvent>()).ToList(), default);
         }
 
+        /// <summary> Defines the asset status event properties. </summary>
         /// <param name="name"> The name of the event. Must be unique within the status.events array. This name is used to correlate between the spec and status event information. </param>
         /// <param name="messageSchemaReference"> The message schema reference object. </param>
         /// <param name="error"> Object to transfer and persist errors that originate from the edge. </param>
@@ -988,6 +1053,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryNamespaceAssetStatusEvent(name, messageSchemaReference, error, default);
         }
 
+        /// <summary> Defines the asset status stream properties. </summary>
         /// <param name="name"> The name of the stream. Must be unique within the status.streams array. This name is used to correlate between the spec and status event information. </param>
         /// <param name="messageSchemaReference"> The message schema reference object. </param>
         /// <param name="error"> Object to transfer and persist errors that originate from the edge. </param>
@@ -997,6 +1063,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryNamespaceAssetStatusStream(name, messageSchemaReference, error, default);
         }
 
+        /// <summary> Defines the asset status management group properties. </summary>
         /// <param name="name"> The name of the management group. Must be unique within the status.managementGroups array. This name is used to correlate between the spec and status event information. </param>
         /// <param name="actions"> Array of action statuses that describe the status of each action. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryNamespaceAssetStatusManagementGroup"/> instance for mocking. </returns>
@@ -1007,6 +1074,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryNamespaceAssetStatusManagementGroup(name, (actions ?? new ChangeTrackingList<DeviceRegistryNamespaceAssetStatusManagementAction>()).ToList(), default);
         }
 
+        /// <summary> Defines the asset status action properties. </summary>
         /// <param name="name"> The name of the action. Must be unique within the status.actions array. This name is used to correlate between the spec and status event information. </param>
         /// <param name="requestMessageSchemaReference"> The request message schema reference object for the action. </param>
         /// <param name="responseMessageSchemaReference"> The response message schema reference object for the action. </param>
@@ -1017,6 +1085,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryNamespaceAssetStatusManagementAction(name, requestMessageSchemaReference, responseMessageSchemaReference, error, default);
         }
 
+        /// <summary> The type used for update operations of the NamespaceAsset. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryNamespaceAssetPatch"/> instance for mocking. </returns>
@@ -1027,6 +1096,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryNamespaceAssetPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> The updatable properties of the NamespaceAsset. </summary>
         /// <param name="enabled"> Enabled/disabled status of the asset. </param>
         /// <param name="displayName"> Human-readable display name. </param>
         /// <param name="description"> Human-readable description of the asset. </param>
@@ -1092,6 +1162,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Device definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1158,6 +1229,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Connection endpoint URL a device can use to connect to a service. </summary>
         /// <param name="inbound"> Set of endpoints to connect to the device. </param>
         /// <param name="outbound"> Set of endpoints a device can connect to. </param>
         /// <returns> A new <see cref="Models.MessagingEndpoints"/> instance for mocking. </returns>
@@ -1187,6 +1259,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Definition of the client authentication mechanism to the host. </summary>
         /// <param name="method"> Defines the method to authenticate the user of the client at the server. </param>
         /// <param name="usernamePasswordCredentials"> Defines the username and password references when UsernamePassword user authentication mode is selected. </param>
         /// <param name="x509Credentials"> Defines the certificate reference when Certificate user authentication mode is selected. </param>
@@ -1196,6 +1269,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new HostAuthentication(@method, usernamePasswordCredentials, x509Credentials, default);
         }
 
+        /// <summary> The x509 certificate for authentication mode Certificate. </summary>
         /// <param name="certificateSecretName"> The name of the secret containing the certificate and private key (e.g. stored as .der/.pem or .der/.pfx). </param>
         /// <param name="keySecretName"> The name of the secret containing the certificate private key in PEM or DER format. </param>
         /// <param name="intermediateCertificatesSecretName"> The name of the secret containing the combined intermediate certificates in PEM format. </param>
@@ -1205,6 +1279,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new X509CertificateCredentials(certificateSecretName, keySecretName, intermediateCertificatesSecretName, default);
         }
 
+        /// <summary> Property bag contains the device's outbound endpoints. </summary>
         /// <param name="assigned"> Endpoints the device can connect to. </param>
         /// <param name="unassigned"> Set of most recently removed endpoints. </param>
         /// <returns> A new <see cref="Models.OutboundEndpoints"/> instance for mocking. </returns>
@@ -1216,6 +1291,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new OutboundEndpoints(assigned ?? new ChangeTrackingDictionary<string, DeviceMessagingEndpoint>(), unassigned ?? new ChangeTrackingDictionary<string, DeviceMessagingEndpoint>(), default);
         }
 
+        /// <summary> Device messaging endpoint model. </summary>
         /// <param name="endpointType"> Type of connection used for the messaging endpoint. </param>
         /// <param name="address"> The endpoint address to connect to. </param>
         /// <returns> A new <see cref="Models.DeviceMessagingEndpoint"/> instance for mocking. </returns>
@@ -1232,6 +1308,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceStatus(config, endpointsInbound is null ? default : new DeviceStatusEndpoints(endpointsInbound ?? new ChangeTrackingDictionary<string, DeviceStatusEndpoint>(), default), default);
         }
 
+        /// <summary> Defines the device status properties. </summary>
         /// <param name="error"> Defines the error related to this endpoint. </param>
         /// <returns> A new <see cref="Models.DeviceStatusEndpoint"/> instance for mocking. </returns>
         public static DeviceStatusEndpoint DeviceStatusEndpoint(DeviceRegistryStatusError error = default)
@@ -1239,6 +1316,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceStatusEndpoint(error, default);
         }
 
+        /// <summary> The type used for update operations of the NamespaceDevice. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryNamespaceDevicePatch"/> instance for mocking. </returns>
@@ -1268,6 +1346,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Request payload for revoking device credentials. </summary>
         /// <param name="disable"> Indicates whether to disable the device(s) after revoking credentials. Prevents new credentials to be issued. </param>
         /// <returns> A new <see cref="Models.DeviceCredentialsRevokeContent"/> instance for mocking. </returns>
         public static DeviceCredentialsRevokeContent DeviceCredentialsRevokeContent(bool? disable = default)
@@ -1275,6 +1354,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceCredentialsRevokeContent(disable, default);
         }
 
+        /// <summary> Discovered asset definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1300,6 +1380,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the discovered asset properties. </summary>
         /// <param name="deviceRef"> Reference to the device that provides data for this asset. Must provide device name &amp; endpoint on the device to use. </param>
         /// <param name="displayName"> Human-readable display name. </param>
         /// <param name="assetTypeRefs"> URIs or type definition IDs. </param>
@@ -1373,6 +1454,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the dataset properties. </summary>
         /// <param name="name"> Name of the dataset. </param>
         /// <param name="dataSource"> Reference to a data source for a given dataset. </param>
         /// <param name="typeRef"> URI or type definition ID. </param>
@@ -1397,6 +1479,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the discovered dataset data point properties. </summary>
         /// <param name="name"> The name of the data point. </param>
         /// <param name="dataSource"> The address of the source of the data in the asset (e.g. URL) so that a client can access the data source on the asset. </param>
         /// <param name="dataPointConfiguration"> Stringified JSON that contains connector-specific configuration for the data point. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </param>
@@ -1414,6 +1497,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the discovered event group properties. </summary>
         /// <param name="name"> The name of the event group. </param>
         /// <param name="dataSource"> The address of the notifier of the event group in the asset (e.g. URL) so that a client can access the event group on the asset. </param>
         /// <param name="eventGroupConfiguration"> Stringified JSON that contains connector-specific configuration for the event group. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </param>
@@ -1436,6 +1520,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the event properties. </summary>
         /// <param name="name"> The name of the event. </param>
         /// <param name="dataSource"> Reference to a data source for a given event. </param>
         /// <param name="eventConfiguration"> Stringified JSON that contains connector-specific configuration for the event. For OPC UA, this could include configuration like, publishingInterval, samplingInterval, and queueSize. </param>
@@ -1457,6 +1542,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the stream properties. </summary>
         /// <param name="name"> Name of the stream definition. </param>
         /// <param name="streamConfiguration"> Stringified JSON that contains connector-specific configuration for the specific stream. </param>
         /// <param name="typeRef"> URI or type definition ID. </param>
@@ -1476,6 +1562,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the management group properties. </summary>
         /// <param name="name"> Name of the management group. </param>
         /// <param name="managementGroupConfiguration"> Stringified JSON that contains connector-specific configuration for the management group. </param>
         /// <param name="typeRef"> URI or type definition ID. </param>
@@ -1501,6 +1588,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the action properties. </summary>
         /// <param name="name"> Name of the action. </param>
         /// <param name="actionConfiguration"> Stringified JSON that contains connector-specific configuration for the action. </param>
         /// <param name="targetUri"> The target URI on which a client can invoke the specific action. </param>
@@ -1524,6 +1612,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> The type used for update operations of the NamespaceDiscoveredAsset. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryNamespaceDiscoveredAssetPatch"/> instance for mocking. </returns>
@@ -1534,6 +1623,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryNamespaceDiscoveredAssetPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> The updatable properties of the NamespaceDiscoveredAsset. </summary>
         /// <param name="deviceRef"> Reference to the device that provides data for this asset. Must provide device name &amp; endpoint on the device to use. </param>
         /// <param name="displayName"> Human-readable display name. </param>
         /// <param name="assetTypeRefs"> URIs or type definition IDs. </param>
@@ -1603,6 +1693,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Discovered device definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1628,6 +1719,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the discovered device properties. </summary>
         /// <param name="externalDeviceId"> A device ID that represents the device in a system external to Azure. Unique within scope of an Azure tenant. </param>
         /// <param name="endpoints"> Endpoints for discovered devices. </param>
         /// <param name="manufacturer"> Device manufacturer. </param>
@@ -1667,6 +1759,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DiscoveredMessagingEndpoints(inbound ?? new ChangeTrackingDictionary<string, DiscoveredInboundEndpoints>(), outboundAssigned is null ? default : new DiscoveredOutboundEndpoints(outboundAssigned ?? new ChangeTrackingDictionary<string, DeviceMessagingEndpoint>(), default), default);
         }
 
+        /// <summary> An endpoint to connect to the device. </summary>
         /// <param name="endpointType"> Type of connection endpoint. </param>
         /// <param name="address"> The endpoint address &amp; port. This can be either an IP address (e.g., 192.168.1.1) or a fully qualified domain name (FQDN, e.g., server.example.com). </param>
         /// <param name="version"> Protocol version associated with the endpoint e.g. 1 or 2 for endpointType Microsoft.HTTP, and 3.5 or 5.0 for endpointType Microsoft.Mqtt etc. </param>
@@ -1688,6 +1781,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> The type used for update operations of the NamespaceDiscoveredDevice. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryNamespaceDiscoveredDevicePatch"/> instance for mocking. </returns>
@@ -1698,6 +1792,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryNamespaceDiscoveredDevicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> The updatable properties of the NamespaceDiscoveredDevice. </summary>
         /// <param name="externalDeviceId"> A device ID that represents the device in a system external to Azure. Unique within scope of an Azure tenant. </param>
         /// <param name="endpoints"> Endpoints for discovered devices. </param>
         /// <param name="operatingSystemVersion"> Device operating system version. </param>
@@ -1719,6 +1814,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Schema registry definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1744,6 +1840,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the schema registry properties. </summary>
         /// <param name="uuid"> Globally unique, immutable, non-reusable id. </param>
         /// <param name="namespace"> Schema registry namespace. Uniquely identifies a schema registry within a tenant. </param>
         /// <param name="displayName"> Human-readable display name. </param>
@@ -1763,6 +1860,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> The type used for update operations of the SchemaRegistry. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -1774,6 +1872,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistrySchemaRegistryPatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> The updatable properties of the SchemaRegistry. </summary>
         /// <param name="displayName"> Human-readable display name. </param>
         /// <param name="description"> Human-readable description of the schema registry. </param>
         /// <returns> A new <see cref="Models.SchemaRegistryUpdateProperties"/> instance for mocking. </returns>
@@ -1782,6 +1881,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new SchemaRegistryUpdateProperties(displayName, description, default);
         }
 
+        /// <summary> Schema definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1799,6 +1899,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the schema properties. </summary>
         /// <param name="uuid"> Globally unique, immutable, non-reusable id. </param>
         /// <param name="displayName"> Human-readable display name. </param>
         /// <param name="description"> Human-readable description of the schema. </param>
@@ -1822,6 +1923,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Schema version's definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1839,6 +1941,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the schema version properties. </summary>
         /// <param name="uuid"> Globally unique, immutable, non-reusable id. </param>
         /// <param name="description"> Human-readable description of the schema. </param>
         /// <param name="schemaContent"> Schema content. </param>
