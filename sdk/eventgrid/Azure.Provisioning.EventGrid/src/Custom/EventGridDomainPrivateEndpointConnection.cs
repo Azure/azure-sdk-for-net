@@ -5,6 +5,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.EventGrid;
 
+// The generated name repeats the EventGrid service prefix. Map it to the released type name
+// EventGridDomainPrivateEndpointConnection without the duplicated prefix.
 [CodeGenType("EventGridEventGridDomainPrivateEndpointConnection")]
 public partial class EventGridDomainPrivateEndpointConnection
 {

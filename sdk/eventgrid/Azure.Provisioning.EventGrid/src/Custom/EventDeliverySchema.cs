@@ -6,6 +6,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.Provisioning.EventGrid;
 
 /// <summary> The schema used for event delivery. </summary>
+// The TypeSpec declaration order changes the generated numeric values. Preserve the released
+// ordinals because these enum values can be cast to and from their underlying integers.
 [CodeGenType("EventDeliverySchema")]
 public enum EventDeliverySchema
 {

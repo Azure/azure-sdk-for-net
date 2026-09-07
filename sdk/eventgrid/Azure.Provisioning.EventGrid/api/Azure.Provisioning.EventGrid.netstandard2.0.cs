@@ -375,7 +375,7 @@ namespace Azure.Provisioning.EventGrid
         public static Azure.Provisioning.EventGrid.EventGridBuiltInRole EventGridEventSubscriptionContributor { get { throw null; } }
         public static Azure.Provisioning.EventGrid.EventGridBuiltInRole EventGridEventSubscriptionReader { get { throw null; } }
         public bool Equals(Azure.Provisioning.EventGrid.EventGridBuiltInRole other) { throw null; }
-        public override bool Equals(object? obj) { throw null; }
+        public override bool Equals(object obj) { throw null; }
         public static string GetBuiltInRoleName(Azure.Provisioning.EventGrid.EventGridBuiltInRole value) { throw null; }
         public override int GetHashCode() { throw null; }
         public static bool operator ==(Azure.Provisioning.EventGrid.EventGridBuiltInRole left, Azure.Provisioning.EventGrid.EventGridBuiltInRole right) { throw null; }
@@ -736,6 +736,8 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.EventGridSku> SkuName { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.EventGrid.EventGridBuiltInRole role, Azure.Provisioning.BicepValue<Azure.Provisioning.Authorization.RoleManagementPrincipalType> principalType, Azure.Provisioning.BicepValue<System.Guid> principalId, string bicepIdentifierSuffix = null) { throw null; }
+        public Azure.Provisioning.Authorization.RoleAssignment CreateRoleAssignment(Azure.Provisioning.EventGrid.EventGridBuiltInRole role, Azure.Provisioning.Roles.UserAssignedIdentity identity) { throw null; }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.EventGrid.EventGridTopic FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions

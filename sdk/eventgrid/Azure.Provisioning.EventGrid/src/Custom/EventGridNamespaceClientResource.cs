@@ -5,6 +5,8 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.EventGrid;
 
+// The generated EventGridNamespaceClient name is treated as an SDK client by the analyzers.
+// Preserve the released Resource suffix so this ARM resource is classified correctly.
 [CodeGenType("EventGridNamespaceClient")]
 public partial class EventGridNamespaceClientResource
 {

@@ -352,6 +352,23 @@ namespace Azure.Provisioning.EventGrid
             }
         }
 
+        /// <summary> Gets or sets the Name. </summary>
+        public BicepValue<EventGridSku> SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                if (Sku is null)
+                {
+                    Sku = new ResourceSku();
+                }
+                Sku.Name = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for EventGridDomain. </summary>
         protected override void DefineProvisionableProperties()
         {

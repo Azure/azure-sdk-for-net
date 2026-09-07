@@ -12,6 +12,8 @@ internal partial class NamespaceProperties
 {
     private BicepList<EventGridPrivateEndpointConnectionData> _customPrivateEndpointConnections;
 
+    // The generated property contains deployable EventGridNamespacePrivateEndpointConnection
+    // resources. Preserve the released inline data-model element type on the same wire path.
     [CodeGenMember("PrivateEndpointConnections")]
     public BicepList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections
     {

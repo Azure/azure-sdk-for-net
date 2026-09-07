@@ -18,6 +18,11 @@ namespace Azure.Provisioning.EventGrid
     {
         private BicepValue<PartnerClientAuthenticationType> _clientAuthenticationType;
 
+        /// <summary> Creates a new PartnerClientAuthentication. </summary>
+        public PartnerClientAuthentication()
+        {
+        }
+
         /// <summary> Type of client authentication. </summary>
         internal BicepValue<PartnerClientAuthenticationType> ClientAuthenticationType
         {
@@ -26,6 +31,14 @@ namespace Azure.Provisioning.EventGrid
                 Initialize();
                 return _clientAuthenticationType;
             }
+        }
+
+        /// <summary> Define all the provisionable properties for PartnerClientAuthentication. </summary>
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _clientAuthenticationType = DefineProperty<PartnerClientAuthenticationType>(nameof(ClientAuthenticationType), new string[] { "clientAuthenticationType" }, isRequired: true);
+            DefineAdditionalProperties();
         }
 
         /// <summary> Define additional provisionable properties for PartnerClientAuthentication that are not part of the generated code. </summary>

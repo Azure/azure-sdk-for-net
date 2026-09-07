@@ -17,6 +17,7 @@ namespace Azure.Provisioning.EventGrid
         private BicepValue<string> _routeTopicResourceId;
         private BicepValue<string> _hostname;
         private RoutingEnrichments _routingEnrichments;
+        private ClientAuthenticationSettings _clientAuthentication;
         private BicepValue<int> _maximumSessionExpiryInHours;
         private BicepValue<int> _maximumClientSessionsPerAuthenticationName;
         private RoutingIdentityInfo _routingIdentityInfo;
@@ -79,6 +80,21 @@ namespace Azure.Provisioning.EventGrid
             {
                 Initialize();
                 AssignOrReplace(ref _routingEnrichments, value);
+            }
+        }
+
+        /// <summary> Gets or sets the ClientAuthentication. </summary>
+        public ClientAuthenticationSettings ClientAuthentication
+        {
+            get
+            {
+                Initialize();
+                return _clientAuthentication;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _clientAuthentication, value);
             }
         }
 
@@ -150,6 +166,7 @@ namespace Azure.Provisioning.EventGrid
             _routeTopicResourceId = DefineProperty<string>(nameof(RouteTopicResourceId), new string[] { "routeTopicResourceId" });
             _hostname = DefineProperty<string>(nameof(Hostname), new string[] { "hostname" }, isOutput: true);
             _routingEnrichments = DefineModelProperty<RoutingEnrichments>(nameof(RoutingEnrichments), new string[] { "routingEnrichments" });
+            _clientAuthentication = DefineModelProperty<ClientAuthenticationSettings>(nameof(ClientAuthentication), new string[] { "clientAuthentication" });
             _maximumSessionExpiryInHours = DefineProperty<int>(nameof(MaximumSessionExpiryInHours), new string[] { "maximumSessionExpiryInHours" });
             _maximumClientSessionsPerAuthenticationName = DefineProperty<int>(nameof(MaximumClientSessionsPerAuthenticationName), new string[] { "maximumClientSessionsPerAuthenticationName" });
             _routingIdentityInfo = DefineModelProperty<RoutingIdentityInfo>(nameof(RoutingIdentityInfo), new string[] { "routingIdentityInfo" });

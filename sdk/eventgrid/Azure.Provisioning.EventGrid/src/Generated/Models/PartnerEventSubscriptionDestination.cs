@@ -12,6 +12,12 @@ namespace Azure.Provisioning.EventGrid
     {
         private PartnerEventSubscriptionDestinationProperties _properties;
 
+        /// <summary> Creates a new PartnerEventSubscriptionDestination. </summary>
+        public PartnerEventSubscriptionDestination()
+        {
+            EndpointType.Assign(EventGrid.EndpointType.PartnerDestination);
+        }
+
         /// <summary> Gets or sets the Properties. </summary>
         internal PartnerEventSubscriptionDestinationProperties Properties
         {
@@ -25,6 +31,14 @@ namespace Azure.Provisioning.EventGrid
                 Initialize();
                 AssignOrReplace(ref _properties, value);
             }
+        }
+
+        /// <summary> Define all the provisionable properties for PartnerEventSubscriptionDestination. </summary>
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _properties = DefineModelProperty<PartnerEventSubscriptionDestinationProperties>(nameof(Properties), new string[] { "properties" });
+            DefineAdditionalProperties();
         }
 
         /// <summary> Define additional provisionable properties for PartnerEventSubscriptionDestination that are not part of the generated code. </summary>

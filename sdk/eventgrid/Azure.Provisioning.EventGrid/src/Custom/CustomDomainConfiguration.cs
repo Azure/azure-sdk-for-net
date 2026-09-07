@@ -14,6 +14,8 @@ public partial class CustomDomainConfiguration
     private BicepValue<Uri> _customCertificateUri;
 
     /// <summary> Gets or sets the certificate URI. </summary>
+    // The generated property uses string. Preserve the released Uri type on the same certificateUrl
+    // wire path so callers retain URI validation and source compatibility.
     [CodeGenMember("CertificateUri")]
     public BicepValue<Uri> CertificateUri
     {

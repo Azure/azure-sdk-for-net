@@ -15,6 +15,8 @@ public partial class InlineEventProperties
     private BicepValue<Uri> _customDataSchemaUri;
 
     /// <summary> Gets or sets the documentation URI. </summary>
+    // The generated property uses string. Preserve the released Uri type on the same
+    // documentationUrl wire path so callers retain URI validation and source compatibility.
     [CodeGenMember("DocumentationUri")]
     public BicepValue<Uri> DocumentationUri
     {
@@ -31,6 +33,8 @@ public partial class InlineEventProperties
     }
 
     /// <summary> Gets or sets the data schema URI. </summary>
+    // The generated property uses string. Preserve the released Uri type on the same dataSchemaUrl
+    // wire path so callers retain URI validation and source compatibility.
     [CodeGenMember("DataSchemaUri")]
     public BicepValue<Uri> DataSchemaUri
     {

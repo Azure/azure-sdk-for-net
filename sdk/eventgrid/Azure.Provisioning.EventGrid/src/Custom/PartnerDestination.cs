@@ -15,7 +15,9 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// PartnerDestination.
 /// </summary>
-[EditorBrowsable(EditorBrowsableState.Never)] // Removed from Preview
+// The generated resource defaults resourceVersion to 2025-11-15-preview and formats timestamps
+// with "O", which normalizes them to UTC. Preserve the released null-version and offset-retaining
+// serialization behavior for compatibility.
 public partial class PartnerDestination : ProvisionableResource
 {
     /// <summary>

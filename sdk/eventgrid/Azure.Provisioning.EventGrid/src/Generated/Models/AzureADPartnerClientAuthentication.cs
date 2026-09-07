@@ -5,12 +5,21 @@
 
 #nullable disable
 
+using System;
+using Azure.Provisioning;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Microsoft Entra ID Partner Client Authentication. </summary>
     public partial class AzureADPartnerClientAuthentication : PartnerClientAuthentication
     {
         private AzureADPartnerClientAuthenticationProperties _properties;
+
+        /// <summary> Creates a new AzureADPartnerClientAuthentication. </summary>
+        public AzureADPartnerClientAuthentication()
+        {
+            ClientAuthenticationType.Assign(PartnerClientAuthenticationType.AzureAD);
+        }
 
         /// <summary> Gets or sets the Properties. </summary>
         internal AzureADPartnerClientAuthenticationProperties Properties
@@ -25,6 +34,48 @@ namespace Azure.Provisioning.EventGrid
                 Initialize();
                 AssignOrReplace(ref _properties, value);
             }
+        }
+
+        /// <summary> Gets or sets the AzureActiveDirectoryTenantId. </summary>
+        public BicepValue<string> AzureActiveDirectoryTenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureActiveDirectoryTenantId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureADPartnerClientAuthenticationProperties();
+                }
+                Properties.AzureActiveDirectoryTenantId = value;
+            }
+        }
+
+        /// <summary> Gets or sets the AzureActiveDirectoryApplicationIdOrUri. </summary>
+        public BicepValue<Uri> AzureActiveDirectoryApplicationIdOrUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AzureActiveDirectoryApplicationIdOrUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new AzureADPartnerClientAuthenticationProperties();
+                }
+                Properties.AzureActiveDirectoryApplicationIdOrUri = value;
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for AzureADPartnerClientAuthentication. </summary>
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _properties = DefineModelProperty<AzureADPartnerClientAuthenticationProperties>(nameof(Properties), new string[] { "properties" });
+            DefineAdditionalProperties();
         }
 
         /// <summary> Define additional provisionable properties for AzureADPartnerClientAuthentication that are not part of the generated code. </summary>

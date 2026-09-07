@@ -11,6 +11,8 @@ namespace Azure.Provisioning.EventGrid;
 public partial class EventGridNamespace
 {
     /// <summary> Gets or sets the private endpoint connections. </summary>
+    // The generated API exposes deployable EventGridNamespacePrivateEndpointConnection resources.
+    // Preserve the released inline EventGridPrivateEndpointConnectionData collection.
     [CodeGenMember("PrivateEndpointConnections")]
     public BicepList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections
     {

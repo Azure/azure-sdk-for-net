@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
@@ -12,7 +13,44 @@ namespace Azure.Provisioning.EventGrid
     /// <summary> Client authentication settings for namespace resource. </summary>
     public partial class ClientAuthenticationSettings : ProvisionableConstruct
     {
+        private BicepList<AlternativeAuthenticationNameSource> _alternativeAuthenticationNameSources;
+        private CustomJwtAuthenticationSettings _customJwtAuthentication;
         private WebhookAuthenticationSettings _webhookAuthentication;
+
+        /// <summary> Creates a new ClientAuthenticationSettings. </summary>
+        public ClientAuthenticationSettings()
+        {
+        }
+
+        /// <summary> Gets or sets the AlternativeAuthenticationNameSources. </summary>
+        public BicepList<AlternativeAuthenticationNameSource> AlternativeAuthenticationNameSources
+        {
+            get
+            {
+                Initialize();
+                return _alternativeAuthenticationNameSources;
+            }
+            set
+            {
+                Initialize();
+                _alternativeAuthenticationNameSources.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the CustomJwtAuthentication. </summary>
+        public CustomJwtAuthenticationSettings CustomJwtAuthentication
+        {
+            get
+            {
+                Initialize();
+                return _customJwtAuthentication;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _customJwtAuthentication, value);
+            }
+        }
 
         /// <summary> Gets or sets the WebhookAuthentication. </summary>
         public WebhookAuthenticationSettings WebhookAuthentication
@@ -27,6 +65,16 @@ namespace Azure.Provisioning.EventGrid
                 Initialize();
                 AssignOrReplace(ref _webhookAuthentication, value);
             }
+        }
+
+        /// <summary> Define all the provisionable properties for ClientAuthenticationSettings. </summary>
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _alternativeAuthenticationNameSources = DefineListProperty<AlternativeAuthenticationNameSource>(nameof(AlternativeAuthenticationNameSources), new string[] { "alternativeAuthenticationNameSources" });
+            _customJwtAuthentication = DefineModelProperty<CustomJwtAuthenticationSettings>(nameof(CustomJwtAuthentication), new string[] { "customJwtAuthentication" });
+            _webhookAuthentication = DefineModelProperty<WebhookAuthenticationSettings>(nameof(WebhookAuthentication), new string[] { "webhookAuthentication" });
+            DefineAdditionalProperties();
         }
 
         /// <summary> Define additional provisionable properties for ClientAuthenticationSettings that are not part of the generated code. </summary>

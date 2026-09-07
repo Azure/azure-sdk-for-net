@@ -12,6 +12,36 @@ namespace Azure.Provisioning.EventGrid
     /// <summary> Information about the certificate that is used for token validation. </summary>
     public partial class IssuerCertificateInfo : ProvisionableConstruct
     {
+        private CustomJwtAuthenticationManagedIdentity _identity;
+
+        /// <summary> Creates a new IssuerCertificateInfo. </summary>
+        public IssuerCertificateInfo()
+        {
+        }
+
+        /// <summary> Gets or sets the Identity. </summary>
+        public CustomJwtAuthenticationManagedIdentity Identity
+        {
+            get
+            {
+                Initialize();
+                return _identity;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _identity, value);
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for IssuerCertificateInfo. </summary>
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _identity = DefineModelProperty<CustomJwtAuthenticationManagedIdentity>(nameof(Identity), new string[] { "identity" });
+            DefineAdditionalProperties();
+        }
+
         /// <summary> Define additional provisionable properties for IssuerCertificateInfo that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }

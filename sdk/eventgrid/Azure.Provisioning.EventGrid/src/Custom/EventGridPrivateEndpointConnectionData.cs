@@ -16,6 +16,8 @@ namespace Azure.Provisioning.EventGrid;
 /// <summary>
 /// A class representing the EventGridPrivateEndpointConnection data model.
 /// </summary>
+// TypeSpec models private endpoint connections as deployable child resources. Preserve the
+// released inline data model used by resource PrivateEndpointConnections collections.
 public partial class EventGridPrivateEndpointConnectionData : ProvisionableConstruct
 {
     /// <summary>

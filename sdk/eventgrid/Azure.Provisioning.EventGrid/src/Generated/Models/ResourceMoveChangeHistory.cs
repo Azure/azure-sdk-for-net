@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
@@ -12,6 +13,53 @@ namespace Azure.Provisioning.EventGrid
     /// <summary> The change history of the resource move. </summary>
     public partial class ResourceMoveChangeHistory : ProvisionableConstruct
     {
+        private BicepValue<string> _azureSubscriptionId;
+        private BicepValue<string> _resourceGroupName;
+
+        /// <summary> Creates a new ResourceMoveChangeHistory. </summary>
+        public ResourceMoveChangeHistory()
+        {
+        }
+
+        /// <summary> Gets or sets the AzureSubscriptionId. </summary>
+        public BicepValue<string> AzureSubscriptionId
+        {
+            get
+            {
+                Initialize();
+                return _azureSubscriptionId;
+            }
+            set
+            {
+                Initialize();
+                _azureSubscriptionId.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the ResourceGroupName. </summary>
+        public BicepValue<string> ResourceGroupName
+        {
+            get
+            {
+                Initialize();
+                return _resourceGroupName;
+            }
+            set
+            {
+                Initialize();
+                _resourceGroupName.Assign(value);
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for ResourceMoveChangeHistory. </summary>
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _azureSubscriptionId = DefineProperty<string>(nameof(AzureSubscriptionId), new string[] { "azureSubscriptionId" });
+            _resourceGroupName = DefineProperty<string>(nameof(ResourceGroupName), new string[] { "resourceGroupName" });
+            DefineAdditionalProperties();
+        }
+
         /// <summary> Define additional provisionable properties for ResourceMoveChangeHistory that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }

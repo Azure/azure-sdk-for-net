@@ -129,6 +129,23 @@ namespace Azure.Provisioning.EventGrid
             }
         }
 
+        /// <summary> Gets or sets the PartnerDestinationInfo. </summary>
+        public PartnerDestinationInfo PartnerDestinationInfo
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PartnerDestinationInfo;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ChannelProperties();
+                }
+                Properties.PartnerDestinationInfo = value;
+            }
+        }
+
         /// <summary> Gets or sets the MessageForActivation. </summary>
         public BicepValue<string> MessageForActivation
         {

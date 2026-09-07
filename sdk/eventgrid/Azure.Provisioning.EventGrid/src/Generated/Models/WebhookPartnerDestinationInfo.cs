@@ -5,12 +5,21 @@
 
 #nullable disable
 
+using System;
+using Azure.Provisioning;
+
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Information about the WebHook of the partner destination. </summary>
     public partial class WebhookPartnerDestinationInfo : PartnerDestinationInfo
     {
         private WebhookPartnerDestinationProperties _properties;
+
+        /// <summary> Creates a new WebhookPartnerDestinationInfo. </summary>
+        public WebhookPartnerDestinationInfo()
+        {
+            EndpointType.Assign(PartnerEndpointType.WebHook);
+        }
 
         /// <summary> Gets or sets the Properties. </summary>
         internal WebhookPartnerDestinationProperties Properties
@@ -25,6 +34,65 @@ namespace Azure.Provisioning.EventGrid
                 Initialize();
                 AssignOrReplace(ref _properties, value);
             }
+        }
+
+        /// <summary> Gets or sets the EndpointUri. </summary>
+        public BicepValue<Uri> EndpointUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndpointUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebhookPartnerDestinationProperties();
+                }
+                Properties.EndpointUri = value;
+            }
+        }
+
+        /// <summary> Gets or sets the EndpointBaseUri. </summary>
+        public BicepValue<Uri> EndpointBaseUri
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EndpointBaseUri;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebhookPartnerDestinationProperties();
+                }
+                Properties.EndpointBaseUri = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ClientAuthentication. </summary>
+        public PartnerClientAuthentication ClientAuthentication
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ClientAuthentication;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new WebhookPartnerDestinationProperties();
+                }
+                Properties.ClientAuthentication = value;
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for WebhookPartnerDestinationInfo. </summary>
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            _properties = DefineModelProperty<WebhookPartnerDestinationProperties>(nameof(Properties), new string[] { "properties" });
+            DefineAdditionalProperties();
         }
 
         /// <summary> Define additional provisionable properties for WebhookPartnerDestinationInfo that are not part of the generated code. </summary>

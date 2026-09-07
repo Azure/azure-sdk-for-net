@@ -28,6 +28,8 @@ namespace Azure.Provisioning.EventGrid
         private TopicProperties _properties;
         private ResourceSku _sku;
         private ManagedServiceIdentity _identity;
+        private BicepValue<ResourceKind> _kind;
+        private ExtendedAzureLocation _extendedLocation;
 
         /// <summary> Creates a new EventGridTopic. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -143,6 +145,36 @@ namespace Azure.Provisioning.EventGrid
             {
                 Initialize();
                 AssignOrReplace(ref _identity, value);
+            }
+        }
+
+        /// <summary> Gets or sets the Kind. </summary>
+        public BicepValue<ResourceKind> Kind
+        {
+            get
+            {
+                Initialize();
+                return _kind;
+            }
+            set
+            {
+                Initialize();
+                _kind.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the ExtendedLocation. </summary>
+        public ExtendedAzureLocation ExtendedLocation
+        {
+            get
+            {
+                Initialize();
+                return _extendedLocation;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _extendedLocation, value);
             }
         }
 
@@ -355,6 +387,23 @@ namespace Azure.Provisioning.EventGrid
             }
         }
 
+        /// <summary> Gets or sets the Name. </summary>
+        public BicepValue<EventGridSku> SkuName
+        {
+            get
+            {
+                return Sku is null ? default : Sku.Name;
+            }
+            set
+            {
+                if (Sku is null)
+                {
+                    Sku = new ResourceSku();
+                }
+                Sku.Name = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for EventGridTopic. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -367,6 +416,8 @@ namespace Azure.Provisioning.EventGrid
             _properties = DefineModelProperty<TopicProperties>(nameof(Properties), new string[] { "properties" });
             _sku = DefineModelProperty<ResourceSku>(nameof(Sku), new string[] { "sku" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
+            _kind = DefineProperty<ResourceKind>(nameof(Kind), new string[] { "kind" });
+            _extendedLocation = DefineModelProperty<ExtendedAzureLocation>(nameof(ExtendedLocation), new string[] { "extendedLocation" });
             DefineAdditionalProperties();
         }
 

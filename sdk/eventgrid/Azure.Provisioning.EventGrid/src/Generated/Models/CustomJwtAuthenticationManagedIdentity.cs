@@ -12,6 +12,18 @@ namespace Azure.Provisioning.EventGrid
     /// <summary> The identity information for retrieving the certificate for custom JWT authentication. </summary>
     public partial class CustomJwtAuthenticationManagedIdentity : ProvisionableConstruct
     {
+        /// <summary> Creates a new CustomJwtAuthenticationManagedIdentity. </summary>
+        public CustomJwtAuthenticationManagedIdentity()
+        {
+        }
+
+        /// <summary> Define all the provisionable properties for CustomJwtAuthenticationManagedIdentity. </summary>
+        protected override void DefineProvisionableProperties()
+        {
+            base.DefineProvisionableProperties();
+            DefineAdditionalProperties();
+        }
+
         /// <summary> Define additional provisionable properties for CustomJwtAuthenticationManagedIdentity that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }

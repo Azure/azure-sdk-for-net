@@ -14,6 +14,8 @@ public partial class PartnerTopicInfo
     private BicepValue<Guid> _customAzureSubscriptionId;
 
     /// <summary> Gets or sets the Azure subscription identifier. </summary>
+    // The generated property uses string. Preserve the released Guid type on the same
+    // azureSubscriptionId wire path so callers retain GUID validation and source compatibility.
     [CodeGenMember("AzureSubscriptionId")]
     public BicepValue<Guid> AzureSubscriptionId
     {
