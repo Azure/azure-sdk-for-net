@@ -31,11 +31,9 @@ namespace Azure.Generator.Management.Utilities
             }
             while (baseTypes.TryPop(out var item))
             {
-                result.AddRange(item.Properties);
-                result.AddRange(item.CustomCodeView?.Properties ?? []);
+                result.AddRange(item.CanonicalView.Properties);
             }
-            result.AddRange(propertyModelProvider.Properties);
-            result.AddRange(propertyModelProvider.CustomCodeView?.Properties ?? []);
+            result.AddRange(propertyModelProvider.CanonicalView.Properties);
             return result;
         }
 
