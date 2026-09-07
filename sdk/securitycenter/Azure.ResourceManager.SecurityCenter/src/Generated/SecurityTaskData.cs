@@ -70,14 +70,5 @@ namespace Azure.ResourceManager.SecurityCenter
                 return Properties is null ? default : Properties.SubState;
             }
         }
-
-        /// <summary> Name of the task type. </summary>
-        public string SecurityTaskName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SecurityTaskName;
-            }
-        }
     }
 }
