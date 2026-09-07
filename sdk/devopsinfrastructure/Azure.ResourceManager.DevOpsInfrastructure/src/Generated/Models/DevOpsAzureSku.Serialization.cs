@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             {
                 writer.WritePropertyName("vmSizes"u8);
                 writer.WriteStartArray();
-                foreach (VmSize item in VmSizes)
+                foreach (DevOpsVmSize item in VmSizes)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             string name = default;
             string windowsNvmeDrive = default;
             string linuxNvmePath = default;
-            IList<VmSize> vmSizes = default;
+            IList<DevOpsVmSize> vmSizes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -171,10 +171,10 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     {
                         continue;
                     }
-                    List<VmSize> array = new List<VmSize>();
+                    List<DevOpsVmSize> array = new List<DevOpsVmSize>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(VmSize.DeserializeVmSize(item, options));
+                        array.Add(DevOpsVmSize.DeserializeDevOpsVmSize(item, options));
                     }
                     vmSizes = array;
                     continue;
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DevOpsAzureSku(name, windowsNvmeDrive, linuxNvmePath, vmSizes ?? new ChangeTrackingList<VmSize>(), additionalBinaryDataProperties);
+            return new DevOpsAzureSku(name, windowsNvmeDrive, linuxNvmePath, vmSizes ?? new ChangeTrackingList<DevOpsVmSize>(), additionalBinaryDataProperties);
         }
     }
 }

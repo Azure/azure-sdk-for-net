@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
-            VmSizes = new ChangeTrackingList<VmSize>();
+            VmSizes = new ChangeTrackingList<DevOpsVmSize>();
         }
 
         /// <summary> Initializes a new instance of <see cref="DevOpsAzureSku"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="linuxNvmePath"> The mount path for the NVMe striped volume on Linux (e.g., '/mnt/azure_nvme_temp'). Defaults to '/mnt/azure_nvme_temp' when not specified. </param>
         /// <param name="vmSizes"> Specifies VM sizes for instance-mix allocation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DevOpsAzureSku(string name, string windowsNvmeDrive, string linuxNvmePath, IList<VmSize> vmSizes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevOpsAzureSku(string name, string windowsNvmeDrive, string linuxNvmePath, IList<DevOpsVmSize> vmSizes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             WindowsNvmeDrive = windowsNvmeDrive;
@@ -53,6 +53,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         public string LinuxNvmePath { get; set; }
 
         /// <summary> Specifies VM sizes for instance-mix allocation. </summary>
-        public IList<VmSize> VmSizes { get; }
+        public IList<DevOpsVmSize> VmSizes { get; }
     }
 }

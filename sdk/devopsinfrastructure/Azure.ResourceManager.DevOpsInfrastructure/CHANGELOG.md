@@ -4,6 +4,11 @@
 
 ### Features Added
 
+- Added support for configuring NVMe storage and instance-mix VM sizes through `DevOpsAzureSku`.
+- Added provisioning script settings to `DevOpsPoolVmImage`.
+- Added description settings to `DevOpsAzureOrganizationProfile`.
+- Added `NVMeDisk` support to `DevOpsEphemeralType`.
+
 ### Breaking Changes
 
 ### Bugs Fixed

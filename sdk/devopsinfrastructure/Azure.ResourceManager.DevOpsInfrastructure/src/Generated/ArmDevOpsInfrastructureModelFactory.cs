@@ -262,19 +262,19 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
         /// <param name="linuxNvmePath"> The mount path for the NVMe striped volume on Linux (e.g., '/mnt/azure_nvme_temp'). Defaults to '/mnt/azure_nvme_temp' when not specified. </param>
         /// <param name="vmSizes"> Specifies VM sizes for instance-mix allocation. </param>
         /// <returns> A new <see cref="Models.DevOpsAzureSku"/> instance for mocking. </returns>
-        public static DevOpsAzureSku DevOpsAzureSku(string name = default, string windowsNvmeDrive = default, string linuxNvmePath = default, IEnumerable<VmSize> vmSizes = default)
+        public static DevOpsAzureSku DevOpsAzureSku(string name = default, string windowsNvmeDrive = default, string linuxNvmePath = default, IEnumerable<DevOpsVmSize> vmSizes = default)
         {
-            vmSizes ??= new ChangeTrackingList<VmSize>();
+            vmSizes ??= new ChangeTrackingList<DevOpsVmSize>();
 
-            return new DevOpsAzureSku(name, windowsNvmeDrive, linuxNvmePath, (vmSizes ?? new ChangeTrackingList<VmSize>()).ToList(), default);
+            return new DevOpsAzureSku(name, windowsNvmeDrive, linuxNvmePath, (vmSizes ?? new ChangeTrackingList<DevOpsVmSize>()).ToList(), default);
         }
 
         /// <summary> Specifies the VM Size. </summary>
         /// <param name="name"> Specifies the name of the VM Size. </param>
-        /// <returns> A new <see cref="Models.VmSize"/> instance for mocking. </returns>
-        public static VmSize VmSize(string name = default)
+        /// <returns> A new <see cref="Models.DevOpsVmSize"/> instance for mocking. </returns>
+        public static DevOpsVmSize DevOpsVmSize(string name = default)
         {
-            return new VmSize(name, default);
+            return new DevOpsVmSize(name, default);
         }
 
         /// <summary> The VM image of the machines in the pool. </summary>

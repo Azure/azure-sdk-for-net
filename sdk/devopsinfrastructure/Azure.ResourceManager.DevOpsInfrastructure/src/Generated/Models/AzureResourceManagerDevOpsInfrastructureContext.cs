@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     [ModelReaderWriterBuildable(typeof(DevOpsStateful))]
     [ModelReaderWriterBuildable(typeof(DevOpsStatelessAgentProfile))]
     [ModelReaderWriterBuildable(typeof(DevOpsStorageProfile))]
+    [ModelReaderWriterBuildable(typeof(DevOpsVmSize))]
     [ModelReaderWriterBuildable(typeof(DevOpsVmssFabricProfile))]
     [ModelReaderWriterBuildable(typeof(ImageVersionListResult))]
     [ModelReaderWriterBuildable(typeof(ImageVersionProperties))]
@@ -73,7 +74,6 @@ namespace Azure.ResourceManager.DevOpsInfrastructure
     [ModelReaderWriterBuildable(typeof(UnknownDevOpsPoolAgentProfile))]
     [ModelReaderWriterBuildable(typeof(UnknownResourcePredictionsProfile))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
-    [ModelReaderWriterBuildable(typeof(VmSize))]
     public partial class AzureResourceManagerDevOpsInfrastructureContext : ModelReaderWriterContext
     {
     }

@@ -11,20 +11,20 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.DevOpsInfrastructure.Models
 {
     /// <summary> Specifies the VM Size. </summary>
-    public partial class VmSize
+    public partial class DevOpsVmSize
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="VmSize"/>. </summary>
-        public VmSize()
+        /// <summary> Initializes a new instance of <see cref="DevOpsVmSize"/>. </summary>
+        public DevOpsVmSize()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="VmSize"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="DevOpsVmSize"/>. </summary>
         /// <param name="name"> Specifies the name of the VM Size. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VmSize(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DevOpsVmSize(string name, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
