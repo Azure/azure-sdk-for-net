@@ -4,12 +4,22 @@
 #nullable disable
 
 using Azure.Core;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.Network.Mocking
 {
     /// <summary> Compatibility declaration for the MockableNetworkResourceGroupResource type. </summary>
+    [CodeGenSuppress("PublicIPAddressesOperationGroupRestClient")]
     public partial class MockableNetworkResourceGroupResource
     {
+        private PublicIPAddressesOperationGroup PublicIPAddressesOperationGroupRestClient => _publicIPAddressesOperationGroupRestClient ??= new PublicIPAddressesOperationGroup(PublicIPAddressesOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, GetVirtualMachineScaleSetPublicIPAddressApiVersion());
+
+        private string GetVirtualMachineScaleSetPublicIPAddressApiVersion()
+        {
+            TryGetApiVersion(new ResourceType("Microsoft.Compute/virtualMachineScaleSets/publicIPAddresses"), out string apiVersion);
+            return apiVersion ?? "2018-10-01";
+        }
+
         /// <summary> Invokes the CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService compatibility operation. </summary>
         public virtual global::Azure.ResourceManager.ArmOperation<global::Azure.ResourceManager.Network.Models.PrivateLinkServiceVisibility> CheckPrivateLinkServiceVisibilityByResourceGroupPrivateLinkService(global::Azure.WaitUntil waitUntil, global::Azure.Core.AzureLocation location, global::Azure.ResourceManager.Network.Models.CheckPrivateLinkServiceVisibilityRequest checkPrivateLinkServiceVisibilityRequest, global::System.Threading.CancellationToken cancellationToken)
             => CheckPrivateLinkServiceVisibilityByResourceGroup(waitUntil, location, checkPrivateLinkServiceVisibilityRequest, cancellationToken);
