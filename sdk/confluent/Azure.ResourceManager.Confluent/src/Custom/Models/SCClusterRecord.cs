@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary>
     /// Backward-compatible shim for the SCClusterRecord type that existed in v1.2.1.
-    /// In the new SDK, cluster records are modeled as ARM resources (see <see cref="ConfluentClusterData"/>).
+    /// In the new SDK, cluster records are modeled as ARM resources (see <see cref="SCClusterRecordData"/>).
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SCClusterRecord : IJsonModel<SCClusterRecord>, IPersistableModel<SCClusterRecord>
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <summary> Specification of the cluster status. </summary>
         public ClusterStatusEntity Status { get; }
 
-        internal static SCClusterRecord FromData(ConfluentClusterData data)
+        internal static SCClusterRecord FromData(SCClusterRecordData data)
         {
             if (data == null)
             {
@@ -68,12 +68,12 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <summary> Serialization is not supported for this backward-compatible type. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            throw new NotSupportedException("SCClusterRecord serialization is not supported. Use ConfluentClusterData instead.");
+            throw new NotSupportedException("SCClusterRecord serialization is not supported. Use SCClusterRecordData instead.");
         }
 
         SCClusterRecord IJsonModel<SCClusterRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            throw new NotSupportedException("SCClusterRecord deserialization is not supported. Use ConfluentClusterData instead.");
+            throw new NotSupportedException("SCClusterRecord deserialization is not supported. Use SCClusterRecordData instead.");
         }
 
         void IJsonModel<SCClusterRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -83,14 +83,14 @@ namespace Azure.ResourceManager.Confluent.Models
 
         SCClusterRecord IPersistableModel<SCClusterRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            throw new NotSupportedException("SCClusterRecord deserialization is not supported. Use ConfluentClusterData instead.");
+            throw new NotSupportedException("SCClusterRecord deserialization is not supported. Use SCClusterRecordData instead.");
         }
 
         string IPersistableModel<SCClusterRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         BinaryData IPersistableModel<SCClusterRecord>.Write(ModelReaderWriterOptions options)
         {
-            throw new NotSupportedException("SCClusterRecord serialization is not supported. Use ConfluentClusterData instead.");
+            throw new NotSupportedException("SCClusterRecord serialization is not supported. Use SCClusterRecordData instead.");
         }
     }
 }

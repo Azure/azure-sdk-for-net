@@ -615,10 +615,10 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="kind"> Type of environment. </param>
         /// <param name="metadata"> Metadata of the record. </param>
         /// <param name="streamGovernanceConfigPackage"> Stream governance configuration. </param>
-        /// <returns> A new <see cref="Confluent.ConfluentEnvironmentData"/> instance for mocking. </returns>
-        public static ConfluentEnvironmentData ConfluentEnvironmentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, SCMetadataEntity metadata = default, ConfluentPackage? streamGovernanceConfigPackage = default)
+        /// <returns> A new <see cref="Confluent.SCEnvironmentRecordData"/> instance for mocking. </returns>
+        public static SCEnvironmentRecordData SCEnvironmentRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, SCMetadataEntity metadata = default, ConfluentPackage? streamGovernanceConfigPackage = default)
         {
-            return new ConfluentEnvironmentData(
+            return new SCEnvironmentRecordData(
                 id,
                 name,
                 resourceType,
@@ -677,10 +677,10 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="metadata"> Metadata of the record. </param>
         /// <param name="spec"> Specification of the cluster. </param>
         /// <param name="status"> Specification of the cluster status. </param>
-        /// <returns> A new <see cref="Confluent.ConfluentClusterData"/> instance for mocking. </returns>
-        public static ConfluentClusterData ConfluentClusterData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, SCMetadataEntity metadata = default, SCClusterSpecEntity spec = default, ClusterStatusEntity status = default)
+        /// <returns> A new <see cref="Confluent.SCClusterRecordData"/> instance for mocking. </returns>
+        public static SCClusterRecordData SCClusterRecordData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string kind = default, SCMetadataEntity metadata = default, SCClusterSpecEntity spec = default, ClusterStatusEntity status = default)
         {
-            return new ConfluentClusterData(
+            return new SCClusterRecordData(
                 id,
                 name,
                 resourceType,

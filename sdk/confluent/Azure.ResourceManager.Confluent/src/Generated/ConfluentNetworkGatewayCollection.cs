@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Confluent
 {
     /// <summary>
     /// A class representing a collection of <see cref="ConfluentNetworkGatewayResource"/> and their operations.
-    /// Each <see cref="ConfluentNetworkGatewayResource"/> in the collection will belong to the same instance of <see cref="ConfluentEnvironmentResource"/>.
-    /// To get a <see cref="ConfluentNetworkGatewayCollection"/> instance call the GetConfluentNetworkGateways method from an instance of <see cref="ConfluentEnvironmentResource"/>.
+    /// Each <see cref="ConfluentNetworkGatewayResource"/> in the collection will belong to the same instance of <see cref="SCEnvironmentRecordResource"/>.
+    /// To get a <see cref="ConfluentNetworkGatewayCollection"/> instance call the GetConfluentNetworkGateways method from an instance of <see cref="SCEnvironmentRecordResource"/>.
     /// </summary>
     public partial class ConfluentNetworkGatewayCollection : ArmCollection, IEnumerable<ConfluentNetworkGatewayResource>, IAsyncEnumerable<ConfluentNetworkGatewayResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Confluent
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ConfluentEnvironmentResource.ResourceType)
+            if (id.ResourceType != SCEnvironmentRecordResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ConfluentEnvironmentResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SCEnvironmentRecordResource.ResourceType), nameof(id));
             }
         }
 

@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.Confluent.Models
 {
     /// <summary>
     /// Backward-compatible shim for the SCEnvironmentRecord type that existed in v1.2.1.
-    /// In the new SDK, environment records are modeled as ARM resources (see <see cref="ConfluentEnvironmentData"/>).
+    /// In the new SDK, environment records are modeled as ARM resources (see <see cref="SCEnvironmentRecordData"/>).
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public partial class SCEnvironmentRecord : IJsonModel<SCEnvironmentRecord>, IPersistableModel<SCEnvironmentRecord>
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <summary> Display name of the environment. </summary>
         public string Name { get; }
 
-        internal static SCEnvironmentRecord FromData(ConfluentEnvironmentData data)
+        internal static SCEnvironmentRecord FromData(SCEnvironmentRecordData data)
         {
             if (data == null)
             {
@@ -57,12 +57,12 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <summary> Serialization is not supported for this backward-compatible type. </summary>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            throw new NotSupportedException("SCEnvironmentRecord serialization is not supported. Use ConfluentEnvironmentData instead.");
+            throw new NotSupportedException("SCEnvironmentRecord serialization is not supported. Use SCEnvironmentRecordData instead.");
         }
 
         SCEnvironmentRecord IJsonModel<SCEnvironmentRecord>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            throw new NotSupportedException("SCEnvironmentRecord deserialization is not supported. Use ConfluentEnvironmentData instead.");
+            throw new NotSupportedException("SCEnvironmentRecord deserialization is not supported. Use SCEnvironmentRecordData instead.");
         }
 
         void IJsonModel<SCEnvironmentRecord>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.Confluent.Models
 
         SCEnvironmentRecord IPersistableModel<SCEnvironmentRecord>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            throw new NotSupportedException("SCEnvironmentRecord deserialization is not supported. Use ConfluentEnvironmentData instead.");
+            throw new NotSupportedException("SCEnvironmentRecord deserialization is not supported. Use SCEnvironmentRecordData instead.");
         }
 
         string IPersistableModel<SCEnvironmentRecord>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         BinaryData IPersistableModel<SCEnvironmentRecord>.Write(ModelReaderWriterOptions options)
         {
-            throw new NotSupportedException("SCEnvironmentRecord serialization is not supported. Use ConfluentEnvironmentData instead.");
+            throw new NotSupportedException("SCEnvironmentRecord serialization is not supported. Use SCEnvironmentRecordData instead.");
         }
     }
 }

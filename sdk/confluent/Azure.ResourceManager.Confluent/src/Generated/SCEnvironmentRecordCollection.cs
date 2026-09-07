@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Confluent
 {
     /// <summary>
-    /// A class representing a collection of <see cref="ConfluentEnvironmentResource"/> and their operations.
-    /// Each <see cref="ConfluentEnvironmentResource"/> in the collection will belong to the same instance of <see cref="ConfluentOrganizationResource"/>.
-    /// To get a <see cref="ConfluentEnvironmentCollection"/> instance call the GetConfluentEnvironments method from an instance of <see cref="ConfluentOrganizationResource"/>.
+    /// A class representing a collection of <see cref="SCEnvironmentRecordResource"/> and their operations.
+    /// Each <see cref="SCEnvironmentRecordResource"/> in the collection will belong to the same instance of <see cref="ConfluentOrganizationResource"/>.
+    /// To get a <see cref="SCEnvironmentRecordCollection"/> instance call the GetSCEnvironmentRecords method from an instance of <see cref="ConfluentOrganizationResource"/>.
     /// </summary>
-    public partial class ConfluentEnvironmentCollection : ArmCollection, IEnumerable<ConfluentEnvironmentResource>, IAsyncEnumerable<ConfluentEnvironmentResource>
+    public partial class SCEnvironmentRecordCollection : ArmCollection, IEnumerable<SCEnvironmentRecordResource>, IAsyncEnumerable<SCEnvironmentRecordResource>
     {
         private readonly ClientDiagnostics _scEnvironmentRecordsClientDiagnostics;
         private readonly SCEnvironmentRecords _scEnvironmentRecordsRestClient;
 
-        /// <summary> Initializes a new instance of ConfluentEnvironmentCollection for mocking. </summary>
-        protected ConfluentEnvironmentCollection()
+        /// <summary> Initializes a new instance of SCEnvironmentRecordCollection for mocking. </summary>
+        protected SCEnvironmentRecordCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ConfluentEnvironmentCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="SCEnvironmentRecordCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ConfluentEnvironmentCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal SCEnvironmentRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ConfluentEnvironmentResource.ResourceType, out string confluentEnvironmentApiVersion);
-            _scEnvironmentRecordsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ConfluentEnvironmentResource.ResourceType.Namespace, Diagnostics);
-            _scEnvironmentRecordsRestClient = new SCEnvironmentRecords(_scEnvironmentRecordsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, confluentEnvironmentApiVersion ?? "2026-06-02-preview");
+            TryGetApiVersion(SCEnvironmentRecordResource.ResourceType, out string scEnvironmentRecordApiVersion);
+            _scEnvironmentRecordsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", SCEnvironmentRecordResource.ResourceType.Namespace, Diagnostics);
+            _scEnvironmentRecordsRestClient = new SCEnvironmentRecords(_scEnvironmentRecordsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scEnvironmentRecordApiVersion ?? "2026-06-02-preview");
             ValidateResourceId(id);
         }
 
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<ConfluentEnvironmentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string environmentId, ConfluentEnvironmentData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<SCEnvironmentRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string environmentId, SCEnvironmentRecordData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
-            using DiagnosticScope scope = _scEnvironmentRecordsClientDiagnostics.CreateScope("ConfluentEnvironmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _scEnvironmentRecordsClientDiagnostics.CreateScope("SCEnvironmentRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scEnvironmentRecordsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, ConfluentEnvironmentData.ToRequestContent(data), context);
+                HttpMessage message = _scEnvironmentRecordsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, SCEnvironmentRecordData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ConfluentEnvironmentData> response = Response.FromValue(ConfluentEnvironmentData.FromResponse(result), result);
+                Response<SCEnvironmentRecordData> response = Response.FromValue(SCEnvironmentRecordData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ConfluentArmOperation<ConfluentEnvironmentResource> operation = new ConfluentArmOperation<ConfluentEnvironmentResource>(Response.FromValue(new ConfluentEnvironmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ConfluentArmOperation<SCEnvironmentRecordResource> operation = new ConfluentArmOperation<SCEnvironmentRecordResource>(Response.FromValue(new SCEnvironmentRecordResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<ConfluentEnvironmentResource> CreateOrUpdate(WaitUntil waitUntil, string environmentId, ConfluentEnvironmentData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<SCEnvironmentRecordResource> CreateOrUpdate(WaitUntil waitUntil, string environmentId, SCEnvironmentRecordData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
-            using DiagnosticScope scope = _scEnvironmentRecordsClientDiagnostics.CreateScope("ConfluentEnvironmentCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _scEnvironmentRecordsClientDiagnostics.CreateScope("SCEnvironmentRecordCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scEnvironmentRecordsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, ConfluentEnvironmentData.ToRequestContent(data), context);
+                HttpMessage message = _scEnvironmentRecordsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, SCEnvironmentRecordData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ConfluentEnvironmentData> response = Response.FromValue(ConfluentEnvironmentData.FromResponse(result), result);
+                Response<SCEnvironmentRecordData> response = Response.FromValue(SCEnvironmentRecordData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ConfluentArmOperation<ConfluentEnvironmentResource> operation = new ConfluentArmOperation<ConfluentEnvironmentResource>(Response.FromValue(new ConfluentEnvironmentResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ConfluentArmOperation<SCEnvironmentRecordResource> operation = new ConfluentArmOperation<SCEnvironmentRecordResource>(Response.FromValue(new SCEnvironmentRecordResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -183,11 +183,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<ConfluentEnvironmentResource>> GetAsync(string environmentId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SCEnvironmentRecordResource>> GetAsync(string environmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
-            using DiagnosticScope scope = _scEnvironmentRecordsClientDiagnostics.CreateScope("ConfluentEnvironmentCollection.Get");
+            using DiagnosticScope scope = _scEnvironmentRecordsClientDiagnostics.CreateScope("SCEnvironmentRecordCollection.Get");
             scope.Start();
             try
             {
@@ -197,12 +197,12 @@ namespace Azure.ResourceManager.Confluent
                 };
                 HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ConfluentEnvironmentData> response = Response.FromValue(ConfluentEnvironmentData.FromResponse(result), result);
+                Response<SCEnvironmentRecordData> response = Response.FromValue(SCEnvironmentRecordData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConfluentEnvironmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SCEnvironmentRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,11 +232,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<ConfluentEnvironmentResource> Get(string environmentId, CancellationToken cancellationToken = default)
+        public virtual Response<SCEnvironmentRecordResource> Get(string environmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
-            using DiagnosticScope scope = _scEnvironmentRecordsClientDiagnostics.CreateScope("ConfluentEnvironmentCollection.Get");
+            using DiagnosticScope scope = _scEnvironmentRecordsClientDiagnostics.CreateScope("SCEnvironmentRecordCollection.Get");
             scope.Start();
             try
             {
@@ -246,12 +246,12 @@ namespace Azure.ResourceManager.Confluent
                 };
                 HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ConfluentEnvironmentData> response = Response.FromValue(ConfluentEnvironmentData.FromResponse(result), result);
+                Response<SCEnvironmentRecordData> response = Response.FromValue(SCEnvironmentRecordData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConfluentEnvironmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SCEnvironmentRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -280,14 +280,14 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="pageSize"> Pagination size. </param>
         /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfluentEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<ConfluentEnvironmentResource> GetAllAsync(int? pageSize = default, string pageToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SCEnvironmentRecordResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SCEnvironmentRecordResource> GetAllAsync(int? pageSize = default, string pageToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<ConfluentEnvironmentData, ConfluentEnvironmentResource>(new SCEnvironmentRecordsGetAccessEnvironmentsAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<SCEnvironmentRecordData, SCEnvironmentRecordResource>(new SCEnvironmentRecordsGetAccessEnvironmentsAsyncCollectionResultOfT(
                 _scEnvironmentRecordsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Confluent
                 pageSize,
                 pageToken,
                 context,
-                "ConfluentEnvironmentCollection.GetAll"), data => new ConfluentEnvironmentResource(Client, data));
+                "SCEnvironmentRecordCollection.GetAll"), data => new SCEnvironmentRecordResource(Client, data));
         }
 
         /// <summary>
@@ -318,14 +318,14 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="pageSize"> Pagination size. </param>
         /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="ConfluentEnvironmentResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<ConfluentEnvironmentResource> GetAll(int? pageSize = default, string pageToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="SCEnvironmentRecordResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SCEnvironmentRecordResource> GetAll(int? pageSize = default, string pageToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<ConfluentEnvironmentData, ConfluentEnvironmentResource>(new SCEnvironmentRecordsGetAccessEnvironmentsCollectionResultOfT(
+            return new PageableWrapper<SCEnvironmentRecordData, SCEnvironmentRecordResource>(new SCEnvironmentRecordsGetAccessEnvironmentsCollectionResultOfT(
                 _scEnvironmentRecordsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.Confluent
                 pageSize,
                 pageToken,
                 context,
-                "ConfluentEnvironmentCollection.GetAll"), data => new ConfluentEnvironmentResource(Client, data));
+                "SCEnvironmentRecordCollection.GetAll"), data => new SCEnvironmentRecordResource(Client, data));
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.Confluent
         {
             Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
-            using DiagnosticScope scope = _scEnvironmentRecordsClientDiagnostics.CreateScope("ConfluentEnvironmentCollection.Exists");
+            using DiagnosticScope scope = _scEnvironmentRecordsClientDiagnostics.CreateScope("SCEnvironmentRecordCollection.Exists");
             scope.Start();
             try
             {
@@ -372,14 +372,14 @@ namespace Azure.ResourceManager.Confluent
                 HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ConfluentEnvironmentData> response = default;
+                Response<SCEnvironmentRecordData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ConfluentEnvironmentData.FromResponse(result), result);
+                        response = Response.FromValue(SCEnvironmentRecordData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ConfluentEnvironmentData)null, result);
+                        response = Response.FromValue((SCEnvironmentRecordData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.Confluent
         {
             Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
-            using DiagnosticScope scope = _scEnvironmentRecordsClientDiagnostics.CreateScope("ConfluentEnvironmentCollection.Exists");
+            using DiagnosticScope scope = _scEnvironmentRecordsClientDiagnostics.CreateScope("SCEnvironmentRecordCollection.Exists");
             scope.Start();
             try
             {
@@ -429,14 +429,14 @@ namespace Azure.ResourceManager.Confluent
                 HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ConfluentEnvironmentData> response = default;
+                Response<SCEnvironmentRecordData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ConfluentEnvironmentData.FromResponse(result), result);
+                        response = Response.FromValue(SCEnvironmentRecordData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ConfluentEnvironmentData)null, result);
+                        response = Response.FromValue((SCEnvironmentRecordData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -471,11 +471,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<ConfluentEnvironmentResource>> GetIfExistsAsync(string environmentId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<SCEnvironmentRecordResource>> GetIfExistsAsync(string environmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
-            using DiagnosticScope scope = _scEnvironmentRecordsClientDiagnostics.CreateScope("ConfluentEnvironmentCollection.GetIfExists");
+            using DiagnosticScope scope = _scEnvironmentRecordsClientDiagnostics.CreateScope("SCEnvironmentRecordCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -486,23 +486,23 @@ namespace Azure.ResourceManager.Confluent
                 HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<ConfluentEnvironmentData> response = default;
+                Response<SCEnvironmentRecordData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ConfluentEnvironmentData.FromResponse(result), result);
+                        response = Response.FromValue(SCEnvironmentRecordData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ConfluentEnvironmentData)null, result);
+                        response = Response.FromValue((SCEnvironmentRecordData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ConfluentEnvironmentResource>(response.GetRawResponse());
+                    return new NoValueResponse<SCEnvironmentRecordResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConfluentEnvironmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SCEnvironmentRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -532,11 +532,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<ConfluentEnvironmentResource> GetIfExists(string environmentId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<SCEnvironmentRecordResource> GetIfExists(string environmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
-            using DiagnosticScope scope = _scEnvironmentRecordsClientDiagnostics.CreateScope("ConfluentEnvironmentCollection.GetIfExists");
+            using DiagnosticScope scope = _scEnvironmentRecordsClientDiagnostics.CreateScope("SCEnvironmentRecordCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -547,23 +547,23 @@ namespace Azure.ResourceManager.Confluent
                 HttpMessage message = _scEnvironmentRecordsRestClient.CreateGetEnvironmentRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, environmentId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<ConfluentEnvironmentData> response = default;
+                Response<SCEnvironmentRecordData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(ConfluentEnvironmentData.FromResponse(result), result);
+                        response = Response.FromValue(SCEnvironmentRecordData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((ConfluentEnvironmentData)null, result);
+                        response = Response.FromValue((SCEnvironmentRecordData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<ConfluentEnvironmentResource>(response.GetRawResponse());
+                    return new NoValueResponse<SCEnvironmentRecordResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new ConfluentEnvironmentResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new SCEnvironmentRecordResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -572,7 +572,7 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        IEnumerator<ConfluentEnvironmentResource> IEnumerable<ConfluentEnvironmentResource>.GetEnumerator()
+        IEnumerator<SCEnvironmentRecordResource> IEnumerable<SCEnvironmentRecordResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Confluent
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<ConfluentEnvironmentResource> IAsyncEnumerable<ConfluentEnvironmentResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<SCEnvironmentRecordResource> IAsyncEnumerable<SCEnvironmentRecordResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

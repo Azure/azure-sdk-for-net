@@ -20,8 +20,8 @@ namespace Azure.ResourceManager.Confluent
 {
     /// <summary>
     /// A class representing a collection of <see cref="ConfluentConnectorResource"/> and their operations.
-    /// Each <see cref="ConfluentConnectorResource"/> in the collection will belong to the same instance of <see cref="ConfluentClusterResource"/>.
-    /// To get a <see cref="ConfluentConnectorCollection"/> instance call the GetConfluentConnectors method from an instance of <see cref="ConfluentClusterResource"/>.
+    /// Each <see cref="ConfluentConnectorResource"/> in the collection will belong to the same instance of <see cref="SCClusterRecordResource"/>.
+    /// To get a <see cref="ConfluentConnectorCollection"/> instance call the GetConfluentConnectors method from an instance of <see cref="SCClusterRecordResource"/>.
     /// </summary>
     public partial class ConfluentConnectorCollection : ArmCollection, IEnumerable<ConfluentConnectorResource>, IAsyncEnumerable<ConfluentConnectorResource>
     {
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Confluent
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != ConfluentClusterResource.ResourceType)
+            if (id.ResourceType != SCClusterRecordResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ConfluentClusterResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SCClusterRecordResource.ResourceType), nameof(id));
             }
         }
 

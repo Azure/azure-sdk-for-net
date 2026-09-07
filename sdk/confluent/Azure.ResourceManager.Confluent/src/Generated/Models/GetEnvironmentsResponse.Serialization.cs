@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Confluent.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ConfluentEnvironmentData item in Value)
+            foreach (SCEnvironmentRecordData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.Confluent.Models
             {
                 return null;
             }
-            IList<ConfluentEnvironmentData> value = default;
+            IList<SCEnvironmentRecordData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ConfluentEnvironmentData> array = new List<ConfluentEnvironmentData>();
+                    List<SCEnvironmentRecordData> array = new List<SCEnvironmentRecordData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ConfluentEnvironmentData.DeserializeConfluentEnvironmentData(item, options));
+                        array.Add(SCEnvironmentRecordData.DeserializeSCEnvironmentRecordData(item, options));
                     }
                     value = array;
                     continue;

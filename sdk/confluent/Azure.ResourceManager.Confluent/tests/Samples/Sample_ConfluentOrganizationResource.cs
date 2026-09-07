@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Confluent.Samples
 
             // invoke the operation and iterate over the result
             int? pageSize = 10;
-            await foreach (ConfluentEnvironmentResource item in confluentOrganization.GetConfluentEnvironments().GetAllAsync(pageSize: pageSize))
+            await foreach (SCEnvironmentRecordResource item in confluentOrganization.GetSCEnvironmentRecords().GetAllAsync(pageSize: pageSize))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -162,8 +162,8 @@ namespace Azure.ResourceManager.Confluent.Samples
 
             // invoke the operation
             string environmentId = "dlz-f3a90de";
-            Response<ConfluentEnvironmentResource> response = await confluentOrganization.GetConfluentEnvironmentAsync(environmentId);
-            ConfluentEnvironmentResource result = response.Value;
+            Response<SCEnvironmentRecordResource> response = await confluentOrganization.GetSCEnvironmentRecordAsync(environmentId);
+            SCEnvironmentRecordResource result = response.Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -191,8 +191,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             // invoke the operation and iterate over the result
             string environmentId = "env-12132";
             int? pageSize = 10;
-            ConfluentEnvironmentResource confluentEnvironment = (await confluentOrganization.GetConfluentEnvironmentAsync(environmentId)).Value;
-            await foreach (ConfluentClusterResource item in confluentEnvironment.GetConfluentClusters().GetAllAsync(pageSize: pageSize))
+            SCEnvironmentRecordResource scEnvironment = (await confluentOrganization.GetSCEnvironmentRecordAsync(environmentId)).Value;
+            await foreach (SCClusterRecordResource item in scEnvironment.GetSCClusterRecords().GetAllAsync(pageSize: pageSize))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -222,8 +222,8 @@ namespace Azure.ResourceManager.Confluent.Samples
 
             // invoke the operation and iterate over the result
             string environmentId = "env-stgcczjp2j3";
-            ConfluentEnvironmentResource confluentEnvironment = (await confluentOrganization.GetConfluentEnvironmentAsync(environmentId)).Value;
-            await foreach (SchemaRegistryClusterRecord item in confluentEnvironment.GetSchemaRegistryClustersAsync())
+            SCEnvironmentRecordResource scEnvironment = (await confluentOrganization.GetSCEnvironmentRecordAsync(environmentId)).Value;
+            await foreach (SchemaRegistryClusterRecord item in scEnvironment.GetSchemaRegistryClustersAsync())
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -294,9 +294,9 @@ namespace Azure.ResourceManager.Confluent.Samples
                 Name = "CI kafka access key",
                 Description = "This API key provides kafka access to cluster x",
             };
-            ConfluentEnvironmentResource confluentEnvironment = (await confluentOrganization.GetConfluentEnvironmentAsync(environmentId)).Value;
-            ConfluentClusterResource confluentCluster = (await confluentEnvironment.GetConfluentClusterAsync(clusterId)).Value;
-            ConfluentApiKeyRecord result = (await confluentCluster.CreateApiKeyAsync(content)).Value;
+            SCEnvironmentRecordResource scEnvironment = (await confluentOrganization.GetSCEnvironmentRecordAsync(environmentId)).Value;
+            SCClusterRecordResource scCluster = (await scEnvironment.GetSCClusterRecordAsync(clusterId)).Value;
+            ConfluentApiKeyRecord result = (await scCluster.CreateApiKeyAsync(content)).Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -378,8 +378,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             // invoke the operation
             string environmentId = "env-stgcczjp2j3";
             string clusterId = "lsrc-stgczkq22z";
-            ConfluentEnvironmentResource confluentEnvironment = (await confluentOrganization.GetConfluentEnvironmentAsync(environmentId)).Value;
-            SchemaRegistryClusterRecord result = (await confluentEnvironment.GetSchemaRegistryClusterAsync(clusterId)).Value;
+            SCEnvironmentRecordResource scEnvironment = (await confluentOrganization.GetSCEnvironmentRecordAsync(environmentId)).Value;
+            SchemaRegistryClusterRecord result = (await scEnvironment.GetSchemaRegistryClusterAsync(clusterId)).Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
@@ -407,8 +407,8 @@ namespace Azure.ResourceManager.Confluent.Samples
             // invoke the operation
             string environmentId = "env-12132";
             string clusterId = "dlz-f3a90de";
-            ConfluentEnvironmentResource confluentEnvironment = (await confluentOrganization.GetConfluentEnvironmentAsync(environmentId)).Value;
-            ConfluentClusterResource result = (await confluentEnvironment.GetConfluentClusterAsync(clusterId)).Value;
+            SCEnvironmentRecordResource scEnvironment = (await confluentOrganization.GetSCEnvironmentRecordAsync(environmentId)).Value;
+            SCClusterRecordResource result = (await scEnvironment.GetSCClusterRecordAsync(clusterId)).Value;
 
             Console.WriteLine($"Succeeded: {result}");
         }
