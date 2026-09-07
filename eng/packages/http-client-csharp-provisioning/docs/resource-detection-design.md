@@ -148,9 +148,18 @@ Bicep type string matches.
 
 Resource names from individual management resource entries may disagree after
 they are collapsed. A single TypeSpec model can also back multiple resource
-types, causing several projections to inherit the same model-based fallback
-name. Model-level C# renaming is insufficient because each projection may need
-a different name.
+types, so model-level C# renaming is insufficient when each projection needs a
+different name.
+
+After all projections have been identified, their names are determined in this
+order:
+
+1. Use the resource-type-specific `provisioning-resource-name` override.
+2. If every grouped resource has the same resource name, use that name.
+3. If the resource model is used by only one projection, use the model name.
+4. Otherwise, remove the provider namespace from the ARM resource type,
+   singularize each remaining segment, convert each segment to PascalCase, and
+   concatenate them.
 
 Use the `provisioning-resource-name` client option on the shared TypeSpec
 resource model to map complete ARM resource types to generated provisioning
@@ -160,8 +169,8 @@ class names:
 #suppress "@azure-tools/typespec-client-generator-core/client-option" "Provisioning resource names"
 #suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Provisioning resource names"
 @@clientOption(PublishingPolicy, "provisioning-resource-name", #{
-  `Microsoft.Web/sites/basicPublishingCredentialsPolicies`: "WebSiteFtpPublishingCredentialsPolicy",
-  `Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies`: "WebSiteSlotFtpPublishingCredentialsPolicy",
+  `Microsoft.Web/sites/basicPublishingCredentialsPolicies`: "WebSitePublishingCredentialsPolicy",
+  `Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies`: "WebSiteSlotPublishingCredentialsPolicy",
 }, "csharp");
 ```
 

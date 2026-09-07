@@ -11,7 +11,11 @@ import {
   type RbacRole,
   type ValidArmResourceSchema
 } from "../../../http-client-csharp-mgmt/emitter/src/resource-metadata.js";
-import { buildResourceProjectionMetadata } from "../src/provisioning-code-model.js";
+import {
+  buildResourceNameFromResourceType,
+  buildResourceProjectionMetadata,
+  determineResourceProjectionName
+} from "../src/provisioning-code-model.js";
 
 describe("resource projection metadata", () => {
   it("collapses resources and preserves distinct aggregate values", () => {
@@ -33,12 +37,8 @@ describe("resource projection metadata", () => {
       ]
     });
 
-    const projection = buildResourceProjectionMetadata(
-      [first, second],
-      "Widget"
-    );
+    const projection = buildResourceProjectionMetadata([first, second]);
 
-    strictEqual(projection.resourceName, "Widget");
     strictEqual(projection.resourceType, "Microsoft.Test/widgets");
     deepStrictEqual(projection.resourceIdPatterns, [
       first.metadata.resourceIdPattern.path,
@@ -77,37 +77,72 @@ describe("resource projection metadata", () => {
       nameConstraints: { pattern: "[0-9]+", minLength: 1, maxLength: 24 }
     });
 
-    const projection = buildResourceProjectionMetadata(
-      [first, second],
-      "Child"
-    );
+    const projection = buildResourceProjectionMetadata([first, second]);
 
-    strictEqual(projection.resourceName, "Child");
     strictEqual(projection.singletonResourceName, undefined);
     strictEqual(projection.parentResourceId, undefined);
     deepStrictEqual(projection.nameConstraints, {});
   });
 
-  it("uses the resource type name override for a grouped projection", () => {
-    const first = createResource({
-      path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/first",
-      resourceName: "FirstWidget",
-      singletonResourceName: "first"
-    });
-    const second = createResource({
-      path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/second",
-      resourceName: "SecondWidget",
-      singletonResourceName: "second"
-    });
-
-    const projection = buildResourceProjectionMetadata(
-      [first, second],
-      "Widget",
-      new Map([["microsoft.test/widgets", "CustomizedWidget"]])
+  it("builds a resource name from singular resource type segments", () => {
+    strictEqual(
+      buildResourceNameFromResourceType(
+        "Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies"
+      ),
+      "SiteSlotBasicPublishingCredentialsPolicy"
     );
+  });
 
-    strictEqual(projection.resourceName, "CustomizedWidget");
-    strictEqual(projection.singletonResourceName, undefined);
+  it("prefers a resource name override", () => {
+    strictEqual(
+      determineResourceProjectionName(
+        "OverrideWidget",
+        "ConsistentWidget",
+        "WidgetModel",
+        true,
+        "Microsoft.Test/widgets"
+      ),
+      "OverrideWidget"
+    );
+  });
+
+  it("uses a consistent resource name before the model name", () => {
+    strictEqual(
+      determineResourceProjectionName(
+        undefined,
+        "ConsistentWidget",
+        "WidgetModel",
+        true,
+        "Microsoft.Test/widgets"
+      ),
+      "ConsistentWidget"
+    );
+  });
+
+  it("uses the model name when the model has one projection", () => {
+    strictEqual(
+      determineResourceProjectionName(
+        undefined,
+        undefined,
+        "WidgetModel",
+        true,
+        "Microsoft.Test/widgets"
+      ),
+      "WidgetModel"
+    );
+  });
+
+  it("uses resource type segments when the model has multiple projections", () => {
+    strictEqual(
+      determineResourceProjectionName(
+        undefined,
+        undefined,
+        "PublishingPolicy",
+        false,
+        "Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies"
+      ),
+      "SiteSlotBasicPublishingCredentialsPolicy"
+    );
   });
 
   it("compares resource and parent paths structurally", () => {
@@ -121,10 +156,7 @@ describe("resource projection metadata", () => {
       parentResourceId: "/subscriptions/{sub}/resourceGroups/{group}"
     });
 
-    const projection = buildResourceProjectionMetadata(
-      [first, second],
-      "Widget"
-    );
+    const projection = buildResourceProjectionMetadata([first, second]);
 
     deepStrictEqual(projection.resourceIdPatterns, [
       first.metadata.resourceIdPattern.path
@@ -147,14 +179,8 @@ describe("resource projection metadata", () => {
       methodKinds: [ResourceOperationKind.Read, ResourceOperationKind.Create]
     });
 
-    const readOnlyProjection = buildResourceProjectionMetadata(
-      [readOnly],
-      "Extension"
-    );
-    const writableProjection = buildResourceProjectionMetadata(
-      [writable],
-      "Extension"
-    );
+    const readOnlyProjection = buildResourceProjectionMetadata([readOnly]);
+    const writableProjection = buildResourceProjectionMetadata([writable]);
 
     deepStrictEqual(readOnlyProjection.writableScopes, []);
     strictEqual(readOnlyProjection.isExtensionResource, false);

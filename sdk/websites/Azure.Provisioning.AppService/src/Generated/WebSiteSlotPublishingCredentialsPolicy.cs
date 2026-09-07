@@ -13,7 +13,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppService
 {
     /// <summary> Publishing Credentials Policies parameters. </summary>
-    public partial class WebSiteSlotFtpPublishingCredentialsPolicy : ProvisionableResource
+    public partial class WebSiteSlotPublishingCredentialsPolicy : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -22,10 +22,10 @@ namespace Azure.Provisioning.AppService
         private BicepValue<string> _kind;
         private ResourceReference<WebSiteSlot> _parent;
 
-        /// <summary> Creates a new WebSiteSlotFtpPublishingCredentialsPolicy. </summary>
+        /// <summary> Creates a new WebSiteSlotPublishingCredentialsPolicy. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public WebSiteSlotFtpPublishingCredentialsPolicy(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies", resourceVersion ?? "2025-03-01")
+        public WebSiteSlotPublishingCredentialsPolicy(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies", resourceVersion ?? "2025-03-01")
         {
         }
 
@@ -126,7 +126,7 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Define all the provisionable properties for WebSiteSlotFtpPublishingCredentialsPolicy. </summary>
+        /// <summary> Define all the provisionable properties for WebSiteSlotPublishingCredentialsPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -139,17 +139,17 @@ namespace Azure.Provisioning.AppService
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing WebSiteSlotFtpPublishingCredentialsPolicy. </summary>
+        /// <summary> Creates a reference to an existing WebSiteSlotPublishingCredentialsPolicy. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static WebSiteSlotFtpPublishingCredentialsPolicy FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static WebSiteSlotPublishingCredentialsPolicy FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            WebSiteSlotFtpPublishingCredentialsPolicy result = new WebSiteSlotFtpPublishingCredentialsPolicy(bicepIdentifier, resourceVersion);
+            WebSiteSlotPublishingCredentialsPolicy result = new WebSiteSlotPublishingCredentialsPolicy(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for WebSiteSlotFtpPublishingCredentialsPolicy that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for WebSiteSlotPublishingCredentialsPolicy that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

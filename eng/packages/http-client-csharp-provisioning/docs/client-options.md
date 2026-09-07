@@ -33,8 +33,8 @@ resource class names.
 #suppress "@azure-tools/typespec-client-generator-core/client-option" "Provisioning resource names"
 #suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Provisioning resource names"
 @@clientOption(PublishingPolicy, "provisioning-resource-name", #{
-  `Microsoft.Web/sites/basicPublishingCredentialsPolicies`: "WebSiteFtpPublishingCredentialsPolicy",
-  `Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies`: "WebSiteSlotFtpPublishingCredentialsPolicy",
+  `Microsoft.Web/sites/basicPublishingCredentialsPolicies`: "WebSitePublishingCredentialsPolicy",
+  `Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies`: "WebSiteSlotPublishingCredentialsPolicy",
 }, "csharp");
 ```
 
@@ -51,6 +51,15 @@ change:
 - parent relationships;
 - operations or serialization;
 - management SDK names.
+
+Without an override, the emitter determines the projection name in this order:
+
+1. If every grouped resource has the same resource name, use that name.
+2. If the projection's resource model is not used by another projection, use
+   the model name.
+3. Otherwise, remove the provider namespace from the ARM resource type,
+   singularize each remaining type segment, convert each segment to PascalCase,
+   and concatenate them.
 
 Do not use this option to combine different ARM resource types or to compensate
 for an incorrectly modeled resource identity.
