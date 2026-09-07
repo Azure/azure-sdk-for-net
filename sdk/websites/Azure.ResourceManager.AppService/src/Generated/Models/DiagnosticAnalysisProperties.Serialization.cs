@@ -74,15 +74,15 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 throw new FormatException($"The model {nameof(DiagnosticAnalysisProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(AbnormalTimePeriods))
             {
@@ -156,8 +156,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             IList<AbnormalTimePeriod> abnormalTimePeriods = default;
             IList<AnalysisDetectorEvidences> payload = default;
             IList<DetectorDefinition> nonCorrelatedDetectors = default;
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("abnormalTimePeriods"u8))
@@ -230,8 +230,8 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             return new DiagnosticAnalysisProperties(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 abnormalTimePeriods ?? new ChangeTrackingList<AbnormalTimePeriod>(),
                 payload ?? new ChangeTrackingList<AnalysisDetectorEvidences>(),
                 nonCorrelatedDetectors ?? new ChangeTrackingList<DetectorDefinition>(),

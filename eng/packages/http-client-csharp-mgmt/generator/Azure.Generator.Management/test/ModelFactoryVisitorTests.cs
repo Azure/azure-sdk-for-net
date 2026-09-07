@@ -8,6 +8,7 @@ using Microsoft.TypeSpec.Generator.Expressions;
 using Microsoft.TypeSpec.Generator.Input;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.SourceInput;
 using Microsoft.TypeSpec.Generator.Statements;
 using NUnit.Framework;
 using System.Reflection;
@@ -18,6 +19,139 @@ namespace Azure.Generator.Mgmt.Tests
 {
     internal class ModelFactoryVisitorTests
     {
+        [Test]
+        public void DateTimeFactoryParameterBackCompatKeepsMrwDeserializationLocals()
+        {
+            var dateTimeType = new InputDateTimeType(
+                DateTimeKnownEncoding.Rfc3339,
+                "utcDateTime",
+                "TypeSpec.utcDateTime",
+                InputPrimitiveType.String);
+            var providerLocation = InputFactory.Model(
+                "providerLocation",
+                usage: InputModelTypeUsage.Input | InputModelTypeUsage.Json);
+            var inputModel = InputFactory.Model(
+                "testModel",
+                usage: InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("providerLocation", providerLocation, isRequired: true),
+                    InputFactory.Property("providers", InputFactory.Array(InputPrimitiveType.String)),
+                    InputFactory.Property("azureLocations", InputFactory.Array(InputPrimitiveType.String)),
+                    InputFactory.Property("startTime", dateTimeType, isRequired: true),
+                    InputFactory.Property("endTime", dateTimeType, isRequired: true)
+                ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [inputModel, providerLocation],
+                lastContractCompilation: () => Helpers.BuildCompilation(
+                    [("LastContract.cs", LastContractSource)]));
+            var output = plugin.Object.OutputLibrary;
+            var ensureBuilt = typeof(TypeProvider).GetMethod(
+                "EnsureBuilt",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
+            foreach (var type in output.TypeProviders)
+            {
+                ensureBuilt.Invoke(type, null);
+            }
+
+            var modelFactory = output.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var currentFactoryMethod = modelFactory.Methods.Single(m => m.Signature.ReturnType?.Name == "TestModel");
+            var previousFactoryParameters = currentFactoryMethod.Signature.Parameters
+                .Select(p => new ParameterProvider(
+                    p.Name switch
+                    {
+                        "startsOn" => "startOn",
+                        "endsOn" => "endOn",
+                        _ => p.Name
+                    },
+                    p.Description,
+                    p.Type,
+                    p.DefaultValue))
+                .ToArray();
+            var lastContractFactory = new TestModelFactoryView(modelFactory.Name);
+            var previousFactorySignature = new MethodSignature(
+                currentFactoryMethod.Signature.Name,
+                currentFactoryMethod.Signature.Description,
+                currentFactoryMethod.Signature.Modifiers,
+                currentFactoryMethod.Signature.ReturnType,
+                currentFactoryMethod.Signature.ReturnDescription,
+                previousFactoryParameters);
+            lastContractFactory.MethodsToBuild =
+                [new MethodProvider(previousFactorySignature, MethodBodyStatement.Empty, lastContractFactory)];
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractFactory);
+
+            var visitLibrary = typeof(LibraryVisitor).GetMethod(
+                "VisitLibrary",
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic)!;
+            foreach (var visitor in plugin.Object.Visitors)
+            {
+                visitLibrary.Invoke(visitor, [output]);
+            }
+
+            var testModel = output.TypeProviders.OfType<ModelProvider>().Single(p => p.Name == "TestModel");
+            var rebuiltModel = new Microsoft.TypeSpec.Generator.ClientModel.Providers.ScmModelProvider(inputModel);
+            testModel.Update(
+                constructors: rebuiltModel.Constructors,
+                properties: rebuiltModel.Properties);
+            typeof(ModelProvider).GetField("_fullConstructor", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(testModel, rebuiltModel.FullConstructor);
+
+            var generatorAssembly = typeof(TypeProvider).Assembly;
+            foreach (var type in output.TypeProviders)
+            {
+                ManagementMockHelpers.ProcessTypeForBackCompatibility(type);
+            }
+
+            Assert.That(
+                testModel.SerializationProviders.Single().Methods
+                    .First(m => m.Signature.Name.StartsWith("Deserialize")).BodyStatements!.ToDisplayString(),
+                Does.Contain("global::System.DateTimeOffset startOn = default;"));
+
+            using var referenceMap = (IDisposable)generatorAssembly
+                .GetType("Microsoft.TypeSpec.Generator.ProviderReferenceMapAnalyzer")!
+                .GetMethod("PrepareForGeneration", BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)!
+                .Invoke(null, [output.TypeProviders])!;
+            var model = output.TypeProviders.OfType<ModelProvider>().Single(p => p.Name == "TestModel");
+            _ = plugin.Object.GetWriter(model).Write();
+            var serialization = model.SerializationProviders.Single();
+            var generated = plugin.Object.GetWriter(serialization).Write().Content.Replace("\r\n", "\n");
+
+            Assert.That(generated, Does.Contain("global::System.DateTimeOffset startOn = default;"));
+            Assert.That(generated, Does.Contain("global::System.DateTimeOffset endOn = default;"));
+            Assert.That(generated, Does.Contain("startOn = prop.Value.GetDateTimeOffset(\"O\");"));
+            Assert.That(generated, Does.Contain("endOn = prop.Value.GetDateTimeOffset(\"O\");"));
+            Assert.That(generated, Does.Contain("startOn,\n                endOn,"));
+        }
+
+        private const string LastContractSource = """
+            using System;
+            using System.Collections.Generic;
+
+            namespace Samples.Models
+            {
+                public partial class TestModel
+                {
+                    public TestModel(ProviderLocation providerLocation, DateTimeOffset startOn, DateTimeOffset endOn) { }
+
+                    internal TestModel(
+                        ProviderLocation providerLocation,
+                        IList<string> providers,
+                        IList<string> azureLocations,
+                        DateTimeOffset startOn,
+                        DateTimeOffset endOn,
+                        IDictionary<string, BinaryData> additionalBinaryDataProperties) { }
+
+                    public ProviderLocation ProviderLocation { get; }
+                    public IList<string> Providers { get; }
+                    public IList<string> AzureLocations { get; }
+                    public DateTimeOffset StartOn { get; }
+                    public DateTimeOffset EndOn { get; }
+                }
+
+                public partial class ProviderLocation { }
+            }
+            """;
+
         [Test]
         public void ModelFactoryParametersPreserveLastContractNames()
         {
@@ -321,6 +455,118 @@ namespace Azure.Generator.Mgmt.Tests
             Assert.That(modelFactory.Methods, Is.Empty);
         }
 
+        [TestCase("StartTime", "startsOn", "startOn")]
+        [TestCase("EndTime", "endsOn", "endOn")]
+        [TestCase("ExpirationTime", "expiresOn", "expireOn")]
+        [TestCase("AccessTierChangeTime", "accessTierChangedOn", "accessTierChangeOn")]
+        [TestCase("LastSyncTimestamp", "lastSyncOn", "lastSyncTimestamp")]
+        public void RebuildsPrimaryFactoryBodyWithPreservedDateTimeParameterName(
+            string inputName,
+            string normalizedName,
+            string gaName)
+        {
+            var dateTimeType = new InputDateTimeType(
+                DateTimeKnownEncoding.Rfc3339,
+                "utcDateTime",
+                "TypeSpec.utcDateTime",
+                InputPrimitiveType.String);
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property(inputName, dateTimeType, serializedName: "unrelated_wire_name")]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var method = modelFactory.Methods.Single(m => m.Signature.ReturnType?.Name == "TestModel");
+            method.Signature.Parameters.Single(p => p.Name == normalizedName).Update(name: gaName);
+            method.Update(signature: method.Signature);
+
+            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain($"global::System.DateTimeOffset? {gaName} = default"));
+            Assert.That(rendered, Does.Contain($"return new global::Samples.Models.TestModel({gaName},"));
+        }
+
+        [Test]
+        public void DoesNotRestoreLastContractFactoryMethodsSuppressedByApiCompatBaseline()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var baseline = ApiCompatBaseline.Parse(
+            [
+                $"MembersMustExist : Member '{ResolveModelFactoryFullName(inputModel)}.TestModel(System.String)' does not exist in the implementation but it does exist in the contract."
+            ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [inputModel],
+                apiCompatBaseline: baseline);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var previousSignature = new MethodSignature(
+                "TestModel",
+                $"Creates a test model.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"A test model.",
+                [new ParameterProvider("value", $"Value description", typeof(string))]);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
+            modelFactory.Update(methods: []);
+
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitType, Is.Not.Null);
+
+            visitType!.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+
+            Assert.That(modelFactory.Methods, Is.Empty);
+        }
+
+        [Test]
+        public void DoesNotRestoreLastContractFactoryMethodsReferencingSuppressedTypes()
+        {
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("value", InputPrimitiveType.String)]);
+
+            var baseline = ApiCompatBaseline.Parse(
+            [
+                "TypesMustExist : Type 'Samples.Models.RemovedModel' does not exist in the implementation but it does exist in the contract."
+            ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [inputModel],
+                apiCompatBaseline: baseline);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var removedType = new CSharpType(typeof(global::Samples.Models.RemovedModel));
+            var previousSignature = new MethodSignature(
+                "TestModel",
+                $"Creates a test model.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"A test model.",
+                [new ParameterProvider("removed", $"A parameter typed with a removed model.", removedType)]);
+            var lastContractView = new TestModelFactoryView(modelFactory.Name);
+            lastContractView.MethodsToBuild = [new MethodProvider(previousSignature, MethodBodyStatement.Empty, lastContractView)];
+            ModelTestHelper.SetLastContractView(modelFactory, lastContractView);
+            modelFactory.Update(methods: []);
+
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType",
+                BindingFlags.NonPublic | BindingFlags.Instance);
+            Assert.That(visitType, Is.Not.Null);
+
+            visitType!.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+
+            Assert.That(modelFactory.Methods, Is.Empty);
+        }
+
         [Test]
         public void RebuildsPrimaryFactoryBodyFromCurrentConstructor()
         {
@@ -389,6 +635,62 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void RebuildsRenamedDateTimeDeserializeArgumentsAfterConstructorReorder()
+        {
+            var dateTimeType = new InputDateTimeType(
+                DateTimeKnownEncoding.Rfc3339,
+                "utcDateTime",
+                "TypeSpec.utcDateTime",
+                InputPrimitiveType.String);
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Input | InputModelTypeUsage.Output | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("startTime", dateTimeType, isRequired: true),
+                    InputFactory.Property("endTime", dateTimeType, isRequired: true)
+                ]);
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var startProperty = model.Properties.Single(p => p.Name == "StartsOn");
+            var endProperty = model.Properties.Single(p => p.Name == "EndsOn");
+            var startVariable = startProperty.AsVariableExpression;
+            var endVariable = endProperty.AsVariableExpression;
+            startProperty.AsParameter.Update(name: "startOn");
+            endProperty.AsParameter.Update(name: "endOn");
+
+            var rebuiltModel = new Microsoft.TypeSpec.Generator.ClientModel.Providers.ScmModelProvider(inputModel);
+            var rebuiltParameters = rebuiltModel.FullConstructor.Signature.Parameters;
+            var rebuiltStartProperty = rebuiltModel.Properties.Single(p => p.Name == "StartsOn");
+            var rebuiltEndProperty = rebuiltModel.Properties.Single(p => p.Name == "EndsOn");
+            var rebuiltStart = new ParameterProvider(
+                "startsOn", rebuiltStartProperty.Description!, rebuiltStartProperty.Type, property: rebuiltStartProperty);
+            var rebuiltEnd = new ParameterProvider(
+                "endsOn", rebuiltEndProperty.Description!, rebuiltEndProperty.Type, property: rebuiltEndProperty);
+            var additionalData = rebuiltParameters.Single(p => p.Name == "additionalBinaryDataProperties");
+            rebuiltModel.FullConstructor.Signature.Update(parameters: [rebuiltEnd, rebuiltStart, additionalData]);
+            typeof(ModelProvider).GetField("_fullConstructor", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(model, rebuiltModel.FullConstructor);
+
+            var additionalDataVariable = new VariableExpression(additionalData.Type, additionalData.Name);
+            var method = new MethodProvider(
+                new MethodSignature(
+                    "DeserializeTestModel",
+                    null,
+                    MethodSignatureModifiers.Internal | MethodSignatureModifiers.Static,
+                    model.Type,
+                    null,
+                    []),
+                Return(new NewInstanceExpression(model.Type, [startVariable, endVariable, additionalDataVariable])),
+                model);
+
+            Management.Visitors.SerializationConstructorCallHelper.FixConstructorCalls([method]);
+
+            var rendered = method.BodyStatements!.ToDisplayString();
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.TestModel(endOn, startOn, additionalBinaryDataProperties)"));
+        }
+
+        [Test]
         public void RebuildsDeserializeConstructorCallFromCurrentConstructor()
         {
             var inputModel = InputFactory.Model(
@@ -425,7 +727,7 @@ namespace Azure.Generator.Mgmt.Tests
                 });
             modelFactory.Update(methods: [method]);
 
-            Management.Visitors.ModelFactoryBackwardCompatHelper.FixConstructorCalls(modelFactory.Methods);
+            Management.Visitors.SerializationConstructorCallHelper.FixConstructorCalls(modelFactory.Methods);
 
             var rendered = new TypeProviderWriter(modelFactory).Write().Content;
             Assert.That(rendered, Does.Not.Contain("name0"));
@@ -460,7 +762,7 @@ namespace Azure.Generator.Mgmt.Tests
                 modelFactory);
             modelFactory.Update(methods: [method]);
 
-            Management.Visitors.ModelFactoryBackwardCompatHelper.FixConstructorCalls(modelFactory.Methods);
+            Management.Visitors.SerializationConstructorCallHelper.FixConstructorCalls(modelFactory.Methods);
 
             var rendered = new TypeProviderWriter(modelFactory).Write().Content;
             Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(vmwareId, ((global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>)default));"));
@@ -494,7 +796,7 @@ namespace Azure.Generator.Mgmt.Tests
                 modelFactory);
             modelFactory.Update(methods: [method]);
 
-            Management.Visitors.ModelFactoryBackwardCompatHelper.FixConstructorCalls(modelFactory.Methods);
+            Management.Visitors.SerializationConstructorCallHelper.FixConstructorCalls(modelFactory.Methods);
 
             var rendered = new TypeProviderWriter(modelFactory).Write().Content;
             Assert.That(rendered, Does.Contain("return new global::Samples.Models.TestModel(vmwareId, ((global::System.Collections.Generic.IDictionary<string, global::System.BinaryData>)default));"));
@@ -612,6 +914,16 @@ namespace Azure.Generator.Mgmt.Tests
             }
 
             return builder.ToString().Replace("\r\n", "\n");
+        }
+
+        /// <summary>
+        /// Loads the mock plugin once purely to discover the fully-qualified name the model factory will be given,
+        /// so a baseline entry can be written for it before the plugin is reloaded with that baseline attached.
+        /// </summary>
+        private static string ResolveModelFactoryFullName(InputModelType inputModel)
+        {
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel]);
+            return plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single().Type.FullyQualifiedName;
         }
 
         private class TestModelFactoryView : TypeProvider
