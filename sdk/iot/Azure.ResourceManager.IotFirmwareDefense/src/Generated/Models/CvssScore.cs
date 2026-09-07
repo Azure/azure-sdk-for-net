@@ -13,37 +13,8 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
     /// <summary> Common Vulnerability Scoring System values. </summary>
     public partial class CvssScore
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="CvssScore"/>. </summary>
         /// <param name="version"> The version of the Common Vulnerability Scoring System (CVSS). </param>
@@ -55,22 +26,28 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <summary> Initializes a new instance of <see cref="CvssScore"/>. </summary>
         /// <param name="version"> The version of the Common Vulnerability Scoring System (CVSS). </param>
         /// <param name="score"> The score of the CVE according to the CVSS specified. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CvssScore(int version, float? score, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="vectorString"> The CVSS vector for the specified score. </param>
+        /// <param name="exploitMaturity"> The likelihood of the vulnerability being attacked based on information regarding the availability of exploitation code/processes and the state of exploitation techniques. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal CvssScore(int version, float? score, string vectorString, ExploitMaturityLevel? exploitMaturity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Version = version;
             Score = score;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="CvssScore"/> for deserialization. </summary>
-        internal CvssScore()
-        {
+            VectorString = vectorString;
+            ExploitMaturity = exploitMaturity;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The version of the Common Vulnerability Scoring System (CVSS). </summary>
         public int Version { get; set; }
+
         /// <summary> The score of the CVE according to the CVSS specified. </summary>
         public float? Score { get; set; }
+
+        /// <summary> The CVSS vector for the specified score. </summary>
+        public string VectorString { get; set; }
+
+        /// <summary> The likelihood of the vulnerability being attacked based on information regarding the availability of exploitation code/processes and the state of exploitation techniques. </summary>
+        public ExploitMaturityLevel? ExploitMaturity { get; set; }
     }
 }

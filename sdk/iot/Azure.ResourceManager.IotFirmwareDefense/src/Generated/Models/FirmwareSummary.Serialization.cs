@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.IotFirmwareDefense;
 
 namespace Azure.ResourceManager.IotFirmwareDefense.Models
 {
-    public partial class FirmwareSummary : IUtf8JsonSerializable, IJsonModel<FirmwareSummary>
+    /// <summary> Properties for high level summary of firmware analysis results. </summary>
+    public partial class FirmwareSummary : FirmwareAnalysisSummaryProperties, IJsonModel<FirmwareSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<FirmwareSummary>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override FirmwareAnalysisSummaryProperties PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FirmwareSummary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeFirmwareSummary(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(FirmwareSummary)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<FirmwareSummary>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(FirmwareSummary)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<FirmwareSummary>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FirmwareSummary IPersistableModel<FirmwareSummary>.Create(BinaryData data, ModelReaderWriterOptions options) => (FirmwareSummary)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<FirmwareSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<FirmwareSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirmwareSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirmwareSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FirmwareSummary)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(ExtractedSize))
             {
@@ -72,26 +112,34 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             }
         }
 
-        FirmwareSummary IJsonModel<FirmwareSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        FirmwareSummary IJsonModel<FirmwareSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (FirmwareSummary)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override FirmwareAnalysisSummaryProperties JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<FirmwareSummary>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<FirmwareSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(FirmwareSummary)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeFirmwareSummary(document.RootElement, options);
         }
 
-        internal static FirmwareSummary DeserializeFirmwareSummary(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static FirmwareSummary DeserializeFirmwareSummary(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            FirmwareAnalysisSummaryType summaryType = default;
+            FirmwareProvisioningState? provisioningState = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             long? extractedSize = default;
             long? fileSize = default;
             long? extractedFileCount = default;
@@ -99,99 +147,94 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
             long? binaryCount = default;
             long? analysisTimeSeconds = default;
             long? rootFileSystems = default;
-            FirmwareAnalysisSummaryType summaryType = default;
-            FirmwareProvisioningState? provisioningState = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("extractedSize"u8))
+                if (prop.NameEquals("summaryType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    summaryType = new FirmwareAnalysisSummaryType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("provisioningState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    extractedSize = property.Value.GetInt64();
+                    provisioningState = new FirmwareProvisioningState(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("fileSize"u8))
+                if (prop.NameEquals("extractedSize"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    fileSize = property.Value.GetInt64();
+                    extractedSize = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("extractedFileCount"u8))
+                if (prop.NameEquals("fileSize"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    extractedFileCount = property.Value.GetInt64();
+                    fileSize = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("componentCount"u8))
+                if (prop.NameEquals("extractedFileCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    componentCount = property.Value.GetInt64();
+                    extractedFileCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("binaryCount"u8))
+                if (prop.NameEquals("componentCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    binaryCount = property.Value.GetInt64();
+                    componentCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("analysisTimeSeconds"u8))
+                if (prop.NameEquals("binaryCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    analysisTimeSeconds = property.Value.GetInt64();
+                    binaryCount = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("rootFileSystems"u8))
+                if (prop.NameEquals("analysisTimeSeconds"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    rootFileSystems = property.Value.GetInt64();
+                    analysisTimeSeconds = prop.Value.GetInt64();
                     continue;
                 }
-                if (property.NameEquals("summaryType"u8))
+                if (prop.NameEquals("rootFileSystems"u8))
                 {
-                    summaryType = new FirmwareAnalysisSummaryType(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("provisioningState"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    provisioningState = new FirmwareProvisioningState(property.Value.GetString());
+                    rootFileSystems = prop.Value.GetInt64();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new FirmwareSummary(
                 summaryType,
                 provisioningState,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 extractedSize,
                 fileSize,
                 extractedFileCount,
@@ -200,36 +243,5 @@ namespace Azure.ResourceManager.IotFirmwareDefense.Models
                 analysisTimeSeconds,
                 rootFileSystems);
         }
-
-        BinaryData IPersistableModel<FirmwareSummary>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FirmwareSummary>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerIotFirmwareDefenseContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(FirmwareSummary)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        FirmwareSummary IPersistableModel<FirmwareSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<FirmwareSummary>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeFirmwareSummary(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(FirmwareSummary)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<FirmwareSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }
