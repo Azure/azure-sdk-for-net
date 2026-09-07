@@ -3158,11 +3158,11 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="eTag"> Etag of the azure resource. </param>
+        /// <param name="etag"> Etag of the azure resource. </param>
         /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="dataTypesDiscoveryLogsState"> Describe whether this data type connection is enabled or not. </param>
+        /// <param name="dataTypes"> The available data types for the connector. </param>
         /// <returns> A new <see cref="Models.McasDataConnector"/> instance for mocking. </returns>
-        public static McasDataConnector McasDataConnector(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? eTag = default, Guid? tenantId = default, SecurityInsightsDataTypeConnectionState? dataTypesDiscoveryLogsState = default)
+        public static McasDataConnector McasDataConnector(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, Guid? tenantId = default, McasDataConnectorDataTypes dataTypes = default)
         {
             return new McasDataConnector(
                 id,
@@ -3170,9 +3170,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 resourceType,
                 systemData,
                 default,
-                eTag,
+                etag,
                 default,
-                tenantId is null && dataTypesDiscoveryLogsState is null ? default : new McasDataConnectorProperties(tenantId.GetValueOrDefault(), default, new McasDataConnectorDataTypes(default, default, new DataConnectorDataTypeCommon(dataTypesDiscoveryLogsState.GetValueOrDefault(), default))));
+                tenantId is null && dataTypes is null ? default : new McasDataConnectorProperties(tenantId.GetValueOrDefault(), default, dataTypes));
         }
 
         /// <param name="alertsState"> Describe whether this data type connection is enabled or not. </param>
@@ -7490,29 +7490,6 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 etag,
                 default,
                 alertsState is null && subscriptionId is null ? default : new AscDataConnectorProperties(new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon(alertsState.GetValueOrDefault(), default), default), default, subscriptionId));
-        }
-
-        /// <summary> Represents MCAS (Microsoft Cloud App Security) data connector. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="etag"> Etag of the azure resource. </param>
-        /// <param name="tenantId"> The tenant id to connect to, and get the data from. </param>
-        /// <param name="dataTypes"> The available data types for the connector. </param>
-        /// <returns> A new <see cref="Models.McasDataConnector"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static McasDataConnector McasDataConnector(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ETag? etag = default, Guid? tenantId = default, McasDataConnectorDataTypes dataTypes = default)
-        {
-            return new McasDataConnector(
-                id,
-                name,
-                resourceType,
-                systemData,
-                default,
-                etag,
-                default,
-                tenantId is null && dataTypes is null ? default : new McasDataConnectorProperties(tenantId.GetValueOrDefault(), default, dataTypes));
         }
 
         /// <summary> Represents MDATP (Microsoft Defender Advanced Threat Protection) data connector. </summary>

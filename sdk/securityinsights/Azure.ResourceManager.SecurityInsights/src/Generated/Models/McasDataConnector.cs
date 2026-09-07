@@ -60,23 +60,5 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
             }
         }
-
-        /// <summary> Describe whether this data type connection is enabled or not. </summary>
-        [WirePath("properties.dataTypes.discoveryLogs.state")]
-        public SecurityInsightsDataTypeConnectionState? DataTypesDiscoveryLogsState
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DataTypesDiscoveryLogsState;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new McasDataConnectorProperties();
-                }
-                Properties.DataTypesDiscoveryLogsState = value;
-            }
-        }
     }
 }

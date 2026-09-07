@@ -49,16 +49,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="compromisedEntity"> The display name of the resource most related to this alert. </param>
         /// <param name="techniques"> kill chain related techniques behind the alert. </param>
         /// <param name="subTechniques"> Kill chain related sub-techniques behind the alert. </param>
-        /// <param name="securityAlertSupportingEvidenceType"> Type of the supportingEvidence. </param>
+        /// <param name="supportingEvidence"> Changing set of properties depending on the supportingEvidence type. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityAlertData"/> instance for mocking. </returns>
-        public static SecurityAlertData SecurityAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string version = default, string alertType = default, string systemAlertId = default, string productComponentName = default, string alertDisplayName = default, string description = default, SecurityAlertSeverity? severity = default, KillChainIntent? intent = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<SecurityAlertResourceIdentifier> resourceIdentifiers = default, IEnumerable<string> remediationSteps = default, string vendorName = default, SecurityAlertStatus? status = default, IEnumerable<IDictionary<string, string>> extendedLinks = default, Uri alertUri = default, DateTimeOffset? generatedOn = default, string productName = default, DateTimeOffset? processingEndOn = default, IEnumerable<SecurityAlertEntity> entities = default, bool? isIncident = default, string correlationKey = default, IDictionary<string, string> extendedProperties = default, string compromisedEntity = default, IEnumerable<string> techniques = default, IEnumerable<string> subTechniques = default, string securityAlertSupportingEvidenceType = default)
+        public static SecurityAlertData SecurityAlertData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string version = default, string alertType = default, string systemAlertId = default, string productComponentName = default, string alertDisplayName = default, string description = default, SecurityAlertSeverity? severity = default, KillChainIntent? intent = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, IEnumerable<SecurityAlertResourceIdentifier> resourceIdentifiers = default, IEnumerable<string> remediationSteps = default, string vendorName = default, SecurityAlertStatus? status = default, IEnumerable<IDictionary<string, string>> extendedLinks = default, Uri alertUri = default, DateTimeOffset? generatedOn = default, string productName = default, DateTimeOffset? processingEndOn = default, IEnumerable<SecurityAlertEntity> entities = default, bool? isIncident = default, string correlationKey = default, IDictionary<string, string> extendedProperties = default, string compromisedEntity = default, IEnumerable<string> techniques = default, IEnumerable<string> subTechniques = default, SecurityAlertSupportingEvidence supportingEvidence = default)
         {
             return new SecurityAlertData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                version is null && alertType is null && systemAlertId is null && productComponentName is null && alertDisplayName is null && description is null && severity is null && intent is null && startOn is null && endOn is null && resourceIdentifiers is null && remediationSteps is null && vendorName is null && status is null && extendedLinks is null && alertUri is null && generatedOn is null && productName is null && processingEndOn is null && entities is null && isIncident is null && correlationKey is null && extendedProperties is null && compromisedEntity is null && techniques is null && subTechniques is null && securityAlertSupportingEvidenceType is null ? default : new AlertProperties(
+                version is null && alertType is null && systemAlertId is null && productComponentName is null && alertDisplayName is null && description is null && severity is null && intent is null && startOn is null && endOn is null && resourceIdentifiers is null && remediationSteps is null && vendorName is null && status is null && extendedLinks is null && alertUri is null && generatedOn is null && productName is null && processingEndOn is null && entities is null && isIncident is null && correlationKey is null && extendedProperties is null && compromisedEntity is null && techniques is null && subTechniques is null && supportingEvidence is null ? default : new AlertProperties(
                     version,
                     alertType,
                     systemAlertId,
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     compromisedEntity,
                     (techniques ?? new ChangeTrackingList<string>()).ToList(),
                     (subTechniques ?? new ChangeTrackingList<string>()).ToList(),
-                    new SecurityAlertSupportingEvidence(securityAlertSupportingEvidenceType, default),
+                    supportingEvidence,
                     default),
                 default);
         }
@@ -3976,21 +3976,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="state"> State of the task (Active, Resolved etc.). </param>
         /// <param name="createdOn"> The time this task was discovered in UTC. </param>
+        /// <param name="securityTaskParameters"> Changing set of properties, depending on the task type that is derived from the name field. </param>
         /// <param name="lastStateChangedOn"> The time this task's details were last changed in UTC. </param>
         /// <param name="subState"> Additional data on the state of the task. </param>
-        /// <param name="securityTaskName"> Name of the task type. </param>
         /// <returns> A new <see cref="SecurityCenter.SecurityTaskData"/> instance for mocking. </returns>
-        public static SecurityTaskData SecurityTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string state = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastStateChangedOn = default, string subState = default, string securityTaskName = default)
+        public static SecurityTaskData SecurityTaskData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string state = default, DateTimeOffset? createdOn = default, SecurityTaskProperties securityTaskParameters = default, DateTimeOffset? lastStateChangedOn = default, string subState = default)
         {
             return new SecurityTaskData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                state is null && createdOn is null && securityTaskName is null && lastStateChangedOn is null && subState is null ? default : new SecurityTaskPropertiesInfo(
+                state is null && createdOn is null && securityTaskParameters is null && lastStateChangedOn is null && subState is null ? default : new SecurityTaskPropertiesInfo(
                     state,
                     createdOn,
-                    new SecurityTaskProperties(securityTaskName, default),
+                    securityTaskParameters,
                     lastStateChangedOn,
                     subState,
                     default),
