@@ -3,6 +3,8 @@
 
 #nullable disable
 
+using System;
+using System.ComponentModel;
 using Azure.Provisioning;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -10,12 +12,32 @@ namespace Azure.Provisioning.EventGrid;
 
 public partial class EventGridDomain
 {
-    /// <summary> Gets the private endpoint connections. </summary>
-    // The generated API exposes deployable EventGridEventGridDomainPrivateEndpointConnection
-    // resources. Preserve the released inline EventGridPrivateEndpointConnectionData collection.
+    // TypeSpec models private endpoint connections as child resources. Keep the generated
+    // resource-based collection under a distinct name so the shipped data-model API can coexist.
+    /// <summary> Gets the private endpoint connection resources. </summary>
     [CodeGenMember("PrivateEndpointConnections")]
+    public BicepList<EventGridDomainPrivateEndpointConnection> PrivateEndpointConnectionResources
+    {
+        get
+        {
+            if (Properties is null)
+            {
+                Properties = new DomainProperties();
+            }
+            return Properties.PrivateEndpointConnections;
+        }
+    }
+
+    /// <summary>
+    /// Gets the private endpoint connection data models.
+    /// This compatibility property preserves the previous generated model shape.
+    /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is deprecated and it will be removed in a future version. Please use PrivateEndpointConnectionResources instead.")]
+#pragma warning disable CS0618 // EventGridPrivateEndpointConnectionData is intentionally preserved for obsolete compatibility APIs.
     public BicepList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections =>
-        Properties is null ? default : Properties.PrivateEndpointConnections;
+#pragma warning restore CS0618
+        Properties is null ? default : Properties.PrivateEndpointConnectionData;
 
     public static partial class ResourceVersions
     {

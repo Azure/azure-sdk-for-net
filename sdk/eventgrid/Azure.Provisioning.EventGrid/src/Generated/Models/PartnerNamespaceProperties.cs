@@ -14,6 +14,7 @@ namespace Azure.Provisioning.EventGrid
 {
     internal partial class PartnerNamespaceProperties : ProvisionableConstruct
     {
+        private BicepList<EventGridDomainPrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<PartnerNamespaceProvisioningState> _provisioningState;
         private BicepValue<ResourceIdentifier> _partnerRegistrationFullyQualifiedId;
         private BicepValue<TlsVersion> _minimumTlsVersionAllowed;
@@ -26,6 +27,16 @@ namespace Azure.Provisioning.EventGrid
         /// <summary> Creates a new PartnerNamespaceProperties. </summary>
         public PartnerNamespaceProperties()
         {
+        }
+
+        /// <summary> Gets the PrivateEndpointConnections. </summary>
+        public BicepList<EventGridDomainPrivateEndpointConnection> PrivateEndpointConnections
+        {
+            get
+            {
+                Initialize();
+                return _privateEndpointConnections;
+            }
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
@@ -142,6 +153,7 @@ namespace Azure.Provisioning.EventGrid
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _privateEndpointConnections = DefineListProperty<EventGridDomainPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _provisioningState = DefineProperty<PartnerNamespaceProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _partnerRegistrationFullyQualifiedId = DefineProperty<ResourceIdentifier>(nameof(PartnerRegistrationFullyQualifiedId), new string[] { "partnerRegistrationFullyQualifiedId" });
             _minimumTlsVersionAllowed = DefineProperty<TlsVersion>(nameof(MinimumTlsVersionAllowed), new string[] { "minimumTlsVersionAllowed" });

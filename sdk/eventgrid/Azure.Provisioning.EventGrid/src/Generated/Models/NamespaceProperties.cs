@@ -12,6 +12,7 @@ namespace Azure.Provisioning.EventGrid
 {
     internal partial class NamespaceProperties : ProvisionableConstruct
     {
+        private BicepList<EventGridDomainPrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<NamespaceProvisioningState> _provisioningState;
         private TopicsConfiguration _topicsConfiguration;
         private TopicSpacesConfiguration _topicSpacesConfiguration;
@@ -24,6 +25,21 @@ namespace Azure.Provisioning.EventGrid
         /// <summary> Creates a new NamespaceProperties. </summary>
         public NamespaceProperties()
         {
+        }
+
+        /// <summary> Gets or sets the PrivateEndpointConnections. </summary>
+        public BicepList<EventGridDomainPrivateEndpointConnection> PrivateEndpointConnections
+        {
+            get
+            {
+                Initialize();
+                return _privateEndpointConnections;
+            }
+            set
+            {
+                Initialize();
+                _privateEndpointConnections.Assign(value);
+            }
         }
 
         /// <summary> Gets the ProvisioningState. </summary>
@@ -145,6 +161,7 @@ namespace Azure.Provisioning.EventGrid
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _privateEndpointConnections = DefineListProperty<EventGridDomainPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" });
             _provisioningState = DefineProperty<NamespaceProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _topicsConfiguration = DefineModelProperty<TopicsConfiguration>(nameof(TopicsConfiguration), new string[] { "topicsConfiguration" });
             _topicSpacesConfiguration = DefineModelProperty<TopicSpacesConfiguration>(nameof(TopicSpacesConfiguration), new string[] { "topicSpacesConfiguration" });

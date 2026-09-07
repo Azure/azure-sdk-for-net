@@ -4,33 +4,36 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.EventGrid;
 
 internal partial class NamespaceProperties
 {
-    private BicepList<EventGridPrivateEndpointConnectionData> _customPrivateEndpointConnections;
+#pragma warning disable CS0618 // EventGridPrivateEndpointConnectionData is intentionally preserved for obsolete compatibility APIs.
+    private BicepList<EventGridPrivateEndpointConnectionData> _privateEndpointConnectionData;
+#pragma warning restore CS0618
 
-    // The generated property contains deployable EventGridNamespacePrivateEndpointConnection
-    // resources. Preserve the released inline data-model element type on the same wire path.
-    [CodeGenMember("PrivateEndpointConnections")]
-    public BicepList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections
+    // Backing storage for the obsolete flattened property on EventGridNamespace.
+#pragma warning disable CS0618 // EventGridPrivateEndpointConnectionData is intentionally preserved for obsolete compatibility APIs.
+    internal BicepList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnectionData
+#pragma warning restore CS0618
     {
         get
         {
             Initialize();
-            return _customPrivateEndpointConnections;
+            return _privateEndpointConnectionData;
         }
         set
         {
             Initialize();
-            _customPrivateEndpointConnections.Assign(value);
+            _privateEndpointConnectionData.Assign(value);
         }
     }
 
     partial void DefineAdditionalProperties()
     {
-        _customPrivateEndpointConnections = DefineListProperty<EventGridPrivateEndpointConnectionData>(nameof(PrivateEndpointConnections), ["privateEndpointConnections"]);
+#pragma warning disable CS0618 // EventGridPrivateEndpointConnectionData is intentionally preserved for obsolete compatibility APIs.
+        _privateEndpointConnectionData = DefineListProperty<EventGridPrivateEndpointConnectionData>(nameof(PrivateEndpointConnectionData), ["privateEndpointConnections"]);
+#pragma warning restore CS0618
     }
 }

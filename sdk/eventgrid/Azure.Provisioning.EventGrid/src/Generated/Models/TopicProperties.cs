@@ -11,7 +11,6 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
 {
-    /// <summary> Properties of the Topic. </summary>
     internal partial class TopicProperties : ProvisionableConstruct
     {
         private BicepList<EventGridDomainPrivateEndpointConnection> _privateEndpointConnections;

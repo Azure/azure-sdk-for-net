@@ -10,6 +10,7 @@ using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
+using System.ComponentModel;
 
 namespace Azure.Provisioning.EventGrid;
 
@@ -18,6 +19,8 @@ namespace Azure.Provisioning.EventGrid;
 /// </summary>
 // TypeSpec models private endpoint connections as deployable child resources. Preserve the
 // released inline data model used by resource PrivateEndpointConnections collections.
+[EditorBrowsable(EditorBrowsableState.Never)]
+[Obsolete("This type is deprecated and it will be removed in a future version. Please use EventGridDomainPrivateEndpointConnection instead.")]
 public partial class EventGridPrivateEndpointConnectionData : ProvisionableConstruct
 {
     /// <summary>

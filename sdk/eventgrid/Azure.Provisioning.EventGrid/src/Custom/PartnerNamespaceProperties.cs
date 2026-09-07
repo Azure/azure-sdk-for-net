@@ -4,28 +4,31 @@
 #nullable disable
 
 using Azure.Provisioning;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.EventGrid;
 
 internal partial class PartnerNamespaceProperties
 {
-    private BicepList<EventGridPrivateEndpointConnectionData> _customPrivateEndpointConnections;
+#pragma warning disable CS0618 // EventGridPrivateEndpointConnectionData is intentionally preserved for obsolete compatibility APIs.
+    private BicepList<EventGridPrivateEndpointConnectionData> _privateEndpointConnectionData;
+#pragma warning restore CS0618
 
-    // The generated property contains deployable PartnerNamespacePrivateEndpointConnection
-    // resources. Preserve the released inline data-model element type on the same wire path.
-    [CodeGenMember("PrivateEndpointConnections")]
-    public BicepList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnections
+    // Backing storage for the obsolete flattened property on PartnerNamespace.
+#pragma warning disable CS0618 // EventGridPrivateEndpointConnectionData is intentionally preserved for obsolete compatibility APIs.
+    internal BicepList<EventGridPrivateEndpointConnectionData> PrivateEndpointConnectionData
+#pragma warning restore CS0618
     {
         get
         {
             Initialize();
-            return _customPrivateEndpointConnections;
+            return _privateEndpointConnectionData;
         }
     }
 
     partial void DefineAdditionalProperties()
     {
-        _customPrivateEndpointConnections = DefineListProperty<EventGridPrivateEndpointConnectionData>(nameof(PrivateEndpointConnections), ["privateEndpointConnections"], isOutput: true);
+#pragma warning disable CS0618 // EventGridPrivateEndpointConnectionData is intentionally preserved for obsolete compatibility APIs.
+        _privateEndpointConnectionData = DefineListProperty<EventGridPrivateEndpointConnectionData>(nameof(PrivateEndpointConnectionData), ["privateEndpointConnections"], isOutput: true);
+#pragma warning restore CS0618
     }
 }
