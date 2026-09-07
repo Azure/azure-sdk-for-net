@@ -9,6 +9,33 @@ namespace Azure.Provisioning.Sql.Tests;
 
 public class BasicSqlTests
 {
+    [Test]
+    public void SensitivityLabelPropertiesAreWritable()
+    {
+        Assert.DoesNotThrow(() =>
+        {
+            ManagedDatabaseSensitivityLabel managedLabel = new(nameof(managedLabel))
+            {
+                LabelName = "label",
+                LabelId = "label-id",
+                InformationType = "information",
+                InformationTypeId = "information-id",
+                Rank = SensitivityLabelRank.High,
+                ClientClassificationSource = ClientClassificationSource.Native
+            };
+
+            SqlDatabaseSensitivityLabel sqlLabel = new(nameof(sqlLabel))
+            {
+                LabelName = "label",
+                LabelId = "label-id",
+                InformationType = "information",
+                InformationTypeId = "information-id",
+                Rank = SensitivityLabelRank.High,
+                ClientClassificationSource = ClientClassificationSource.Native
+            };
+        });
+    }
+
     internal static Trycep CreateSimpleSqlServerAndDatabaseTest()
     {
         return new Trycep().Define(
