@@ -17,69 +17,69 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Confluent
 {
-    /// <summary> Details of cluster record. </summary>
-    public partial class SCClusterRecordData : ResourceData, IJsonModel<SCClusterRecordData>
+    /// <summary> Details about environment name, metadata and environment id of an environment. </summary>
+    public partial class ConfluentEnvironmentData : ResourceData, IJsonModel<ConfluentEnvironmentData>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SCClusterRecordData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfluentEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSCClusterRecordData(document.RootElement, options);
+                        return DeserializeConfluentEnvironmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SCClusterRecordData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfluentEnvironmentData)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SCClusterRecordData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfluentEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerConfluentContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SCClusterRecordData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfluentEnvironmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SCClusterRecordData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ConfluentEnvironmentData>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SCClusterRecordData IPersistableModel<SCClusterRecordData>.Create(BinaryData data, ModelReaderWriterOptions options) => (SCClusterRecordData)PersistableModelCreateCore(data, options);
+        ConfluentEnvironmentData IPersistableModel<ConfluentEnvironmentData>.Create(BinaryData data, ModelReaderWriterOptions options) => (ConfluentEnvironmentData)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SCClusterRecordData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ConfluentEnvironmentData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="scClusterRecordData"> The <see cref="SCClusterRecordData"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SCClusterRecordData scClusterRecordData)
+        /// <param name="confluentEnvironmentData"> The <see cref="ConfluentEnvironmentData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ConfluentEnvironmentData confluentEnvironmentData)
         {
-            if (scClusterRecordData == null)
+            if (confluentEnvironmentData == null)
             {
                 return null;
             }
-            return RequestContent.Create(scClusterRecordData, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(confluentEnvironmentData, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SCClusterRecordData"/> from. </param>
-        internal static SCClusterRecordData FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="ConfluentEnvironmentData"/> from. </param>
+        internal static ConfluentEnvironmentData FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSCClusterRecordData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeConfluentEnvironmentData(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SCClusterRecordData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ConfluentEnvironmentData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SCClusterRecordData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfluentEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SCClusterRecordData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfluentEnvironmentData)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Kind))
@@ -125,24 +125,24 @@ namespace Azure.ResourceManager.Confluent
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SCClusterRecordData IJsonModel<SCClusterRecordData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (SCClusterRecordData)JsonModelCreateCore(ref reader, options);
+        ConfluentEnvironmentData IJsonModel<ConfluentEnvironmentData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (ConfluentEnvironmentData)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual ResourceData JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SCClusterRecordData>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ConfluentEnvironmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SCClusterRecordData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfluentEnvironmentData)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSCClusterRecordData(document.RootElement, options);
+            return DeserializeConfluentEnvironmentData(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SCClusterRecordData DeserializeSCClusterRecordData(JsonElement element, ModelReaderWriterOptions options)
+        internal static ConfluentEnvironmentData DeserializeConfluentEnvironmentData(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Confluent
             ResourceType resourceType = default;
             SystemData systemData = default;
             string kind = default;
-            ClusterProperties properties = default;
+            EnvironmentProperties properties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Confluent
                     {
                         continue;
                     }
-                    properties = ClusterProperties.DeserializeClusterProperties(prop.Value, options);
+                    properties = EnvironmentProperties.DeserializeEnvironmentProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Confluent
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SCClusterRecordData(
+            return new ConfluentEnvironmentData(
                 id,
                 name,
                 resourceType,

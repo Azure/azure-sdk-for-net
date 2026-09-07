@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <summary> Initializes a new instance of <see cref="GetEnvironmentsResponse"/>. </summary>
         /// <param name="value"> The SCEnvironmentRecord items on this page. </param>
-        internal GetEnvironmentsResponse(IEnumerable<SCEnvironmentRecordData> value)
+        internal GetEnvironmentsResponse(IEnumerable<ConfluentEnvironmentData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <param name="value"> The SCEnvironmentRecord items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GetEnvironmentsResponse(IList<SCEnvironmentRecordData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GetEnvironmentsResponse(IList<ConfluentEnvironmentData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Confluent.Models
         }
 
         /// <summary> The SCEnvironmentRecord items on this page. </summary>
-        public IList<SCEnvironmentRecordData> Value { get; }
+        public IList<ConfluentEnvironmentData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         public Uri NextLink { get; }

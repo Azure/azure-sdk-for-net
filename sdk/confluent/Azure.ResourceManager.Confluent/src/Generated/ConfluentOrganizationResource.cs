@@ -2219,11 +2219,11 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        /// <summary> Gets a collection of SCEnvironmentRecords in the <see cref="ConfluentOrganizationResource"/>. </summary>
-        /// <returns> An object representing collection of SCEnvironmentRecords and their operations over a SCEnvironmentRecordResource. </returns>
-        public virtual SCEnvironmentRecordCollection GetSCEnvironmentRecords()
+        /// <summary> Gets a collection of ConfluentEnvironments in the <see cref="ConfluentOrganizationResource"/>. </summary>
+        /// <returns> An object representing collection of ConfluentEnvironments and their operations over a ConfluentEnvironmentResource. </returns>
+        public virtual ConfluentEnvironmentCollection GetConfluentEnvironments()
         {
-            return GetCachedClient(client => new SCEnvironmentRecordCollection(client, Id));
+            return GetCachedClient(client => new ConfluentEnvironmentCollection(client, Id));
         }
 
         /// <summary> Get Environment details by environment Id. </summary>
@@ -2232,11 +2232,11 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<SCEnvironmentRecordResource>> GetSCEnvironmentRecordAsync(string environmentId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfluentEnvironmentResource>> GetConfluentEnvironmentAsync(string environmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
-            return await GetSCEnvironmentRecords().GetAsync(environmentId, cancellationToken).ConfigureAwait(false);
+            return await GetConfluentEnvironments().GetAsync(environmentId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get Environment details by environment Id. </summary>
@@ -2245,11 +2245,11 @@ namespace Azure.ResourceManager.Confluent
         /// <exception cref="ArgumentNullException"> <paramref name="environmentId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="environmentId"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<SCEnvironmentRecordResource> GetSCEnvironmentRecord(string environmentId, CancellationToken cancellationToken = default)
+        public virtual Response<ConfluentEnvironmentResource> GetConfluentEnvironment(string environmentId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(environmentId, nameof(environmentId));
 
-            return GetSCEnvironmentRecords().Get(environmentId, cancellationToken);
+            return GetConfluentEnvironments().Get(environmentId, cancellationToken);
         }
     }
 }

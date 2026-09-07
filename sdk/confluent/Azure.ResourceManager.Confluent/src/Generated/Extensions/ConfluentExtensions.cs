@@ -57,39 +57,39 @@ namespace Azure.ResourceManager.Confluent
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SCEnvironmentRecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ConfluentEnvironmentResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConfluentArmClient.GetSCEnvironmentRecordResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableConfluentArmClient.GetConfluentEnvironmentResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SCEnvironmentRecordResource"/> object. </returns>
-        public static SCEnvironmentRecordResource GetSCEnvironmentRecordResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConfluentEnvironmentResource"/> object. </returns>
+        public static ConfluentEnvironmentResource GetConfluentEnvironmentResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableConfluentArmClient(client).GetSCEnvironmentRecordResource(id);
+            return GetMockableConfluentArmClient(client).GetConfluentEnvironmentResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="SCClusterRecordResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ConfluentClusterResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConfluentArmClient.GetSCClusterRecordResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableConfluentArmClient.GetConfluentClusterResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="SCClusterRecordResource"/> object. </returns>
-        public static SCClusterRecordResource GetSCClusterRecordResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConfluentClusterResource"/> object. </returns>
+        public static ConfluentClusterResource GetConfluentClusterResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableConfluentArmClient(client).GetSCClusterRecordResource(id);
+            return GetMockableConfluentArmClient(client).GetConfluentClusterResource(id);
         }
 
         /// <summary>

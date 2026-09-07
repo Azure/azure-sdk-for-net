@@ -14,7 +14,7 @@ using Azure.ResourceManager.Confluent.Models;
 
 namespace Azure.ResourceManager.Confluent
 {
-    internal partial class SCEnvironmentRecordsGetAccessEnvironmentsCollectionResultOfT : Pageable<SCEnvironmentRecordData>
+    internal partial class SCEnvironmentRecordsGetAccessEnvironmentsCollectionResultOfT : Pageable<ConfluentEnvironmentData>
     {
         private readonly SCEnvironmentRecords _client;
         private readonly Guid _subscriptionId;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SCEnvironmentRecordsGetAccessEnvironmentsCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<SCEnvironmentRecordData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ConfluentEnvironmentData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Confluent
                 }
                 GetEnvironmentsResponse result = GetEnvironmentsResponse.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<SCEnvironmentRecordData>.FromValues((IReadOnlyList<SCEnvironmentRecordData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ConfluentEnvironmentData>.FromValues((IReadOnlyList<ConfluentEnvironmentData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

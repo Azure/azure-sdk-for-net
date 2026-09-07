@@ -14,7 +14,7 @@ using Azure.ResourceManager.Confluent.Models;
 
 namespace Azure.ResourceManager.Confluent
 {
-    internal partial class SCClusterRecordsGetClustersCollectionResultOfT : Pageable<SCClusterRecordData>
+    internal partial class SCClusterRecordsGetClustersCollectionResultOfT : Pageable<ConfluentClusterData>
     {
         private readonly SCClusterRecords _client;
         private readonly Guid _subscriptionId;
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of SCClusterRecordsGetClustersCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<SCClusterRecordData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<ConfluentClusterData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Confluent
                 }
                 ListClustersSuccessResponse result = ListClustersSuccessResponse.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<SCClusterRecordData>.FromValues((IReadOnlyList<SCClusterRecordData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ConfluentClusterData>.FromValues((IReadOnlyList<ConfluentClusterData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

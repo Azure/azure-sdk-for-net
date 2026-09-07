@@ -19,7 +19,7 @@ namespace Azure.ResourceManager.Confluent
     /// <summary>
     /// A class representing a ConfluentConnector along with the instance operations that can be performed on it.
     /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ConfluentConnectorResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="SCClusterRecordResource"/> using the GetConfluentConnectors method.
+    /// Otherwise you can get one from its parent resource <see cref="ConfluentClusterResource"/> using the GetConfluentConnectors method.
     /// </summary>
     public partial class ConfluentConnectorResource : ArmResource
     {

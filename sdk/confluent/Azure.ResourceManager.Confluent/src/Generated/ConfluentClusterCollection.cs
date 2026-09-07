@@ -19,28 +19,28 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.Confluent
 {
     /// <summary>
-    /// A class representing a collection of <see cref="SCClusterRecordResource"/> and their operations.
-    /// Each <see cref="SCClusterRecordResource"/> in the collection will belong to the same instance of <see cref="SCEnvironmentRecordResource"/>.
-    /// To get a <see cref="SCClusterRecordCollection"/> instance call the GetSCClusterRecords method from an instance of <see cref="SCEnvironmentRecordResource"/>.
+    /// A class representing a collection of <see cref="ConfluentClusterResource"/> and their operations.
+    /// Each <see cref="ConfluentClusterResource"/> in the collection will belong to the same instance of <see cref="ConfluentEnvironmentResource"/>.
+    /// To get a <see cref="ConfluentClusterCollection"/> instance call the GetConfluentClusters method from an instance of <see cref="ConfluentEnvironmentResource"/>.
     /// </summary>
-    public partial class SCClusterRecordCollection : ArmCollection, IEnumerable<SCClusterRecordResource>, IAsyncEnumerable<SCClusterRecordResource>
+    public partial class ConfluentClusterCollection : ArmCollection, IEnumerable<ConfluentClusterResource>, IAsyncEnumerable<ConfluentClusterResource>
     {
         private readonly ClientDiagnostics _scClusterRecordsClientDiagnostics;
         private readonly SCClusterRecords _scClusterRecordsRestClient;
 
-        /// <summary> Initializes a new instance of SCClusterRecordCollection for mocking. </summary>
-        protected SCClusterRecordCollection()
+        /// <summary> Initializes a new instance of ConfluentClusterCollection for mocking. </summary>
+        protected ConfluentClusterCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SCClusterRecordCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentClusterCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal SCClusterRecordCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal ConfluentClusterCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(SCClusterRecordResource.ResourceType, out string scClusterRecordApiVersion);
-            _scClusterRecordsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", SCClusterRecordResource.ResourceType.Namespace, Diagnostics);
-            _scClusterRecordsRestClient = new SCClusterRecords(_scClusterRecordsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scClusterRecordApiVersion ?? "2026-06-02-preview");
+            TryGetApiVersion(ConfluentClusterResource.ResourceType, out string confluentClusterApiVersion);
+            _scClusterRecordsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ConfluentClusterResource.ResourceType.Namespace, Diagnostics);
+            _scClusterRecordsRestClient = new SCClusterRecords(_scClusterRecordsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, confluentClusterApiVersion ?? "2026-06-02-preview");
             ValidateResourceId(id);
         }
 
@@ -48,9 +48,9 @@ namespace Azure.ResourceManager.Confluent
         [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
-            if (id.ResourceType != SCEnvironmentRecordResource.ResourceType)
+            if (id.ResourceType != ConfluentEnvironmentResource.ResourceType)
             {
-                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, SCEnvironmentRecordResource.ResourceType), nameof(id));
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ConfluentEnvironmentResource.ResourceType), nameof(id));
             }
         }
 
@@ -77,11 +77,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<ArmOperation<SCClusterRecordResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterId, SCClusterRecordData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<ConfluentClusterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string clusterId, ConfluentClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
 
-            using DiagnosticScope scope = _scClusterRecordsClientDiagnostics.CreateScope("SCClusterRecordCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _scClusterRecordsClientDiagnostics.CreateScope("ConfluentClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -89,12 +89,12 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scClusterRecordsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterId, SCClusterRecordData.ToRequestContent(data), context);
+                HttpMessage message = _scClusterRecordsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterId, ConfluentClusterData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SCClusterRecordData> response = Response.FromValue(SCClusterRecordData.FromResponse(result), result);
+                Response<ConfluentClusterData> response = Response.FromValue(ConfluentClusterData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ConfluentArmOperation<SCClusterRecordResource> operation = new ConfluentArmOperation<SCClusterRecordResource>(Response.FromValue(new SCClusterRecordResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ConfluentArmOperation<ConfluentClusterResource> operation = new ConfluentArmOperation<ConfluentClusterResource>(Response.FromValue(new ConfluentClusterResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -131,11 +131,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual ArmOperation<SCClusterRecordResource> CreateOrUpdate(WaitUntil waitUntil, string clusterId, SCClusterRecordData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<ConfluentClusterResource> CreateOrUpdate(WaitUntil waitUntil, string clusterId, ConfluentClusterData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
 
-            using DiagnosticScope scope = _scClusterRecordsClientDiagnostics.CreateScope("SCClusterRecordCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _scClusterRecordsClientDiagnostics.CreateScope("ConfluentClusterCollection.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -143,12 +143,12 @@ namespace Azure.ResourceManager.Confluent
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scClusterRecordsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterId, SCClusterRecordData.ToRequestContent(data), context);
+                HttpMessage message = _scClusterRecordsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterId, ConfluentClusterData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SCClusterRecordData> response = Response.FromValue(SCClusterRecordData.FromResponse(result), result);
+                Response<ConfluentClusterData> response = Response.FromValue(ConfluentClusterData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                ConfluentArmOperation<SCClusterRecordResource> operation = new ConfluentArmOperation<SCClusterRecordResource>(Response.FromValue(new SCClusterRecordResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                ConfluentArmOperation<ConfluentClusterResource> operation = new ConfluentArmOperation<ConfluentClusterResource>(Response.FromValue(new ConfluentClusterResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -183,11 +183,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<SCClusterRecordResource>> GetAsync(string clusterId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ConfluentClusterResource>> GetAsync(string clusterId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
 
-            using DiagnosticScope scope = _scClusterRecordsClientDiagnostics.CreateScope("SCClusterRecordCollection.Get");
+            using DiagnosticScope scope = _scClusterRecordsClientDiagnostics.CreateScope("ConfluentClusterCollection.Get");
             scope.Start();
             try
             {
@@ -197,12 +197,12 @@ namespace Azure.ResourceManager.Confluent
                 };
                 HttpMessage message = _scClusterRecordsRestClient.CreateGetClusterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterId, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SCClusterRecordData> response = Response.FromValue(SCClusterRecordData.FromResponse(result), result);
+                Response<ConfluentClusterData> response = Response.FromValue(ConfluentClusterData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SCClusterRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -232,11 +232,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<SCClusterRecordResource> Get(string clusterId, CancellationToken cancellationToken = default)
+        public virtual Response<ConfluentClusterResource> Get(string clusterId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
 
-            using DiagnosticScope scope = _scClusterRecordsClientDiagnostics.CreateScope("SCClusterRecordCollection.Get");
+            using DiagnosticScope scope = _scClusterRecordsClientDiagnostics.CreateScope("ConfluentClusterCollection.Get");
             scope.Start();
             try
             {
@@ -246,12 +246,12 @@ namespace Azure.ResourceManager.Confluent
                 };
                 HttpMessage message = _scClusterRecordsRestClient.CreateGetClusterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterId, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SCClusterRecordData> response = Response.FromValue(SCClusterRecordData.FromResponse(result), result);
+                Response<ConfluentClusterData> response = Response.FromValue(ConfluentClusterData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new SCClusterRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -280,14 +280,14 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="pageSize"> Pagination size. </param>
         /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SCClusterRecordResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<SCClusterRecordResource> GetAllAsync(int? pageSize = default, string pageToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConfluentClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ConfluentClusterResource> GetAllAsync(int? pageSize = default, string pageToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<SCClusterRecordData, SCClusterRecordResource>(new SCClusterRecordsGetClustersAsyncCollectionResultOfT(
+            return new AsyncPageableWrapper<ConfluentClusterData, ConfluentClusterResource>(new SCClusterRecordsGetClustersAsyncCollectionResultOfT(
                 _scClusterRecordsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Confluent
                 pageSize,
                 pageToken,
                 context,
-                "SCClusterRecordCollection.GetAll"), data => new SCClusterRecordResource(Client, data));
+                "ConfluentClusterCollection.GetAll"), data => new ConfluentClusterResource(Client, data));
         }
 
         /// <summary>
@@ -319,14 +319,14 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="pageSize"> Pagination size. </param>
         /// <param name="pageToken"> An opaque pagination token to fetch the next set of records. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="SCClusterRecordResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<SCClusterRecordResource> GetAll(int? pageSize = default, string pageToken = default, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ConfluentClusterResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ConfluentClusterResource> GetAll(int? pageSize = default, string pageToken = default, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<SCClusterRecordData, SCClusterRecordResource>(new SCClusterRecordsGetClustersCollectionResultOfT(
+            return new PageableWrapper<ConfluentClusterData, ConfluentClusterResource>(new SCClusterRecordsGetClustersCollectionResultOfT(
                 _scClusterRecordsRestClient,
                 Guid.Parse(Id.SubscriptionId),
                 Id.ResourceGroupName,
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Confluent
                 pageSize,
                 pageToken,
                 context,
-                "SCClusterRecordCollection.GetAll"), data => new SCClusterRecordResource(Client, data));
+                "ConfluentClusterCollection.GetAll"), data => new ConfluentClusterResource(Client, data));
         }
 
         /// <summary>
@@ -363,7 +363,7 @@ namespace Azure.ResourceManager.Confluent
         {
             Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
 
-            using DiagnosticScope scope = _scClusterRecordsClientDiagnostics.CreateScope("SCClusterRecordCollection.Exists");
+            using DiagnosticScope scope = _scClusterRecordsClientDiagnostics.CreateScope("ConfluentClusterCollection.Exists");
             scope.Start();
             try
             {
@@ -374,14 +374,14 @@ namespace Azure.ResourceManager.Confluent
                 HttpMessage message = _scClusterRecordsRestClient.CreateGetClusterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<SCClusterRecordData> response = default;
+                Response<ConfluentClusterData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SCClusterRecordData.FromResponse(result), result);
+                        response = Response.FromValue(ConfluentClusterData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SCClusterRecordData)null, result);
+                        response = Response.FromValue((ConfluentClusterData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Confluent
         {
             Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
 
-            using DiagnosticScope scope = _scClusterRecordsClientDiagnostics.CreateScope("SCClusterRecordCollection.Exists");
+            using DiagnosticScope scope = _scClusterRecordsClientDiagnostics.CreateScope("ConfluentClusterCollection.Exists");
             scope.Start();
             try
             {
@@ -431,14 +431,14 @@ namespace Azure.ResourceManager.Confluent
                 HttpMessage message = _scClusterRecordsRestClient.CreateGetClusterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<SCClusterRecordData> response = default;
+                Response<ConfluentClusterData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SCClusterRecordData.FromResponse(result), result);
+                        response = Response.FromValue(ConfluentClusterData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SCClusterRecordData)null, result);
+                        response = Response.FromValue((ConfluentClusterData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
@@ -473,11 +473,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<SCClusterRecordResource>> GetIfExistsAsync(string clusterId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<ConfluentClusterResource>> GetIfExistsAsync(string clusterId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
 
-            using DiagnosticScope scope = _scClusterRecordsClientDiagnostics.CreateScope("SCClusterRecordCollection.GetIfExists");
+            using DiagnosticScope scope = _scClusterRecordsClientDiagnostics.CreateScope("ConfluentClusterCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -488,23 +488,23 @@ namespace Azure.ResourceManager.Confluent
                 HttpMessage message = _scClusterRecordsRestClient.CreateGetClusterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterId, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
-                Response<SCClusterRecordData> response = default;
+                Response<ConfluentClusterData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SCClusterRecordData.FromResponse(result), result);
+                        response = Response.FromValue(ConfluentClusterData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SCClusterRecordData)null, result);
+                        response = Response.FromValue((ConfluentClusterData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<SCClusterRecordResource>(response.GetRawResponse());
+                    return new NoValueResponse<ConfluentClusterResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new SCClusterRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -534,11 +534,11 @@ namespace Azure.ResourceManager.Confluent
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clusterId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="clusterId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<SCClusterRecordResource> GetIfExists(string clusterId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<ConfluentClusterResource> GetIfExists(string clusterId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
 
-            using DiagnosticScope scope = _scClusterRecordsClientDiagnostics.CreateScope("SCClusterRecordCollection.GetIfExists");
+            using DiagnosticScope scope = _scClusterRecordsClientDiagnostics.CreateScope("ConfluentClusterCollection.GetIfExists");
             scope.Start();
             try
             {
@@ -549,23 +549,23 @@ namespace Azure.ResourceManager.Confluent
                 HttpMessage message = _scClusterRecordsRestClient.CreateGetClusterRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, clusterId, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
-                Response<SCClusterRecordData> response = default;
+                Response<ConfluentClusterData> response = default;
                 switch (result.Status)
                 {
                     case 200:
-                        response = Response.FromValue(SCClusterRecordData.FromResponse(result), result);
+                        response = Response.FromValue(ConfluentClusterData.FromResponse(result), result);
                         break;
                     case 404:
-                        response = Response.FromValue((SCClusterRecordData)null, result);
+                        response = Response.FromValue((ConfluentClusterData)null, result);
                         break;
                     default:
                         throw new RequestFailedException(result);
                 }
                 if (response.Value == null)
                 {
-                    return new NoValueResponse<SCClusterRecordResource>(response.GetRawResponse());
+                    return new NoValueResponse<ConfluentClusterResource>(response.GetRawResponse());
                 }
-                return Response.FromValue(new SCClusterRecordResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new ConfluentClusterResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -574,7 +574,7 @@ namespace Azure.ResourceManager.Confluent
             }
         }
 
-        IEnumerator<SCClusterRecordResource> IEnumerable<SCClusterRecordResource>.GetEnumerator()
+        IEnumerator<ConfluentClusterResource> IEnumerable<ConfluentClusterResource>.GetEnumerator()
         {
             return GetAll().GetEnumerator();
         }
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.Confluent
         }
 
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        IAsyncEnumerator<SCClusterRecordResource> IAsyncEnumerable<SCClusterRecordResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
+        IAsyncEnumerator<ConfluentClusterResource> IAsyncEnumerable<ConfluentClusterResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);
         }

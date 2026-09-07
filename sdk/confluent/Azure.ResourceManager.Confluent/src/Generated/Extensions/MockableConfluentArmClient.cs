@@ -35,22 +35,22 @@ namespace Azure.ResourceManager.Confluent.Mocking
             return new ConfluentOrganizationResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SCEnvironmentRecordResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ConfluentEnvironmentResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SCEnvironmentRecordResource"/> object. </returns>
-        public virtual SCEnvironmentRecordResource GetSCEnvironmentRecordResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConfluentEnvironmentResource"/> object. </returns>
+        public virtual ConfluentEnvironmentResource GetConfluentEnvironmentResource(ResourceIdentifier id)
         {
-            SCEnvironmentRecordResource.ValidateResourceId(id);
-            return new SCEnvironmentRecordResource(Client, id);
+            ConfluentEnvironmentResource.ValidateResourceId(id);
+            return new ConfluentEnvironmentResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="SCClusterRecordResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ConfluentClusterResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="SCClusterRecordResource"/> object. </returns>
-        public virtual SCClusterRecordResource GetSCClusterRecordResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ConfluentClusterResource"/> object. </returns>
+        public virtual ConfluentClusterResource GetConfluentClusterResource(ResourceIdentifier id)
         {
-            SCClusterRecordResource.ValidateResourceId(id);
-            return new SCClusterRecordResource(Client, id);
+            ConfluentClusterResource.ValidateResourceId(id);
+            return new ConfluentClusterResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ConfluentConnectorResource"/> along with the instance operations that can be performed on it but with no data. </summary>

@@ -13,37 +13,37 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Confluent
 {
-    /// <summary> Details of cluster record. </summary>
-    public partial class SCClusterRecordData : ResourceData
+    /// <summary> Details about environment name, metadata and environment id of an environment. </summary>
+    public partial class ConfluentEnvironmentData : ResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SCClusterRecordData"/>. </summary>
-        public SCClusterRecordData()
+        /// <summary> Initializes a new instance of <see cref="ConfluentEnvironmentData"/>. </summary>
+        public ConfluentEnvironmentData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SCClusterRecordData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ConfluentEnvironmentData"/>. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="kind"> Type of cluster. </param>
-        /// <param name="properties"> Cluster Properties. </param>
+        /// <param name="kind"> Type of environment. </param>
+        /// <param name="properties"> Environment properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SCClusterRecordData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, ClusterProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ConfluentEnvironmentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string kind, EnvironmentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Kind = kind;
             Properties = properties;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
-        /// <summary> Type of cluster. </summary>
+        /// <summary> Type of environment. </summary>
         public string Kind { get; set; }
 
-        /// <summary> Cluster Properties. </summary>
-        internal ClusterProperties Properties { get; set; }
+        /// <summary> Environment properties. </summary>
+        internal EnvironmentProperties Properties { get; set; }
 
         /// <summary> Metadata of the record. </summary>
         public SCMetadataEntity Metadata
@@ -56,43 +56,26 @@ namespace Azure.ResourceManager.Confluent
             {
                 if (Properties is null)
                 {
-                    Properties = new ClusterProperties();
+                    Properties = new EnvironmentProperties();
                 }
                 Properties.Metadata = value;
             }
         }
 
-        /// <summary> Specification of the cluster. </summary>
-        public SCClusterSpecEntity Spec
+        /// <summary> Stream governance configuration. </summary>
+        public ConfluentPackage? StreamGovernanceConfigPackage
         {
             get
             {
-                return Properties is null ? default : Properties.Spec;
+                return Properties is null ? default : Properties.StreamGovernanceConfigPackage;
             }
             set
             {
                 if (Properties is null)
                 {
-                    Properties = new ClusterProperties();
+                    Properties = new EnvironmentProperties();
                 }
-                Properties.Spec = value;
-            }
-        }
-
-        /// <summary> Specification of the cluster status. </summary>
-        public ClusterStatusEntity Status
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Status;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ClusterProperties();
-                }
-                Properties.Status = value;
+                Properties.StreamGovernanceConfigPackage = value;
             }
         }
     }

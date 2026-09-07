@@ -1,5 +1,5 @@
 directory: specification/confluent/resource-manager/Microsoft.Confluent/Confluent
-commit: 35f2c1dd33909f2f5a96854f8865af6b56c8eadb
+commit: de97d4852301409a280b7b6d5f1a35e489d41abe
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

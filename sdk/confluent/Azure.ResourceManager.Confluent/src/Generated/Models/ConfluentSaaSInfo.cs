@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -24,13 +25,13 @@ namespace Azure.ResourceManager.Confluent.Models
         /// <summary> Initializes a new instance of <see cref="ConfluentSaaSInfo"/>. </summary>
         /// <param name="saaSResourceId"> SaaS resource id. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ConfluentSaaSInfo(string saaSResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ConfluentSaaSInfo(ResourceIdentifier saaSResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SaaSResourceId = saaSResourceId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> SaaS resource id. </summary>
-        public string SaaSResourceId { get; set; }
+        public ResourceIdentifier SaaSResourceId { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <summary>
         /// Backward-compatible factory method for <see cref="SCClusterRecord"/>.
-        /// Use <see cref="SCClusterRecordData"/> in new code.
+        /// Use <see cref="ConfluentClusterData"/> in new code.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SCClusterRecord SCClusterRecord(string kind = null, string id = null, string name = null, SCMetadataEntity metadata = null, SCClusterSpecEntity spec = null, ClusterStatusEntity status = null)
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.Confluent.Models
 
         /// <summary>
         /// Backward-compatible factory method for <see cref="SCEnvironmentRecord"/>.
-        /// Use <see cref="SCEnvironmentRecordData"/> in new code.
+        /// Use <see cref="ConfluentEnvironmentData"/> in new code.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SCEnvironmentRecord SCEnvironmentRecord(string kind = null, string id = null, string name = null, SCMetadataEntity metadata = null)
