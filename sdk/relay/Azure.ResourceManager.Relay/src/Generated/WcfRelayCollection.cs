@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Relay
         {
             TryGetApiVersion(WcfRelayResource.ResourceType, out string wcfRelayApiVersion);
             _wcfRelaysClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Relay", WcfRelayResource.ResourceType.Namespace, Diagnostics);
-            _wcfRelaysRestClient = new WCFRelays(_wcfRelaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, wcfRelayApiVersion ?? "2024-01-01");
+            _wcfRelaysRestClient = new WCFRelays(_wcfRelaysClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, wcfRelayApiVersion ?? "2026-01-01");
             ValidateResourceId(id);
         }
 
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Relay
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-01-01. </description>
+        /// <description> 2026-01-01. </description>
         /// </item>
         /// </list>
         /// </summary>

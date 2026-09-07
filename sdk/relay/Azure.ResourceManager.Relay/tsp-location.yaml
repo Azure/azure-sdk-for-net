@@ -1,4 +1,6 @@
 directory: specification/relay/resource-manager/Microsoft.Relay/Relay
-commit: 4496888f7022cbd5834ee593a13effb8482c3764
+commit: e03e8c1a6ebebcd8e8c303ce938b810546bd8a06
 repo: Azure/azure-rest-api-specs
-emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
+additionalDirectories: 
+
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json
