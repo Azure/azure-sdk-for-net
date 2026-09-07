@@ -1,10 +1,25 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ComponentModel;
+
 namespace Azure.Provisioning.Sql;
 
 public partial class ManagedInstancePrivateEndpointConnection
 {
+    /// <summary>
+    /// This property is obsolete and will be removed in a future release.
+    /// Please use <see cref="PrivateLinkServiceConnectionState"/> instead.
+    /// </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is obsolete and will be removed in a future release. Please use PrivateLinkServiceConnectionState instead.", false)]
+    public ManagedInstancePrivateLinkServiceConnectionStateProperty ConnectionState
+    {
+        get => PrivateLinkServiceConnectionState;
+        set => PrivateLinkServiceConnectionState = value;
+    }
+
     // Preserve API versions shipped by the reflection-based generator that are not emitted
     // by the TypeSpec-based generator when targeting only the current stable API version.
     public static partial class ResourceVersions

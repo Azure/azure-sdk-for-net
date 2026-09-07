@@ -1557,6 +1557,8 @@ namespace Azure.Provisioning.Sql
     public partial class ManagedInstancePrivateEndpointConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public ManagedInstancePrivateEndpointConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future release. Please use PrivateLinkServiceConnectionState instead.", false)]
+        public Azure.Provisioning.Sql.ManagedInstancePrivateLinkServiceConnectionStateProperty ConnectionState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.ManagedInstance Parent { get { throw null; } set { } }
@@ -1792,6 +1794,7 @@ namespace Azure.Provisioning.Sql
     {
         public ManagedServerDnsAlias(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<string> AzureDnsRecord { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> CreateDnsRecord { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.ManagedInstance Parent { get { throw null; } set { } }
@@ -2650,6 +2653,7 @@ namespace Azure.Provisioning.Sql
     {
         public SqlDatabaseSqlVulnerabilityAssessmentBaseline(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsLatestScan { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.SqlDatabaseSqlVulnerabilityAssessment Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.BicepList<Azure.Provisioning.BicepList<string>>> Results { get { throw null; } set { } }
@@ -2665,6 +2669,7 @@ namespace Azure.Provisioning.Sql
     {
         public SqlDatabaseSqlVulnerabilityAssessmentBaselineRule(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsLatestScan { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.SqlDatabaseSqlVulnerabilityAssessmentBaseline Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.BicepList<string>> Results { get { throw null; } set { } }
@@ -3751,6 +3756,7 @@ namespace Azure.Provisioning.Sql
     {
         public SqlServerSqlVulnerabilityAssessmentBaseline(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsLatestScan { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.SqlServerSqlVulnerabilityAssessment Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<Azure.Provisioning.BicepList<Azure.Provisioning.BicepList<string>>> Results { get { throw null; } set { } }
@@ -3770,6 +3776,7 @@ namespace Azure.Provisioning.Sql
     {
         public SqlServerSqlVulnerabilityAssessmentBaselineRule(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<bool> IsLatestScan { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.SqlServerSqlVulnerabilityAssessmentBaseline Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.BicepList<string>> Results { get { throw null; } set { } }
