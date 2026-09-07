@@ -17,6 +17,7 @@ namespace Azure.Storage.Cryptography
         private readonly Stream _innerStream;
         private readonly CryptoStreamMode _mode;
         private readonly IAuthenticatedCryptographicTransform _transform;
+        private readonly ArrayPool<byte> _arrayPool;
         private bool _flushedFinal;
 
         private byte[] _buffer;
@@ -46,11 +47,13 @@ namespace Azure.Storage.Cryptography
             Stream innerStream,
             IAuthenticatedCryptographicTransform transform,
             int regionDataSize,
-            CryptoStreamMode streamMode)
+            CryptoStreamMode streamMode,
+            ArrayPool<byte> arrayPool = default)
         {
             _innerStream = innerStream;
             _transform = transform;
             _mode = streamMode;
+            _arrayPool = arrayPool ?? ArrayPool<byte>.Shared;
 
             // determine size of buffers. ciphertextLength = nonceLength + plaintextLength + tagLength.
             // determine if the stream's main buffer will hold ciphertext or plaintext and size accordingly.
@@ -77,7 +80,7 @@ namespace Azure.Storage.Cryptography
                 throw Errors.InvalidArgument(nameof(transform));
             }
 
-            _buffer = ArrayPool<byte>.Shared.Rent(bufferSize);
+            _buffer = _arrayPool.Rent(bufferSize);
             _bufferLength = bufferSize; // not necessarily the total rented array size
             _bufferPopulatedLength = _bufferLength; // starting at max length triggers the refresh upfront when needed
 
@@ -112,7 +115,7 @@ namespace Azure.Storage.Cryptography
                 byte[] transformInputBuffer = null;
                 try
                 {
-                    transformInputBuffer = ArrayPool<byte>.Shared.Rent(_tempRefillBufferSize);
+                    transformInputBuffer = _arrayPool.Rent(_tempRefillBufferSize);
 
                     int totalRead = 0;
                     while (totalRead < _tempRefillBufferSize)
@@ -146,7 +149,7 @@ namespace Azure.Storage.Cryptography
                 }
                 finally
                 {
-                    ArrayPool<byte>.Shared.Return(transformInputBuffer);
+                    _arrayPool.Return(transformInputBuffer);
                 }
             }
 
@@ -218,7 +221,7 @@ namespace Azure.Storage.Cryptography
             byte[] transformedContentsBuffer = null;
             try
             {
-                transformedContentsBuffer = ArrayPool<byte>.Shared.Rent(_tempRefillBufferSize);
+                transformedContentsBuffer = _arrayPool.Rent(_tempRefillBufferSize);
                 int outputBytes = _transform.TransformAuthenticationBlock(
                     input: new ReadOnlySpan<byte>(_buffer, 0, _bufferLength),
                     output: transformedContentsBuffer);
@@ -243,7 +246,7 @@ namespace Azure.Storage.Cryptography
             }
             finally
             {
-                ArrayPool<byte>.Shared.Return(transformedContentsBuffer);
+                _arrayPool.Return(transformedContentsBuffer);
             }
             return true;
         }
@@ -268,7 +271,7 @@ namespace Azure.Storage.Cryptography
                 byte[] transformedContentsBuffer = null;
                 try
                 {
-                    transformedContentsBuffer = ArrayPool<byte>.Shared.Rent(_tempRefillBufferSize);
+                    transformedContentsBuffer = _arrayPool.Rent(_tempRefillBufferSize);
                     int outputBytes = _transform.TransformAuthenticationBlock(
                         input: new ReadOnlySpan<byte>(_buffer, 0, _bufferPos),
                         output: transformedContentsBuffer);
@@ -293,7 +296,7 @@ namespace Azure.Storage.Cryptography
                 }
                 finally
                 {
-                    ArrayPool<byte>.Shared.Return(transformedContentsBuffer);
+                    _arrayPool.Return(transformedContentsBuffer);
                 }
             }
 
@@ -342,7 +345,7 @@ namespace Azure.Storage.Cryptography
                 {
                     try
                     {
-                        ArrayPool<byte>.Shared.Return(bufferToReturn);
+                        _arrayPool.Return(bufferToReturn);
                     }
                     catch
                     {
