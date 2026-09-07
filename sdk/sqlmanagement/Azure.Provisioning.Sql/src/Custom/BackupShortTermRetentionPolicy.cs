@@ -43,27 +43,3 @@ public partial class BackupShortTermRetentionPolicy
         public static readonly string V2023_08_01 = "2023-08-01";
     }
 }
-
-internal partial class BackupShortTermRetentionPolicyProperties
-{
-    private BicepValue<int> _diffBackupIntervalInHours;
-
-    internal BicepValue<int> DiffBackupIntervalInHours
-    {
-        get
-        {
-            Initialize();
-            return _diffBackupIntervalInHours;
-        }
-        set
-        {
-            Initialize();
-            _diffBackupIntervalInHours.Assign(value);
-        }
-    }
-
-    partial void DefineAdditionalProperties()
-    {
-        _diffBackupIntervalInHours = DefineProperty<int>(nameof(DiffBackupIntervalInHours), new string[] { "diffBackupIntervalInHours" });
-    }
-}
