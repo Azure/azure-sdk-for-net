@@ -322,22 +322,8 @@ namespace Azure.Generator.Management.Visitors
                 && !outerConstructorParameters.Any(outerParameter =>
                     !string.Equals(outerParameter.Name, internalProperty.Name, StringComparison.OrdinalIgnoreCase)
                     && string.Equals(outerParameter.Name, parameter.Name, StringComparison.OrdinalIgnoreCase)
-                    && AreCompatibleParameterTypes(parameter.Type, outerParameter.Type)))
+                    && ModelFactoryBackwardCompatHelper.AreCompatibleParameterTypes(parameter.Type, outerParameter.Type)))
                 .ToArray();
-        }
-
-        private static bool AreCompatibleParameterTypes(CSharpType parameterType, CSharpType expectedType)
-        {
-            if (parameterType.AreNamesEqual(expectedType)
-                || parameterType.InputType.AreNamesEqual(expectedType.InputType))
-            {
-                return true;
-            }
-
-            return parameterType.IsList
-                && expectedType.IsList
-                && parameterType.Arguments.Count == expectedType.Arguments.Count
-                && parameterType.Arguments.Zip(expectedType.Arguments).All(pair => pair.First.AreNamesEqual(pair.Second));
         }
 
         private static ValueExpression? BuildConditionExpression(
@@ -469,12 +455,10 @@ namespace Azure.Generator.Management.Visitors
                     var directParameter = directParameters?.SingleOrDefault(parameter =>
                         !(usedDirectParameters?.Contains(parameter) ?? false)
                         && string.Equals(parameter.Name, constructorParameter.Name, StringComparison.OrdinalIgnoreCase)
-                        && AreCompatibleParameterTypes(parameter.Type, constructorParameterType));
+                        && ModelFactoryBackwardCompatHelper.AreCompatibleParameterTypes(parameter.Type, constructorParameterType));
                     if (directParameter is not null)
                     {
-                        parameters.Add(directParameter.Type.IsValueType && directParameter.Type.IsNullable && !constructorParameterType.IsNullable
-                            ? directParameter.Invoke(nameof(Nullable<int>.GetValueOrDefault))
-                            : NeedNullCoalesce(directParameter) ? directParameter.NullCoalesce(New.Instance(ManagementClientGenerator.Instance.TypeFactory.ListInitializationType.MakeGenericType(directParameter.Type.Arguments))).ToList() : directParameter);
+                        parameters.Add(ModelFactoryBackwardCompatHelper.BuildParameterArgument(directParameter, constructorParameterType));
                         usedDirectParameters?.Add(directParameter);
                         continue;
                     }

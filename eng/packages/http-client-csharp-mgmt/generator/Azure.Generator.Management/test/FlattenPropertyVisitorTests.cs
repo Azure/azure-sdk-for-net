@@ -1294,10 +1294,14 @@ namespace Azure.Generator.Mgmt.Tests
                 "networkFabricId",
                 InputPrimitiveType.String,
                 serializedName: "networkFabricId");
+            var labelsProperty = InputFactory.Property(
+                "labels",
+                new InputDictionaryType("labels", InputPrimitiveType.String, InputPrimitiveType.String),
+                serializedName: "labels");
             var propertiesModel = InputFactory.Model(
                 "TestProperties",
                 usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
-                properties: [annotationProperty, routePolicyProperty, networkFabricIdProperty]);
+                properties: [annotationProperty, routePolicyProperty, networkFabricIdProperty, labelsProperty]);
             var propertiesProperty = InputFactory.Property(
                 "properties",
                 propertiesModel,
@@ -1332,6 +1336,10 @@ namespace Azure.Generator.Mgmt.Tests
                 modifiers: MethodSignatureModifiers.Internal);
             propertiesProvider.Properties.Single(property => property.Name == "NetworkFabricId").Update(
                 modifiers: MethodSignatureModifiers.Internal);
+            propertiesProvider.Properties.Single(property => property.Name == "Labels").Update(
+                modifiers: MethodSignatureModifiers.Internal);
+            propertiesProvider.FullConstructor.Signature.Parameters.Single(parameter => parameter.Name == "labels").Update(
+                type: typeof(IReadOnlyDictionary<string, string>));
             var parentCustomCodeView = new TestTypeView(parentProvider.Name)
             {
                 PropertiesToBuild =
@@ -1354,7 +1362,8 @@ namespace Azure.Generator.Mgmt.Tests
                 [
                     .. originalFactoryMethod.Signature.Parameters,
                     parentCustomCodeView.Properties.Single().AsParameter,
-                    new ParameterProvider("networkFabricId", $"", typeof(string), Default)
+                    new ParameterProvider("networkFabricId", $"", typeof(string), Default),
+                    new ParameterProvider("labels", $"", typeof(IDictionary<string, string>), Default)
                 ]);
 
             var visitTypeCore = typeof(LibraryVisitor).GetMethod(
@@ -1367,11 +1376,13 @@ namespace Azure.Generator.Mgmt.Tests
             var factoryMethod = modelFactory.Methods.Single(method => method.Signature.ReturnType == parentProvider.Type);
             Assert.That(factoryMethod.Signature.Parameters.Select(parameter => parameter.Name), Does.Contain("routePolicy"));
             Assert.That(factoryMethod.Signature.Parameters.Select(parameter => parameter.Name), Does.Contain("networkFabricId"));
+            Assert.That(factoryMethod.Signature.Parameters.Select(parameter => parameter.Name), Does.Contain("labels"));
 
             var body = factoryMethod.BodyStatements!.ToDisplayString();
             Assert.That(body, Does.Contain("routePolicy is null"));
             Assert.That(body, Does.Contain("networkFabricId is null"));
-            Assert.That(body, Does.Match(@"new\s+(?:global::Samples\.Models\.)?TestProperties\s*\(\s*annotation,\s*routePolicy,\s*networkFabricId,"));
+            Assert.That(body, Does.Contain("labels is null"));
+            Assert.That(body, Does.Match(@"new\s+(?:global::Samples\.Models\.)?TestProperties\s*\(\s*annotation,\s*routePolicy,\s*networkFabricId,\s*new\s+(?:global::Samples\.)?ChangeTrackingDictionary<string, string>"));
         }
 
         [Test]
