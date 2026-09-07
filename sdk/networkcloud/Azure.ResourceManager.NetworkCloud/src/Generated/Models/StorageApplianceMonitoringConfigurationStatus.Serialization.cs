@@ -126,8 +126,8 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             {
                 return null;
             }
-            StorageApplianceMetricsConfigurationStatusLogLevel? logLevel = default;
-            StorageApplianceMetricsConfigurationStatusMetricsLevel? metricsLevel = default;
+            StorageApplianceMonitoringConfigurationStatusLogLevel? logLevel = default;
+            StorageApplianceMonitoringConfigurationStatusMetricsLevel? metricsLevel = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    logLevel = new StorageApplianceMetricsConfigurationStatusLogLevel(prop.Value.GetString());
+                    logLevel = new StorageApplianceMonitoringConfigurationStatusLogLevel(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("metricsLevel"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                     {
                         continue;
                     }
-                    metricsLevel = new StorageApplianceMetricsConfigurationStatusMetricsLevel(prop.Value.GetString());
+                    metricsLevel = new StorageApplianceMonitoringConfigurationStatusMetricsLevel(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")

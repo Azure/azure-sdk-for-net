@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <param name="logLevel"> The log level for the monitoring configuration status of the storage appliance. </param>
         /// <param name="metricsLevel"> The metrics level for the monitoring configuration status of the storage appliance. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal StorageApplianceMonitoringConfigurationStatus(StorageApplianceMetricsConfigurationStatusLogLevel? logLevel, StorageApplianceMetricsConfigurationStatusMetricsLevel? metricsLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal StorageApplianceMonitoringConfigurationStatus(StorageApplianceMonitoringConfigurationStatusLogLevel? logLevel, StorageApplianceMonitoringConfigurationStatusMetricsLevel? metricsLevel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LogLevel = logLevel;
             MetricsLevel = metricsLevel;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> The log level for the monitoring configuration status of the storage appliance. </summary>
-        public StorageApplianceMetricsConfigurationStatusLogLevel? LogLevel { get; }
+        public StorageApplianceMonitoringConfigurationStatusLogLevel? LogLevel { get; }
 
         /// <summary> The metrics level for the monitoring configuration status of the storage appliance. </summary>
-        public StorageApplianceMetricsConfigurationStatusMetricsLevel? MetricsLevel { get; }
+        public StorageApplianceMonitoringConfigurationStatusMetricsLevel? MetricsLevel { get; }
     }
 }
