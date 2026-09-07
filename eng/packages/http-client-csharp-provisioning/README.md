@@ -41,17 +41,25 @@ emit:
 
 ## Resource name customization
 
-When one TypeSpec model backs multiple ARM resource types, use the
-`provisioning-resource-name` client option to assign a name to each generated
-resource projection:
+Provisioning collapses detected resources that share the same resource model
+and ARM resource type into one generated resource projection. When one model
+backs multiple ARM resource types, or the names of the collapsed resources
+disagree, use the `provisioning-resource-name` client option to explicitly name
+each projection:
 
 ```typespec
 #suppress "@azure-tools/typespec-client-generator-core/client-option" "Provisioning resource names"
 #suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Provisioning resource names"
 @@clientOption(MyResource, "provisioning-resource-name", #{
-  "Microsoft.Example/widgets": "Widget",
-  "Microsoft.Example/widgets/children": "WidgetChild",
+  `Microsoft.Example/widgets`: "Widget",
+  `Microsoft.Example/widgets/children`: "WidgetChild",
 }, "csharp");
 ```
 
-Keys are matched case-insensitively against the complete ARM resource type.
+Apply the option to the TypeSpec resource model shared by the projections. Each
+map key is the complete ARM resource type and each value is the desired C#
+resource class name. Keys are matched case-insensitively.
+
+This option changes only the generated provisioning class and file name. It
+does not change the ARM resource type, resource paths, singleton names, parent
+relationships, wire model, or management SDK names.

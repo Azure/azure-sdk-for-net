@@ -144,6 +144,44 @@ readable and writable scopes. If the resource type is the same but the resource
 models differ, the implementation should not collapse them merely because the
 Bicep type string matches.
 
+### Customizing a projection name
+
+Resource names from individual management resource entries may disagree after
+they are collapsed. A single TypeSpec model can also back multiple resource
+types, causing several projections to inherit the same model-based fallback
+name. Model-level C# renaming is insufficient because each projection may need
+a different name.
+
+Use the `provisioning-resource-name` client option on the shared TypeSpec
+resource model to map complete ARM resource types to generated provisioning
+class names:
+
+```typespec
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Provisioning resource names"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Provisioning resource names"
+@@clientOption(PublishingPolicy, "provisioning-resource-name", #{
+  `Microsoft.Web/sites/basicPublishingCredentialsPolicies`: "WebSiteFtpPublishingCredentialsPolicy",
+  `Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies`: "WebSiteSlotFtpPublishingCredentialsPolicy",
+}, "csharp");
+```
+
+The option value must be a record whose:
+
+- keys are complete ARM resource type strings;
+- values are non-empty C# resource class names.
+
+ARM resource type matching is case-insensitive. The override is applied after
+resource entries are grouped, so it names the complete projection rather than
+an individual path or singleton variant. It affects only the generated
+provisioning class and file name; resource types, resource ID patterns,
+singleton behavior, parent relationships, operations, serialization, and
+management SDK names remain unchanged.
+
+Use this option when the intended public provisioning name cannot be derived
+unambiguously from the grouped resource metadata. Do not use it to combine
+different ARM resource types or to compensate for an incorrectly modeled
+resource identity.
+
 ---
 
 ## Resource body
