@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.AppContainers.Mocking
     {
         private ClientDiagnostics _containerAppsSessionPoolsClientDiagnostics;
         private ContainerAppsSessionPools _containerAppsSessionPoolsRestClient;
+        private ClientDiagnostics _sandboxGroupsClientDiagnostics;
+        private SandboxGroups _sandboxGroupsRestClient;
         private ClientDiagnostics _containerAppsClientDiagnostics;
         private ContainerApps _containerAppsRestClient;
-        private ClientDiagnostics _buildersClientDiagnostics;
-        private Builders _buildersRestClient;
         private ClientDiagnostics _connectedEnvironmentsClientDiagnostics;
         private ConnectedEnvironments _connectedEnvironmentsRestClient;
         private ClientDiagnostics _containerAppManagedEnvironmentsClientDiagnostics;
@@ -38,6 +38,8 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         private AppClient _appClientRestClient;
         private ClientDiagnostics _availableWorkloadProfilesClientDiagnostics;
         private AvailableWorkloadProfiles _availableWorkloadProfilesRestClient;
+        private ClientDiagnostics _availableEnvironmentModesClientDiagnostics;
+        private AvailableEnvironmentModes _availableEnvironmentModesRestClient;
         private ClientDiagnostics _billingMetersClientDiagnostics;
         private BillingMeters _billingMetersRestClient;
         private ClientDiagnostics _usagesClientDiagnostics;
@@ -57,43 +59,47 @@ namespace Azure.ResourceManager.AppContainers.Mocking
 
         private ClientDiagnostics ContainerAppsSessionPoolsClientDiagnostics => _containerAppsSessionPoolsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContainerAppsSessionPools ContainerAppsSessionPoolsRestClient => _containerAppsSessionPoolsRestClient ??= new ContainerAppsSessionPools(ContainerAppsSessionPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
+        private ContainerAppsSessionPools ContainerAppsSessionPoolsRestClient => _containerAppsSessionPoolsRestClient ??= new ContainerAppsSessionPools(ContainerAppsSessionPoolsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+
+        private ClientDiagnostics SandboxGroupsClientDiagnostics => _sandboxGroupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private SandboxGroups SandboxGroupsRestClient => _sandboxGroupsRestClient ??= new SandboxGroups(SandboxGroupsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics ContainerAppsClientDiagnostics => _containerAppsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContainerApps ContainerAppsRestClient => _containerAppsRestClient ??= new ContainerApps(ContainerAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
-
-        private ClientDiagnostics BuildersClientDiagnostics => _buildersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private Builders BuildersRestClient => _buildersRestClient ??= new Builders(BuildersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
+        private ContainerApps ContainerAppsRestClient => _containerAppsRestClient ??= new ContainerApps(ContainerAppsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics ConnectedEnvironmentsClientDiagnostics => _connectedEnvironmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ConnectedEnvironments ConnectedEnvironmentsRestClient => _connectedEnvironmentsRestClient ??= new ConnectedEnvironments(ConnectedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
+        private ConnectedEnvironments ConnectedEnvironmentsRestClient => _connectedEnvironmentsRestClient ??= new ConnectedEnvironments(ConnectedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics ContainerAppManagedEnvironmentsClientDiagnostics => _containerAppManagedEnvironmentsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContainerAppManagedEnvironments ContainerAppManagedEnvironmentsRestClient => _containerAppManagedEnvironmentsRestClient ??= new ContainerAppManagedEnvironments(ContainerAppManagedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
+        private ContainerAppManagedEnvironments ContainerAppManagedEnvironmentsRestClient => _containerAppManagedEnvironmentsRestClient ??= new ContainerAppManagedEnvironments(ContainerAppManagedEnvironmentsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics ContainerAppJobsClientDiagnostics => _containerAppJobsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ContainerAppJobs ContainerAppJobsRestClient => _containerAppJobsRestClient ??= new ContainerAppJobs(ContainerAppJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
+        private ContainerAppJobs ContainerAppJobsRestClient => _containerAppJobsRestClient ??= new ContainerAppJobs(ContainerAppJobsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics AppClientClientDiagnostics => _appClientClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AppClient AppClientRestClient => _appClientRestClient ??= new AppClient(AppClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
+        private AppClient AppClientRestClient => _appClientRestClient ??= new AppClient(AppClientClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics AvailableWorkloadProfilesClientDiagnostics => _availableWorkloadProfilesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AvailableWorkloadProfiles AvailableWorkloadProfilesRestClient => _availableWorkloadProfilesRestClient ??= new AvailableWorkloadProfiles(AvailableWorkloadProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
+        private AvailableWorkloadProfiles AvailableWorkloadProfilesRestClient => _availableWorkloadProfilesRestClient ??= new AvailableWorkloadProfiles(AvailableWorkloadProfilesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
+
+        private ClientDiagnostics AvailableEnvironmentModesClientDiagnostics => _availableEnvironmentModesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private AvailableEnvironmentModes AvailableEnvironmentModesRestClient => _availableEnvironmentModesRestClient ??= new AvailableEnvironmentModes(AvailableEnvironmentModesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics BillingMetersClientDiagnostics => _billingMetersClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BillingMeters BillingMetersRestClient => _billingMetersRestClient ??= new BillingMeters(BillingMetersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
+        private BillingMeters BillingMetersRestClient => _billingMetersRestClient ??= new BillingMeters(BillingMetersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         private ClientDiagnostics UsagesClientDiagnostics => _usagesClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.AppContainers.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-10-02-preview");
+        private Usages UsagesRestClient => _usagesRestClient ??= new Usages(UsagesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-01");
 
         /// <summary>
         /// Get the session pools in a given subscription.
@@ -108,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -136,7 +142,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -152,6 +158,62 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         }
 
         /// <summary>
+        /// Get all SandboxGroups for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.App/sandboxGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SandboxGroups_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SandboxGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<SandboxGroupResource> GetSandboxGroupsAsync(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<SandboxGroupData, SandboxGroupResource>(new SandboxGroupsGetBySubscriptionAsyncCollectionResultOfT(SandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetSandboxGroups"), data => new SandboxGroupResource(Client, data));
+        }
+
+        /// <summary>
+        /// Get all SandboxGroups for a subscription.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.App/sandboxGroups. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> SandboxGroups_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="SandboxGroupResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<SandboxGroupResource> GetSandboxGroups(CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<SandboxGroupData, SandboxGroupResource>(new SandboxGroupsGetBySubscriptionCollectionResultOfT(SandboxGroupsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetSandboxGroups"), data => new SandboxGroupResource(Client, data));
+        }
+
+        /// <summary>
         /// Get the Container Apps in a given subscription.
         /// <list type="bullet">
         /// <item>
@@ -164,7 +226,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -192,7 +254,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -208,62 +270,6 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         }
 
         /// <summary>
-        /// List BuilderResource resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.App/builders. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Builders_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BuilderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<BuilderResource> GetBuildersAsync(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<BuilderData, BuilderResource>(new BuildersGetBySubscriptionAsyncCollectionResultOfT(BuildersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetBuilders"), data => new BuilderResource(Client, data));
-        }
-
-        /// <summary>
-        /// List BuilderResource resources by subscription ID
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.App/builders. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> Builders_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="BuilderResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<BuilderResource> GetBuilders(CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<BuilderData, BuilderResource>(new BuildersGetBySubscriptionCollectionResultOfT(BuildersRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAppContainersSubscriptionResource.GetBuilders"), data => new BuilderResource(Client, data));
-        }
-
-        /// <summary>
         /// Get all connectedEnvironments for a subscription.
         /// <list type="bullet">
         /// <item>
@@ -276,7 +282,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -304,7 +310,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -332,7 +338,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -360,7 +366,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -388,7 +394,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -416,7 +422,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -444,7 +450,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -488,7 +494,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -532,7 +538,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -561,7 +567,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -578,6 +584,64 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         }
 
         /// <summary>
+        /// Gets the environment modes available to a subscription in a location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsModes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailableEnvironmentModesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AvailableEnvironmentMode"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<AvailableEnvironmentMode> GetAllAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailableEnvironmentModesGetAllAsyncCollectionResultOfT(AvailableEnvironmentModesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
+        /// Gets the environment modes available to a subscription in a location.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.App/locations/{location}/availableManagedEnvironmentsModes. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> AvailableEnvironmentModesOperationGroup_List. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-07-01. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="AvailableEnvironmentMode"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<AvailableEnvironmentMode> GetAll(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AvailableEnvironmentModesGetAllCollectionResultOfT(AvailableEnvironmentModesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetAll");
+        }
+
+        /// <summary>
         /// Get all billingMeters for a location.
         /// <list type="bullet">
         /// <item>
@@ -590,7 +654,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -619,7 +683,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -648,11 +712,11 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerAppUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
@@ -677,11 +741,11 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerAppUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)

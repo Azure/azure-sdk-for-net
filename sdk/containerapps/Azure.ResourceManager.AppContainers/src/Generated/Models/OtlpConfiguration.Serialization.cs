@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
-                foreach (Header item in Headers)
+                foreach (ContainerAppOtlpHeader item in Headers)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             string name = default;
             string endpoint = default;
             bool? isInsecure = default;
-            IList<Header> headers = default;
+            IList<ContainerAppOtlpHeader> headers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -173,10 +173,10 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    List<Header> array = new List<Header>();
+                    List<ContainerAppOtlpHeader> array = new List<ContainerAppOtlpHeader>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Header.DeserializeHeader(item, options));
+                        array.Add(ContainerAppOtlpHeader.DeserializeContainerAppOtlpHeader(item, options));
                     }
                     headers = array;
                     continue;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new OtlpConfiguration(name, endpoint, isInsecure, headers ?? new ChangeTrackingList<Header>(), additionalBinaryDataProperties);
+            return new OtlpConfiguration(name, endpoint, isInsecure, headers ?? new ChangeTrackingList<ContainerAppOtlpHeader>(), additionalBinaryDataProperties);
         }
     }
 }

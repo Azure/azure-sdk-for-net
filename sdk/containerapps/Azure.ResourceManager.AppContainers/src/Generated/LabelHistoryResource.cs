@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.AppContainers
         private readonly ContainerAppsLabelHistory _containerAppsLabelHistoryRestClient;
         private readonly LabelHistoryData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/labelHistory";
+        public static readonly ResourceType ResourceType = "Microsoft.App/containerApps/labelHistories";
 
         /// <summary> Initializes a new instance of LabelHistoryResource for mocking. </summary>
         protected LabelHistoryResource()
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.AppContainers
         {
             TryGetApiVersion(ResourceType, out string labelHistoryApiVersion);
             _containerAppsLabelHistoryClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ResourceType.Namespace, Diagnostics);
-            _containerAppsLabelHistoryRestClient = new ContainerAppsLabelHistory(_containerAppsLabelHistoryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, labelHistoryApiVersion ?? "2025-10-02-preview");
+            _containerAppsLabelHistoryRestClient = new ContainerAppsLabelHistory(_containerAppsLabelHistoryClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, labelHistoryApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="labelName"> The labelName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string containerAppName, string labelName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistory/{labelName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistories/{labelName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the history of a label.
+        /// Gets the revision history associated with a Container App label.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistory/{labelName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistories/{labelName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -140,11 +140,11 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the history of a label.
+        /// Gets the revision history associated with a Container App label.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistory/{labelName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistories/{labelName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -188,11 +188,11 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Delete the history of a label.
+        /// Deletes the revision history associated with a Container App label.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistory/{labelName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistories/{labelName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -239,11 +239,11 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Delete the history of a label.
+        /// Deletes the revision history associated with a Container App label.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistory/{labelName}. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.App/containerApps/{containerAppName}/labelHistories/{labelName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.AppContainers
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-10-02-preview. </description>
+        /// <description> 2026-07-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
