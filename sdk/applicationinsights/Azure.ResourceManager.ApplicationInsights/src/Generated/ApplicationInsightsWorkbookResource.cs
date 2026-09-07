@@ -7,47 +7,37 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary>
-    /// A Class representing an ApplicationInsightsWorkbook along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct an <see cref="ApplicationInsightsWorkbookResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetApplicationInsightsWorkbookResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetApplicationInsightsWorkbook method.
+    /// A class representing a ApplicationInsightsWorkbook along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ApplicationInsightsWorkbookResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ResourceGroupResource"/> using the GetApplicationInsightsWorkbooks method.
     /// </summary>
     public partial class ApplicationInsightsWorkbookResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ApplicationInsightsWorkbookResource"/> instance. </summary>
-        /// <param name="subscriptionId"> The subscriptionId. </param>
-        /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="resourceName"> The resourceName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
-        {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}";
-            return new ResourceIdentifier(resourceId);
-        }
-
-        private readonly ClientDiagnostics _applicationInsightsWorkbookWorkbooksClientDiagnostics;
-        private readonly WorkbooksRestOperations _applicationInsightsWorkbookWorkbooksRestClient;
+        private readonly ClientDiagnostics _workbooksClientDiagnostics;
+        private readonly Workbooks _workbooksRestClient;
         private readonly ApplicationInsightsWorkbookData _data;
-
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.Insights/workbooks";
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationInsightsWorkbookResource"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ApplicationInsightsWorkbookResource for mocking. </summary>
         protected ApplicationInsightsWorkbookResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationInsightsWorkbookResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsWorkbookResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
         internal ApplicationInsightsWorkbookResource(ArmClient client, ApplicationInsightsWorkbookData data) : this(client, data.Id)
@@ -56,141 +46,93 @@ namespace Azure.ResourceManager.ApplicationInsights
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationInsightsWorkbookResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsWorkbookResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApplicationInsightsWorkbookResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _applicationInsightsWorkbookWorkbooksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string applicationInsightsWorkbookWorkbooksApiVersion);
-            _applicationInsightsWorkbookWorkbooksRestClient = new WorkbooksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsWorkbookWorkbooksApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ResourceType, out string applicationInsightsWorkbookApiVersion);
+            _workbooksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ResourceType.Namespace, Diagnostics);
+            _workbooksRestClient = new Workbooks(_workbooksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsWorkbookApiVersion ?? "2023-06-01");
+            ValidateResourceId(id);
         }
 
         /// <summary> Gets whether or not the current instance has data. </summary>
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
         public virtual ApplicationInsightsWorkbookData Data
         {
             get
             {
                 if (!HasData)
+                {
                     throw new InvalidOperationException("The current instance does not have data, you must call Get first.");
+                }
                 return _data;
             }
         }
 
+        /// <summary> Generate the resource identifier for this resource. </summary>
+        /// <param name="subscriptionId"> The subscriptionId. </param>
+        /// <param name="resourceGroupName"> The resourceGroupName. </param>
+        /// <param name="resourceName"> The resourceName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string resourceName)
+        {
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}";
+            return new ResourceIdentifier(resourceId);
+        }
+
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
-        }
-
-        /// <summary> Gets a collection of ApplicationInsightsWorkbookRevisionResources in the ApplicationInsightsWorkbook. </summary>
-        /// <returns> An object representing collection of ApplicationInsightsWorkbookRevisionResources and their operations over a ApplicationInsightsWorkbookRevisionResource. </returns>
-        public virtual ApplicationInsightsWorkbookRevisionCollection GetApplicationInsightsWorkbookRevisions()
-        {
-            return GetCachedClient(client => new ApplicationInsightsWorkbookRevisionCollection(client, Id));
-        }
-
-        /// <summary>
-        /// Get a single workbook revision defined by its revisionId.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions/{revisionId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_RevisionGet</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookRevisionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="revisionId"> The id of the workbook's revision. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ApplicationInsightsWorkbookRevisionResource>> GetApplicationInsightsWorkbookRevisionAsync(string revisionId, CancellationToken cancellationToken = default)
-        {
-            return await GetApplicationInsightsWorkbookRevisions().GetAsync(revisionId, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get a single workbook revision defined by its revisionId.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions/{revisionId}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_RevisionGet</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookRevisionResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="revisionId"> The id of the workbook's revision. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual Response<ApplicationInsightsWorkbookRevisionResource> GetApplicationInsightsWorkbookRevision(string revisionId, CancellationToken cancellationToken = default)
-        {
-            return GetApplicationInsightsWorkbookRevisions().Get(revisionId, cancellationToken);
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get a single workbook by its resourceName.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workbooks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApplicationInsightsWorkbookResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ApplicationInsightsWorkbookResource>> GetAsync(bool? canFetchContent = null, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ApplicationInsightsWorkbookResource>> GetAsync(bool? canFetchContent = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationInsightsWorkbookWorkbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.Get");
+            using DiagnosticScope scope = _workbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.Get");
             scope.Start();
             try
             {
-                var response = await _applicationInsightsWorkbookWorkbooksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, canFetchContent, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, canFetchContent, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApplicationInsightsWorkbookData> response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationInsightsWorkbookResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -204,34 +146,142 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Get a single workbook by its resourceName.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workbooks_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApplicationInsightsWorkbookResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="canFetchContent"> Flag indicating whether or not to return the full content for each applicable workbook. If false, only return summary content for workbooks. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ApplicationInsightsWorkbookResource> Get(bool? canFetchContent = null, CancellationToken cancellationToken = default)
+        public virtual Response<ApplicationInsightsWorkbookResource> Get(bool? canFetchContent = default, CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationInsightsWorkbookWorkbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.Get");
+            using DiagnosticScope scope = _workbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.Get");
             scope.Start();
             try
             {
-                var response = _applicationInsightsWorkbookWorkbooksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, canFetchContent, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, canFetchContent, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApplicationInsightsWorkbookData> response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ApplicationInsightsWorkbookResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a workbook that has already been added.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workbooks_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApplicationInsightsWorkbookResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> Properties that need to be specified to create a new workbook. </param>
+        /// <param name="sourceId"> Azure Resource Id that will fetch all linked workbooks. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<ApplicationInsightsWorkbookResource>> UpdateAsync(ApplicationInsightsWorkbookPatch patch, string sourceId = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workbooksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ApplicationInsightsWorkbookPatch.ToRequestContent(patch), sourceId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApplicationInsightsWorkbookData> response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return Response.FromValue(new ApplicationInsightsWorkbookResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Updates a workbook that has already been added.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> Workbooks_Update. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01. </description>
+        /// </item>
+        /// <item>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApplicationInsightsWorkbookResource"/>. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="patch"> Properties that need to be specified to create a new workbook. </param>
+        /// <param name="sourceId"> Azure Resource Id that will fetch all linked workbooks. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<ApplicationInsightsWorkbookResource> Update(ApplicationInsightsWorkbookPatch patch, string sourceId = default, CancellationToken cancellationToken = default)
+        {
+            using DiagnosticScope scope = _workbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.Update");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workbooksRestClient.CreateUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ApplicationInsightsWorkbookPatch.ToRequestContent(patch), sourceId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApplicationInsightsWorkbookData> response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationInsightsWorkbookResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -245,20 +295,20 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Delete a workbook.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workbooks_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApplicationInsightsWorkbookResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -266,16 +316,23 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationInsightsWorkbookWorkbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.Delete");
+            using DiagnosticScope scope = _workbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.Delete");
             scope.Start();
             try
             {
-                var response = await _applicationInsightsWorkbookWorkbooksRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
-                var uri = _applicationInsightsWorkbookWorkbooksRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApplicationInsightsArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workbooksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApplicationInsightsArmOperation operation = new ApplicationInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -289,20 +346,20 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Delete a workbook.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_Delete</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workbooks_Delete. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01. </description>
         /// </item>
         /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
+        /// <term> Resource. </term>
+        /// <description> <see cref="ApplicationInsightsWorkbookResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -310,16 +367,23 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _applicationInsightsWorkbookWorkbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.Delete");
+            using DiagnosticScope scope = _workbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.Delete");
             scope.Start();
             try
             {
-                var response = _applicationInsightsWorkbookWorkbooksRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
-                var uri = _applicationInsightsWorkbookWorkbooksRestClient.CreateDeleteRequestUri(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApplicationInsightsArmOperation(response, rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workbooksRestClient.CreateDeleteRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, context);
+                Response response = Pipeline.ProcessMessage(message, context);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApplicationInsightsArmOperation operation = new ApplicationInsightsArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletionResponse(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -329,113 +393,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        /// <summary>
-        /// Updates a workbook that has already been added.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> Properties that need to be specified to create a new workbook. </param>
-        /// <param name="sourceId"> Azure Resource Id that will fetch all linked workbooks. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual async Task<Response<ApplicationInsightsWorkbookResource>> UpdateAsync(ApplicationInsightsWorkbookPatch patch, string sourceId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _applicationInsightsWorkbookWorkbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.Update");
-            scope.Start();
-            try
-            {
-                var response = await _applicationInsightsWorkbookWorkbooksRestClient.UpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, sourceId, cancellationToken).ConfigureAwait(false);
-                return Response.FromValue(new ApplicationInsightsWorkbookResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Updates a workbook that has already been added.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_Update</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="patch"> Properties that need to be specified to create a new workbook. </param>
-        /// <param name="sourceId"> Azure Resource Id that will fetch all linked workbooks. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
-        public virtual Response<ApplicationInsightsWorkbookResource> Update(ApplicationInsightsWorkbookPatch patch, string sourceId = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var scope = _applicationInsightsWorkbookWorkbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.Update");
-            scope.Start();
-            try
-            {
-                var response = _applicationInsightsWorkbookWorkbooksRestClient.Update(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, sourceId, cancellationToken);
-                return Response.FromValue(new ApplicationInsightsWorkbookResource(Client, response.Value), response.GetRawResponse());
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -445,29 +403,35 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _applicationInsightsWorkbookWorkbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.AddTag");
+            using DiagnosticScope scope = _workbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.AddTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues[key] = value;
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _applicationInsightsWorkbookWorkbooksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ApplicationInsightsWorkbookResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ApplicationInsightsWorkbookData> response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
+                    return Response.FromValue(new ApplicationInsightsWorkbookResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ApplicationInsightsWorkbookPatch();
-                    foreach (var tag in current.Tags)
+                    ApplicationInsightsWorkbookData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ApplicationInsightsWorkbookPatch patch = new ApplicationInsightsWorkbookPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<ApplicationInsightsWorkbookResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -477,27 +441,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        /// <summary>
-        /// Add a tag to the current resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Add a tag to the current resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="value"> The value for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -507,29 +451,35 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(key, nameof(key));
             Argument.AssertNotNull(value, nameof(value));
 
-            using var scope = _applicationInsightsWorkbookWorkbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.AddTag");
+            using DiagnosticScope scope = _workbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.AddTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues[key] = value;
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _applicationInsightsWorkbookWorkbooksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new ApplicationInsightsWorkbookResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ApplicationInsightsWorkbookData> response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
+                    return Response.FromValue(new ApplicationInsightsWorkbookResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ApplicationInsightsWorkbookPatch();
-                    foreach (var tag in current.Tags)
+                    ApplicationInsightsWorkbookData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ApplicationInsightsWorkbookPatch patch = new ApplicationInsightsWorkbookPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags[key] = value;
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<ApplicationInsightsWorkbookResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -539,54 +489,40 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<ApplicationInsightsWorkbookResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _applicationInsightsWorkbookWorkbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.SetTags");
+            using DiagnosticScope scope = _workbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.SetTags");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    await GetTagResource().DeleteAsync(WaitUntil.Completed, cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _applicationInsightsWorkbookWorkbooksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ApplicationInsightsWorkbookResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ApplicationInsightsWorkbookData> response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
+                    return Response.FromValue(new ApplicationInsightsWorkbookResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ApplicationInsightsWorkbookPatch();
+                    ApplicationInsightsWorkbookData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ApplicationInsightsWorkbookPatch patch = new ApplicationInsightsWorkbookPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<ApplicationInsightsWorkbookResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -596,54 +532,40 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        /// <summary>
-        /// Replace the tags on the resource with the given set.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="tags"> The set of tags to use as replacement. </param>
+        /// <summary> Replace the tags on the resource with the given set. </summary>
+        /// <param name="tags"> The tags to set on the resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<ApplicationInsightsWorkbookResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tags, nameof(tags));
 
-            using var scope = _applicationInsightsWorkbookWorkbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.SetTags");
+            using DiagnosticScope scope = _workbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.SetTags");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken: cancellationToken);
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    GetTagResource().Delete(WaitUntil.Completed, cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.ReplaceWith(tags);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _applicationInsightsWorkbookWorkbooksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new ApplicationInsightsWorkbookResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ApplicationInsightsWorkbookData> response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
+                    return Response.FromValue(new ApplicationInsightsWorkbookResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ApplicationInsightsWorkbookPatch();
+                    ApplicationInsightsWorkbookData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ApplicationInsightsWorkbookPatch patch = new ApplicationInsightsWorkbookPatch();
                     patch.Tags.ReplaceWith(tags);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<ApplicationInsightsWorkbookResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -653,27 +575,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -681,29 +583,35 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _applicationInsightsWorkbookWorkbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.RemoveTag");
+            using DiagnosticScope scope = _workbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.RemoveTag");
             scope.Start();
             try
             {
-                if (await CanUseTagResourceAsync(cancellationToken: cancellationToken).ConfigureAwait(false))
+                if (await CanUseTagResourceAsync(cancellationToken).ConfigureAwait(false))
                 {
-                    var originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
+                    Response<TagResource> originalTags = await GetTagResource().GetAsync(cancellationToken).ConfigureAwait(false);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    var originalResponse = await _applicationInsightsWorkbookWorkbooksRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken).ConfigureAwait(false);
-                    return Response.FromValue(new ApplicationInsightsWorkbookResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    await GetTagResource().CreateOrUpdateAsync(WaitUntil.Completed, originalTags.Value.Data, cancellationToken).ConfigureAwait(false);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                    Response<ApplicationInsightsWorkbookData> response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
+                    return Response.FromValue(new ApplicationInsightsWorkbookResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
-                    var patch = new ApplicationInsightsWorkbookPatch();
-                    foreach (var tag in current.Tags)
+                    ApplicationInsightsWorkbookData current = (await GetAsync(cancellationToken: cancellationToken).ConfigureAwait(false)).Value.Data;
+                    ApplicationInsightsWorkbookPatch patch = new ApplicationInsightsWorkbookPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
-                    return result;
+                    Response<ApplicationInsightsWorkbookResource> result = await UpdateAsync(patch, cancellationToken: cancellationToken).ConfigureAwait(false);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -713,27 +621,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             }
         }
 
-        /// <summary>
-        /// Removes a tag by key from the resource.
-        /// <list type="bullet">
-        /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}</description>
-        /// </item>
-        /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_Get</description>
-        /// </item>
-        /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookResource"/></description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Removes a tag by key from the resource. </summary>
         /// <param name="key"> The key for the tag. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
@@ -741,29 +629,35 @@ namespace Azure.ResourceManager.ApplicationInsights
         {
             Argument.AssertNotNull(key, nameof(key));
 
-            using var scope = _applicationInsightsWorkbookWorkbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.RemoveTag");
+            using DiagnosticScope scope = _workbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookResource.RemoveTag");
             scope.Start();
             try
             {
-                if (CanUseTagResource(cancellationToken: cancellationToken))
+                if (CanUseTagResource(cancellationToken))
                 {
-                    var originalTags = GetTagResource().Get(cancellationToken);
+                    Response<TagResource> originalTags = GetTagResource().Get(cancellationToken);
                     originalTags.Value.Data.TagValues.Remove(key);
-                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken: cancellationToken);
-                    var originalResponse = _applicationInsightsWorkbookWorkbooksRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, null, cancellationToken);
-                    return Response.FromValue(new ApplicationInsightsWorkbookResource(Client, originalResponse.Value), originalResponse.GetRawResponse());
+                    GetTagResource().CreateOrUpdate(WaitUntil.Completed, originalTags.Value.Data, cancellationToken);
+                    RequestContext context = new RequestContext
+                    {
+                        CancellationToken = cancellationToken
+                    };
+                    HttpMessage message = _workbooksRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, default, context);
+                    Response result = Pipeline.ProcessMessage(message, context);
+                    Response<ApplicationInsightsWorkbookData> response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
+                    return Response.FromValue(new ApplicationInsightsWorkbookResource(Client, response.Value), response.GetRawResponse());
                 }
                 else
                 {
-                    var current = Get(cancellationToken: cancellationToken).Value.Data;
-                    var patch = new ApplicationInsightsWorkbookPatch();
-                    foreach (var tag in current.Tags)
+                    ApplicationInsightsWorkbookData current = Get(cancellationToken: cancellationToken).Value.Data;
+                    ApplicationInsightsWorkbookPatch patch = new ApplicationInsightsWorkbookPatch();
+                    foreach (KeyValuePair<string, string> tag in current.Tags)
                     {
                         patch.Tags.Add(tag);
                     }
                     patch.Tags.Remove(key);
-                    var result = Update(patch, cancellationToken: cancellationToken);
-                    return result;
+                    Response<ApplicationInsightsWorkbookResource> result = Update(patch, cancellationToken: cancellationToken);
+                    return Response.FromValue(result.Value, result.GetRawResponse());
                 }
             }
             catch (Exception e)
@@ -771,6 +665,39 @@ namespace Azure.ResourceManager.ApplicationInsights
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary> Gets a collection of ApplicationInsightsWorkbookRevisions in the <see cref="ApplicationInsightsWorkbookResource"/>. </summary>
+        /// <returns> An object representing collection of ApplicationInsightsWorkbookRevisions and their operations over a ApplicationInsightsWorkbookRevisionResource. </returns>
+        public virtual ApplicationInsightsWorkbookRevisionCollection GetApplicationInsightsWorkbookRevisions()
+        {
+            return GetCachedClient(client => new ApplicationInsightsWorkbookRevisionCollection(client, Id));
+        }
+
+        /// <summary> Get a single workbook revision defined by its revisionId. </summary>
+        /// <param name="revisionId"> The id of the workbook's revision. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ApplicationInsightsWorkbookRevisionResource>> GetApplicationInsightsWorkbookRevisionAsync(string revisionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(revisionId, nameof(revisionId));
+
+            return await GetApplicationInsightsWorkbookRevisions().GetAsync(revisionId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a single workbook revision defined by its revisionId. </summary>
+        /// <param name="revisionId"> The id of the workbook's revision. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ApplicationInsightsWorkbookRevisionResource> GetApplicationInsightsWorkbookRevision(string revisionId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(revisionId, nameof(revisionId));
+
+            return GetApplicationInsightsWorkbookRevisions().Get(revisionId, cancellationToken);
         }
     }
 }

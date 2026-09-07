@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SerialConsole;
@@ -42,6 +41,7 @@ namespace Azure.ResourceManager.SerialConsole.Models
                 default);
         }
 
+        /// <summary> Serial port connect result. </summary>
         /// <param name="connectionString"> Connection string to the serial port of the resource. </param>
         /// <returns> A new <see cref="Models.SerialPortConnectionInfo"/> instance for mocking. </returns>
         public static SerialPortConnectionInfo SerialPortConnectionInfo(string connectionString = default)

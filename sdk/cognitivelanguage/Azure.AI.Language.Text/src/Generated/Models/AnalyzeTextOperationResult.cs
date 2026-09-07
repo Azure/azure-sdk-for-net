@@ -20,25 +20,25 @@ namespace Azure.AI.Language.Text
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextOperationResult"/>. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="kind"> Kind of the task. </param>
-        private protected AnalyzeTextOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, AnalyzeTextOperationResultsKind kind)
+        private protected AnalyzeTextOperationResult(DateTimeOffset lastUpdateOn, TextActionState status, AnalyzeTextOperationResultsKind kind)
         {
-            LastUpdateDateTime = lastUpdateDateTime;
+            LastUpdateOn = lastUpdateOn;
             Status = status;
             Kind = kind;
         }
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeTextOperationResult"/>. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AnalyzeTextOperationResult(DateTimeOffset lastUpdateDateTime, TextActionState status, string taskName, AnalyzeTextOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AnalyzeTextOperationResult(DateTimeOffset lastUpdateOn, TextActionState status, string taskName, AnalyzeTextOperationResultsKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            LastUpdateDateTime = lastUpdateDateTime;
+            LastUpdateOn = lastUpdateOn;
             Status = status;
             TaskName = taskName;
             Kind = kind;
@@ -46,7 +46,7 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> The last updated time in UTC for the task. </summary>
-        public DateTimeOffset LastUpdateDateTime { get; }
+        public DateTimeOffset LastUpdateOn { get; }
 
         /// <summary> The status of the task at the mentioned last update time. </summary>
         public TextActionState Status { get; }

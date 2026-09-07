@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.HybridCompute.Models
         private const string WindowsServer2012Value = "Windows Server 2012";
         /// <summary> Windows Server 2012 R2. </summary>
         private const string WindowsServer2012R2Value = "Windows Server 2012 R2";
+        /// <summary> Windows Server 2016 license target. </summary>
+        private const string WindowsServer2016Value = "Windows Server 2016";
 
         /// <summary> Initializes a new instance of <see cref="HybridComputeLicenseTarget"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,6 +37,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
 
         /// <summary> Windows Server 2012 R2. </summary>
         public static HybridComputeLicenseTarget WindowsServer2012R2 { get; } = new HybridComputeLicenseTarget(WindowsServer2012R2Value);
+
+        /// <summary> Windows Server 2016 license target. </summary>
+        public static HybridComputeLicenseTarget WindowsServer2016 { get; } = new HybridComputeLicenseTarget(WindowsServer2016Value);
 
         /// <summary> Determines if two <see cref="HybridComputeLicenseTarget"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

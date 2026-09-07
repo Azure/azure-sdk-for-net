@@ -22,6 +22,9 @@
   Prefix for the exported variable name (default: GH_TOKEN).
   With a single owner, exports as GH_TOKEN. With multiple owners, exports as GH_TOKEN_<Owner>.
 
+.PARAMETER AlwaysUseOwnerSuffix
+  Export tokens as <VariableNamePrefix>_<Owner> even when only one owner is requested.
+
 .PARAMETER ExportAsOutputVariable
   When set in Azure DevOps, also exports the variable as an output variable
   (##vso[task.setvariable ...;isOutput=true]) for downstream jobs/stages.
@@ -39,6 +42,7 @@ param(
   [string] $GitHubAppId = '1086291', # Azure SDK Automation App ID
   [string[]] $InstallationTokenOwners = @("Azure"),
   [string] $VariableNamePrefix = "GH_TOKEN",
+  [switch] $AlwaysUseOwnerSuffix,
   [switch] $ExportAsOutputVariable
 )
 
@@ -231,7 +235,7 @@ function Invoke-LoginToGitHub {
     $installationToken = New-GitHubInstallationToken -Jwt $jwt -InstallationId $installationId -ApiBase $GitHubApiBaseUrl -ApiVersion $GitHubApiVersion
 
     $variableName = $VariableNamePrefix
-    if ($InstallationTokenOwners.Count -gt 1) {
+    if ($AlwaysUseOwnerSuffix -or $InstallationTokenOwners.Count -gt 1) {
       $variableName = $VariableNamePrefix + "_" + $normalizedOwner
     }
 

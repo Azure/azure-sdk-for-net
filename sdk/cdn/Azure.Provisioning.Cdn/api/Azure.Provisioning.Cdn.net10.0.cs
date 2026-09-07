@@ -157,7 +157,7 @@ namespace Azure.Provisioning.Cdn
     public partial class CdnManagedHttpsContent : Azure.Provisioning.Cdn.CustomDomainHttpsContent
     {
         public CdnManagedHttpsContent() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CdnManagedCertificateType> CertificateType { get { throw null; } set { } }
+        public Azure.Provisioning.Cdn.CdnCertificateSource CertificateSourceParameters { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum CdnMinimumTlsVersion
@@ -1223,7 +1223,7 @@ namespace Azure.Provisioning.Cdn
     public partial class OriginGroupOverrideAction : Azure.Provisioning.Cdn.DeliveryRuleAction
     {
         public OriginGroupOverrideAction() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> OriginGroupId { get { throw null; } set { } }
+        public Azure.Provisioning.Cdn.OriginGroupOverrideActionProperties Properties { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class OriginGroupOverrideActionProperties : Azure.Provisioning.Cdn.DeliveryRuleActionProperties
@@ -1424,14 +1424,9 @@ namespace Azure.Provisioning.Cdn
         GreaterThanOrEqual = 8,
         RegEx = 9,
     }
-    public partial class RateLimitRule : Azure.Provisioning.Primitives.ProvisionableConstruct
+    public partial class RateLimitRule : Azure.Provisioning.Cdn.CustomRule
     {
         public RateLimitRule() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.OverrideActionType> Action { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Cdn.CustomRuleEnabledState> EnabledState { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Cdn.CustomRuleMatchCondition> MatchConditions { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<int> Priority { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> RateLimitDurationInMinutes { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> RateLimitThreshold { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }

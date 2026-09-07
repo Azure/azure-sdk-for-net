@@ -15,6 +15,7 @@ namespace Azure.Provisioning.MachineLearning
         /// <summary> Creates a new OAuth2AuthTypeWorkspaceConnectionProperties. </summary>
         public OAuth2AuthTypeWorkspaceConnectionProperties()
         {
+            AuthType.Assign(ConnectionAuthType.OAuth2);
         }
 
         /// <summary> Gets or sets the Credentials. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "OAuth2");
             _credentials = DefineModelProperty<WorkspaceConnectionOAuth2>(nameof(Credentials), new string[] { "credentials" });
             DefineAdditionalProperties();
         }

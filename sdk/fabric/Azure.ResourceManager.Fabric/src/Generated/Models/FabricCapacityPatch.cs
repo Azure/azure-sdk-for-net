@@ -45,16 +45,20 @@ namespace Azure.ResourceManager.Fabric.Models
         /// <summary> The resource-specific properties for this resource. </summary>
         internal FabricCapacityUpdateProperties Properties { get; set; }
 
-        /// <summary> Gets the AdministrationMembers. </summary>
-        public IList<string> FabricCapacityUpdateAdministrationMembers
+        /// <summary> The capacity overage properties of the Fabric capacity resource. </summary>
+        public CapacityOverageProperties FabricCapacityUpdateOverage
         {
             get
+            {
+                return Properties is null ? default : Properties.Overage;
+            }
+            set
             {
                 if (Properties is null)
                 {
                     Properties = new FabricCapacityUpdateProperties();
                 }
-                return Properties.AdministrationMembers;
+                Properties.Overage = value;
             }
         }
     }

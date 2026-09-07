@@ -76,6 +76,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(ManagedClusterNatGatewayProfile)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(Sku))
+            {
+                writer.WritePropertyName("sku"u8);
+                writer.WriteStringValue(Sku.Value.ToString());
+            }
             if (Optional.IsDefined(ManagedOutboundIPProfile))
             {
                 writer.WritePropertyName("managedOutboundIPProfile"u8);
@@ -95,6 +100,16 @@ namespace Azure.ResourceManager.ContainerService.Models
                     ((IJsonModel<WritableSubResource>)item).Write(writer, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(OutboundIPPrefixes))
+            {
+                writer.WritePropertyName("outboundIPPrefixes"u8);
+                writer.WriteObjectValue(OutboundIPPrefixes, options);
+            }
+            if (Optional.IsDefined(OutboundIPs))
+            {
+                writer.WritePropertyName("outboundIPs"u8);
+                writer.WriteObjectValue(OutboundIPs, options);
             }
             if (Optional.IsDefined(IdleTimeoutInMinutes))
             {
@@ -143,12 +158,24 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
+            ManagedClusterNatGatewaySku? sku = default;
             ManagedClusterManagedOutboundIPProfile managedOutboundIPProfile = default;
             IList<WritableSubResource> effectiveOutboundIPs = default;
+            ManagedClusterNATGatewayProfileOutboundIPPrefixes outboundIPPrefixes = default;
+            ManagedClusterNATGatewayProfileOutboundIPs outboundIPs = default;
             int? idleTimeoutInMinutes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("sku"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    sku = new ManagedClusterNatGatewaySku(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("managedOutboundIPProfile"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -179,6 +206,24 @@ namespace Azure.ResourceManager.ContainerService.Models
                     effectiveOutboundIPs = array;
                     continue;
                 }
+                if (prop.NameEquals("outboundIPPrefixes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outboundIPPrefixes = ManagedClusterNATGatewayProfileOutboundIPPrefixes.DeserializeManagedClusterNATGatewayProfileOutboundIPPrefixes(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("outboundIPs"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outboundIPs = ManagedClusterNATGatewayProfileOutboundIPs.DeserializeManagedClusterNATGatewayProfileOutboundIPs(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("idleTimeoutInMinutes"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -193,7 +238,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedClusterNatGatewayProfile(managedOutboundIPProfile, effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>(), idleTimeoutInMinutes, additionalBinaryDataProperties);
+            return new ManagedClusterNatGatewayProfile(
+                sku,
+                managedOutboundIPProfile,
+                effectiveOutboundIPs ?? new ChangeTrackingList<WritableSubResource>(),
+                outboundIPPrefixes,
+                outboundIPs,
+                idleTimeoutInMinutes,
+                additionalBinaryDataProperties);
         }
     }
 }

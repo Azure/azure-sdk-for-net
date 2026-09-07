@@ -12,7 +12,10 @@ using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> Base definition for a job. </summary>
+    /// <summary>
+    /// Base definition for a job.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AutoMLJob"/>, <see cref="MachineLearningCommandJob"/>, <see cref="DistillationJob"/>, <see cref="FineTuningJob"/>, <see cref="MachineLearningPipelineJob"/>, <see cref="SparkJob"/>, and <see cref="MachineLearningSweepJob"/>.
+    /// </summary>
     public partial class MachineLearningJobProperties : MachineLearningResourceBase
     {
         /// <summary> Initializes a new instance of <see cref="MachineLearningJobProperties"/>. </summary>

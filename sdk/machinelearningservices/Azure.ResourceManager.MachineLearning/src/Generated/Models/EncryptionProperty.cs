@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="EncryptionProperty"/>. </summary>
-        /// <param name="cosmosDbResourceId">
+        /// <param name="cosmosDBResourceId">
         /// The byok cosmosdb account that customer brings to store customer's data
         /// with encryption
         /// </param>
@@ -47,9 +47,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// with encryption
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal EncryptionProperty(ResourceIdentifier cosmosDbResourceId, IdentityForCmk identity, KeyVaultProperties keyVaultProperties, ResourceIdentifier searchAccountResourceId, MachineLearningEncryptionStatus status, ResourceIdentifier storageAccountResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal EncryptionProperty(ResourceIdentifier cosmosDBResourceId, IdentityForCmk identity, KeyVaultProperties keyVaultProperties, ResourceIdentifier searchAccountResourceId, MachineLearningEncryptionStatus status, ResourceIdentifier storageAccountResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            CosmosDbResourceId = cosmosDbResourceId;
+            CosmosDBResourceId = cosmosDBResourceId;
             Identity = identity;
             KeyVaultProperties = keyVaultProperties;
             SearchAccountResourceId = searchAccountResourceId;
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// with encryption
         /// </summary>
         [WirePath("cosmosDbResourceId")]
-        public ResourceIdentifier CosmosDbResourceId { get; set; }
+        public ResourceIdentifier CosmosDBResourceId { get; set; }
 
         /// <summary> Identity to be used with the keyVault. </summary>
         [WirePath("identity")]

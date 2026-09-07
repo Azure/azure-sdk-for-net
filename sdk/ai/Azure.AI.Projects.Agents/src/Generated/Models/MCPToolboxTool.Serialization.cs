@@ -89,6 +89,11 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("connector_id"u8);
                 writer.WriteStringValue(ConnectorId.Value.ToSerialString());
             }
+            if (Optional.IsDefined(TunnelId))
+            {
+                writer.WritePropertyName("tunnel_id"u8);
+                writer.WriteStringValue(TunnelId);
+            }
             if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
@@ -126,6 +131,16 @@ namespace Azure.AI.Projects.Agents
                     JsonSerializer.Serialize(writer, document.RootElement);
                 }
 #endif
+            }
+            if (Optional.IsCollectionDefined(AllowedCallers))
+            {
+                writer.WritePropertyName("allowed_callers"u8);
+                writer.WriteStartArray();
+                foreach (CallableToolAllowedCaller item in AllowedCallers)
+                {
+                    writer.WriteStringValue(item.ToSerialString());
+                }
+                writer.WriteEndArray();
             }
             if (Optional.IsDefined(RequireApprovalInternal))
             {
@@ -184,10 +199,12 @@ namespace Azure.AI.Projects.Agents
             string serverLabel = default;
             Uri serverUri = default;
             MCPToolboxToolConnectorId? connectorId = default;
+            string tunnelId = default;
             string authorization = default;
             string serverDescription = default;
             IDictionary<string, string> headers = default;
             BinaryData allowedTools = default;
+            IList<CallableToolAllowedCaller> allowedCallers = default;
             BinaryData requireApprovalInternal = default;
             bool? deferLoading = default;
             string projectConnectionId = default;
@@ -245,6 +262,11 @@ namespace Azure.AI.Projects.Agents
                     connectorId = prop.Value.GetString().ToMCPToolboxToolConnectorId();
                     continue;
                 }
+                if (prop.NameEquals("tunnel_id"u8))
+                {
+                    tunnelId = prop.Value.GetString();
+                    continue;
+                }
                 if (prop.NameEquals("authorization"u8))
                 {
                     authorization = prop.Value.GetString();
@@ -286,6 +308,20 @@ namespace Azure.AI.Projects.Agents
                     allowedTools = BinaryData.FromString(prop.Value.GetRawText());
                     continue;
                 }
+                if (prop.NameEquals("allowed_callers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CallableToolAllowedCaller> array = new List<CallableToolAllowedCaller>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString().ToCallableToolAllowedCaller());
+                    }
+                    allowedCallers = array;
+                    continue;
+                }
                 if (prop.NameEquals("require_approval"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -324,10 +360,12 @@ namespace Azure.AI.Projects.Agents
                 serverLabel,
                 serverUri,
                 connectorId,
+                tunnelId,
                 authorization,
                 serverDescription,
                 headers ?? new ChangeTrackingDictionary<string, string>(),
                 allowedTools,
+                allowedCallers ?? new ChangeTrackingList<CallableToolAllowedCaller>(),
                 requireApprovalInternal,
                 deferLoading,
                 projectConnectionId);

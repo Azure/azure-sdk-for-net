@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Azure.Provisioning;
 using System;
 using System.ComponentModel;
+using Azure.Provisioning;
 
 #nullable disable
 

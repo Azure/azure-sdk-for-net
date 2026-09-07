@@ -8,43 +8,15 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
+using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
     /// <summary> Network Interface model. </summary>
     public partial class ScVmmNetworkInterface
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ScVmmNetworkInterface"/>. </summary>
         public ScVmmNetworkInterface()
@@ -65,8 +37,8 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="ipv6AddressType"> Gets or sets the ipv6 address type. </param>
         /// <param name="macAddressType"> Gets or sets the mac address type. </param>
         /// <param name="nicId"> Gets or sets the nic id. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ScVmmNetworkInterface(string name, string displayName, IReadOnlyList<string> ipv4Addresses, IReadOnlyList<string> ipv6Addresses, string macAddress, ResourceIdentifier virtualNetworkId, string networkName, AllocationMethod? ipv4AddressType, AllocationMethod? ipv6AddressType, AllocationMethod? macAddressType, string nicId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ScVmmNetworkInterface(string name, string displayName, IReadOnlyList<string> ipv4Addresses, IReadOnlyList<string> ipv6Addresses, string macAddress, ResourceIdentifier virtualNetworkId, string networkName, AllocationMethod? ipv4AddressType, AllocationMethod? ipv6AddressType, AllocationMethod? macAddressType, string nicId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
@@ -79,29 +51,39 @@ namespace Azure.ResourceManager.ScVmm.Models
             IPv6AddressType = ipv6AddressType;
             MacAddressType = macAddressType;
             NicId = nicId;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Gets or sets the name of the network interface. </summary>
         public string Name { get; set; }
+
         /// <summary> Gets the display name of the network interface as shown in the vmmServer. This is the fallback label for a NIC when the name is not set. </summary>
         public string DisplayName { get; }
+
         /// <summary> Gets the nic ipv4 addresses. </summary>
         public IReadOnlyList<string> IPv4Addresses { get; }
+
         /// <summary> Gets the nic ipv6 addresses. </summary>
         public IReadOnlyList<string> IPv6Addresses { get; }
+
         /// <summary> Gets or sets the nic MAC address. </summary>
         public string MacAddress { get; set; }
+
         /// <summary> Gets or sets the ARM Id of the Microsoft.ScVmm/virtualNetwork resource to connect the nic. </summary>
         public ResourceIdentifier VirtualNetworkId { get; set; }
+
         /// <summary> Gets the name of the virtual network in vmmServer that the nic is connected to. </summary>
         public string NetworkName { get; }
+
         /// <summary> Gets or sets the ipv4 address type. </summary>
         public AllocationMethod? IPv4AddressType { get; set; }
+
         /// <summary> Gets or sets the ipv6 address type. </summary>
         public AllocationMethod? IPv6AddressType { get; set; }
+
         /// <summary> Gets or sets the mac address type. </summary>
         public AllocationMethod? MacAddressType { get; set; }
+
         /// <summary> Gets or sets the nic id. </summary>
         public string NicId { get; set; }
     }

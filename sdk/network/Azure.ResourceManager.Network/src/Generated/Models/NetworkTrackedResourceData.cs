@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.Network.Models
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
+        private protected ResourceIdentifier _id;
         private protected string _name;
 
         /// <summary> Initializes a new instance of <see cref="NetworkTrackedResourceData"/>. </summary>

@@ -74,6 +74,11 @@ namespace Azure.ResourceManager.Fabric.Models
             {
                 throw new FormatException($"The model {nameof(FabricCapacityUpdateProperties)} does not support writing '{format}' format.");
             }
+            if (Optional.IsDefined(Overage))
+            {
+                writer.WritePropertyName("overage"u8);
+                writer.WriteObjectValue(Overage, options);
+            }
             if (Optional.IsDefined(Administration))
             {
                 writer.WritePropertyName("administration"u8);
@@ -121,10 +126,20 @@ namespace Azure.ResourceManager.Fabric.Models
             {
                 return null;
             }
+            CapacityOverageProperties overage = default;
             FabricCapacityAdministration administration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("overage"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    overage = CapacityOverageProperties.DeserializeCapacityOverageProperties(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("administration"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -139,7 +154,7 @@ namespace Azure.ResourceManager.Fabric.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FabricCapacityUpdateProperties(administration, additionalBinaryDataProperties);
+            return new FabricCapacityUpdateProperties(overage, administration, additionalBinaryDataProperties);
         }
     }
 }

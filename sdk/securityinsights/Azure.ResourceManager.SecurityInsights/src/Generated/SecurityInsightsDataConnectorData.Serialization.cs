@@ -15,7 +15,10 @@ using Azure.ResourceManager.SecurityInsights.Models;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
-    /// <summary> Data connector. </summary>
+    /// <summary>
+    /// Data connector
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="SecurityInsightsAadDataConnector"/>, <see cref="MstiDataConnector"/>, <see cref="PremiumMicrosoftDefenderForThreatIntelligence"/>, <see cref="MtpDataConnector"/>, <see cref="SecurityInsightsAatpDataConnector"/>, <see cref="SecurityInsightsAscDataConnector"/>, <see cref="SecurityInsightsAwsCloudTrailDataConnector"/>, <see cref="AwsS3DataConnector"/>, <see cref="RestApiPollerDataConnector"/>, <see cref="GcpDataConnector"/>, <see cref="McasDataConnector"/>, <see cref="Dynamics365DataConnector"/>, <see cref="OfficeAtpDataConnector"/>, <see cref="MicrosoftPurviewInformationProtectionDataConnector"/>, <see cref="Office365ProjectDataConnector"/>, <see cref="OfficePowerBIDataConnector"/>, <see cref="PurviewAuditDataConnector"/>, <see cref="OfficeIrmDataConnector"/>, <see cref="MdatpDataConnector"/>, <see cref="SecurityInsightsOfficeDataConnector"/>, <see cref="SecurityInsightsTIDataConnector"/>, <see cref="ThreatIntelligenceTaxiiDataConnector"/>, <see cref="IoTDataConnector"/>, <see cref="CodelessUiDataConnector"/>, and <see cref="CodelessApiPollingDataConnector"/>.
+    /// </summary>
     public partial class SecurityInsightsDataConnectorData : ResourceData, IJsonModel<SecurityInsightsDataConnectorData>
     {
         /// <param name="data"> The data to parse. </param>

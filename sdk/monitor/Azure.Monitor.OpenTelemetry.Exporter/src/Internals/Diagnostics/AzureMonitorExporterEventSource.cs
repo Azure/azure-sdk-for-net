@@ -542,5 +542,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(58, Message = "SDK statistics disabled by remote configuration at '{0}'.", Level = EventLevel.Informational)]
         public void SdkStatsDisabledByConfig(string configUrl) => WriteEvent(58, configUrl);
+
+        [NonEvent]
+        public void FailedToPersistOnShutdown(string instrumentationKey, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                FailedToPersistOnShutdown(instrumentationKey, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(59, Message = "Failed to write telemetry to storage while shutting down. This telemetry item will be lost. Instrumentation Key: {0}. {1}", Level = EventLevel.Error)]
+        public void FailedToPersistOnShutdown(string instrumentationKey, string exceptionMessage) => WriteEvent(59, instrumentationKey, exceptionMessage);
+
+        [Event(60, Message = "Ingestion rejected a batch of {0} stored payloads with status code {1}. Retrying them individually to isolate the rejected payload.", Level = EventLevel.Warning)]
+        public void CoalescedBatchRejected(int batchSize, int statusCode) => WriteEvent(60, batchSize, statusCode);
     }
 }

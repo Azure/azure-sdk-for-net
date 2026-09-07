@@ -57,7 +57,7 @@ namespace Azure.Provisioning.MachineLearning
         {
             base.DefineProvisionableProperties();
             _maxRetries = DefineProperty<int>(nameof(MaxRetries), new string[] { "maxRetries" });
-            _timeout = DefineProperty<TimeSpan>(nameof(Timeout), new string[] { "timeout" });
+            _timeout = DefineProperty<TimeSpan>(nameof(Timeout), new string[] { "timeout" }, format: "P");
             DefineAdditionalProperties();
         }
 

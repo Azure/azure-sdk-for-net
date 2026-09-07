@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Billing.Models
         {
             get
             {
-                return Properties is null ? default : Properties.TermStartOn;
+                return Properties is null ? default : Properties.TermStartsOn;
             }
         }
 
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Billing.Models
         {
             get
             {
-                return Properties is null ? default : Properties.TermEndOn;
+                return Properties is null ? default : Properties.TermEndsOn;
             }
         }
 
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Billing.Models
         {
             get
             {
-                return Properties is null ? default : Properties.EnrollmentAccountStartOn;
+                return Properties is null ? default : Properties.EnrollmentAccountStartsOn;
             }
         }
 

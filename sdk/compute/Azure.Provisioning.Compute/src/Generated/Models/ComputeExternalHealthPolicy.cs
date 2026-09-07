@@ -73,8 +73,8 @@ namespace Azure.Provisioning.Compute
         {
             base.DefineProvisionableProperties();
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
-            _expiryDuration = DefineProperty<TimeSpan>(nameof(ExpiryDuration), new string[] { "expiryDuration" });
-            _gracePeriod = DefineProperty<TimeSpan>(nameof(GracePeriod), new string[] { "gracePeriod" });
+            _expiryDuration = DefineProperty<TimeSpan>(nameof(ExpiryDuration), new string[] { "expiryDuration" }, format: "P");
+            _gracePeriod = DefineProperty<TimeSpan>(nameof(GracePeriod), new string[] { "gracePeriod" }, format: "P");
             DefineAdditionalProperties();
         }
 

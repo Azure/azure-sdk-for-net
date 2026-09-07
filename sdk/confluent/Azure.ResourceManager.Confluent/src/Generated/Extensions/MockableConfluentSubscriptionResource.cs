@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure;
@@ -246,6 +247,30 @@ namespace Azure.ResourceManager.Confluent.Mocking
                 scope.Failed(e);
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Create Confluent Marketplace agreement in the subscription.
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/defaultOperation IdMarketplaceAgreements_CreateDefault Api Version2024-02-13
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Task<Response<ConfluentAgreement>> CreateMarketplaceAgreementAsync(CancellationToken cancellationToken = default)
+        {
+            return CreateMarketplaceAgreementAsync(body: default, cancellationToken: cancellationToken);
+        }
+
+        /// <summary>
+        /// Create Confluent Marketplace agreement in the subscription.
+        ///             Request Path/subscriptions/{subscriptionId}/providers/Microsoft.Confluent/agreements/defaultOperation IdMarketplaceAgreements_CreateDefault Api Version2024-02-13
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [ForwardsClientCalls]
+        public virtual Response<ConfluentAgreement> CreateMarketplaceAgreement(CancellationToken cancellationToken = default)
+        {
+            return CreateMarketplaceAgreement(body: default, cancellationToken: cancellationToken);
         }
     }
 }

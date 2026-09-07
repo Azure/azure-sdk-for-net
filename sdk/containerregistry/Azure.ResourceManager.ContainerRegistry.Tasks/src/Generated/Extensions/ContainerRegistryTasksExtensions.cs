@@ -33,100 +33,100 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="AgentPoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ContainerRegistryAgentPoolResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksArmClient.GetAgentPoolResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksArmClient.GetContainerRegistryAgentPoolResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="AgentPoolResource"/> object. </returns>
-        public static AgentPoolResource GetAgentPoolResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerRegistryAgentPoolResource"/> object. </returns>
+        public static ContainerRegistryAgentPoolResource GetContainerRegistryAgentPoolResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerRegistryTasksArmClient(client).GetAgentPoolResource(id);
+            return GetMockableContainerRegistryTasksArmClient(client).GetContainerRegistryAgentPoolResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="RunResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ContainerRegistryRunResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksArmClient.GetRunResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksArmClient.GetContainerRegistryRunResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="RunResource"/> object. </returns>
-        public static RunResource GetRunResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerRegistryRunResource"/> object. </returns>
+        public static ContainerRegistryRunResource GetContainerRegistryRunResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerRegistryTasksArmClient(client).GetRunResource(id);
+            return GetMockableContainerRegistryTasksArmClient(client).GetContainerRegistryRunResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TaskRunResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ContainerRegistryTaskRunResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksArmClient.GetTaskRunResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksArmClient.GetContainerRegistryTaskRunResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TaskRunResource"/> object. </returns>
-        public static TaskRunResource GetTaskRunResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerRegistryTaskRunResource"/> object. </returns>
+        public static ContainerRegistryTaskRunResource GetContainerRegistryTaskRunResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerRegistryTasksArmClient(client).GetTaskRunResource(id);
+            return GetMockableContainerRegistryTasksArmClient(client).GetContainerRegistryTaskRunResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="TaskResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ContainerRegistryTaskResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksArmClient.GetTaskResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksArmClient.GetContainerRegistryTaskResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="TaskResource"/> object. </returns>
-        public static TaskResource GetTaskResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerRegistryTaskResource"/> object. </returns>
+        public static ContainerRegistryTaskResource GetContainerRegistryTaskResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableContainerRegistryTasksArmClient(client).GetTaskResource(id);
+            return GetMockableContainerRegistryTasksArmClient(client).GetContainerRegistryTaskResource(id);
         }
 
         /// <summary>
-        /// Gets a collection of AgentPools in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ContainerRegistryAgentPools in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetAgentPools(string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetContainerRegistryAgentPools(string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="registryName"> The registryName for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of AgentPools and their operations over a AgentPoolResource. </returns>
-        public static AgentPoolCollection GetAgentPools(this ResourceGroupResource resourceGroupResource, string registryName)
+        /// <returns> An object representing collection of ContainerRegistryAgentPools and their operations over a ContainerRegistryAgentPoolResource. </returns>
+        public static ContainerRegistryAgentPoolCollection GetContainerRegistryAgentPools(this ResourceGroupResource resourceGroupResource, string registryName)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetAgentPools(registryName);
+            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetContainerRegistryAgentPools(registryName);
         }
 
         /// <summary>
         /// Gets the detailed information for a given agent pool.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetAgentPoolAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetContainerRegistryAgentPoolAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -135,18 +135,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<AgentPoolResource>> GetAgentPoolAsync(this ResourceGroupResource resourceGroupResource, string registryName, string agentPoolName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerRegistryAgentPoolResource>> GetContainerRegistryAgentPoolAsync(this ResourceGroupResource resourceGroupResource, string registryName, string agentPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetAgentPoolAsync(registryName, agentPoolName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetContainerRegistryAgentPoolAsync(registryName, agentPoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the detailed information for a given agent pool.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetAgentPool(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetContainerRegistryAgentPool(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -155,36 +155,36 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<AgentPoolResource> GetAgentPool(this ResourceGroupResource resourceGroupResource, string registryName, string agentPoolName, CancellationToken cancellationToken = default)
+        public static Response<ContainerRegistryAgentPoolResource> GetContainerRegistryAgentPool(this ResourceGroupResource resourceGroupResource, string registryName, string agentPoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetAgentPool(registryName, agentPoolName, cancellationToken);
+            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetContainerRegistryAgentPool(registryName, agentPoolName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of Runs in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ContainerRegistryRuns in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetRuns(string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetContainerRegistryRuns(string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="registryName"> The registryName for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Runs and their operations over a RunResource. </returns>
-        public static RunCollection GetRuns(this ResourceGroupResource resourceGroupResource, string registryName)
+        /// <returns> An object representing collection of ContainerRegistryRuns and their operations over a ContainerRegistryRunResource. </returns>
+        public static ContainerRegistryRunCollection GetContainerRegistryRuns(this ResourceGroupResource resourceGroupResource, string registryName)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetRuns(registryName);
+            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetContainerRegistryRuns(registryName);
         }
 
         /// <summary>
         /// Gets the detailed information for a given run.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetRunAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetContainerRegistryRunAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -193,18 +193,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<RunResource>> GetRunAsync(this ResourceGroupResource resourceGroupResource, string registryName, string runId, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerRegistryRunResource>> GetContainerRegistryRunAsync(this ResourceGroupResource resourceGroupResource, string registryName, string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetRunAsync(registryName, runId, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetContainerRegistryRunAsync(registryName, runId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the detailed information for a given run.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetRun(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetContainerRegistryRun(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -213,36 +213,36 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<RunResource> GetRun(this ResourceGroupResource resourceGroupResource, string registryName, string runId, CancellationToken cancellationToken = default)
+        public static Response<ContainerRegistryRunResource> GetContainerRegistryRun(this ResourceGroupResource resourceGroupResource, string registryName, string runId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetRun(registryName, runId, cancellationToken);
+            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetContainerRegistryRun(registryName, runId, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of TaskRuns in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ContainerRegistryTaskRuns in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetTaskRuns(string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetContainerRegistryTaskRuns(string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="registryName"> The registryName for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of TaskRuns and their operations over a TaskRunResource. </returns>
-        public static TaskRunCollection GetTaskRuns(this ResourceGroupResource resourceGroupResource, string registryName)
+        /// <returns> An object representing collection of ContainerRegistryTaskRuns and their operations over a ContainerRegistryTaskRunResource. </returns>
+        public static ContainerRegistryTaskRunCollection GetContainerRegistryTaskRuns(this ResourceGroupResource resourceGroupResource, string registryName)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetTaskRuns(registryName);
+            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetContainerRegistryTaskRuns(registryName);
         }
 
         /// <summary>
         /// Gets the detailed information for a given task run.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetTaskRunAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetContainerRegistryTaskRunAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -251,18 +251,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<TaskRunResource>> GetTaskRunAsync(this ResourceGroupResource resourceGroupResource, string registryName, string taskRunName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerRegistryTaskRunResource>> GetContainerRegistryTaskRunAsync(this ResourceGroupResource resourceGroupResource, string registryName, string taskRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetTaskRunAsync(registryName, taskRunName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetContainerRegistryTaskRunAsync(registryName, taskRunName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Gets the detailed information for a given task run.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetTaskRun(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetContainerRegistryTaskRun(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -271,36 +271,36 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<TaskRunResource> GetTaskRun(this ResourceGroupResource resourceGroupResource, string registryName, string taskRunName, CancellationToken cancellationToken = default)
+        public static Response<ContainerRegistryTaskRunResource> GetContainerRegistryTaskRun(this ResourceGroupResource resourceGroupResource, string registryName, string taskRunName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetTaskRun(registryName, taskRunName, cancellationToken);
+            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetContainerRegistryTaskRun(registryName, taskRunName, cancellationToken);
         }
 
         /// <summary>
-        /// Gets a collection of Tasks in the <see cref="ResourceGroupResource"/>
+        /// Gets a collection of ContainerRegistryTasks in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetTasks(string)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetContainerRegistryTasks(string)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
         /// <param name="registryName"> The registryName for the resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        /// <returns> An object representing collection of Tasks and their operations over a TaskResource. </returns>
-        public static TaskCollection GetTasks(this ResourceGroupResource resourceGroupResource, string registryName)
+        /// <returns> An object representing collection of ContainerRegistryTasks and their operations over a ContainerRegistryTaskResource. </returns>
+        public static ContainerRegistryTaskCollection GetContainerRegistryTasks(this ResourceGroupResource resourceGroupResource, string registryName)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetTasks(registryName);
+            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetContainerRegistryTasks(registryName);
         }
 
         /// <summary>
         /// Get the properties of a specified task.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetTaskAsync(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetContainerRegistryTaskAsync(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -309,18 +309,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static async Task<Response<TaskResource>> GetTaskAsync(this ResourceGroupResource resourceGroupResource, string registryName, string taskName, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerRegistryTaskResource>> GetContainerRegistryTaskAsync(this ResourceGroupResource resourceGroupResource, string registryName, string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return await GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetTaskAsync(registryName, taskName, cancellationToken).ConfigureAwait(false);
+            return await GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetContainerRegistryTaskAsync(registryName, taskName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Get the properties of a specified task.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetTask(string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetContainerRegistryTask(string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -329,18 +329,18 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
         [ForwardsClientCalls]
-        public static Response<TaskResource> GetTask(this ResourceGroupResource resourceGroupResource, string registryName, string taskName, CancellationToken cancellationToken = default)
+        public static Response<ContainerRegistryTaskResource> GetContainerRegistryTask(this ResourceGroupResource resourceGroupResource, string registryName, string taskName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
-            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetTask(registryName, taskName, cancellationToken);
+            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetContainerRegistryTask(registryName, taskName, cancellationToken);
         }
 
         /// <summary>
         /// Schedules a new run based on the request parameters and add it to the run queue.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.ScheduleRunAsync(string, RunContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.ScheduleRunAsync(string, ContainerRegistryRunContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<RunResource>> ScheduleRunAsync(this ResourceGroupResource resourceGroupResource, string registryName, RunContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<ContainerRegistryRunResource>> ScheduleRunAsync(this ResourceGroupResource resourceGroupResource, string registryName, ContainerRegistryRunContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// Schedules a new run based on the request parameters and add it to the run queue.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.ScheduleRun(string, RunContent, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.ScheduleRun(string, ContainerRegistryRunContent, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
@@ -367,47 +367,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="content"> The request body. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<RunResource> ScheduleRun(this ResourceGroupResource resourceGroupResource, string registryName, RunContent content, CancellationToken cancellationToken = default)
+        public static Response<ContainerRegistryRunResource> ScheduleRun(this ResourceGroupResource resourceGroupResource, string registryName, ContainerRegistryRunContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).ScheduleRun(registryName, content, cancellationToken);
-        }
-
-        /// <summary>
-        /// Get the upload location for the user to be able to upload the source.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetBuildSourceUploadUrlAsync(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="registryName"> The name of the container registry. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static async Task<Response<ContainerRegistryTaskSourceUploadResult>> GetBuildSourceUploadUrlAsync(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return await GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetBuildSourceUploadUrlAsync(registryName, cancellationToken).ConfigureAwait(false);
-        }
-
-        /// <summary>
-        /// Get the upload location for the user to be able to upload the source.
-        /// <item>
-        /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableContainerRegistryTasksResourceGroupResource.GetBuildSourceUploadUrl(string, CancellationToken)"/> instead. </description>
-        /// </item>
-        /// </summary>
-        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
-        /// <param name="registryName"> The name of the container registry. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
-        public static Response<ContainerRegistryTaskSourceUploadResult> GetBuildSourceUploadUrl(this ResourceGroupResource resourceGroupResource, string registryName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
-
-            return GetMockableContainerRegistryTasksResourceGroupResource(resourceGroupResource).GetBuildSourceUploadUrl(registryName, cancellationToken);
         }
     }
 }

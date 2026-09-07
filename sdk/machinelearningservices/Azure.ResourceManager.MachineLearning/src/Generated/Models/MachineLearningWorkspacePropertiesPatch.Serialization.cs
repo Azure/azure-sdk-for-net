@@ -124,11 +124,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("imageBuildCompute"u8);
                 writer.WriteStringValue(ImageBuildCompute);
             }
-            if (Optional.IsCollectionDefined(IpAllowlist))
+            if (Optional.IsCollectionDefined(IPAllowlist))
             {
                 writer.WritePropertyName("ipAllowlist"u8);
                 writer.WriteStartArray();
-                foreach (string item in IpAllowlist)
+                foreach (string item in IPAllowlist)
                 {
                     if (item == null)
                     {

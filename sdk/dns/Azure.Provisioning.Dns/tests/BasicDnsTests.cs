@@ -237,7 +237,9 @@ public class BasicDnsTests
 
             resource spfTxtRecord 'Microsoft.Network/dnsZones/TXT@2018-05-01' = {
               name: '@'
+              parent: zone
               properties: {
+                TTL: 3600
                 TXTRecords: [
                   {
                     value: [
@@ -245,14 +247,14 @@ public class BasicDnsTests
                     ]
                   }
                 ]
-                TTL: 3600
               }
-              parent: zone
             }
 
             resource notesTXTRecord 'Microsoft.Network/dnsZones/TXT@2018-05-01' = {
               name: 'notes'
+              parent: zone
               properties: {
+                TTL: 3600
                 TXTRecords: [
                   {
                     value: [
@@ -261,9 +263,7 @@ public class BasicDnsTests
                     ]
                   }
                 ]
-                TTL: 3600
               }
-              parent: zone
             }
             """
         );

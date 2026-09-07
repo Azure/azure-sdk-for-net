@@ -51,6 +51,7 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
+        /// <summary> The parameters to provide for the Bot. </summary>
         /// <param name="displayName"> The Name of the bot. </param>
         /// <param name="description"> The description of the bot. </param>
         /// <param name="iconUri"> The Icon Url of the bot. </param>
@@ -158,6 +159,7 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -167,6 +169,7 @@ namespace Azure.ResourceManager.BotService.Models
             return new BotServicePrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> Network Security Perimeter configuration. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -184,6 +187,7 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
+        /// <summary> Properties of Network Security Perimeter configuration. </summary>
         /// <param name="provisioningState"></param>
         /// <param name="provisioningIssues"> List of Provisioning Issues if any. </param>
         /// <param name="networkSecurityPerimeter"> Information about Network Security Perimeter. </param>
@@ -203,6 +207,7 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
+        /// <summary> Describes Provisioning issue for given Network Security Perimeter configuration. </summary>
         /// <param name="name"> Name of the issue. </param>
         /// <param name="properties"> Properties of Provisioning Issue. </param>
         /// <returns> A new <see cref="Models.ProvisioningIssue"/> instance for mocking. </returns>
@@ -211,6 +216,7 @@ namespace Azure.ResourceManager.BotService.Models
             return new ProvisioningIssue(name, properties, default);
         }
 
+        /// <summary> Properties of Provisioning Issue. </summary>
         /// <param name="issueType"> Type of Issue. </param>
         /// <param name="severity"> Provisioning state of Network Security Perimeter configuration propagation. </param>
         /// <param name="description"> Description of the issue. </param>
@@ -231,6 +237,7 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
+        /// <summary> Information of Access Rule in a profile. </summary>
         /// <param name="name"> Name of the access rule. </param>
         /// <param name="properties"> Properties of Access Rule. </param>
         /// <returns> A new <see cref="Models.NspAccessRule"/> instance for mocking. </returns>
@@ -239,6 +246,7 @@ namespace Azure.ResourceManager.BotService.Models
             return new NspAccessRule(name, properties, default);
         }
 
+        /// <summary> Properties of Access Rule. </summary>
         /// <param name="direction"> Direction of Access Rule. </param>
         /// <param name="addressPrefixes"> Address prefixes in the CIDR format for inbound rules. </param>
         /// <param name="subscriptions"> Subscriptions for inbound rules. </param>
@@ -267,6 +275,7 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
+        /// <summary> Subscription for inbound rule. </summary>
         /// <param name="id"> Fully qualified identifier of subscription. </param>
         /// <returns> A new <see cref="Models.BotServiceNspAccessRuleSubscription"/> instance for mocking. </returns>
         public static BotServiceNspAccessRuleSubscription BotServiceNspAccessRuleSubscription(string id = default)
@@ -274,6 +283,7 @@ namespace Azure.ResourceManager.BotService.Models
             return new BotServiceNspAccessRuleSubscription(id, default);
         }
 
+        /// <summary> Information about Network Security Perimeter. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. E.g. "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}". </param>
         /// <param name="perimeterGuid"> Guid of the Network Security Perimeter. </param>
         /// <param name="location"> Location of the Network Security Perimeter. </param>
@@ -283,6 +293,7 @@ namespace Azure.ResourceManager.BotService.Models
             return new NetworkSecurityPerimeter(id, perimeterGuid, location, default);
         }
 
+        /// <summary> Information about resource association. </summary>
         /// <param name="name"> Name of the resource association. </param>
         /// <param name="accessMode"> Access Mode of the resource association. </param>
         /// <returns> A new <see cref="Models.BotServiceResourceAssociation"/> instance for mocking. </returns>
@@ -291,6 +302,7 @@ namespace Azure.ResourceManager.BotService.Models
             return new BotServiceResourceAssociation(name, accessMode, default);
         }
 
+        /// <summary> Information about profile. </summary>
         /// <param name="name"> Name of the profile. </param>
         /// <param name="accessRulesVersion"> Current access rules version. </param>
         /// <param name="accessRules"> List of Access Rules. </param>
@@ -311,6 +323,7 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
+        /// <summary> The SKU of the cognitive services account. </summary>
         /// <param name="name"> The sku name. </param>
         /// <param name="tier"> Gets the sku tier. This is based on the SKU name. </param>
         /// <returns> A new <see cref="Models.BotServiceSku"/> instance for mocking. </returns>
@@ -405,6 +418,7 @@ namespace Azure.ResourceManager.BotService.Models
                 properties);
         }
 
+        /// <summary> The parameters to provide for the Alexa channel. </summary>
         /// <param name="alexaSkillId"> The Alexa skill Id. </param>
         /// <param name="uriFragment"> Url fragment used in part of the Uri configured in Alexa. </param>
         /// <param name="serviceEndpointUri"> Full Uri used to configured the skill in Alexa. </param>
@@ -431,6 +445,7 @@ namespace Azure.ResourceManager.BotService.Models
                 properties);
         }
 
+        /// <summary> The parameters to provide for the Facebook channel. </summary>
         /// <param name="verifyToken"> Verify token. Value only returned through POST to the action Channel List API, otherwise empty. </param>
         /// <param name="pages"> The list of Facebook pages. </param>
         /// <param name="appId"> Facebook application id. </param>
@@ -452,6 +467,7 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
+        /// <summary> A Facebook page for Facebook channel registration. </summary>
         /// <param name="id"> Page id. </param>
         /// <param name="accessToken"> Facebook application access token. Value only returned through POST to the action Channel List API, otherwise empty. </param>
         /// <returns> A new <see cref="Models.FacebookPage"/> instance for mocking. </returns>
@@ -476,6 +492,7 @@ namespace Azure.ResourceManager.BotService.Models
                 properties);
         }
 
+        /// <summary> The parameters to provide for the Email channel. </summary>
         /// <param name="emailAddress"> The email address. </param>
         /// <param name="authMethod"> Email channel auth method. 0 Password (Default); 1 Graph. </param>
         /// <param name="password"> The password for the email address. Value only returned through POST to the action Channel List API, otherwise empty. </param>
@@ -518,6 +535,7 @@ namespace Azure.ResourceManager.BotService.Models
                 properties);
         }
 
+        /// <summary> The parameters to provide for the Microsoft Teams channel. </summary>
         /// <param name="isCallingEnabled"> Enable calling for Microsoft Teams channel. </param>
         /// <param name="callingWebhook"> Webhook for Microsoft Teams channel calls. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
@@ -553,6 +571,7 @@ namespace Azure.ResourceManager.BotService.Models
                 properties);
         }
 
+        /// <summary> The parameters to provide for the Microsoft Teams channel. </summary>
         /// <param name="isMessagingEnabled"> Enable messaging for Skype channel. </param>
         /// <param name="isMediaCardsEnabled"> Enable media cards for Skype channel. </param>
         /// <param name="isVideoEnabled"> Enable video for Skype channel. </param>
@@ -596,6 +615,7 @@ namespace Azure.ResourceManager.BotService.Models
                 properties);
         }
 
+        /// <summary> The parameters to provide for the Kik channel. </summary>
         /// <param name="userName"> The Kik user name. </param>
         /// <param name="apiKey"> Kik API key. Value only returned through POST to the action Channel List API, otherwise empty. </param>
         /// <param name="isValidated"> Whether this channel is validated for the bot. </param>
@@ -622,6 +642,7 @@ namespace Azure.ResourceManager.BotService.Models
                 properties);
         }
 
+        /// <summary> The parameters to provide for the Web Chat channel. </summary>
         /// <param name="webChatEmbedCode"> Web chat control embed code. </param>
         /// <param name="sites"> The list of Web Chat sites. </param>
         /// <returns> A new <see cref="Models.WebChatChannelProperties"/> instance for mocking. </returns>
@@ -742,6 +763,7 @@ namespace Azure.ResourceManager.BotService.Models
                 properties);
         }
 
+        /// <summary> The parameters to provide for the Direct Line channel. </summary>
         /// <param name="sites"> The list of Direct Line sites. </param>
         /// <param name="extensionKey1"> The extensionKey1. </param>
         /// <param name="extensionKey2"> The extensionKey2. </param>
@@ -817,6 +839,7 @@ namespace Azure.ResourceManager.BotService.Models
                 properties);
         }
 
+        /// <summary> The parameters to provide for the Telegram channel. </summary>
         /// <param name="accessToken"> The Telegram access token. Value only returned through POST to the action Channel List API, otherwise empty. </param>
         /// <param name="isValidated"> Whether this channel is validated for the bot. </param>
         /// <param name="isEnabled"> Whether this channel is enabled for the bot. </param>
@@ -842,6 +865,7 @@ namespace Azure.ResourceManager.BotService.Models
                 properties);
         }
 
+        /// <summary> The parameters to provide for the Sms channel. </summary>
         /// <param name="phone"> The Sms phone. </param>
         /// <param name="accountSID"> The Sms account SID. Value only returned through POST to the action Channel List API, otherwise empty. </param>
         /// <param name="authToken"> The Sms auth token. Value only returned through POST to the action Channel List API, otherwise empty. </param>
@@ -875,6 +899,7 @@ namespace Azure.ResourceManager.BotService.Models
                 properties);
         }
 
+        /// <summary> The parameters to provide for the Slack channel. </summary>
         /// <param name="clientId"> The Slack client id. </param>
         /// <param name="clientSecret"> The Slack client secret. Value only returned through POST to the action Channel List API, otherwise empty. </param>
         /// <param name="verificationToken"> The Slack verification token. Value only returned through POST to the action Channel List API, otherwise empty. </param>
@@ -920,6 +945,7 @@ namespace Azure.ResourceManager.BotService.Models
                 properties);
         }
 
+        /// <summary> The parameters to provide for the Line channel. </summary>
         /// <param name="lineRegistrations"> The list of line channel registrations. </param>
         /// <param name="callbackUri"> Callback Url to enter in line registration. </param>
         /// <param name="isValidated"> Whether this channel is validated for the bot. </param>
@@ -931,6 +957,7 @@ namespace Azure.ResourceManager.BotService.Models
             return new LineChannelProperties((lineRegistrations ?? new ChangeTrackingList<LineRegistration>()).ToList(), callbackUri, isValidated, default);
         }
 
+        /// <summary> The properties corresponding to a line channel registration. </summary>
         /// <param name="generatedId"> Id generated for the line channel registration. </param>
         /// <param name="channelSecret"> Secret for the line channel registration. </param>
         /// <param name="channelAccessToken"> Access token for the line channel registration. </param>
@@ -956,6 +983,7 @@ namespace Azure.ResourceManager.BotService.Models
                 properties);
         }
 
+        /// <summary> The parameters to provide for the DirectLine Speech channel. </summary>
         /// <param name="cognitiveServiceResourceId"> The cognitive service id with this channel registration. </param>
         /// <param name="cognitiveServiceRegion"> The cognitive service region with this channel registration. </param>
         /// <param name="cognitiveServiceSubscriptionKey"> The cognitive service subscription key to use with this channel registration. </param>
@@ -977,6 +1005,7 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
+        /// <summary> Omnichannel channel definition. </summary>
         /// <param name="eTag"> Entity Tag of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="location"> Specifies the location of the resource. </param>
@@ -1002,6 +1031,7 @@ namespace Azure.ResourceManager.BotService.Models
                 properties);
         }
 
+        /// <summary> The parameters to provide for the Direct Line channel. </summary>
         /// <param name="phoneNumbers"> The list of Telephony phone numbers. </param>
         /// <param name="apiConfigurations"> The list of Telephony api configuration. </param>
         /// <param name="cognitiveServiceSubscriptionKey"> The extensionKey1. </param>
@@ -1026,6 +1056,7 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
+        /// <summary> A telephone number for the Telephony channel. </summary>
         /// <param name="id"> The element id. </param>
         /// <param name="phoneNumber"> The phone number. </param>
         /// <param name="acsEndpoint"> The endpoint of ACS. </param>
@@ -1053,6 +1084,7 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
+        /// <summary> A resource Api configuration for the Telephony channel. </summary>
         /// <param name="id"> The id of config. </param>
         /// <param name="providerName"> The provider name. </param>
         /// <param name="cognitiveServiceSubscriptionKey"> The cognitive service subscription key. </param>
@@ -1141,6 +1173,7 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
+        /// <summary> Channel settings definition. </summary>
         /// <param name="extensionKey1"> The extensionKey1. </param>
         /// <param name="extensionKey2"> The extensionKey2. </param>
         /// <param name="sites"> The list of sites. </param>
@@ -1170,6 +1203,7 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
+        /// <summary> Site information for WebChat or DirectLine Channels to identify which site to regenerate keys for. </summary>
         /// <param name="siteName"> The site name. </param>
         /// <param name="key"> Determines which key is to be regenerated. </param>
         /// <returns> A new <see cref="Models.BotChannelRegenerateKeysContent"/> instance for mocking. </returns>
@@ -1210,6 +1244,7 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
+        /// <summary> Properties for a Connection Setting Item. </summary>
         /// <param name="id"> Id of the Connection Setting. </param>
         /// <param name="name"> Name of the Connection Setting. </param>
         /// <param name="clientId"> Client Id associated with the Connection Setting. </param>
@@ -1239,6 +1274,7 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
+        /// <summary> Extra Parameter in a Connection Setting Properties to indicate service provider specific properties. </summary>
         /// <param name="key"> Key for the Connection Setting Parameter. </param>
         /// <param name="value"> Value associated with the Connection Setting Parameter. </param>
         /// <returns> A new <see cref="Models.BotConnectionSettingParameter"/> instance for mocking. </returns>
@@ -1247,6 +1283,7 @@ namespace Azure.ResourceManager.BotService.Models
             return new BotConnectionSettingParameter(key, value, default);
         }
 
+        /// <summary> The request body for a request to Bot Service Management to check availability of a bot name. </summary>
         /// <param name="name"> the name of the bot for which availability needs to be checked. </param>
         /// <param name="resourceType"> the type of the bot for which availability needs to be checked. </param>
         /// <returns> A new <see cref="Models.BotServiceNameAvailabilityContent"/> instance for mocking. </returns>
@@ -1255,6 +1292,7 @@ namespace Azure.ResourceManager.BotService.Models
             return new BotServiceNameAvailabilityContent(name, resourceType, default);
         }
 
+        /// <summary> The response body returned for a request to Bot Service Management to check availability of a bot name. </summary>
         /// <param name="isValid"> indicates if the bot name is valid. </param>
         /// <param name="message"> additional message from the bot management api showing why a bot name is not available. </param>
         /// <param name="absCode"> response code from ABS. </param>
@@ -1264,6 +1302,7 @@ namespace Azure.ResourceManager.BotService.Models
             return new BotServiceNameAvailabilityResult(isValid, message, absCode, default);
         }
 
+        /// <summary> Service Provider Definition. </summary>
         /// <param name="properties"> The Properties of a Service Provider Object. </param>
         /// <returns> A new <see cref="Models.BotServiceProvider"/> instance for mocking. </returns>
         public static BotServiceProvider BotServiceProvider(BotServiceProviderProperties properties = default)
@@ -1271,6 +1310,7 @@ namespace Azure.ResourceManager.BotService.Models
             return new BotServiceProvider(properties, default);
         }
 
+        /// <summary> The Object used to describe a Service Provider supported by Bot Service. </summary>
         /// <param name="id"> Id for Service Provider. </param>
         /// <param name="displayName"> Display Name of the Service Provider. </param>
         /// <param name="serviceProviderName"> Name of the Service Provider. </param>
@@ -1313,6 +1353,7 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
+        /// <summary> The request body for a request to Bot Service Management to list QnA Maker endpoint keys. </summary>
         /// <param name="hostname"> the host name of the QnA Maker endpoint. </param>
         /// <param name="authkey"> Subscription key which provides access to this API. </param>
         /// <returns> A new <see cref="Models.GetBotServiceQnAMakerEndpointKeyContent"/> instance for mocking. </returns>
@@ -1321,6 +1362,7 @@ namespace Azure.ResourceManager.BotService.Models
             return new GetBotServiceQnAMakerEndpointKeyContent(hostname, authkey, default);
         }
 
+        /// <summary> Schema for EndpointKeys generate/refresh operations. </summary>
         /// <param name="primaryEndpointKey"> Primary Access Key. </param>
         /// <param name="secondaryEndpointKey"> Secondary Access Key. </param>
         /// <param name="installedVersion"> Current version of runtime. </param>
@@ -1331,6 +1373,7 @@ namespace Azure.ResourceManager.BotService.Models
             return new GetBotServiceQnAMakerEndpointKeyResult(primaryEndpointKey, secondaryEndpointKey, installedVersion, lastStableVersion, default);
         }
 
+        /// <summary> The response body returned for a request to Bot Service Management to check per subscription hostSettings. </summary>
         /// <param name="oAuthUri"> For in-conversation bot user authentication. </param>
         /// <param name="toBotFromChannelOpenIdMetadataUri"> For verifying incoming tokens from the channels. </param>
         /// <param name="toBotFromChannelTokenIssuer"> For verifying incoming tokens from the channels. </param>
@@ -1354,7 +1397,7 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BotProperties"/>. </summary>
+        /// <summary> The parameters to provide for the Bot. </summary>
         /// <param name="displayName"> The Name of the bot. </param>
         /// <param name="description"> The description of the bot. </param>
         /// <param name="iconUri"> The Icon Url of the bot. </param>
@@ -1434,12 +1477,12 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="BotService.BotServicePrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpointId"> The resource of private end point. </param>
+        /// <summary> The Private Endpoint Connection resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="privateEndpointId"> The ARM identifier for Private Endpoint. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of the private endpoint connection resource. </param>
         /// <param name="groupIds"> Group ids. </param>
@@ -1456,7 +1499,7 @@ namespace Azure.ResourceManager.BotService.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BotConnectionSettingProperties"/>. </summary>
+        /// <summary> Properties for a Connection Setting Item. </summary>
         /// <param name="clientId"> Client Id associated with the Connection Setting. </param>
         /// <param name="settingId"> Setting Id set by the service for the Connection Setting. </param>
         /// <param name="clientSecret"> Client Secret associated with the Connection Setting. </param>

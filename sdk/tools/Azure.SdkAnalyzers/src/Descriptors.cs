@@ -53,6 +53,16 @@ namespace Azure.SdkAnalyzers
             true,
             "Output model types returned from client methods should have corresponding model factory methods for mocking support.");
 
+        public static readonly DiagnosticDescriptor AZC0004 = new(
+            nameof(AZC0004),
+            "DO provide both asynchronous and synchronous variants for all service methods.",
+            "DO provide both asynchronous and synchronous variants for all service methods.",
+            DiagnosticCategory.Usage,
+            DiagnosticSeverity.Warning,
+            true,
+            "Client service methods should provide both asynchronous and synchronous variants.",
+            "https://azure.github.io/azure-sdk/dotnet_introduction.html#dotnet-service-methods");
+
         public static readonly DiagnosticDescriptor AZC0005 = new(
             nameof(AZC0005),
             "DO provide protected parameterless constructor for mocking.",

@@ -24,52 +24,52 @@ namespace Azure.ResourceManager.AppService.Mocking
     {
         /// <summary> Description for Get available Function app frameworks and their versions for location. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(AzureLocation location, ProviderStackOSType? stackOsType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<FunctionAppStack> GetFunctionAppStacksForLocationProvidersAsync(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new CompatGetFunctionAppStacksForLocationAsyncCollectionResultOfT(
                 ProviderOperationGroupRestClient,
                 location,
-                stackOsType?.ToString(),
+                stackOSType?.ToString(),
                 context,
                 "MockableAppServiceTenantResource.GetFunctionAppStacksForLocationProviders");
         }
 
         /// <summary> Description for Get available Function app frameworks and their versions for location. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(AzureLocation location, ProviderStackOSType? stackOsType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<FunctionAppStack> GetFunctionAppStacksForLocationProviders(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new CompatGetFunctionAppStacksForLocationCollectionResultOfT(
                 ProviderOperationGroupRestClient,
                 location,
-                stackOsType?.ToString(),
+                stackOSType?.ToString(),
                 context,
                 "MockableAppServiceTenantResource.GetFunctionAppStacksForLocationProviders");
         }
 
         /// <summary> Description for Get available Web app frameworks and their versions for location. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual AsyncPageable<WebAppStack> GetWebAppStacksByLocationAsync(AzureLocation location, ProviderStackOSType? stackOsType = null, CancellationToken cancellationToken = default)
+        public virtual AsyncPageable<WebAppStack> GetWebAppStacksByLocationAsync(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new CompatGetWebAppStacksByLocationAsyncCollectionResultOfT(
                 ProviderOperationGroupRestClient,
                 location,
-                stackOsType?.ToString(),
+                stackOSType?.ToString(),
                 context,
                 "MockableAppServiceTenantResource.GetWebAppStacksByLocation");
         }
 
         /// <summary> Description for Get available Web app frameworks and their versions for location. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public virtual Pageable<WebAppStack> GetWebAppStacksByLocation(AzureLocation location, ProviderStackOSType? stackOsType = null, CancellationToken cancellationToken = default)
+        public virtual Pageable<WebAppStack> GetWebAppStacksByLocation(AzureLocation location, ProviderStackOSType? stackOSType = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext { CancellationToken = cancellationToken };
             return new CompatGetWebAppStacksByLocationCollectionResultOfT(
                 ProviderOperationGroupRestClient,
                 location,
-                stackOsType?.ToString(),
+                stackOSType?.ToString(),
                 context,
                 "MockableAppServiceTenantResource.GetWebAppStacksByLocation");
         }

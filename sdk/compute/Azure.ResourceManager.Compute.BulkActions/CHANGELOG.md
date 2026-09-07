@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0-beta.3 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,35 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0-beta.2 (2026-08-06)
+
+### Features Added
+
+- Added capacity and placement recommendations for bulk start operations.
+- Added partial fulfillment controls, including minimum capacity.
+- Added pageable per-VM operation status for `BulkCreateCustom`.
+- Added resolved VM details to `BulkCreateCustom` results.
+
+### Breaking Changes
+
+- Renamed `RecurringScheduledActions*` models to `ScheduledActions*`.
+- Renamed `ResourceProvisioningState` to `OccurrenceResourceProvisioningState`.
+
+### Bugs Fixed
+
+- Renamed the non-resource model to `BulkCreateCustomResolvedItem`.
+- Corrected boolean and timestamp property names to follow .NET conventions.
+
+### Other Changes
+
+- Updated the client to target API version `2026-08-06-preview`.
+
+## 1.2.0-beta.1 (2026-08-03)
+
+### Features Added
+
+- The `ExecuteStartContent`, `ExecuteDeallocateContent`, `ExecuteHibernateContent`, and `ExecuteDeleteContent` models now expose a settable `Resources` property and a constructor overload that accepts only `executionParameters`, in addition to the existing `(executionParameters, resources)` constructor.
 
 ## 1.1.0 (2026-07-07)
 

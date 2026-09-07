@@ -32,26 +32,26 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="name"> The caller provided unique name for the resource. </param>
         /// <param name="displayName"> The name that can be used for display purposes. </param>
         /// <param name="content"> The type of data the data connection will transfer. </param>
-        /// <param name="createdDate"> The date the data connection was created. </param>
+        /// <param name="createdOn"> The date the data connection was created. </param>
         /// <param name="frequency"> The rate at which the data connection will receive updates. </param>
         /// <param name="frequencyOffset"> The day to update the data connection on. (1-7 for weekly, 1-31 for monthly). </param>
-        /// <param name="updatedDate"> The date the data connection was last updated. </param>
-        /// <param name="userUpdatedAt"> The date the data connection was last updated by user. </param>
+        /// <param name="updatedOn"> The date the data connection was last updated. </param>
+        /// <param name="userUpdatedOn"> The date the data connection was last updated by user. </param>
         /// <param name="active"> An indicator of whether the data connection is active. </param>
         /// <param name="inactiveMessage"> A message that specifies details about data connection if inactive. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DataConnection(string kind, string id, string name, string displayName, DataConnectionContent? content, DateTimeOffset? createdDate, DataConnectionFrequency? frequency, int? frequencyOffset, DateTimeOffset? updatedDate, DateTimeOffset? userUpdatedAt, bool? active, string inactiveMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DataConnection(string kind, string id, string name, string displayName, DataConnectionContent? content, DateTimeOffset? createdOn, DataConnectionFrequency? frequency, int? frequencyOffset, DateTimeOffset? updatedOn, DateTimeOffset? userUpdatedOn, bool? active, string inactiveMessage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kind = kind;
             Id = id;
             Name = name;
             DisplayName = displayName;
             Content = content;
-            CreatedDate = createdDate;
+            CreatedOn = createdOn;
             Frequency = frequency;
             FrequencyOffset = frequencyOffset;
-            UpdatedDate = updatedDate;
-            UserUpdatedAt = userUpdatedAt;
+            UpdatedOn = updatedOn;
+            UserUpdatedOn = userUpdatedOn;
             Active = active;
             InactiveMessage = inactiveMessage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Defender.Easm
         public DataConnectionContent? Content { get; }
 
         /// <summary> The date the data connection was created. </summary>
-        public DateTimeOffset? CreatedDate { get; }
+        public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> The rate at which the data connection will receive updates. </summary>
         public DataConnectionFrequency? Frequency { get; }
@@ -82,10 +82,10 @@ namespace Azure.Analytics.Defender.Easm
         public int? FrequencyOffset { get; }
 
         /// <summary> The date the data connection was last updated. </summary>
-        public DateTimeOffset? UpdatedDate { get; }
+        public DateTimeOffset? UpdatedOn { get; }
 
         /// <summary> The date the data connection was last updated by user. </summary>
-        public DateTimeOffset? UserUpdatedAt { get; }
+        public DateTimeOffset? UserUpdatedOn { get; }
 
         /// <summary> An indicator of whether the data connection is active. </summary>
         public bool? Active { get; }

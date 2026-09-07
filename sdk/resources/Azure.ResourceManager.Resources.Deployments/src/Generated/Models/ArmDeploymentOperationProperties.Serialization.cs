@@ -9,9 +9,9 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
-namespace Azure.ResourceManager.Resources.Models
+namespace Azure.ResourceManager.Resources.Deployments.Models
 {
     /// <summary> Deployment operation properties. </summary>
     public partial class ArmDeploymentOperationProperties : IJsonModel<ArmDeploymentOperationProperties>
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Resources.Models
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerResourcesDeploymentsContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(ArmDeploymentOperationProperties)} does not support writing '{options.Format}' format.");
             }
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Resources.Models
                 }
                 if (prop.NameEquals("statusCode"u8))
                 {
-                    statusCode = prop.Value.GetString();
+                    DeserializeStatusCode(prop, ref statusCode, options);
                     continue;
                 }
                 if (prop.NameEquals("statusMessage"u8))

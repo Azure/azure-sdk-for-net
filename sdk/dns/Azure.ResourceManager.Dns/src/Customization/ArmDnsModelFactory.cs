@@ -13,11 +13,30 @@ using Azure.Core;
 using Azure.ResourceManager.Dns;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
+using CodeGenSuppressAttribute = Microsoft.TypeSpec.Generator.Customizations.CodeGenSuppressAttribute;
 
 namespace Azure.ResourceManager.Dns.Models
 {
+    // TODO: Remove these compatibility overloads when https://github.com/microsoft/typespec/issues/11707
+    // preserves existing public model-factory parameter names.
+    [CodeGenSuppressAttribute("DnsARecordInfo", typeof(IPAddress))]
+    [CodeGenSuppressAttribute("DnsAaaaRecordInfo", typeof(IPAddress))]
     public static partial class ArmDnsModelFactory
     {
+        /// <param name="iPv4Address"> The IPv4 address of this A record. </param>
+        /// <returns> A new <see cref="DnsARecordInfo"/> instance for mocking. </returns>
+        public static DnsARecordInfo DnsARecordInfo(IPAddress iPv4Address = default)
+        {
+            return new DnsARecordInfo(iPv4Address, default);
+        }
+
+        /// <param name="iPv6Address"> The IPv6 address of this AAAA record. </param>
+        /// <returns> A new <see cref="DnsAaaaRecordInfo"/> instance for mocking. </returns>
+        public static DnsAaaaRecordInfo DnsAaaaRecordInfo(IPAddress iPv6Address = default)
+        {
+            return new DnsAaaaRecordInfo(iPv6Address, default);
+        }
+
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="resourceType"></param>

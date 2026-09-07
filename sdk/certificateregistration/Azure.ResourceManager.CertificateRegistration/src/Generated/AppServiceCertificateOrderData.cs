@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.CertificateRegistration
         {
             get
             {
-                return Properties is null ? default : Properties.ExpireOn;
+                return Properties is null ? default : Properties.ExpiresOn;
             }
         }
 

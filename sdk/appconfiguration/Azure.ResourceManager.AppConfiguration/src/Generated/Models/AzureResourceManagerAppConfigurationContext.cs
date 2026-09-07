@@ -6,8 +6,10 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.AppConfiguration.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
@@ -69,11 +71,13 @@ namespace Azure.ResourceManager.AppConfiguration
     [ModelReaderWriterBuildable(typeof(ReplicaListResult))]
     [ModelReaderWriterBuildable(typeof(ReplicaProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceAssociation))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SnapshotKeyValueFilter))]
     [ModelReaderWriterBuildable(typeof(SnapshotProperties))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TelemetryProperties))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerAppConfigurationContext : ModelReaderWriterContext
     {
     }

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -14,41 +15,62 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     public readonly partial struct HybridContainerServiceOSSku : IEquatable<HybridContainerServiceOSSku>
     {
         private readonly string _value;
+        /// <summary> Use Mariner as the OS for node images. </summary>
+        private const string CBLMarinerValue = "CBLMariner";
+        /// <summary> Use Windows2019 as the OS for node images. </summary>
+        private const string Windows2019Value = "Windows2019";
+        /// <summary> Use Windows2022 as the OS for node images. </summary>
+        private const string Windows2022Value = "Windows2022";
 
         /// <summary> Initializes a new instance of <see cref="HybridContainerServiceOSSku"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public HybridContainerServiceOSSku(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string CBLMarinerValue = "CBLMariner";
-        private const string Windows2019Value = "Windows2019";
-        private const string Windows2022Value = "Windows2022";
+            _value = value;
+        }
 
         /// <summary> Use Mariner as the OS for node images. </summary>
         public static HybridContainerServiceOSSku CBLMariner { get; } = new HybridContainerServiceOSSku(CBLMarinerValue);
+
         /// <summary> Use Windows2019 as the OS for node images. </summary>
         public static HybridContainerServiceOSSku Windows2019 { get; } = new HybridContainerServiceOSSku(Windows2019Value);
+
         /// <summary> Use Windows2022 as the OS for node images. </summary>
         public static HybridContainerServiceOSSku Windows2022 { get; } = new HybridContainerServiceOSSku(Windows2022Value);
+
         /// <summary> Determines if two <see cref="HybridContainerServiceOSSku"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(HybridContainerServiceOSSku left, HybridContainerServiceOSSku right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="HybridContainerServiceOSSku"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(HybridContainerServiceOSSku left, HybridContainerServiceOSSku right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="HybridContainerServiceOSSku"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="HybridContainerServiceOSSku"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator HybridContainerServiceOSSku(string value) => new HybridContainerServiceOSSku(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="HybridContainerServiceOSSku"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator HybridContainerServiceOSSku?(string value) => value == null ? null : new HybridContainerServiceOSSku(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is HybridContainerServiceOSSku other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(HybridContainerServiceOSSku other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

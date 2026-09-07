@@ -10,8 +10,9 @@ commit, this script:
      'auto-release' label.
   2. Builds a PR diff object (New-GitHubPullRequestDiffObject) from the PR's changed files and reuses
      the repo's existing package-detection logic (Get-PrPkgProperties) to identify the changed packages
-     (honoring triggering paths, deleted files and service-level changes), excluding
-     validation-only packages. Get-PrPkgProperties delegates to each repo's own
+      (honoring triggering paths and deleted files while ignoring only files directly under
+      sdk/<service>/, not files in package subdirectories), excluding validation-only packages.
+      Get-PrPkgProperties delegates to each repo's own
      Get-AllPackageInfoFromRepo (language-settings.ps1), so this script works for any language repo.
   3. Intersects those packages with this pipeline's declared artifacts and emits Azure DevOps output
      variables consumed by the release stages. Both consumption styles are emitted:
@@ -135,7 +136,10 @@ function Invoke-AutoReleaseResolution {
   # package-detection logic to identify the changed packages.
   Write-Host "Fetching changed files for PR $prLink..."
   $files = @(Get-GitHubPullRequestFiles -RepoId $RepoId -PullRequestNumber $pr.number -AuthToken $AuthToken)
-  $diff = New-GitHubPullRequestDiffObject -PullRequestNumber $pr.number -PullRequestFiles $files
+  $diff = New-GitHubPullRequestDiffObject `
+    -PullRequestNumber $pr.number `
+    -PullRequestFiles $files `
+    -ExcludeServiceRootFiles
   Write-Host "PR $prLink changed $($diff.ChangedFiles.Count) file(s) and deleted $($diff.DeletedFiles.Count) file(s)."
 
   $diffPath = Join-Path ([System.IO.Path]::GetTempPath()) ("autorelease-diff-" + [System.Guid]::NewGuid().ToString('N') + ".json")
@@ -196,13 +200,13 @@ function Invoke-AutoReleaseResolution {
         $matchedArtifacts += $artifact
 
         # Update release pending status and release pipeline URL in the release plan for this package.
-        # release status is updated as "Released" when the package has been successfully released; here we are marking it as "Approval Pending" to indicate that the release is awaiting approval.
+        # The release status is updated to "Released" after successful completion; until then, mark it as "Release In Progress" to indicate that the release is underway.
         try
         {
           if($AzsdkExePath)
           {
             $sdkPullRequestUrl = $pr.html_url
-            $cliArgs = @("release-plan", "update-release-status", "--package-name", $name, "--language", $LanguageDisplayName, "--status", "Approval Pending", "--sdk-pull-request", $sdkPullRequestUrl)
+            $cliArgs = @("release-plan", "update-release-status", "--package-name", $name, "--language", $LanguageDisplayName, "--status", "Release In Progress", "--sdk-pull-request", $sdkPullRequestUrl)
             if ($PipelineUrl)
             {
                 $cliArgs += @("--release-pipeline", $PipelineUrl)

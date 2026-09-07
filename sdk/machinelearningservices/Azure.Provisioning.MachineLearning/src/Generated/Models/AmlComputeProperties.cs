@@ -311,7 +311,7 @@ namespace Azure.Provisioning.MachineLearning
             _subnet = DefineModelProperty<ResourceId>(nameof(Subnet), new string[] { "subnet" });
             _remoteLoginPortPublicAccess = DefineProperty<MachineLearningRemoteLoginPortPublicAccess>(nameof(RemoteLoginPortPublicAccess), new string[] { "remoteLoginPortPublicAccess" });
             _allocationState = DefineProperty<MachineLearningAllocationState>(nameof(AllocationState), new string[] { "allocationState" }, isOutput: true);
-            _allocationStateTransitionOn = DefineProperty<DateTimeOffset>(nameof(AllocationStateTransitionOn), new string[] { "allocationStateTransitionTime" }, isOutput: true);
+            _allocationStateTransitionOn = DefineProperty<DateTimeOffset>(nameof(AllocationStateTransitionOn), new string[] { "allocationStateTransitionTime" }, isOutput: true, format: "O");
             _errors = DefineListProperty<MachineLearningError>(nameof(Errors), new string[] { "errors" }, isOutput: true);
             _currentNodeCount = DefineProperty<int>(nameof(CurrentNodeCount), new string[] { "currentNodeCount" }, isOutput: true);
             _targetNodeCount = DefineProperty<int>(nameof(TargetNodeCount), new string[] { "targetNodeCount" }, isOutput: true);

@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network
             AzureLocation? location = default;
             IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            IpGroupPropertiesFormat properties = default;
+            IPGroupPropertiesFormat properties = default;
             ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Network
                     {
                         continue;
                     }
-                    properties = IpGroupPropertiesFormat.DeserializeIpGroupPropertiesFormat(prop.Value, options);
+                    properties = IPGroupPropertiesFormat.DeserializeIPGroupPropertiesFormat(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))

@@ -110,6 +110,11 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
+            if (Optional.IsDefined(CapabilitySettings))
+            {
+                writer.WritePropertyName("capabilitySettings"u8);
+                writer.WriteObjectValue(CapabilitySettings, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -157,6 +162,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string description = default;
             IReadOnlyDictionary<string, string> endpoints = default;
             bool? isDefault = default;
+            CapabilitySettings capabilitySettings = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -209,6 +215,15 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     isDefault = prop.Value.GetBoolean();
                     continue;
                 }
+                if (prop.NameEquals("capabilitySettings"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    capabilitySettings = CapabilitySettings.DeserializeCapabilitySettings(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -220,6 +235,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 description,
                 endpoints ?? new ChangeTrackingDictionary<string, string>(),
                 isDefault,
+                capabilitySettings,
                 additionalBinaryDataProperties);
         }
     }

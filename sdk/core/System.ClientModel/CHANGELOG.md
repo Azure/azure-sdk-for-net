@@ -1,6 +1,6 @@
 # Release History
 
-## 1.15.0-beta.1 (Unreleased)
+## 1.16.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,16 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.15.0 (2026-08-04)
+
+### Features Added
+
+- Added sealed, one-shot experimental `AsyncStreamingClientResult<T>` (and the `AsyncStreamingClientResult` factory class) for asynchronous streaming responses, with factories for custom producers, server-sent events, and newline-delimited JSON. These types are marked experimental (`SCME0005`) and are subject to change or removal in future updates.
+
+### Bugs Fixed
+
+- Fixed an issue where response content logging could emit more bytes than were actually read when a non-buffered (streaming) response was read into a buffer larger than the response body. Previously, when the read began at offset 0, `MessageLoggingPolicy` logged the entire caller-supplied buffer — including the bytes past the response payload, which for a pooled buffer contain unrelated in-process content — and the configured `MessageContentSizeLimit` was not applied. Only the bytes that were read are now logged. ([#61399](https://github.com/Azure/azure-sdk-for-net/issues/61399))
 
 ## 1.14.0 (2026-06-03)
 

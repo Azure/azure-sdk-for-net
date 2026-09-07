@@ -22,6 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
         public GatewayProperties()
         {
             AllowedFeatures = new ChangeTrackingList<string>();
+            GatewayBypass = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="GatewayProperties"/>. </summary>
@@ -30,14 +31,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <param name="gatewayType"> The type of the Gateway resource. </param>
         /// <param name="gatewayEndpoint"> The endpoint fqdn for the Gateway. </param>
         /// <param name="allowedFeatures"> Specifies the list of features that are enabled for this Gateway. </param>
+        /// <param name="gatewayBypass"> Specifies the list of domain names that should bypass the gateway. Each entry must be a valid DNS hostname. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GatewayProperties(HybridComputeProvisioningState? provisioningState, ResourceIdentifier gatewayId, ArcGatewayType? gatewayType, string gatewayEndpoint, IList<string> allowedFeatures, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GatewayProperties(HybridComputeProvisioningState? provisioningState, ResourceIdentifier gatewayId, ArcGatewayType? gatewayType, string gatewayEndpoint, IList<string> allowedFeatures, IList<string> gatewayBypass, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             GatewayId = gatewayId;
             GatewayType = gatewayType;
             GatewayEndpoint = gatewayEndpoint;
             AllowedFeatures = allowedFeatures;
+            GatewayBypass = gatewayBypass;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -60,5 +63,9 @@ namespace Azure.ResourceManager.HybridCompute.Models
         /// <summary> Specifies the list of features that are enabled for this Gateway. </summary>
         [WirePath("allowedFeatures")]
         public IList<string> AllowedFeatures { get; } = new ChangeTrackingList<string>();
+
+        /// <summary> Specifies the list of domain names that should bypass the gateway. Each entry must be a valid DNS hostname. </summary>
+        [WirePath("gatewayBypass")]
+        public IList<string> GatewayBypass { get; } = new ChangeTrackingList<string>();
     }
 }

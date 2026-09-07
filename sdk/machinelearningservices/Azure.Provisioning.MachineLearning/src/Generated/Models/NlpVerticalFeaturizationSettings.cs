@@ -5,41 +5,20 @@
 
 #nullable disable
 
-using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
-
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> The NlpVerticalFeaturizationSettings. </summary>
-    internal partial class NlpVerticalFeaturizationSettings : ProvisionableConstruct
+    internal partial class NlpVerticalFeaturizationSettings : MachineLearningFeaturizationSettings
     {
-        private BicepValue<string> _datasetLanguage;
-
         /// <summary> Creates a new NlpVerticalFeaturizationSettings. </summary>
         public NlpVerticalFeaturizationSettings()
         {
-        }
-
-        /// <summary> Gets or sets the DatasetLanguage. </summary>
-        public BicepValue<string> DatasetLanguage
-        {
-            get
-            {
-                Initialize();
-                return _datasetLanguage;
-            }
-            set
-            {
-                Initialize();
-                _datasetLanguage.Assign(value);
-            }
         }
 
         /// <summary> Define all the provisionable properties for NlpVerticalFeaturizationSettings. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _datasetLanguage = DefineProperty<string>(nameof(DatasetLanguage), new string[] { "datasetLanguage" });
             DefineAdditionalProperties();
         }
 

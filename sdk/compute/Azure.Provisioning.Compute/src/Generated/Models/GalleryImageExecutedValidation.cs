@@ -71,7 +71,7 @@ namespace Azure.Provisioning.Compute
             _executedValidationType = DefineProperty<string>(nameof(ExecutedValidationType), new string[] { "type" });
             _status = DefineProperty<ComputeGalleryValidationStatus>(nameof(Status), new string[] { "status" });
             _version = DefineProperty<string>(nameof(Version), new string[] { "version" });
-            _executionOn = DefineProperty<DateTimeOffset>(nameof(ExecutionOn), new string[] { "executionTime" });
+            _executionOn = DefineProperty<DateTimeOffset>(nameof(ExecutionOn), new string[] { "executionTime" }, format: "O");
             DefineAdditionalProperties();
         }
 

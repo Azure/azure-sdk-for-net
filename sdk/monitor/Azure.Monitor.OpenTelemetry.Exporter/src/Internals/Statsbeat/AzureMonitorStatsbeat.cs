@@ -39,7 +39,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         private readonly IPlatform _platform;
 
+        internal readonly int _networkExportIntervalMilliseconds;
+
+        internal readonly TimeSpan _attachEmissionInterval;
+
+        private readonly string? _connectionStringOverride;
+
         internal MeterProvider? _statsbeatMeterProvider;
+
+        private volatile bool _isDisposed;
 
         // Wall-clock throttle for the Attach observable gauge so it emits at most once per
         // AttachEmissionInterval even though the shared reader collects every 15 min.
@@ -68,6 +76,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
             _operatingSystem = platform.GetOSPlatformName();
 
+            _networkExportIntervalMilliseconds = ResolveIntervalMilliseconds(
+                platform,
+                EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATS_SHORT_EXPORT_INTERVAL,
+                StatsbeatConstants.NetworkStatsbeatInterval);
+
+            _attachEmissionInterval = ResolveInterval(
+                platform,
+                EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATS_LONG_EXPORT_INTERVAL,
+                StatsbeatConstants.AttachEmissionInterval);
+
+            var connectionStringOverride = platform.GetEnvironmentVariable(EnvironmentVariableConstants.APPLICATIONINSIGHTS_STATS_CONNECTION_STRING);
+            _connectionStringOverride = string.IsNullOrWhiteSpace(connectionStringOverride) ? null : connectionStringOverride;
+
             _customer_Ikey = connectionStringVars.InstrumentationKey;
 
             // IEnumerable<Measurement<T>> overload lets the callback yield zero measurements
@@ -88,6 +109,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             var routeToDistroEndpoint =
                 AppContext.TryGetSwitch(StatsbeatConstants.RouteSdkStatsToDistroEndpointSwitchName, out var enabled)
                 && enabled;
+
+            // Explicit destination override (spec: connectionString) wins over both the
+            // distro-routed and region-derived endpoints.
+            if (_connectionStringOverride != null)
+            {
+                _statsbeat_ConnectionString = _connectionStringOverride;
+                BuildMeterProvider(_statsbeat_ConnectionString);
+                ScheduleInitialAttachFlush();
+                return;
+            }
 
             if (routeToDistroEndpoint)
             {
@@ -194,6 +225,38 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             // long-interval instruments on their native 24 hr cadence. EnableStatsbeat=false
             // avoids a recursive Statsbeat construction inside the transmitter we're about to
             // attach.
+            var exporterOptions = CreateExporterOptions(connectionString);
+
+            var meterProvider = Sdk.CreateMeterProviderBuilder()
+                .AddMeter(StatsbeatConstants.AttachStatsbeatMeterName)
+                .AddMeter(StatsbeatConstants.FeatureStatsbeatMeterName)
+                .AddMeter(StatsbeatConstants.DistroFeatureSdkStatsMeterName)
+                .AddMeter(StatsbeatConstants.NetworkSdkStatsMeterName)
+                .AddMeter(StatsbeatConstants.DistroNetworkSdkStatsMeterName)
+                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), _networkExportIntervalMilliseconds)
+                { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
+                .Build();
+
+            // A full fence, so the disposed flag below cannot be read before this is visible.
+            Interlocked.Exchange(ref _statsbeatMeterProvider, meterProvider);
+
+            if (!_isDisposed)
+            {
+                return;
+            }
+
+            // The distro path builds this from a background config fetch, which can land after a
+            // short-lived process has already disposed us. Whichever side takes the provider here
+            // owns it, so it is disposed once and never orphaned.
+            var orphaned = Interlocked.Exchange(ref _statsbeatMeterProvider, null);
+            if (orphaned != null)
+            {
+                DisposeInBackground(orphaned);
+            }
+        }
+
+        internal static AzureMonitorExporterOptions CreateExporterOptions(string connectionString)
+        {
             var exporterOptions = new AzureMonitorExporterOptions
             {
                 DisableOfflineStorage = true,
@@ -201,15 +264,36 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 EnableStatsbeat = false,
             };
 
-            _statsbeatMeterProvider = Sdk.CreateMeterProviderBuilder()
-                .AddMeter(StatsbeatConstants.AttachStatsbeatMeterName)
-                .AddMeter(StatsbeatConstants.FeatureStatsbeatMeterName)
-                .AddMeter(StatsbeatConstants.DistroFeatureSdkStatsMeterName)
-                .AddMeter(StatsbeatConstants.NetworkSdkStatsMeterName)
-                .AddMeter(StatsbeatConstants.DistroNetworkSdkStatsMeterName)
-                .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), StatsbeatConstants.NetworkStatsbeatInterval)
-                { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
-                .Build();
+            // Disposing this meter provider exports once more on the process exit path.
+            exporterOptions.Retry.NetworkTimeout = ShutdownPersistence.PersistOnShutdownConfig.InternalTelemetryNetworkTimeout;
+
+            return exporterOptions;
+        }
+
+        private static int ResolveIntervalMilliseconds(IPlatform platform, string envVarName, int defaultMilliseconds)
+        {
+            var value = platform.GetEnvironmentVariable(envVarName);
+            // Guard the seconds->milliseconds multiplication against int overflow: a value
+            // above int.MaxValue/1000 would wrap to a negative interval and break the reader.
+            if (int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var seconds)
+                && seconds > 0
+                && seconds <= int.MaxValue / 1000)
+            {
+                return seconds * 1000;
+            }
+
+            return defaultMilliseconds;
+        }
+
+        private static TimeSpan ResolveInterval(IPlatform platform, string envVarName, TimeSpan defaultInterval)
+        {
+            var value = platform.GetEnvironmentVariable(envVarName);
+            if (int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var seconds) && seconds > 0)
+            {
+                return TimeSpan.FromSeconds(seconds);
+            }
+
+            return defaultInterval;
         }
 
         private void ScheduleInitialAttachFlush()
@@ -282,7 +366,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             long previousTicks = Volatile.Read(ref _lastAttachEmissionTicks);
             long nowTicks = DateTime.UtcNow.Ticks;
             if (previousTicks != 0
-                && nowTicks - previousTicks < StatsbeatConstants.AttachEmissionInterval.Ticks)
+                && nowTicks - previousTicks < _attachEmissionInterval.Ticks)
             {
                 yield break;
             }
@@ -393,8 +477,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 _resourceProvider = "vm";
                 _resourceProviderId = _resourceProviderId = vmMetadata.vmId + "/" + vmMetadata.subscriptionId;
 
-                // osType takes precedence.
-                _operatingSystem = vmMetadata.osType?.ToLower(CultureInfo.InvariantCulture) ?? "unknown";
+                // osType takes precedence when IMDS reports a concrete value; when it is
+                // null/empty or the literal "Unknown", fall back to the running process OS
+                // (already captured in _operatingSystem via the constructor) per spec.
+                _operatingSystem = ResolveOperatingSystem(vmMetadata.osType, _operatingSystem);
 
                 return;
             }
@@ -403,9 +489,52 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             _resourceProviderId = "unknown";
         }
 
+        /// <summary>
+        /// Determines the effective "os" dimension. Per the SDKStats spec, the IMDS
+        /// <c>azInst_osType</c> takes precedence over the running process OS, except when it
+        /// is null/empty or the literal "Unknown" (case-insensitive), in which case the
+        /// running process OS (<paramref name="processOperatingSystem"/>) is used.
+        /// </summary>
+        internal static string ResolveOperatingSystem(string? vmOsType, string processOperatingSystem)
+        {
+            if (!string.IsNullOrEmpty(vmOsType)
+                && !string.Equals(vmOsType, "unknown", StringComparison.OrdinalIgnoreCase))
+            {
+                return vmOsType!.ToLower(CultureInfo.InvariantCulture);
+            }
+
+            return processOperatingSystem;
+        }
+
         public void Dispose()
         {
-            _statsbeatMeterProvider?.Dispose();
+            _isDisposed = true;
+
+            var meterProvider = Interlocked.Exchange(ref _statsbeatMeterProvider, null);
+            if (meterProvider == null)
+            {
+                return;
+            }
+
+            DisposeInBackground(meterProvider);
+        }
+
+        private static void DisposeInBackground(MeterProvider meterProvider)
+        {
+            // Disposing the meter provider exports one last time, which would put an ingestion round
+            // trip on the process exit path. Statsbeat is internal telemetry with no offline storage
+            // behind it, so losing that final export is preferable to delaying exit for it.
+            _ = Task.Run(() =>
+            {
+                try
+                {
+                    meterProvider.Dispose();
+                }
+                catch (Exception)
+                {
+                    // The process is going away; there is nothing useful to report.
+                }
+            });
         }
     }
 }

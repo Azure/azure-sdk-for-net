@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.ArtifactSigning.Models;
 using Azure.ResourceManager.Models;
 
@@ -30,6 +31,7 @@ namespace Azure.ResourceManager.ArtifactSigning
     [ModelReaderWriterBuildable(typeof(CodeSigningAccountListResult))]
     [ModelReaderWriterBuildable(typeof(CodeSigningAccountPatchProperties))]
     [ModelReaderWriterBuildable(typeof(CodeSigningAccountProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(Revocation))]
     [ModelReaderWriterBuildable(typeof(RevokeCertificateContent))]
     [ModelReaderWriterBuildable(typeof(RevokeCertificateList))]

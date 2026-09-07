@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.MongoDBAtlas.Models;
 
@@ -38,6 +39,7 @@ namespace Azure.ResourceManager.MongoDBAtlas
     [ModelReaderWriterBuildable(typeof(MongoDBAtlasUserDetails))]
     [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
     [ModelReaderWriterBuildable(typeof(ProjectListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UserAssignedIdentity))]
     public partial class AzureResourceManagerMongoDBAtlasContext : ModelReaderWriterContext

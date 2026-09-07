@@ -79,11 +79,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (Optional.IsCollectionDefined(IpRules))
+            if (Optional.IsCollectionDefined(IPRules))
             {
                 writer.WritePropertyName("ipRules"u8);
                 writer.WriteStartArray();
-                foreach (IPRule item in IpRules)
+                foreach (IPRule item in IPRules)
                 {
                     writer.WriteObjectValue(item, options);
                 }

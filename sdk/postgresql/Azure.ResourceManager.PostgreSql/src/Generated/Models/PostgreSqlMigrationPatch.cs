@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.PostgreSql.FlexibleServers;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -43,60 +44,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
 
-        /// <summary> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </summary>
-        [WirePath("properties.sourceDbServerResourceId")]
-        public ResourceIdentifier SourceDbServerResourceId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SourceDbServerResourceId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new MigrationPropertiesForPatch();
-                }
-                Properties.SourceDbServerResourceId = value;
-            }
-        }
-
-        /// <summary> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </summary>
-        [WirePath("properties.sourceDbServerFullyQualifiedDomainName")]
-        public string SourceDbServerFullyQualifiedDomainName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SourceDbServerFullyQualifiedDomainName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new MigrationPropertiesForPatch();
-                }
-                Properties.SourceDbServerFullyQualifiedDomainName = value;
-            }
-        }
-
-        /// <summary> Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server. </summary>
-        [WirePath("properties.targetDbServerFullyQualifiedDomainName")]
-        public string TargetDbServerFullyQualifiedDomainName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.TargetDbServerFullyQualifiedDomainName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new MigrationPropertiesForPatch();
-                }
-                Properties.TargetDbServerFullyQualifiedDomainName = value;
-            }
-        }
-
         /// <summary> Names of databases to migrate. </summary>
         [WirePath("properties.dbsToMigrate")]
         public IList<string> DbsToMigrate
@@ -108,24 +55,6 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     Properties = new MigrationPropertiesForPatch();
                 }
                 return Properties.DbsToMigrate;
-            }
-        }
-
-        /// <summary> Indicates whether to setup logical replication on source server, if needed. </summary>
-        [WirePath("properties.setupLogicalReplicationOnSourceDbIfNeeded")]
-        public PostgreSqlMigrationLogicalReplicationOnSourceDb? SetupLogicalReplicationOnSourceDbIfNeeded
-        {
-            get
-            {
-                return Properties is null ? default : Properties.SetupLogicalReplicationOnSourceDbIfNeeded;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new MigrationPropertiesForPatch();
-                }
-                Properties.SetupLogicalReplicationOnSourceDbIfNeeded = value;
             }
         }
 
@@ -280,6 +209,82 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     Properties = new MigrationPropertiesForPatch();
                 }
                 Properties.MigrationMode = value;
+            }
+        }
+
+        /// <summary> Identifier of the source database server resource, when 'sourceType' is 'PostgreSQLSingleServer'. For other source types this must be set to ipaddress:port@username or hostname:port@username. </summary>
+        [CodeGenMember("SourceDBServerResourceId")]
+        [WirePath("properties.sourceDbServerResourceId")]
+        public ResourceIdentifier SourceDbServerResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceDbServerResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                Properties.SourceDbServerResourceId = value;
+            }
+        }
+
+        /// <summary> Fully qualified domain name (FQDN) or IP address of the source server. This property is optional. When provided, the migration service will always use it to connect to the source server. </summary>
+        [CodeGenMember("SourceDBServerFullyQualifiedDomainName")]
+        [WirePath("properties.sourceDbServerFullyQualifiedDomainName")]
+        public string SourceDbServerFullyQualifiedDomainName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SourceDbServerFullyQualifiedDomainName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                Properties.SourceDbServerFullyQualifiedDomainName = value;
+            }
+        }
+
+        /// <summary> Fully qualified domain name (FQDN) or IP address of the target server. This property is optional. When provided, the migration service will always use it to connect to the target server. </summary>
+        [CodeGenMember("TargetDBServerFullyQualifiedDomainName")]
+        [WirePath("properties.targetDbServerFullyQualifiedDomainName")]
+        public string TargetDbServerFullyQualifiedDomainName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TargetDbServerFullyQualifiedDomainName;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                Properties.TargetDbServerFullyQualifiedDomainName = value;
+            }
+        }
+
+        /// <summary> Indicates whether to setup logical replication on source server, if needed. </summary>
+        [CodeGenMember("SetupLogicalReplicationOnSourceDBIfNeeded")]
+        [WirePath("properties.setupLogicalReplicationOnSourceDbIfNeeded")]
+        public PostgreSqlMigrationLogicalReplicationOnSourceDb? SetupLogicalReplicationOnSourceDbIfNeeded
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SetupLogicalReplicationOnSourceDbIfNeeded;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new MigrationPropertiesForPatch();
+                }
+                Properties.SetupLogicalReplicationOnSourceDbIfNeeded = value;
             }
         }
     }

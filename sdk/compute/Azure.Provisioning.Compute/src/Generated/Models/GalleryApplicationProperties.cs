@@ -140,7 +140,7 @@ namespace Azure.Provisioning.Compute
             _eula = DefineProperty<string>(nameof(Eula), new string[] { "eula" });
             _privacyStatementUri = DefineProperty<Uri>(nameof(PrivacyStatementUri), new string[] { "privacyStatementUri" });
             _releaseNoteUri = DefineProperty<Uri>(nameof(ReleaseNoteUri), new string[] { "releaseNoteUri" });
-            _endOfLifeOn = DefineProperty<DateTimeOffset>(nameof(EndOfLifeOn), new string[] { "endOfLifeDate" });
+            _endOfLifeOn = DefineProperty<DateTimeOffset>(nameof(EndOfLifeOn), new string[] { "endOfLifeDate" }, format: "O");
             _supportedOSType = DefineProperty<SupportedOperatingSystemType>(nameof(SupportedOSType), new string[] { "supportedOSType" }, isRequired: true);
             _customActions = DefineListProperty<GalleryApplicationCustomAction>(nameof(CustomActions), new string[] { "customActions" });
             DefineAdditionalProperties();

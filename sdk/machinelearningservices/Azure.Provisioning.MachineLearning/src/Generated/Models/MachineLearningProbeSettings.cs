@@ -105,10 +105,10 @@ namespace Azure.Provisioning.MachineLearning
         {
             base.DefineProvisionableProperties();
             _failureThreshold = DefineProperty<int>(nameof(FailureThreshold), new string[] { "failureThreshold" });
-            _initialDelay = DefineProperty<TimeSpan>(nameof(InitialDelay), new string[] { "initialDelay" });
-            _period = DefineProperty<TimeSpan>(nameof(Period), new string[] { "period" });
+            _initialDelay = DefineProperty<TimeSpan>(nameof(InitialDelay), new string[] { "initialDelay" }, format: "P");
+            _period = DefineProperty<TimeSpan>(nameof(Period), new string[] { "period" }, format: "P");
             _successThreshold = DefineProperty<int>(nameof(SuccessThreshold), new string[] { "successThreshold" });
-            _timeout = DefineProperty<TimeSpan>(nameof(Timeout), new string[] { "timeout" });
+            _timeout = DefineProperty<TimeSpan>(nameof(Timeout), new string[] { "timeout" }, format: "P");
             DefineAdditionalProperties();
         }
 

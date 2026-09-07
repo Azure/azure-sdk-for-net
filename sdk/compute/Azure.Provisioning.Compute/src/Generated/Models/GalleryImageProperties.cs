@@ -299,7 +299,7 @@ namespace Azure.Provisioning.Compute
             _osType = DefineProperty<SupportedOperatingSystemType>(nameof(OSType), new string[] { "osType" }, isRequired: true);
             _osState = DefineProperty<OperatingSystemStateType>(nameof(OSState), new string[] { "osState" }, isRequired: true);
             _hyperVGeneration = DefineProperty<HyperVGeneration>(nameof(HyperVGeneration), new string[] { "hyperVGeneration" });
-            _endOfLifeOn = DefineProperty<DateTimeOffset>(nameof(EndOfLifeOn), new string[] { "endOfLifeDate" });
+            _endOfLifeOn = DefineProperty<DateTimeOffset>(nameof(EndOfLifeOn), new string[] { "endOfLifeDate" }, format: "O");
             _identifier = DefineModelProperty<GalleryImageIdentifier>(nameof(Identifier), new string[] { "identifier" }, isRequired: true);
             _recommended = DefineModelProperty<RecommendedMachineConfiguration>(nameof(Recommended), new string[] { "recommended" });
             _disallowed = DefineModelProperty<Disallowed>(nameof(Disallowed), new string[] { "disallowed" });

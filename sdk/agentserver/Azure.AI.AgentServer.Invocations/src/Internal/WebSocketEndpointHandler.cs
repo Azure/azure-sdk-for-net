@@ -88,24 +88,29 @@ internal sealed class WebSocketEndpointHandler
             httpContext.Response.Headers[SessionIdResponseHeader] = sessionId;
         }
 
-        // Propagate invocation/session/x-request-id baggage onto the current request
-        // Activity for downstream correlation. Reuses the same helper the HTTP
-        // `POST /invocations` endpoint uses so HTTP and WS paths produce
-        // the same baggage shape. No framework-level WS span is created — ASP.NET
-        // Core auto-propagates the inbound W3C trace context to the request
-        // Activity, so any spans the handler starts inherit it directly.
-        _activitySource.PropagateInvocationBaggage(context, httpContext.Request.Headers);
+        // Apply the normalized correlation baggage to the request Activity when present,
+        // and pass the same allowlisted snapshot to the Voice semantic hierarchy.
+        var correlationBaggage = _activitySource.PropagateInvocationBaggage(
+            context,
+            httpContext.Request.Headers);
+        var lifecycle = webSocketHandler.CreateEndpointLifecycle(
+            httpContext,
+            correlationBaggage);
 
-        using var logScope = _logger.BeginScope(new Dictionary<string, object>
+        var logScopeState = new Dictionary<string, object>
         {
             ["SessionId"] = sessionId,
             ["InvocationId"] = invocationId,
-        });
+        };
+        using var logScope = lifecycle is null
+            ? WrapLoggerScope(_logger.BeginScope(logScopeState))
+            : BeginLifecycleLogScopeSafely(logScopeState);
 
         var startTimestamp = Stopwatch.GetTimestamp();
         var closeCode = InvocationsWebSocketConstants.CloseNormal;
         string? errorCode = null;
         WebSocket? webSocket = null;
+        InvocationsWebSocketCloseResult? handlerOutcome = null;
 
         try
         {
@@ -113,20 +118,40 @@ internal sealed class WebSocketEndpointHandler
             {
                 webSocket = await httpContext.WebSockets.AcceptWebSocketAsync();
             }
+            catch (OperationCanceledException)
+                when (lifecycle?.TryMarkAcceptCancellation(
+                    httpContext.RequestAborted) == true)
+            {
+                closeCode = 1006;
+                throw;
+            }
             catch (Exception acceptEx)
             {
-                _logger.LogError(
-                    acceptEx,
-                    "WebSocket accept failed for session {SessionId}",
-                    sessionId);
                 closeCode = InvocationsWebSocketConstants.CloseInternalError;
                 errorCode = InvocationsWebSocketConstants.ErrorCodeAcceptFailed;
+                TryInvokeLogger(() => _logger.LogError(
+                    acceptEx,
+                    "WebSocket accept failed for session {SessionId}",
+                    sessionId));
                 throw;
             }
 
             try
             {
-                await webSocketHandler.HandleWebSocketAsync(webSocket, context, httpContext.RequestAborted);
+                handlerOutcome = lifecycle is null
+                    ? await webSocketHandler.HandleWebSocketWithOutcomeAsync(
+                        webSocket,
+                        context,
+                        httpContext.RequestAborted)
+                    : await lifecycle.HandleWebSocketWithOutcomeAsync(
+                        webSocket,
+                        context,
+                        httpContext.RequestAborted);
+                if (handlerOutcome is { } outcome)
+                {
+                    closeCode = outcome.Code;
+                    errorCode = outcome.ErrorCode;
+                }
             }
             catch (OperationCanceledException oce)
                 when (oce.CancellationToken == httpContext.RequestAborted
@@ -159,9 +184,102 @@ internal sealed class WebSocketEndpointHandler
         }
         finally
         {
-            var durationMs = GetElapsedMilliseconds(startTimestamp);
-            await CloseSocketAsync(webSocket, closeCode, sessionId);
-            EmitCloseEventLog(sessionId, closeCode, durationMs, errorCode);
+            async Task FinalizeConnectionAsync()
+            {
+                if (handlerOutcome is null)
+                {
+                    await CloseSocketAsync(webSocket, closeCode, sessionId);
+                }
+                else
+                {
+                    EmitHandlerOutcomeDiagnostics(handlerOutcome.Value, sessionId);
+                }
+            }
+
+            void EmitCloseEvent(long durationMs) => TryInvokeLogger(() =>
+                EmitCloseEventLog(sessionId, closeCode, durationMs, errorCode));
+
+            if (lifecycle is null)
+            {
+                await FinalizeConnectionAsync();
+                EmitCloseEvent(GetElapsedMilliseconds(startTimestamp));
+            }
+            else
+            {
+                await lifecycle.FinalizeAsync(
+                    FinalizeConnectionAsync,
+                    EmitCloseEvent,
+                    new WebSocketEndpointCompletion(
+                    sessionId,
+                    closeCode,
+                    errorCode,
+                    handlerOutcome,
+                    () => GetElapsedMilliseconds(startTimestamp)));
+            }
+        }
+    }
+
+    private void EmitHandlerOutcomeDiagnostics(
+        InvocationsWebSocketCloseResult outcome,
+        string sessionId)
+    {
+        if (outcome.Exception is not null)
+        {
+            TryInvokeLogger(() => _logger.LogError(
+                outcome.Exception,
+                "WebSocket handler ended with an error for session {SessionId}",
+                sessionId));
+        }
+        if (outcome.CleanupException is not null)
+        {
+            TryInvokeLogger(() => _logger.LogError(
+                outcome.CleanupException,
+                "WebSocket cleanup callback raised for session {SessionId}",
+                sessionId));
+        }
+        if (outcome.CloseException is not null)
+        {
+            TryInvokeLogger(() => _logger.LogError(
+                outcome.CloseException,
+                "WebSocket close failed for session {SessionId}",
+                sessionId));
+        }
+    }
+
+    private IDisposable? BeginLifecycleLogScopeSafely(Dictionary<string, object> state)
+    {
+        IDisposable? scope = null;
+        TryInvokeLogger(() => scope = _logger.BeginScope(state));
+        return WrapLoggerScope(scope);
+    }
+
+    private static IDisposable? WrapLoggerScope(IDisposable? scope) =>
+        scope is null ? null : new SafeLoggerScope(scope);
+
+    private static void TryInvokeLogger(Action log)
+    {
+        try
+        {
+            log();
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+        }
+    }
+
+    private sealed class SafeLoggerScope : IDisposable
+    {
+        private IDisposable? _scope;
+
+        public SafeLoggerScope(IDisposable scope) => _scope = scope;
+
+        public void Dispose()
+        {
+            var scope = Interlocked.Exchange(ref _scope, null);
+            if (scope is not null)
+            {
+                TryInvokeLogger(scope.Dispose);
+            }
         }
     }
 

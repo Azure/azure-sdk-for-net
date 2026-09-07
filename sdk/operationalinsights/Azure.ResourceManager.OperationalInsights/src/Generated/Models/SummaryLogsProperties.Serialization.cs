@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 throw new FormatException($"The model {nameof(SummaryLogsProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RuleType))
+            if (Optional.IsDefined(SummaryLogsRuleType))
             {
                 writer.WritePropertyName("ruleType"u8);
-                writer.WriteStringValue(RuleType.Value.ToString());
+                writer.WriteStringValue(SummaryLogsRuleType.Value.ToString());
             }
             if (Optional.IsDefined(DisplayName))
             {
@@ -94,15 +94,15 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 writer.WritePropertyName("isActive"u8);
                 writer.WriteBooleanValue(IsActive.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(StatusCode))
+            if (options.Format != "W" && Optional.IsDefined(SummaryLogsStatusCode))
             {
                 writer.WritePropertyName("statusCode"u8);
-                writer.WriteStringValue(StatusCode.Value.ToString());
+                writer.WriteStringValue(SummaryLogsStatusCode.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
+            if (options.Format != "W" && Optional.IsDefined(SummaryLogsProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
+                writer.WriteStringValue(SummaryLogsProvisioningState.Value.ToString());
             }
             if (Optional.IsDefined(RuleDefinition))
             {
@@ -151,12 +151,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             {
                 return null;
             }
-            OperationalInsightsNetworkSecurityPerimeterRuleType? ruleType = default;
+            OperationalInsightsSummaryLogsRuleType? summaryLogsRuleType = default;
             string displayName = default;
             string description = default;
             bool? isActive = default;
-            OperationalInsightsNetworkSecurityPerimeterStatusCode? statusCode = default;
-            OperationalInsightsNetworkSecurityPerimeterProvisioningState? provisioningState = default;
+            OperationalInsightsSummaryLogsStatusCode? summaryLogsStatusCode = default;
+            OperationalInsightsSummaryLogsProvisioningState? summaryLogsProvisioningState = default;
             OperationalInsightsSummaryRule ruleDefinition = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    ruleType = new OperationalInsightsNetworkSecurityPerimeterRuleType(prop.Value.GetString());
+                    summaryLogsRuleType = new OperationalInsightsSummaryLogsRuleType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("displayName"u8))
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    statusCode = new OperationalInsightsNetworkSecurityPerimeterStatusCode(prop.Value.GetString());
+                    summaryLogsStatusCode = new OperationalInsightsSummaryLogsStatusCode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     {
                         continue;
                     }
-                    provisioningState = new OperationalInsightsNetworkSecurityPerimeterProvisioningState(prop.Value.GetString());
+                    summaryLogsProvisioningState = new OperationalInsightsSummaryLogsProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ruleDefinition"u8))
@@ -222,12 +222,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 }
             }
             return new SummaryLogsProperties(
-                ruleType,
+                summaryLogsRuleType,
                 displayName,
                 description,
                 isActive,
-                statusCode,
-                provisioningState,
+                summaryLogsStatusCode,
+                summaryLogsProvisioningState,
                 ruleDefinition,
                 additionalBinaryDataProperties);
         }

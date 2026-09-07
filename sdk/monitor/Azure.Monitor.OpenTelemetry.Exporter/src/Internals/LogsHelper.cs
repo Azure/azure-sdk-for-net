@@ -232,7 +232,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                                         var maxValueLength = SchemaConstants.GenAiProperties.Contains(item.Key)
                                             ? SchemaConstants.GenAi_Properties_MaxValueLength
                                             : SchemaConstants.MessageData_Properties_MaxValueLength;
-                                        var stringValue = item.Value.ToString().Truncate(maxValueLength)!;
+                                        var stringValue = Convert.ToString(item.Value, CultureInfo.InvariantCulture).Truncate(maxValueLength)!;
                                         properties.Add(item.Key, stringValue);
                                     }
                                 }

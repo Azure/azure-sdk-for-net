@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 throw new FormatException($"The model {nameof(EncryptionProperty)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(CosmosDbResourceId))
+            if (Optional.IsDefined(CosmosDBResourceId))
             {
                 writer.WritePropertyName("cosmosDbResourceId"u8);
-                writer.WriteStringValue(CosmosDbResourceId);
+                writer.WriteStringValue(CosmosDBResourceId);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            ResourceIdentifier cosmosDbResourceId = default;
+            ResourceIdentifier cosmosDBResourceId = default;
             IdentityForCmk identity = default;
             KeyVaultProperties keyVaultProperties = default;
             ResourceIdentifier searchAccountResourceId = default;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     {
                         continue;
                     }
-                    cosmosDbResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    cosmosDBResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             return new EncryptionProperty(
-                cosmosDbResourceId,
+                cosmosDBResourceId,
                 identity,
                 keyVaultProperties,
                 searchAccountResourceId,

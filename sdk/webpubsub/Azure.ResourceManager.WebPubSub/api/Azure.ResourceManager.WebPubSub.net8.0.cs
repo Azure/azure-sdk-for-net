@@ -1053,7 +1053,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
     {
         public WebPubSubNetworkAcls() { }
         public Azure.ResourceManager.WebPubSub.Models.AclAction? DefaultAction { get { throw null; } set { } }
-        public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.WebPubSubIPRule> IpRules { get { throw null; } }
+        public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.WebPubSubIPRule> IPRules { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.WebPubSub.Models.PrivateEndpointAcl> PrivateEndpoints { get { throw null; } }
         public Azure.ResourceManager.WebPubSub.Models.PublicNetworkAcls PublicNetwork { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.WebPubSub.Models.WebPubSubNetworkAcls JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

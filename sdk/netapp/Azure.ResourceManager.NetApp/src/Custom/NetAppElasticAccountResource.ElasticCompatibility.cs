@@ -22,5 +22,5 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetApp
 {
-    public partial class NetAppElasticAccountResource : ArmResource { protected NetAppElasticAccountResource() { } internal NetAppElasticAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id) { } }
+    public partial class NetAppElasticAccountResource : ArmResource { protected NetAppElasticAccountResource() { } internal NetAppElasticAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id) { _elasticAccountsClientDiagnostics = null; _elasticAccountsRestClient = null; _ = _elasticAccountsClientDiagnostics; _ = _elasticAccountsRestClient; } }
 }

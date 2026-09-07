@@ -90,15 +90,15 @@ namespace Azure.ResourceManager.Authorization.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Optional.IsDefined(ReviewHistoryPeriodStartOn))
+            if (options.Format != "W" && Optional.IsDefined(ReviewHistoryPeriodStartsOn))
             {
                 writer.WritePropertyName("reviewHistoryPeriodStartDateTime"u8);
-                writer.WriteStringValue(ReviewHistoryPeriodStartOn.Value, "O");
+                writer.WriteStringValue(ReviewHistoryPeriodStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ReviewHistoryPeriodEndOn))
+            if (options.Format != "W" && Optional.IsDefined(ReviewHistoryPeriodEndsOn))
             {
                 writer.WritePropertyName("reviewHistoryPeriodEndDateTime"u8);
-                writer.WriteStringValue(ReviewHistoryPeriodEndOn.Value, "O");
+                writer.WriteStringValue(ReviewHistoryPeriodEndsOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Decisions))
             {
@@ -193,8 +193,8 @@ namespace Azure.ResourceManager.Authorization.Models
                 return null;
             }
             string displayName = default;
-            DateTimeOffset? reviewHistoryPeriodStartOn = default;
-            DateTimeOffset? reviewHistoryPeriodEndOn = default;
+            DateTimeOffset? reviewHistoryPeriodStartsOn = default;
+            DateTimeOffset? reviewHistoryPeriodEndsOn = default;
             IList<AccessReviewResult> decisions = default;
             AccessReviewHistoryDefinitionStatus? status = default;
             DateTimeOffset? createdOn = default;
@@ -214,20 +214,20 @@ namespace Azure.ResourceManager.Authorization.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        reviewHistoryPeriodStartOn = null;
+                        reviewHistoryPeriodStartsOn = null;
                         continue;
                     }
-                    reviewHistoryPeriodStartOn = prop.Value.GetDateTimeOffset("O");
+                    reviewHistoryPeriodStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("reviewHistoryPeriodEndDateTime"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        reviewHistoryPeriodEndOn = null;
+                        reviewHistoryPeriodEndsOn = null;
                         continue;
                     }
-                    reviewHistoryPeriodEndOn = prop.Value.GetDateTimeOffset("O");
+                    reviewHistoryPeriodEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("decisions"u8))
@@ -318,8 +318,8 @@ namespace Azure.ResourceManager.Authorization.Models
             }
             return new AccessReviewHistoryDefinitionProperties(
                 displayName,
-                reviewHistoryPeriodStartOn,
-                reviewHistoryPeriodEndOn,
+                reviewHistoryPeriodStartsOn,
+                reviewHistoryPeriodEndsOn,
                 decisions ?? new ChangeTrackingList<AccessReviewResult>(),
                 status,
                 createdOn,
