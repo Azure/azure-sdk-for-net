@@ -85,15 +85,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startAt"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endAt"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -164,8 +164,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
             string productCode = default;
             FreeServicesStatus? status = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             string provisioningState = default;
             ResourceIdentifier billingAccountResourceId = default;
             ResourceIdentifier billingProfileResourceId = default;
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endAt"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -251,8 +251,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new FreeServicesProperties(
                 productCode,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 provisioningState,
                 billingAccountResourceId,
                 billingProfileResourceId,
