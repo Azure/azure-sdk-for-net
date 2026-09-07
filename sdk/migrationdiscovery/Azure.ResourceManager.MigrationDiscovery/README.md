@@ -1,4 +1,4 @@
-# Azure.ResourceManager.MigrationDiscovery management client library for .NET
+# Azure Migration Discovery client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
