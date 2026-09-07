@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="aggregatedHealthState"> Computed aggregated health state of the group as of the last entity evaluation. Unknown if no resolvable members or all members filtered out. </param>
         /// <param name="unresolvedMembers"> Members listed in 'members' that do not currently resolve to a signal on this entity at the time of the last entity evaluation. Treated as Unknown during aggregation. Empty/omitted when every member resolves. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SignalAggregationGroup(string name, string displayName, AggregationType? aggregationType, IList<string> members, double? degradedThreshold, double? unhealthyThreshold, AggregationUnit? unit, bool? shouldIgnoreUnknown, EntityHealthState? aggregatedHealthState, IReadOnlyList<string> unresolvedMembers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SignalAggregationGroup(string name, string displayName, HealthStateAggregationType? aggregationType, IList<string> members, double? degradedThreshold, double? unhealthyThreshold, HealthStateAggregationUnit? unit, bool? shouldIgnoreUnknown, EntityHealthState? aggregatedHealthState, IReadOnlyList<string> unresolvedMembers, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             DisplayName = displayName;
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public string DisplayName { get; set; }
 
         /// <summary> Aggregation strategy applied across the members of this group. </summary>
-        public AggregationType? AggregationType { get; set; }
+        public HealthStateAggregationType? AggregationType { get; set; }
 
         /// <summary> Names of signals on this entity which are members of the group. Members are matched by name; references to signals that do not currently exist on the entity are accepted (typically for pre-declared external signals) and surfaced via 'unresolvedMembers'. A signal may be listed in multiple groups; no duplicates within this list. </summary>
         public IList<string> Members { get; }
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public double? UnhealthyThreshold { get; set; }
 
         /// <summary> Unit type for the thresholds. Required when aggregationType is MinHealthy or MaxNotHealthy; MUST NOT be set otherwise. </summary>
-        public AggregationUnit? Unit { get; set; }
+        public HealthStateAggregationUnit? Unit { get; set; }
 
         /// <summary> If true (default), members reporting Unknown are excluded from the aggregation. For MinHealthy and MaxNotHealthy this flag affects the denominator/count and is meaningful. For WorstOf and BestOf the flag has no observable effect: under WorstOf, Unknown=0 is the lowest severity and can never beat any non-Unknown member in a Max() so filtering it changes nothing observable; under BestOf, Unknown is unconditionally excluded by the strategy itself irrespective of the flag. The flag is retained on the contract for vocabulary symmetry across all four strategies. </summary>
         public bool? ShouldIgnoreUnknown { get; set; }

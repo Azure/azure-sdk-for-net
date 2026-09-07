@@ -12,7 +12,7 @@ using Azure.ResourceManager.CloudHealth;
 namespace Azure.ResourceManager.CloudHealth.Models
 {
     /// <summary> Aggregation strategy for combining a set of health states into one. </summary>
-    public readonly partial struct AggregationType : IEquatable<AggregationType>
+    public readonly partial struct HealthStateAggregationType : IEquatable<HealthStateAggregationType>
     {
         private readonly string _value;
         /// <summary> Worst health state across members is propagated. Default behavior. </summary>
@@ -24,10 +24,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <summary> Healthy if the count/percentage of not-healthy members stays below the threshold. </summary>
         private const string MaxNotHealthyValue = "MaxNotHealthy";
 
-        /// <summary> Initializes a new instance of <see cref="AggregationType"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthStateAggregationType"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public AggregationType(string value)
+        public HealthStateAggregationType(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -35,41 +35,41 @@ namespace Azure.ResourceManager.CloudHealth.Models
         }
 
         /// <summary> Worst health state across members is propagated. Default behavior. </summary>
-        public static AggregationType WorstOf { get; } = new AggregationType(WorstOfValue);
+        public static HealthStateAggregationType WorstOf { get; } = new HealthStateAggregationType(WorstOfValue);
 
         /// <summary> Best (least severe) health state across the non-Unknown members is propagated. Unknown members are excluded from the selection; if every member is Unknown the group resolves to Unknown. The 'ignoreUnknown' flag has no observable effect for this strategy and is documented as such. </summary>
-        public static AggregationType BestOf { get; } = new AggregationType(BestOfValue);
+        public static HealthStateAggregationType BestOf { get; } = new HealthStateAggregationType(BestOfValue);
 
         /// <summary> Healthy if the count/percentage of healthy members meets the threshold. </summary>
-        public static AggregationType MinHealthy { get; } = new AggregationType(MinHealthyValue);
+        public static HealthStateAggregationType MinHealthy { get; } = new HealthStateAggregationType(MinHealthyValue);
 
         /// <summary> Healthy if the count/percentage of not-healthy members stays below the threshold. </summary>
-        public static AggregationType MaxNotHealthy { get; } = new AggregationType(MaxNotHealthyValue);
+        public static HealthStateAggregationType MaxNotHealthy { get; } = new HealthStateAggregationType(MaxNotHealthyValue);
 
-        /// <summary> Determines if two <see cref="AggregationType"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="HealthStateAggregationType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(AggregationType left, AggregationType right) => left.Equals(right);
+        public static bool operator ==(HealthStateAggregationType left, HealthStateAggregationType right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="AggregationType"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="HealthStateAggregationType"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(AggregationType left, AggregationType right) => !left.Equals(right);
+        public static bool operator !=(HealthStateAggregationType left, HealthStateAggregationType right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="AggregationType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HealthStateAggregationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AggregationType(string value) => new AggregationType(value);
+        public static implicit operator HealthStateAggregationType(string value) => new HealthStateAggregationType(value);
 
-        /// <summary> Converts a string to a <see cref="AggregationType"/>. </summary>
+        /// <summary> Converts a string to a <see cref="HealthStateAggregationType"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator AggregationType?(string value) => value == null ? null : new AggregationType(value);
+        public static implicit operator HealthStateAggregationType?(string value) => value == null ? null : new HealthStateAggregationType(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is AggregationType other && Equals(other);
+        public override bool Equals(object obj) => obj is HealthStateAggregationType other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(AggregationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(HealthStateAggregationType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

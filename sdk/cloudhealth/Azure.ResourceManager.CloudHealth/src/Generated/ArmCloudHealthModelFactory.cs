@@ -567,7 +567,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="unit"> Unit type for the aggregation thresholds. Required when aggregationType is MinHealthy or MaxNotHealthy. </param>
         /// <param name="shouldIgnoreUnknown"> If true, children with Unknown health state are excluded from aggregation calculations. Defaults to true. </param>
         /// <returns> A new <see cref="Models.DependenciesSignalGroupV2"/> instance for mocking. </returns>
-        public static DependenciesSignalGroupV2 DependenciesSignalGroupV2(AggregationType aggregationType = default, double? degradedThreshold = default, double? unhealthyThreshold = default, AggregationUnit? unit = default, bool? shouldIgnoreUnknown = default)
+        public static DependenciesSignalGroupV2 DependenciesSignalGroupV2(HealthStateAggregationType aggregationType = default, double? degradedThreshold = default, double? unhealthyThreshold = default, HealthStateAggregationUnit? unit = default, bool? shouldIgnoreUnknown = default)
         {
             return new DependenciesSignalGroupV2(
                 aggregationType,
@@ -590,7 +590,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="aggregatedHealthState"> Computed aggregated health state of the group as of the last entity evaluation. Unknown if no resolvable members or all members filtered out. </param>
         /// <param name="unresolvedMembers"> Members listed in 'members' that do not currently resolve to a signal on this entity at the time of the last entity evaluation. Treated as Unknown during aggregation. Empty/omitted when every member resolves. </param>
         /// <returns> A new <see cref="Models.SignalAggregationGroup"/> instance for mocking. </returns>
-        public static SignalAggregationGroup SignalAggregationGroup(string name = default, string displayName = default, AggregationType? aggregationType = default, IEnumerable<string> members = default, double? degradedThreshold = default, double? unhealthyThreshold = default, AggregationUnit? unit = default, bool? shouldIgnoreUnknown = default, EntityHealthState? aggregatedHealthState = default, IEnumerable<string> unresolvedMembers = default)
+        public static SignalAggregationGroup SignalAggregationGroup(string name = default, string displayName = default, HealthStateAggregationType? aggregationType = default, IEnumerable<string> members = default, double? degradedThreshold = default, double? unhealthyThreshold = default, HealthStateAggregationUnit? unit = default, bool? shouldIgnoreUnknown = default, EntityHealthState? aggregatedHealthState = default, IEnumerable<string> unresolvedMembers = default)
         {
             members ??= new ChangeTrackingList<string>();
             unresolvedMembers ??= new ChangeTrackingList<string>();

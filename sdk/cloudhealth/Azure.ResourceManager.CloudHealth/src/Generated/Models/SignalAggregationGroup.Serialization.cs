@@ -187,11 +187,11 @@ namespace Azure.ResourceManager.CloudHealth.Models
             }
             string name = default;
             string displayName = default;
-            AggregationType? aggregationType = default;
+            HealthStateAggregationType? aggregationType = default;
             IList<string> members = default;
             double? degradedThreshold = default;
             double? unhealthyThreshold = default;
-            AggregationUnit? unit = default;
+            HealthStateAggregationUnit? unit = default;
             bool? shouldIgnoreUnknown = default;
             EntityHealthState? aggregatedHealthState = default;
             IReadOnlyList<string> unresolvedMembers = default;
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    aggregationType = new AggregationType(prop.Value.GetString());
+                    aggregationType = new HealthStateAggregationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("members"u8))
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    unit = new AggregationUnit(prop.Value.GetString());
+                    unit = new HealthStateAggregationUnit(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ignoreUnknown"u8))

@@ -143,17 +143,17 @@ namespace Azure.ResourceManager.CloudHealth.Models
             {
                 return null;
             }
-            AggregationType aggregationType = default;
+            HealthStateAggregationType aggregationType = default;
             double? degradedThreshold = default;
             double? unhealthyThreshold = default;
-            AggregationUnit? unit = default;
+            HealthStateAggregationUnit? unit = default;
             bool? shouldIgnoreUnknown = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("aggregationType"u8))
                 {
-                    aggregationType = new AggregationType(prop.Value.GetString());
+                    aggregationType = new HealthStateAggregationType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("degradedThreshold"u8))
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
                     {
                         continue;
                     }
-                    unit = new AggregationUnit(prop.Value.GetString());
+                    unit = new HealthStateAggregationUnit(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("ignoreUnknown"u8))
