@@ -17,13 +17,13 @@
 ## Summary
 
 - Total libraries: 454
-- Management Plane (MPG): 265
+- Management Plane (MPG): 264
   - Autorest/Swagger: 39
-  - New Emitter (TypeSpec): 226
+  - New Emitter (TypeSpec): 225
   - Old TypeSpec: 0
-- Data Plane (DPG): 124
+- Data Plane (DPG): 125
   - Autorest/Swagger: 30
-  - New Emitter (TypeSpec): 53
+  - New Emitter (TypeSpec): 54
   - Old TypeSpec: 0
 - Provisioning: 65
   - Reflection-based generator: 16
@@ -36,7 +36,7 @@
 
 Libraries that provide client APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 53 / 53 (100%)
+**Migration Status**: 54 / 54 (100%)
 
 | Service | Library | New Emitter | Using SCM |
 | ------- | ------- | ----------- | --------- |
@@ -61,6 +61,7 @@ Libraries that provide client APIs for Azure services and have been migrated to 
 | contentsafety | Azure.AI.ContentSafety | ✅ |  |
 | contentunderstanding | Azure.AI.ContentUnderstanding | ✅ |  |
 | devcenter | Azure.Developer.DevCenter | ✅ |  |
+| deviceregistry | Azure.IoT.DeviceRegistry.SoftwareUpdate | ✅ |  |
 | deviceupdate | Azure.IoT.DeviceUpdate | ✅ |  |
 | discovery | Azure.AI.Discovery | ✅ |  |
 | documentintelligence | Azure.AI.DocumentIntelligence | ✅ |  |
@@ -137,7 +138,7 @@ Libraries that have not yet been migrated to the new TypeSpec emitter. Total: 30
 
 Libraries that provide resource management APIs for Azure services and have been migrated to the new TypeSpec emitter.
 
-**Migration Status**: 226 / 226 (100%)
+**Migration Status**: 225 / 225 (100%)
 
 | Service | Library | New Emitter |
 | ------- | ------- | ----------- |
@@ -158,7 +159,6 @@ Libraries that provide resource management APIs for Azure services and have been
 | arc-scvmm | Azure.ResourceManager.ScVmm | ✅ |
 | arizeaiobservabilityeval | Azure.ResourceManager.ArizeAIObservabilityEval | ✅ |
 | artifactsigning | Azure.ResourceManager.ArtifactSigning | ✅ |
-| astronomer | Azure.ResourceManager.Astro | ✅ |
 | attestation | Azure.ResourceManager.Attestation | ✅ |
 | authorization | Azure.ResourceManager.Authorization | ✅ |
 | automation | Azure.ResourceManager.Automation | ✅ |

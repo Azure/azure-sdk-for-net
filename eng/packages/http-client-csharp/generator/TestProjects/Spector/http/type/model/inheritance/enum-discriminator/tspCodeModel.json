@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "DogKind",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.DogKind",
       "valueType": {
         "$id": "2",
@@ -43,6 +44,7 @@
       "$id": "4",
       "kind": "enum",
       "name": "SnakeKind",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.SnakeKind",
       "valueType": {
         "$id": "5",
@@ -220,6 +222,7 @@
       "$id": "23",
       "kind": "model",
       "name": "Dog",
+      "apiVersions": [],
       "namespace": "Type.Model.Inheritance.EnumDiscriminator",
       "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.Dog",
       "usage": "Input,Output,Json",
@@ -235,6 +238,7 @@
         "$id": "24",
         "kind": "property",
         "name": "kind",
+        "apiVersions": [],
         "serializedName": "kind",
         "doc": "discriminator property",
         "type": {
@@ -262,6 +266,7 @@
           "$id": "25",
           "kind": "property",
           "name": "weight",
+          "apiVersions": [],
           "serializedName": "weight",
           "doc": "Weight of the dog",
           "type": {
@@ -291,6 +296,7 @@
           "$id": "27",
           "kind": "model",
           "name": "Golden",
+          "apiVersions": [],
           "namespace": "Type.Model.Inheritance.EnumDiscriminator",
           "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.Golden",
           "usage": "Input,Output,Json",
@@ -311,6 +317,7 @@
               "$id": "28",
               "kind": "property",
               "name": "kind",
+              "apiVersions": [],
               "serializedName": "kind",
               "doc": "discriminator property",
               "type": {
@@ -394,6 +401,7 @@
       "$id": "33",
       "kind": "model",
       "name": "Snake",
+      "apiVersions": [],
       "namespace": "Type.Model.Inheritance.EnumDiscriminator",
       "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.Snake",
       "usage": "Input,Output,Json",
@@ -409,6 +417,7 @@
         "$id": "34",
         "kind": "property",
         "name": "kind",
+        "apiVersions": [],
         "serializedName": "kind",
         "doc": "discriminator property",
         "type": {
@@ -436,6 +445,7 @@
           "$id": "35",
           "kind": "property",
           "name": "length",
+          "apiVersions": [],
           "serializedName": "length",
           "doc": "Length of the snake",
           "type": {
@@ -465,6 +475,7 @@
           "$id": "37",
           "kind": "model",
           "name": "Cobra",
+          "apiVersions": [],
           "namespace": "Type.Model.Inheritance.EnumDiscriminator",
           "crossLanguageDefinitionId": "Type.Model.Inheritance.EnumDiscriminator.Cobra",
           "usage": "Input,Output,Json",
@@ -485,6 +496,7 @@
               "$id": "38",
               "kind": "property",
               "name": "kind",
+              "apiVersions": [],
               "serializedName": "kind",
               "doc": "discriminator property",
               "type": {

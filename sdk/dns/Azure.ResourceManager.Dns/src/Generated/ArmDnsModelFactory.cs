@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Dns;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -40,6 +38,7 @@ namespace Azure.ResourceManager.Dns.Models
                 default);
         }
 
+        /// <summary> Represents the signing key. </summary>
         /// <param name="delegationSignerInfo"> The delegation signer information. </param>
         /// <param name="flags"> The flags specifies how the key is used. </param>
         /// <param name="keyTag"> The key tag value of the DNSKEY Resource Record. </param>
@@ -61,6 +60,7 @@ namespace Azure.ResourceManager.Dns.Models
                 default);
         }
 
+        /// <summary> The delegation signer information. </summary>
         /// <param name="digestAlgorithmType"> The digest algorithm type represents the standard digest algorithm number used to construct the digest. See: https://www.iana.org/assignments/ds-rr-types/ds-rr-types.xhtml. </param>
         /// <param name="digestValue"> The digest value is a cryptographic hash value of the referenced DNSKEY Resource Record. </param>
         /// <param name="record"> The record represents a delegation signer (DS) record. </param>
@@ -128,6 +128,7 @@ namespace Azure.ResourceManager.Dns.Models
                 default);
         }
 
+        /// <summary> A reference to a another resource. </summary>
         /// <param name="id"> Resource Id. </param>
         /// <returns> A new <see cref="Models.DnsSubResourceInfo"/> instance for mocking. </returns>
         public static DnsSubResourceInfo DnsSubResourceInfo(ResourceIdentifier id = default)
@@ -135,6 +136,7 @@ namespace Azure.ResourceManager.Dns.Models
             return new DnsSubResourceInfo(id, default);
         }
 
+        /// <summary> An MX record. </summary>
         /// <param name="preference"> The preference value for this MX record. </param>
         /// <param name="exchange"> The domain name of the mail host for this MX record. </param>
         /// <returns> A new <see cref="Models.DnsMXRecordInfo"/> instance for mocking. </returns>
@@ -143,6 +145,7 @@ namespace Azure.ResourceManager.Dns.Models
             return new DnsMXRecordInfo(preference, exchange, default);
         }
 
+        /// <summary> An NS record. </summary>
         /// <param name="dnsNSDomainName"> The name server name for this NS record. </param>
         /// <returns> A new <see cref="Models.DnsNSRecordInfo"/> instance for mocking. </returns>
         public static DnsNSRecordInfo DnsNSRecordInfo(string dnsNSDomainName = default)
@@ -150,6 +153,7 @@ namespace Azure.ResourceManager.Dns.Models
             return new DnsNSRecordInfo(dnsNSDomainName, default);
         }
 
+        /// <summary> A PTR record. </summary>
         /// <param name="dnsPtrDomainName"> The PTR target domain name for this PTR record. </param>
         /// <returns> A new <see cref="Models.DnsPtrRecordInfo"/> instance for mocking. </returns>
         public static DnsPtrRecordInfo DnsPtrRecordInfo(string dnsPtrDomainName = default)
@@ -157,6 +161,7 @@ namespace Azure.ResourceManager.Dns.Models
             return new DnsPtrRecordInfo(dnsPtrDomainName, default);
         }
 
+        /// <summary> An SRV record. </summary>
         /// <param name="priority"> The priority value for this SRV record. </param>
         /// <param name="weight"> The weight value for this SRV record. </param>
         /// <param name="port"> The port value for this SRV record. </param>
@@ -167,6 +172,7 @@ namespace Azure.ResourceManager.Dns.Models
             return new DnsSrvRecordInfo(priority, weight, port, target, default);
         }
 
+        /// <summary> A TXT record. </summary>
         /// <param name="values"> The text value of this TXT record. </param>
         /// <returns> A new <see cref="Models.DnsTxtRecordInfo"/> instance for mocking. </returns>
         public static DnsTxtRecordInfo DnsTxtRecordInfo(IEnumerable<string> values = default)
@@ -176,6 +182,7 @@ namespace Azure.ResourceManager.Dns.Models
             return new DnsTxtRecordInfo((values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> An SOA record. </summary>
         /// <param name="host"> The domain name of the authoritative name server for this SOA record. </param>
         /// <param name="email"> The email contact for this SOA record. </param>
         /// <param name="serialNumber"> The serial number for this SOA record. </param>
@@ -197,6 +204,7 @@ namespace Azure.ResourceManager.Dns.Models
                 default);
         }
 
+        /// <summary> A CAA record. </summary>
         /// <param name="flags"> The flags for this CAA record as an integer between 0 and 255. </param>
         /// <param name="tag"> The tag for this CAA record. </param>
         /// <param name="value"> The value for this CAA record. </param>
@@ -206,6 +214,7 @@ namespace Azure.ResourceManager.Dns.Models
             return new DnsCaaRecordInfo(flags, tag, value, default);
         }
 
+        /// <summary> A DS record. For more information about the DS record format, see RFC 4034: https://www.rfc-editor.org/rfc/rfc4034. </summary>
         /// <param name="keyTag"> The key tag value is used to determine which DNSKEY Resource Record is used for signature verification. </param>
         /// <param name="algorithm"> The security algorithm type represents the standard security algorithm number of the DNSKEY Resource Record. See: https://www.iana.org/assignments/dns-sec-alg-numbers/dns-sec-alg-numbers.xhtml. </param>
         /// <param name="digest"> The digest entity. </param>
@@ -215,6 +224,7 @@ namespace Azure.ResourceManager.Dns.Models
             return new DnsDSRecordInfo(keyTag, algorithm, digest, default);
         }
 
+        /// <summary> A digest. </summary>
         /// <param name="algorithmType"> The digest algorithm type represents the standard digest algorithm number used to construct the digest. See: https://www.iana.org/assignments/ds-rr-types/ds-rr-types.xhtml. </param>
         /// <param name="value"> The digest value is a cryptographic hash value of the referenced DNSKEY Resource Record. </param>
         /// <returns> A new <see cref="Models.DSRecordDigest"/> instance for mocking. </returns>
@@ -223,6 +233,7 @@ namespace Azure.ResourceManager.Dns.Models
             return new DSRecordDigest(algorithmType, value, default);
         }
 
+        /// <summary> A TLSA record. For more information about the TLSA record format, see RFC 6698: https://www.rfc-editor.org/rfc/rfc6698. </summary>
         /// <param name="usage"> The usage specifies the provided association that will be used to match the certificate presented in the TLS handshake. </param>
         /// <param name="selector"> The selector specifies which part of the TLS certificate presented by the server will be matched against the association data. </param>
         /// <param name="matchingType"> The matching type specifies how the certificate association is presented. </param>
@@ -233,6 +244,7 @@ namespace Azure.ResourceManager.Dns.Models
             return new DnsTlsaRecordInfo(usage, selector, matchingType, certAssociationData, default);
         }
 
+        /// <summary> A NAPTR record. For more information about the NAPTR record format, see RFC 3403: https://www.rfc-editor.org/rfc/rfc3403. </summary>
         /// <param name="order"> The order in which the NAPTR records MUST be processed in order to accurately represent the ordered list of rules. The ordering is from lowest to highest. Valid values: 0-65535. </param>
         /// <param name="preference"> The preference specifies the order in which NAPTR records with equal 'order' values should be processed, low numbers being processed before high numbers. Valid values: 0-65535. </param>
         /// <param name="flags"> The flags specific to DDDS applications. Values currently defined in RFC 3404 are uppercase and lowercase letters "A", "P", "S", and "U", and the empty string, "". Enclose Flags in quotation marks. </param>
@@ -293,6 +305,7 @@ namespace Azure.ResourceManager.Dns.Models
                 default);
         }
 
+        /// <summary> Describes a request to update a DNS zone. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.DnsZonePatch"/> instance for mocking. </returns>
         public static DnsZonePatch DnsZonePatch(IDictionary<string, string> tags = default)
@@ -314,46 +327,6 @@ namespace Azure.ResourceManager.Dns.Models
         public static DnsResourceReferenceResult DnsResourceReferenceResult(IEnumerable<DnsResourceReference> dnsResourceReferences = default)
         {
             return new DnsResourceReferenceResult(dnsResourceReferences is null ? default : new DnsResourceReferenceResultProperties((dnsResourceReferences ?? new ChangeTrackingList<DnsResourceReference>()).ToList(), default), default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Dns.DnsZoneData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="etag"> The etag of the zone. </param>
-        /// <param name="maxNumberOfRecords"> The maximum number of record sets that can be created in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="maxNumberOfRecordsPerRecord"> The maximum number of records per record set that can be created in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="numberOfRecords"> The current number of record sets in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="nameServers"> The name servers for this DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
-        /// <param name="zoneType"> The type of this DNS zone (Public or Private). </param>
-        /// <param name="registrationVirtualNetworks"> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </param>
-        /// <param name="resolutionVirtualNetworks"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
-        /// <returns> A new <see cref="Dns.DnsZoneData"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DnsZoneData DnsZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, long? maxNumberOfRecords = default, long? maxNumberOfRecordsPerRecord = default, long? numberOfRecords = default, IEnumerable<string> nameServers = default, DnsZoneType? zoneType = default, IEnumerable<WritableSubResource> registrationVirtualNetworks = default, IEnumerable<WritableSubResource> resolutionVirtualNetworks = default)
-        {
-            return new DnsZoneData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                maxNumberOfRecords is null && maxNumberOfRecordsPerRecord is null && numberOfRecords is null && nameServers is null && zoneType is null ? default : new ZoneProperties(
-                    maxNumberOfRecords,
-                    maxNumberOfRecordsPerRecord,
-                    numberOfRecords,
-                    (nameServers ?? new ChangeTrackingList<string>()).ToList(),
-                    zoneType,
-                    default,
-                    default,
-                    default,
-                    default),
-                etag,
-                default);
         }
     }
 }

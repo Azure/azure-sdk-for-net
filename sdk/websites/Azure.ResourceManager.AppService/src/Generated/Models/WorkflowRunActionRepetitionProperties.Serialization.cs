@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 return null;
             }
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             WebAppRunActionCorrelation correlation = default;
             WorkflowStatus? status = default;
             string code = default;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("correlation"u8))
@@ -273,8 +273,8 @@ namespace Azure.ResourceManager.AppService.Models
                 }
             }
             return new WorkflowRunActionRepetitionProperties(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 correlation,
                 status,
                 code,

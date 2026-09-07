@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
     public static partial class ArmDatabaseFleetManagerModelFactory
     {
 
+        /// <summary> A fleet database. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -35,6 +36,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 default);
         }
 
+        /// <summary> Fleet database properties. </summary>
         /// <param name="originalDatabaseId"> Resource identifier for the underlying database resource. </param>
         /// <param name="provisioningState"> Database state. </param>
         /// <param name="createMode"> Create mode. Available options: Default - Create a database. Copy - Copy the source database (source database name must be specified) PointInTimeRestore - Create a database by restoring source database from a point in time (source database name and restore from time must be specified). </param>
@@ -76,6 +78,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 default);
         }
 
+        /// <summary> Database Identity. </summary>
         /// <param name="identityType"> Identity type of the main principal. </param>
         /// <param name="userAssignedIdentities"> User identity ids. </param>
         /// <param name="federatedClientId"> The federated client id for the SQL Database. It is used for cross tenant CMK scenario. </param>
@@ -87,6 +90,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             return new FleetDatabaseIdentityProperties(identityType, (userAssignedIdentities ?? new ChangeTrackingList<DatabaseIdentity>()).ToList(), federatedClientId, default);
         }
 
+        /// <summary> Database Identity properties. </summary>
         /// <param name="resourceId"> Resource Id of the database identity. </param>
         /// <param name="principalId"> Principal Id of the database identity. </param>
         /// <param name="clientId"> Client Id of the database identity. </param>
@@ -96,6 +100,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             return new DatabaseIdentity(resourceId, principalId, clientId, default);
         }
 
+        /// <summary> Transparent Data Encryption properties. </summary>
         /// <param name="keyUri"> Customer Managed Key (CMK) Uri. </param>
         /// <param name="keys"> Additional Keys. </param>
         /// <param name="enableAutoRotation"> Enable key auto rotation. </param>
@@ -107,6 +112,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             return new DatabaseFleetManagerTransparentDataEncryption(keyUri, (keys ?? new ChangeTrackingList<string>()).ToList(), enableAutoRotation, default);
         }
 
+        /// <summary> A database change tier definition. </summary>
         /// <param name="targetTierName"> A target tier name. </param>
         /// <returns> A new <see cref="Models.DatabaseChangeTierContent"/> instance for mocking. </returns>
         public static DatabaseChangeTierContent DatabaseChangeTierContent(string targetTierName = default)
@@ -114,6 +120,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             return new DatabaseChangeTierContent(targetTierName, default);
         }
 
+        /// <summary> A database rename definition. </summary>
         /// <param name="newName"> New database name. </param>
         /// <returns> A new <see cref="Models.DatabaseRenameContent"/> instance for mocking. </returns>
         public static DatabaseRenameContent DatabaseRenameContent(string newName = default)
@@ -121,6 +128,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             return new DatabaseRenameContent(newName, default);
         }
 
+        /// <summary> A fleetspace. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -138,6 +146,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 default);
         }
 
+        /// <summary> A Fleetspace properties. </summary>
         /// <param name="provisioningState"> Fleetspace state. </param>
         /// <param name="capacityMax"> Maximum number of vCores database fleet manager is allowed to provision in the fleetspace. </param>
         /// <param name="mainPrincipal"> Main Microsoft Entra ID principal that has admin access to all databases in the fleetspace. </param>
@@ -147,6 +156,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             return new FleetspaceProperties(provisioningState, capacityMax, mainPrincipal, default);
         }
 
+        /// <summary> A main principal. </summary>
         /// <param name="login"> Login name of the main principal. </param>
         /// <param name="applicationId"> Application Id of the main principal. </param>
         /// <param name="objectId"> Object Id of the main principal. </param>
@@ -164,6 +174,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 default);
         }
 
+        /// <summary> Server registration definition. </summary>
         /// <param name="tierName"> Destination tier name. </param>
         /// <param name="sourceSubscriptionId"> Source subscription id. </param>
         /// <param name="sourceResourceGroupName"> Source resource group name. </param>
@@ -183,6 +194,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 default);
         }
 
+        /// <summary> A destination tier override. </summary>
         /// <param name="resourceType"> Resource type. </param>
         /// <param name="tierName"> Destination tier name. </param>
         /// <param name="resourceName"> Resource name. </param>
@@ -192,6 +204,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             return new DestinationTierOverride(resourceType, tierName, resourceName, default);
         }
 
+        /// <summary> A Database Fleet. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -215,6 +228,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 default);
         }
 
+        /// <summary> The Database Fleet properties. </summary>
         /// <param name="description"> Fleet description. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <returns> A new <see cref="Models.FleetProperties"/> instance for mocking. </returns>
@@ -223,6 +237,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             return new FleetProperties(description, provisioningState, default);
         }
 
+        /// <summary> An update to a Database Fleet. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The Database Fleet properties. </param>
         /// <returns> A new <see cref="Models.DatabaseFleetPatch"/> instance for mocking. </returns>
@@ -233,6 +248,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             return new DatabaseFleetPatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> A firewall rule. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -250,6 +266,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 default);
         }
 
+        /// <summary> A Firewall rule properties. </summary>
         /// <param name="startIPAddress"> Start IP address. </param>
         /// <param name="endIPAddress"> End IP address. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
@@ -259,6 +276,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
             return new FirewallRuleProperties(startIPAddress, endIPAddress, provisioningState, default);
         }
 
+        /// <summary> A SQL Database Fleet tier. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -276,6 +294,7 @@ namespace Azure.ResourceManager.DatabaseFleetManager.Models
                 default);
         }
 
+        /// <summary> A Fleet tier properties. </summary>
         /// <param name="isDisabled"> If true, tier is disabled. </param>
         /// <param name="isServerless"> If true, serverless resources are provisioned in the tier. </param>
         /// <param name="isPooled"> If true, databases are pooled. </param>

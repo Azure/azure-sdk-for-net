@@ -21,6 +21,24 @@ namespace Azure.ResourceManager.Dns.Models
     // preserves existing public model-factory parameter names.
     [CodeGenSuppressAttribute("DnsARecordInfo", typeof(IPAddress))]
     [CodeGenSuppressAttribute("DnsAaaaRecordInfo", typeof(IPAddress))]
+    // The generated compatibility overload cannot convert the released writable subresource parameters
+    // after the corresponding model properties were renamed and changed to DnsSubResourceInfo.
+    [CodeGenSuppressAttribute(
+        "DnsZoneData",
+        typeof(ResourceIdentifier),
+        typeof(string),
+        typeof(ResourceType),
+        typeof(SystemData),
+        typeof(IDictionary<string, string>),
+        typeof(AzureLocation),
+        typeof(ETag?),
+        typeof(long?),
+        typeof(long?),
+        typeof(long?),
+        typeof(IEnumerable<string>),
+        typeof(DnsZoneType?),
+        typeof(IEnumerable<WritableSubResource>),
+        typeof(IEnumerable<WritableSubResource>))]
     public static partial class ArmDnsModelFactory
     {
         /// <param name="iPv4Address"> The IPv4 address of this A record. </param>
@@ -260,6 +278,74 @@ namespace Azure.ResourceManager.Dns.Models
                             .Select(item => new DnsSubResourceInfo { Id = item?.Id })
                             .ToList(),
                         default),
+                default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Dns.DnsZoneData"/>. </summary>
+        /// <param name="id"> The resource identifier. </param>
+        /// <param name="name"> The resource name. </param>
+        /// <param name="resourceType"> The resource type. </param>
+        /// <param name="systemData"> The system data. </param>
+        /// <param name="tags"> The resource tags. </param>
+        /// <param name="location"> The resource location. </param>
+        /// <param name="etag"> The etag of the zone. </param>
+        /// <param name="maxNumberOfRecords"> The maximum number of record sets that can be created in this DNS zone. </param>
+        /// <param name="maxNumberOfRecordsPerRecord"> The maximum number of records per record set. </param>
+        /// <param name="numberOfRecords"> The current number of record sets in this DNS zone. </param>
+        /// <param name="nameServers"> The name servers for this DNS zone. </param>
+        /// <param name="zoneType"> The type of this DNS zone. </param>
+        /// <param name="registrationVirtualNetworks"> The virtual networks that register hostnames in this DNS zone. </param>
+        /// <param name="resolutionVirtualNetworks"> The virtual networks that resolve records in this DNS zone. </param>
+        /// <returns> A new <see cref="Dns.DnsZoneData"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DnsZoneData DnsZoneData(
+            ResourceIdentifier id = default,
+            string name = default,
+            ResourceType resourceType = default,
+            SystemData systemData = default,
+            IDictionary<string, string> tags = default,
+            AzureLocation location = default,
+            ETag? etag = default,
+            long? maxNumberOfRecords = default,
+            long? maxNumberOfRecordsPerRecord = default,
+            long? numberOfRecords = default,
+            IEnumerable<string> nameServers = default,
+            DnsZoneType? zoneType = default,
+            IEnumerable<WritableSubResource> registrationVirtualNetworks = default,
+            IEnumerable<WritableSubResource> resolutionVirtualNetworks = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new DnsZoneData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                maxNumberOfRecords is null
+                    && maxNumberOfRecordsPerRecord is null
+                    && numberOfRecords is null
+                    && nameServers is null
+                    && zoneType is null
+                    && registrationVirtualNetworks is null
+                    && resolutionVirtualNetworks is null
+                        ? default
+                        : new ZoneProperties(
+                            maxNumberOfRecords,
+                            maxNumberOfRecordsPerRecord,
+                            numberOfRecords,
+                            (nameServers ?? new ChangeTrackingList<string>()).ToList(),
+                            zoneType,
+                            (registrationVirtualNetworks ?? new ChangeTrackingList<WritableSubResource>())
+                                .Select(item => new DnsSubResourceInfo { Id = item?.Id })
+                                .ToList(),
+                            (resolutionVirtualNetworks ?? new ChangeTrackingList<WritableSubResource>())
+                                .Select(item => new DnsSubResourceInfo { Id = item?.Id })
+                                .ToList(),
+                            default,
+                            default),
+                etag,
                 default);
         }
 

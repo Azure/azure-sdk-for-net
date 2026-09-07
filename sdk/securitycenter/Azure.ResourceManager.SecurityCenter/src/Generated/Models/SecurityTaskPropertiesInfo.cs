@@ -45,12 +45,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
         public DateTimeOffset? CreatedOn { get; }
 
         /// <summary> Changing set of properties, depending on the task type that is derived from the name field. </summary>
-        public SecurityTaskProperties SecurityTaskParameters { get; set; }
+        internal SecurityTaskProperties SecurityTaskParameters { get; set; }
 
         /// <summary> The time this task's details were last changed in UTC. </summary>
         public DateTimeOffset? LastStateChangedOn { get; }
 
         /// <summary> Additional data on the state of the task. </summary>
         public string SubState { get; }
+
+        /// <summary> Name of the task type. </summary>
+        public string SecurityTaskName
+        {
+            get
+            {
+                return SecurityTaskParameters is null ? default : SecurityTaskParameters.TaskName;
+            }
+        }
     }
 }

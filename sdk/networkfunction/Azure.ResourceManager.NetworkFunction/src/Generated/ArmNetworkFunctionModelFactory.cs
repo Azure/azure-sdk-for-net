@@ -47,6 +47,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 default);
         }
 
+        /// <summary> Tags object for patch operations. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.TagsObject"/> instance for mocking. </returns>
         public static TagsObject TagsObject(IDictionary<string, string> tags = default)
@@ -83,6 +84,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 default);
         }
 
+        /// <summary> Ingestion Policy properties. </summary>
         /// <param name="ingestionType"> The ingestion type. </param>
         /// <param name="ingestionSources"> Ingestion Sources. </param>
         /// <returns> A new <see cref="Models.IngestionPolicyPropertiesFormat"/> instance for mocking. </returns>
@@ -93,6 +95,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             return new IngestionPolicyPropertiesFormat(ingestionType, (ingestionSources ?? new ChangeTrackingList<IngestionSourcesPropertiesFormat>()).ToList(), default);
         }
 
+        /// <summary> Ingestion policy properties. </summary>
         /// <param name="sourceType"> Ingestion source type. </param>
         /// <param name="resourceId"> Resource ID. </param>
         /// <returns> A new <see cref="Models.IngestionSourcesPropertiesFormat"/> instance for mocking. </returns>
@@ -101,6 +104,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             return new IngestionSourcesPropertiesFormat(sourceType, resourceId, default);
         }
 
+        /// <summary> Emission policy properties. </summary>
         /// <param name="emissionType"> Emission format type. </param>
         /// <param name="emissionDestinations"> Emission policy destinations. </param>
         /// <returns> A new <see cref="Models.EmissionPoliciesPropertiesFormat"/> instance for mocking. </returns>
@@ -111,6 +115,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             return new EmissionPoliciesPropertiesFormat(emissionType, (emissionDestinations ?? new ChangeTrackingList<EmissionPolicyDestination>()).ToList(), default);
         }
 
+        /// <summary> Emission policy destination properties. </summary>
         /// <param name="destinationType"> Emission destination type. </param>
         /// <returns> A new <see cref="Models.EmissionPolicyDestination"/> instance for mocking. </returns>
         public static EmissionPolicyDestination EmissionPolicyDestination(EmissionDestinationType? destinationType = default)
@@ -118,6 +123,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             return new EmissionPolicyDestination(destinationType, default);
         }
 
+        /// <summary> Azure Traffic Collector resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -144,6 +150,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 default);
         }
 
+        /// <summary> Collector policy resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
