@@ -31,19 +31,6 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         }
 
         /// <summary> Additional properties for Validate for execute. </summary>
-        internal ValidateForExecutionProperties ValidateForExecutionProperties { get; set; }
-
-        /// <summary> Physiscal Source locations from where resources to be failed-over or faulted. </summary>
-        public IList<string> ValidateForExecutionSourceLocations
-        {
-            get
-            {
-                if (ValidateForExecutionProperties is null)
-                {
-                    ValidateForExecutionProperties = new ValidateForExecutionProperties();
-                }
-                return ValidateForExecutionProperties.SourceLocations;
-            }
-        }
+        public ValidateForExecutionProperties ValidateForExecutionProperties { get; set; }
     }
 }

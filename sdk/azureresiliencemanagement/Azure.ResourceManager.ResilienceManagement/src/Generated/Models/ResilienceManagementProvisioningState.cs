@@ -29,6 +29,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
         private const string DeletingValue = "Deleting";
         /// <summary> Change accepted for processing. </summary>
         private const string AcceptedValue = "Accepted";
+        /// <summary> The resource needs attention from the user. </summary>
+        private const string NeedsAttentionValue = "NeedsAttention";
 
         /// <summary> Initializes a new instance of <see cref="ResilienceManagementProvisioningState"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -60,6 +62,9 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
 
         /// <summary> Change accepted for processing. </summary>
         public static ResilienceManagementProvisioningState Accepted { get; } = new ResilienceManagementProvisioningState(AcceptedValue);
+
+        /// <summary> The resource needs attention from the user. </summary>
+        public static ResilienceManagementProvisioningState NeedsAttention { get; } = new ResilienceManagementProvisioningState(NeedsAttentionValue);
 
         /// <summary> Determines if two <see cref="ResilienceManagementProvisioningState"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -82,8 +82,11 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             writer.WritePropertyName("serviceLevelIndicatorResourceId"u8);
             writer.WriteStringValue(ServiceLevelIndicatorResourceId);
-            writer.WritePropertyName("serviceLevelObjectiveResourceId"u8);
-            writer.WriteStringValue(ServiceLevelObjectiveResourceId);
+            if (Optional.IsDefined(ServiceLevelObjectiveResourceId))
+            {
+                writer.WritePropertyName("serviceLevelObjectiveResourceId"u8);
+                writer.WriteStringValue(ServiceLevelObjectiveResourceId);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -138,6 +141,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
                 if (prop.NameEquals("serviceLevelObjectiveResourceId"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     serviceLevelObjectiveResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }

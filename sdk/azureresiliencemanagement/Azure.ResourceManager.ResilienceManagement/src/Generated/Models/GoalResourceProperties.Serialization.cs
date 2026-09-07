@@ -82,10 +82,21 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             writer.WritePropertyName("resourceArmId"u8);
             writer.WriteStringValue(ResourceArmId);
-            writer.WritePropertyName("highAvailabilityGoalParticipation"u8);
-            writer.WriteStringValue(HighAvailabilityGoalParticipation.ToString());
-            writer.WritePropertyName("highAvailabilityAttestationStatus"u8);
-            writer.WriteStringValue(HighAvailabilityAttestationStatus.ToString());
+            if (Optional.IsDefined(HighAvailabilityGoalParticipation))
+            {
+                writer.WritePropertyName("highAvailabilityGoalParticipation"u8);
+                writer.WriteStringValue(HighAvailabilityGoalParticipation.Value.ToString());
+            }
+            if (Optional.IsDefined(HighAvailabilityAttestationStatus))
+            {
+                writer.WritePropertyName("highAvailabilityAttestationStatus"u8);
+                writer.WriteStringValue(HighAvailabilityAttestationStatus.Value.ToString());
+            }
+            if (Optional.IsDefined(ZonalResiliency))
+            {
+                writer.WritePropertyName("zonalResiliency"u8);
+                writer.WriteObjectValue(ZonalResiliency, options);
+            }
             if (Optional.IsDefined(DisasterRecoveryGoalParticipation))
             {
                 writer.WritePropertyName("disasterRecoveryGoalParticipation"u8);
@@ -110,7 +121,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             {
                 writer.WritePropertyName("userConfirmationForHighAvailability"u8);
                 writer.WriteStartArray();
-                foreach (UserConfirmationForHighAvailabilityItem item in UserConfirmationForHighAvailability)
+                foreach (UserConfirmationItem item in UserConfirmationForHighAvailability)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -174,13 +185,14 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             ResourceIdentifier resourceArmId = default;
-            ExclusionState highAvailabilityGoalParticipation = default;
-            AttestationState highAvailabilityAttestationStatus = default;
+            ExclusionState? highAvailabilityGoalParticipation = default;
+            AttestationState? highAvailabilityAttestationStatus = default;
+            ResiliencyProperties zonalResiliency = default;
             ExclusionState? disasterRecoveryGoalParticipation = default;
             AttestationState? disasterRecoveryAttestationStatus = default;
             ExclusionReason? exclusionReasonForHighAvailabilityGoals = default;
             ExclusionReason? exclusionReasonForDisasterRecoveryGoals = default;
-            IList<UserConfirmationForHighAvailabilityItem> userConfirmationForHighAvailability = default;
+            IList<UserConfirmationItem> userConfirmationForHighAvailability = default;
             IReadOnlyList<ServiceGroupMembership> serviceGroupMemberships = default;
             ResilienceManagementProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -193,12 +205,29 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 }
                 if (prop.NameEquals("highAvailabilityGoalParticipation"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     highAvailabilityGoalParticipation = new ExclusionState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("highAvailabilityAttestationStatus"u8))
                 {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
                     highAvailabilityAttestationStatus = new AttestationState(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("zonalResiliency"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    zonalResiliency = ResiliencyProperties.DeserializeResiliencyProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("disasterRecoveryGoalParticipation"u8))
@@ -243,10 +272,10 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    List<UserConfirmationForHighAvailabilityItem> array = new List<UserConfirmationForHighAvailabilityItem>();
+                    List<UserConfirmationItem> array = new List<UserConfirmationItem>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(UserConfirmationForHighAvailabilityItem.DeserializeUserConfirmationForHighAvailabilityItem(item, options));
+                        array.Add(UserConfirmationItem.DeserializeUserConfirmationItem(item, options));
                     }
                     userConfirmationForHighAvailability = array;
                     continue;
@@ -283,11 +312,12 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 resourceArmId,
                 highAvailabilityGoalParticipation,
                 highAvailabilityAttestationStatus,
+                zonalResiliency,
                 disasterRecoveryGoalParticipation,
                 disasterRecoveryAttestationStatus,
                 exclusionReasonForHighAvailabilityGoals,
                 exclusionReasonForDisasterRecoveryGoals,
-                userConfirmationForHighAvailability ?? new ChangeTrackingList<UserConfirmationForHighAvailabilityItem>(),
+                userConfirmationForHighAvailability ?? new ChangeTrackingList<UserConfirmationItem>(),
                 serviceGroupMemberships ?? new ChangeTrackingList<ServiceGroupMembership>(),
                 provisioningState,
                 additionalBinaryDataProperties);

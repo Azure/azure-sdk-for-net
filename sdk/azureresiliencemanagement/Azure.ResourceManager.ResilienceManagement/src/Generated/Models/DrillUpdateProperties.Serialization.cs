@@ -99,6 +99,16 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("monitoringProperties"u8);
                 writer.WriteObjectValue(MonitoringProperties, options);
             }
+            if (Optional.IsDefined(HealthModelMonitoringProperties))
+            {
+                writer.WritePropertyName("healthModelMonitoringProperties"u8);
+                writer.WriteObjectValue(HealthModelMonitoringProperties, options);
+            }
+            if (Optional.IsDefined(SliMonitoringProperties))
+            {
+                writer.WritePropertyName("sliMonitoringProperties"u8);
+                writer.WriteObjectValue(SliMonitoringProperties, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -146,6 +156,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             ChaosResourcePropertiesOfDrill chaosResourceProperties = default;
             ResilienceManagementRbacSetupMode? rbacSetupMode = default;
             MonitoringPropertiesOfDrill monitoringProperties = default;
+            HealthModelMonitoringProperties healthModelMonitoringProperties = default;
+            SliMonitoringProperties sliMonitoringProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -194,6 +206,26 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     monitoringProperties = MonitoringPropertiesOfDrill.DeserializeMonitoringPropertiesOfDrill(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("healthModelMonitoringProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        healthModelMonitoringProperties = null;
+                        continue;
+                    }
+                    healthModelMonitoringProperties = HealthModelMonitoringProperties.DeserializeHealthModelMonitoringProperties(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("sliMonitoringProperties"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        sliMonitoringProperties = null;
+                        continue;
+                    }
+                    sliMonitoringProperties = SliMonitoringProperties.DeserializeSliMonitoringProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -205,6 +237,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 chaosResourceProperties,
                 rbacSetupMode,
                 monitoringProperties,
+                healthModelMonitoringProperties,
+                sliMonitoringProperties,
                 additionalBinaryDataProperties);
         }
     }
