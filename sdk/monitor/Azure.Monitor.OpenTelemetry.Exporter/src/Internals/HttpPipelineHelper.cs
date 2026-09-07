@@ -433,15 +433,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                     CustomerSdkStatsHelper.TrackDropped(droppedCounter, ResponseStatusCodes.PartialSuccess, "Partial success - non-retriable");
                 }
 
-                return;
-            }
-
-            if (origin == TelemetryItemOrigin.Storage && blob != null)
-            {
-                if (blob.TryDelete())
+                if (origin == TelemetryItemOrigin.Storage && blob != null)
                 {
-                    result.DeletedBlob = true;
+                    if (blob.TryDelete())
+                    {
+                        result.DeletedBlob = true;
+                    }
                 }
+
+                return;
             }
 
             result.ExportResult = blobProvider.SaveTelemetry(partialContent);
