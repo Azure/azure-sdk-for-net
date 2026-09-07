@@ -16,6 +16,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ResourceManager.LargeHeader
 {
     public class LargeHeadersTests : SpectorTestBase
     {
+        // Keep requests HTTPS through authentication, then switch to HTTP only when sending to the local Spector server.
         private sealed class InsecureTransport : HttpPipelineTransport
         {
             private readonly HttpClientTransport _transport = new();
@@ -44,6 +45,7 @@ namespace TestProjects.Spector.Tests.Http.Azure.ResourceManager.LargeHeader
                 => new(GetToken(requestContext, cancellationToken));
         }
 
+        // LRO polling URLs returned by Spector use HTTP. Normalize them before the bearer-token policy validates the scheme.
         private sealed class ForceHttpsPolicy : HttpPipelineSynchronousPolicy
         {
             public override void OnSendingRequest(HttpMessage message)
