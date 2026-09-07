@@ -83,9 +83,9 @@ namespace Azure.Analytics.Defender.Easm
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("createdAt"u8);
-            writer.WriteStringValue(CreatedAt, "O");
+            writer.WriteStringValue(CreatedOn, "O");
             writer.WritePropertyName("updatedAt"u8);
-            writer.WriteStringValue(UpdatedAt, "O");
+            writer.WriteStringValue(UpdatedOn, "O");
             writer.WritePropertyName("state"u8);
             writer.WriteStringValue(State.ToString());
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -132,8 +132,8 @@ namespace Azure.Analytics.Defender.Easm
             }
             GlobalAssetType kind = default;
             string name = default;
-            DateTimeOffset createdAt = default;
-            DateTimeOffset updatedAt = default;
+            DateTimeOffset createdOn = default;
+            DateTimeOffset updatedOn = default;
             GlobalInventoryState state = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -150,12 +150,12 @@ namespace Azure.Analytics.Defender.Easm
                 }
                 if (prop.NameEquals("createdAt"u8))
                 {
-                    createdAt = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("updatedAt"u8))
                 {
-                    updatedAt = prop.Value.GetDateTimeOffset("O");
+                    updatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("state"u8))
@@ -171,8 +171,8 @@ namespace Azure.Analytics.Defender.Easm
             return new DeltaResult(
                 kind,
                 name,
-                createdAt,
-                updatedAt,
+                createdOn,
+                updatedOn,
                 state,
                 additionalBinaryDataProperties);
         }

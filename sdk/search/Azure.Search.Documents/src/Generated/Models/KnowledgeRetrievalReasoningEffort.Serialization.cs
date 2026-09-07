@@ -14,7 +14,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 {
     /// <summary>
     /// Base type for reasoning effort.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>, <see cref="KnowledgeRetrievalLowReasoningEffort"/>, and <see cref="KnowledgeRetrievalMediumReasoningEffort"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeRetrievalMinimalReasoningEffort"/>, <see cref="KnowledgeRetrievalLowReasoningEffort"/>, <see cref="KnowledgeRetrievalMediumReasoningEffort"/>, and <see cref="KnowledgeRetrievalAutoReasoningEffort"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownKnowledgeRetrievalReasoningEffort))]
     public abstract partial class KnowledgeRetrievalReasoningEffort : IJsonModel<KnowledgeRetrievalReasoningEffort>
@@ -136,6 +136,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                         return KnowledgeRetrievalLowReasoningEffort.DeserializeKnowledgeRetrievalLowReasoningEffort(element, options);
                     case "medium":
                         return KnowledgeRetrievalMediumReasoningEffort.DeserializeKnowledgeRetrievalMediumReasoningEffort(element, options);
+                    case "auto":
+                        return KnowledgeRetrievalAutoReasoningEffort.DeserializeKnowledgeRetrievalAutoReasoningEffort(element, options);
                 }
             }
             return UnknownKnowledgeRetrievalReasoningEffort.DeserializeUnknownKnowledgeRetrievalReasoningEffort(element, options);

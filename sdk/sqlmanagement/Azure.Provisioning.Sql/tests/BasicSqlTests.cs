@@ -94,11 +94,11 @@ public class BasicSqlTests
             resource db 'Microsoft.Sql/servers/databases@2021-11-01' = {
               name: dbName
               location: location
+              parent: sql
               sku: {
                 name: 'Standard'
                 tier: 'Standard'
               }
-              parent: sql
             }
             """);
     }

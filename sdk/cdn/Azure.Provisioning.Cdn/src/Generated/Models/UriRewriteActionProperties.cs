@@ -19,6 +19,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new UriRewriteActionProperties. </summary>
         public UriRewriteActionProperties()
         {
+            TypeName.Assign(DeliveryRuleActionParametersType.DeliveryRuleUrlRewriteActionParameters);
         }
 
         /// <summary> Gets or sets the SourcePattern. </summary>
@@ -70,7 +71,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleUrlRewriteActionParameters");
             _sourcePattern = DefineProperty<string>(nameof(SourcePattern), new string[] { "sourcePattern" }, isRequired: true);
             _destination = DefineProperty<string>(nameof(Destination), new string[] { "destination" }, isRequired: true);
             _preserveUnmatchedPath = DefineProperty<bool>(nameof(PreserveUnmatchedPath), new string[] { "preserveUnmatchedPath" });

@@ -136,10 +136,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 }
                 writer.WriteEndArray();
             }
-            if (Optional.IsDefined(LastUpdatedDateTime))
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedDateTime"u8);
-                writer.WriteStringValue(LastUpdatedDateTime.Value, "O");
+                writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -190,7 +190,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
             IDictionary<string, string> metadata = default;
             QnaDialog dialog = default;
             IList<SuggestedQuestionsCluster> activeLearningSuggestions = default;
-            DateTimeOffset? lastUpdatedDateTime = default;
+            DateTimeOffset? lastUpdatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -280,7 +280,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    lastUpdatedDateTime = prop.Value.GetDateTimeOffset("O");
+                    lastUpdatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -296,7 +296,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 dialog,
                 activeLearningSuggestions ?? new ChangeTrackingList<SuggestedQuestionsCluster>(),
-                lastUpdatedDateTime,
+                lastUpdatedOn,
                 additionalBinaryDataProperties);
         }
     }

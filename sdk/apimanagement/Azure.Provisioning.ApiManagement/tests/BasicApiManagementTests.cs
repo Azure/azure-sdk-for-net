@@ -76,16 +76,16 @@ public class BasicApiManagementTests
             resource apiService 'Microsoft.ApiManagement/service@2024-05-01' = {
               name: take('apiservice${uniqueString(resourceGroup().id)}', 24)
               location: location
+              identity: {
+                type: 'SystemAssigned'
+              }
               properties: {
                 publisherEmail: publisherEmail
                 publisherName: publisherName
               }
               sku: {
-                name: 'Developer'
                 capacity: 1
-              }
-              identity: {
-                type: 'SystemAssigned'
+                name: 'Developer'
               }
             }
 
@@ -354,21 +354,22 @@ public class BasicApiManagementTests
                 publisherName: publisherName
               }
               sku: {
-                name: 'Developer'
                 capacity: 1
+                name: 'Developer'
               }
             }
 
             resource tenantPolicyResource 'Microsoft.ApiManagement/service/policies@2024-05-01' = {
               name: take('tenantpolicyresource${uniqueString(resourceGroup().id)}', 24)
+              parent: apiService
               properties: {
                 value: tenantPolicy
               }
-              parent: apiService
             }
 
             resource exampleApi 'Microsoft.ApiManagement/service/apis@2024-05-01' = {
               name: take('exampleapi${uniqueString(resourceGroup().id)}', 24)
+              parent: apiService
               properties: {
                 description: 'Description for example API'
                 displayName: 'Example API Name'
@@ -377,41 +378,41 @@ public class BasicApiManagementTests
                   'https'
                 ]
               }
-              parent: apiService
             }
 
             resource exampleOperationDelete 'Microsoft.ApiManagement/service/apis/operations@2024-05-01' = {
               name: take('exampleoperationdelete${uniqueString(resourceGroup().id)}', 24)
+              parent: exampleApi
               properties: {
                 description: 'A demonstration of a DELETE call'
                 displayName: 'DELETE resource'
                 method: 'DELETE'
                 urlTemplate: '/resource'
               }
-              parent: exampleApi
             }
 
             resource exampleOperationGet 'Microsoft.ApiManagement/service/apis/operations@2024-05-01' = {
               name: take('exampleoperationget${uniqueString(resourceGroup().id)}', 24)
+              parent: exampleApi
               properties: {
                 description: 'A demonstration of a GET call'
                 displayName: 'GET resource'
                 method: 'GET'
                 urlTemplate: '/resource'
               }
-              parent: exampleApi
             }
 
             resource exampleOperationGetPolicy 'Microsoft.ApiManagement/service/apis/operations/policies@2024-05-01' = {
               name: take('exampleoperationgetpolicy${uniqueString(resourceGroup().id)}', 24)
+              parent: exampleOperationGet
               properties: {
                 value: operationPolicy
               }
-              parent: exampleOperationGet
             }
 
             resource exampleApiWithPolicy 'Microsoft.ApiManagement/service/apis@2024-05-01' = {
               name: take('exampleapiwithpolicy${uniqueString(resourceGroup().id)}', 24)
+              parent: apiService
               properties: {
                 description: 'Description for example API with policy'
                 displayName: 'Example API Name with Policy'
@@ -420,40 +421,40 @@ public class BasicApiManagementTests
                   'https'
                 ]
               }
-              parent: apiService
             }
 
             resource exampleApiWithPolicyPolicy 'Microsoft.ApiManagement/service/apis/policies@2024-05-01' = {
               name: take('exampleapiwithpolicypolicy${uniqueString(resourceGroup().id)}', 24)
+              parent: exampleApiWithPolicy
               properties: {
                 value: apiPolicy
               }
-              parent: exampleApiWithPolicy
             }
 
             resource exampleProduct 'Microsoft.ApiManagement/service/products@2024-05-01' = {
               name: take('exampleproduct${uniqueString(resourceGroup().id)}', 24)
+              parent: apiService
               properties: {
+                approvalRequired: false
                 description: 'Description for example product'
                 displayName: 'Example Product Name'
-                approvalRequired: false
-                subscriptionRequired: true
                 state: 'published'
+                subscriptionRequired: true
                 subscriptionsLimit: 1
               }
-              parent: apiService
             }
 
             resource exampleProductPolicy 'Microsoft.ApiManagement/service/products/policies@2024-05-01' = {
               name: take('exampleproductpolicy${uniqueString(resourceGroup().id)}', 24)
+              parent: exampleProduct
               properties: {
                 value: productPolicy
               }
-              parent: exampleProduct
             }
 
             resource exampleUser1 'Microsoft.ApiManagement/service/users@2024-05-01' = {
               name: take('exampleuser${uniqueString(resourceGroup().id)}', 24)
+              parent: apiService
               properties: {
                 email: 'examplefirst1@example.com'
                 firstName: 'ExampleFirstName1'
@@ -461,11 +462,11 @@ public class BasicApiManagementTests
                 note: 'note for example user 1'
                 state: 'active'
               }
-              parent: apiService
             }
 
             resource exampleUser2 'Microsoft.ApiManagement/service/users@2024-05-01' = {
               name: take('exampleuser${uniqueString(resourceGroup().id)}', 24)
+              parent: apiService
               properties: {
                 email: 'examplefirst2@example.com'
                 firstName: 'ExampleFirstName2'
@@ -473,11 +474,11 @@ public class BasicApiManagementTests
                 note: 'note for example user 2'
                 state: 'active'
               }
-              parent: apiService
             }
 
             resource exampleNamedValue 'Microsoft.ApiManagement/service/namedValues@2024-05-01' = {
               name: take('examplenamedvalue${uniqueString(resourceGroup().id)}', 24)
+              parent: apiService
               properties: {
                 displayName: 'propertyExampleName'
                 tags: [
@@ -485,36 +486,35 @@ public class BasicApiManagementTests
                 ]
                 value: 'propertyExampleValue'
               }
-              parent: apiService
             }
 
             resource exampleGroup 'Microsoft.ApiManagement/service/groups@2024-05-01' = {
               name: take('examplegroup${uniqueString(resourceGroup().id)}', 24)
+              parent: apiService
               properties: {
                 description: 'Example group description'
                 displayName: 'Example Group Name'
               }
-              parent: apiService
             }
 
             resource exampleOpenIdConnectProvider 'Microsoft.ApiManagement/service/openidConnectProviders@2024-05-01' = {
               name: take('exampleopenidconnectprovider${uniqueString(resourceGroup().id)}', 24)
+              parent: apiService
               properties: {
                 clientId: 'exampleClientId'
                 description: 'Description for example OpenId Connect provider'
                 displayName: 'exampleOpenIdConnectProviderName'
                 metadataEndpoint: 'https://example-openIdConnect-url.net'
               }
-              parent: apiService
             }
 
             resource exampleLogger 'Microsoft.ApiManagement/service/loggers@2024-05-01' = {
               name: take('examplelogger${uniqueString(resourceGroup().id)}', 24)
+              parent: apiService
               properties: {
                 description: 'Description for example logger'
                 loggerType: 'azureEventHub'
               }
-              parent: apiService
             }
 
             output name string = apiService.name

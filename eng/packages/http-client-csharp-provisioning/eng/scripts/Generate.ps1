@@ -22,7 +22,7 @@ if ($null -eq $filter -or $filter -eq "Provisioning-TypeSpec") {
 
     $provisioningTypespecTestProject = Join-Path $testProjectsLocalDir "Provisioning-TypeSpec"
 
-    Invoke (Get-Provisioning-TspCommand "$provisioningTypespecTestProject/main.tsp" $provisioningTypespecTestProject -debug:$Debug)
+    Invoke (Get-Provisioning-TspCommand "$provisioningTypespecTestProject/main.tsp" $provisioningTypespecTestProject -debug:$Debug -newProject:$false)
 
     # exit if the generation failed
     if ($LASTEXITCODE -ne 0) {

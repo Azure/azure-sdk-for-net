@@ -21,6 +21,7 @@ namespace Azure.Provisioning.Kusto
         /// <param name="resourceVersion"> The resource API version. </param>
         public KustoEventHubDataConnection(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, resourceVersion)
         {
+            Kind.Assign(DataConnectionKind.EventHub);
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -217,12 +218,12 @@ namespace Azure.Provisioning.Kusto
             }
         }
 
-        /// <summary> Gets or sets the RetrievalStartOn. </summary>
-        public BicepValue<DateTimeOffset> RetrievalStartOn
+        /// <summary> Gets or sets the RetrievalStartsOn. </summary>
+        public BicepValue<DateTimeOffset> RetrievalStartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.RetrievalStartOn;
+                return Properties is null ? default : Properties.RetrievalStartsOn;
             }
             set
             {
@@ -230,7 +231,7 @@ namespace Azure.Provisioning.Kusto
                 {
                     Properties = new EventHubConnectionProperties();
                 }
-                Properties.RetrievalStartOn = value;
+                Properties.RetrievalStartsOn = value;
             }
         }
 
@@ -238,7 +239,6 @@ namespace Azure.Provisioning.Kusto
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("kind", new string[] { "kind" }, defaultValue: "EventHub");
             _properties = DefineModelProperty<EventHubConnectionProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

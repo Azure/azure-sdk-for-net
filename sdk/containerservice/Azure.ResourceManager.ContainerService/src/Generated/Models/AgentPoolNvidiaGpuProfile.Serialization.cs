@@ -79,6 +79,11 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("managementMode"u8);
                 writer.WriteStringValue(ManagementMode.Value.ToString());
             }
+            if (Optional.IsDefined(DriverMode))
+            {
+                writer.WritePropertyName("driverMode"u8);
+                writer.WriteStringValue(DriverMode.Value.ToString());
+            }
             if (Optional.IsDefined(MigStrategy))
             {
                 writer.WritePropertyName("migStrategy"u8);
@@ -127,6 +132,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             GpuManagementMode? managementMode = default;
+            NvidiaDriverMode? driverMode = default;
             MultiInstanceGpuStrategy? migStrategy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -138,6 +144,15 @@ namespace Azure.ResourceManager.ContainerService.Models
                         continue;
                     }
                     managementMode = new GpuManagementMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("driverMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    driverMode = new NvidiaDriverMode(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("migStrategy"u8))
@@ -154,7 +169,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentPoolNvidiaGpuProfile(managementMode, migStrategy, additionalBinaryDataProperties);
+            return new AgentPoolNvidiaGpuProfile(managementMode, driverMode, migStrategy, additionalBinaryDataProperties);
         }
     }
 }

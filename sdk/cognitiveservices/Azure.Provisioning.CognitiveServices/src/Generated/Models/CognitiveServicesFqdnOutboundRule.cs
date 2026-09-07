@@ -17,6 +17,7 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new CognitiveServicesFqdnOutboundRule. </summary>
         public CognitiveServicesFqdnOutboundRule()
         {
+            Type.Assign(RuleType.FQDN);
         }
 
         /// <summary> Gets or sets the Destination. </summary>
@@ -38,7 +39,6 @@ namespace Azure.Provisioning.CognitiveServices
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("type", new string[] { "type" }, defaultValue: "FQDN");
             _destination = DefineProperty<string>(nameof(Destination), new string[] { "destination" });
             DefineAdditionalProperties();
         }

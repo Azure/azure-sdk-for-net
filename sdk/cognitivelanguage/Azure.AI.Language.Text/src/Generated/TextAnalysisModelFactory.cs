@@ -1180,26 +1180,26 @@ namespace Azure.AI.Language.Text
 
         /// <summary> The object containing the analyze job LRO job state. </summary>
         /// <param name="displayName"> display name. </param>
-        /// <param name="createdAt"> Date and time job created. </param>
+        /// <param name="createdOn"> Date and time job created. </param>
         /// <param name="expiresOn"> Date and time job expires. </param>
         /// <param name="jobId"> job ID. </param>
-        /// <param name="lastUpdatedAt"> last updated date and time. </param>
+        /// <param name="lastUpdatedOn"> last updated date and time. </param>
         /// <param name="status"> status. </param>
         /// <param name="errors"> errors. </param>
         /// <param name="nextLink"> next link. </param>
         /// <param name="tasks"> List of tasks. </param>
         /// <param name="statistics"> if showStats=true was specified in the request this field will contain information about the request payload. </param>
         /// <returns> A new <see cref="Text.AnalyzeTextJobState"/> instance for mocking. </returns>
-        public static AnalyzeTextJobState AnalyzeTextJobState(string displayName = default, DateTimeOffset createdAt = default, DateTimeOffset? expiresOn = default, Guid jobId = default, DateTimeOffset lastUpdatedAt = default, TextActionState status = default, IEnumerable<AnalyzeTextError> errors = default, string nextLink = default, TextActions tasks = default, RequestStatistics statistics = default)
+        public static AnalyzeTextJobState AnalyzeTextJobState(string displayName = default, DateTimeOffset createdOn = default, DateTimeOffset? expiresOn = default, Guid jobId = default, DateTimeOffset lastUpdatedOn = default, TextActionState status = default, IEnumerable<AnalyzeTextError> errors = default, string nextLink = default, TextActions tasks = default, RequestStatistics statistics = default)
         {
             errors ??= new ChangeTrackingList<AnalyzeTextError>();
 
             return new AnalyzeTextJobState(
                 displayName,
-                createdAt,
+                createdOn,
                 expiresOn,
                 jobId,
-                lastUpdatedAt,
+                lastUpdatedOn,
                 status,
                 errors.ToList(),
                 nextLink,
@@ -1232,26 +1232,26 @@ namespace Azure.AI.Language.Text
         /// Contains the AnalyzeText long running operation result object.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Text.CustomEntityRecognitionOperationResult"/>, <see cref="Text.CustomSingleLabelClassificationOperationResult"/>, <see cref="Text.CustomMultiLabelClassificationOperationResult"/>, <see cref="Text.EntityLinkingOperationResult"/>, <see cref="Text.EntityRecognitionOperationResult"/>, <see cref="Text.HealthcareOperationResult"/>, <see cref="Text.KeyPhraseExtractionOperationResult"/>, <see cref="Text.PiiEntityRecognitionOperationResult"/>, <see cref="Text.SentimentOperationResult"/>, <see cref="Text.ExtractiveSummarizationOperationResult"/>, and <see cref="Text.AbstractiveSummarizationOperationResult"/>.
         /// </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="kind"> Kind of the task. </param>
         /// <returns> A new <see cref="Text.AnalyzeTextOperationResult"/> instance for mocking. </returns>
-        public static AnalyzeTextOperationResult AnalyzeTextOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, string kind = default)
+        public static AnalyzeTextOperationResult AnalyzeTextOperationResult(DateTimeOffset lastUpdateOn = default, TextActionState status = default, string taskName = default, string kind = default)
         {
-            return new UnknownAnalyzeTextOperationResult(lastUpdateDateTime, status, taskName, new AnalyzeTextOperationResultsKind(kind), additionalBinaryDataProperties: null);
+            return new UnknownAnalyzeTextOperationResult(lastUpdateOn, status, taskName, new AnalyzeTextOperationResultsKind(kind), additionalBinaryDataProperties: null);
         }
 
         /// <summary> Contains the custom entity recognition job result. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> List of results. </param>
         /// <returns> A new <see cref="Text.CustomEntityRecognitionOperationResult"/> instance for mocking. </returns>
-        public static CustomEntityRecognitionOperationResult CustomEntityRecognitionOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, CustomEntitiesResult results = default)
+        public static CustomEntityRecognitionOperationResult CustomEntityRecognitionOperationResult(DateTimeOffset lastUpdateOn = default, TextActionState status = default, string taskName = default, CustomEntitiesResult results = default)
         {
             return new CustomEntityRecognitionOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 taskName,
                 AnalyzeTextOperationResultsKind.CustomEntityRecognitionOperationResults,
@@ -1322,15 +1322,15 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Contains the custom single label classification job result. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> List of results. </param>
         /// <returns> A new <see cref="Text.CustomSingleLabelClassificationOperationResult"/> instance for mocking. </returns>
-        public static CustomSingleLabelClassificationOperationResult CustomSingleLabelClassificationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, CustomLabelClassificationResult results = default)
+        public static CustomSingleLabelClassificationOperationResult CustomSingleLabelClassificationOperationResult(DateTimeOffset lastUpdateOn = default, TextActionState status = default, string taskName = default, CustomLabelClassificationResult results = default)
         {
             return new CustomSingleLabelClassificationOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 taskName,
                 AnalyzeTextOperationResultsKind.CustomSingleLabelClassificationOperationResults,
@@ -1390,15 +1390,15 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Contains the custom multi label classification job result. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> List of results. </param>
         /// <returns> A new <see cref="Text.CustomMultiLabelClassificationOperationResult"/> instance for mocking. </returns>
-        public static CustomMultiLabelClassificationOperationResult CustomMultiLabelClassificationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, CustomLabelClassificationResult results = default)
+        public static CustomMultiLabelClassificationOperationResult CustomMultiLabelClassificationOperationResult(DateTimeOffset lastUpdateOn = default, TextActionState status = default, string taskName = default, CustomLabelClassificationResult results = default)
         {
             return new CustomMultiLabelClassificationOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 taskName,
                 AnalyzeTextOperationResultsKind.CustomMultiLabelClassificationOperationResults,
@@ -1407,15 +1407,15 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Contains the analyze text Entity linking task LRO result. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> Entity linking result. </param>
         /// <returns> A new <see cref="Text.EntityLinkingOperationResult"/> instance for mocking. </returns>
-        public static EntityLinkingOperationResult EntityLinkingOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, EntityLinkingResult results = default)
+        public static EntityLinkingOperationResult EntityLinkingOperationResult(DateTimeOffset lastUpdateOn = default, TextActionState status = default, string taskName = default, EntityLinkingResult results = default)
         {
             return new EntityLinkingOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 taskName,
                 AnalyzeTextOperationResultsKind.EntityLinkingOperationResults,
@@ -1424,15 +1424,15 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Contains the entity recognition job task result. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> Results for the task. </param>
         /// <returns> A new <see cref="Text.EntityRecognitionOperationResult"/> instance for mocking. </returns>
-        public static EntityRecognitionOperationResult EntityRecognitionOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, EntitiesResult results = default)
+        public static EntityRecognitionOperationResult EntityRecognitionOperationResult(DateTimeOffset lastUpdateOn = default, TextActionState status = default, string taskName = default, EntitiesResult results = default)
         {
             return new EntityRecognitionOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 taskName,
                 AnalyzeTextOperationResultsKind.EntityRecognitionOperationResults,
@@ -1469,15 +1469,15 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Healthcare Analyze Text long tunning operation result object. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> Results of the task. </param>
         /// <returns> A new <see cref="Text.HealthcareOperationResult"/> instance for mocking. </returns>
-        public static HealthcareOperationResult HealthcareOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, HealthcareResult results = default)
+        public static HealthcareOperationResult HealthcareOperationResult(DateTimeOffset lastUpdateOn = default, TextActionState status = default, string taskName = default, HealthcareResult results = default)
         {
             return new HealthcareOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 taskName,
                 AnalyzeTextOperationResultsKind.HealthcareOperationResults,
@@ -1605,15 +1605,15 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Contains the analyze text KeyPhraseExtraction LRO task. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> The list of Key phrase extraction results. </param>
         /// <returns> A new <see cref="Text.KeyPhraseExtractionOperationResult"/> instance for mocking. </returns>
-        public static KeyPhraseExtractionOperationResult KeyPhraseExtractionOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, KeyPhraseResult results = default)
+        public static KeyPhraseExtractionOperationResult KeyPhraseExtractionOperationResult(DateTimeOffset lastUpdateOn = default, TextActionState status = default, string taskName = default, KeyPhraseResult results = default)
         {
             return new KeyPhraseExtractionOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 taskName,
                 AnalyzeTextOperationResultsKind.KeyPhraseExtractionOperationResults,
@@ -1622,15 +1622,15 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Contains the PII LRO results. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> The list of pii results. </param>
         /// <returns> A new <see cref="Text.PiiEntityRecognitionOperationResult"/> instance for mocking. </returns>
-        public static PiiEntityRecognitionOperationResult PiiEntityRecognitionOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, PiiResult results = default)
+        public static PiiEntityRecognitionOperationResult PiiEntityRecognitionOperationResult(DateTimeOffset lastUpdateOn = default, TextActionState status = default, string taskName = default, PiiResult results = default)
         {
             return new PiiEntityRecognitionOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 taskName,
                 AnalyzeTextOperationResultsKind.PiiEntityRecognitionOperationResults,
@@ -1639,15 +1639,15 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> Contains the Sentiment Analysis LRO results. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> The sentiment analysis results. </param>
         /// <returns> A new <see cref="Text.SentimentOperationResult"/> instance for mocking. </returns>
-        public static SentimentOperationResult SentimentOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, SentimentResult results = default)
+        public static SentimentOperationResult SentimentOperationResult(DateTimeOffset lastUpdateOn = default, TextActionState status = default, string taskName = default, SentimentResult results = default)
         {
             return new SentimentOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 taskName,
                 AnalyzeTextOperationResultsKind.SentimentAnalysisOperationResults,
@@ -1656,15 +1656,15 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> An object representing the results for an Extractive Summarization task. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> Results of the task. </param>
         /// <returns> A new <see cref="Text.ExtractiveSummarizationOperationResult"/> instance for mocking. </returns>
-        public static ExtractiveSummarizationOperationResult ExtractiveSummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, ExtractiveSummarizationResult results = default)
+        public static ExtractiveSummarizationOperationResult ExtractiveSummarizationOperationResult(DateTimeOffset lastUpdateOn = default, TextActionState status = default, string taskName = default, ExtractiveSummarizationResult results = default)
         {
             return new ExtractiveSummarizationOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 taskName,
                 AnalyzeTextOperationResultsKind.ExtractiveSummarizationOperationResults,
@@ -1719,15 +1719,15 @@ namespace Azure.AI.Language.Text
         }
 
         /// <summary> An object representing the results for an Abstractive Summarization task. </summary>
-        /// <param name="lastUpdateDateTime"> The last updated time in UTC for the task. </param>
+        /// <param name="lastUpdateOn"> The last updated time in UTC for the task. </param>
         /// <param name="status"> The status of the task at the mentioned last update time. </param>
         /// <param name="taskName"> task name. </param>
         /// <param name="results"> Results of the task. </param>
         /// <returns> A new <see cref="Text.AbstractiveSummarizationOperationResult"/> instance for mocking. </returns>
-        public static AbstractiveSummarizationOperationResult AbstractiveSummarizationOperationResult(DateTimeOffset lastUpdateDateTime = default, TextActionState status = default, string taskName = default, AbstractiveSummarizationResult results = default)
+        public static AbstractiveSummarizationOperationResult AbstractiveSummarizationOperationResult(DateTimeOffset lastUpdateOn = default, TextActionState status = default, string taskName = default, AbstractiveSummarizationResult results = default)
         {
             return new AbstractiveSummarizationOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 taskName,
                 AnalyzeTextOperationResultsKind.AbstractiveSummarizationOperationResults,

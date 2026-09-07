@@ -116,13 +116,13 @@ public class BasicMonitorTests
               properties: {
                 emailReceivers: [
                   {
-                    name: emailName
                     emailAddress: emailAddress
+                    name: emailName
                     useCommonAlertSchema: true
                   }
                 ]
-                groupShortName: 'string'
                 enabled: true
+                groupShortName: 'string'
               }
             }
 
@@ -140,8 +140,8 @@ public class BasicMonitorTests
                 condition: {
                   allOf: [
                     {
-                      field: 'category'
                       equals: 'ResourceHealth'
+                      field: 'category'
                     }
                   ]
                 }

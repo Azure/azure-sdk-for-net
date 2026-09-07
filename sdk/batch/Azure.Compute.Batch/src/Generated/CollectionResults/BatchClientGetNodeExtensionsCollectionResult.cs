@@ -20,7 +20,7 @@ namespace Azure.Compute.Batch
         private readonly string _poolId;
         private readonly string _nodeId;
         private readonly TimeSpan? _timeout;
-        private readonly DateTimeOffset? _requestDate;
+        private readonly DateTimeOffset? _requestOn;
         private readonly int? _maxResults;
         private readonly IEnumerable<string> _select;
         private readonly RequestContext _context;
@@ -31,7 +31,7 @@ namespace Azure.Compute.Batch
         /// <param name="poolId"> The ID of the Pool that contains Compute Node. </param>
         /// <param name="nodeId"> The ID of the Compute Node that you want to list extensions. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -43,13 +43,13 @@ namespace Azure.Compute.Batch
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BatchClientGetNodeExtensionsCollectionResult(BatchClient client, string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, IEnumerable<string> @select, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BatchClientGetNodeExtensionsCollectionResult(BatchClient client, string poolId, string nodeId, TimeSpan? timeout, DateTimeOffset? requestOn, int? maxResults, IEnumerable<string> @select, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _poolId = poolId;
             _nodeId = nodeId;
             _timeout = timeout;
-            _requestDate = requestDate;
+            _requestOn = requestOn;
             _maxResults = maxResults;
             _select = @select;
             _context = context;
@@ -90,7 +90,7 @@ namespace Azure.Compute.Batch
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetNodeExtensionsRequest(nextLink, _poolId, _nodeId, _timeout, _requestDate, _maxResults, _select, _context) : _client.CreateGetNodeExtensionsRequest(_poolId, _nodeId, _timeout, _requestDate, _maxResults, _select, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetNodeExtensionsRequest(nextLink, _poolId, _nodeId, _timeout, _requestOn, _maxResults, _select, _context) : _client.CreateGetNodeExtensionsRequest(_poolId, _nodeId, _timeout, _requestOn, _maxResults, _select, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

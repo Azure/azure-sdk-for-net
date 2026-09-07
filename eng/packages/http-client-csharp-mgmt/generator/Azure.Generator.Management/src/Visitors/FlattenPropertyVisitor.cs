@@ -116,6 +116,14 @@ namespace Azure.Generator.Management.Visitors
                 a.Type is { IsFrameworkType: true } && a.Type.FrameworkType == typeof(System.ObsoleteAttribute));
         }
 
+        private static bool IsFlattenableProperty(PropertyProvider property)
+        {
+            // Infrastructure-only properties such as Patch have no wire representation and must not be flattened.
+            return property.Modifiers.HasFlag(MethodSignatureModifiers.Public)
+                && property.WireInfo is not null
+                && !IsObsoleteProperty(property);
+        }
+
         private bool TryGetFlattenPropertyInfo(CSharpType returnType, [NotNullWhen(true)] out Dictionary<string, List<FlattenPropertyInfo>>? propertyNameMap)
         {
             Dictionary<string, List<FlattenPropertyInfo>>? mergedPropertyNameMap = null;
@@ -560,8 +568,15 @@ namespace Azure.Generator.Management.Visitors
                 // safe flatten single property
                 else
                 {
+                    // A wrapper property that was public in the GA contract must remain public. Safe flattening
+                    // would internalize it and replace it with its child, changing the shipped API shape.
+                    if (ShouldPreserveLastContractProperty(model, internalProperty))
+                    {
+                        continue;
+                    }
+
                     // only safe flatten single public property (excluding obsolete ones)
-                    var publicPropertyCount = innerProperties.Count(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public) && !IsObsoleteProperty(p));
+                    var publicPropertyCount = innerProperties.Count(IsFlattenableProperty);
                     if (publicPropertyCount != 1)
                     {
                         continue;
@@ -614,19 +629,19 @@ namespace Azure.Generator.Management.Visitors
         {
             foreach (var innerProperty in innerProperties)
             {
-                if (!innerProperty.Modifiers.HasFlag(MethodSignatureModifiers.Public))
-                {
-                    continue;
-                }
-                // skip properties marked [Obsolete] in custom code to avoid CS0618
-                if (IsObsoleteProperty(innerProperty))
+                if (!IsFlattenableProperty(innerProperty))
                 {
                     continue;
                 }
                 UpdateFlattenTypeCollectionProperty(internalProperty, innerProperty, model);
                 // flatten the property to public and associate it with the internal property
                 var (_, includeGetterNullCheck, _) = PropertyHelpers.GetFlags(internalProperty, innerProperty);
-                var flattenPropertyName = innerProperty.Name; // TODO: handle name conflicts
+                var flattenPropertyName = ResolveFlattenedDateTimePropertyName(
+                    model,
+                    innerProperty,
+                    innerProperty.Name,
+                    propertyMap,
+                    static historicalName => historicalName); // TODO: handle name conflicts
 
                 // The flattened public property is nullable iff the wrapping parent may be
                 // absent at runtime (see ShouldLiftToNullable). This applies symmetrically
@@ -656,6 +671,7 @@ namespace Azure.Generator.Management.Visitors
                         innerProperty.IsRef,
                         FilterAttributesForFlatten(innerProperty.Attributes),
                         isLiftedToNullable: shouldLiftToNullable);
+                ManagementClientGenerator.Instance.DateTimePropertyMatcher.RegisterDerivedProperty(flattenedProperty, innerProperty);
 
                 // Keep the public constructor parameter type as the original non-nullable
                 // inner type. Required leaves must be provided by the caller; lifting the
@@ -700,14 +716,19 @@ namespace Azure.Generator.Management.Visitors
         private bool SafeFlatten(ModelProvider model, IReadOnlyList<PropertyProvider> innerProperties, Dictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap, PropertyProvider internalProperty, ModelProvider modelProvider)
         {
             bool isFlattened;
-            // Get the single public non-obsolete property from innerProperties
-            var innerProperty = innerProperties.Single(p => p.Modifiers.HasFlag(MethodSignatureModifiers.Public) && !IsObsoleteProperty(p));
+            // Get the single public wire property from innerProperties.
+            var innerProperty = innerProperties.Single(IsFlattenableProperty);
             isFlattened = true;
 
             UpdateFlattenTypeCollectionProperty(internalProperty, innerProperty, model);
             // flatten the single property to public and associate it with the internal property
             var (isFlattenedPropertyReadOnly, includeGetterNullCheck, includeSetterNullCheck) = PropertyHelpers.GetFlags(internalProperty, innerProperty);
-            var flattenPropertyName = PropertyHelpers.GetCombinedPropertyName(innerProperty, internalProperty); // TODO: handle name conflicts
+            var flattenPropertyName = ResolveFlattenedDateTimePropertyName(
+                model,
+                innerProperty,
+                PropertyHelpers.GetCombinedPropertyName(innerProperty, internalProperty),
+                propertyMap,
+                historicalName => PropertyHelpers.GetCombinedPropertyName(innerProperty, internalProperty, historicalName)); // TODO: handle name conflicts
 
             // The flattened property is nullable iff the wrapping parent may be absent
             // at runtime. Symmetric with PropertyFlatten — see ShouldLiftToNullable.
@@ -737,6 +758,7 @@ namespace Azure.Generator.Management.Visitors
                     innerProperty.IsRef,
                     FilterAttributesForFlatten(innerProperty.Attributes),
                     isLiftedToNullable: shouldLiftToNullable);
+            ManagementClientGenerator.Instance.DateTimePropertyMatcher.RegisterDerivedProperty(flattenedProperty, innerProperty);
 
             // make the internalized properties internal
             internalProperty.Update(modifiers: internalProperty.Modifiers & ~MethodSignatureModifiers.Public | MethodSignatureModifiers.Internal);
@@ -751,9 +773,58 @@ namespace Azure.Generator.Management.Visitors
             return isFlattened;
         }
 
+        private static bool ShouldPreserveLastContractProperty(ModelProvider model, PropertyProvider property)
+        {
+            return model.LastContractView?.Properties.Any(p =>
+                IsPublicApi(p.Modifiers) &&
+                p.Name == property.Name &&
+                p.Type.WithNullable(false).Equals(property.Type.WithNullable(false))) == true;
+        }
+
         private static bool ShouldPreserveLastContractSetter(ModelProvider model, string propertyName)
         {
             return model.LastContractView?.Properties.Any(p => p.Name == propertyName && p.Body.HasSetter) == true;
+        }
+
+        private static bool IsPublicApi(MethodSignatureModifiers modifiers)
+            => (modifiers.HasFlag(MethodSignatureModifiers.Public) || modifiers.HasFlag(MethodSignatureModifiers.Protected)) &&
+                !modifiers.HasFlag(MethodSignatureModifiers.Private);
+
+        private static string ResolveFlattenedDateTimePropertyName(
+            ModelProvider model,
+            PropertyProvider innerProperty,
+            string currentName,
+            IReadOnlyDictionary<PropertyProvider, List<FlattenPropertyInfo>> propertyMap,
+            Func<string, string> buildHistoricalFlattenedName)
+        {
+            var lastContractProperties = model.LastContractView?.Properties;
+            if (lastContractProperties is null ||
+                lastContractProperties.Any(p =>
+                    p.Name == currentName &&
+                    p.Type.WithNullable(false).Equals(innerProperty.Type.WithNullable(false))))
+            {
+                return currentName;
+            }
+
+            var matcher = ManagementClientGenerator.Instance.DateTimePropertyMatcher;
+            if (!matcher.TryGetPreviousMpgDateTimePropertyName(innerProperty, out var historicalInnerName))
+            {
+                return currentName;
+            }
+
+            var historicalName = buildHistoricalFlattenedName(historicalInnerName);
+            var previousProperty = lastContractProperties.FirstOrDefault(p =>
+                p.Name == historicalName &&
+                p.Type.WithNullable(false).Equals(innerProperty.Type.WithNullable(false)));
+            if (previousProperty is null ||
+                model.Properties.Any(p => p.Name == historicalName) ||
+                model.CustomCodeView?.Properties.Any(p => p.Name == historicalName) == true ||
+                propertyMap.Values.SelectMany(v => v).Any(info => info.FlattenedProperty.Name == historicalName))
+            {
+                return currentName;
+            }
+
+            return previousProperty.Name;
         }
 
         private bool IsFlattenedIntoParentWithLastContractSetter(ModelProvider model, string propertyName)

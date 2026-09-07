@@ -62,7 +62,7 @@ namespace Azure.Provisioning.Enclave
         {
             get
             {
-                return ManagedOnBehalfOfConfiguration.MoboBrokerResources;
+                return ManagedOnBehalfOfConfiguration is null ? default : ManagedOnBehalfOfConfiguration.MoboBrokerResources;
             }
         }
 

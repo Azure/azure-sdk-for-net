@@ -11,7 +11,7 @@ The `Microsoft.Azure.PostgreSQL.Auth` library provides Entra ID (formerly Azure 
 Install the client library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
-dotnet add package Microsoft.Azure.PostgreSQL.Auth --prerelease
+dotnet add package Microsoft.Azure.PostgreSQL.Auth
 ```
 
 ### Prerequisites

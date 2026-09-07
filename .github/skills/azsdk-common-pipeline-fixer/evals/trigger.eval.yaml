@@ -8,14 +8,14 @@ tags:
   area: azsdk-common-pipeline-fixer
   type: ci-gate
 
-config:
+defaults:
   runs: 1
   # Stimuli with a resolvable build reference (URL or build ID) make the agent
-  # run the full analyze→fix→verify workflow (~90-180s under claude-opus-4.6),
+  # run the full analyze→fix→verify workflow (~90-180s under gpt-5.4),
   # so the per-stimulus cap matches the Vally scenario evals (5m). Non-build-ref
   # routing prompts still complete in ~10-20s.
   timeout: "5m"
-  model: claude-opus-4.6
+  model: gpt-5.4
   executor: copilot-sdk
 
 scoring:

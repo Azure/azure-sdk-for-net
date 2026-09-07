@@ -24,18 +24,18 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BmcKeySetPatchProperties"/>. </summary>
-        /// <param name="expireOn"> The date and time after which the users in this key set will be removed from the baseboard management controllers. </param>
+        /// <param name="expiresOn"> The date and time after which the users in this key set will be removed from the baseboard management controllers. </param>
         /// <param name="userList"> The unique list of permitted users. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BmcKeySetPatchProperties(DateTimeOffset? expireOn, IList<KeySetUser> userList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BmcKeySetPatchProperties(DateTimeOffset? expiresOn, IList<KeySetUser> userList, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             UserList = userList;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The date and time after which the users in this key set will be removed from the baseboard management controllers. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
 
         /// <summary> The unique list of permitted users. </summary>
         public IList<KeySetUser> UserList { get; } = new ChangeTrackingList<KeySetUser>();

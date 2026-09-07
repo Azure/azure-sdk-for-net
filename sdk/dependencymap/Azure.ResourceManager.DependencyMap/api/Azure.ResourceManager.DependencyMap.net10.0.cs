@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.DependencyMap.Models
     public static partial class ArmDependencyMapModelFactory
     {
         public static Azure.ResourceManager.DependencyMap.DependencyMapData DependencyMapData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DependencyMap.Models.DependencyMapProvisioningState? dependencyMapProvisioningState = default(Azure.ResourceManager.DependencyMap.Models.DependencyMapProvisioningState?)) { throw null; }
-        public static Azure.ResourceManager.DependencyMap.Models.DependencyMapDateTimeFilter DependencyMapDateTimeFilter(System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.DependencyMap.Models.DependencyMapDateTimeFilter DependencyMapDateTimeFilter(System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.DependencyMap.DependencyMapDiscoverySourceData DependencyMapDiscoverySourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.DependencyMap.Models.DependencyMapDiscoverySourceProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DependencyMap.Models.DependencyMapDiscoverySourcePatch DependencyMapDiscoverySourcePatch(System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.DependencyMap.Models.DependencyMapDiscoverySourceProperties DependencyMapDiscoverySourceProperties(Azure.ResourceManager.DependencyMap.Models.DependencyMapProvisioningState? provisioningState = default(Azure.ResourceManager.DependencyMap.Models.DependencyMapProvisioningState?), string sourceType = null, Azure.Core.ResourceIdentifier sourceId = null) { throw null; }
@@ -177,20 +177,20 @@ namespace Azure.ResourceManager.DependencyMap.Models
         public static Azure.ResourceManager.DependencyMap.Models.DependencyMapProcessNameFilter DependencyMapProcessNameFilter(Azure.ResourceManager.DependencyMap.Models.DependencyMapProcessNameFilterOperator @operator = default(Azure.ResourceManager.DependencyMap.Models.DependencyMapProcessNameFilterOperator), System.Collections.Generic.IEnumerable<string> processNames = null) { throw null; }
         public static Azure.ResourceManager.DependencyMap.Models.DependencyMapVisualizationFilter DependencyMapVisualizationFilter(Azure.ResourceManager.DependencyMap.Models.DependencyMapDateTimeFilter dateTime = null, Azure.ResourceManager.DependencyMap.Models.DependencyMapProcessNameFilter processNameFilter = null) { throw null; }
         public static Azure.ResourceManager.DependencyMap.Models.ExportDependenciesContent ExportDependenciesContent(Azure.Core.ResourceIdentifier focusedMachineId = null, Azure.ResourceManager.DependencyMap.Models.DependencyMapVisualizationFilter filters = null, System.Collections.Generic.IEnumerable<string> applianceNameList = null) { throw null; }
-        public static Azure.ResourceManager.DependencyMap.Models.ExportDependenciesOperationResult ExportDependenciesOperationResult(string id = null, string name = null, string status = null, Azure.ResponseError error = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), Azure.ResourceManager.DependencyMap.Models.ExportDependenciesResultProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.DependencyMap.Models.ExportDependenciesOperationResult ExportDependenciesOperationResult(string id = null, string name = null, string status = null, Azure.ResponseError error = null, System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), Azure.ResourceManager.DependencyMap.Models.ExportDependenciesResultProperties properties = null) { throw null; }
         public static Azure.ResourceManager.DependencyMap.Models.ExportDependenciesResultProperties ExportDependenciesResultProperties(string exportedDataSasUri = null, Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode? statusCode = default(Azure.ResourceManager.DependencyMap.Models.ExportDependenciesStatusCode?), int? additionalInfoAvailableDaysCount = default(int?)) { throw null; }
         public static Azure.ResourceManager.DependencyMap.Models.GetConnectionsForProcessOnFocusedMachineContent GetConnectionsForProcessOnFocusedMachineContent(Azure.Core.ResourceIdentifier focusedMachineId = null, string processIdOnFocusedMachine = null, Azure.ResourceManager.DependencyMap.Models.DependencyMapVisualizationFilter filters = null) { throw null; }
         public static Azure.ResourceManager.DependencyMap.Models.GetConnectionsWithConnectedMachineForFocusedMachineContent GetConnectionsWithConnectedMachineForFocusedMachineContent(Azure.Core.ResourceIdentifier focusedMachineId = null, Azure.Core.ResourceIdentifier connectedMachineId = null, Azure.ResourceManager.DependencyMap.Models.DependencyMapVisualizationFilter filters = null) { throw null; }
         public static Azure.ResourceManager.DependencyMap.Models.GetDependencyViewForAllMachinesContent GetDependencyViewForAllMachinesContent(Azure.ResourceManager.DependencyMap.Models.DependencyMapProcessNameFilter processNameFilter = null) { throw null; }
-        public static Azure.ResourceManager.DependencyMap.Models.GetDependencyViewForAllMachinesOperationResult GetDependencyViewForAllMachinesOperationResult(string id = null, string name = null, string status = null, Azure.ResponseError error = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string getDependencyViewForAllMachinesResultLayoutFileSasUri = null) { throw null; }
+        public static Azure.ResourceManager.DependencyMap.Models.GetDependencyViewForAllMachinesOperationResult GetDependencyViewForAllMachinesOperationResult(string id = null, string name = null, string status = null, Azure.ResponseError error = null, System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), string getDependencyViewForAllMachinesResultLayoutFileSasUri = null) { throw null; }
         public static Azure.ResourceManager.DependencyMap.Models.GetDependencyViewForFocusedMachineContent GetDependencyViewForFocusedMachineContent(Azure.Core.ResourceIdentifier focusedMachineId = null, Azure.ResourceManager.DependencyMap.Models.DependencyMapVisualizationFilter filters = null) { throw null; }
         public static Azure.ResourceManager.DependencyMap.Models.OffAzureDiscoverySourceProperties OffAzureDiscoverySourceProperties(Azure.ResourceManager.DependencyMap.Models.DependencyMapProvisioningState? provisioningState = default(Azure.ResourceManager.DependencyMap.Models.DependencyMapProvisioningState?), Azure.Core.ResourceIdentifier sourceId = null) { throw null; }
     }
     public partial class DependencyMapDateTimeFilter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DependencyMap.Models.DependencyMapDateTimeFilter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DependencyMap.Models.DependencyMapDateTimeFilter>
     {
         public DependencyMapDateTimeFilter() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
-        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } set { } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.DependencyMap.Models.DependencyMapDateTimeFilter JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.ResourceManager.DependencyMap.Models.DependencyMapDateTimeFilter PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -332,12 +332,12 @@ namespace Azure.ResourceManager.DependencyMap.Models
     public partial class ExportDependenciesOperationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DependencyMap.Models.ExportDependenciesOperationResult>
     {
         internal ExportDependenciesOperationResult() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
         public Azure.ResourceManager.DependencyMap.Models.ExportDependenciesResultProperties Properties { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } }
         public string Status { get { throw null; } }
         protected virtual Azure.ResourceManager.DependencyMap.Models.ExportDependenciesOperationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -432,12 +432,12 @@ namespace Azure.ResourceManager.DependencyMap.Models
     public partial class GetDependencyViewForAllMachinesOperationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.DependencyMap.Models.GetDependencyViewForAllMachinesOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.DependencyMap.Models.GetDependencyViewForAllMachinesOperationResult>
     {
         internal GetDependencyViewForAllMachinesOperationResult() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
         public string GetDependencyViewForAllMachinesResultLayoutFileSasUri { get { throw null; } }
         public string Id { get { throw null; } }
         public string Name { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } }
         public string Status { get { throw null; } }
         protected virtual Azure.ResourceManager.DependencyMap.Models.GetDependencyViewForAllMachinesOperationResult JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

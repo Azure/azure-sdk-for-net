@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 using Microsoft.TypeSpec.Generator.Input;
-using Microsoft.TypeSpec.Generator.Providers;
+using Microsoft.TypeSpec.Generator.ClientModel.Providers;
 using System;
 using System.IO;
 
@@ -23,7 +23,7 @@ namespace Azure.Generator.Management.Providers
     /// <c>CSharpType._baseType</c>, and no subsequent visitor-driven rename can rewrite it.
     /// </para>
     /// </remarks>
-    internal class ResourceDataModelProvider : ModelProvider
+    internal class ResourceDataModelProvider : ScmModelProvider
     {
         public ResourceDataModelProvider(InputModelType inputModel)
             : base(inputModel)

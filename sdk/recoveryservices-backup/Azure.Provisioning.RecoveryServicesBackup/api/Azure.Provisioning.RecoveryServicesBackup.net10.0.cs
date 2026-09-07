@@ -131,10 +131,10 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         public BackupGenericJob() { }
         public Azure.Provisioning.BicepValue<string> ActivityId { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.RecoveryServicesBackup.BackupManagementType> BackupManagementType { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> EntityFriendlyName { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Operation { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Status { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -198,7 +198,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         public BackupHourlySchedule() { }
         public Azure.Provisioning.BicepValue<int> Interval { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> ScheduleWindowDuration { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ScheduleWindowStartOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ScheduleWindowStartsOn { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum BackupItemType
@@ -688,8 +688,8 @@ namespace Azure.Provisioning.RecoveryServicesBackup
     {
         public DpmBackupJobTaskDetails() { }
         public Azure.Provisioning.BicepValue<System.TimeSpan> Duration { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Status { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> TaskId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -889,10 +889,10 @@ namespace Azure.Provisioning.RecoveryServicesBackup
     {
         public IaasVmBackupJobTaskDetails() { }
         public Azure.Provisioning.BicepValue<System.TimeSpan> Duration { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> InstanceId { get { throw null; } }
         public Azure.Provisioning.BicepValue<double> ProgressPercentage { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Status { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> TaskExecutionDetails { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> TaskId { get { throw null; } }
@@ -1127,8 +1127,8 @@ namespace Azure.Provisioning.RecoveryServicesBackup
     {
         public MabBackupJobTaskDetails() { }
         public Azure.Provisioning.BicepValue<System.TimeSpan> Duration { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Status { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> TaskId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -1235,8 +1235,8 @@ namespace Azure.Provisioning.RecoveryServicesBackup
     public partial class PointInTimeRange : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public PointInTimeRange() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> EndsOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum PrivateEndpointConnectionStatus

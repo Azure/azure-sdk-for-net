@@ -8,10 +8,10 @@ tags:
   area: azsdk-common-prepare-release-plan
   type: ci-gate
 
-config:
+defaults:
   runs: 1
   timeout: "90s"
-  model: claude-opus-4.6
+  model: gpt-5.4
   executor: copilot-sdk
 
 scoring:
