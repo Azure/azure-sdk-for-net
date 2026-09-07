@@ -115,5 +115,32 @@ namespace Azure.ResourceManager.Consumption.Models
                 return ReserRecomDetailsProperties is null ? default : ReserRecomDetailsProperties.Usage;
             }
         }
+
+        /// <summary> Management group id associated with management group scoped recommendation. </summary>
+        public ResourceIdentifier ManagementGroupId
+        {
+            get
+            {
+                return ReserRecomDetailsProperties is null ? default : ReserRecomDetailsProperties.ManagementGroupId;
+            }
+        }
+
+        /// <summary> The tenant ID associated with the management group. Populated only when managementGroupId is populated. </summary>
+        public string TenantId
+        {
+            get
+            {
+                return ReserRecomDetailsProperties is null ? default : ReserRecomDetailsProperties.TenantId;
+            }
+        }
+
+        /// <summary> Total projected retail usage in commitment units (CUs). </summary>
+        public float? TotalRetailUsageInCUs
+        {
+            get
+            {
+                return ReserRecomDetailsProperties is null ? default : ReserRecomDetailsProperties.TotalRetailUsageInCUs;
+            }
+        }
     }
 }

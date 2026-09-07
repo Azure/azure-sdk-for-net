@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.Consumption
         {
             TryGetApiVersion(ResourceType, out string consumptionCreditSummaryApiVersion);
             _creditsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Consumption", ResourceType.Namespace, Diagnostics);
-            _creditsRestClient = new Credits(_creditsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, consumptionCreditSummaryApiVersion ?? "2024-08-01");
+            _creditsRestClient = new Credits(_creditsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, consumptionCreditSummaryApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Consumption
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

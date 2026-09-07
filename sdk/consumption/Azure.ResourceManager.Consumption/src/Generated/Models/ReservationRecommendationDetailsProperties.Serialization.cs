@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.Consumption;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -104,6 +105,21 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("usage"u8);
                 writer.WriteObjectValue(Usage, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(ManagementGroupId))
+            {
+                writer.WritePropertyName("managementGroupId"u8);
+                writer.WriteStringValue(ManagementGroupId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
+            {
+                writer.WritePropertyName("tenantId"u8);
+                writer.WriteStringValue(TenantId);
+            }
+            if (options.Format != "W" && Optional.IsDefined(ProjectedUsage))
+            {
+                writer.WritePropertyName("projectedUsage"u8);
+                writer.WriteObjectValue(ProjectedUsage, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -152,6 +168,9 @@ namespace Azure.ResourceManager.Consumption.Models
             ConsumptionSavingsProperties savings = default;
             string scope = default;
             ConsumptionUsageProperties usage = default;
+            ResourceIdentifier managementGroupId = default;
+            string tenantId = default;
+            ReservationRecommendationDetailsProjectedUsageProperties projectedUsage = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -197,6 +216,29 @@ namespace Azure.ResourceManager.Consumption.Models
                     usage = ConsumptionUsageProperties.DeserializeConsumptionUsageProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("managementGroupId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    managementGroupId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("tenantId"u8))
+                {
+                    tenantId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("projectedUsage"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    projectedUsage = ReservationRecommendationDetailsProjectedUsageProperties.DeserializeReservationRecommendationDetailsProjectedUsageProperties(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -209,6 +251,9 @@ namespace Azure.ResourceManager.Consumption.Models
                 savings,
                 scope,
                 usage,
+                managementGroupId,
+                tenantId,
+                projectedUsage,
                 additionalBinaryDataProperties);
         }
     }

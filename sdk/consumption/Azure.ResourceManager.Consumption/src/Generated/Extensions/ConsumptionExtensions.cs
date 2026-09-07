@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.Consumption
         /// Details of a reservation recommendation for what-if analysis of reserved instances.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionReservationRecommendationDetailsAsync(ResourceIdentifier, ConsumptionReservationRecommendationScope, string, ConsumptionReservationRecommendationTerm, ConsumptionReservationRecommendationLookBackPeriod, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionReservationRecommendationDetailsAsync(ResourceIdentifier, ConsumptionReservationRecommendationScope, string, ConsumptionReservationRecommendationTerm, ConsumptionReservationRecommendationLookBackPeriod, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -806,20 +806,21 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="lookBackPeriod"> Filter the time period on which reservation recommendation results are based. </param>
         /// <param name="product"> Filter the products for which reservation recommendation results are generated. Examples: Standard_DS1_v2 (for VM), Premium_SSD_Managed_Disks_P30 (for Managed Disks). </param>
         /// <param name="filter"> Used to filter reservation recommendation details by: properties/subscriptionId can be specified for billing account and billing profile paths. </param>
+        /// <param name="managementGroupId"> Specify the management group ID. Required when recommendation scope is 'ManagementGroup'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static async Task<Response<ConsumptionReservationRecommendationDetails>> GetConsumptionReservationRecommendationDetailsAsync(this ArmClient client, ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = default, CancellationToken cancellationToken = default)
+        public static async Task<Response<ConsumptionReservationRecommendationDetails>> GetConsumptionReservationRecommendationDetailsAsync(this ArmClient client, ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = default, string managementGroupId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return await GetMockableConsumptionArmClient(client).GetConsumptionReservationRecommendationDetailsAsync(scope, reservationScope, region, term, lookBackPeriod, product, filter, cancellationToken).ConfigureAwait(false);
+            return await GetMockableConsumptionArmClient(client).GetConsumptionReservationRecommendationDetailsAsync(scope, reservationScope, region, term, lookBackPeriod, product, filter, managementGroupId, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
         /// Details of a reservation recommendation for what-if analysis of reserved instances.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionReservationRecommendationDetails(ResourceIdentifier, ConsumptionReservationRecommendationScope, string, ConsumptionReservationRecommendationTerm, ConsumptionReservationRecommendationLookBackPeriod, string, string, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableConsumptionArmClient.GetConsumptionReservationRecommendationDetails(ResourceIdentifier, ConsumptionReservationRecommendationScope, string, ConsumptionReservationRecommendationTerm, ConsumptionReservationRecommendationLookBackPeriod, string, string, string, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
@@ -830,13 +831,14 @@ namespace Azure.ResourceManager.Consumption
         /// <param name="lookBackPeriod"> Filter the time period on which reservation recommendation results are based. </param>
         /// <param name="product"> Filter the products for which reservation recommendation results are generated. Examples: Standard_DS1_v2 (for VM), Premium_SSD_Managed_Disks_P30 (for Managed Disks). </param>
         /// <param name="filter"> Used to filter reservation recommendation details by: properties/subscriptionId can be specified for billing account and billing profile paths. </param>
+        /// <param name="managementGroupId"> Specify the management group ID. Required when recommendation scope is 'ManagementGroup'. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        public static Response<ConsumptionReservationRecommendationDetails> GetConsumptionReservationRecommendationDetails(this ArmClient client, ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = default, CancellationToken cancellationToken = default)
+        public static Response<ConsumptionReservationRecommendationDetails> GetConsumptionReservationRecommendationDetails(this ArmClient client, ResourceIdentifier scope, ConsumptionReservationRecommendationScope reservationScope, string region, ConsumptionReservationRecommendationTerm term, ConsumptionReservationRecommendationLookBackPeriod lookBackPeriod, string product, string filter = default, string managementGroupId = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableConsumptionArmClient(client).GetConsumptionReservationRecommendationDetails(scope, reservationScope, region, term, lookBackPeriod, product, filter, cancellationToken);
+            return GetMockableConsumptionArmClient(client).GetConsumptionReservationRecommendationDetails(scope, reservationScope, region, term, lookBackPeriod, product, filter, managementGroupId, cancellationToken);
         }
 
         /// <summary>

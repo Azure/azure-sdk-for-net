@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.Consumption.Models
 {
@@ -28,8 +29,11 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="savings"> Savings information for the recommendation. </param>
         /// <param name="scope"> Scope of the reservation, ex: Single or Shared. </param>
         /// <param name="usage"> Historical usage details used to calculate the estimated savings. </param>
+        /// <param name="managementGroupId"> Management group id associated with management group scoped recommendation. </param>
+        /// <param name="tenantId"> The tenant ID associated with the management group. Populated only when managementGroupId is populated. </param>
+        /// <param name="projectedUsage"> Projected usage details used for generating the recommendation. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ReservationRecommendationDetailsProperties(string currency, ConsumptionResourceProperties properties, string resourceGroup, ConsumptionSavingsProperties savings, string scope, ConsumptionUsageProperties usage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ReservationRecommendationDetailsProperties(string currency, ConsumptionResourceProperties properties, string resourceGroup, ConsumptionSavingsProperties savings, string scope, ConsumptionUsageProperties usage, ResourceIdentifier managementGroupId, string tenantId, ReservationRecommendationDetailsProjectedUsageProperties projectedUsage, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Currency = currency;
             Properties = properties;
@@ -37,6 +41,9 @@ namespace Azure.ResourceManager.Consumption.Models
             Savings = savings;
             Scope = scope;
             Usage = usage;
+            ManagementGroupId = managementGroupId;
+            TenantId = tenantId;
+            ProjectedUsage = projectedUsage;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,5 +64,23 @@ namespace Azure.ResourceManager.Consumption.Models
 
         /// <summary> Historical usage details used to calculate the estimated savings. </summary>
         public ConsumptionUsageProperties Usage { get; }
+
+        /// <summary> Management group id associated with management group scoped recommendation. </summary>
+        public ResourceIdentifier ManagementGroupId { get; }
+
+        /// <summary> The tenant ID associated with the management group. Populated only when managementGroupId is populated. </summary>
+        public string TenantId { get; }
+
+        /// <summary> Projected usage details used for generating the recommendation. </summary>
+        internal ReservationRecommendationDetailsProjectedUsageProperties ProjectedUsage { get; }
+
+        /// <summary> Total projected retail usage in commitment units (CUs). </summary>
+        public float? TotalRetailUsageInCUs
+        {
+            get
+            {
+                return ProjectedUsage is null ? default : ProjectedUsage.TotalRetailUsageInCUs;
+            }
+        }
     }
 }

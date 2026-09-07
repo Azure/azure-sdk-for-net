@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
 
         private ClientDiagnostics AggregatedCostClientDiagnostics => _aggregatedCostClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Consumption.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private AggregatedCost AggregatedCostRestClient => _aggregatedCostRestClient ??= new AggregatedCost(AggregatedCostClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2024-08-01");
+        private AggregatedCost AggregatedCostRestClient => _aggregatedCostRestClient ??= new AggregatedCost(AggregatedCostClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-06-01");
 
         /// <summary>
         /// Provides the aggregate cost of a management group and all child management groups by current billing period.
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Consumption.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2024-08-01. </description>
+        /// <description> 2026-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
