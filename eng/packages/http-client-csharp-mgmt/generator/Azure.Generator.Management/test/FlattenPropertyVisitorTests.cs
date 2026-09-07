@@ -1436,6 +1436,57 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void TestModelFactoryDirectParameterMatchingToleratesDuplicateSemanticParameters()
+        {
+            var annotationProperty = InputFactory.Property(
+                "annotation",
+                InputPrimitiveType.String,
+                serializedName: "annotation");
+            var labelProperty = InputFactory.Property(
+                "label",
+                InputPrimitiveType.String,
+                serializedName: "label");
+            var propertiesModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [annotationProperty, labelProperty]);
+            var propertiesProperty = InputFactory.Property(
+                "properties",
+                propertiesModel,
+                serializedName: "properties");
+            ApplyFlattenDecorator(propertiesProperty);
+            var parentModel = InputFactory.Model(
+                "TestResource",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [propertiesProperty]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(
+                inputModels: () => [parentModel, propertiesModel]);
+            var parentProvider = plugin.Object.TypeFactory.CreateModel(parentModel)!;
+            var propertiesProvider = plugin.Object.TypeFactory.CreateModel(propertiesModel)!;
+            propertiesProvider.Properties.Single(property => property.Name == "Label").Update(
+                modifiers: MethodSignatureModifiers.Internal);
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var originalFactoryMethod = modelFactory.Methods.Single(method => method.Signature.ReturnType == parentProvider.Type);
+            originalFactoryMethod.Signature.Update(parameters:
+                [
+                    .. originalFactoryMethod.Signature.Parameters,
+                    new ParameterProvider("label", $"", typeof(string), Default),
+                    new ParameterProvider("label", $"", typeof(string), Default)
+                ]);
+
+            var visitTypeCore = typeof(LibraryVisitor).GetMethod(
+                "VisitTypeCore",
+                BindingFlags.NonPublic | BindingFlags.Instance)!;
+            var flattenVisitor = new FlattenPropertyVisitor();
+            visitTypeCore.Invoke(flattenVisitor, [parentProvider]);
+
+            Assert.DoesNotThrow(() => visitTypeCore.Invoke(flattenVisitor, [modelFactory]));
+            var factoryMethod = modelFactory.Methods.Single(method => method.Signature.ReturnType == parentProvider.Type);
+            Assert.That(factoryMethod.BodyStatements!.ToDisplayString(), Does.Contain("new global::Samples.Models.TestProperties(annotation, label, null)"));
+        }
+
+        [Test]
         public void TestSafeFlattenCountsIndependentCustomPropertyWithoutWireInfo()
         {
             var valueProperty = InputFactory.Property("value", InputPrimitiveType.String, isRequired: true, serializedName: "value");

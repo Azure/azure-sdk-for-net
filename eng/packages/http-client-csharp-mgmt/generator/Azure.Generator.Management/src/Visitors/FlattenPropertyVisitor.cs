@@ -452,7 +452,7 @@ namespace Azure.Generator.Management.Visitors
                 }
                 else
                 {
-                    var directParameter = directParameters?.SingleOrDefault(parameter =>
+                    var directParameter = directParameters?.FirstOrDefault(parameter =>
                         !(usedDirectParameters?.Contains(parameter) ?? false)
                         && string.Equals(parameter.Name, constructorParameter.Name, StringComparison.OrdinalIgnoreCase)
                         && ModelFactoryBackwardCompatHelper.AreCompatibleParameterTypes(parameter.Type, constructorParameterType));
