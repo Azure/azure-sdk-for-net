@@ -44,7 +44,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.Snippets
                 return new TextResponse(context, request,
                     configure: response =>
                     {
-                        response.Temperature = 0.7;
+                        response.Temperature = 0.7f;
                     },
                     createTextStream: GenerateTokensAsync);
             }

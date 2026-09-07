@@ -5,16 +5,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models;
 
 /// <summary>
 /// Extension methods for <see cref="CreateResponse"/>.
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public static class CreateResponseExtensions
 {
     /// <summary>
-    /// Extracts the conversation ID from the <see cref="CreateResponse.Conversation"/> field,
+    /// Extracts the conversation ID from the <see cref="CreateResponse.ConversationOptions"/> field,
     /// which may be a plain string ID or a JSON object with an <c>id</c> property.
     /// Returns <c>null</c> if no conversation context is present.
     /// </summary>
@@ -26,35 +28,8 @@ public static class CreateResponseExtensions
     {
         Argument.AssertNotNull(request, nameof(request));
 
-        if (request.Conversation is not null)
-        {
-            try
-            {
-                using var doc = JsonDocument.Parse(request.Conversation.ToMemory());
-                var root = doc.RootElement;
-
-                if (root.ValueKind == JsonValueKind.String)
-                {
-                    var conversationId = root.GetString();
-                    if (!string.IsNullOrEmpty(conversationId))
-                        return conversationId;
-                }
-                else if (root.ValueKind == JsonValueKind.Object &&
-                         root.TryGetProperty("id", out var idProp) &&
-                         idProp.ValueKind == JsonValueKind.String)
-                {
-                    var conversationId = idProp.GetString();
-                    if (!string.IsNullOrEmpty(conversationId))
-                        return conversationId;
-                }
-            }
-            catch (JsonException)
-            {
-                // Swallow JSON parse errors — no conversation ID available
-            }
-        }
-
-        return null;
+        var conversationId = request.ConversationOptions?.ConversationId;
+        return string.IsNullOrEmpty(conversationId) ? null : conversationId;
     }
 
     /// <summary>
@@ -79,7 +54,7 @@ public static class CreateResponseExtensions
     }
 
     /// <summary>
-    /// Expands the <see cref="CreateResponse.Input"/> BinaryData into a typed list of
+    /// Expands the <see cref="CreateResponse.InputItems"/> BinaryData into a typed list of
     /// <see cref="Item"/> objects. A plain string input is wrapped as a single
     /// <see cref="ItemMessage"/> with <see cref="MessageRole.User"/> role and text content.
     /// Array elements without a <c>"type"</c> discriminator default to
@@ -97,7 +72,7 @@ public static class CreateResponseExtensions
     public static List<Item> GetInputExpanded(this CreateResponse request)
     {
         Argument.AssertNotNull(request, nameof(request));
-        return BinaryDataExpansionHelpers.ExpandInput(request.Input);
+        return BinaryDataExpansionHelpers.ExpandInput(request.InputItems);
     }
 
     /// <summary>
@@ -119,18 +94,17 @@ public static class CreateResponseExtensions
     {
         Argument.AssertNotNull(request, nameof(request));
 
-        var items = request.GetInputExpanded();
-        var texts = items
+        var texts = request.GetInputExpanded()
             .OfType<ItemMessage>()
-            .SelectMany(msg => msg.GetContentExpanded())
-            .OfType<MessageContentInputTextContent>()
-            .Select(tc => tc.Text);
+            .SelectMany(msg => msg.Content)
+            .Where(part => part.Kind == ResponseContentPartKind.InputText)
+            .Select(part => part.Text);
 
         return string.Join("\n", texts);
     }
 
     /// <summary>
-    /// Expands the <see cref="CreateResponse.Conversation"/> BinaryData into a typed
+    /// Expands the <see cref="CreateResponse.ConversationOptions"/> BinaryData into a typed
     /// <see cref="ConversationParam"/>. A plain string is treated as the conversation ID.
     /// </summary>
     /// <param name="request">The create-response request.</param>
@@ -141,7 +115,7 @@ public static class CreateResponseExtensions
     public static ConversationParam? GetConversationExpanded(this CreateResponse request)
     {
         Argument.AssertNotNull(request, nameof(request));
-        return BinaryDataExpansionHelpers.ExpandConversation(request.Conversation);
+        return BinaryDataExpansionHelpers.ExpandConversation(request.ConversationOptions);
     }
 
     /// <summary>
@@ -162,8 +136,8 @@ public static class CreateResponseExtensions
     public static BinaryData? GetInstructionsBinaryData(this CreateResponse request)
     {
         Argument.AssertNotNull(request, nameof(request));
-        return request.Instructions != null
-            ? BinaryData.FromObjectAsJson(request.Instructions)
-            : null;
+        return request.Instructions is null
+            ? null
+            : BinaryData.FromObjectAsJson(request.Instructions);
     }
 }

@@ -60,18 +60,9 @@ public class StreamingUpstreamHandler : ResponseHandler
         // contributes content.
         int seq = 0;
         var conversationId = request.GetConversationId();
-        var response = new ResponseObject(context.ResponseId, request.Model ?? "")
-        {
-            Status = Models.ResponseStatus.InProgress,
-            Metadata = request.Metadata!,
-            AgentReference = request.AgentReference,
-            Background = request.Background,
-            Conversation = conversationId != null
-                ? new ConversationReference(conversationId) : null,
-            PreviousResponseId = request.PreviousResponseId,
-        };
-        yield return new ResponseCreatedEvent(seq++, response);
-        yield return new ResponseInProgressEvent(seq++, response);
+        var response = new ResponseObject { Id = context.ResponseId, Model = request.Model ?? "", Status = ResponseStatus.InProgress,  AgentReference = request.AgentReference, BackgroundModeEnabled = request.BackgroundModeEnabled, ConversationOptions = conversationId != null ? new ConversationReference(conversationId) : null, PreviousResponseId = request.PreviousResponseId };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(seq++), Response = response };
+        yield return new ResponseInProgressEvent { SequenceNumber = (int)(seq++), Response = response };
 
         // Stream from the upstream. Translate content events (output
         // items, deltas, etc.) and yield them directly. Skip upstream
@@ -120,17 +111,16 @@ public class StreamingUpstreamHandler : ResponseHandler
         // Emit terminal event — the handler decides the outcome.
         if (upstreamFailed)
         {
-            response.Status = Models.ResponseStatus.Failed;
-            response.Error = new ResponseErrorInfo(
-                Models.ResponseErrorCode.ServerError, "Upstream request failed");
-            yield return new ResponseFailedEvent(seq++, response);
+            response.Status = ResponseStatus.Failed;
+            response.Error = OpenAIModelFactory.CreateError(ResponseErrorCode.ServerError.ToString(), "Upstream request failed");
+            yield return new ResponseFailedEvent { SequenceNumber = (int)(seq++), Response = response };
         }
         else
         {
-            response.Status = Models.ResponseStatus.Completed;
+            response.Status = ResponseStatus.Completed;
             foreach (var item in outputItems)
-                response.Output.Add(item);
-            yield return new ResponseCompletedEvent(seq++, response);
+                response.OutputItems.Add(item);
+            yield return new ResponseCompletedEvent { SequenceNumber = (int)(seq++), Response = response };
         }
     }
 }

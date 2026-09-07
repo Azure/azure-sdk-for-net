@@ -6,13 +6,20 @@
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <Nullable>annotations</Nullable>
-    <NoWarn>$(NoWarn);CS1591</NoWarn>
+    <NoWarn>$(NoWarn);CS1591;AAIP001;AAIP002;OPENAI001;OPENAICUA001;SCME0001</NoWarn>
   </PropertyGroup>
 
   <!-- Mirror the global using that NuGet consumers get via Core's build props.
        Core targets net8.0+, so the namespace doesn't exist on legacy framework targets. -->
   <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
     <Using Include="Azure.AI.AgentServer.Core" />
+  </ItemGroup>
+
+  <!-- The type aliases that map the legacy generated names onto the OpenAI models are
+       compile-time only; sharing the file keeps the tests speaking the same vocabulary
+       as the source project. -->
+  <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net8.0'))">
+    <Compile Include="..\src\Custom\OpenAITypeAliases.cs" Link="OpenAITypeAliases.cs" />
   </ItemGroup>
 
   <ItemGroup>

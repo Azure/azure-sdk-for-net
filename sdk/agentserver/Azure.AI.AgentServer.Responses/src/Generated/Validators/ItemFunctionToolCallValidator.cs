@@ -49,13 +49,6 @@ internal static partial class ItemFunctionToolCallValidator
                 errors.Add(new ValidationError("$.call_id", $"Expected string, got {callIdProp.ValueKind}"));
         }
 
-        // Optional: id
-        if (element.TryGetProperty("id", out var idProp) && idProp.ValueKind != JsonValueKind.Null)
-        {
-            if (idProp.ValueKind != JsonValueKind.String)
-                errors.Add(new ValidationError("$.id", $"Expected string, got {idProp.ValueKind}"));
-        }
-
         // Required: name
         if (!element.TryGetProperty("name", out var nameProp))
             errors.Add(new ValidationError("$.name", "Required property 'name' is missing"));

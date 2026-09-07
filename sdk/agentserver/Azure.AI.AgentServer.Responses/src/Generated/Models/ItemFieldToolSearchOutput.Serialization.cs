@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -94,8 +95,13 @@ namespace Azure.AI.AgentServer.Responses.Models
             writer.WriteStringValue(Execution.ToSerialString());
             writer.WritePropertyName("tools"u8);
             writer.WriteStartArray();
-            foreach (Tool item in Tools)
+            foreach (ResponseTool item in Tools)
             {
+                if (item == null)
+                {
+                    writer.WriteNullValue();
+                    continue;
+                }
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
@@ -138,7 +144,7 @@ namespace Azure.AI.AgentServer.Responses.Models
             string id = default;
             string callId = default;
             ToolSearchExecutionType execution = default;
-            IList<Tool> tools = default;
+            IList<ResponseTool> tools = default;
             FunctionCallOutputStatusEnum status = default;
             string createdBy = default;
             foreach (var prop in element.EnumerateObject())
@@ -170,10 +176,17 @@ namespace Azure.AI.AgentServer.Responses.Models
                 }
                 if (prop.NameEquals("tools"u8))
                 {
-                    List<Tool> array = new List<Tool>();
+                    List<ResponseTool> array = new List<ResponseTool>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(Tool.DeserializeTool(item, options));
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseTool>(item.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIAgentServerResponsesContext.Default));
+                        }
                     }
                     tools = array;
                     continue;

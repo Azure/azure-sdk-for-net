@@ -69,9 +69,9 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
         IDictionary<string, string>? queryParameters = null)
     {
         var provider = new FileResponsesProvider(ResponsesDir);
-        var envelope = new ResponseObject(responseId, "test-model") { Status = ResponseStatus.InProgress };
-        envelope.Background = true;
-        await provider.CreateResponseAsync(new CreateResponseRequest(envelope, null, null), PlatformContext.Empty);
+        var envelope = new ResponseObject { Id = responseId, Model = "test-model", Status = ResponseStatus.InProgress };
+        envelope.BackgroundModeEnabled = true;
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(envelope, null, null), PlatformContext.Empty);
 
         var query = new Dictionary<string, string>(StringComparer.Ordinal);
         if (queryParameters is not null)
@@ -94,7 +94,7 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
         await SeedInterruptedTaskAsync(new ResponseRecoveryPayload(
             responseId: responseId,
             disposition: disposition,
-            request: new CreateResponse { Model = "test-model", Background = true, Store = true, Stream = stream },
+            request: new CreateResponse { Model = "test-model", BackgroundModeEnabled = true, StoredOutputEnabled = true, StreamingEnabled = stream },
             clientHeaders: headers,
             queryParameters: query));
     }
@@ -108,19 +108,19 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
         int outputItems)
     {
         var provider = new FileResponsesProvider(ResponsesDir);
-        var envelope = new ResponseObject(responseId, "test-model") { Status = ResponseStatus.InProgress };
-        envelope.Background = true;
+        var envelope = new ResponseObject { Id = responseId, Model = "test-model", Status = ResponseStatus.InProgress };
+        envelope.BackgroundModeEnabled = true;
         for (var i = 0; i < outputItems; i++)
         {
-            envelope.Output.Add(NewOutputMessage($"msg_seed_{i}", $"phase-{i}"));
+            envelope.OutputItems.Add(NewOutputMessage($"msg_seed_{i}", $"phase-{i}"));
         }
 
-        await provider.CreateResponseAsync(new CreateResponseRequest(envelope, null, null), PlatformContext.Empty);
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(envelope, null, null), PlatformContext.Empty);
 
         await SeedInterruptedTaskAsync(new ResponseRecoveryPayload(
             responseId: responseId,
             disposition: disposition,
-            request: new CreateResponse { Model = "test-model", Background = true, Store = true, Stream = false },
+            request: new CreateResponse { Model = "test-model", BackgroundModeEnabled = true, StoredOutputEnabled = true, StreamingEnabled = false },
             clientHeaders: new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase),
             queryParameters: new Dictionary<string, string>(StringComparer.Ordinal)));
     }
@@ -130,9 +130,9 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
     private protected async Task SeedDurableEnvelopeAsync(string responseId)
     {
         var provider = new FileResponsesProvider(ResponsesDir);
-        var envelope = new ResponseObject(responseId, "test-model") { Status = ResponseStatus.InProgress };
-        envelope.Background = true;
-        await provider.CreateResponseAsync(new CreateResponseRequest(envelope, null, null), PlatformContext.Empty);
+        var envelope = new ResponseObject { Id = responseId, Model = "test-model", Status = ResponseStatus.InProgress };
+        envelope.BackgroundModeEnabled = true;
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(envelope, null, null), PlatformContext.Empty);
     }
 
     /// <summary>Seeds a durable in-progress envelope carrying <paramref name="outputItems"/> already-emitted
@@ -140,14 +140,14 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
     private protected async Task SeedDurableEnvelopeWithOutputAsync(string responseId, int outputItems)
     {
         var provider = new FileResponsesProvider(ResponsesDir);
-        var envelope = new ResponseObject(responseId, "test-model") { Status = ResponseStatus.InProgress };
-        envelope.Background = true;
+        var envelope = new ResponseObject { Id = responseId, Model = "test-model", Status = ResponseStatus.InProgress };
+        envelope.BackgroundModeEnabled = true;
         for (var i = 0; i < outputItems; i++)
         {
-            envelope.Output.Add(NewOutputMessage($"msg_seed_{i}", $"phase-{i}"));
+            envelope.OutputItems.Add(NewOutputMessage($"msg_seed_{i}", $"phase-{i}"));
         }
 
-        await provider.CreateResponseAsync(new CreateResponseRequest(envelope, null, null), PlatformContext.Empty);
+        await provider.CreateResponseAsync(new CreateResponsePersistRequest(envelope, null, null), PlatformContext.Empty);
     }
 
     /// <summary>Publishes a pre-crash durable SSE stream: created(0) + one output-item added(1)/done(2) per
@@ -157,14 +157,14 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
         var streamRegistry = TestEventStreams.CreateFileBackedRegistry(ResponsesDir);
         var stream = await streamRegistry.GetOrCreateAsync(responseId);
         var publisher = await EventStreamObserver.CreateAsync(stream);
-        var response = new ResponseObject(responseId, "test-model") { Status = ResponseStatus.InProgress };
+        var response = new ResponseObject { Id = responseId, Model = "test-model", Status = ResponseStatus.InProgress };
         long seq = 0;
-        await publisher.OnNextAsync(new ResponseCreatedEvent(seq++, response));
+        await publisher.OnNextAsync(new ResponseCreatedEvent { SequenceNumber = (int)(seq++), Response = response });
         for (var i = 0; i < outputItems; i++)
         {
             var item = NewOutputMessage($"msg_seed_{i}", $"phase-{i}");
-            await publisher.OnNextAsync(new ResponseOutputItemAddedEvent(seq++, outputIndex: i, item: item));
-            await publisher.OnNextAsync(new ResponseOutputItemDoneEvent(seq++, outputIndex: i, item: item));
+            await publisher.OnNextAsync(new ResponseOutputItemAddedEvent { OutputIndex = (int)(i), Item = item });
+            await publisher.OnNextAsync(new ResponseOutputItemDoneEvent { OutputIndex = (int)(i), Item = item });
         }
 
         // Simulate a crash: release the durable stream's exclusive writer lock WITHOUT writing a
@@ -185,17 +185,14 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
         => SeedInterruptedTaskAsync(new ResponseRecoveryPayload(
             responseId: responseId,
             disposition: ResponseRecoveryPayload.DispositionReinvoke,
-            request: new CreateResponse { Model = "test-model", Background = true, Store = true, Stream = true }));
+            request: new CreateResponse { Model = "test-model", BackgroundModeEnabled = true, StoredOutputEnabled = true, StreamingEnabled = true }));
 
     /// <summary>Builds a completed output message item with a single text content.</summary>
     private protected static OutputItemMessage NewOutputMessage(string id, string text)
-        => new(
-            id: id,
-            content: new List<MessageContent>
+        => MessageItemFactory.OutputMessage(id, MessageStatus.Completed, MessageRole.Assistant, new List<ResponseContentPart>
             {
-                new MessageContentOutputTextContent(text, Array.Empty<Annotation>(), Array.Empty<LogProb>()),
-            },
-            status: MessageStatus.Completed);
+                ResponseContentPart.CreateOutputTextPart(text, Array.Empty<Annotation>()),
+            });
 
     /// <summary>Builds a fresh host over the same durable directories, enabling resilient background.</summary>
     private protected TestWebApplicationFactory NewRecoveringHost(TestHandler handler)
@@ -272,11 +269,11 @@ public abstract class CrashRecoveryE2ETestBase : IDisposable
         TaskCompletionSource signal,
         [EnumeratorCancellation] CancellationToken ct = default)
     {
-        var response = new ResponseObject(ctx.ResponseId, "test-model");
-        yield return new ResponseCreatedEvent(0, response);
+        var response = new ResponseObject { Id = ctx.ResponseId, Model = "test-model" };
+        yield return new ResponseCreatedEvent { SequenceNumber = (int)(0), Response = response };
         await Task.Yield();
         response.SetCompleted();
-        yield return new ResponseCompletedEvent(0, response);
+        yield return new ResponseCompletedEvent { SequenceNumber = (int)(0), Response = response };
         signal.TrySetResult();
     }
 }

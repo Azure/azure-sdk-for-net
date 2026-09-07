@@ -54,10 +54,8 @@ internal static partial class OutputMessageContentOutputTextContentValidator
             }
         }
 
-        // Required: logprobs
-        if (!element.TryGetProperty("logprobs", out var logprobsProp))
-            errors.Add(new ValidationError("$.logprobs", "Required property 'logprobs' is missing"));
-        else
+        // Optional: logprobs
+        if (element.TryGetProperty("logprobs", out var logprobsProp))
         {
             if (logprobsProp.ValueKind != JsonValueKind.Array)
                 errors.Add(new ValidationError("$.logprobs", $"Expected array, got {logprobsProp.ValueKind}"));

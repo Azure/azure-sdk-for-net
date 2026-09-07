@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public readonly partial struct FunctionAndCustomToolCallOutputType : IEquatable<FunctionAndCustomToolCallOutputType>
+    internal readonly partial struct FunctionAndCustomToolCallOutputType : IEquatable<FunctionAndCustomToolCallOutputType>
     {
         private readonly string _value;
         private const string InputTextValue = "input_text";

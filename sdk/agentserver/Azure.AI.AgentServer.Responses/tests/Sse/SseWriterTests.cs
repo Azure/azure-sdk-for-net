@@ -23,9 +23,9 @@ public class SseWriterTests
         },
     };
 
-    private static Models.ResponseObject CreateTestResponse()
+    private static ResponseObject CreateTestResponse()
     {
-        return new Models.ResponseObject("resp_test", "gpt-4o");
+        return new ResponseObject { Id = "resp_test", Model = "gpt-4o" };
     }
 
     private static SseKeepAliveSession CreateInactiveSession(Stream output) =>
@@ -38,7 +38,7 @@ public class SseWriterTests
         await using var session = CreateInactiveSession(stream);
         var writer = new SseWriter(session, _jsonOptions);
 
-        var evt = new ResponseCreatedEvent(response: CreateTestResponse(), sequenceNumber: 0);
+        var evt = new ResponseCreatedEvent { Response = CreateTestResponse(), SequenceNumber = (int)(0) };
         await writer.WriteEventAsync(evt, 0, CancellationToken.None);
 
         var output = Encoding.UTF8.GetString(stream.ToArray());
@@ -54,7 +54,9 @@ public class SseWriterTests
         await using var session = CreateInactiveSession(stream);
         var writer = new SseWriter(session, _jsonOptions);
 
-        var evt = new ResponseTextDeltaEvent(3, "item_1", 0, 0, "Hello", Array.Empty<ResponseLogProb>());
+        var evt = new ResponseTextDeltaEvent { SequenceNumber = (int)(3), ItemId = "item_1", OutputIndex = (int)(0), ContentIndex = (int)(0), Delta = "Hello" };
+        foreach (var __v in Array.Empty<ResponseLogProb>() ?? [])
+            evt.TokenLogProbabilities.Add(__v);
         await writer.WriteEventAsync(evt, 0, CancellationToken.None);
 
         var output = Encoding.UTF8.GetString(stream.ToArray());
@@ -72,7 +74,7 @@ public class SseWriterTests
         await using var session = CreateInactiveSession(stream);
         var writer = new SseWriter(session, _jsonOptions);
 
-        var evt = new ResponseCompletedEvent(response: CreateTestResponse(), sequenceNumber: 5);
+        var evt = new ResponseCompletedEvent { Response = CreateTestResponse(), SequenceNumber = (int)(5) };
         await writer.WriteEventAsync(evt, 5, CancellationToken.None);
 
         var output = Encoding.UTF8.GetString(stream.ToArray());
@@ -88,8 +90,8 @@ public class SseWriterTests
         var writer = new SseWriter(session, _jsonOptions);
 
         var response = CreateTestResponse();
-        await writer.WriteEventAsync(new ResponseCreatedEvent(response: response, sequenceNumber: 0), 0, CancellationToken.None);
-        await writer.WriteEventAsync(new ResponseCompletedEvent(response: response, sequenceNumber: 1), 1, CancellationToken.None);
+        await writer.WriteEventAsync(new ResponseCreatedEvent { Response = response, SequenceNumber = (int)(0) }, 0, CancellationToken.None);
+        await writer.WriteEventAsync(new ResponseCompletedEvent { Response = response, SequenceNumber = (int)(1) }, 1, CancellationToken.None);
 
         var output = Encoding.UTF8.GetString(stream.ToArray());
         // Each event ends with \n\n (blank line separator)
@@ -110,7 +112,7 @@ public class SseWriterTests
         {
             var seqNum = i;
             tasks.Add(writer.WriteEventAsync(
-                new ResponseCreatedEvent(response: CreateTestResponse(), sequenceNumber: seqNum), seqNum, CancellationToken.None));
+                new ResponseCreatedEvent { Response = CreateTestResponse(), SequenceNumber = (int)(seqNum) }, seqNum, CancellationToken.None));
         }
 
         await Task.WhenAll(tasks);

@@ -22,7 +22,7 @@ public class StreamingHandler : ResponseHandler
         return new TextResponse(context, request,
             configure: response =>
             {
-                response.Temperature = 0.7;
+                response.Temperature = 0.7f;
             },
             createTextStream: GenerateTokensAsync);
     }

@@ -56,6 +56,13 @@ internal static partial class FunctionShellToolParamValidator
                 errors.Add(new ValidationError("$.name", $"Expected string, got {nameProp.ValueKind}"));
         }
 
+        // Optional: tool_configs
+        if (element.TryGetProperty("tool_configs", out var toolConfigsProp))
+        {
+            if (toolConfigsProp.ValueKind != JsonValueKind.Object)
+                errors.Add(new ValidationError("$.tool_configs", $"Expected object, got {toolConfigsProp.ValueKind}"));
+        }
+
         // Required: type
         if (!element.TryGetProperty("type", out var typeValProp))
             errors.Add(new ValidationError("$.type", "Required property 'type' is missing"));

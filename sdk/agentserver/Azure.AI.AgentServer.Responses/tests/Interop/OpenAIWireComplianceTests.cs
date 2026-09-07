@@ -16,12 +16,6 @@ using Azure.AI.AgentServer.Responses.Models;
 using Azure.AI.AgentServer.Responses.Tests.Helpers;
 using NUnit.Framework;
 using OpenAI.Responses;
-using CodeInterpreterTool = Azure.AI.AgentServer.Responses.Models.CodeInterpreterTool;
-using FileSearchTool = Azure.AI.AgentServer.Responses.Models.FileSearchTool;
-using FunctionTool = Azure.AI.AgentServer.Responses.Models.FunctionTool;
-// Disambiguate types that exist in both Azure and OpenAI namespaces
-using MessageRole = Azure.AI.AgentServer.Responses.Models.MessageRole;
-using WebSearchPreviewTool = Azure.AI.AgentServer.Responses.Models.WebSearchPreviewTool;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Interop;
 
@@ -205,7 +199,7 @@ public class OpenAIWireComplianceTests
 
         Assert.That(request!.Tools, Has.Count.EqualTo(1));
         var tool = XAssert.IsType<FunctionTool>(request.Tools[0]);
-        Assert.That(tool.Name, Is.EqualTo("get_weather"));
+        Assert.That(tool.FunctionName, Is.EqualTo("get_weather"));
     }
 
     [Test]
@@ -226,7 +220,7 @@ public class OpenAIWireComplianceTests
 
         Assert.That(request!.Tools, Has.Count.EqualTo(1));
         var tool = XAssert.IsType<FunctionTool>(request.Tools[0]);
-        Assert.That(tool.Name, Is.EqualTo("no_params_tool"));
+        Assert.That(tool.FunctionName, Is.EqualTo("no_params_tool"));
     }
 
     [Test]
@@ -244,7 +238,7 @@ public class OpenAIWireComplianceTests
 
         Assert.That(request!.Tools, Has.Count.EqualTo(1));
         var tool = XAssert.IsType<FunctionTool>(request.Tools[0]);
-        Assert.That(tool.Name, Is.EqualTo("minimal_tool"));
+        Assert.That(tool.FunctionName, Is.EqualTo("minimal_tool"));
     }
 
     [Test]
@@ -377,7 +371,6 @@ public class OpenAIWireComplianceTests
         Assert.That(((ItemMessage)items[1]).Role, Is.EqualTo(MessageRole.Assistant));
         Assert.That(((ItemMessage)items[2]).Role, Is.EqualTo(MessageRole.Developer));
         Assert.That(((ItemMessage)items[3]).Role, Is.EqualTo(MessageRole.System));
-        Assert.That(((ItemMessage)items[4]).Role, Is.EqualTo(MessageRole.Tool));
     }
 
     [Test]
@@ -397,8 +390,8 @@ public class OpenAIWireComplianceTests
         Assert.That(items, Has.Count.EqualTo(1));
         var fc = XAssert.IsType<ItemFunctionToolCall>(items[0]);
         Assert.That(fc.CallId, Is.EqualTo("call_abc"));
-        Assert.That(fc.Name, Is.EqualTo("get_weather"));
-        Assert.That(fc.Arguments, Is.EqualTo("{\"city\":\"Seattle\"}"));
+        Assert.That(fc.FunctionName, Is.EqualTo("get_weather"));
+        Assert.That(fc.FunctionArguments.ToString(), Is.EqualTo("{\"city\":\"Seattle\"}"));
     }
 
     [Test]
@@ -417,8 +410,7 @@ public class OpenAIWireComplianceTests
         Assert.That(items, Has.Count.EqualTo(1));
         var fco = XAssert.IsType<FunctionCallOutputItemParam>(items[0]);
         Assert.That(fco.CallId, Is.EqualTo("call_abc"));
-        using var doc = JsonDocument.Parse(fco.Output);
-        Assert.That(doc.RootElement.GetString(), Is.EqualTo("72°F and sunny"));
+        Assert.That(fco.FunctionOutput.ToString(), Is.EqualTo("72°F and sunny"));
     }
 
     [Test]
@@ -439,8 +431,8 @@ public class OpenAIWireComplianceTests
 
         Assert.That(items, Has.Count.EqualTo(1));
         var fco = XAssert.IsType<FunctionCallOutputItemParam>(items[0]);
-        using var doc = JsonDocument.Parse(fco.Output);
-        Assert.That(doc.RootElement.ValueKind, Is.EqualTo(JsonValueKind.Array));
+        // Array-form output is flattened to its text parts: the canonical shape is a string.
+        Assert.That(fco.FunctionOutput.ToString(), Is.EqualTo("Result text"));
     }
 
     [Test]
@@ -461,7 +453,7 @@ public class OpenAIWireComplianceTests
         Assert.That(items, Has.Count.EqualTo(1));
         var reasoning = XAssert.IsType<ItemReasoningItem>(items[0]);
         Assert.That(reasoning.Id, Is.EqualTo("rs_abc"));
-        Assert.That(reasoning.Summary, Has.Count.EqualTo(1));
+        Assert.That(reasoning.SummaryParts, Has.Count.EqualTo(1));
     }
 
     [Test]
@@ -501,7 +493,7 @@ public class OpenAIWireComplianceTests
         Assert.That(items, Has.Count.EqualTo(1));
         var approval = XAssert.IsType<MCPApprovalResponse>(items[0]);
         Assert.That(approval.ApprovalRequestId, Is.EqualTo("mcpr_abc"));
-        Assert.That(approval.Approve, Is.True);
+        Assert.That(approval.Approved, Is.True);
     }
 
     [Test]
@@ -585,7 +577,7 @@ public class OpenAIWireComplianceTests
         Assert.That(response.OutputItems, Has.Count.EqualTo(1));
         var fco = XAssert.IsType<FunctionCallOutputResponseItem>(response.OutputItems[0]);
         Assert.That(fco.CallId, Is.EqualTo("call_abc"));
-        Assert.That(fco.FunctionOutput, Is.EqualTo("72°F and sunny"));
+        Assert.That(fco.FunctionOutput.ToString(), Is.EqualTo("72°F and sunny"));
     }
 
     [Test]
@@ -753,9 +745,9 @@ public class OpenAIWireComplianceTests
     [Test]
     public void Translate_ItemMessage_ToResponseItem()
     {
-        var msg = new ItemMessage(MessageRole.User, new List<Models.MessageContent>
+        var msg = MessageItemFactory.Message(MessageRole.User, new List<ResponseContentPart>
         {
-            new MessageContentInputTextContent("Hello from Azure"),
+            ResponseContentPart.CreateInputTextPart("Hello from Azure"),
         });
 
         var openAiItem = msg.Translate().To<ResponseItem>();
@@ -766,7 +758,7 @@ public class OpenAIWireComplianceTests
     [Test]
     public void Translate_FunctionCall_ToResponseItem()
     {
-        var fc = new ItemFunctionToolCall("call_1", "my_func", "{\"x\":1}");
+        var fc = new ItemFunctionToolCall("call_1", "my_func", BinaryData.FromString("{\"x\":1}"));
 
         var openAiItem = fc.Translate().To<ResponseItem>();
         Assert.That(openAiItem, Is.InstanceOf<FunctionCallResponseItem>());
@@ -778,7 +770,7 @@ public class OpenAIWireComplianceTests
     [Test]
     public void Translate_FunctionCallOutput_ToResponseItem()
     {
-        var fco = new FunctionCallOutputItemParam("call_1", BinaryData.FromObjectAsJson("result"));
+        var fco = new FunctionCallOutputItemParam("call_1", "result");
 
         var openAiItem = fco.Translate().To<ResponseItem>();
         Assert.That(openAiItem, Is.InstanceOf<FunctionCallOutputResponseItem>());
@@ -833,7 +825,7 @@ public class OpenAIWireComplianceTests
 
     [Test]
     public async Task CreateResponse_MaxOutputTokens() =>
-        Assert.That((await CaptureRequest("""{ "model": "test", "max_output_tokens": 1024 }""")).MaxOutputTokens, Is.EqualTo(1024));
+        Assert.That((await CaptureRequest("""{ "model": "test", "max_output_tokens": 1024 }""")).MaxOutputTokenCount, Is.EqualTo(1024));
 
     [Test]
     public async Task CreateResponse_PreviousResponseId()
@@ -845,7 +837,7 @@ public class OpenAIWireComplianceTests
 
     [Test]
     public async Task CreateResponse_Store() =>
-        Assert.That((await CaptureRequest("""{ "model": "test", "store": false }""")).Store, Is.False);
+        Assert.That((await CaptureRequest("""{ "model": "test", "store": false }""")).StoredOutputEnabled, Is.False);
 
     [Test]
     public async Task CreateResponse_Metadata()
@@ -856,20 +848,20 @@ public class OpenAIWireComplianceTests
 
     [Test]
     public async Task CreateResponse_ParallelToolCalls() =>
-        Assert.That((await CaptureRequest("""{ "model": "test", "parallel_tool_calls": false }""")).ParallelToolCalls, Is.False);
+        Assert.That((await CaptureRequest("""{ "model": "test", "parallel_tool_calls": false }""")).ParallelToolCallsEnabled, Is.False);
 
     [Test]
     public async Task CreateResponse_Truncation()
     {
         var req = await CaptureRequest("""{ "model": "test", "truncation": "auto" }""");
-        Assert.That(req.Truncation, Is.Not.Null);
+        Assert.That(req.TruncationMode, Is.Not.Null);
     }
 
     [Test]
     public async Task CreateResponse_Reasoning()
     {
         var req = await CaptureRequest("""{ "model": "test", "reasoning": { "effort": "high" } }""");
-        Assert.That(req.Reasoning, Is.Not.Null);
+        Assert.That(req.ReasoningOptions, Is.Not.Null);
     }
 
     [Test]
@@ -941,7 +933,7 @@ public class OpenAIWireComplianceTests
     public async Task CreateResponse_Stream()
     {
         var (_, req) = await SendAndCapture("""{ "model": "test", "stream": true }""", expectSse: true);
-        Assert.That(req!.Stream, Is.True);
+        Assert.That(req!.StreamingEnabled, Is.True);
     }
 
     // ═══════════════════════════════════════════════════════════════════
@@ -1025,8 +1017,7 @@ public class OpenAIWireComplianceTests
             { "model": "test", "input": [{ "type": "function_call_output", "call_id": "c1", "output": "72 degrees" }] }
             """);
         var fco = XAssert.IsType<FunctionCallOutputItemParam>(items[0]);
-        using var doc = JsonDocument.Parse(fco.Output);
-        Assert.That(doc.RootElement.GetString(), Is.EqualTo("72 degrees"));
+        Assert.That(fco.FunctionOutput.ToString(), Is.EqualTo("72 degrees"));
     }
 
     [Test]
@@ -1048,9 +1039,7 @@ public class OpenAIWireComplianceTests
             }
             """);
         var fco = XAssert.IsType<FunctionCallOutputItemParam>(items[0]);
-        using var doc = JsonDocument.Parse(fco.Output);
-        Assert.That(doc.RootElement.ValueKind, Is.EqualTo(JsonValueKind.Array));
-        Assert.That(doc.RootElement.GetArrayLength(), Is.EqualTo(2));
+        Assert.That(fco.FunctionOutput.ToString(), Is.EqualTo("Result"));
     }
 
     // ═══════════════════════════════════════════════════════════════════
@@ -1082,8 +1071,8 @@ public class OpenAIWireComplianceTests
         Assert.That(req.Model, Is.EqualTo("gpt-4o"));
         Assert.That(req.Instructions, Is.EqualTo("Be helpful"));
         Assert.That(req.Temperature, Is.EqualTo(0.5).Within(0.001));
-        Assert.That(req.MaxOutputTokens, Is.EqualTo(500));
-        Assert.That(req.Store, Is.True);
+        Assert.That(req.MaxOutputTokenCount, Is.EqualTo(500));
+        Assert.That(req.StoredOutputEnabled, Is.True);
 
         var items = req.GetInputExpanded();
         Assert.That(items, Has.Count.EqualTo(1));

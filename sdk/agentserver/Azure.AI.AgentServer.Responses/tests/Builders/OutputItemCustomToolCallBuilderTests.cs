@@ -60,7 +60,7 @@ public class OutputItemCustomToolCallBuilderTests
         var builder = stream.AddOutputItemCustomToolCall("c1", "t1");
         var evt = builder.EmitInputDelta("{\"key");
         XAssert.IsType<ResponseCustomToolCallInputDeltaEvent>(evt);
-        Assert.That(evt.Delta, Is.EqualTo("{\"key"));
+        Assert.That(evt.Delta.ToString(), Is.EqualTo("{\"key"));
         Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
         Assert.That(evt.OutputIndex, Is.EqualTo(builder.OutputIndex));
     }
@@ -72,8 +72,8 @@ public class OutputItemCustomToolCallBuilderTests
         var builder = stream.AddOutputItemCustomToolCall("c1", "t1");
         var d1 = builder.EmitInputDelta("{\"key");
         var d2 = builder.EmitInputDelta("\":\"value\"}");
-        Assert.That(d1.Delta, Is.EqualTo("{\"key"));
-        Assert.That(d2.Delta, Is.EqualTo("\":\"value\"}"));
+        Assert.That(d1.Delta.ToString(), Is.EqualTo("{\"key"));
+        Assert.That(d2.Delta.ToString(), Is.EqualTo("\":\"value\"}"));
     }
 
     [Test]

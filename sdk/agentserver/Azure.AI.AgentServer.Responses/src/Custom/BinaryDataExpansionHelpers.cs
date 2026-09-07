@@ -6,26 +6,35 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models;
 
 /// <summary>
-/// Internal helpers for expanding BinaryData union-typed properties
-/// into their strongly-typed representations.
+/// Internal helpers for projecting the OpenAI-typed request properties onto the
+/// Azure-specific unions declared in this package's TypeSpec.
 /// </summary>
+/// <remarks>
+/// The wire fields these cover (<c>tool_choice</c>, <c>input</c>, <c>instructions</c>,
+/// <c>conversation</c> and message <c>content</c>) are unions whose Azure representation
+/// still carries members that the OpenAI library does not model. The OpenAI value is
+/// serialized and re-read as the Azure union so that both representations stay available
+/// without duplicating the union logic.
+/// </remarks>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal static class BinaryDataExpansionHelpers
 {
     /// <summary>
     /// Expands a BinaryData ToolChoice into a typed <see cref="ToolChoiceParam"/>.
     /// </summary>
-    internal static ToolChoiceParam? ExpandToolChoice(BinaryData? toolChoice)
+    internal static ToolChoiceParam? ExpandToolChoice(ResponseToolChoice? toolChoice)
     {
         if (toolChoice is null)
         {
             return null;
         }
 
-        using var doc = JsonDocument.Parse(toolChoice.ToMemory());
+        using var doc = JsonDocument.Parse(Serialize(toolChoice).ToMemory());
         var root = doc.RootElement;
 
         return root.ValueKind switch
@@ -52,79 +61,38 @@ internal static class BinaryDataExpansionHelpers
     /// <summary>
     /// Expands a BinaryData Input into a typed list of <see cref="Item"/>.
     /// </summary>
-    internal static List<Item> ExpandInput(BinaryData? input)
+    internal static List<Item> ExpandInput(IList<Item>? input)
     {
         if (input is null)
         {
             return new List<Item>();
         }
 
-        try
-        {
-            using var doc = JsonDocument.Parse(input.ToMemory());
-            var root = doc.RootElement;
-
-            var items = root.ValueKind switch
-            {
-                JsonValueKind.String => new List<Item>
-                {
-                    CreateStringInputMessage(root.GetString()!),
-                },
-                JsonValueKind.Array => DeserializeItemArray(root),
-                _ => throw new FormatException(
-                    $"Expected a string or array for Input, but got {root.ValueKind}."),
-            };
-
-            NormalizeMessageContent(items);
-            return items;
-        }
-        catch (FormatException)
-        {
-            throw;
-        }
-        catch (Exception ex)
-        {
-            throw new FormatException("Failed to convert input items", ex);
-        }
+        // Input items are already the OpenAI item type; the string shorthand and the
+        // per-item content shorthand are normalized by the OpenAI reader on the way in.
+        return new List<Item>(input);
     }
 
     /// <summary>
     /// Expands a BinaryData Instructions into a typed list of <see cref="Item"/>.
     /// Uses <see cref="MessageRole.Developer"/> for string shorthand.
     /// </summary>
-    internal static List<Item> ExpandInstructions(BinaryData? instructions)
-    {
-        if (instructions is null)
-        {
-            return new List<Item>();
-        }
-
-        using var doc = JsonDocument.Parse(instructions.ToMemory());
-        var root = doc.RootElement;
-
-        return root.ValueKind switch
-        {
-            JsonValueKind.String => new List<Item>
-            {
-                CreateStringInstructionMessage(root.GetString()!),
-            },
-            JsonValueKind.Array => DeserializeItemArray(root),
-            _ => throw new FormatException(
-                $"Expected a string or array for Instructions, but got {root.ValueKind}."),
-        };
-    }
+    internal static List<Item> ExpandInstructions(string? instructions)
+        => string.IsNullOrEmpty(instructions)
+            ? new List<Item>()
+            : new List<Item> { CreateStringInstructionMessage(instructions!) };
 
     /// <summary>
     /// Expands a BinaryData Conversation into a typed <see cref="ConversationParam"/>.
     /// </summary>
-    internal static ConversationParam? ExpandConversation(BinaryData? conversation)
+    internal static ConversationParam? ExpandConversation(ResponseConversationOptions? conversation)
     {
         if (conversation is null)
         {
             return null;
         }
 
-        using var doc = JsonDocument.Parse(conversation.ToMemory());
+        using var doc = JsonDocument.Parse(Serialize(conversation).ToMemory());
         var root = doc.RootElement;
 
         return root.ValueKind switch
@@ -139,14 +107,14 @@ internal static class BinaryDataExpansionHelpers
     /// <summary>
     /// Expands a BinaryData Content into a typed list of <see cref="MessageContent"/>.
     /// </summary>
-    internal static List<MessageContent> ExpandContent(BinaryData? content)
+    internal static List<MessageContent> ExpandContent(IList<ResponseContentPart>? content)
     {
         if (content is null)
         {
             return new List<MessageContent>();
         }
 
-        using var doc = JsonDocument.Parse(content.ToMemory());
+        using var doc = JsonDocument.Parse(SerializeParts(content).ToMemory());
         var root = doc.RootElement;
 
         return root.ValueKind switch
@@ -158,27 +126,35 @@ internal static class BinaryDataExpansionHelpers
             JsonValueKind.Array => DeserializeContentArray(root),
             JsonValueKind.Object => new List<MessageContent>
             {
-                ModelReaderWriter.Read<MessageContent>(
-                    BinaryData.FromString(root.GetRawText()), ModelReaderWriterOptions.Json, AzureAIAgentServerResponsesContext.Default)!,
+                Internal.ModelJson.Read<MessageContent>(
+                    BinaryData.FromString(root.GetRawText()), ModelReaderWriterOptions.Json)!,
             },
             _ => throw new FormatException("Expected JSON array, object, or string for item content"),
         };
     }
 
-    private static ItemMessage CreateStringInputMessage(string text)
-    {
-        return new ItemMessage(MessageRole.User, new List<MessageContent>
-        {
-            new MessageContentInputTextContent(text),
-        });
-    }
-
     private static ItemMessage CreateStringInstructionMessage(string text)
+        => (ItemMessage)ResponseItem.CreateDeveloperMessageItem(text);
+
+    private static BinaryData Serialize<T>(T model)
+        where T : notnull
+        => Internal.ModelJson.Write(model, ModelReaderWriterOptions.Json);
+
+    private static BinaryData SerializeParts(IList<ResponseContentPart> parts)
     {
-        return new ItemMessage(MessageRole.Developer, new List<MessageContent>
+        using var stream = new MemoryStream();
+        using (var writer = new Utf8JsonWriter(stream))
         {
-            new MessageContentInputTextContent(text),
-        });
+            writer.WriteStartArray();
+            foreach (var part in parts)
+            {
+                ((IJsonModel<ResponseContentPart>)part).Write(writer, ModelReaderWriterOptions.Json);
+            }
+
+            writer.WriteEndArray();
+        }
+
+        return BinaryData.FromBytes(stream.ToArray());
     }
 
     private static List<Item> DeserializeItemArray(JsonElement root)
@@ -192,14 +168,9 @@ internal static class BinaryDataExpansionHelpers
                     $"Expected a JSON object in the item array, but got {element.ValueKind}.");
             }
 
-            if (element.TryGetProperty("type", out _))
-            {
-                items.Add(Item.DeserializeItem(element, ModelReaderWriterOptions.Json));
-            }
-            else
-            {
-                items.Add(ItemMessage.DeserializeItemMessage(element, ModelReaderWriterOptions.Json));
-            }
+            var json = BinaryData.FromString(element.GetRawText());
+            items.Add(Internal.ModelJson.Read<Item>(
+                json, ModelReaderWriterOptions.Json)!);
         }
 
         return items;
@@ -214,43 +185,5 @@ internal static class BinaryDataExpansionHelpers
         }
 
         return items;
-    }
-
-    /// <summary>
-    /// Normalizes <see cref="ItemMessage.Content"/> from JSON string shorthand to
-    /// the canonical array form so that downstream consumers always see an array
-    /// of <see cref="MessageContent"/> regardless of how the input was submitted.
-    /// </summary>
-    private static void NormalizeMessageContent(List<Item> items)
-    {
-        foreach (var item in items)
-        {
-            if (item is ItemMessage message && message.Content is not null)
-            {
-                using var doc = JsonDocument.Parse(message.Content.ToMemory());
-                if (doc.RootElement.ValueKind == JsonValueKind.String)
-                {
-                    var expanded = ExpandContent(message.Content);
-                    message.Content = SerializeContentArray(expanded);
-                }
-            }
-        }
-    }
-
-    private static BinaryData SerializeContentArray(List<MessageContent> content)
-    {
-        using var stream = new MemoryStream();
-        using (var writer = new Utf8JsonWriter(stream))
-        {
-            writer.WriteStartArray();
-            foreach (var part in content)
-            {
-                ((IJsonModel<MessageContent>)part).Write(writer, ModelReaderWriterOptions.Json);
-            }
-
-            writer.WriteEndArray();
-        }
-
-        return BinaryData.FromBytes(stream.ToArray());
     }
 }

@@ -261,18 +261,7 @@ public class BuilderLifecycleTests
         events.Add(stream.EmitInProgress());
 
         var funcId = IdGenerator.NewFunctionCallItemId();
-        var item = new OutputItemFunctionToolCall(
-            OutputItemType.FunctionCall,
-            createdBy: null,
-            agentReference: null,
-            responseId: null,
-            additionalBinaryDataProperties: null,
-            id: funcId,
-            callId: "call_1",
-            @namespace: null,
-            name: "myFunc",
-            arguments: "{\"x\":1}",
-            status: ItemFunctionToolCallStatus.InProgress);
+        var item = new OutputItemFunctionToolCall("call_1", "myFunc", BinaryData.FromString("{\"x\":1}")) { Id = funcId, Status = FunctionCallStatus.InProgress };
         var builder = stream.AddOutputItem<OutputItemFunctionToolCall>(funcId);
         events.Add(builder.EmitAdded(item));
         events.Add(builder.EmitDone(item));
@@ -382,18 +371,7 @@ public class BuilderLifecycleTests
         Assert.That(ctc.OutputIndex, Is.EqualTo(8));
 
         var genericId = IdGenerator.NewFunctionCallItemId();
-        var genericItem = new OutputItemFunctionToolCall(
-            OutputItemType.FunctionCall,
-            createdBy: null,
-            agentReference: null,
-            responseId: null,
-            additionalBinaryDataProperties: null,
-            id: genericId,
-            callId: "c",
-            @namespace: null,
-            name: "f",
-            arguments: "{}",
-            status: ItemFunctionToolCallStatus.InProgress);
+        var genericItem = new OutputItemFunctionToolCall("c", "f", BinaryData.FromString("{}")) { Id = genericId, Status = FunctionCallStatus.InProgress };
         var generic = stream.AddOutputItem<OutputItemFunctionToolCall>(genericId);
         Assert.That(generic.OutputIndex, Is.EqualTo(9));
     }
@@ -428,8 +406,8 @@ public class BuilderLifecycleTests
         var ig = stream.AddOutputItemImageGenCall();
         events.Add(ig.EmitAdded());
         events.Add(ig.EmitInProgress());
-        events.Add(ig.EmitPartialImage("base64chunk1"));
-        events.Add(ig.EmitPartialImage("base64chunk2"));
+        events.Add(ig.EmitPartialImage("YmFzZTY0Y2h1bmsx"));
+        events.Add(ig.EmitPartialImage("YmFzZTY0Y2h1bmsy"));
         events.Add(ig.EmitCompleted());
         events.Add(ig.EmitDone("dGVzdC1pbWFnZS1kYXRh"));
 

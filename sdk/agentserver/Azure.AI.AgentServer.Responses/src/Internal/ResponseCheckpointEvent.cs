@@ -16,6 +16,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// serialization; the interception is purely type-based.
 /// </para>
 /// </summary>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 internal sealed class ResponseCheckpointEvent : ResponseStreamEvent
 {
     /// <summary>The reserved, never-serialized discriminator for the checkpoint control signal.</summary>

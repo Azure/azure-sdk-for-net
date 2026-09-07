@@ -8,7 +8,7 @@ namespace Azure.AI.AgentServer.Responses.Tests.PublicApi;
 
 /// <summary>
 /// T009: Reflection tests asserting key OutputItem subtypes, OutputContent subtypes,
-/// Models.ResponseObject, and Models.ResponseErrorInfo have public constructors. Abstract bases and Unknown
+/// ResponseObject, and ResponseErrorInfo have public constructors. Abstract bases and Unknown
 /// variants must NOT have public constructors.
 /// </summary>
 public class PublicConstructorModelTests
@@ -21,18 +21,13 @@ public class PublicConstructorModelTests
         new object[] { typeof(OutputItemApplyPatchToolCall) },
         new object[] { typeof(OutputItemApplyPatchToolCallOutput) },
         new object[] { typeof(OutputItemCodeInterpreterToolCall) },
-        new object[] { typeof(OutputItemCompactionBody) },
         new object[] { typeof(OutputItemComputerToolCall) },
         new object[] { typeof(OutputItemComputerToolCallOutput) },
         new object[] { typeof(OutputItemCustomToolCall) },
         new object[] { typeof(OutputItemCustomToolCallOutput) },
         new object[] { typeof(OutputItemFileSearchToolCall) },
-        new object[] { typeof(OutputItemFunctionShellCall) },
-        new object[] { typeof(OutputItemFunctionShellCallOutput) },
         new object[] { typeof(OutputItemFunctionToolCall) },
         new object[] { typeof(OutputItemImageGenToolCall) },
-        new object[] { typeof(OutputItemLocalShellToolCall) },
-        new object[] { typeof(OutputItemLocalShellToolCallOutput) },
         new object[] { typeof(OutputItemMcpApprovalRequest) },
         new object[] { typeof(OutputItemMcpApprovalResponseResource) },
         new object[] { typeof(OutputItemMcpListTools) },
@@ -85,7 +80,6 @@ public class PublicConstructorModelTests
     public static IEnumerable<object[]> OutputContentTypes => new[]
     {
         new object[] { typeof(OutputContentOutputTextContent) },
-        new object[] { typeof(OutputContentReasoningTextContent) },
         new object[] { typeof(OutputContentRefusalContent) },
     };
 
@@ -105,6 +99,11 @@ public class PublicConstructorModelTests
     [TestCaseSource(nameof(AllOutputItemTypes))]
     public void OutputItemSubtype_HasAtLeastOnePublicConstructor(Type type)
     {
+        if (type.Assembly != typeof(Azure.AI.AgentServer.Responses.Models.Metadata).Assembly)
+        {
+            Assert.Ignore($"{type.Name} is owned by the OpenAI SDK, which constructs its models through factory methods.");
+        }
+
         var publicCtors = type.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
         Assert.That(publicCtors.Length > 0, Is.True,
             $"{type.Name} should have at least one public constructor but has none.");
@@ -117,6 +116,11 @@ public class PublicConstructorModelTests
     [TestCaseSource(nameof(OutputContentTypes))]
     public void OutputContentSubtype_HasAtLeastOnePublicConstructor(Type type)
     {
+        if (type.Assembly != typeof(Azure.AI.AgentServer.Responses.Models.Metadata).Assembly)
+        {
+            Assert.Ignore($"{type.Name} is owned by the OpenAI SDK, which constructs its models through factory methods.");
+        }
+
         var publicCtors = type.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
         Assert.That(publicCtors.Length > 0, Is.True,
             $"{type.Name} should have at least one public constructor but has none.");
@@ -125,27 +129,25 @@ public class PublicConstructorModelTests
     [TestCaseSource(nameof(MessageContentTypes))]
     public void MessageContentSubtype_HasAtLeastOnePublicConstructor(Type type)
     {
+        if (type.Assembly != typeof(Azure.AI.AgentServer.Responses.Models.Metadata).Assembly)
+        {
+            Assert.Ignore($"{type.Name} is owned by the OpenAI SDK, which constructs its models through factory methods.");
+        }
+
         var publicCtors = type.GetConstructors(BindingFlags.Public | BindingFlags.Instance);
         Assert.That(publicCtors.Length > 0, Is.True,
             $"{type.Name} should have at least one public constructor but has none.");
     }
 
     // ========================================
-    // Models.ResponseObject and Models.ResponseErrorInfo
+    // ResponseObject and ResponseErrorInfo
     // ========================================
 
     [Test]
     public void Response_HasAtLeastOnePublicConstructor()
     {
-        var publicCtors = typeof(Models.ResponseObject).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
+        var publicCtors = typeof(ResponseObject).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
         Assert.That(publicCtors.Length > 0, Is.True, "Response should have at least one public constructor.");
-    }
-
-    [Test]
-    public void ResponseError_HasAtLeastOnePublicConstructor()
-    {
-        var publicCtors = typeof(Models.ResponseErrorInfo).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
-        Assert.That(publicCtors.Length > 0, Is.True, "ResponseError should have at least one public constructor.");
     }
 
     [Test]
@@ -167,22 +169,10 @@ public class PublicConstructorModelTests
     }
 
     [Test]
-    public void OutputItem_IsAbstract()
+    public void OutputItem_HasNoAccessiblePublicSurfaceForDirectConstruction()
     {
-        Assert.That(typeof(OutputItem).IsAbstract, Is.True);
-    }
-
-    [Test]
-    public void OutputContent_HasNoPublicConstructors()
-    {
-        var publicCtors = typeof(OutputContent).GetConstructors(BindingFlags.Public | BindingFlags.Instance);
-        Assert.That(publicCtors, Is.Empty);
-    }
-
-    [Test]
-    public void OutputContent_IsAbstract()
-    {
-        Assert.That(typeof(OutputContent).IsAbstract, Is.True);
+        // OpenAI models the item hierarchy with a concrete-but-uninstantiable base.
+        Assert.That(typeof(OutputItem).GetConstructors(BindingFlags.Public | BindingFlags.Instance), Is.Empty);
     }
 
     [Test]
@@ -203,8 +193,8 @@ public class PublicConstructorModelTests
     // ========================================
 
     [Test]
-    public void AllOutputItemTypes_Count_Is46()
+    public void AllOutputItemTypes_Count_Is41()
     {
-        Assert.That(AllOutputItemTypes.Count(), Is.EqualTo(46));
+        Assert.That(AllOutputItemTypes.Count(), Is.EqualTo(41));
     }
 }

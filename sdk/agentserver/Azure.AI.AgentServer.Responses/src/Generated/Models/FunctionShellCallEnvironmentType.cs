@@ -11,7 +11,7 @@ using Azure.AI.AgentServer.Responses;
 namespace Azure.AI.AgentServer.Responses.Models
 {
     /// <summary></summary>
-    public readonly partial struct FunctionShellCallEnvironmentType : IEquatable<FunctionShellCallEnvironmentType>
+    internal readonly partial struct FunctionShellCallEnvironmentType : IEquatable<FunctionShellCallEnvironmentType>
     {
         private readonly string _value;
         private const string LocalValue = "local";

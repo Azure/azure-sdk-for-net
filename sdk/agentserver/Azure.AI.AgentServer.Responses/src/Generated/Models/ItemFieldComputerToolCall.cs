@@ -6,8 +6,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure.AI.AgentServer.Responses;
+using OpenAI.Responses;
 
 namespace Azure.AI.AgentServer.Responses.Models
 {
@@ -26,7 +28,7 @@ namespace Azure.AI.AgentServer.Responses.Models
         {
             Id = id;
             CallId = callId;
-            Actions = new ChangeTrackingList<ComputerAction>();
+            Actions = new ChangeTrackingList<ComputerCallAction>();
             PendingSafetyChecks = pendingSafetyChecks.ToList();
             Status = status;
         }
@@ -43,7 +45,8 @@ namespace Azure.AI.AgentServer.Responses.Models
         /// The status of the item. One of `in_progress`, `completed`, or
         ///   `incomplete`. Populated when items are returned via API.
         /// </param>
-        internal ItemFieldComputerToolCall(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ComputerAction action, IList<ComputerAction> actions, IList<ComputerCallSafetyCheckParam> pendingSafetyChecks, ItemComputerToolCallStatus status) : base(@type, additionalBinaryDataProperties)
+        [Experimental("AAIP002")]
+        internal ItemFieldComputerToolCall(ItemFieldType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, string callId, ComputerCallAction action, IList<ComputerCallAction> actions, IList<ComputerCallSafetyCheckParam> pendingSafetyChecks, ItemComputerToolCallStatus status) : base(@type, additionalBinaryDataProperties)
         {
             Id = id;
             CallId = callId;
@@ -60,10 +63,12 @@ namespace Azure.AI.AgentServer.Responses.Models
         public string CallId { get; }
 
         /// <summary> Gets the Action. </summary>
-        public ComputerAction Action { get; }
+        [Experimental("AAIP002")]
+        public ComputerCallAction Action { get; }
 
         /// <summary> Gets the Actions. </summary>
-        public IList<ComputerAction> Actions { get; }
+        [Experimental("AAIP002")]
+        public IList<ComputerCallAction> Actions { get; }
 
         /// <summary> The pending safety checks for the computer call. </summary>
         public IList<ComputerCallSafetyCheckParam> PendingSafetyChecks { get; }

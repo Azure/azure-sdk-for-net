@@ -39,7 +39,7 @@ public class OutputItemImageGenCallBuilderTests
         var evt = builder.EmitAdded();
         var item = XAssert.IsType<OutputItemImageGenToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(ItemImageGenToolCallStatus.InProgress));
+        Assert.That(item.Status, Is.EqualTo(ImageGenerationCallStatus.InProgress));
     }
 
     [Test]
@@ -69,9 +69,9 @@ public class OutputItemImageGenCallBuilderTests
     {
         var stream = CreateStream();
         var builder = stream.AddOutputItemImageGenCall();
-        var evt = builder.EmitPartialImage("base64data");
+        var evt = builder.EmitPartialImage("YmFzZTY0ZGF0YQ==");
         XAssert.IsType<ResponseImageGenCallPartialImageEvent>(evt);
-        Assert.That(evt.PartialImageB64, Is.EqualTo("base64data"));
+        Assert.That(Convert.ToBase64String(evt.PartialImageBytes.ToArray()), Is.EqualTo("YmFzZTY0ZGF0YQ=="));
         Assert.That(evt.ItemId, Is.EqualTo(builder.ItemId));
         Assert.That(evt.OutputIndex, Is.EqualTo(builder.OutputIndex));
     }
@@ -81,7 +81,7 @@ public class OutputItemImageGenCallBuilderTests
     {
         var stream = CreateStream();
         var builder = stream.AddOutputItemImageGenCall();
-        var evt = builder.EmitPartialImage("data1");
+        var evt = builder.EmitPartialImage("ZGF0YTE=");
         Assert.That(evt.PartialImageIndex, Is.EqualTo(0));
     }
 
@@ -90,9 +90,9 @@ public class OutputItemImageGenCallBuilderTests
     {
         var stream = CreateStream();
         var builder = stream.AddOutputItemImageGenCall();
-        var p0 = builder.EmitPartialImage("data0");
-        var p1 = builder.EmitPartialImage("data1");
-        var p2 = builder.EmitPartialImage("data2");
+        var p0 = builder.EmitPartialImage("ZGF0YTA=");
+        var p1 = builder.EmitPartialImage("ZGF0YTE=");
+        var p2 = builder.EmitPartialImage("ZGF0YTI=");
         Assert.That(p0.PartialImageIndex, Is.EqualTo(0));
         Assert.That(p1.PartialImageIndex, Is.EqualTo(1));
         Assert.That(p2.PartialImageIndex, Is.EqualTo(2));
@@ -118,8 +118,8 @@ public class OutputItemImageGenCallBuilderTests
         var evt = builder.EmitDone("dGVzdC1pbWFnZS1kYXRh");
         var item = XAssert.IsType<OutputItemImageGenToolCall>(evt.Item);
         Assert.That(item.Id, Is.EqualTo(builder.ItemId));
-        Assert.That(item.Status, Is.EqualTo(ItemImageGenToolCallStatus.Completed));
-        Assert.That(item.Result, Is.EqualTo("dGVzdC1pbWFnZS1kYXRh"));
+        Assert.That(item.Status, Is.EqualTo(ImageGenerationCallStatus.Completed));
+        Assert.That(Convert.ToBase64String(item.ImageResultBytes.ToArray()), Is.EqualTo("dGVzdC1pbWFnZS1kYXRh"));
     }
 
     [Test]
@@ -130,9 +130,9 @@ public class OutputItemImageGenCallBuilderTests
         var added = builder.EmitAdded();              // 0
         var inProg = builder.EmitInProgress();        // 1
         var generating = builder.EmitGenerating();    // 2
-        var partial = builder.EmitPartialImage("d");  // 3
+        var partial = builder.EmitPartialImage("ZA==");  // 3
         var completed = builder.EmitCompleted();      // 4
-        var done = builder.EmitDone("r");             // 5
+        var done = builder.EmitDone("cg==");             // 5
         Assert.That(added.SequenceNumber, Is.EqualTo(0));
         Assert.That(inProg.SequenceNumber, Is.EqualTo(1));
         Assert.That(generating.SequenceNumber, Is.EqualTo(2));

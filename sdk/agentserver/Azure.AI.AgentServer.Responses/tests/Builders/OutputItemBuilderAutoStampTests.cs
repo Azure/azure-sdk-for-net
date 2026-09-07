@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using Azure.AI.AgentServer.Responses.Models;
+using Azure.AI.AgentServer.Responses.Tests.Helpers;
 
 namespace Azure.AI.AgentServer.Responses.Tests.Builders;
 
@@ -57,13 +58,11 @@ public class OutputItemBuilderAutoStampTests
         var builder = stream.AddOutputItemMessage();
 
         // Create an item with handler-set ResponseId
-        var item = new OutputItemMessage(
+        var item = MessageItemFactory.OutputMessage(
             id: builder.ItemId,
-            content: Array.Empty<MessageContent>(),
-            status: MessageStatus.InProgress)
-        {
-            ResponseId = handlerResponseId,
-        };
+            content: Array.Empty<ResponseContentPart>(),
+            status: MessageStatus.InProgress);
+        item.ResponseId = handlerResponseId;
         var evt = builder.EmitAdded(item);
 
         Assert.That(evt.Item.ResponseId, Is.EqualTo(handlerResponseId));
@@ -75,7 +74,7 @@ public class OutputItemBuilderAutoStampTests
     public void EmitAdded_StampsAgentReference_WhenNotSetByHandler()
     {
         var responseId = "resp_auto_004";
-        var agentRef = new AgentReference("my-agent") { Version = "1.0" };
+        var agentRef = new AgentReference("my-agent", "1.0");
         var request = new CreateResponse { Model = "test", AgentReference = agentRef };
         var ctx = new ResponseContext(responseId);
         var stream = new ResponseEventStream(ctx, request);
@@ -93,19 +92,17 @@ public class OutputItemBuilderAutoStampTests
     {
         var responseId = "resp_auto_005";
         var requestAgentRef = new AgentReference("request-agent");
-        var handlerAgentRef = new AgentReference("handler-agent") { Version = "2.0" };
+        var handlerAgentRef = new AgentReference("handler-agent", "2.0");
         var request = new CreateResponse { Model = "test", AgentReference = requestAgentRef };
         var ctx = new ResponseContext(responseId);
         var stream = new ResponseEventStream(ctx, request);
         var builder = stream.AddOutputItemMessage();
 
-        var item = new OutputItemMessage(
+        var item = MessageItemFactory.OutputMessage(
             id: builder.ItemId,
-            content: Array.Empty<MessageContent>(),
-            status: MessageStatus.InProgress)
-        {
-            AgentReference = handlerAgentRef,
-        };
+            content: Array.Empty<ResponseContentPart>(),
+            status: MessageStatus.InProgress);
+        item.AgentReference = handlerAgentRef;
         var evt = builder.EmitAdded(item);
 
         // Handler-set value takes precedence

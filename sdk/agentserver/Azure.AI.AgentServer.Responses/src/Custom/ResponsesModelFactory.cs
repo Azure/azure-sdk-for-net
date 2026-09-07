@@ -16,16 +16,17 @@ namespace Azure.AI.AgentServer.Responses.Models;
 /// constructed directly. This factory is primarily useful for types where
 /// all-defaults construction is convenient for tests.
 /// </remarks>
+[System.Diagnostics.CodeAnalysis.Experimental("AAIP002")]
 public static class ResponsesModelFactory
 {
-    /// <summary>Creates a <see cref="Models.ResponseObject"/> instance for mocking.</summary>
+    /// <summary>Creates a <see cref="ResponseObject"/> instance for mocking.</summary>
     /// <param name="id">The unique response identifier.</param>
     /// <param name="model">The model name (e.g. "gpt-4o").</param>
     /// <param name="status">The response status.</param>
     /// <param name="createdAt">The creation timestamp.</param>
     /// <param name="error">The error, if any.</param>
     /// <param name="output">The output items.</param>
-    /// <returns>A new <see cref="Models.ResponseObject"/> instance.</returns>
+    /// <returns>A new <see cref="ResponseObject"/> instance.</returns>
     public static ResponseObject ResponseObject(
         string id = default!,
         string model = default!,
@@ -43,10 +44,10 @@ public static class ResponsesModelFactory
             output: output);
     }
 
-    /// <summary>Creates a <see cref="Models.ResponseErrorInfo"/> instance for mocking.</summary>
+    /// <summary>Creates a <see cref="ResponseErrorInfo"/> instance for mocking.</summary>
     /// <param name="code">The error code.</param>
     /// <param name="message">The error message.</param>
-    /// <returns>A new <see cref="Models.ResponseErrorInfo"/> instance.</returns>
+    /// <returns>A new <see cref="ResponseErrorInfo"/> instance.</returns>
     public static ResponseErrorInfo ResponseErrorInfo(
         ResponseErrorCode code = default,
         string message = default!)
@@ -56,10 +57,10 @@ public static class ResponsesModelFactory
             message: message);
     }
 
-    /// <summary>Creates a <see cref="Models.ResponseCreatedEvent"/> instance for mocking.</summary>
+    /// <summary>Creates a <see cref="ResponseCreatedEvent"/> instance for mocking.</summary>
     /// <param name="response">The response object.</param>
     /// <param name="sequenceNumber">The SSE sequence number.</param>
-    /// <returns>A new <see cref="Models.ResponseCreatedEvent"/> instance.</returns>
+    /// <returns>A new <see cref="ResponseCreatedEvent"/> instance.</returns>
     public static ResponseCreatedEvent ResponseCreatedEvent(
         ResponseObject response = default!,
         long sequenceNumber = default)
