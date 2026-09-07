@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -15,6 +16,8 @@ namespace Azure.Provisioning.EventGrid
     {
         private BicepValue<string> _description;
         private BicepValue<string> _displayName;
+        private BicepValue<Uri> _documentationUri;
+        private BicepValue<Uri> _dataSchemaUri;
 
         /// <summary> Creates a new InlineEventProperties. </summary>
         public InlineEventProperties()
@@ -51,12 +54,44 @@ namespace Azure.Provisioning.EventGrid
             }
         }
 
+        /// <summary> Gets or sets the DocumentationUri. </summary>
+        public BicepValue<Uri> DocumentationUri
+        {
+            get
+            {
+                Initialize();
+                return _documentationUri;
+            }
+            set
+            {
+                Initialize();
+                _documentationUri.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the DataSchemaUri. </summary>
+        public BicepValue<Uri> DataSchemaUri
+        {
+            get
+            {
+                Initialize();
+                return _dataSchemaUri;
+            }
+            set
+            {
+                Initialize();
+                _dataSchemaUri.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for InlineEventProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _displayName = DefineProperty<string>(nameof(DisplayName), new string[] { "displayName" });
+            _documentationUri = DefineProperty<Uri>(nameof(DocumentationUri), new string[] { "documentationUrl" });
+            _dataSchemaUri = DefineProperty<Uri>(nameof(DataSchemaUri), new string[] { "dataSchemaUrl" });
             DefineAdditionalProperties();
         }
 

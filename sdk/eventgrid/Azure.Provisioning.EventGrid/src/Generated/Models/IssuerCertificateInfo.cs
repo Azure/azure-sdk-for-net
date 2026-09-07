@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
@@ -12,11 +14,27 @@ namespace Azure.Provisioning.EventGrid
     /// <summary> Information about the certificate that is used for token validation. </summary>
     public partial class IssuerCertificateInfo : ProvisionableConstruct
     {
+        private BicepValue<Uri> _certificateUri;
         private CustomJwtAuthenticationManagedIdentity _identity;
 
         /// <summary> Creates a new IssuerCertificateInfo. </summary>
         public IssuerCertificateInfo()
         {
+        }
+
+        /// <summary> Gets or sets the CertificateUri. </summary>
+        public BicepValue<Uri> CertificateUri
+        {
+            get
+            {
+                Initialize();
+                return _certificateUri;
+            }
+            set
+            {
+                Initialize();
+                _certificateUri.Assign(value);
+            }
         }
 
         /// <summary> Gets or sets the Identity. </summary>
@@ -38,6 +56,7 @@ namespace Azure.Provisioning.EventGrid
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _certificateUri = DefineProperty<Uri>(nameof(CertificateUri), new string[] { "certificateUrl" }, isRequired: true);
             _identity = DefineModelProperty<CustomJwtAuthenticationManagedIdentity>(nameof(Identity), new string[] { "identity" });
             DefineAdditionalProperties();
         }

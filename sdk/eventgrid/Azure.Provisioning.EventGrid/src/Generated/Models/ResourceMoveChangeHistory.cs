@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -15,6 +16,7 @@ namespace Azure.Provisioning.EventGrid
     {
         private BicepValue<string> _azureSubscriptionId;
         private BicepValue<string> _resourceGroupName;
+        private BicepValue<DateTimeOffset> _changedTimeUtc;
 
         /// <summary> Creates a new ResourceMoveChangeHistory. </summary>
         public ResourceMoveChangeHistory()
@@ -51,12 +53,28 @@ namespace Azure.Provisioning.EventGrid
             }
         }
 
+        /// <summary> Gets or sets the ChangedTimeUtc. </summary>
+        public BicepValue<DateTimeOffset> ChangedTimeUtc
+        {
+            get
+            {
+                Initialize();
+                return _changedTimeUtc;
+            }
+            set
+            {
+                Initialize();
+                _changedTimeUtc.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ResourceMoveChangeHistory. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _azureSubscriptionId = DefineProperty<string>(nameof(AzureSubscriptionId), new string[] { "azureSubscriptionId" });
             _resourceGroupName = DefineProperty<string>(nameof(ResourceGroupName), new string[] { "resourceGroupName" });
+            _changedTimeUtc = DefineProperty<DateTimeOffset>(nameof(ChangedTimeUtc), new string[] { "changedTimeUtc" }, format: "O");
             DefineAdditionalProperties();
         }
 

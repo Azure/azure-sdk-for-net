@@ -13,8 +13,8 @@ public partial class PartnerEventSubscriptionDestination
     private BicepValue<string> _resourceId;
 
     /// <summary> The Azure Resource ID of the partner destination. </summary>
-    // The generated property uses ResourceIdentifier. Preserve the released string property and
-    // the nested properties.resourceId wire path used by the generated payload.
+    // TypeSpec and the management library use ResourceIdentifier. Preserve the released
+    // provisioning string type and nested wire path to avoid a breaking API change.
     [CodeGenMember("ResourceId")]
     public BicepValue<string> ResourceId
     {
@@ -32,6 +32,6 @@ public partial class PartnerEventSubscriptionDestination
 
     partial void DefineAdditionalProperties()
     {
-        _resourceId = DefineProperty<string>(nameof(ResourceId), ["properties", "resourceId"], isRequired: true);
+        _resourceId = DefineProperty<string>(nameof(ResourceId), ["properties", "resourceId"]);
     }
 }

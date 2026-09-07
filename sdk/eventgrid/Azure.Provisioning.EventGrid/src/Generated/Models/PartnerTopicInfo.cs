@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,6 +14,7 @@ namespace Azure.Provisioning.EventGrid
     /// <summary> Properties of the corresponding partner topic of a Channel. </summary>
     public partial class PartnerTopicInfo : ProvisionableConstruct
     {
+        private BicepValue<Guid> _azureSubscriptionId;
         private BicepValue<string> _resourceGroupName;
         private BicepValue<string> _name;
         private PartnerTopicEventTypeInfo _eventTypeInfo;
@@ -21,6 +23,21 @@ namespace Azure.Provisioning.EventGrid
         /// <summary> Creates a new PartnerTopicInfo. </summary>
         public PartnerTopicInfo()
         {
+        }
+
+        /// <summary> Gets or sets the AzureSubscriptionId. </summary>
+        public BicepValue<Guid> AzureSubscriptionId
+        {
+            get
+            {
+                Initialize();
+                return _azureSubscriptionId;
+            }
+            set
+            {
+                Initialize();
+                _azureSubscriptionId.Assign(value);
+            }
         }
 
         /// <summary> Gets or sets the ResourceGroupName. </summary>
@@ -87,6 +104,7 @@ namespace Azure.Provisioning.EventGrid
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _azureSubscriptionId = DefineProperty<Guid>(nameof(AzureSubscriptionId), new string[] { "azureSubscriptionId" });
             _resourceGroupName = DefineProperty<string>(nameof(ResourceGroupName), new string[] { "resourceGroupName" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _eventTypeInfo = DefineModelProperty<PartnerTopicEventTypeInfo>(nameof(EventTypeInfo), new string[] { "eventTypeInfo" });

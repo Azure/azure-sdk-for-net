@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.EventGrid
@@ -12,15 +13,33 @@ namespace Azure.Provisioning.EventGrid
     /// <summary> The identity information for retrieving the certificate for custom JWT authentication. </summary>
     public partial class CustomJwtAuthenticationManagedIdentity : ProvisionableConstruct
     {
+        private BicepValue<CustomJwtAuthenticationManagedIdentityType> _identityType;
+
         /// <summary> Creates a new CustomJwtAuthenticationManagedIdentity. </summary>
         public CustomJwtAuthenticationManagedIdentity()
         {
+        }
+
+        /// <summary> Gets or sets the IdentityType. </summary>
+        public BicepValue<CustomJwtAuthenticationManagedIdentityType> IdentityType
+        {
+            get
+            {
+                Initialize();
+                return _identityType;
+            }
+            set
+            {
+                Initialize();
+                _identityType.Assign(value);
+            }
         }
 
         /// <summary> Define all the provisionable properties for CustomJwtAuthenticationManagedIdentity. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _identityType = DefineProperty<CustomJwtAuthenticationManagedIdentityType>(nameof(IdentityType), new string[] { "type" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

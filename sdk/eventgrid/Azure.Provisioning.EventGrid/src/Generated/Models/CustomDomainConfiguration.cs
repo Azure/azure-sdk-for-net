@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -16,6 +17,7 @@ namespace Azure.Provisioning.EventGrid
         private BicepValue<string> _fullyQualifiedDomainName;
         private BicepValue<CustomDomainValidationState> _validationState;
         private CustomDomainIdentity _identity;
+        private BicepValue<Uri> _certificateUri;
         private BicepValue<string> _expectedTxtRecordName;
         private BicepValue<string> _expectedTxtRecordValue;
 
@@ -69,6 +71,21 @@ namespace Azure.Provisioning.EventGrid
             }
         }
 
+        /// <summary> Gets or sets the CertificateUri. </summary>
+        public BicepValue<Uri> CertificateUri
+        {
+            get
+            {
+                Initialize();
+                return _certificateUri;
+            }
+            set
+            {
+                Initialize();
+                _certificateUri.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the ExpectedTxtRecordName. </summary>
         public BicepValue<string> ExpectedTxtRecordName
         {
@@ -106,6 +123,7 @@ namespace Azure.Provisioning.EventGrid
             _fullyQualifiedDomainName = DefineProperty<string>(nameof(FullyQualifiedDomainName), new string[] { "fullyQualifiedDomainName" }, isRequired: true);
             _validationState = DefineProperty<CustomDomainValidationState>(nameof(ValidationState), new string[] { "validationState" });
             _identity = DefineModelProperty<CustomDomainIdentity>(nameof(Identity), new string[] { "identity" });
+            _certificateUri = DefineProperty<Uri>(nameof(CertificateUri), new string[] { "certificateUrl" });
             _expectedTxtRecordName = DefineProperty<string>(nameof(ExpectedTxtRecordName), new string[] { "expectedTxtRecordName" });
             _expectedTxtRecordValue = DefineProperty<string>(nameof(ExpectedTxtRecordValue), new string[] { "expectedTxtRecordValue" });
             DefineAdditionalProperties();
