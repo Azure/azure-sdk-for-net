@@ -88,6 +88,28 @@ describe("resource projection metadata", () => {
     deepStrictEqual(projection.nameConstraints, {});
   });
 
+  it("uses the resource type name override for a grouped projection", () => {
+    const first = createResource({
+      path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/first",
+      resourceName: "FirstWidget",
+      singletonResourceName: "first"
+    });
+    const second = createResource({
+      path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/second",
+      resourceName: "SecondWidget",
+      singletonResourceName: "second"
+    });
+
+    const projection = buildResourceProjectionMetadata(
+      [first, second],
+      "Widget",
+      new Map([["microsoft.test/widgets", "CustomizedWidget"]])
+    );
+
+    strictEqual(projection.resourceName, "CustomizedWidget");
+    strictEqual(projection.singletonResourceName, undefined);
+  });
+
   it("compares resource and parent paths structurally", () => {
     const first = createResource({
       path: "/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Test/widgets/{widgetName}",

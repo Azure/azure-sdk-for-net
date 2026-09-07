@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.AppService
 {
     /// <summary> CsmPublishingCredentialsPoliciesEntity resource specific properties. </summary>
-    public partial class CsmPublishingCredentialsPoliciesEntityProperties : ProvisionableConstruct
+    internal partial class CsmPublishingCredentialsPoliciesEntityProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _allow;
 

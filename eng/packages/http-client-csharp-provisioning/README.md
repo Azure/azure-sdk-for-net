@@ -38,3 +38,20 @@ tsp compile . --emit=@azure-typespec/http-client-csharp-provisioning
 emit:
   - '@azure-typespec/http-client-csharp-provisioning'
 ```
+
+## Resource name customization
+
+When one TypeSpec model backs multiple ARM resource types, use the
+`provisioning-resource-name` client option to assign a name to each generated
+resource projection:
+
+```typespec
+#suppress "@azure-tools/typespec-client-generator-core/client-option" "Provisioning resource names"
+#suppress "@azure-tools/typespec-client-generator-core/client-option-requires-scope" "Provisioning resource names"
+@@clientOption(MyResource, "provisioning-resource-name", #{
+  "Microsoft.Example/widgets": "Widget",
+  "Microsoft.Example/widgets/children": "WidgetChild",
+}, "csharp");
+```
+
+Keys are matched case-insensitively against the complete ARM resource type.

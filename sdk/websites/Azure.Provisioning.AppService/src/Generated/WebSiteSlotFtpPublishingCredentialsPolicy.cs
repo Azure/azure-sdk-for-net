@@ -13,7 +13,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppService
 {
     /// <summary> Publishing Credentials Policies parameters. </summary>
-    public partial class CsmPublishingCredentialsPoliciesEntity : ProvisionableResource
+    public partial class WebSiteSlotFtpPublishingCredentialsPolicy : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -22,10 +22,10 @@ namespace Azure.Provisioning.AppService
         private BicepValue<string> _kind;
         private ResourceReference<WebSiteSlot> _parent;
 
-        /// <summary> Creates a new CsmPublishingCredentialsPoliciesEntity. </summary>
+        /// <summary> Creates a new WebSiteSlotFtpPublishingCredentialsPolicy. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public CsmPublishingCredentialsPoliciesEntity(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies", resourceVersion ?? "2025-03-01")
+        public WebSiteSlotFtpPublishingCredentialsPolicy(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies", resourceVersion ?? "2025-03-01")
         {
         }
 
@@ -65,7 +65,7 @@ namespace Azure.Provisioning.AppService
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        public CsmPublishingCredentialsPoliciesEntityProperties Properties
+        internal CsmPublishingCredentialsPoliciesEntityProperties Properties
         {
             get
             {
@@ -75,7 +75,7 @@ namespace Azure.Provisioning.AppService
             set
             {
                 Initialize();
-                this.AssignOrReplace(ref _properties, value);
+                AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -109,7 +109,24 @@ namespace Azure.Provisioning.AppService
             }
         }
 
-        /// <summary> Define all the provisionable properties for CsmPublishingCredentialsPoliciesEntity. </summary>
+        /// <summary> Gets or sets the Allow. </summary>
+        public BicepValue<bool> Allow
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Allow;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CsmPublishingCredentialsPoliciesEntityProperties();
+                }
+                Properties.Allow = value;
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for WebSiteSlotFtpPublishingCredentialsPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -119,20 +136,20 @@ namespace Azure.Provisioning.AppService
             _properties = DefineModelProperty<CsmPublishingCredentialsPoliciesEntityProperties>(nameof(Properties), new string[] { "properties" });
             _kind = DefineProperty<string>(nameof(Kind), new string[] { "kind" });
             _parent = DefineResource<WebSiteSlot>("Parent", new string[] { "parent" }, isRequired: true);
-            this.DefineAdditionalProperties();
+            DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing CsmPublishingCredentialsPoliciesEntity. </summary>
+        /// <summary> Creates a reference to an existing WebSiteSlotFtpPublishingCredentialsPolicy. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static CsmPublishingCredentialsPoliciesEntity FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static WebSiteSlotFtpPublishingCredentialsPolicy FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            CsmPublishingCredentialsPoliciesEntity result = new CsmPublishingCredentialsPoliciesEntity(bicepIdentifier, resourceVersion);
+            WebSiteSlotFtpPublishingCredentialsPolicy result = new WebSiteSlotFtpPublishingCredentialsPolicy(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for CsmPublishingCredentialsPoliciesEntity that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for WebSiteSlotFtpPublishingCredentialsPolicy that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

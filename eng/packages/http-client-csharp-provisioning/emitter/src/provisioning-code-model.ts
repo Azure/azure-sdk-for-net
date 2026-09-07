@@ -2,8 +2,13 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 import { ManagementCodeModelTransformer } from "@azure-typespec/http-client-csharp-mgmt";
+import {
+  getClientOptions,
+  SdkModelType
+} from "@azure-tools/typespec-client-generator-core";
 import { CodeModel, InputModelType } from "@typespec/http-client-csharp";
 
+type CSharpEmitterContext = Parameters<ManagementCodeModelTransformer>[1];
 type ArmProviderSchema = Parameters<ManagementCodeModelTransformer>[2];
 type ArmResourceSchema = ArmProviderSchema["resources"][number];
 type ArmResourceMetadata = ArmResourceSchema["metadata"];
@@ -18,6 +23,7 @@ type ProjectionScopeOperation = "Create" | "Read";
 
 const provisioningProviderSchema =
   "Azure.ClientGenerator.Core.@provisioningProviderSchema";
+const provisioningResourceNameKey = "provisioning-resource-name";
 
 interface ResourceProjection {
   resourceModel: InputModelType;
@@ -39,9 +45,14 @@ interface ResourceProjection {
 
 export function updateProvisioningCodeModel(
   codeModel: CodeModel,
+  sdkContext: CSharpEmitterContext,
   armProviderSchema: ArmProviderSchema
 ): CodeModel {
-  const projections = buildResourceProjections(codeModel, armProviderSchema);
+  const projections = buildResourceProjections(
+    codeModel,
+    sdkContext,
+    armProviderSchema
+  );
   const { models, enums, modelSettableUsage } =
     collectReachableTypes(projections);
 
@@ -82,12 +93,19 @@ export function updateProvisioningCodeModel(
 
 function buildResourceProjections(
   codeModel: CodeModel,
+  sdkContext: CSharpEmitterContext,
   armProviderSchema: ArmProviderSchema
 ): ResourceProjection[] {
   // Resource metadata identifies body models by cross-language ID, while the
   // reachability analysis below needs the actual model instances.
   const modelsById = new Map(
     codeModel.models.map((model) => [model.crossLanguageDefinitionId, model])
+  );
+  const sdkModelsById = new Map(
+    sdkContext.sdkPackage.models.map((model) => [
+      model.crossLanguageDefinitionId,
+      model
+    ])
   );
   const groups = new Map<string, ArmResourceSchema[]>();
 
@@ -118,7 +136,10 @@ function buildResourceProjections(
     // resources remain reachable for existing-resource scenarios.
     const projection = buildResourceProjectionMetadata(
       resources,
-      resourceModel.name
+      resourceModel.name,
+      getProvisioningResourceNameOverrides(
+        sdkModelsById.get(resources[0].resourceModelId)
+      )
     );
     return {
       ...projection,
@@ -130,17 +151,22 @@ function buildResourceProjections(
 
 export function buildResourceProjectionMetadata(
   resources: ArmResourceSchema[],
-  defaultResourceName: string
+  defaultResourceName: string,
+  resourceNameOverrides?: ReadonlyMap<string, string>
 ): Omit<ResourceProjection, "resourceModel" | "isSettable"> {
   const first = resources[0];
   const writableScopes = collectScopes(resources, "Create");
 
   return {
     resourceModelId: first.resourceModelId,
-    resourceName: getConsistentValue(
-      resources.map((resource) => resource.metadata.resourceName),
-      defaultResourceName
-    ),
+    resourceName:
+      resourceNameOverrides?.get(
+        normalizeResourceType(first.metadata.resourceType)
+      ) ??
+      getConsistentValue(
+        resources.map((resource) => resource.metadata.resourceName),
+        defaultResourceName
+      ),
     resourceType: first.metadata.resourceType,
     singletonResourceName: getConsistentValue(
       resources.map((resource) => resource.metadata.singletonResourceName),
@@ -175,6 +201,43 @@ export function buildResourceProjectionMetadata(
     writableScopes,
     isExtensionResource: writableScopes.some(isExtensionScope)
   };
+}
+
+function getProvisioningResourceNameOverrides(
+  model: SdkModelType | undefined
+): ReadonlyMap<string, string> | undefined {
+  if (!model) {
+    return undefined;
+  }
+
+  const value = getClientOptions(model, provisioningResourceNameKey);
+  if (value === undefined) {
+    return undefined;
+  }
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    throw new Error(
+      `Client option '${provisioningResourceNameKey}' on '${model.crossLanguageDefinitionId}' must be a map of ARM resource types to resource names.`
+    );
+  }
+
+  const overrides = new Map<string, string>();
+  for (const [resourceType, resourceName] of Object.entries(value)) {
+    if (
+      resourceType.length === 0 ||
+      typeof resourceName !== "string" ||
+      resourceName.length === 0
+    ) {
+      throw new Error(
+        `Client option '${provisioningResourceNameKey}' on '${model.crossLanguageDefinitionId}' must contain non-empty ARM resource type keys and resource name values.`
+      );
+    }
+    overrides.set(normalizeResourceType(resourceType), resourceName);
+  }
+  return overrides;
+}
+
+function normalizeResourceType(resourceType: string): string {
+  return resourceType.toLowerCase();
 }
 
 function resourcePathsEqual(

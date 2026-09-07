@@ -1402,28 +1402,6 @@ namespace Azure.Provisioning.AppService
         FixedTime = 0,
         IdentityProviderDerived = 1,
     }
-    public partial class CsmPublishingCredentialsPoliciesEntity : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public CsmPublishingCredentialsPoliciesEntity(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.AppService.WebSiteSlot Parent { get { throw null; } set { } }
-        public Azure.Provisioning.AppService.CsmPublishingCredentialsPoliciesEntityProperties Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.AppService.CsmPublishingCredentialsPoliciesEntity FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2025_03_01;
-        }
-    }
-    public partial class CsmPublishingCredentialsPoliciesEntityProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public CsmPublishingCredentialsPoliciesEntityProperties() { }
-        public Azure.Provisioning.BicepValue<bool> Allow { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
     public partial class CsmSiteDeploymentStatus : Azure.Provisioning.Primitives.ProvisionableResource
     {
         internal CsmSiteDeploymentStatus() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -6327,6 +6305,22 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2025_03_01;
         }
     }
+    public partial class WebSiteFtpPublishingCredentialsPolicy : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public WebSiteFtpPublishingCredentialsPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<bool> Allow { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppService.WebSite Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppService.WebSiteFtpPublishingCredentialsPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2025_03_01;
+        }
+    }
     public partial class WebSiteHybridConnection : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public WebSiteHybridConnection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -6875,6 +6869,22 @@ namespace Azure.Provisioning.AppService
             public static readonly string V2023_12_01;
             public static readonly string V2024_04_01;
             public static readonly string V2024_11_01;
+            public static readonly string V2025_03_01;
+        }
+    }
+    public partial class WebSiteSlotFtpPublishingCredentialsPolicy : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public WebSiteSlotFtpPublishingCredentialsPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<bool> Allow { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.AppService.WebSiteSlot Parent { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.AppService.WebSiteSlotFtpPublishingCredentialsPolicy FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
             public static readonly string V2025_03_01;
         }
     }

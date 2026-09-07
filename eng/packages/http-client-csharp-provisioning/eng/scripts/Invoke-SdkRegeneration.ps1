@@ -18,10 +18,8 @@
     Full path to the azure-sdk-for-net repository root.
 
 .PARAMETER LocalSpecRepoPath
-    Path to a local azure-rest-api-specs repo root. When specified, spec files are
-    copied from this directory instead of fetching from GitHub via sparse clone.
-    The path should point to the repo root (e.g., C:\src\azure-rest-api-specs);
-    the script joins it with the 'directory' value from tsp-location.yaml.
+    Path to the local TypeSpec directory identified by tsp-location.yaml. A local
+    azure-rest-api-specs repository root is also accepted for compatibility.
 #>
 
 param(
@@ -69,16 +67,35 @@ try {
     New-Item $tempTypeSpecDir -ItemType Directory -Force | Out-Null
 
     if ($LocalSpecRepoPath) {
-        # Use local spec repo directly — normalize path separators for cross-OS compatibility
+        # Accept either the exact TypeSpec directory or the repository root.
         $normalizedDir = $directory -replace '[/\\]', [IO.Path]::DirectorySeparatorChar
-        $source = Join-Path $LocalSpecRepoPath $normalizedDir
+        $normalizedLocalPath = [IO.Path]::GetFullPath($LocalSpecRepoPath).TrimEnd(
+            [IO.Path]::DirectorySeparatorChar,
+            [IO.Path]::AltDirectorySeparatorChar)
+        $normalizedDir = $normalizedDir.Trim(
+            [IO.Path]::DirectorySeparatorChar,
+            [IO.Path]::AltDirectorySeparatorChar)
+
+        if ($normalizedLocalPath.EndsWith($normalizedDir, [StringComparison]::OrdinalIgnoreCase)) {
+            $source = $normalizedLocalPath
+            $localSpecRepoRoot = $normalizedLocalPath.Substring(
+                0,
+                $normalizedLocalPath.Length - $normalizedDir.Length).TrimEnd(
+                    [IO.Path]::DirectorySeparatorChar,
+                    [IO.Path]::AltDirectorySeparatorChar)
+        }
+        else {
+            $source = Join-Path $normalizedLocalPath $normalizedDir
+            $localSpecRepoRoot = $normalizedLocalPath
+        }
+
         if (-not (Test-Path $source)) { throw "Local spec directory not found: $source" }
         Copy-Item -Path $source -Destination $tempTypeSpecDir -Recurse -Force
 
         if ($additionalDirs) {
             foreach ($addDir in $additionalDirs) {
                 $normalizedAddDir = $addDir -replace '[/\\]', [IO.Path]::DirectorySeparatorChar
-                $addSource = Join-Path $LocalSpecRepoPath $normalizedAddDir
+                $addSource = Join-Path $localSpecRepoRoot $normalizedAddDir
                 Copy-Item -Path $addSource -Destination $tempTypeSpecDir -Recurse -Force
             }
         }
