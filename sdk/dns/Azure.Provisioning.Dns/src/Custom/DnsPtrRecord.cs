@@ -22,6 +22,7 @@ namespace Azure.Provisioning.Dns;
 [CodeGenSuppress("Cname")]
 public partial class DnsPtrRecord
 {
+    // Map the shared record-set properties member to the resource-specific public API name.
     /// <summary> The PTR record data in the record set. </summary>
     [CodeGenMember("DnsPtrRecords")]
     public BicepList<DnsPtrRecordInfo> PtrRecords

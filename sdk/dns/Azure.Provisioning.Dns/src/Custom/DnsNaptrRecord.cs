@@ -22,6 +22,7 @@ namespace Azure.Provisioning.Dns;
 [CodeGenSuppress("Cname")]
 public partial class DnsNaptrRecord
 {
+    // Map the shared record-set properties member to the resource-specific public API name.
     /// <summary> The NAPTR record data in the record set. </summary>
     [CodeGenMember("DnsNaptrRecords")]
     public BicepList<DnsNaptrRecordInfo> NaptrRecords

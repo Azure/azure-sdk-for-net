@@ -10,6 +10,8 @@ namespace Azure.Provisioning.Dns;
 
 internal partial class ZoneProperties
 {
+    // Keep WritableSubResource-backed properties at the original Bicep paths so the released
+    // DnsZone compatibility aliases remain functional while the preferred properties use DnsSubResourceInfo.
     private BicepList<WritableSubResource> _registrationVirtualNetworks;
     private BicepList<WritableSubResource> _resolutionVirtualNetworks;
 

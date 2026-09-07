@@ -24,6 +24,7 @@ namespace Azure.Provisioning.Dns;
 [CodeGenSuppress("Cname")]
 public partial class DnsSoaRecord
 {
+    // Map the shared record-set properties member to the resource-specific public API name.
     /// <summary> The SOA record data in the record set. </summary>
     [CodeGenMember("DnsSoaRecord")]
     public DnsSoaRecordInfo SoaRecordInfo

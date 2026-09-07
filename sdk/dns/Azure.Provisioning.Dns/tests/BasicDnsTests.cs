@@ -268,40 +268,4 @@ public class BasicDnsTests
             """
         );
     }
-
-    [Test]
-    public void CompatibilityAliasesForwardToPreferredProperties()
-    {
-        IPAddress ipv4Address = IPAddress.Parse("203.0.113.1");
-        DnsARecordInfo aRecordInfo = new();
-#pragma warning disable CS0618 // Verify the released compatibility alias forwards to the preferred property.
-        aRecordInfo.Ipv4Address = ipv4Address;
-#pragma warning restore CS0618
-        Assert.That(aRecordInfo.IPv4Address.Value, Is.EqualTo(ipv4Address));
-
-        IPAddress ipv6Address = IPAddress.Parse("2001:db8::1");
-        DnsAaaaRecordInfo aaaaRecordInfo = new();
-#pragma warning disable CS0618 // Verify the released compatibility alias forwards to the preferred property.
-        aaaaRecordInfo.Ipv6Address = ipv6Address;
-#pragma warning restore CS0618
-        Assert.That(aaaaRecordInfo.IPv6Address.Value, Is.EqualTo(ipv6Address));
-
-        DnsNSRecord nsRecord = new(nameof(nsRecord));
-        DnsNSRecordInfo nsRecordInfo = new();
-#pragma warning disable CS0618 // Verify the released compatibility alias forwards to the preferred property.
-        nsRecord.NSRecords = [nsRecordInfo];
-        BicepList<DnsNSRecordInfo> legacyNsRecords = nsRecord.NSRecords;
-#pragma warning restore CS0618
-        Assert.That(legacyNsRecords, Is.SameAs(nsRecord.NsRecords));
-        Assert.That(nsRecord.NsRecords, Has.Count.EqualTo(1));
-
-        DnsSoaRecord soaRecord = new(nameof(soaRecord));
-        DnsSoaRecordInfo soaRecordInfo = new();
-#pragma warning disable CS0618 // Verify the released compatibility alias forwards to the preferred property.
-        soaRecord.SoaRecord = soaRecordInfo;
-        DnsSoaRecordInfo legacySoaRecord = soaRecord.SoaRecord;
-#pragma warning restore CS0618
-        Assert.That(soaRecord.SoaRecordInfo, Is.SameAs(soaRecordInfo));
-        Assert.That(legacySoaRecord, Is.SameAs(soaRecord.SoaRecordInfo));
-    }
 }

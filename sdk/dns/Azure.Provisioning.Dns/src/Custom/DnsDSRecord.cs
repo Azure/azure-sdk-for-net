@@ -22,6 +22,7 @@ namespace Azure.Provisioning.Dns;
 [CodeGenSuppress("Cname")]
 public partial class DnsDSRecord
 {
+    // Map the shared record-set properties member to the resource-specific public API name.
     /// <summary> The DS record data in the record set. </summary>
     [CodeGenMember("DnsDSRecords")]
     public BicepList<DnsDSRecordInfo> DsRecords

@@ -22,6 +22,7 @@ namespace Azure.Provisioning.Dns;
 [CodeGenSuppress("Cname")]
 public partial class DnsCaaRecord
 {
+    // Map the shared record-set properties member to the resource-specific public API name.
     /// <summary> The CAA record data in the record set. </summary>
     [CodeGenMember("DnsCaaRecords")]
     public BicepList<DnsCaaRecordInfo> CaaRecords
