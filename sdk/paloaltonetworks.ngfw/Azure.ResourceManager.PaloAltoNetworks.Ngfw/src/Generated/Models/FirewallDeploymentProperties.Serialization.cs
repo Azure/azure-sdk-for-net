@@ -85,6 +85,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WritePropertyName("panEtag"u8);
                 writer.WriteStringValue(PanETag.Value.ToString());
             }
+            if (Optional.IsDefined(FirewallSku))
+            {
+                writer.WritePropertyName("firewallSku"u8);
+                writer.WriteStringValue(FirewallSku);
+            }
             writer.WritePropertyName("networkProfile"u8);
             writer.WriteObjectValue(NetworkProfile, options);
             if (Optional.IsDefined(IsPanoramaManaged))
@@ -176,6 +181,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 return null;
             }
             ETag? panETag = default;
+            string firewallSku = default;
             FirewallNetworkProfile networkProfile = default;
             FirewallBooleanType? isPanoramaManaged = default;
             FirewallBooleanType? isStrataCloudManaged = default;
@@ -197,6 +203,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         continue;
                     }
                     panETag = new ETag(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("firewallSku"u8))
+                {
+                    firewallSku = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("networkProfile"u8))
@@ -294,6 +305,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             }
             return new FirewallDeploymentProperties(
                 panETag,
+                firewallSku,
                 networkProfile,
                 isPanoramaManaged,
                 isStrataCloudManaged,

@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
 {
     /// <summary>
-    /// A class representing a MetricsObjectFirewall along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MetricsObjectFirewallResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="PaloAltoNetworksFirewallResource"/> using the GetMetricsObjectFirewall method.
+    /// A class representing a LogIngestionSettingsResource along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="LogIngestionSettingsResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="PaloAltoNetworksFirewallResource"/> using the GetLogIngestionSettingsResource method.
     /// </summary>
-    public partial class MetricsObjectFirewallResource : ArmResource
+    public partial class LogIngestionSettingsResource : ArmResource
     {
-        private readonly ClientDiagnostics _metricsObjectFirewallClientDiagnostics;
-        private readonly MetricsObjectFirewall _metricsObjectFirewallRestClient;
-        private readonly MetricsObjectFirewallData _data;
+        private readonly ClientDiagnostics _logIngestionSettingsResourcesClientDiagnostics;
+        private readonly LogIngestionSettingsResources _logIngestionSettingsResourcesRestClient;
+        private readonly LogIngestionSettingsResourceData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/firewalls/metrics";
+        public static readonly ResourceType ResourceType = "PaloAltoNetworks.Cloudngfw/firewalls/logIngestionSettings";
 
-        /// <summary> Initializes a new instance of MetricsObjectFirewallResource for mocking. </summary>
-        protected MetricsObjectFirewallResource()
+        /// <summary> Initializes a new instance of LogIngestionSettingsResource for mocking. </summary>
+        protected LogIngestionSettingsResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricsObjectFirewallResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogIngestionSettingsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal MetricsObjectFirewallResource(ArmClient client, MetricsObjectFirewallData data) : this(client, data.Id)
+        internal LogIngestionSettingsResource(ArmClient client, LogIngestionSettingsResourceData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="MetricsObjectFirewallResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="LogIngestionSettingsResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal MetricsObjectFirewallResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal LogIngestionSettingsResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string metricsObjectFirewallApiVersion);
-            _metricsObjectFirewallClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
-            _metricsObjectFirewallRestClient = new MetricsObjectFirewall(_metricsObjectFirewallClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, metricsObjectFirewallApiVersion ?? "2026-07-29-preview");
+            TryGetApiVersion(ResourceType, out string logIngestionSettingsResourceApiVersion);
+            _logIngestionSettingsResourcesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.PaloAltoNetworks.Ngfw", ResourceType.Namespace, Diagnostics);
+            _logIngestionSettingsResourcesRestClient = new LogIngestionSettingsResources(_logIngestionSettingsResourcesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, logIngestionSettingsResourceApiVersion ?? "2026-07-29-preview");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual MetricsObjectFirewallData Data
+        public virtual LogIngestionSettingsResourceData Data
         {
             get
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="firewallName"> The firewallName. </param>
         public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string firewallName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/metrics/default";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/logIngestionSettings/default";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -91,15 +91,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Create a MetricsObjectFirewallResource
+        /// Create or update the Log Ingestion Settings for a firewall. SYNC — forwards to the partner and returns 200 OK (or 201 Created on first create) with the persisted settings. commonDestination.monitorConfigurationsV2 (dcrId, logIngestionEndpoint, dcrImmutableId, streamName) drives where the firewall logs are ingested.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/metrics/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/logIngestionSettings/default. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MetricsObjectFirewallResources_CreateOrUpdate. </description>
+        /// <description> LogIngestionSettingsResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MetricsObjectFirewallResource"/>. </description>
+        /// <description> <see cref="LogIngestionSettingsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -115,11 +115,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<MetricsObjectFirewallResource>> CreateOrUpdateAsync(WaitUntil waitUntil, MetricsObjectFirewallData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<LogIngestionSettingsResource>> CreateOrUpdateAsync(WaitUntil waitUntil, LogIngestionSettingsResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _metricsObjectFirewallClientDiagnostics.CreateScope("MetricsObjectFirewallResource.CreateOrUpdate");
+            using DiagnosticScope scope = _logIngestionSettingsResourcesClientDiagnostics.CreateScope("LogIngestionSettingsResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -127,15 +127,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricsObjectFirewallRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, MetricsObjectFirewallData.ToRequestContent(data), context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NgfwArmOperation<MetricsObjectFirewallResource> operation = new NgfwArmOperation<MetricsObjectFirewallResource>(
-                    new MetricsObjectFirewallResourceOperationSource(Client),
-                    _metricsObjectFirewallClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                HttpMessage message = _logIngestionSettingsResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, LogIngestionSettingsResourceData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<LogIngestionSettingsResourceData> response = Response.FromValue(LogIngestionSettingsResourceData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NgfwArmOperation<LogIngestionSettingsResource> operation = new NgfwArmOperation<LogIngestionSettingsResource>(Response.FromValue(new LogIngestionSettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -150,15 +147,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Create a MetricsObjectFirewallResource
+        /// Create or update the Log Ingestion Settings for a firewall. SYNC — forwards to the partner and returns 200 OK (or 201 Created on first create) with the persisted settings. commonDestination.monitorConfigurationsV2 (dcrId, logIngestionEndpoint, dcrImmutableId, streamName) drives where the firewall logs are ingested.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/metrics/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/logIngestionSettings/default. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MetricsObjectFirewallResources_CreateOrUpdate. </description>
+        /// <description> LogIngestionSettingsResources_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -166,7 +163,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MetricsObjectFirewallResource"/>. </description>
+        /// <description> <see cref="LogIngestionSettingsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -174,11 +171,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<MetricsObjectFirewallResource> CreateOrUpdate(WaitUntil waitUntil, MetricsObjectFirewallData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<LogIngestionSettingsResource> CreateOrUpdate(WaitUntil waitUntil, LogIngestionSettingsResourceData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _metricsObjectFirewallClientDiagnostics.CreateScope("MetricsObjectFirewallResource.CreateOrUpdate");
+            using DiagnosticScope scope = _logIngestionSettingsResourcesClientDiagnostics.CreateScope("LogIngestionSettingsResource.CreateOrUpdate");
             scope.Start();
             try
             {
@@ -186,15 +183,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricsObjectFirewallRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, MetricsObjectFirewallData.ToRequestContent(data), context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                NgfwArmOperation<MetricsObjectFirewallResource> operation = new NgfwArmOperation<MetricsObjectFirewallResource>(
-                    new MetricsObjectFirewallResourceOperationSource(Client),
-                    _metricsObjectFirewallClientDiagnostics,
-                    Pipeline,
-                    message.Request,
-                    response,
-                    OperationFinalStateVia.AzureAsyncOperation);
+                HttpMessage message = _logIngestionSettingsResourcesRestClient.CreateCreateOrUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, LogIngestionSettingsResourceData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<LogIngestionSettingsResourceData> response = Response.FromValue(LogIngestionSettingsResourceData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NgfwArmOperation<LogIngestionSettingsResource> operation = new NgfwArmOperation<LogIngestionSettingsResource>(Response.FromValue(new LogIngestionSettingsResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
@@ -209,15 +203,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Get a MetricsObjectFirewallResource
+        /// Get the Log Ingestion Settings for a firewall. Live read from the partner. Returns 200 OK with the current settings, or 404 when log ingestion has not been configured.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/metrics/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/logIngestionSettings/default. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MetricsObjectFirewallResources_Get. </description>
+        /// <description> LogIngestionSettingsResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -225,14 +219,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MetricsObjectFirewallResource"/>. </description>
+        /// <description> <see cref="LogIngestionSettingsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<MetricsObjectFirewallResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<LogIngestionSettingsResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _metricsObjectFirewallClientDiagnostics.CreateScope("MetricsObjectFirewallResource.Get");
+            using DiagnosticScope scope = _logIngestionSettingsResourcesClientDiagnostics.CreateScope("LogIngestionSettingsResource.Get");
             scope.Start();
             try
             {
@@ -240,14 +234,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricsObjectFirewallRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _logIngestionSettingsResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<MetricsObjectFirewallData> response = Response.FromValue(MetricsObjectFirewallData.FromResponse(result), result);
+                Response<LogIngestionSettingsResourceData> response = Response.FromValue(LogIngestionSettingsResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MetricsObjectFirewallResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogIngestionSettingsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -257,15 +251,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Get a MetricsObjectFirewallResource
+        /// Get the Log Ingestion Settings for a firewall. Live read from the partner. Returns 200 OK with the current settings, or 404 when log ingestion has not been configured.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/metrics/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/logIngestionSettings/default. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MetricsObjectFirewallResources_Get. </description>
+        /// <description> LogIngestionSettingsResources_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -273,14 +267,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MetricsObjectFirewallResource"/>. </description>
+        /// <description> <see cref="LogIngestionSettingsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<MetricsObjectFirewallResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<LogIngestionSettingsResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _metricsObjectFirewallClientDiagnostics.CreateScope("MetricsObjectFirewallResource.Get");
+            using DiagnosticScope scope = _logIngestionSettingsResourcesClientDiagnostics.CreateScope("LogIngestionSettingsResource.Get");
             scope.Start();
             try
             {
@@ -288,14 +282,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricsObjectFirewallRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _logIngestionSettingsResourcesRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<MetricsObjectFirewallData> response = Response.FromValue(MetricsObjectFirewallData.FromResponse(result), result);
+                Response<LogIngestionSettingsResourceData> response = Response.FromValue(LogIngestionSettingsResourceData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new MetricsObjectFirewallResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new LogIngestionSettingsResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -305,15 +299,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Delete a MetricsObjectFirewallResource
+        /// Delete (clear) the Log Ingestion Settings for a firewall. SYNC — soft-clears the DCR destination on the partner (logs have no partner delete API). Returns 200 on success or 204 when nothing is configured.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/metrics/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/logIngestionSettings/default. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MetricsObjectFirewallResources_Delete. </description>
+        /// <description> LogIngestionSettingsResources_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -321,7 +315,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MetricsObjectFirewallResource"/>. </description>
+        /// <description> <see cref="LogIngestionSettingsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -329,7 +323,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _metricsObjectFirewallClientDiagnostics.CreateScope("MetricsObjectFirewallResource.Delete");
+            using DiagnosticScope scope = _logIngestionSettingsResourcesClientDiagnostics.CreateScope("LogIngestionSettingsResource.Delete");
             scope.Start();
             try
             {
@@ -337,9 +331,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricsObjectFirewallRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _logIngestionSettingsResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                NgfwArmOperation operation = new NgfwArmOperation(_metricsObjectFirewallClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NgfwArmOperation operation = new NgfwArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
@@ -354,15 +350,15 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         }
 
         /// <summary>
-        /// Delete a MetricsObjectFirewallResource
+        /// Delete (clear) the Log Ingestion Settings for a firewall. SYNC — soft-clears the DCR destination on the partner (logs have no partner delete API). Returns 200 on success or 204 when nothing is configured.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/metrics/default. </description>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/PaloAltoNetworks.Cloudngfw/firewalls/{firewallName}/logIngestionSettings/default. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> MetricsObjectFirewallResources_Delete. </description>
+        /// <description> LogIngestionSettingsResources_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -370,7 +366,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="MetricsObjectFirewallResource"/>. </description>
+        /// <description> <see cref="LogIngestionSettingsResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -378,7 +374,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _metricsObjectFirewallClientDiagnostics.CreateScope("MetricsObjectFirewallResource.Delete");
+            using DiagnosticScope scope = _logIngestionSettingsResourcesClientDiagnostics.CreateScope("LogIngestionSettingsResource.Delete");
             scope.Start();
             try
             {
@@ -386,9 +382,11 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _metricsObjectFirewallRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
+                HttpMessage message = _logIngestionSettingsResourcesRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
-                NgfwArmOperation operation = new NgfwArmOperation(_metricsObjectFirewallClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                NgfwArmOperation operation = new NgfwArmOperation(response, rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletionResponse(cancellationToken);
