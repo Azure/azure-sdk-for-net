@@ -2,8 +2,14 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 import { ManagementCodeModelTransformer } from "@azure-typespec/http-client-csharp-mgmt";
+import {
+  getClientOptions,
+  SdkModelType
+} from "@azure-tools/typespec-client-generator-core";
 import { CodeModel, InputModelType } from "@typespec/http-client-csharp";
+import pluralize from "pluralize";
 
+type CSharpEmitterContext = Parameters<ManagementCodeModelTransformer>[1];
 type ArmProviderSchema = Parameters<ManagementCodeModelTransformer>[2];
 type ArmResourceSchema = ArmProviderSchema["resources"][number];
 type ArmResourceMetadata = ArmResourceSchema["metadata"];
@@ -18,6 +24,7 @@ type ProjectionScopeOperation = "Create" | "Read";
 
 const provisioningProviderSchema =
   "Azure.ClientGenerator.Core.@provisioningProviderSchema";
+const provisioningResourceNameKey = "provisioning-resource-name";
 
 interface ResourceProjection {
   resourceModel: InputModelType;
@@ -37,11 +44,24 @@ interface ResourceProjection {
   isExtensionResource: boolean;
 }
 
+interface PendingResourceProjection extends Omit<
+  ResourceProjection,
+  "resourceName"
+> {
+  resourceNameOverride?: string;
+  consistentResourceName?: string;
+}
+
 export function updateProvisioningCodeModel(
   codeModel: CodeModel,
+  sdkContext: CSharpEmitterContext,
   armProviderSchema: ArmProviderSchema
 ): CodeModel {
-  const projections = buildResourceProjections(codeModel, armProviderSchema);
+  const projections = buildResourceProjections(
+    codeModel,
+    sdkContext,
+    armProviderSchema
+  );
   const { models, enums, modelSettableUsage } =
     collectReachableTypes(projections);
 
@@ -82,12 +102,19 @@ export function updateProvisioningCodeModel(
 
 function buildResourceProjections(
   codeModel: CodeModel,
+  sdkContext: CSharpEmitterContext,
   armProviderSchema: ArmProviderSchema
 ): ResourceProjection[] {
   // Resource metadata identifies body models by cross-language ID, while the
   // reachability analysis below needs the actual model instances.
   const modelsById = new Map(
     codeModel.models.map((model) => [model.crossLanguageDefinitionId, model])
+  );
+  const sdkModelsById = new Map(
+    sdkContext.sdkPackage.models.map((model) => [
+      model.crossLanguageDefinitionId,
+      model
+    ])
   );
   const groups = new Map<string, ArmResourceSchema[]>();
 
@@ -105,7 +132,7 @@ function buildResourceProjections(
     }
   }
 
-  return Array.from(groups.values(), (resources) => {
+  const projections = Array.from(groups.values(), (resources) => {
     const resourceModel = modelsById.get(resources[0].resourceModelId);
     if (!resourceModel) {
       throw new Error(
@@ -116,31 +143,48 @@ function buildResourceProjections(
     // Like Bicep, treat the projection as deployable/settable only when at
     // least one grouped resource has a Create (PUT) operation. PATCH-only
     // resources remain reachable for existing-resource scenarios.
-    const projection = buildResourceProjectionMetadata(
-      resources,
-      resourceModel.name
+    const resourceNameOverrides = getProvisioningResourceNameOverrides(
+      sdkModelsById.get(resources[0].resourceModelId)
     );
+    const projection = buildResourceProjectionMetadata(resources);
     return {
       ...projection,
       resourceModel,
-      isSettable: projection.writableScopes.length > 0
+      isSettable: projection.writableScopes.length > 0,
+      resourceNameOverride: resourceNameOverrides?.get(
+        normalizeResourceType(projection.resourceType)
+      ),
+      consistentResourceName: getConsistentValue(
+        resources.map((resource) => resource.metadata.resourceName),
+        undefined
+      )
     };
   });
+
+  const projectionCountByModel = new Map<string, number>();
+  for (const projection of projections) {
+    projectionCountByModel.set(
+      projection.resourceModelId,
+      (projectionCountByModel.get(projection.resourceModelId) ?? 0) + 1
+    );
+  }
+
+  return projections.map((projection) =>
+    resolveResourceProjectionName(
+      projection,
+      projectionCountByModel.get(projection.resourceModelId) === 1
+    )
+  );
 }
 
 export function buildResourceProjectionMetadata(
-  resources: ArmResourceSchema[],
-  defaultResourceName: string
-): Omit<ResourceProjection, "resourceModel" | "isSettable"> {
+  resources: ArmResourceSchema[]
+): Omit<ResourceProjection, "resourceModel" | "resourceName" | "isSettable"> {
   const first = resources[0];
   const writableScopes = collectScopes(resources, "Create");
 
   return {
     resourceModelId: first.resourceModelId,
-    resourceName: getConsistentValue(
-      resources.map((resource) => resource.metadata.resourceName),
-      defaultResourceName
-    ),
     resourceType: first.metadata.resourceType,
     singletonResourceName: getConsistentValue(
       resources.map((resource) => resource.metadata.singletonResourceName),
@@ -175,6 +219,95 @@ export function buildResourceProjectionMetadata(
     writableScopes,
     isExtensionResource: writableScopes.some(isExtensionScope)
   };
+}
+
+function resolveResourceProjectionName(
+  projection: PendingResourceProjection,
+  isResourceModelUnique: boolean
+): ResourceProjection {
+  const {
+    resourceNameOverride,
+    consistentResourceName,
+    ...resolvedProjection
+  } = projection;
+
+  return {
+    ...resolvedProjection,
+    resourceName: determineResourceProjectionName(
+      resourceNameOverride,
+      consistentResourceName,
+      projection.resourceModel.name,
+      isResourceModelUnique,
+      projection.resourceType
+    )
+  };
+}
+
+export function determineResourceProjectionName(
+  resourceNameOverride: string | undefined,
+  consistentResourceName: string | undefined,
+  resourceModelName: string,
+  isResourceModelUnique: boolean,
+  resourceType: string
+): string {
+  return (
+    resourceNameOverride ??
+    consistentResourceName ??
+    (isResourceModelUnique
+      ? resourceModelName
+      : buildResourceNameFromResourceType(resourceType))
+  );
+}
+
+export function buildResourceNameFromResourceType(
+  resourceType: string
+): string {
+  const segments = resourceType.split("/").slice(1);
+  return segments
+    .map((segment) => {
+      const singularSegment = pluralize.singular(segment);
+      return singularSegment.length === 0
+        ? singularSegment
+        : singularSegment[0].toUpperCase() + singularSegment.slice(1);
+    })
+    .join("");
+}
+
+function getProvisioningResourceNameOverrides(
+  model: SdkModelType | undefined
+): ReadonlyMap<string, string> | undefined {
+  if (!model) {
+    return undefined;
+  }
+
+  const value = getClientOptions(model, provisioningResourceNameKey);
+  if (value === undefined) {
+    return undefined;
+  }
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    throw new Error(
+      `Client option '${provisioningResourceNameKey}' on '${model.crossLanguageDefinitionId}' must be a map of ARM resource types to resource names.`
+    );
+  }
+
+  const overrides = new Map<string, string>();
+  for (const [resourceType, resourceName] of Object.entries(value)) {
+    if (
+      resourceType.length === 0 ||
+      typeof resourceName !== "string" ||
+      resourceName.length === 0
+    ) {
+      throw new Error(
+        `Client option '${provisioningResourceNameKey}' on '${model.crossLanguageDefinitionId}' must contain non-empty ARM resource type keys and resource name values.`
+      );
+    }
+    overrides.set(normalizeResourceType(resourceType), resourceName);
+  }
+  return overrides;
+}
+
+function normalizeResourceType(resourceType: string): string {
+  return resourceType.toLowerCase();
 }
 
 function resourcePathsEqual(

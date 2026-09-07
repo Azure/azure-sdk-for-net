@@ -18,10 +18,9 @@
     Full path to the azure-sdk-for-net repository root.
 
 .PARAMETER LocalSpecRepoPath
-    Path to a local azure-rest-api-specs repo root. When specified, spec files are
-    copied from this directory instead of fetching from GitHub via sparse clone.
-    The path should point to the repo root (e.g., C:\src\azure-rest-api-specs);
-    the script joins it with the 'directory' value from tsp-location.yaml.
+    Path to a local azure-rest-api-specs repository root. The script appends the
+    'directory' value from tsp-location.yaml, so do not pass the TypeSpec
+    service directory itself.
 #>
 
 param(

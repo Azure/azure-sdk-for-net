@@ -46,4 +46,11 @@ public partial class FunctionAppScaleAndConcurrency : ProvisionableConstruct
         set { Initialize(); _httpPerInstanceConcurrency!.Assign(value); }
     }
     private BicepValue<float>? _httpPerInstanceConcurrency;
+
+    partial void DefineAdditionalProperties()
+    {
+        _maximumInstanceCount = DefineProperty<float>(nameof(MaximumInstanceCount), new string[] { "maximumInstanceCount" });
+        _instanceMemoryMB = DefineProperty<float>(nameof(InstanceMemoryMB), new string[] { "instanceMemoryMB" });
+        _httpPerInstanceConcurrency = DefineProperty<float>(nameof(HttpPerInstanceConcurrency), new string[] { "triggers", "http", "perInstanceConcurrency" });
+    }
 }

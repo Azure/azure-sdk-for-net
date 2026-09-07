@@ -24,9 +24,9 @@
     Number of parallel jobs (default: 4, min: 1). Set to 1 for sequential execution.
 
 .PARAMETER LocalSpecRepoPath
-    Path to a local azure-rest-api-specs repo. When specified, reads spec files from
-    this local directory instead of fetching from GitHub. Useful for fast iteration
-    when making spec changes alongside generator changes.
+    Path to a local azure-rest-api-specs repository root. The script appends the
+    'directory' value from tsp-location.yaml, so do not pass the TypeSpec
+    service directory itself.
 
 .PARAMETER SaveInputs
     When specified, passes save-inputs=true to the emitter to preserve tspCodeModel.json for debugging.
