@@ -376,20 +376,21 @@ namespace Azure.Generator.Management.Visitors
                 var effectiveParameter = (parameterMap is not null && parameterMap.TryGetValue(propertyParameter, out var updatedParameter))
                     ? updatedParameter
                     : propertyParameter;
-                AddParameterToCondition(effectiveParameter);
+                AddParameterToCondition(effectiveParameter, includeNonNullableReferenceType: false);
             }
             foreach (var directParameter in directParameters ?? [])
             {
-                AddParameterToCondition(directParameter);
+                AddParameterToCondition(directParameter, includeNonNullableReferenceType: true);
             }
             return result;
 
-            void AddParameterToCondition(ParameterProvider parameter)
+            void AddParameterToCondition(ParameterProvider parameter, bool includeNonNullableReferenceType)
             {
-                // A non-nullable parameter (e.g. a required value type kept as `T` in the
-                // public constructor) can never be null, so it must not appear in the
-                // "all params null → default the parent" guard.
-                if (parameter.Type.IsValueType && !parameter.Type.IsNullable)
+                // Preserve the legacy behavior for flattened/public-constructor parameters by skipping
+                // every non-nullable parameter. Direct model-factory reference parameters can still be
+                // omitted at runtime and therefore must participate in the all-null guard.
+                if (!parameter.Type.IsNullable
+                    && (!includeNonNullableReferenceType || parameter.Type.IsValueType))
                 {
                     return;
                 }
