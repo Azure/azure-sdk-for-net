@@ -1,7 +1,7 @@
 /**
- * Declaration node types for the Azure CDK serialization AST.
+ * Declaration node types for the Azure Provisioning Serialization AST.
  *
- * These represent Bicep declarations that the CDK serializer emits:
+ * These represent Bicep declarations that the library serializer emits:
  * parameters, variables, outputs, resources, and modules.
  */
 
@@ -15,15 +15,28 @@ namespace AzureCDK.Serialization;
 model DecoratorsNode {
   description?: string;
   secure?: true;
-  minValue?: int64str;
-  maxValue?: int64str;
-  minLength?: int64str;
-  maxLength?: int64str;
+  minValue?: safeint;
+  maxValue?: safeint;
+  minLength?: safeint;
+  maxLength?: safeint;
   metadata?: Record<ExpressionNode>;
   allowed?: ExpressionNode[];
   discriminator?: string;
   sealed?: true;
   export?: true;
+  batchSize?: safeint;
+}
+
+// ──────────────────────────────────────────────
+// Declaration bodies
+// ──────────────────────────────────────────────
+
+/** An object body, optionally guarded by an `if` or produced by a `for`. */
+@discriminated(#{ envelope: "none" })
+union DeclarableBodyNode {
+  object: ObjectValue,
+  "if-condition": IfConditionExpression,
+  "for-expression": ForExpression,
 }
 
 // ──────────────────────────────────────────────
@@ -79,7 +92,7 @@ model ResourceDeclarationNode {
   existing: boolean;
 
   /** The resource body. */
-  value: ObjectValue | IfConditionExpression | ForExpression;
+  value: DeclarableBodyNode;
 
   decorators?: DecoratorsNode;
 }
@@ -96,7 +109,7 @@ model ModuleDeclarationNode {
   path: string;
 
   /** The module body. */
-  value: ObjectValue | IfConditionExpression | ForExpression;
+  value: DeclarableBodyNode;
 
   decorators?: DecoratorsNode;
 }

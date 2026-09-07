@@ -14,8 +14,8 @@ namespace Azure.Provisioning.Expressions;
 /// </summary>
 internal static class DecoratorsNodeSerializer
 {
-    // Decorator fields that the schema defines as int64str (int64 encoded as JSON string)
-    private static readonly HashSet<string> Int64StrFields = new(StringComparer.Ordinal)
+    // These fields were encoded as strings by the previous schema revision.
+    private static readonly HashSet<string> LegacyStringNumericFields = new(StringComparer.Ordinal)
     {
         "minValue", "maxValue", "minLength", "maxLength"
     };
@@ -45,15 +45,10 @@ internal static class DecoratorsNodeSerializer
                 else if (funcCall.Arguments.Length == 1)
                 {
                     BicepExpression arg = funcCall.Arguments[0];
-                    if (arg is IntLiteralExpression intLit && Int64StrFields.Contains(name))
-                    {
-                        // Schema defines these as int64str — write as JSON string
-                        writer.WriteString(name, intLit.Value.ToString());
-                    }
-                    else if (arg is StringLiteralExpression strLit)
+                    if (arg is StringLiteralExpression strLit)
                         writer.WriteString(name, strLit.Value);
-                    else if (arg is IntLiteralExpression intLit2)
-                        writer.WriteNumber(name, intLit2.Value);
+                    else if (arg is IntLiteralExpression intLit)
+                        writer.WriteNumber(name, intLit.Value);
                     else if (arg is BoolLiteralExpression boolLit)
                         writer.WriteBoolean(name, boolLit.Value);
                     else
@@ -95,8 +90,8 @@ internal static class DecoratorsNodeSerializer
             else if (prop.Value.ValueKind == JsonValueKind.String)
             {
                 string strVal = prop.Value.GetString()!;
-                // int64str fields are encoded as JSON strings but represent integers
-                if (Int64StrFields.Contains(name) && long.TryParse(strVal, out long numVal))
+                // Continue accepting numeric strings written by the previous schema.
+                if (LegacyStringNumericFields.Contains(name) && long.TryParse(strVal, out long numVal))
                 {
                     if (numVal < int.MinValue || numVal > int.MaxValue)
                     {

@@ -34,6 +34,14 @@ internal static class SerializationTestHelpers
         return model.Create(new BinaryData(json), ModelReaderWriterOptions.Json)!;
     }
 
+    public static JsonElement GetSingleInfraNode(JsonElement document)
+    {
+        Assert.IsTrue(document.TryGetProperty("infras", out JsonElement infras), "SerializationDocument is missing 'infras'");
+        Assert.AreEqual(JsonValueKind.Array, infras.ValueKind);
+        Assert.AreEqual(1, infras.GetArrayLength(), "Expected one InfraNode");
+        return infras[0];
+    }
+
     public static void AssertJsonRoundTrip(Infrastructure infra)
     {
         string json1 = SerializeToJson(infra);

@@ -1,5 +1,5 @@
 /**
- * Value node types for the Azure CDK serialization AST.
+ * Value node types for the Azure Provisioning Serialization AST.
  *
  * These represent literal/concrete values in the Bicep AST:
  * null, boolean, integer, string, array, and object.

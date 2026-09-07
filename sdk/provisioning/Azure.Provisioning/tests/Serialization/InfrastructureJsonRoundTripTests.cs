@@ -258,7 +258,7 @@ public class InfrastructureJsonRoundTripTests
 
         string json = SerializationTestHelpers.SerializeToJson(infra);
         using JsonDocument doc = JsonDocument.Parse(json);
-        JsonElement root = doc.RootElement;
+        JsonElement root = SerializationTestHelpers.GetSingleInfraNode(doc.RootElement);
 
         Assert.IsTrue(root.TryGetProperty("fileName", out _));
         Assert.IsFalse(root.TryGetProperty("targetScope", out _), "targetScope should be omitted for resourceGroup");

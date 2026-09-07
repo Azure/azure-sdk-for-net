@@ -51,9 +51,9 @@ public class SchemaComplianceTests
         TestContext.Out.WriteLine(json);
 
         using JsonDocument doc = JsonDocument.Parse(json);
-        JsonElement root = doc.RootElement;
+        JsonElement root = SerializationTestHelpers.GetSingleInfraNode(doc.RootElement);
 
-        // === Top-level: InfraNode (single object) ===
+        // === Top-level: SerializationDocument containing InfraNode entries ===
         // === File-level: fileName, targetScope ===
         Assert.AreEqual("main.bicep", root.GetProperty("fileName").GetString());
         Assert.IsFalse(root.TryGetProperty("targetScope", out _), "targetScope should be omitted for resourceGroup (default)");
@@ -150,8 +150,10 @@ public class SchemaComplianceTests
         string jsonWithResolvers = SerializationTestHelpers.SerializeToJson(infraWithResolvers);
         Assert.IsTrue(jsonWithResolvers.Contains("\"kind\": \"function-call\""),
             $"Expected function-call kind in resolved JSON.\n{jsonWithResolvers}");
-        Assert.IsTrue(jsonWithResolvers.Contains("\"kind\": \"contextual-variable\""),
-            $"Expected contextual-variable kind in resolved JSON.\n{jsonWithResolvers}");
+        Assert.IsFalse(jsonWithResolvers.Contains("\"kind\": \"contextual-variable\""),
+            $"contextual-variable is not part of the current schema.\n{jsonWithResolvers}");
+        Assert.IsTrue(jsonWithResolvers.Contains("\"kind\": \"property-access\""),
+            $"Expected contextual values to use property-access.\n{jsonWithResolvers}");
         Assert.IsTrue(jsonWithResolvers.Contains("\"kind\": \"integer\""),
             $"Expected integer kind in resolved JSON.\n{jsonWithResolvers}");
     }
@@ -192,7 +194,7 @@ public class SchemaComplianceTests
         infra.Add(storage);
         string json = SerializationTestHelpers.SerializeToJson(infra);
         using var doc = JsonDocument.Parse(json);
-        var file = doc.RootElement;
+        var file = SerializationTestHelpers.GetSingleInfraNode(doc.RootElement);
         Assert.IsFalse(file.TryGetProperty("targetScope", out _), "targetScope should be omitted for resourceGroup (default)");
     }
 
@@ -202,7 +204,7 @@ public class SchemaComplianceTests
         Infrastructure infra = new() { TargetScope = DeploymentScope.Subscription };
         string json = SerializationTestHelpers.SerializeToJson(infra);
         using var doc = JsonDocument.Parse(json);
-        var file = doc.RootElement;
+        var file = SerializationTestHelpers.GetSingleInfraNode(doc.RootElement);
         Assert.AreEqual("subscription", file.GetProperty("targetScope").GetString());
     }
 
@@ -218,7 +220,7 @@ public class SchemaComplianceTests
         infra.Add(param);
         string json = SerializationTestHelpers.SerializeToJson(infra);
         using var doc = JsonDocument.Parse(json);
-        var file = doc.RootElement;
+        var file = SerializationTestHelpers.GetSingleInfraNode(doc.RootElement);
         var paramNode = file.GetProperty("parameters").GetProperty("myParam");
         if (paramNode.TryGetProperty("decorators", out JsonElement decs))
         {
@@ -228,6 +230,26 @@ public class SchemaComplianceTests
             if (decs.TryGetProperty("description", out JsonElement desc))
                 Assert.AreEqual("A secret param", desc.GetString());
         }
+    }
+
+    [Test]
+    public void SchemaCompliance_DecoratorBoundsUseSafeIntNumbers()
+    {
+        ParameterStatement statement = new("name", new TypeExpression(typeof(string)), null);
+        statement.Decorators.Add(new DecoratorExpression(
+            new FunctionCallExpression(
+                new IdentifierExpression("minLength"),
+                new IntLiteralExpression(3))));
+
+        BinaryData json = ModelReaderWriter.Write<BicepStatement>(
+            statement,
+            ModelReaderWriterOptions.Json,
+            AzureProvisioningContext.Default);
+        using JsonDocument doc = JsonDocument.Parse(json);
+
+        Assert.AreEqual(
+            JsonValueKind.Number,
+            doc.RootElement.GetProperty("decorators").GetProperty("minLength").ValueKind);
     }
 
     [Test]
@@ -253,8 +275,9 @@ public class SchemaComplianceTests
             new UnaryExpression(UnaryBicepOperator.Not, new BoolLiteralExpression(false)),
             new ConditionalExpression(new BoolLiteralExpression(true), new StringLiteralExpression("a"), new StringLiteralExpression("b")),
             new IfConditionExpression(new BoolLiteralExpression(true), new ObjectExpression()),
-            // NOTE: InterpolatedStringExpression, NestedAccessExpression, and DecoratorExpression
-            // emit kinds not yet in the TypeSpec ExpressionNode union. They are intentionally
+            new InterpolatedStringExpression([new StringLiteralExpression("prefix"), new IdentifierExpression("value")]),
+            // NOTE: NestedAccessExpression and DecoratorExpression emit kinds not yet in the
+            // TypeSpec ExpressionNode union. They are intentionally
             // excluded here so this test fails when a *spec-defined* kind drifts.
         };
 
@@ -282,9 +305,10 @@ public class SchemaComplianceTests
     {
         using JsonDocument doc = JsonDocument.Parse(json);
         JsonElement root = doc.RootElement;
-
-        // Infrastructure now serializes as a single InfraNode (not wrapped in SerializationDocument)
-        AssertBicepFileNode(root);
+        Assert.IsTrue(root.TryGetProperty("infras", out JsonElement infras), "SerializationDocument is missing 'infras'");
+        Assert.AreEqual(JsonValueKind.Array, infras.ValueKind);
+        foreach (JsonElement infra in infras.EnumerateArray())
+            AssertBicepFileNode(infra);
     }
 
     private static void AssertBicepFileNode(JsonElement file)
@@ -449,10 +473,6 @@ public class SchemaComplianceTests
                 Assert.IsTrue(node.TryGetProperty("fromEnd", out _), $"ArrayAccess at {path} missing 'fromEnd'");
                 AssertExpressionNode(aaBase, $"{path}.base");
                 AssertExpressionNode(aaIdx, $"{path}.index");
-                break;
-            case "contextual-variable":
-                Assert.IsTrue(node.TryGetProperty("context", out _), $"ContextualVariable at {path} missing 'context'");
-                Assert.IsTrue(node.TryGetProperty("property", out _), $"ContextualVariable at {path} missing 'property'");
                 break;
             case "if-condition":
                 Assert.IsTrue(node.TryGetProperty("condition", out JsonElement ifCond), $"IfCondition at {path} missing 'condition'");

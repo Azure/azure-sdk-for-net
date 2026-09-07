@@ -1,5 +1,5 @@
 /**
- * Type node types for the Azure CDK serialization AST.
+ * Type node types for the Azure Provisioning Serialization AST.
  *
  * These represent Bicep type annotations used on parameters and outputs:
  * primitive types, named type references, array types, object types,

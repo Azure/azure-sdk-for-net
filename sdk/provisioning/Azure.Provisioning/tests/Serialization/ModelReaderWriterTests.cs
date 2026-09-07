@@ -54,7 +54,8 @@ public class ModelReaderWriterTests
         string json = jsonData.ToString();
 
         using JsonDocument doc = JsonDocument.Parse(json);
-        Assert.IsTrue(doc.RootElement.TryGetProperty("fileName", out _));
+        JsonElement infraNode = SerializationTestHelpers.GetSingleInfraNode(doc.RootElement);
+        Assert.IsTrue(infraNode.TryGetProperty("fileName", out _));
     }
 
     [Test]
@@ -163,7 +164,7 @@ public class ModelReaderWriterTests
     }
 
     [Test]
-    public void MRW_BicepExpression_ContextualVariable_RoundTrips()
+    public void MRW_BicepExpression_ContextualPropertyAccess_RoundTrips()
     {
         BicepExpression expr = new MemberExpression(
             new FunctionCallExpression(new IdentifierExpression("subscription")),
@@ -171,8 +172,10 @@ public class ModelReaderWriterTests
 
         BinaryData json = ModelReaderWriter.Write(expr, ModelReaderWriterOptions.Json, AzureProvisioningContext.Default);
         string jsonStr = json.ToString();
-        Assert.IsTrue(jsonStr.Contains("\"kind\":\"contextual-variable\"") || jsonStr.Contains("\"kind\": \"contextual-variable\""),
-            $"Expected contextual-variable kind. Got: {jsonStr}");
+        Assert.IsTrue(jsonStr.Contains("\"kind\":\"property-access\"") || jsonStr.Contains("\"kind\": \"property-access\""),
+            $"Expected property-access kind. Got: {jsonStr}");
+        Assert.IsTrue(jsonStr.Contains("\"kind\":\"function-call\"") || jsonStr.Contains("\"kind\": \"function-call\""),
+            $"Expected function-call base. Got: {jsonStr}");
 
         BicepExpression deserialized = ModelReaderWriter.Read<BicepExpression>(json, ModelReaderWriterOptions.Json, AzureProvisioningContext.Default)!;
         Assert.AreEqual(expr, deserialized);

@@ -1,13 +1,13 @@
 /**
- * Azure CDK Serialization AST — TypeSpec Schema
+ * Azure Provisioning Serialization AST — TypeSpec Schema
  *
  * This is the top-level entry point that defines the complete serialization
  * document produced by the Azure CDK. The document contains one or more
  * Bicep file nodes, each representing a `.bicep` file with its resources,
  * modules, parameters, outputs, and variables.
  *
- * The schema mirrors the TypeScript interfaces in
- * `packages/serialization/src/` of the azure-cdk repository.
+ * The schema generates the TypeScript contract in
+ * `packages/core/src/serialization/contract/generated/`.
  */
 
 import "./values.tsp";
@@ -66,6 +66,3 @@ model SerializationDocument {
   /** The collection of infra nodes that make up this deployment. */
   infras: InfraNode[];
 }
-
-@encode(string)
-scalar int64str extends int64;

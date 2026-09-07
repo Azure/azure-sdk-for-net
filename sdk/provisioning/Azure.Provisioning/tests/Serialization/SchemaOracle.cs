@@ -20,8 +20,8 @@ internal static class SchemaOracle
     private static readonly string SchemaSpecDir = Path.Combine(
         TestContext.CurrentContext.TestDirectory, "Serialization", "SchemaSpec");
 
-    private const string SchemaRepo = "bterlson/azure-cdk";
-    private const string SchemaPath = "typespec";
+    private const string SchemaRepo = "Azure/js-provisioning-lib";
+    private const int SchemaPullRequest = 473;
 
     private static string? s_staleWarning;
     private static bool s_staleChecked;
@@ -30,8 +30,7 @@ internal static class SchemaOracle
     /// Checks if the local tsp files are up to date with the remote repo.
     /// Issues a test warning if stale. Caches the result so the gh CLI call
     /// only happens once per test run. Safe to call from [SetUp] on every test.
-    /// SOURCE.md must record the SHA from <c>gh api repos/{repo}/commits?path={path}&amp;per_page=1</c>,
-    /// not a merge commit SHA, since path-filtered results exclude merge commits.
+    /// SOURCE.md must record the pull request head SHA.
     /// </summary>
     public static void WarnIfStale()
     {
@@ -61,7 +60,9 @@ internal static class SchemaOracle
                 return null;
             string localSha = shaMatch.Groups[1].Value;
 
-            var psi = new ProcessStartInfo("gh", $"api repos/{SchemaRepo}/commits?path={SchemaPath}&per_page=1 --jq .[0].sha")
+            var psi = new ProcessStartInfo(
+                "gh",
+                $"pr view {SchemaPullRequest} --repo {SchemaRepo} --json headRefOid --jq .headRefOid")
             {
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
@@ -84,8 +85,8 @@ internal static class SchemaOracle
             if (!remoteSha.StartsWith(localSha) && !localSha.StartsWith(remoteSha))
             {
                 return $"Local schema spec (SHA {localSha.Substring(0, 12)}) may be out of date. " +
-                    $"Latest remote commit touching {SchemaPath}/: {remoteSha.Substring(0, 12)}. " +
-                    $"Re-download from {SchemaRepo} and update SOURCE.md.";
+                    $"Pull request {SchemaRepo}#{SchemaPullRequest} head: {remoteSha.Substring(0, 12)}. " +
+                    "Re-download its typespec/ directory and update SOURCE.md.";
             }
         }
         catch

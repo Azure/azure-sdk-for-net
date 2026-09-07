@@ -1,9 +1,10 @@
 # Schema Source
 
-These TypeSpec files define the Azure CDK serialization AST schema.
+These TypeSpec files define the Azure Provisioning serialization AST schema.
 
-- **Repository**: `bterlson/azure-cdk` (private)
-- **SHA**: f60b21c1e503dc9edf9399ce668aeb269b9678f5
-- **Downloaded**: 2026-04-02
+- **Repository**: `Azure/js-provisioning-lib`
+- **Pull request**: `473`
+- **SHA**: ce35a7a690540fab89e4cbe753e3ca7ac81e1ef8
+- **Downloaded**: 2026-09-07
 
-To update, download the .tsp files from the `typespec/` directory in the repository above.
+To update, download the `.tsp` files from the `typespec/` directory at the pull request head.

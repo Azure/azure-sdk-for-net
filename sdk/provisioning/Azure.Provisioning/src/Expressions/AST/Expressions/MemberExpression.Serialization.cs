@@ -10,24 +10,8 @@ namespace Azure.Provisioning.Expressions;
 
 public partial class MemberExpression : IJsonModel<BicepExpression>
 {
-    private static readonly string[] ContextualFunctions = ["subscription", "resourceGroup", "tenant", "managementGroup", "deployment"];
-
     void IJsonModel<BicepExpression>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
     {
-        // Detect contextual-variable pattern: MemberExpr(FunctionCall(Identifier(ctx), []), prop)
-        if (Value is FunctionCallExpression funcCall &&
-            funcCall.Arguments.Length == 0 &&
-            funcCall.Function is IdentifierExpression funcId &&
-            IsContextualFunction(funcId.Name))
-        {
-            writer.WriteStartObject();
-            writer.WriteString("kind", "contextual-variable");
-            writer.WriteString("context", funcId.Name);
-            writer.WriteString("property", Member);
-            writer.WriteEndObject();
-            return;
-        }
-
         writer.WriteStartObject();
         writer.WriteString("kind", "property-access");
         writer.WritePropertyName("base");
@@ -69,14 +53,4 @@ public partial class MemberExpression : IJsonModel<BicepExpression>
     public override bool Equals(BicepExpression? other) => other is MemberExpression m && Value.Equals(m.Value) && Member == m.Member;
     /// <inheritdoc/>
     public override int GetHashCode() => typeof(MemberExpression).GetHashCode() ^ (Value?.GetHashCode() ?? 0) ^ (Member?.GetHashCode() ?? 0);
-
-    private static bool IsContextualFunction(string name)
-    {
-        foreach (string ctx in ContextualFunctions)
-        {
-            if (ctx == name)
-                return true;
-        }
-        return false;
-    }
 }

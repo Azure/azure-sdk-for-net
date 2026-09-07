@@ -37,7 +37,7 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
         }
 
         using JsonDocument document = JsonDocument.ParseValue(ref reader);
-        return DeserializeInfrastructure(document.RootElement);
+        return DeserializeDocument(document.RootElement);
     }
 
     BinaryData IPersistableModel<Infrastructure>.Write(ModelReaderWriterOptions options)
@@ -77,7 +77,7 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
         }
 
         using JsonDocument document = JsonDocument.Parse(data);
-        return DeserializeInfrastructure(document.RootElement);
+        return DeserializeDocument(document.RootElement);
     }
 
     string IPersistableModel<Infrastructure>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
@@ -142,6 +142,9 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
             statements = modules.Values.First();
         }
 
+        writer.WriteStartObject();
+        writer.WritePropertyName("infras");
+        writer.WriteStartArray();
         writer.WriteStartObject();
         writer.WriteString("fileName", $"{BicepName}.bicep");
 
@@ -252,6 +255,30 @@ public partial class Infrastructure : IJsonModel<Infrastructure>
         }
 
         writer.WriteEndObject();
+        writer.WriteEndArray();
+        writer.WriteEndObject();
+    }
+
+    internal static Infrastructure DeserializeDocument(JsonElement element)
+    {
+        if (!element.TryGetProperty("infras", out JsonElement infras) ||
+            infras.ValueKind != JsonValueKind.Array)
+        {
+            throw new FormatException("SerializationDocument is missing required 'infras' array.");
+        }
+
+        int count = infras.GetArrayLength();
+        if (count == 0)
+        {
+            throw new FormatException("SerializationDocument must contain at least one InfraNode.");
+        }
+        if (count != 1)
+        {
+            throw new NotSupportedException(
+                $"Deserializing {count} InfraNode entries into a single {nameof(Infrastructure)} is not supported.");
+        }
+
+        return DeserializeInfrastructure(infras[0]);
     }
 
     internal static Infrastructure DeserializeInfrastructure(JsonElement element)

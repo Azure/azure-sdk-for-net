@@ -1,5 +1,5 @@
 /**
- * Expression node types for the Azure CDK serialization AST.
+ * Expression node types for the Azure Provisioning Serialization AST.
  *
  * These represent runtime expressions in the Bicep AST: identifiers,
  * function calls, member access, and contextual variables.
@@ -54,21 +54,6 @@ model ArrayAccessExpression {
   index: ExpressionNode;
   nullish: boolean;
   fromEnd: boolean;
-}
-
-// ──────────────────────────────────────────────
-// Context access
-// ──────────────────────────────────────────────
-
-/** A built-in contextual variable (e.g. `subscription().subscriptionId`). */
-model ContextualVariableExpression {
-  kind: "contextual-variable";
-
-  /** The context scope (e.g. "subscription", "resourceGroup", "tenant"). */
-  context: string;
-
-  /** The property within the context (e.g. "subscriptionId", "tenantId"). */
-  property: string;
 }
 
 // ──────────────────────────────────────────────
@@ -145,6 +130,16 @@ model ForExpression {
 }
 
 // ──────────────────────────────────────────────
+// Interpolation
+// ──────────────────────────────────────────────
+
+/** An interpolated string expression (e.g. `'prefix${expr}suffix'`). */
+model InterpolatedStringExpression {
+  kind: "interpolated-string";
+  segments: ExpressionNode[];
+}
+
+// ──────────────────────────────────────────────
 // Expression union
 // ──────────────────────────────────────────────
 
@@ -170,10 +165,10 @@ union ExpressionNode {
   "instance-function-call": InstanceFunctionCallExpression,
   "property-access": PropertyAccessExpression,
   "array-access": ArrayAccessExpression,
-  "contextual-variable": ContextualVariableExpression,
   "binary-operation": BinaryOperationExpression,
   "unary-operation": UnaryOperationExpression,
   "ternary-operation": TernaryOperationExpression,
   "if-condition": IfConditionExpression,
   "for-expression": ForExpression,
+  "interpolated-string": InterpolatedStringExpression,
 }
