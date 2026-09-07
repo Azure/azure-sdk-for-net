@@ -616,8 +616,10 @@ namespace Azure.Storage.Test
             stream.Dispose();
 
             // assert the one rental, the stream's own buffer, was returned exactly once
-            arrayPool.Verify(pool => pool.Rent(It.IsAny<int>()), Times.Once());
-            arrayPool.Verify(pool => pool.Return(It.IsAny<byte[]>(), It.IsAny<bool>()), Times.Once());
+            arrayPool.Verify(pool => pool.Rent(It.IsAny<int>()), Times.Once(),
+                "expected only the stream buffer to be rented");
+            arrayPool.Verify(pool => pool.Return(It.IsAny<byte[]>(), It.IsAny<bool>()), Times.Once(),
+                "the stream buffer must be returned to the pool exactly once");
         }
 
         /// <summary>
@@ -651,18 +653,19 @@ namespace Azure.Storage.Test
 
             Assert.IsTrue(innerStream.Disposed, "inner stream was left undisposed");
             Assert.AreEqual(1, transform.DisposeCount, "transform was left undisposed");
-            // assert every pool rental (the stream's buffer and the flush's scratch buffer) was returned
-            int rents = arrayPool.Invocations.Where(i => i.Method.Name == nameof(ArrayPool<byte>.Rent)).Count();
-            int returns = arrayPool.Invocations.Where(i => i.Method.Name == nameof(ArrayPool<byte>.Return)).Count();
-            Assert.Greater(rents, 0);
-            Assert.AreEqual(rents, returns);
+            // both rentals, the stream's buffer and the final flush's scratch buffer, were returned
+            arrayPool.Verify(pool => pool.Rent(It.IsAny<int>()), Times.Exactly(2),
+                "expected the stream buffer and the flush scratch buffer to be rented");
+            arrayPool.Verify(pool => pool.Return(It.IsAny<byte[]>(), It.IsAny<bool>()), Times.Exactly(2),
+                "every rented array must be returned exactly once");
             // and with the buffer gone, the stream no longer accepts writes
             Assert.Throws<NotSupportedException>(() => stream.Write(new byte[1], 0, 1));
 
             // the failed Dispose still counts as the one Dispose that does the work
+            arrayPool.Invocations.Clear();
             Assert.DoesNotThrow(() => stream.Dispose());
             Assert.AreEqual(1, transform.DisposeCount, "transform was disposed more than once");
-            Assert.AreEqual(returns, arrayPool.Invocations.Where(i => i.Method.Name == nameof(ArrayPool<byte>.Return)).Count(),
+            arrayPool.Verify(pool => pool.Return(It.IsAny<byte[]>(), It.IsAny<bool>()), Times.Never(),
                 "a later Dispose must not return anything to the pool again");
         }
 
