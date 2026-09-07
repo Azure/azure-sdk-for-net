@@ -681,6 +681,82 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="MarkupRuleResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetMarkupRuleResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="MarkupRuleResource"/> object. </returns>
+        public static MarkupRuleResource GetMarkupRuleResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetMarkupRuleResource(id);
+        }
+
+        /// <summary>
+        /// Gets a collection of <see cref="MarkupRuleCollection"/> objects within the specified scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetMarkupRules(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a collection of <see cref="MarkupRuleResource"/> objects. </returns>
+        public static MarkupRuleCollection GetMarkupRules(this ArmClient client, ResourceIdentifier scope)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetMarkupRules(scope);
+        }
+
+        /// <summary>
+        /// Get a markup rule by name for a billing account and billing profile.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetMarkupRule(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="ruleName"> Markup rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<MarkupRuleResource> GetMarkupRule(this ArmClient client, ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetMarkupRule(scope, ruleName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Get a markup rule by name for a billing account and billing profile.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetMarkupRuleAsync(ResourceIdentifier, string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="ruleName"> Markup rule name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<MarkupRuleResource>> GetMarkupRuleAsync(this ArmClient client, ResourceIdentifier scope, string ruleName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableCostManagementArmClient(client).GetMarkupRuleAsync(scope, ruleName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="CostAllocationRuleResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -792,6 +868,42 @@ namespace Azure.ResourceManager.CostManagement
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableCostManagementArmClient(client).CheckCostManagementNameAvailabilityByScopeScheduledAction(scope, content, cancellationToken);
+        }
+
+        /// <summary>
+        /// List all cost management settings in the requested scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetAllAsync(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static async Task<Response<SettingsListResult>> GetAllAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return await GetMockableCostManagementArmClient(client).GetAllAsync(scope, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// List all cost management settings in the requested scope.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableCostManagementArmClient.GetAll(ResourceIdentifier, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="scope"> The scope that the resource will apply against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        public static Response<SettingsListResult> GetAll(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableCostManagementArmClient(client).GetAll(scope, cancellationToken);
         }
 
         /// <summary>

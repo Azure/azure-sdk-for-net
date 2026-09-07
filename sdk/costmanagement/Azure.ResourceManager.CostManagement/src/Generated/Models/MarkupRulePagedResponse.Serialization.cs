@@ -14,59 +14,59 @@ using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
-    /// <summary> Setting list result. It contains a list of settings. </summary>
-    public partial class SettingsListResult : IJsonModel<SettingsListResult>
+    /// <summary> Markup rule list result. It contains a list of Markup rules. </summary>
+    internal partial class MarkupRulePagedResponse : IJsonModel<MarkupRulePagedResponse>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SettingsListResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MarkupRulePagedResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SettingsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MarkupRulePagedResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSettingsListResult(document.RootElement, options);
+                        return DeserializeMarkupRulePagedResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SettingsListResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarkupRulePagedResponse)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SettingsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MarkupRulePagedResponse>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCostManagementContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SettingsListResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarkupRulePagedResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SettingsListResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MarkupRulePagedResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SettingsListResult IPersistableModel<SettingsListResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MarkupRulePagedResponse IPersistableModel<MarkupRulePagedResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SettingsListResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MarkupRulePagedResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SettingsListResult"/> from. </param>
-        internal static SettingsListResult FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="MarkupRulePagedResponse"/> from. </param>
+        internal static MarkupRulePagedResponse FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSettingsListResult(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeMarkupRulePagedResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SettingsListResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MarkupRulePagedResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,20 +77,25 @@ namespace Azure.ResourceManager.CostManagement.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SettingsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MarkupRulePagedResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SettingsListResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MarkupRulePagedResponse)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
-                foreach (CostManagementSettingData item in Value)
+                foreach (MarkupRuleData item in Value)
                 {
                     writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(NextLink))
+            {
+                writer.WritePropertyName("nextLink"u8);
+                writer.WriteStringValue(NextLink);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -111,30 +116,31 @@ namespace Azure.ResourceManager.CostManagement.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SettingsListResult IJsonModel<SettingsListResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MarkupRulePagedResponse IJsonModel<MarkupRulePagedResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SettingsListResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MarkupRulePagedResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SettingsListResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MarkupRulePagedResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SettingsListResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MarkupRulePagedResponse)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSettingsListResult(document.RootElement, options);
+            return DeserializeMarkupRulePagedResponse(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SettingsListResult DeserializeSettingsListResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static MarkupRulePagedResponse DeserializeMarkupRulePagedResponse(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            IReadOnlyList<CostManagementSettingData> value = default;
+            IList<MarkupRuleData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -144,12 +150,17 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    List<CostManagementSettingData> array = new List<CostManagementSettingData>();
+                    List<MarkupRuleData> array = new List<MarkupRuleData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(CostManagementSettingData.DeserializeCostManagementSettingData(item, options));
+                        array.Add(MarkupRuleData.DeserializeMarkupRuleData(item, options));
                     }
                     value = array;
+                    continue;
+                }
+                if (prop.NameEquals("nextLink"u8))
+                {
+                    nextLink = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -157,7 +168,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SettingsListResult(value ?? new ChangeTrackingList<CostManagementSettingData>(), additionalBinaryDataProperties);
+            return new MarkupRulePagedResponse(value ?? new ChangeTrackingList<MarkupRuleData>(), nextLink, additionalBinaryDataProperties);
         }
     }
 }

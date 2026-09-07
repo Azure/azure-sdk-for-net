@@ -17,40 +17,40 @@ using Azure.ResourceManager;
 namespace Azure.ResourceManager.CostManagement
 {
     /// <summary>
-    /// A class representing a ScheduledAction along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ScheduledActionResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetScheduledActions method.
+    /// A class representing a MarkupRule along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="MarkupRuleResource"/> from an instance of <see cref="ArmClient"/> using the GetResource method.
+    /// Otherwise you can get one from its parent resource <see cref="ArmResource"/> using the GetMarkupRules method.
     /// </summary>
-    public partial class ScheduledActionResource : ArmResource
+    public partial class MarkupRuleResource : ArmResource
     {
-        private readonly ClientDiagnostics _scheduledActionOperationGroupClientDiagnostics;
-        private readonly ScheduledActionOperationGroup _scheduledActionOperationGroupRestClient;
-        private readonly ScheduledActionData _data;
+        private readonly ClientDiagnostics _markupRulesClientDiagnostics;
+        private readonly MarkupRules _markupRulesRestClient;
+        private readonly MarkupRuleData _data;
         /// <summary> Gets the resource type for the operations. </summary>
-        public static readonly ResourceType ResourceType = "Microsoft.CostManagement/scheduledActions";
+        public static readonly ResourceType ResourceType = "Microsoft.CostManagement/markupRules";
 
-        /// <summary> Initializes a new instance of ScheduledActionResource for mocking. </summary>
-        protected ScheduledActionResource()
+        /// <summary> Initializes a new instance of MarkupRuleResource for mocking. </summary>
+        protected MarkupRuleResource()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarkupRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ScheduledActionResource(ArmClient client, ScheduledActionData data) : this(client, data.Id)
+        internal MarkupRuleResource(ArmClient client, MarkupRuleData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledActionResource"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="MarkupRuleResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ScheduledActionResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal MarkupRuleResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ResourceType, out string scheduledActionApiVersion);
-            _scheduledActionOperationGroupClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", ResourceType.Namespace, Diagnostics);
-            _scheduledActionOperationGroupRestClient = new ScheduledActionOperationGroup(_scheduledActionOperationGroupClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledActionApiVersion ?? "2026-06-01");
+            TryGetApiVersion(ResourceType, out string markupRuleApiVersion);
+            _markupRulesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CostManagement", ResourceType.Namespace, Diagnostics);
+            _markupRulesRestClient = new MarkupRules(_markupRulesClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, markupRuleApiVersion ?? "2026-06-01");
             ValidateResourceId(id);
         }
 
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CostManagement
         public virtual bool HasData { get; }
 
         /// <summary> Gets the data representing this Feature. </summary>
-        public virtual ScheduledActionData Data
+        public virtual MarkupRuleData Data
         {
             get
             {
@@ -71,11 +71,12 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary> Generate the resource identifier for this resource. </summary>
-        /// <param name="scope"> The scope. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string scope, string name)
+        /// <param name="billingAccountId"> The billingAccountId. </param>
+        /// <param name="billingProfileId"> The billingProfileId. </param>
+        /// <param name="ruleName"> The ruleName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string billingAccountId, string billingProfileId, string ruleName)
         {
-            string resourceId = $"{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}";
+            string resourceId = $"/providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/markupRules/{ruleName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -90,15 +91,15 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Get the shared scheduled action from the given scope by name.
+        /// Get a markup rule by name for a billing account and billing profile.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/markupRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationGroup_GetByScope. </description>
+        /// <description> MarkupRules_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -106,14 +107,14 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <description> <see cref="MarkupRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ScheduledActionResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<MarkupRuleResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionResource.Get");
+            using DiagnosticScope scope = _markupRulesClientDiagnostics.CreateScope("MarkupRuleResource.Get");
             scope.Start();
             try
             {
@@ -121,14 +122,14 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                HttpMessage message = _markupRulesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
+                Response<MarkupRuleData> response = Response.FromValue(MarkupRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarkupRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -138,15 +139,15 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Get the shared scheduled action from the given scope by name.
+        /// Get a markup rule by name for a billing account and billing profile.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/markupRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationGroup_GetByScope. </description>
+        /// <description> MarkupRules_Get. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -154,14 +155,14 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <description> <see cref="MarkupRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ScheduledActionResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<MarkupRuleResource> Get(CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionResource.Get");
+            using DiagnosticScope scope = _markupRulesClientDiagnostics.CreateScope("MarkupRuleResource.Get");
             scope.Start();
             try
             {
@@ -169,14 +170,14 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateGetByScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                HttpMessage message = _markupRulesRestClient.CreateGetRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
+                Response<MarkupRuleData> response = Response.FromValue(MarkupRuleData.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
                 }
-                return Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new MarkupRuleResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -186,15 +187,15 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Delete a scheduled action within the given scope.
+        /// Delete a markup rule for a billing account and billing profile.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/markupRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationGroup_DeleteByScope. </description>
+        /// <description> MarkupRules_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -202,7 +203,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <description> <see cref="MarkupRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -210,7 +211,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionResource.Delete");
+            using DiagnosticScope scope = _markupRulesClientDiagnostics.CreateScope("MarkupRuleResource.Delete");
             scope.Start();
             try
             {
@@ -218,7 +219,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateDeleteByScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                HttpMessage message = _markupRulesRestClient.CreateDeleteRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -237,15 +238,15 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Delete a scheduled action within the given scope.
+        /// Delete a markup rule for a billing account and billing profile.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/markupRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationGroup_DeleteByScope. </description>
+        /// <description> MarkupRules_Delete. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -253,7 +254,7 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <description> <see cref="MarkupRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -261,7 +262,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionResource.Delete");
+            using DiagnosticScope scope = _markupRulesClientDiagnostics.CreateScope("MarkupRuleResource.Delete");
             scope.Start();
             try
             {
@@ -269,7 +270,7 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateDeleteByScopeRequest(Id.Parent.ToString(), Id.Name, context);
+                HttpMessage message = _markupRulesRestClient.CreateDeleteRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Delete, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
@@ -288,15 +289,15 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Runs a shared scheduled action within the given scope.
+        /// Update a MarkupRule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}/execute. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/markupRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationGroup_RunByScope. </description>
+        /// <description> MarkupRules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -304,106 +305,19 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response> RunByScopeAsync(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionResource.RunByScope");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateRunByScopeRequest(Id.Parent.ToString(), Id.Name, context);
-                Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Runs a shared scheduled action within the given scope.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}/execute. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationGroup_RunByScope. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response RunByScope(CancellationToken cancellationToken = default)
-        {
-            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionResource.RunByScope");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateRunByScopeRequest(Id.Parent.ToString(), Id.Name, context);
-                Response response = Pipeline.ProcessMessage(message, context);
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Update a ScheduledAction.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationGroup_CreateOrUpdateByScope. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-06-01. </description>
-        /// </item>
-        /// <item>
-        /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <description> <see cref="MarkupRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Scheduled action to be created or updated. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity. Optional when updating an entity and can be specified to achieve optimistic concurrency. </param>
+        /// <param name="data"> The markup rule to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ScheduledActionResource>> UpdateAsync(WaitUntil waitUntil, ScheduledActionData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<MarkupRuleResource>> UpdateAsync(WaitUntil waitUntil, MarkupRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionResource.Update");
+            using DiagnosticScope scope = _markupRulesClientDiagnostics.CreateScope("MarkupRuleResource.Update");
             scope.Start();
             try
             {
@@ -411,12 +325,12 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateCreateOrUpdateByScopeRequest(Id.Parent.ToString(), Id.Name, ScheduledActionData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _markupRulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MarkupRuleData.ToRequestContent(data), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
+                Response<MarkupRuleData> response = Response.FromValue(MarkupRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                CostManagementArmOperation<ScheduledActionResource> operation = new CostManagementArmOperation<ScheduledActionResource>(Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                CostManagementArmOperation<MarkupRuleResource> operation = new CostManagementArmOperation<MarkupRuleResource>(Response.FromValue(new MarkupRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
@@ -431,15 +345,15 @@ namespace Azure.ResourceManager.CostManagement
         }
 
         /// <summary>
-        /// Update a ScheduledAction.
+        /// Update a MarkupRule.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
-        /// <description> /{scope}/providers/Microsoft.CostManagement/scheduledActions/{name}. </description>
+        /// <description> /providers/Microsoft.Billing/billingAccounts/{billingAccountId}/billingProfiles/{billingProfileId}/providers/Microsoft.CostManagement/markupRules/{ruleName}. </description>
         /// </item>
         /// <item>
         /// <term> Operation Id. </term>
-        /// <description> ScheduledActionOperationGroup_CreateOrUpdateByScope. </description>
+        /// <description> MarkupRules_CreateOrUpdate. </description>
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
@@ -447,20 +361,19 @@ namespace Azure.ResourceManager.CostManagement
         /// </item>
         /// <item>
         /// <term> Resource. </term>
-        /// <description> <see cref="ScheduledActionResource"/>. </description>
+        /// <description> <see cref="MarkupRuleResource"/>. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="data"> Scheduled action to be created or updated. </param>
-        /// <param name="ifMatch"> ETag of the Entity. Not required when creating an entity. Optional when updating an entity and can be specified to achieve optimistic concurrency. </param>
+        /// <param name="data"> The markup rule to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ScheduledActionResource> Update(WaitUntil waitUntil, ScheduledActionData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<MarkupRuleResource> Update(WaitUntil waitUntil, MarkupRuleData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using DiagnosticScope scope = _scheduledActionOperationGroupClientDiagnostics.CreateScope("ScheduledActionResource.Update");
+            using DiagnosticScope scope = _markupRulesClientDiagnostics.CreateScope("MarkupRuleResource.Update");
             scope.Start();
             try
             {
@@ -468,12 +381,12 @@ namespace Azure.ResourceManager.CostManagement
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _scheduledActionOperationGroupRestClient.CreateCreateOrUpdateByScopeRequest(Id.Parent.ToString(), Id.Name, ScheduledActionData.ToRequestContent(data), ifMatch, context);
+                HttpMessage message = _markupRulesRestClient.CreateCreateOrUpdateRequest(Id.Parent.Parent.Name, Id.Parent.Name, Id.Name, MarkupRuleData.ToRequestContent(data), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<ScheduledActionData> response = Response.FromValue(ScheduledActionData.FromResponse(result), result);
+                Response<MarkupRuleData> response = Response.FromValue(MarkupRuleData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
                 RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                CostManagementArmOperation<ScheduledActionResource> operation = new CostManagementArmOperation<ScheduledActionResource>(Response.FromValue(new ScheduledActionResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
+                CostManagementArmOperation<MarkupRuleResource> operation = new CostManagementArmOperation<MarkupRuleResource>(Response.FromValue(new MarkupRuleResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
                 {
                     operation.WaitForCompletion(cancellationToken);
