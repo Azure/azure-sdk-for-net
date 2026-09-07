@@ -19,3 +19,7 @@ extends:
       safeName: AzureResourceManagerMonitorSlis
     - name: Azure.Provisioning.Monitor
       safeName: AzureProvisioningMonitor
+    - name: Azure.Provisioning.Monitor.PipelineGroups
+      safeName: AzureProvisioningMonitorPipelineGroups
+    - name: Azure.Provisioning.Monitor.Workspaces
+      safeName: AzureProvisioningMonitorWorkspaces

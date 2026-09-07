@@ -1,0 +1,4 @@
+directory: specification/monitor/resource-manager/Microsoft.Insights/Insights
+commit: 903d39ff464b836b0228fe0b6d656364c01916e9
+repo: ArcturusZhang/azure-rest-api-specs
+emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"
