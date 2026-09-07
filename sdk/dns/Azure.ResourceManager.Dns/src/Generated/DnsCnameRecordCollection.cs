@@ -181,13 +181,13 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cnameRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DnsCnameRecordResource>> GetAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cnameRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DnsCnameRecordResource>> GetAsync(string cnameRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNullOrEmpty(cnameRecordName, nameof(cnameRecordName));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsCnameRecordCollection.Get");
             scope.Start();
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "CNAME", context);
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cnameRecordName, "CNAME", context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DnsCnameRecordData> response = Response.FromValue(DnsCnameRecordData.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,13 +230,13 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cnameRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DnsCnameRecordResource> Get(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cnameRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DnsCnameRecordResource> Get(string cnameRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNullOrEmpty(cnameRecordName, nameof(cnameRecordName));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsCnameRecordCollection.Get");
             scope.Start();
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "CNAME", context);
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cnameRecordName, "CNAME", context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DnsCnameRecordData> response = Response.FromValue(DnsCnameRecordData.FromResponse(result), result);
                 if (response.Value == null)
@@ -279,13 +279,13 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cnameRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cnameRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string cnameRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNullOrEmpty(cnameRecordName, nameof(cnameRecordName));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsCnameRecordCollection.Exists");
             scope.Start();
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "CNAME", context);
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cnameRecordName, "CNAME", context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DnsCnameRecordData> response = default;
@@ -336,13 +336,13 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cnameRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cnameRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string cnameRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNullOrEmpty(cnameRecordName, nameof(cnameRecordName));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsCnameRecordCollection.Exists");
             scope.Start();
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "CNAME", context);
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cnameRecordName, "CNAME", context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DnsCnameRecordData> response = default;
@@ -393,13 +393,13 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cnameRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<DnsCnameRecordResource>> GetIfExistsAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cnameRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<DnsCnameRecordResource>> GetIfExistsAsync(string cnameRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNullOrEmpty(cnameRecordName, nameof(cnameRecordName));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsCnameRecordCollection.GetIfExists");
             scope.Start();
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "CNAME", context);
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cnameRecordName, "CNAME", context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DnsCnameRecordData> response = default;
@@ -454,13 +454,13 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="cnameRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<DnsCnameRecordResource> GetIfExists(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="cnameRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="cnameRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<DnsCnameRecordResource> GetIfExists(string cnameRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNullOrEmpty(cnameRecordName, nameof(cnameRecordName));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsCnameRecordCollection.GetIfExists");
             scope.Start();
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "CNAME", context);
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cnameRecordName, "CNAME", context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DnsCnameRecordData> response = default;

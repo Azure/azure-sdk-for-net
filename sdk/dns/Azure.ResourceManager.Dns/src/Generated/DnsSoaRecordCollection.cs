@@ -181,13 +181,13 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="soaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<DnsSoaRecordResource>> GetAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="soaRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<DnsSoaRecordResource>> GetAsync(string soaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNullOrEmpty(soaRecordName, nameof(soaRecordName));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsSoaRecordCollection.Get");
             scope.Start();
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "SOA", context);
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, soaRecordName, "SOA", context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<DnsSoaRecordData> response = Response.FromValue(DnsSoaRecordData.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,13 +230,13 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="soaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<DnsSoaRecordResource> Get(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="soaRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<DnsSoaRecordResource> Get(string soaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNullOrEmpty(soaRecordName, nameof(soaRecordName));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsSoaRecordCollection.Get");
             scope.Start();
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "SOA", context);
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, soaRecordName, "SOA", context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<DnsSoaRecordData> response = Response.FromValue(DnsSoaRecordData.FromResponse(result), result);
                 if (response.Value == null)
@@ -279,13 +279,13 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="soaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="soaRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string soaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNullOrEmpty(soaRecordName, nameof(soaRecordName));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsSoaRecordCollection.Exists");
             scope.Start();
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "SOA", context);
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, soaRecordName, "SOA", context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DnsSoaRecordData> response = default;
@@ -336,13 +336,13 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="soaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="soaRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string soaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNullOrEmpty(soaRecordName, nameof(soaRecordName));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsSoaRecordCollection.Exists");
             scope.Start();
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "SOA", context);
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, soaRecordName, "SOA", context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DnsSoaRecordData> response = default;
@@ -393,13 +393,13 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="soaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<DnsSoaRecordResource>> GetIfExistsAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="soaRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<DnsSoaRecordResource>> GetIfExistsAsync(string soaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNullOrEmpty(soaRecordName, nameof(soaRecordName));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsSoaRecordCollection.GetIfExists");
             scope.Start();
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "SOA", context);
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, soaRecordName, "SOA", context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<DnsSoaRecordData> response = default;
@@ -454,13 +454,13 @@ namespace Azure.ResourceManager.Dns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="soaRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<DnsSoaRecordResource> GetIfExists(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="soaRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="soaRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<DnsSoaRecordResource> GetIfExists(string soaRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNullOrEmpty(soaRecordName, nameof(soaRecordName));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("DnsSoaRecordCollection.GetIfExists");
             scope.Start();
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.Dns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, relativeRecordSetName, "SOA", context);
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, soaRecordName, "SOA", context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<DnsSoaRecordData> response = default;

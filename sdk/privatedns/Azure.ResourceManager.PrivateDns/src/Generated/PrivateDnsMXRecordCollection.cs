@@ -181,13 +181,13 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="mxRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<PrivateDnsMXRecordResource>> GetAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mxRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<PrivateDnsMXRecordResource>> GetAsync(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNullOrEmpty(mxRecordName, nameof(mxRecordName));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("PrivateDnsMXRecordCollection.Get");
             scope.Start();
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX", relativeRecordSetName, context);
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX", mxRecordName, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateDnsMXRecordData> response = Response.FromValue(PrivateDnsMXRecordData.FromResponse(result), result);
                 if (response.Value == null)
@@ -230,13 +230,13 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="mxRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<PrivateDnsMXRecordResource> Get(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mxRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<PrivateDnsMXRecordResource> Get(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNullOrEmpty(mxRecordName, nameof(mxRecordName));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("PrivateDnsMXRecordCollection.Get");
             scope.Start();
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX", relativeRecordSetName, context);
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX", mxRecordName, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateDnsMXRecordData> response = Response.FromValue(PrivateDnsMXRecordData.FromResponse(result), result);
                 if (response.Value == null)
@@ -279,13 +279,13 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="mxRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<bool>> ExistsAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mxRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<bool>> ExistsAsync(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNullOrEmpty(mxRecordName, nameof(mxRecordName));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("PrivateDnsMXRecordCollection.Exists");
             scope.Start();
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX", relativeRecordSetName, context);
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX", mxRecordName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PrivateDnsMXRecordData> response = default;
@@ -336,13 +336,13 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="mxRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<bool> Exists(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mxRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<bool> Exists(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNullOrEmpty(mxRecordName, nameof(mxRecordName));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("PrivateDnsMXRecordCollection.Exists");
             scope.Start();
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX", relativeRecordSetName, context);
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX", mxRecordName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PrivateDnsMXRecordData> response = default;
@@ -393,13 +393,13 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="mxRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<NullableResponse<PrivateDnsMXRecordResource>> GetIfExistsAsync(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mxRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<NullableResponse<PrivateDnsMXRecordResource>> GetIfExistsAsync(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNullOrEmpty(mxRecordName, nameof(mxRecordName));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("PrivateDnsMXRecordCollection.GetIfExists");
             scope.Start();
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX", relativeRecordSetName, context);
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX", mxRecordName, context);
                 await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
                 Response result = message.Response;
                 Response<PrivateDnsMXRecordData> response = default;
@@ -454,13 +454,13 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="relativeRecordSetName"> The name of the record set, relative to the name of the zone. </param>
+        /// <param name="mxRecordName"> The name of the record set, relative to the name of the zone. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="relativeRecordSetName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="relativeRecordSetName"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual NullableResponse<PrivateDnsMXRecordResource> GetIfExists(string relativeRecordSetName, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="mxRecordName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="mxRecordName"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual NullableResponse<PrivateDnsMXRecordResource> GetIfExists(string mxRecordName, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNullOrEmpty(relativeRecordSetName, nameof(relativeRecordSetName));
+            Argument.AssertNotNullOrEmpty(mxRecordName, nameof(mxRecordName));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("PrivateDnsMXRecordCollection.GetIfExists");
             scope.Start();
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX", relativeRecordSetName, context);
+                HttpMessage message = _recordSetsRestClient.CreateGetRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, "MX", mxRecordName, context);
                 Pipeline.Send(message, context.CancellationToken);
                 Response result = message.Response;
                 Response<PrivateDnsMXRecordData> response = default;
