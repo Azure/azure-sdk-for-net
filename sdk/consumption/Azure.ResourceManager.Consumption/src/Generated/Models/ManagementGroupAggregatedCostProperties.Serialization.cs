@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("billingPeriodId"u8);
                 writer.WriteStringValue(BillingPeriodId);
             }
-            if (options.Format != "W" && Optional.IsDefined(UsageStartOn))
+            if (options.Format != "W" && Optional.IsDefined(UsageStartsOn))
             {
                 writer.WritePropertyName("usageStart"u8);
-                writer.WriteStringValue(UsageStartOn.Value, "O");
+                writer.WriteStringValue(UsageStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(UsageEndOn))
+            if (options.Format != "W" && Optional.IsDefined(UsageEndsOn))
             {
                 writer.WritePropertyName("usageEnd"u8);
-                writer.WriteStringValue(UsageEndOn.Value, "O");
+                writer.WriteStringValue(UsageEndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(AzureCharges))
             {
@@ -192,8 +192,8 @@ namespace Azure.ResourceManager.Consumption.Models
                 return null;
             }
             string billingPeriodId = default;
-            DateTimeOffset? usageStartOn = default;
-            DateTimeOffset? usageEndOn = default;
+            DateTimeOffset? usageStartsOn = default;
+            DateTimeOffset? usageEndsOn = default;
             decimal? azureCharges = default;
             decimal? marketplaceCharges = default;
             decimal? chargesBilledSeparately = default;
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    usageStartOn = prop.Value.GetDateTimeOffset("O");
+                    usageStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("usageEnd"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    usageEndOn = prop.Value.GetDateTimeOffset("O");
+                    usageEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("azureCharges"u8))
@@ -322,8 +322,8 @@ namespace Azure.ResourceManager.Consumption.Models
             }
             return new ManagementGroupAggregatedCostProperties(
                 billingPeriodId,
-                usageStartOn,
-                usageEndOn,
+                usageStartsOn,
+                usageEndsOn,
                 azureCharges,
                 marketplaceCharges,
                 chargesBilledSeparately,

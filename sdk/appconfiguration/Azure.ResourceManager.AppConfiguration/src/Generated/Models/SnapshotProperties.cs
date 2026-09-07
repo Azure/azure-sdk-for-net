@@ -36,21 +36,21 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         /// <param name="filters"> A list of filters used to filter the key-values included in the snapshot. </param>
         /// <param name="compositionType"> The composition type describes how the key-values within the snapshot are composed. The 'key' composition type ensures there are no two key-values containing the same key. The 'key_label' composition type ensures there are no two key-values containing the same key and label. </param>
         /// <param name="createdOn"> The time that the snapshot was created. </param>
-        /// <param name="expireOn"> The time that the snapshot will expire. </param>
+        /// <param name="expiresOn"> The time that the snapshot will expire. </param>
         /// <param name="retentionPeriod"> The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </param>
         /// <param name="size"> The size in bytes of the snapshot. </param>
         /// <param name="itemsCount"> The amount of key-values in the snapshot. </param>
         /// <param name="tags"> The tags of the snapshot. NOTE: These are data plane tags, not ARM tags. </param>
         /// <param name="eTag"> A value representing the current state of the snapshot. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SnapshotProperties(AppConfigurationProvisioningState? provisioningState, AppConfigurationSnapshotStatus? status, IList<SnapshotKeyValueFilter> filters, SnapshotCompositionType? compositionType, DateTimeOffset? createdOn, DateTimeOffset? expireOn, long? retentionPeriod, long? size, long? itemsCount, IDictionary<string, string> tags, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SnapshotProperties(AppConfigurationProvisioningState? provisioningState, AppConfigurationSnapshotStatus? status, IList<SnapshotKeyValueFilter> filters, SnapshotCompositionType? compositionType, DateTimeOffset? createdOn, DateTimeOffset? expiresOn, long? retentionPeriod, long? size, long? itemsCount, IDictionary<string, string> tags, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Status = status;
             Filters = filters;
             CompositionType = compositionType;
             CreatedOn = createdOn;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             RetentionPeriod = retentionPeriod;
             Size = size;
             ItemsCount = itemsCount;
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
 
         /// <summary> The time that the snapshot will expire. </summary>
         [WirePath("expires")]
-        public DateTimeOffset? ExpireOn { get; }
+        public DateTimeOffset? ExpiresOn { get; }
 
         /// <summary> The amount of time, in seconds, that a snapshot will remain in the archived state before expiring. This property is only writable during the creation of a snapshot. If not specified, the default lifetime of key-value revisions will be used. </summary>
         [WirePath("retentionPeriod")]

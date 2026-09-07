@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
     public static partial class ArmHybridNetworkModelFactory
     {
 
+        /// <summary> Configuration group schema resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -42,6 +43,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> Configuration group schema properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the Configuration group schema resource. </param>
         /// <param name="versionState"> The configuration group schema version state. </param>
         /// <param name="description"> Description of what schema can contain. </param>
@@ -52,6 +54,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ConfigurationGroupSchemaPropertiesFormat(provisioningState, versionState, description, schemaDefinition, default);
         }
 
+        /// <summary> Tags object for patch operations. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.TagsObject"/> instance for mocking. </returns>
         public static TagsObject TagsObject(IDictionary<string, string> tags = default)
@@ -61,6 +64,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new TagsObject(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Publisher configuration group schema update request definition. </summary>
         /// <param name="versionState"> The configuration group schema state. </param>
         /// <returns> A new <see cref="Models.ConfigurationGroupSchemaVersionUpdateState"/> instance for mocking. </returns>
         public static ConfigurationGroupSchemaVersionUpdateState ConfigurationGroupSchemaVersionUpdateState(VersionState? versionState = default)
@@ -68,6 +72,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ConfigurationGroupSchemaVersionUpdateState(versionState, default);
         }
 
+        /// <summary> publisher resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -93,6 +98,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> publisher properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the publisher resource. </param>
         /// <param name="scope"> The publisher scope. </param>
         /// <returns> A new <see cref="Models.PublisherPropertiesFormat"/> instance for mocking. </returns>
@@ -101,6 +107,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new PublisherPropertiesFormat(provisioningState, scope, default);
         }
 
+        /// <summary> Hybrid configuration group value resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -124,6 +131,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary>
+        /// Hybrid configuration group value properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ConfigurationValueWithSecrets"/> and <see cref="Models.ConfigurationValueWithoutSecrets"/>.
+        /// </summary>
         /// <param name="provisioningState"> The provisioning state of the site resource. </param>
         /// <param name="publisherName"> The publisher name for the configuration group schema. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -145,6 +156,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary>
+        /// The azure resource reference which is used for deployment.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.SecretDeploymentResourceReference"/> and <see cref="Models.OpenDeploymentResourceReference"/>.
+        /// </summary>
         /// <param name="idType"> The resource reference arm id type. </param>
         /// <returns> A new <see cref="Models.DeploymentResourceIdReference"/> instance for mocking. </returns>
         public static DeploymentResourceIdReference DeploymentResourceIdReference(string idType = default)
@@ -152,6 +167,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new UnknownDeploymentResourceIdReference(default, default);
         }
 
+        /// <summary> Secret deployment resource id reference. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <returns> A new <see cref="Models.SecretDeploymentResourceReference"/> instance for mocking. </returns>
         public static SecretDeploymentResourceReference SecretDeploymentResourceReference(ResourceIdentifier id = default)
@@ -159,6 +175,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new SecretDeploymentResourceReference(default, default, id);
         }
 
+        /// <summary> Non secret deployment resource id reference. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <returns> A new <see cref="Models.OpenDeploymentResourceReference"/> instance for mocking. </returns>
         public static OpenDeploymentResourceReference OpenDeploymentResourceReference(ResourceIdentifier id = default)
@@ -166,6 +183,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new OpenDeploymentResourceReference(default, default, id);
         }
 
+        /// <summary> The ConfigurationValue with secrets. </summary>
         /// <param name="provisioningState"> The provisioning state of the site resource. </param>
         /// <param name="publisherName"> The publisher name for the configuration group schema. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -188,6 +206,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 secretConfigurationValue);
         }
 
+        /// <summary> The ConfigurationValue with no secrets. </summary>
         /// <param name="provisioningState"> The provisioning state of the site resource. </param>
         /// <param name="publisherName"> The publisher name for the configuration group schema. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -210,6 +229,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 configurationValue);
         }
 
+        /// <summary> Network function resource response. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -237,6 +257,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary>
+        /// Network function properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.NetworkFunctionValueWithSecrets"/> and <see cref="Models.NetworkFunctionValueWithoutSecrets"/>.
+        /// </summary>
         /// <param name="provisioningState"> The provisioning state of the network function resource. </param>
         /// <param name="publisherName"> The publisher name for the network function. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -270,6 +294,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> NetworkFunction with secrets. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function resource. </param>
         /// <param name="publisherName"> The publisher name for the network function. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -304,6 +329,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 secretDeploymentValues);
         }
 
+        /// <summary> NetworkFunction with no secrets. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function resource. </param>
         /// <param name="publisherName"> The publisher name for the network function. </param>
         /// <param name="publisherScope"> The scope of the publisher. </param>
@@ -338,6 +364,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 deploymentValues);
         }
 
+        /// <summary> Payload for execute request post call. </summary>
         /// <param name="serviceEndpoint"> The endpoint of service to call. </param>
         /// <param name="requestMetadata"> The request metadata. </param>
         /// <returns> A new <see cref="Models.ExecuteRequestContent"/> instance for mocking. </returns>
@@ -346,6 +373,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ExecuteRequestContent(serviceEndpoint, requestMetadata, default);
         }
 
+        /// <summary> Request metadata of execute request post call payload. </summary>
         /// <param name="relativePath"> The relative path of the request. </param>
         /// <param name="httpMethod"> The http method of the request. </param>
         /// <param name="serializedBody"> The serialized body of the request. </param>
@@ -356,6 +384,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new RequestMetadata(relativePath, httpMethod, serializedBody, apiVersion, default);
         }
 
+        /// <summary> The component sub resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -373,6 +402,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> The component properties of the network function. </summary>
         /// <param name="provisioningState"> The provisioning state of the component resource. </param>
         /// <param name="deploymentProfile"> The JSON-serialized deployment profile of the component resource. </param>
         /// <param name="deploymentStatus"> The deployment status of the component resource. </param>
@@ -382,6 +412,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ComponentProperties(provisioningState, deploymentProfile, deploymentStatus, default);
         }
 
+        /// <summary> The deployment status properties of the network function component. </summary>
         /// <param name="status"> The status of the component resource. </param>
         /// <param name="resources"> The resource related to the component resource. </param>
         /// <param name="nextExpectedUpdateOn"> The next expected update of deployment status. </param>
@@ -391,6 +422,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new DeploymentStatusProperties(status, resources, nextExpectedUpdateOn, default);
         }
 
+        /// <summary> The resources of the network function component. </summary>
         /// <param name="deployments"> Deployments that are related to component resource. </param>
         /// <param name="pods"> Pods related to component resource. </param>
         /// <param name="replicaSets"> Replica sets related to component resource. </param>
@@ -414,6 +446,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> Helm Deployment status properties. </summary>
         /// <param name="name"> The name of the deployment. </param>
         /// <param name="namespace"> The namespace of the deployment. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
@@ -435,6 +468,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> Helm Pod status properties. </summary>
         /// <param name="name"> The name of the Pod. </param>
         /// <param name="namespace"> The namespace of the Pod. </param>
         /// <param name="desiredNumberOfContainers"> Desired number of containers. </param>
@@ -458,6 +492,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> Pod Event  properties. </summary>
         /// <param name="eventType"> The type of pod event. </param>
         /// <param name="reason"> Event reason. </param>
         /// <param name="message"> Event message. </param>
@@ -468,6 +503,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new PodEvent(eventType, reason, message, lastSeenOn, default);
         }
 
+        /// <summary> Helm ReplicaSet status properties. </summary>
         /// <param name="name"> The name of the replicaSet. </param>
         /// <param name="namespace"> The namespace of the replicaSet. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
@@ -487,6 +523,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> Helm StatefulSet status properties. </summary>
         /// <param name="name"> The name of the statefulset. </param>
         /// <param name="namespace"> The namespace of the statefulset. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
@@ -504,6 +541,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> Helm DaemonSet status properties. </summary>
         /// <param name="name"> The name of the daemonSet. </param>
         /// <param name="namespace"> The namespace of the daemonSet. </param>
         /// <param name="desiredNumberOfPods"> Desired number of pods. </param>
@@ -527,6 +565,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> Network function definition group resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -550,6 +589,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> Network function definition group properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function definition groups resource. </param>
         /// <param name="description"> The network function definition group description. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionDefinitionGroupPropertiesFormat"/> instance for mocking. </returns>
@@ -558,6 +598,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NetworkFunctionDefinitionGroupPropertiesFormat(provisioningState, description, default);
         }
 
+        /// <summary> Network function definition version. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -581,6 +622,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary>
+        /// Network function definition version properties.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ContainerizedNetworkFunctionDefinitionVersion"/> and <see cref="Models.VirtualNetworkFunctionDefinitionVersion"/>.
+        /// </summary>
         /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
         /// <param name="versionState"> The network function definition version state. </param>
         /// <param name="description"> The network function definition version description. </param>
@@ -598,6 +643,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> Containerized network function network function definition version properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
         /// <param name="versionState"> The network function definition version state. </param>
         /// <param name="description"> The network function definition version description. </param>
@@ -616,6 +662,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 networkFunctionTemplate);
         }
 
+        /// <summary>
+        /// Containerized network function template.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureArcKubernetesNetworkFunctionTemplate"/>.
+        /// </summary>
         /// <param name="nfviType"> The network function type. </param>
         /// <returns> A new <see cref="Models.ContainerizedNetworkFunctionTemplate"/> instance for mocking. </returns>
         public static ContainerizedNetworkFunctionTemplate ContainerizedNetworkFunctionTemplate(string nfviType = default)
@@ -623,6 +673,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new UnknownContainerizedNetworkFunctionTemplate(default, default);
         }
 
+        /// <summary> Azure Arc kubernetes network function template. </summary>
         /// <param name="networkFunctionApplications"> Network function applications. </param>
         /// <returns> A new <see cref="Models.AzureArcKubernetesNetworkFunctionTemplate"/> instance for mocking. </returns>
         public static AzureArcKubernetesNetworkFunctionTemplate AzureArcKubernetesNetworkFunctionTemplate(IEnumerable<AzureArcKubernetesNetworkFunctionApplication> networkFunctionApplications = default)
@@ -632,6 +683,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureArcKubernetesNetworkFunctionTemplate(default, default, (networkFunctionApplications ?? new ChangeTrackingList<AzureArcKubernetesNetworkFunctionApplication>()).ToList());
         }
 
+        /// <summary>
+        /// Azure arc kubernetes network function application definition.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureArcKubernetesHelmApplication"/>.
+        /// </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
         /// <param name="artifactType"> The artifact type. </param>
@@ -641,6 +696,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new UnknownAzureArcKubernetesNetworkFunctionApplication(name, dependsOnProfile, default, default);
         }
 
+        /// <summary> Network function application definition. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionApplication"/> instance for mocking. </returns>
@@ -649,6 +705,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NetworkFunctionApplication(name, dependsOnProfile, default);
         }
 
+        /// <summary> Depends on profile definition. </summary>
         /// <param name="installDependsOn"> Application installation operation dependency. </param>
         /// <param name="uninstallDependsOn"> Application deletion operation dependency. </param>
         /// <param name="updateDependsOn"> Application update operation dependency. </param>
@@ -662,6 +719,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new DependsOnProfile((installDependsOn ?? new ChangeTrackingList<string>()).ToList(), (uninstallDependsOn ?? new ChangeTrackingList<string>()).ToList(), (updateDependsOn ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Azure arc kubernetes helm application configurations. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
         /// <param name="artifactProfile"> Azure arc kubernetes artifact profile. </param>
@@ -686,6 +744,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureArcKubernetesArtifactProfile(artifactStoreId is null ? default : new ReferencedResourceById(artifactStoreId, default), default, helmArtifactProfile);
         }
 
+        /// <summary> Helm artifact profile. </summary>
         /// <param name="helmPackageName"> Helm package name. </param>
         /// <param name="helmPackageVersionRange"> Helm package version range. </param>
         /// <param name="registryValuesPaths"> The registry values path list. </param>
@@ -706,6 +765,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ArtifactProfile(artifactStoreId is null ? default : new ReferencedResourceById(artifactStoreId, default), default);
         }
 
+        /// <summary> Reference to another resource. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <returns> A new <see cref="Models.ReferencedResourceById"/> instance for mocking. </returns>
         public static ReferencedResourceById ReferencedResourceById(ResourceIdentifier id = default)
@@ -713,6 +773,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ReferencedResourceById(id, default);
         }
 
+        /// <summary> Azure arc kubernetes deploy mapping rule profile. </summary>
         /// <param name="applicationEnablement"> The application enablement. </param>
         /// <param name="helmMappingRuleProfile"> The helm mapping rule profile. </param>
         /// <returns> A new <see cref="Models.AzureArcKubernetesDeployMappingRuleProfile"/> instance for mocking. </returns>
@@ -721,6 +782,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureArcKubernetesDeployMappingRuleProfile(applicationEnablement, default, helmMappingRuleProfile);
         }
 
+        /// <summary> Helm mapping rule profile. </summary>
         /// <param name="releaseNamespace"> Helm release namespace. </param>
         /// <param name="releaseName"> Helm release name. </param>
         /// <param name="helmPackageVersion"> Helm package version. </param>
@@ -738,6 +800,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> The helm deployment options. </summary>
         /// <param name="installOptions"> The helm deployment install options. </param>
         /// <param name="upgradeOptions"> The helm deployment upgrade options. </param>
         /// <returns> A new <see cref="Models.HelmMappingRuleProfileConfig"/> instance for mocking. </returns>
@@ -746,6 +809,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new HelmMappingRuleProfileConfig(installOptions, upgradeOptions, default);
         }
 
+        /// <summary> The helm deployment install options. </summary>
         /// <param name="atomic"> The helm deployment atomic options. </param>
         /// <param name="wait"> The helm deployment wait options. </param>
         /// <param name="timeout"> The helm deployment timeout options. </param>
@@ -755,6 +819,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new HelmInstallConfig(atomic, wait, timeout, default);
         }
 
+        /// <summary> The helm deployment install options. </summary>
         /// <param name="atomic"> The helm deployment atomic options. </param>
         /// <param name="wait"> The helm deployment wait options. </param>
         /// <param name="timeout"> The helm deployment timeout options. </param>
@@ -764,6 +829,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new HelmUpgradeConfig(atomic, wait, timeout, default);
         }
 
+        /// <summary> Mapping rule profile properties. </summary>
         /// <param name="applicationEnablement"> The application enablement. </param>
         /// <returns> A new <see cref="Models.MappingRuleProfile"/> instance for mocking. </returns>
         public static MappingRuleProfile MappingRuleProfile(ApplicationEnablement? applicationEnablement = default)
@@ -771,6 +837,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new MappingRuleProfile(applicationEnablement, default);
         }
 
+        /// <summary> Virtual network function network function definition version properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the network function definition version resource. </param>
         /// <param name="versionState"> The network function definition version state. </param>
         /// <param name="description"> The network function definition version description. </param>
@@ -789,6 +856,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 networkFunctionTemplate);
         }
 
+        /// <summary>
+        /// Virtual network function template.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureCoreNetworkFunctionTemplate"/> and <see cref="Models.AzureOperatorNexusNetworkFunctionTemplate"/>.
+        /// </summary>
         /// <param name="nfviType"> The network function type. </param>
         /// <returns> A new <see cref="Models.VirtualNetworkFunctionTemplate"/> instance for mocking. </returns>
         public static VirtualNetworkFunctionTemplate VirtualNetworkFunctionTemplate(string nfviType = default)
@@ -796,6 +867,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new UnknownVirtualNetworkFunctionTemplate(default, default);
         }
 
+        /// <summary> Azure virtual network function template. </summary>
         /// <param name="networkFunctionApplications"> Network function applications. </param>
         /// <returns> A new <see cref="Models.AzureCoreNetworkFunctionTemplate"/> instance for mocking. </returns>
         public static AzureCoreNetworkFunctionTemplate AzureCoreNetworkFunctionTemplate(IEnumerable<AzureCoreNetworkFunctionApplication> networkFunctionApplications = default)
@@ -805,6 +877,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureCoreNetworkFunctionTemplate(default, default, (networkFunctionApplications ?? new ChangeTrackingList<AzureCoreNetworkFunctionApplication>()).ToList());
         }
 
+        /// <summary>
+        /// Azure virtual network function application definition.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureCoreNetworkFunctionVhdApplication"/> and <see cref="Models.AzureCoreNetworkFunctionArmTemplateApplication"/>.
+        /// </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
         /// <param name="artifactType"> The artifact type. </param>
@@ -814,6 +890,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new UnknownAzureCoreNetworkFunctionApplication(name, dependsOnProfile, default, default);
         }
 
+        /// <summary> Azure core network function vhd application definition. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
         /// <param name="artifactProfile"> Azure vhd image artifact profile. </param>
@@ -838,6 +915,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureCoreVhdImageArtifactProfile(artifactStoreId is null ? default : new ReferencedResourceById(artifactStoreId, default), default, vhdArtifactProfile);
         }
 
+        /// <summary> Vhd artifact profile. </summary>
         /// <param name="vhdName"> Vhd name. </param>
         /// <param name="vhdVersion"> Vhd version. </param>
         /// <returns> A new <see cref="Models.VhdImageArtifactProfile"/> instance for mocking. </returns>
@@ -854,6 +932,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureCoreVhdImageDeployMappingRuleProfile(applicationEnablement, default, vhdImageMappingRuleUserConfiguration is null ? default : new VhdImageMappingRuleProfile(vhdImageMappingRuleUserConfiguration, default));
         }
 
+        /// <summary> Azure core network function Template application definition. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
         /// <param name="artifactProfile"> Azure template artifact profile. </param>
@@ -878,6 +957,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureCoreArmTemplateArtifactProfile(artifactStoreId is null ? default : new ReferencedResourceById(artifactStoreId, default), default, templateArtifactProfile);
         }
 
+        /// <summary> Template artifact profile. </summary>
         /// <param name="templateName"> Template name. </param>
         /// <param name="templateVersion"> Template version. </param>
         /// <returns> A new <see cref="Models.ArmTemplateArtifactProfile"/> instance for mocking. </returns>
@@ -894,6 +974,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureCoreArmTemplateDeployMappingRuleProfile(applicationEnablement, default, templateParameters is null ? default : new ArmTemplateMappingRuleProfile(templateParameters, default));
         }
 
+        /// <summary> Azure Operator Distributed Services network function template. </summary>
         /// <param name="networkFunctionApplications"> Network function applications. </param>
         /// <returns> A new <see cref="Models.AzureOperatorNexusNetworkFunctionTemplate"/> instance for mocking. </returns>
         public static AzureOperatorNexusNetworkFunctionTemplate AzureOperatorNexusNetworkFunctionTemplate(IEnumerable<AzureOperatorNexusNetworkFunctionApplication> networkFunctionApplications = default)
@@ -903,6 +984,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureOperatorNexusNetworkFunctionTemplate(default, default, (networkFunctionApplications ?? new ChangeTrackingList<AzureOperatorNexusNetworkFunctionApplication>()).ToList());
         }
 
+        /// <summary>
+        /// Azure Operator Distributed Services network function application definition.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureOperatorNexusNetworkFunctionImageApplication"/> and <see cref="Models.AzureOperatorNexusNetworkFunctionArmTemplateApplication"/>.
+        /// </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
         /// <param name="artifactType"> The artifact type. </param>
@@ -912,6 +997,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new UnknownAzureOperatorNexusNetworkFunctionApplication(name, dependsOnProfile, default, default);
         }
 
+        /// <summary> Azure Operator Distributed Services network function image application definition. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
         /// <param name="artifactProfile"> Azure Operator Distributed Services image artifact profile. </param>
@@ -936,6 +1022,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureOperatorNexusImageArtifactProfile(artifactStoreId is null ? default : new ReferencedResourceById(artifactStoreId, default), default, imageArtifactProfile);
         }
 
+        /// <summary> Image artifact profile. </summary>
         /// <param name="imageName"> Image name. </param>
         /// <param name="imageVersion"> Image version. </param>
         /// <returns> A new <see cref="Models.ImageArtifactProfile"/> instance for mocking. </returns>
@@ -952,6 +1039,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureOperatorNexusImageDeployMappingRuleProfile(applicationEnablement, default, imageMappingRuleUserConfiguration is null ? default : new ImageMappingRuleProfile(imageMappingRuleUserConfiguration, default));
         }
 
+        /// <summary> Azure Operator Distributed Services network function Template application definition. </summary>
         /// <param name="name"> The name of the network function application. </param>
         /// <param name="dependsOnProfile"> Depends on profile definition. </param>
         /// <param name="artifactProfile"> Azure Operator Distributed Services Template artifact profile. </param>
@@ -984,6 +1072,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureOperatorNexusArmTemplateDeployMappingRuleProfile(applicationEnablement, default, templateParameters is null ? default : new ArmTemplateMappingRuleProfile(templateParameters, default));
         }
 
+        /// <summary> Publisher network function definition version update request definition. </summary>
         /// <param name="versionState"> The network function definition version state. </param>
         /// <returns> A new <see cref="Models.NetworkFunctionDefinitionVersionUpdateState"/> instance for mocking. </returns>
         public static NetworkFunctionDefinitionVersionUpdateState NetworkFunctionDefinitionVersionUpdateState(VersionState? versionState = default)
@@ -991,6 +1080,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NetworkFunctionDefinitionVersionUpdateState(versionState, default);
         }
 
+        /// <summary> network service design group resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1014,6 +1104,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> network service design group properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the network service design groups resource. </param>
         /// <param name="description"> The network service design group description. </param>
         /// <returns> A new <see cref="Models.NetworkServiceDesignGroupPropertiesFormat"/> instance for mocking. </returns>
@@ -1022,6 +1113,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NetworkServiceDesignGroupPropertiesFormat(provisioningState, description, default);
         }
 
+        /// <summary> network service design version. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1045,6 +1137,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> network service design version properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the network service design version resource. </param>
         /// <param name="versionState"> The network service design version state. </param>
         /// <param name="description"> The network service design version description. </param>
@@ -1068,6 +1161,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> The nfvi details. </summary>
         /// <param name="name"> The nfvi name. </param>
         /// <param name="nfviDetailsType"> The nfvi type. </param>
         /// <returns> A new <see cref="Models.NfviSiteDetails"/> instance for mocking. </returns>
@@ -1076,6 +1170,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NfviSiteDetails(name, nfviDetailsType, default);
         }
 
+        /// <summary>
+        /// The resource element template object.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ArmResourceDefinitionResourceElementTemplateDetails"/> and <see cref="Models.NetworkFunctionDefinitionResourceElementTemplateDetails"/>.
+        /// </summary>
         /// <param name="name"> Name of the resource element template. </param>
         /// <param name="resourceElementType"> The resource element template type. </param>
         /// <param name="dependsOnProfile"> The depends on profile. </param>
@@ -1085,6 +1183,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new UnknownResourceElementTemplate(name, default, dependsOnProfile, default);
         }
 
+        /// <summary> The arm resource definition resource element template details. </summary>
         /// <param name="name"> Name of the resource element template. </param>
         /// <param name="dependsOnProfile"> The depends on profile. </param>
         /// <param name="configuration"> The resource element template type. </param>
@@ -1094,6 +1193,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ArmResourceDefinitionResourceElementTemplateDetails(name, default, dependsOnProfile, default, configuration);
         }
 
+        /// <summary> The arm template RE. </summary>
         /// <param name="templateType"> The template type. </param>
         /// <param name="parameterValues"> Name and value pairs that define the parameter values. It can be  a well formed escaped JSON string. </param>
         /// <param name="artifactProfile"> Artifact profile properties. </param>
@@ -1112,6 +1212,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NsdArtifactProfile(artifactStoreReferenceId is null ? default : new ReferencedResourceById(artifactStoreReferenceId, default), artifactName, artifactVersion, default);
         }
 
+        /// <summary> The network function definition resource element template details. </summary>
         /// <param name="name"> Name of the resource element template. </param>
         /// <param name="dependsOnProfile"> The depends on profile. </param>
         /// <param name="configuration"> The resource element template type. </param>
@@ -1121,6 +1222,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NetworkFunctionDefinitionResourceElementTemplateDetails(name, default, dependsOnProfile, default, configuration);
         }
 
+        /// <summary> Publisher network service design version update request definition. </summary>
         /// <param name="versionState"> The network service design version state. </param>
         /// <returns> A new <see cref="Models.NetworkServiceDesignVersionUpdateState"/> instance for mocking. </returns>
         public static NetworkServiceDesignVersionUpdateState NetworkServiceDesignVersionUpdateState(VersionState? versionState = default)
@@ -1128,6 +1230,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new NetworkServiceDesignVersionUpdateState(versionState, default);
         }
 
+        /// <summary> Artifact store properties. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1151,6 +1254,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> Artifact store properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the application groups resource. </param>
         /// <param name="storeType"> The artifact store type. </param>
         /// <param name="backingResourcePublicNetworkAccess"> The artifact store backing resource network access type. </param>
@@ -1170,6 +1274,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> The ArtifactStorePropertiesFormatManagedResourceGroupConfiguration. </summary>
         /// <param name="name"> The managed resource group name. </param>
         /// <param name="location"> The managed resource group location. </param>
         /// <returns> A new <see cref="Models.ArtifactStorePropertiesFormatManagedResourceGroupConfiguration"/> instance for mocking. </returns>
@@ -1178,6 +1283,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ArtifactStorePropertiesFormatManagedResourceGroupConfiguration(name, location, default);
         }
 
+        /// <summary> List of network fabric controller ids. </summary>
         /// <param name="networkFabricControllerIds"> list of network fabric controllers. </param>
         /// <returns> A new <see cref="Models.ArtifactStoreNetworkFabricControllerEndPoints"/> instance for mocking. </returns>
         public static ArtifactStoreNetworkFabricControllerEndPoints ArtifactStoreNetworkFabricControllerEndPoints(IEnumerable<ReferencedResourceById> networkFabricControllerIds = default)
@@ -1187,6 +1293,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ArtifactStoreNetworkFabricControllerEndPoints((networkFabricControllerIds ?? new ChangeTrackingList<ReferencedResourceById>()).ToList(), default);
         }
 
+        /// <summary> List of manual private endpoints. </summary>
         /// <param name="manualPrivateEndPointConnections"> list of private endpoints. </param>
         /// <returns> A new <see cref="Models.ArtifactStorePrivateEndPointsFormat"/> instance for mocking. </returns>
         public static ArtifactStorePrivateEndPointsFormat ArtifactStorePrivateEndPointsFormat(IEnumerable<ReferencedResourceById> manualPrivateEndPointConnections = default)
@@ -1196,6 +1303,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ArtifactStorePrivateEndPointsFormat((manualPrivateEndPointConnections ?? new ChangeTrackingList<ReferencedResourceById>()).ToList(), default);
         }
 
+        /// <summary> The proxy artifact overview. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1206,6 +1314,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ProxyArtifactListOverview(id, name, resourceType, systemData, default);
         }
 
+        /// <summary> The proxy artifact overview. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1223,6 +1332,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> The ProxyArtifactOverviewPropertiesValue. </summary>
         /// <param name="artifactType"> The artifact type. </param>
         /// <param name="artifactVersion"> The artifact version. </param>
         /// <param name="artifactState"> The artifact state. </param>
@@ -1239,6 +1349,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ArtifactChangeState(artifactState is null ? default : new ArtifactChangeStateProperties(artifactState, default), default);
         }
 
+        /// <summary> Artifact manifest properties. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1262,6 +1373,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> Artifact manifest properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the ArtifactManifest resource. </param>
         /// <param name="artifactManifestState"> The artifact manifest state. </param>
         /// <param name="artifacts"> The artifacts list. </param>
@@ -1273,6 +1385,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ArtifactManifestPropertiesFormat(provisioningState, artifactManifestState, (artifacts ?? new ChangeTrackingList<ManifestArtifactFormat>()).ToList(), default);
         }
 
+        /// <summary> Manifest artifact properties. </summary>
         /// <param name="artifactName"> The artifact name. </param>
         /// <param name="artifactType"> The artifact type. </param>
         /// <param name="artifactVersion"> The artifact version. </param>
@@ -1282,6 +1395,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ManifestArtifactFormat(artifactName, artifactType, artifactVersion, default);
         }
 
+        /// <summary>
+        /// The artifact manifest credential definition.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureContainerRegistryScopedTokenCredential"/> and <see cref="Models.AzureStorageAccountCredential"/>.
+        /// </summary>
         /// <param name="credentialType"> The credential type. </param>
         /// <returns> A new <see cref="Models.ArtifactAccessCredential"/> instance for mocking. </returns>
         public static ArtifactAccessCredential ArtifactAccessCredential(string credentialType = default)
@@ -1289,6 +1406,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new UnknownArtifactAccessCredential(default, default);
         }
 
+        /// <summary> The azure container registry scoped token credential definition. </summary>
         /// <param name="username"> The username of the credential. </param>
         /// <param name="acrToken"> The credential value. </param>
         /// <param name="acrServerUri"> The Acr server url. </param>
@@ -1309,6 +1427,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 expiryOn);
         }
 
+        /// <summary> The azure storage account credential definition. </summary>
         /// <param name="storageAccountId"> The storage account Id. </param>
         /// <param name="containerCredentials"> The containers that could be accessed using the current credential. </param>
         /// <param name="expiryOn"> The UTC time when credential will expire. </param>
@@ -1320,6 +1439,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureStorageAccountCredential(default, default, storageAccountId, (containerCredentials ?? new ChangeTrackingList<AzureStorageAccountContainerCredential>()).ToList(), expiryOn);
         }
 
+        /// <summary> The azure storage account container credential definition. </summary>
         /// <param name="containerName"> The storage account container name. </param>
         /// <param name="containerSasUri"> The storage account container sas uri. </param>
         /// <returns> A new <see cref="Models.AzureStorageAccountContainerCredential"/> instance for mocking. </returns>
@@ -1328,6 +1448,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureStorageAccountContainerCredential(containerName, containerSasUri, default);
         }
 
+        /// <summary> The artifact manifest updating request payload. Only the 'Uploaded' state is allowed for updates. Other states are used for internal state transitioning. </summary>
         /// <param name="artifactManifestState"> The artifact manifest state. </param>
         /// <returns> A new <see cref="Models.ArtifactManifestUpdateState"/> instance for mocking. </returns>
         public static ArtifactManifestUpdateState ArtifactManifestUpdateState(ArtifactManifestState? artifactManifestState = default)
@@ -1335,6 +1456,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ArtifactManifestUpdateState(artifactManifestState, default);
         }
 
+        /// <summary> Site resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1358,6 +1480,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> Site properties. </summary>
         /// <param name="provisioningState"> The provisioning state of the site resource. <b>TODO</b>: Confirm if this is needed. </param>
         /// <param name="nfvis"> List of NFVIs. </param>
         /// <param name="referencedSiteNetworkServices"> The list of site network services on the site. </param>
@@ -1370,6 +1493,10 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new SitePropertiesFormat(provisioningState, (nfvis ?? new ChangeTrackingList<NfviDetails>()).ToList(), (referencedSiteNetworkServices ?? new ChangeTrackingList<ReferencedResourceById>()).ToList(), default);
         }
 
+        /// <summary>
+        /// The NFVI object.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AzureCoreNfviDetails"/>, <see cref="Models.AzureArcK8SClusterNfviDetails"/>, and <see cref="Models.AzureOperatorNexusClusterNfviDetails"/>.
+        /// </summary>
         /// <param name="name"> Name of the nfvi. </param>
         /// <param name="nfviType"> The NFVI type. </param>
         /// <returns> A new <see cref="Models.NfviDetails"/> instance for mocking. </returns>
@@ -1378,6 +1505,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new UnknownNfviDetails(name, default, default);
         }
 
+        /// <summary> The Azure Core NFVI detail. </summary>
         /// <param name="name"> Name of the nfvi. </param>
         /// <param name="location"> Location of the Azure core. </param>
         /// <returns> A new <see cref="Models.AzureCoreNfviDetails"/> instance for mocking. </returns>
@@ -1402,6 +1530,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new AzureOperatorNexusClusterNfviDetails(name, default, default, customLocationReferenceId is null ? default : new ReferencedResourceById(customLocationReferenceId, default));
         }
 
+        /// <summary> Site network service resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1463,6 +1592,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 default);
         }
 
+        /// <summary> Managed resource group configuration. </summary>
         /// <param name="name"> Managed resource group name. </param>
         /// <param name="location"> Managed resource group location. </param>
         /// <returns> A new <see cref="Models.ManagedResourceGroupConfiguration"/> instance for mocking. </returns>
@@ -1471,6 +1601,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             return new ManagedResourceGroupConfiguration(name, location, default);
         }
 
+        /// <summary> Sku, to be associated with a SiteNetworkService. </summary>
         /// <param name="name"> Name of this Sku. </param>
         /// <param name="tier"> The SKU tier based on the SKU name. </param>
         /// <returns> A new <see cref="Models.HybridNetworkSku"/> instance for mocking. </returns>
