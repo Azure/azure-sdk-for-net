@@ -7,5 +7,5 @@ extends:
     ServiceDirectory: sreagent
     LimitForPullRequest: true
     Artifacts:
-    - name: Azure.ResourceManager.SreAgent
-      safeName: AzureResourceManagerSreAgent
+    - name: Azure.ResourceManager.AppService.SreAgent
+      safeName: AzureResourceManagerAppServiceSreAgent
