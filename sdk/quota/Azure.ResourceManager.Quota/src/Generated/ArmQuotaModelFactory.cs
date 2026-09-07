@@ -507,6 +507,189 @@ namespace Azure.ResourceManager.Quota.Models
                 default);
         }
 
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the quota transfer. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <returns> A new <see cref="Quota.QuotaTransferData"/> instance for mocking. </returns>
+        public static QuotaTransferData QuotaTransferData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, QuotaTransferProperties properties = default, string eTag = default)
+        {
+            return new QuotaTransferData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                default);
+        }
+
+        /// <param name="provisioningState"> The status of the underlying ARM resource operation. </param>
+        /// <param name="transferStatus"> The business status of the transfer. </param>
+        /// <param name="transferId">
+        /// Server-generated identifier the recipient uses to address the transfer on the
+        /// incomingQuotaTransfers URI.
+        /// </param>
+        /// <param name="displayName"> Human-friendly label surfaced on customer GET responses and recipient inbox listings. </param>
+        /// <param name="comment"> Donor-supplied free-text rationale captured at submit time. </param>
+        /// <param name="destinationSubscriptionId"> Recipient subscription id. Must differ from the donor subscription. </param>
+        /// <param name="destinationTenantId"> Recipient tenant id, resolved by the service from the recipient subscription. </param>
+        /// <param name="billingAccountId"> Billing account id both donor and recipient subscriptions must roll up to. </param>
+        /// <param name="resourceName">
+        /// The quota dimension being moved, scoped by the URI's target provider
+        /// (for example, `standardDv5Family` under Microsoft.Compute).
+        /// </param>
+        /// <param name="amount"> Amount to transfer in the resource's native unit (e.g. vCPU count). </param>
+        /// <param name="autoApprove">
+        /// Same-tenant one-shot opt-in. When true, the donor PUT admission-checks recipient-side
+        /// RBAC and cap at submit time and drives the transfer to terminal Completed within the
+        /// same LRO, with no recipient approve required. The outcome is reflected by
+        /// `transferStatus`: `Completed` means the auto path committed; `Pending` means it did
+        /// not (e.g. cross-tenant, missing RBAC, cap exceeded) and the recipient must approve.
+        /// </param>
+        /// <param name="createdOn"> Time the transfer was created. </param>
+        /// <param name="expiresOn"> Time at which a Pending transfer expires if the recipient has not approved or rejected it. </param>
+        /// <param name="createdBy"> Principal that created the transfer. </param>
+        /// <param name="approval">
+        /// Approval record. Populated when `transferStatus` is `Accepted` or `Completed`.
+        /// Mutually exclusive with `cancellation`.
+        /// </param>
+        /// <param name="cancellation">
+        /// Cancellation record. Populated when `transferStatus` is `Cancelled`.
+        /// Mutually exclusive with `approval`.
+        /// </param>
+        /// <returns> A new <see cref="Models.QuotaTransferProperties"/> instance for mocking. </returns>
+        public static QuotaTransferProperties QuotaTransferProperties(TransferProvisioningState? provisioningState = default, TransferStatus? transferStatus = default, string transferId = default, string displayName = default, string comment = default, string destinationSubscriptionId = default, string destinationTenantId = default, string billingAccountId = default, string resourceName = default, long amount = default, bool? autoApprove = default, DateTimeOffset? createdOn = default, DateTimeOffset? expiresOn = default, string createdBy = default, ApprovalRecord approval = default, CancellationRecord cancellation = default)
+        {
+            return new QuotaTransferProperties(
+                provisioningState,
+                transferStatus,
+                transferId,
+                displayName,
+                comment,
+                destinationSubscriptionId,
+                destinationTenantId,
+                billingAccountId,
+                resourceName,
+                amount,
+                autoApprove,
+                createdOn,
+                expiresOn,
+                createdBy,
+                approval,
+                cancellation,
+                default);
+        }
+
+        /// <param name="comment"> Optional free-text comment supplied by the approver. </param>
+        /// <param name="actor"> Principal that performed the approval (typically a UPN or service principal id). </param>
+        /// <param name="occurredOn"> Timestamp at which the approval was recorded. </param>
+        /// <returns> A new <see cref="Models.ApprovalRecord"/> instance for mocking. </returns>
+        public static ApprovalRecord ApprovalRecord(string comment = default, string actor = default, DateTimeOffset occurredOn = default)
+        {
+            return new ApprovalRecord(comment, actor, occurredOn, default);
+        }
+
+        /// <param name="reason"> Optional free-text reason supplied by the donor when cancelling. </param>
+        /// <param name="actor"> Principal that performed the cancellation. </param>
+        /// <param name="occurredOn"> Timestamp at which the cancellation was recorded. </param>
+        /// <returns> A new <see cref="Models.CancellationRecord"/> instance for mocking. </returns>
+        public static CancellationRecord CancellationRecord(string reason = default, string actor = default, DateTimeOffset occurredOn = default)
+        {
+            return new CancellationRecord(reason, actor, occurredOn, default);
+        }
+
+        /// <param name="reason"> Optional free-text reason recorded on the transfer. </param>
+        /// <returns> A new <see cref="Models.QuotaTransferCancelContent"/> instance for mocking. </returns>
+        public static QuotaTransferCancelContent QuotaTransferCancelContent(string reason = default)
+        {
+            return new QuotaTransferCancelContent(reason, default);
+        }
+
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="properties"> Properties of the incoming quota transfer. </param>
+        /// <param name="eTag"> "If etag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields."). </param>
+        /// <returns> A new <see cref="Quota.IncomingQuotaTransferData"/> instance for mocking. </returns>
+        public static IncomingQuotaTransferData IncomingQuotaTransferData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IncomingQuotaTransferProperties properties = default, string eTag = default)
+        {
+            return new IncomingQuotaTransferData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                properties,
+                eTag,
+                default);
+        }
+
+        /// <param name="provisioningState"> The status of the underlying ARM resource operation. </param>
+        /// <param name="transferStatus"> The business status of the transfer. </param>
+        /// <param name="transferId"> Server-generated identifier of the transfer (matches the URI key). </param>
+        /// <param name="transferRef"> Fully qualified ARM resource id of the donor-side quotaTransfers resource. </param>
+        /// <param name="sourceSubscriptionId"> Donor subscription id. The recipient subscription is the one in the request URI. </param>
+        /// <param name="sourceTenantId"> Donor tenant id, resolved by the service from the donor subscription. </param>
+        /// <param name="billingAccountId"> Billing account id both donor and recipient subscriptions roll up to. </param>
+        /// <param name="resourceName"> The quota dimension being moved. </param>
+        /// <param name="amount"> Amount being transferred in the resource's native unit. </param>
+        /// <param name="sourceEtag">
+        /// ETag of the donor-side source document at the time the inbox entry was projected. Used
+        /// as the If-Match value on approve and reject requests.
+        /// </param>
+        /// <param name="approval">
+        /// Approval record. Populated when `transferStatus` is `Accepted` or `Completed`.
+        /// Mutually exclusive with `rejection`.
+        /// </param>
+        /// <param name="rejection">
+        /// Rejection record. Populated when `transferStatus` is `Rejected`.
+        /// Mutually exclusive with `approval`.
+        /// </param>
+        /// <returns> A new <see cref="Models.IncomingQuotaTransferProperties"/> instance for mocking. </returns>
+        public static IncomingQuotaTransferProperties IncomingQuotaTransferProperties(TransferProvisioningState? provisioningState = default, TransferStatus? transferStatus = default, string transferId = default, ResourceIdentifier transferRef = default, string sourceSubscriptionId = default, string sourceTenantId = default, string billingAccountId = default, string resourceName = default, long? amount = default, string sourceEtag = default, ApprovalRecord approval = default, RejectionRecord rejection = default)
+        {
+            return new IncomingQuotaTransferProperties(
+                provisioningState,
+                transferStatus,
+                transferId,
+                transferRef,
+                sourceSubscriptionId,
+                sourceTenantId,
+                billingAccountId,
+                resourceName,
+                amount,
+                sourceEtag,
+                approval,
+                rejection,
+                default);
+        }
+
+        /// <param name="reason"> Optional free-text reason supplied by the recipient when rejecting. </param>
+        /// <param name="actor"> Principal that performed the rejection. </param>
+        /// <param name="occurredOn"> Timestamp at which the rejection was recorded. </param>
+        /// <returns> A new <see cref="Models.RejectionRecord"/> instance for mocking. </returns>
+        public static RejectionRecord RejectionRecord(string reason = default, string actor = default, DateTimeOffset occurredOn = default)
+        {
+            return new RejectionRecord(reason, actor, occurredOn, default);
+        }
+
+        /// <param name="comment"> Optional free-text comment recorded on the transfer. </param>
+        /// <returns> A new <see cref="Models.IncomingQuotaTransferApproveContent"/> instance for mocking. </returns>
+        public static IncomingQuotaTransferApproveContent IncomingQuotaTransferApproveContent(string comment = default)
+        {
+            return new IncomingQuotaTransferApproveContent(comment, default);
+        }
+
+        /// <param name="reason"> Optional free-text reason recorded on the transfer. </param>
+        /// <returns> A new <see cref="Models.IncomingQuotaTransferRejectContent"/> instance for mocking. </returns>
+        public static IncomingQuotaTransferRejectContent IncomingQuotaTransferRejectContent(string reason = default)
+        {
+            return new IncomingQuotaTransferRejectContent(reason, default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.GroupQuotaLimitProperties"/>. </summary>
         /// <param name="resourceName"> The resource name, such as SKU name. </param>
         /// <param name="limit"> The current Group Quota Limit at the parentId level. </param>

@@ -336,5 +336,101 @@ namespace Azure.ResourceManager.Quota.Mocking
 
             return await GetQuotaRequestDetails(scope).GetAsync(id, cancellationToken).ConfigureAwait(false);
         }
+
+        /// <summary> Gets an object representing a <see cref="QuotaTransferResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="QuotaTransferResource"/> object. </returns>
+        public virtual QuotaTransferResource GetQuotaTransferResource(ResourceIdentifier id)
+        {
+            QuotaTransferResource.ValidateResourceId(id);
+            return new QuotaTransferResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="QuotaTransferCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="QuotaTransferResource"/> objects. </returns>
+        public virtual QuotaTransferCollection GetQuotaTransfers(ResourceIdentifier scope)
+        {
+            return new QuotaTransferCollection(Client, scope);
+        }
+
+        /// <summary> Get a quota transfer. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="transferName">
+        /// The donor-chosen name segment of the quota transfer. Used as the idempotency key
+        /// for retries on the donor side.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<QuotaTransferResource> GetQuotaTransfer(ResourceIdentifier scope, string transferName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(transferName, nameof(transferName));
+
+            return GetQuotaTransfers(scope).Get(transferName, cancellationToken);
+        }
+
+        /// <summary> Get a quota transfer. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="transferName">
+        /// The donor-chosen name segment of the quota transfer. Used as the idempotency key
+        /// for retries on the donor side.
+        /// </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transferName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transferName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<QuotaTransferResource>> GetQuotaTransferAsync(ResourceIdentifier scope, string transferName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(transferName, nameof(transferName));
+
+            return await GetQuotaTransfers(scope).GetAsync(transferName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Gets an object representing a <see cref="IncomingQuotaTransferResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="IncomingQuotaTransferResource"/> object. </returns>
+        public virtual IncomingQuotaTransferResource GetIncomingQuotaTransferResource(ResourceIdentifier id)
+        {
+            IncomingQuotaTransferResource.ValidateResourceId(id);
+            return new IncomingQuotaTransferResource(Client, id);
+        }
+
+        /// <summary> Gets a collection of <see cref="IncomingQuotaTransferCollection"/> objects within the specified scope. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <returns> Returns a collection of <see cref="IncomingQuotaTransferResource"/> objects. </returns>
+        public virtual IncomingQuotaTransferCollection GetIncomingQuotaTransfers(ResourceIdentifier scope)
+        {
+            return new IncomingQuotaTransferCollection(Client, scope);
+        }
+
+        /// <summary> Get an incoming quota transfer. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="transferId"> Server-generated identifier of the transfer (matches `properties.transferId`). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transferId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transferId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<IncomingQuotaTransferResource> GetIncomingQuotaTransfer(ResourceIdentifier scope, string transferId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
+
+            return GetIncomingQuotaTransfers(scope).Get(transferId, cancellationToken);
+        }
+
+        /// <summary> Get an incoming quota transfer. </summary>
+        /// <param name="scope"> The scope of the resource collection to get. </param>
+        /// <param name="transferId"> Server-generated identifier of the transfer (matches `properties.transferId`). </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="transferId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="transferId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<IncomingQuotaTransferResource>> GetIncomingQuotaTransferAsync(ResourceIdentifier scope, string transferId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(transferId, nameof(transferId));
+
+            return await GetIncomingQuotaTransfers(scope).GetAsync(transferId, cancellationToken).ConfigureAwait(false);
+        }
     }
 }
