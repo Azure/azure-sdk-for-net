@@ -145,20 +145,20 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("effectiveDateTime"u8);
                 writer.WriteStringValue(EffectOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiryDateTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(PurchaseOn))
             {
                 writer.WritePropertyName("purchaseDateTime"u8);
                 writer.WriteStringValue(PurchaseOn.Value, "O");
             }
-            if (Optional.IsDefined(BenefitStartOn))
+            if (Optional.IsDefined(BenefitStartsOn))
             {
                 writer.WritePropertyName("benefitStartTime"u8);
-                writer.WriteStringValue(BenefitStartOn.Value, "O");
+                writer.WriteStringValue(BenefitStartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ExtendedStatusInfo))
             {
@@ -246,9 +246,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             BillingBenefitsAppliedScopeProperties appliedScopeProperties = default;
             BillingBenefitsCommitment commitment = default;
             DateTimeOffset? effectOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             DateTimeOffset? purchaseOn = default;
-            DateTimeOffset? benefitStartOn = default;
+            DateTimeOffset? benefitStartsOn = default;
             BillingBenefitsExtendedStatusInfo extendedStatusInfo = default;
             bool? isRenewed = default;
             BillingBenefitsSavingsPlanUtilization utilization = default;
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("purchaseDateTime"u8))
@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    benefitStartOn = prop.Value.GetDateTimeOffset("O");
+                    benefitStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("extendedStatusInfo"u8))
@@ -465,9 +465,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 appliedScopeProperties,
                 commitment,
                 effectOn,
-                expireOn,
+                expiresOn,
                 purchaseOn,
-                benefitStartOn,
+                benefitStartsOn,
                 extendedStatusInfo,
                 isRenewed,
                 utilization,

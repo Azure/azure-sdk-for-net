@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Commerce
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetUsageAggregatesRequest(string subscriptionId, DateTimeOffset reportedStartTime, DateTimeOffset reportedEndTime, bool? showDetails, string aggregationGranularity, string continuationToken, RequestContext context)
+        internal HttpMessage CreateGetUsageAggregatesRequest(string subscriptionId, DateTimeOffset reportedStartsOn, DateTimeOffset reportedEndsOn, bool? showDetails, string aggregationGranularity, string continuationToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -55,8 +55,8 @@ namespace Azure.ResourceManager.Commerce
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            uri.AppendQuery("reportedStartTime", TypeFormatters.ConvertToString(reportedStartTime, SerializationFormat.DateTime_RFC3339), true);
-            uri.AppendQuery("reportedEndTime", TypeFormatters.ConvertToString(reportedEndTime, SerializationFormat.DateTime_RFC3339), true);
+            uri.AppendQuery("reportedStartTime", TypeFormatters.ConvertToString(reportedStartsOn, SerializationFormat.DateTime_RFC3339), true);
+            uri.AppendQuery("reportedEndTime", TypeFormatters.ConvertToString(reportedEndsOn, SerializationFormat.DateTime_RFC3339), true);
             if (showDetails != null)
             {
                 uri.AppendQuery("showDetails", TypeFormatters.ConvertToString(showDetails), true);
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Commerce
             return message;
         }
 
-        internal HttpMessage CreateNextGetUsageAggregatesRequest(Uri nextPage, string subscriptionId, DateTimeOffset reportedStartTime, DateTimeOffset reportedEndTime, bool? showDetails, string aggregationGranularity, string continuationToken, RequestContext context)
+        internal HttpMessage CreateNextGetUsageAggregatesRequest(Uri nextPage, string subscriptionId, DateTimeOffset reportedStartsOn, DateTimeOffset reportedEndsOn, bool? showDetails, string aggregationGranularity, string continuationToken, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)

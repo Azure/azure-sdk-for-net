@@ -139,6 +139,36 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WritePropertyName("podMaxPids"u8);
                 writer.WriteNumberValue(PodMaxPids.Value);
             }
+            if (Optional.IsDefined(SeccompDefault))
+            {
+                writer.WritePropertyName("seccompDefault"u8);
+                writer.WriteStringValue(SeccompDefault.Value.ToString());
+            }
+            if (Optional.IsDefined(KubeReserved))
+            {
+                writer.WritePropertyName("kubeReserved"u8);
+                writer.WriteObjectValue(KubeReserved, options);
+            }
+            if (Optional.IsDefined(HardEvictionThreshold))
+            {
+                writer.WritePropertyName("hardEvictionThreshold"u8);
+                writer.WriteObjectValue(HardEvictionThreshold, options);
+            }
+            if (Optional.IsDefined(SoftEvictionThreshold))
+            {
+                writer.WritePropertyName("softEvictionThreshold"u8);
+                writer.WriteObjectValue(SoftEvictionThreshold, options);
+            }
+            if (Optional.IsDefined(SoftEvictionGracePeriod))
+            {
+                writer.WritePropertyName("softEvictionGracePeriod"u8);
+                writer.WriteObjectValue(SoftEvictionGracePeriod, options);
+            }
+            if (Optional.IsDefined(EvictionMaxPodGracePeriodInSeconds))
+            {
+                writer.WritePropertyName("evictionMaxPodGracePeriodInSeconds"u8);
+                writer.WriteNumberValue(EvictionMaxPodGracePeriodInSeconds.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -192,6 +222,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             int? containerLogMaxSizeInMB = default;
             int? containerLogMaxFiles = default;
             int? podMaxPids = default;
+            SeccompDefault? seccompDefault = default;
+            KubeletReservedResources kubeReserved = default;
+            KubeletHardEvictionThreshold hardEvictionThreshold = default;
+            SoftEvictionThreshold softEvictionThreshold = default;
+            SoftEvictionGracePeriod softEvictionGracePeriod = default;
+            int? evictionMaxPodGracePeriodInSeconds = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -294,6 +330,60 @@ namespace Azure.ResourceManager.ContainerService.Models
                     podMaxPids = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("seccompDefault"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    seccompDefault = new SeccompDefault(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("kubeReserved"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    kubeReserved = KubeletReservedResources.DeserializeKubeletReservedResources(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("hardEvictionThreshold"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    hardEvictionThreshold = KubeletHardEvictionThreshold.DeserializeKubeletHardEvictionThreshold(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("softEvictionThreshold"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    softEvictionThreshold = SoftEvictionThreshold.DeserializeSoftEvictionThreshold(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("softEvictionGracePeriod"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    softEvictionGracePeriod = SoftEvictionGracePeriod.DeserializeSoftEvictionGracePeriod(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("evictionMaxPodGracePeriodInSeconds"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    evictionMaxPodGracePeriodInSeconds = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -311,6 +401,12 @@ namespace Azure.ResourceManager.ContainerService.Models
                 containerLogMaxSizeInMB,
                 containerLogMaxFiles,
                 podMaxPids,
+                seccompDefault,
+                kubeReserved,
+                hardEvictionThreshold,
+                softEvictionThreshold,
+                softEvictionGracePeriod,
+                evictionMaxPodGracePeriodInSeconds,
                 additionalBinaryDataProperties);
         }
     }

@@ -408,16 +408,16 @@ namespace Azure.ResourceManager.CloudHealth.Models
         public static Azure.ResourceManager.CloudHealth.Models.EntityAlerts EntityAlerts(Azure.ResourceManager.CloudHealth.Models.EntityAlertConfiguration unhealthy = null, Azure.ResourceManager.CloudHealth.Models.EntityAlertConfiguration degraded = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntityCoordinates EntityCoordinates(float x = 0f, float y = 0f) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntityDataAnnotation EntityDataAnnotation(string annotationId = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.Collections.Generic.IDictionary<string, string> annotationDetails = null, string description = null) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent EntityGetDataAnnotationsContent(System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), int? top = default(int?), string nextMarker = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent EntityGetDataAnnotationsContent(System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), int? top = default(int?), string nextMarker = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsResult EntityGetDataAnnotationsResult(string entityName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.EntityDataAnnotation> annotations = null, string nextMarker = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntityGetSignalRecommendationsResult EntityGetSignalRecommendationsResult(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.SignalConfiguration> recommendedSignals = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.SignalConfiguration> recommendedConfigurations = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntityHealthReportContent EntityHealthReportContent(string signalName = null, Azure.ResourceManager.CloudHealth.Models.EntityHealthState healthState = default(Azure.ResourceManager.CloudHealth.Models.EntityHealthState), double? value = default(double?), Azure.ResourceManager.CloudHealth.Models.HealthReportEvaluationRule evaluationRules = null, int? expiresInMinutes = default(int?), string additionalContext = null) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent EntityHistoryContent(System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), int? top = default(int?), string nextMarker = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent EntityHistoryContent(System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), int? top = default(int?), string nextMarker = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntityHistoryResult EntityHistoryResult(string entityName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.HealthStateTransition> history = null, string nextMarker = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntityIcon EntityIcon(string iconName = null, string customData = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule EntitySignalEvaluationRule(Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRuleV2 degradedRule = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRuleV2 unhealthyRule = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalGroups EntitySignalGroups(Azure.ResourceManager.CloudHealth.Models.ResourceSignals azureResource = null, Azure.ResourceManager.CloudHealth.Models.LogAnalyticsSignals azureLogAnalytics = null, Azure.ResourceManager.CloudHealth.Models.MonitorWorkspaceSignals azureMonitorWorkspace = null, Azure.ResourceManager.CloudHealth.Models.DependenciesSignalGroupV2 dependencies = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.ExternalSignal> externalSignals = null) { throw null; }
-        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent EntitySignalHistoryContent(string signalName = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), int? top = default(int?), string nextMarker = null) { throw null; }
+        public static Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent EntitySignalHistoryContent(string signalName = null, System.DateTimeOffset? startsOn = default(System.DateTimeOffset?), System.DateTimeOffset? endsOn = default(System.DateTimeOffset?), int? top = default(int?), string nextMarker = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryResult EntitySignalHistoryResult(string entityName = null, string signalName = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CloudHealth.Models.SignalHistoryDataPoint> history = null, string nextMarker = null) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.EntitySignalThresholdRuleV2 EntitySignalThresholdRuleV2(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator signalOperator = default(Azure.ResourceManager.CloudHealth.Models.EntitySignalOperator), double? threshold = default(double?), Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity? sensitivity = default(Azure.ResourceManager.CloudHealth.Models.EntityDynamicThresholdSensitivity?), Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow? lookBackWindow = default(Azure.ResourceManager.CloudHealth.Models.DynamicThresholdLookBackWindow?)) { throw null; }
         public static Azure.ResourceManager.CloudHealth.Models.ExternalSignal ExternalSignal(string name = null, string signalDefinitionName = null, Azure.ResourceManager.CloudHealth.Models.SignalStatus status = null, Azure.ResourceManager.CloudHealth.Models.EntitySignalEvaluationRule evaluationRules = null) { throw null; }
@@ -706,9 +706,9 @@ namespace Azure.ResourceManager.CloudHealth.Models
     public partial class EntityGetDataAnnotationsContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent>
     {
         public EntityGetDataAnnotationsContent() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } set { } }
         public string NextMarker { get { throw null; } set { } }
-        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
         public int? Top { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.CloudHealth.Models.EntityGetDataAnnotationsContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -793,9 +793,9 @@ namespace Azure.ResourceManager.CloudHealth.Models
     public partial class EntityHistoryContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent>
     {
         public EntityHistoryContent() { }
-        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } set { } }
         public string NextMarker { get { throw null; } set { } }
-        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
         public int? Top { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.CloudHealth.Models.EntityHistoryContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -892,10 +892,10 @@ namespace Azure.ResourceManager.CloudHealth.Models
     public partial class EntitySignalHistoryContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent>
     {
         public EntitySignalHistoryContent(string signalName) { }
-        public System.DateTimeOffset? EndOn { get { throw null; } set { } }
+        public System.DateTimeOffset? EndsOn { get { throw null; } set { } }
         public string NextMarker { get { throw null; } set { } }
         public string SignalName { get { throw null; } }
-        public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        public System.DateTimeOffset? StartsOn { get { throw null; } set { } }
         public int? Top { get { throw null; } set { } }
         protected virtual Azure.ResourceManager.CloudHealth.Models.EntitySignalHistoryContent JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

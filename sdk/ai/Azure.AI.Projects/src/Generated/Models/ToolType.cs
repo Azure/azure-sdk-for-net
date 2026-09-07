@@ -18,6 +18,7 @@ namespace Azure.AI.Projects
         private const string WebSearchValue = "web_search";
         private const string McpValue = "mcp";
         private const string CodeInterpreterValue = "code_interpreter";
+        private const string ProgrammaticToolCallingValue = "programmatic_tool_calling";
         private const string ImageGenerationValue = "image_generation";
         private const string LocalShellValue = "local_shell";
         private const string ShellValue = "shell";
@@ -73,6 +74,9 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets the CodeInterpreter. </summary>
         public static ToolType CodeInterpreter { get; } = new ToolType(CodeInterpreterValue);
+
+        /// <summary> Gets the ProgrammaticToolCalling. </summary>
+        public static ToolType ProgrammaticToolCalling { get; } = new ToolType(ProgrammaticToolCallingValue);
 
         /// <summary> Gets the ImageGeneration. </summary>
         public static ToolType ImageGeneration { get; } = new ToolType(ImageGenerationValue);

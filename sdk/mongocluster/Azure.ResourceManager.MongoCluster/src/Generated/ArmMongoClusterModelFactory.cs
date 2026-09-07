@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
     public static partial class ArmMongoClusterModelFactory
     {
 
+        /// <summary> Represents a mongo cluster resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -99,6 +100,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 default);
         }
 
+        /// <summary> Parameters used for restore operations. </summary>
         /// <param name="pointInTimeUTC"> UTC point in time to restore a mongo cluster. </param>
         /// <param name="sourceResourceId"> Resource ID to locate the source cluster to restore. </param>
         /// <returns> A new <see cref="Models.MongoClusterRestoreContent"/> instance for mocking. </returns>
@@ -107,6 +109,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterRestoreContent(pointInTimeUTC, sourceResourceId, default);
         }
 
+        /// <summary> Parameters used for replica operations. </summary>
         /// <param name="sourceResourceId"> The id of the replication source cluster. </param>
         /// <param name="sourceLocation"> The location of the source cluster. </param>
         /// <returns> A new <see cref="Models.MongoClusterReplicaContent"/> instance for mocking. </returns>
@@ -115,6 +118,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterReplicaContent(sourceResourceId, sourceLocation, default);
         }
 
+        /// <summary> The local administrator login properties. </summary>
         /// <param name="userName"> The administrator user name. </param>
         /// <param name="password"> The administrator password. </param>
         /// <returns> A new <see cref="Models.MongoClusterAdministratorProperties"/> instance for mocking. </returns>
@@ -123,6 +127,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterAdministratorProperties(userName, password, default);
         }
 
+        /// <summary> The storage properties of the cluster. This includes the data storage size and scaling applied to servers in the cluster. </summary>
         /// <param name="sizeGb"> The size of the data disk assigned to each server. </param>
         /// <param name="type"> The type of storage to provision the cluster servers with. </param>
         /// <returns> A new <see cref="Models.MongoClusterStorageProperties"/> instance for mocking. </returns>
@@ -131,6 +136,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterStorageProperties(sizeGb, @type, default);
         }
 
+        /// <summary> The private endpoint connection resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -148,6 +154,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 default);
         }
 
+        /// <summary> Properties of the private endpoint connection. </summary>
         /// <param name="groupIds"> The group ids for the private endpoint resource. </param>
         /// <param name="privateEndpoint"> The private endpoint resource. </param>
         /// <param name="privateLinkServiceConnectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
@@ -160,6 +167,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterPrivateEndpointConnectionProperties((groupIds ?? new ChangeTrackingList<string>()).ToList(), privateEndpoint, privateLinkServiceConnectionState, provisioningState, default);
         }
 
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -169,6 +177,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> Replica properties of the mongo cluster. </summary>
         /// <param name="sourceResourceId"> The resource id the source cluster for the replica cluster. </param>
         /// <param name="role"> The replication role of the cluster. </param>
         /// <param name="replicationState"> The replication link state of the replica cluster. </param>
@@ -178,6 +187,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterReplicationProperties(sourceResourceId, role, replicationState, default);
         }
 
+        /// <summary> Customer managed key encryption settings. </summary>
         /// <param name="keyEncryptionKeyIdentity"> The identity used to access the key encryption key. </param>
         /// <param name="keyEncryptionKeyUri"> The URI of the key vault key used for encryption. </param>
         /// <returns> A new <see cref="Models.MongoClusterCmkEncryptionProperties"/> instance for mocking. </returns>
@@ -186,6 +196,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterCmkEncryptionProperties(keyEncryptionKeyIdentity, keyEncryptionKeyUri, default);
         }
 
+        /// <summary> The identity used for key encryption key. </summary>
         /// <param name="identityType"> The type of identity. Only 'UserAssignedIdentity' is supported. </param>
         /// <param name="userAssignedIdentityResourceId"> The user assigned identity resource id. </param>
         /// <returns> A new <see cref="Models.MongoClusterKeyEncryptionKeyIdentity"/> instance for mocking. </returns>
@@ -194,6 +205,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterKeyEncryptionKeyIdentity(identityType, userAssignedIdentityResourceId, default);
         }
 
+        /// <summary> The type used for update operations of the MongoCluster. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -240,6 +252,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 default);
         }
 
+        /// <summary> The connection strings for the given mongo cluster. </summary>
         /// <param name="connectionStrings"> An array that contains the connection strings for a mongo cluster. </param>
         /// <returns> A new <see cref="Models.MongoClusterConnectionStringsResult"/> instance for mocking. </returns>
         public static MongoClusterConnectionStringsResult MongoClusterConnectionStringsResult(IEnumerable<MongoClusterConnectionString> connectionStrings = default)
@@ -249,6 +262,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterConnectionStringsResult((connectionStrings ?? new ChangeTrackingList<MongoClusterConnectionString>()).ToList(), default);
         }
 
+        /// <summary> Connection string for the mongo cluster. </summary>
         /// <param name="uri"> Value of the connection string. </param>
         /// <param name="description"> Description of the connection string. </param>
         /// <param name="name"> Name of the connection string. </param>
@@ -258,6 +272,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterConnectionString(uri, description, name, default);
         }
 
+        /// <summary> The check availability request body. </summary>
         /// <param name="name"> The name of the resource for which availability needs to be checked. </param>
         /// <param name="resourceType"> The resource type. </param>
         /// <returns> A new <see cref="Models.MongoClusterNameAvailabilityContent"/> instance for mocking. </returns>
@@ -266,6 +281,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterNameAvailabilityContent(name, resourceType, default);
         }
 
+        /// <summary> The check availability result. </summary>
         /// <param name="isNameAvailable"> Indicates if the resource name is available. </param>
         /// <param name="reason"> The reason why the given name is not available. </param>
         /// <param name="message"> Detailed reason why the given name is not available. </param>
@@ -275,6 +291,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
+        /// <summary> Promote replica request properties. </summary>
         /// <param name="promoteOption"> The promote option to apply to the operation. </param>
         /// <param name="mode"> The mode to apply to the promote operation. Value is optional and default value is 'Switchover'. </param>
         /// <returns> A new <see cref="Models.PromoteReplicaContent"/> instance for mocking. </returns>
@@ -283,6 +300,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new PromoteReplicaContent(promoteOption, mode, default);
         }
 
+        /// <summary> Represents a mongo cluster firewall rule. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -300,6 +318,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 default);
         }
 
+        /// <summary> The properties of a mongo cluster firewall rule. </summary>
         /// <param name="provisioningState"> The provisioning state of the firewall rule. </param>
         /// <param name="startIPAddress"> The start IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
         /// <param name="endIPAddress"> The end IP address of the mongo cluster firewall rule. Must be IPv4 format. </param>
@@ -309,6 +328,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterFirewallRuleProperties(provisioningState, startIPAddress, endIPAddress, default);
         }
 
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -326,6 +346,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 default);
         }
 
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -343,6 +364,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 default);
         }
 
+        /// <summary> Properties of a private link resource. </summary>
         /// <param name="groupId"> The private link resource group id. </param>
         /// <param name="requiredMembers"> The private link resource required member names. </param>
         /// <param name="requiredZoneNames"> The private link resource private link DNS zone name. </param>
@@ -355,6 +377,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterPrivateLinkResourceProperties(groupId, (requiredMembers ?? new ChangeTrackingList<string>()).ToList(), (requiredZoneNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Represents a mongo cluster replica. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -372,6 +395,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 default);
         }
 
+        /// <summary> Represents a Mongo cluster user. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -389,6 +413,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
                 default);
         }
 
+        /// <summary> Definition of Mongo user resource on a cluster. </summary>
         /// <param name="provisioningState"> The provisioning state of the user. </param>
         /// <param name="identityProvider"> The user's identity provider definition. </param>
         /// <param name="roles"> Database roles that are assigned to the user. </param>
@@ -400,6 +425,10 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterUserProperties(provisioningState, identityProvider, (roles ?? new ChangeTrackingList<MongoClusterDatabaseRole>()).ToList(), default);
         }
 
+        /// <summary>
+        /// Defines a user's identity provider definition.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MongoClusterEntraIdentityProvider"/>.
+        /// </summary>
         /// <param name="type"> The type of identity provider that the user belongs to. </param>
         /// <returns> A new <see cref="Models.MongoClusterIdentityProvider"/> instance for mocking. </returns>
         public static MongoClusterIdentityProvider MongoClusterIdentityProvider(string @type = default)
@@ -414,6 +443,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterEntraIdentityProvider(default, default, new MongoClusterEntraIdentityProviderProperties(mongoClusterEntraIdentityProviderPrincipalType, default));
         }
 
+        /// <summary> Microsoft Entra ID provider properties. </summary>
         /// <param name="principalType"> The principal type of the user. </param>
         /// <returns> A new <see cref="Models.MongoClusterEntraIdentityProviderProperties"/> instance for mocking. </returns>
         public static MongoClusterEntraIdentityProviderProperties MongoClusterEntraIdentityProviderProperties(MongoClusterEntraPrincipalType principalType = default)
@@ -421,6 +451,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterEntraIdentityProviderProperties(principalType, default);
         }
 
+        /// <summary> Database role definition that is assigned to a user. </summary>
         /// <param name="db"> Database scope that the role is assigned to. </param>
         /// <param name="role"> The role that is assigned to the user on the database scope. </param>
         /// <returns> A new <see cref="Models.MongoClusterDatabaseRole"/> instance for mocking. </returns>
@@ -429,7 +460,7 @@ namespace Azure.ResourceManager.MongoCluster.Models
             return new MongoClusterDatabaseRole(db, role, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.MongoClusterProperties"/>. </summary>
+        /// <summary> The properties of a mongo cluster. </summary>
         /// <param name="createMode"> The mode to create a mongo cluster. </param>
         /// <param name="restoreParameters"> The parameters to create a point-in-time restore mongo cluster. </param>
         /// <param name="replicaParameters"> The parameters to create a replica mongo cluster. </param>
@@ -439,18 +470,18 @@ namespace Azure.ResourceManager.MongoCluster.Models
         /// <param name="provisioningState"> The provisioning state of the mongo cluster. </param>
         /// <param name="clusterStatus"> The status of the mongo cluster. </param>
         /// <param name="publicNetworkAccess"> Whether or not public endpoint access is allowed for this mongo cluster. </param>
-        /// <param name="highAvailabilityTargetMode"> The high availability properties of the mongo cluster. </param>
+        /// <param name="highAvailabilityTargetMode"> The target high availability mode requested for the cluster. </param>
         /// <param name="storage"> The storage properties of the mongo cluster. </param>
-        /// <param name="shardingShardCount"> The sharding properties of the mongo cluster. </param>
-        /// <param name="computeTier"> The compute properties of the mongo cluster. </param>
-        /// <param name="backupEarliestRestoreTime"> The backup properties of the mongo cluster. </param>
-        /// <param name="dataApiMode"> The Data API properties of the mongo cluster. </param>
+        /// <param name="shardingShardCount"> Number of shards to provision on the cluster. </param>
+        /// <param name="computeTier"> The compute tier to assign to the cluster, where each tier maps to a virtual-core and memory size. Example values: 'M30', 'M40'. </param>
+        /// <param name="backupEarliestRestoreTime"> Earliest restore timestamp in UTC ISO8601 format. </param>
+        /// <param name="dataApiMode"> The mode to indicate whether the Mongo Data API is enabled for a cluster. </param>
         /// <param name="privateEndpointConnections"> List of private endpoint connections. </param>
         /// <param name="previewFeatures"> List of private endpoint connections. </param>
         /// <param name="replica"> The replication properties for the mongo cluster. </param>
         /// <param name="infrastructureVersion"> The infrastructure version the cluster is provisioned on. </param>
-        /// <param name="authConfigAllowedModes"> The authentication configuration for the cluster. </param>
-        /// <param name="customerManagedKeyEncryption"> The encryption configuration for the cluster. Depends on identity being configured. </param>
+        /// <param name="authConfigAllowedModes"> Allowed authentication modes for data access on the cluster. </param>
+        /// <param name="customerManagedKeyEncryption"> Customer managed key encryption settings. </param>
         /// <returns> A new <see cref="Models.MongoClusterProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static MongoClusterProperties MongoClusterProperties(MongoClusterCreateMode? createMode = default, MongoClusterRestoreContent restoreParameters = default, MongoClusterReplicaContent replicaParameters = default, MongoClusterAdministratorProperties administrator = default, string serverVersion = default, string connectionString = default, MongoClusterProvisioningState? provisioningState = default, MongoClusterStatus? clusterStatus = default, MongoClusterPublicNetworkAccess? publicNetworkAccess = default, HighAvailabilityMode? highAvailabilityTargetMode = default, MongoClusterStorageProperties storage = default, int? shardingShardCount = default, string computeTier = default, string backupEarliestRestoreTime = default, MongoClusterDataApiMode? dataApiMode = default, IEnumerable<MongoClusterPrivateEndpointConnection> privateEndpointConnections = default, IEnumerable<MongoClusterPreviewFeature> previewFeatures = default, MongoClusterReplicationProperties replica = default, string infrastructureVersion = default, IEnumerable<MongoClusterAuthenticationMode> authConfigAllowedModes = default, MongoClusterCmkEncryptionProperties customerManagedKeyEncryption = default)

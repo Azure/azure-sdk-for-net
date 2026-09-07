@@ -32,19 +32,19 @@ namespace Azure.ResourceManager.Commerce
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="reportedStartTime"> The start of the time range to retrieve data for. </param>
-        /// <param name="reportedEndTime"> The end of the time range to retrieve data for. </param>
+        /// <param name="reportedStartsOn"> The start of the time range to retrieve data for. </param>
+        /// <param name="reportedEndsOn"> The end of the time range to retrieve data for. </param>
         /// <param name="showDetails"> `True` returns usage data in instance-level detail, `false` causes server-side aggregation with fewer details. For example, if you have 3 website instances, by default you will get 3 line items for website consumption. If you specify showDetails = false, the data will be aggregated as a single line item for website consumption within the time period (for the given subscriptionId, meterId, usageStartTime and usageEndTime). </param>
         /// <param name="aggregationGranularity"> `Daily` (default) returns the data in daily granularity, `Hourly` returns the data in hourly granularity. </param>
         /// <param name="continuationToken"> Used when a continuation token string is provided in the response body of the previous call, enabling paging through a large result set. If not present, the data is retrieved from the beginning of the day/hour (based on the granularity) passed in. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="CommerceUsageAggregation"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CommerceUsageAggregation> GetUsageAggregatesAsync(this SubscriptionResource subscriptionResource, DateTimeOffset reportedStartTime, DateTimeOffset reportedEndTime, bool? showDetails = default, CommerceUsageAggregationGranularity? aggregationGranularity = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public static AsyncPageable<CommerceUsageAggregation> GetUsageAggregatesAsync(this SubscriptionResource subscriptionResource, DateTimeOffset reportedStartsOn, DateTimeOffset reportedEndsOn, bool? showDetails = default, CommerceUsageAggregationGranularity? aggregationGranularity = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableCommerceSubscriptionResource(subscriptionResource).GetUsageAggregatesAsync(reportedStartTime, reportedEndTime, showDetails, aggregationGranularity, continuationToken, cancellationToken);
+            return GetMockableCommerceSubscriptionResource(subscriptionResource).GetUsageAggregatesAsync(reportedStartsOn, reportedEndsOn, showDetails, aggregationGranularity, continuationToken, cancellationToken);
         }
 
         /// <summary>
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.Commerce
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
-        /// <param name="reportedStartTime"> The start of the time range to retrieve data for. </param>
-        /// <param name="reportedEndTime"> The end of the time range to retrieve data for. </param>
+        /// <param name="reportedStartsOn"> The start of the time range to retrieve data for. </param>
+        /// <param name="reportedEndsOn"> The end of the time range to retrieve data for. </param>
         /// <param name="showDetails"> `True` returns usage data in instance-level detail, `false` causes server-side aggregation with fewer details. For example, if you have 3 website instances, by default you will get 3 line items for website consumption. If you specify showDetails = false, the data will be aggregated as a single line item for website consumption within the time period (for the given subscriptionId, meterId, usageStartTime and usageEndTime). </param>
         /// <param name="aggregationGranularity"> `Daily` (default) returns the data in daily granularity, `Hourly` returns the data in hourly granularity. </param>
         /// <param name="continuationToken"> Used when a continuation token string is provided in the response body of the previous call, enabling paging through a large result set. If not present, the data is retrieved from the beginning of the day/hour (based on the granularity) passed in. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
         /// <returns> A collection of <see cref="CommerceUsageAggregation"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CommerceUsageAggregation> GetUsageAggregates(this SubscriptionResource subscriptionResource, DateTimeOffset reportedStartTime, DateTimeOffset reportedEndTime, bool? showDetails = default, CommerceUsageAggregationGranularity? aggregationGranularity = default, string continuationToken = default, CancellationToken cancellationToken = default)
+        public static Pageable<CommerceUsageAggregation> GetUsageAggregates(this SubscriptionResource subscriptionResource, DateTimeOffset reportedStartsOn, DateTimeOffset reportedEndsOn, bool? showDetails = default, CommerceUsageAggregationGranularity? aggregationGranularity = default, string continuationToken = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableCommerceSubscriptionResource(subscriptionResource).GetUsageAggregates(reportedStartTime, reportedEndTime, showDetails, aggregationGranularity, continuationToken, cancellationToken);
+            return GetMockableCommerceSubscriptionResource(subscriptionResource).GetUsageAggregates(reportedStartsOn, reportedEndsOn, showDetails, aggregationGranularity, continuationToken, cancellationToken);
         }
 
         /// <summary>
