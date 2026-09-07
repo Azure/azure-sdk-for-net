@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="ttlInSeconds"> The TTL (time-to-live) of the records in the record set. </param>
         /// <param name="fqdn"> Fully qualified domain name of the record set. </param>
         /// <param name="provisioningState"> provisioning State of the record set. </param>
-        /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
-        /// <param name="trafficManagementProfile"> A reference to an azure traffic manager profile resource from where the dns resource value is taken. </param>
+        /// <param name="targetResourceId"> Resource Id. </param>
+        /// <param name="trafficManagementProfileId"> Resource Id. </param>
         /// <param name="dnsARecords"> The list of A records in the record set. </param>
         /// <param name="dnsAaaaRecords"> The list of AAAA records in the record set. </param>
         /// <param name="dnsMXRecords"> The list of MX records in the record set. </param>
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="dnsTlsaRecords"> The list of TLSA records in the record set. </param>
         /// <param name="dnsNaptrRecords"> The list of NAPTR records in the record set. </param>
         /// <returns> A new <see cref="Models.DnsRecordSetProperties"/> instance for mocking. </returns>
-        public static DnsRecordSetProperties DnsRecordSetProperties(IDictionary<string, string> metadata = default, long? ttlInSeconds = default, string fqdn = default, string provisioningState = default, WritableSubResource targetResource = default, WritableSubResource trafficManagementProfile = default, IEnumerable<DnsARecordInfo> dnsARecords = default, IEnumerable<DnsAaaaRecordInfo> dnsAaaaRecords = default, IEnumerable<DnsMXRecordInfo> dnsMXRecords = default, IEnumerable<DnsNSRecordInfo> dnsNSRecords = default, IEnumerable<DnsPtrRecordInfo> dnsPtrRecords = default, IEnumerable<DnsSrvRecordInfo> dnsSrvRecords = default, IEnumerable<DnsTxtRecordInfo> dnsTxtRecords = default, string cname = default, DnsSoaRecordInfo dnsSoaRecord = default, IEnumerable<DnsCaaRecordInfo> dnsCaaRecords = default, IEnumerable<DnsDSRecordInfo> dnsDSRecords = default, IEnumerable<DnsTlsaRecordInfo> dnsTlsaRecords = default, IEnumerable<DnsNaptrRecordInfo> dnsNaptrRecords = default)
+        public static DnsRecordSetProperties DnsRecordSetProperties(IDictionary<string, string> metadata = default, long? ttlInSeconds = default, string fqdn = default, string provisioningState = default, ResourceIdentifier targetResourceId = default, ResourceIdentifier trafficManagementProfileId = default, IEnumerable<DnsARecordInfo> dnsARecords = default, IEnumerable<DnsAaaaRecordInfo> dnsAaaaRecords = default, IEnumerable<DnsMXRecordInfo> dnsMXRecords = default, IEnumerable<DnsNSRecordInfo> dnsNSRecords = default, IEnumerable<DnsPtrRecordInfo> dnsPtrRecords = default, IEnumerable<DnsSrvRecordInfo> dnsSrvRecords = default, IEnumerable<DnsTxtRecordInfo> dnsTxtRecords = default, string cname = default, DnsSoaRecordInfo dnsSoaRecord = default, IEnumerable<DnsCaaRecordInfo> dnsCaaRecords = default, IEnumerable<DnsDSRecordInfo> dnsDSRecords = default, IEnumerable<DnsTlsaRecordInfo> dnsTlsaRecords = default, IEnumerable<DnsNaptrRecordInfo> dnsNaptrRecords = default)
         {
             metadata ??= new ChangeTrackingDictionary<string, string>();
             dnsARecords ??= new ChangeTrackingList<DnsARecordInfo>();
@@ -112,8 +112,8 @@ namespace Azure.ResourceManager.Dns.Models
                 ttlInSeconds,
                 fqdn,
                 provisioningState,
-                targetResource,
-                trafficManagementProfile,
+                targetResourceId is null ? default : new DnsSubResourceInfo(targetResourceId, default),
+                trafficManagementProfileId is null ? default : new DnsSubResourceInfo(trafficManagementProfileId, default),
                 (dnsARecords ?? new ChangeTrackingList<DnsARecordInfo>()).ToList(),
                 (dnsAaaaRecords ?? new ChangeTrackingList<DnsAaaaRecordInfo>()).ToList(),
                 (dnsMXRecords ?? new ChangeTrackingList<DnsMXRecordInfo>()).ToList(),
@@ -128,6 +128,14 @@ namespace Azure.ResourceManager.Dns.Models
                 (dnsTlsaRecords ?? new ChangeTrackingList<DnsTlsaRecordInfo>()).ToList(),
                 (dnsNaptrRecords ?? new ChangeTrackingList<DnsNaptrRecordInfo>()).ToList(),
                 default);
+        }
+
+        /// <summary> A reference to a another resource. </summary>
+        /// <param name="id"> Resource Id. </param>
+        /// <returns> A new <see cref="Models.DnsSubResourceInfo"/> instance for mocking. </returns>
+        public static DnsSubResourceInfo DnsSubResourceInfo(ResourceIdentifier id = default)
+        {
+            return new DnsSubResourceInfo(id, default);
         }
 
         /// <summary> An MX record. </summary>
@@ -269,12 +277,12 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="numberOfRecords"> The current number of record sets in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="nameServers"> The name servers for this DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="zoneType"> The type of this DNS zone (Public or Private). </param>
-        /// <param name="registrationVirtualNetworks"> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </param>
-        /// <param name="resolutionVirtualNetworks"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
+        /// <param name="registrationVirtualNetworkReferences"> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </param>
+        /// <param name="resolutionVirtualNetworkReferences"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
         /// <param name="signingKeys"> The list of signing keys. </param>
         /// <param name="eTag"> The etag of the zone. </param>
         /// <returns> A new <see cref="Dns.DnsZoneData"/> instance for mocking. </returns>
-        public static DnsZoneData DnsZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, long? maxNumberOfRecords = default, long? maxNumberOfRecordsPerRecord = default, long? numberOfRecords = default, IEnumerable<string> nameServers = default, DnsZoneType? zoneType = default, IEnumerable<WritableSubResource> registrationVirtualNetworks = default, IEnumerable<WritableSubResource> resolutionVirtualNetworks = default, IEnumerable<DnsSigningKey> signingKeys = default, ETag? eTag = default)
+        public static DnsZoneData DnsZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, long? maxNumberOfRecords = default, long? maxNumberOfRecordsPerRecord = default, long? numberOfRecords = default, IEnumerable<string> nameServers = default, DnsZoneType? zoneType = default, IEnumerable<DnsSubResourceInfo> registrationVirtualNetworkReferences = default, IEnumerable<DnsSubResourceInfo> resolutionVirtualNetworkReferences = default, IEnumerable<DnsSigningKey> signingKeys = default, ETag? eTag = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -285,14 +293,14 @@ namespace Azure.ResourceManager.Dns.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                maxNumberOfRecords is null && maxNumberOfRecordsPerRecord is null && numberOfRecords is null && nameServers is null && zoneType is null && registrationVirtualNetworks is null && resolutionVirtualNetworks is null && signingKeys is null ? default : new ZoneProperties(
+                maxNumberOfRecords is null && maxNumberOfRecordsPerRecord is null && numberOfRecords is null && nameServers is null && zoneType is null && registrationVirtualNetworkReferences is null && resolutionVirtualNetworkReferences is null && signingKeys is null ? default : new ZoneProperties(
                     maxNumberOfRecords,
                     maxNumberOfRecordsPerRecord,
                     numberOfRecords,
                     (nameServers ?? new ChangeTrackingList<string>()).ToList(),
                     zoneType,
-                    (registrationVirtualNetworks ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    (resolutionVirtualNetworks ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    (registrationVirtualNetworkReferences ?? new ChangeTrackingList<DnsSubResourceInfo>()).ToList(),
+                    (resolutionVirtualNetworkReferences ?? new ChangeTrackingList<DnsSubResourceInfo>()).ToList(),
                     (signingKeys ?? new ChangeTrackingList<DnsSigningKey>()).ToList(),
                     default),
                 eTag,
@@ -309,11 +317,11 @@ namespace Azure.ResourceManager.Dns.Models
             return new DnsZonePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <param name="targetResources"> A list of references to azure resources for which referencing dns records need to be queried. </param>
+        /// <param name="targetResourceReferences"> A list of references to azure resources for which referencing dns records need to be queried. </param>
         /// <returns> A new <see cref="Models.DnsResourceReferenceContent"/> instance for mocking. </returns>
-        public static DnsResourceReferenceContent DnsResourceReferenceContent(IEnumerable<WritableSubResource> targetResources = default)
+        public static DnsResourceReferenceContent DnsResourceReferenceContent(IEnumerable<DnsSubResourceInfo> targetResourceReferences = default)
         {
-            return new DnsResourceReferenceContent(targetResources is null ? default : new DnsResourceReferenceRequestProperties((targetResources ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default), default);
+            return new DnsResourceReferenceContent(targetResourceReferences is null ? default : new DnsResourceReferenceRequestProperties((targetResourceReferences ?? new ChangeTrackingList<DnsSubResourceInfo>()).ToList(), default), default);
         }
 
         /// <param name="dnsResourceReferences"> The result of dns resource reference request. A list of dns resource references for each of the azure resource in the request. </param>
@@ -323,15 +331,14 @@ namespace Azure.ResourceManager.Dns.Models
             return new DnsResourceReferenceResult(dnsResourceReferences is null ? default : new DnsResourceReferenceResultProperties((dnsResourceReferences ?? new ChangeTrackingList<DnsResourceReference>()).ToList(), default), default);
         }
 
-        /// <summary> Represents a single Azure resource and its referencing DNS records. </summary>
         /// <param name="dnsResources"> A list of dns Records. </param>
-        /// <param name="targetResource"> A reference to an azure resource from where the dns resource value is taken. </param>
+        /// <param name="targetResourceId"> Resource Id. </param>
         /// <returns> A new <see cref="Models.DnsResourceReference"/> instance for mocking. </returns>
-        public static DnsResourceReference DnsResourceReference(IEnumerable<WritableSubResource> dnsResources = default, WritableSubResource targetResource = default)
+        public static DnsResourceReference DnsResourceReference(IEnumerable<WritableSubResource> dnsResources = default, ResourceIdentifier targetResourceId = default)
         {
             dnsResources ??= new ChangeTrackingList<WritableSubResource>();
 
-            return new DnsResourceReference((dnsResources ?? new ChangeTrackingList<WritableSubResource>()).ToList(), targetResource, default);
+            return new DnsResourceReference((dnsResources ?? new ChangeTrackingList<WritableSubResource>()).ToList(), targetResourceId is null ? default : new DnsSubResourceInfo(targetResourceId, default), default);
         }
 
         /// <summary> Describes a DNS zone. </summary>
@@ -347,8 +354,8 @@ namespace Azure.ResourceManager.Dns.Models
         /// <param name="numberOfRecords"> The current number of record sets in this DNS zone.  This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="nameServers"> The name servers for this DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="zoneType"> The type of this DNS zone (Public or Private). </param>
-        /// <param name="registrationVirtualNetworks"> A list of references to virtual networks that register hostnames in this DNS zone. This is a only when ZoneType is Private. </param>
-        /// <param name="resolutionVirtualNetworks"> A list of references to virtual networks that resolve records in this DNS zone. This is a only when ZoneType is Private. </param>
+        /// <param name="registrationVirtualNetworks"></param>
+        /// <param name="resolutionVirtualNetworks"></param>
         /// <returns> A new <see cref="Dns.DnsZoneData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static DnsZoneData DnsZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ETag? etag = default, long? maxNumberOfRecords = default, long? maxNumberOfRecordsPerRecord = default, long? numberOfRecords = default, IEnumerable<string> nameServers = default, DnsZoneType? zoneType = default, IEnumerable<WritableSubResource> registrationVirtualNetworks = default, IEnumerable<WritableSubResource> resolutionVirtualNetworks = default)
@@ -360,28 +367,18 @@ namespace Azure.ResourceManager.Dns.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                maxNumberOfRecords is null && maxNumberOfRecordsPerRecord is null && numberOfRecords is null && nameServers is null && zoneType is null && registrationVirtualNetworks is null && resolutionVirtualNetworks is null ? default : new ZoneProperties(
+                maxNumberOfRecords is null && maxNumberOfRecordsPerRecord is null && numberOfRecords is null && nameServers is null && zoneType is null ? default : new ZoneProperties(
                     maxNumberOfRecords,
                     maxNumberOfRecordsPerRecord,
                     numberOfRecords,
                     (nameServers ?? new ChangeTrackingList<string>()).ToList(),
                     zoneType,
-                    (registrationVirtualNetworks ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    (resolutionVirtualNetworks ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
+                    default,
+                    default,
                     default,
                     default),
                 etag,
                 default);
-        }
-
-        /// <summary> Represents a single Azure resource and its referencing DNS records. </summary>
-        /// <param name="dnsResources"> A list of dns Records. </param>
-        /// <param name="targetResourceId"></param>
-        /// <returns> A new <see cref="Models.DnsResourceReference"/> instance for mocking. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static DnsResourceReference DnsResourceReference(IEnumerable<WritableSubResource> dnsResources = default, ResourceIdentifier targetResourceId = default)
-        {
-            return new DnsResourceReference((dnsResources ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default, default);
         }
     }
 }
