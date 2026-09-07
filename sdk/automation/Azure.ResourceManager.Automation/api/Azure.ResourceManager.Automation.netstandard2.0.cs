@@ -3149,6 +3149,7 @@ namespace Azure.ResourceManager.Automation.Models
         public Azure.ResourceManager.Automation.Models.AutomationAdvancedSchedule AdvancedSchedule { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public Azure.ResourceManager.Automation.Models.AutomationScheduleFrequency Frequency { get { throw null; } }
         public System.BinaryData Interval { get { throw null; } set { } }
         public string Name { get { throw null; } }
@@ -3360,6 +3361,7 @@ namespace Azure.ResourceManager.Automation.Models
     {
         public AutomationWebhookCreateOrUpdateContent(string name) { }
         public System.DateTimeOffset? ExpireOn { get { throw null; } set { } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public bool? IsEnabled { get { throw null; } set { } }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Parameters { get { throw null; } }

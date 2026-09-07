@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             }
             DiscountEntityType entityType = default;
             string productCode = default;
-            DateTimeOffset startOn = default;
+            DateTimeOffset startsOn = default;
             string systemId = default;
             DiscountProvisioningState? provisioningState = default;
             ResourceIdentifier billingAccountResourceId = default;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
                 if (prop.NameEquals("startAt"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("systemId"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             return new UnknownBillingBenefitsDiscountProperties(
                 entityType,
                 productCode,
-                startOn,
+                startsOn,
                 systemId,
                 provisioningState,
                 billingAccountResourceId,

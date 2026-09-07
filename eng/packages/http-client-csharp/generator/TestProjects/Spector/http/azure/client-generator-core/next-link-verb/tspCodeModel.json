@@ -26,6 +26,7 @@
       "$id": "3",
       "kind": "model",
       "name": "ListTestResult",
+      "apiVersions": [],
       "namespace": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb",
       "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.ListTestResult",
       "usage": "Output,Json",
@@ -42,6 +43,7 @@
           "$id": "4",
           "kind": "property",
           "name": "items",
+          "apiVersions": [],
           "serializedName": "items",
           "doc": "List of items.",
           "type": {
@@ -52,6 +54,7 @@
               "$id": "6",
               "kind": "model",
               "name": "Test",
+              "apiVersions": [],
               "namespace": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb",
               "crossLanguageDefinitionId": "_Specs_.Azure.ClientGenerator.Core.NextLinkVerb.Test",
               "usage": "Output,Json",
@@ -68,6 +71,7 @@
                   "$id": "7",
                   "kind": "property",
                   "name": "id",
+                  "apiVersions": [],
                   "serializedName": "id",
                   "doc": "The id of the test.",
                   "type": {
@@ -114,6 +118,7 @@
           "$id": "9",
           "kind": "property",
           "name": "nextLink",
+          "apiVersions": [],
           "serializedName": "nextLink",
           "doc": "Link to fetch more items.",
           "type": {

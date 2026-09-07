@@ -24,14 +24,18 @@ namespace Azure.AI.Projects
         /// <param name="filename"></param>
         /// <param name="fileData"></param>
         /// <param name="fileUri"></param>
+        /// <param name="detail"> The detail level of the file to be sent to the model. Use `auto` to let the system select the detail level; for GPT-5.6 and later models, `auto` uses high-quality rendering, which may increase input token usage. Use `low` for lower-cost rendering, or `high` to render the file at higher quality. Defaults to `auto`. </param>
+        /// <param name="promptCacheBreakpoint"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InputFileContentParam(string @type, string fileId, string filename, string fileData, Uri fileUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InputFileContentParam(string @type, string fileId, string filename, string fileData, Uri fileUri, FileInputDetail? detail, PromptCacheBreakpointParam promptCacheBreakpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             FileId = fileId;
             Filename = filename;
             FileData = fileData;
             FileUri = fileUri;
+            Detail = detail;
+            PromptCacheBreakpoint = promptCacheBreakpoint;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -49,5 +53,11 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets or sets the FileUri. </summary>
         public Uri FileUri { get; set; }
+
+        /// <summary> The detail level of the file to be sent to the model. Use `auto` to let the system select the detail level; for GPT-5.6 and later models, `auto` uses high-quality rendering, which may increase input token usage. Use `low` for lower-cost rendering, or `high` to render the file at higher quality. Defaults to `auto`. </summary>
+        public FileInputDetail? Detail { get; set; }
+
+        /// <summary> Gets or sets the PromptCacheBreakpoint. </summary>
+        public PromptCacheBreakpointParam PromptCacheBreakpoint { get; set; }
     }
 }

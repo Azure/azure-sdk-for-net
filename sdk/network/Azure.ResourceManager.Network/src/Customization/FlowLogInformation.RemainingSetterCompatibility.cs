@@ -40,5 +40,28 @@ namespace Azure.ResourceManager.Network.Models
                 };
             }
         }
+
+        // TODO: Remove these properties when https://github.com/Azure/azure-sdk-for-net/pull/62632 is available in the generator.
+        /// <summary> Gets or sets the flow log format type. </summary>
+        public FlowLogFormatType? FormatType
+        {
+            get => Properties?.FormatType;
+            set
+            {
+                Properties ??= new FlowLogProperties();
+                Properties.FormatType = value;
+            }
+        }
+
+        /// <summary> Gets or sets the flow log format version. </summary>
+        public int? Version
+        {
+            get => Properties?.Version;
+            set
+            {
+                Properties ??= new FlowLogProperties();
+                Properties.Version = value;
+            }
+        }
     }
 }

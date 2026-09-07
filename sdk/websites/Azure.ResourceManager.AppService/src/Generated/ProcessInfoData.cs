@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.AppService
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.AppService
                 {
                     Properties = new ProcessInfoProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 

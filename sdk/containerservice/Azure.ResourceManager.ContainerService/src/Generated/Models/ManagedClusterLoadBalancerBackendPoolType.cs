@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string NodeIPConfigurationValue = "NodeIPConfiguration";
         /// <summary> The type of the managed inbound Load Balancer BackendPool. https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#configure-load-balancer-backend. </summary>
         private const string NodeIPValue = "NodeIP";
+        /// <summary> The type of the managed inbound Load Balancer BackendPool. Used only when loadBalancerSku is specified as 'service'. https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#configure-load-balancer-backend. </summary>
+        private const string PodIPValue = "PodIP";
 
         /// <summary> Initializes a new instance of <see cref="ManagedClusterLoadBalancerBackendPoolType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,6 +37,9 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> The type of the managed inbound Load Balancer BackendPool. https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#configure-load-balancer-backend. </summary>
         public static ManagedClusterLoadBalancerBackendPoolType NodeIP { get; } = new ManagedClusterLoadBalancerBackendPoolType(NodeIPValue);
+
+        /// <summary> The type of the managed inbound Load Balancer BackendPool. Used only when loadBalancerSku is specified as 'service'. https://cloud-provider-azure.sigs.k8s.io/topics/loadbalancer/#configure-load-balancer-backend. </summary>
+        public static ManagedClusterLoadBalancerBackendPoolType PodIP { get; } = new ManagedClusterLoadBalancerBackendPoolType(PodIPValue);
 
         /// <summary> Determines if two <see cref="ManagedClusterLoadBalancerBackendPoolType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

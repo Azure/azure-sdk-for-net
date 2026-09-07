@@ -19,8 +19,8 @@ namespace Azure.ResourceManager.Commerce
     {
         private readonly UsageAggregates _client;
         private readonly string _subscriptionId;
-        private readonly DateTimeOffset _reportedStartTime;
-        private readonly DateTimeOffset _reportedEndTime;
+        private readonly DateTimeOffset _reportedStartsOn;
+        private readonly DateTimeOffset _reportedEndsOn;
         private readonly bool? _showDetails;
         private readonly string _aggregationGranularity;
         private readonly string _continuationToken;
@@ -30,19 +30,19 @@ namespace Azure.ResourceManager.Commerce
         /// <summary> Initializes a new instance of UsageAggregatesGetUsageAggregatesAsyncCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The UsageAggregates client used to send requests. </param>
         /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="reportedStartTime"> The start of the time range to retrieve data for. </param>
-        /// <param name="reportedEndTime"> The end of the time range to retrieve data for. </param>
+        /// <param name="reportedStartsOn"> The start of the time range to retrieve data for. </param>
+        /// <param name="reportedEndsOn"> The end of the time range to retrieve data for. </param>
         /// <param name="showDetails"> `True` returns usage data in instance-level detail, `false` causes server-side aggregation with fewer details. For example, if you have 3 website instances, by default you will get 3 line items for website consumption. If you specify showDetails = false, the data will be aggregated as a single line item for website consumption within the time period (for the given subscriptionId, meterId, usageStartTime and usageEndTime). </param>
         /// <param name="aggregationGranularity"> `Daily` (default) returns the data in daily granularity, `Hourly` returns the data in hourly granularity. </param>
         /// <param name="continuationToken"> Used when a continuation token string is provided in the response body of the previous call, enabling paging through a large result set. If not present, the data is retrieved from the beginning of the day/hour (based on the granularity) passed in. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public UsageAggregatesGetUsageAggregatesAsyncCollectionResultOfT(UsageAggregates client, string subscriptionId, DateTimeOffset reportedStartTime, DateTimeOffset reportedEndTime, bool? showDetails, string aggregationGranularity, string continuationToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public UsageAggregatesGetUsageAggregatesAsyncCollectionResultOfT(UsageAggregates client, string subscriptionId, DateTimeOffset reportedStartsOn, DateTimeOffset reportedEndsOn, bool? showDetails, string aggregationGranularity, string continuationToken, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;
-            _reportedStartTime = reportedStartTime;
-            _reportedEndTime = reportedEndTime;
+            _reportedStartsOn = reportedStartsOn;
+            _reportedEndsOn = reportedEndsOn;
             _showDetails = showDetails;
             _aggregationGranularity = aggregationGranularity;
             _continuationToken = continuationToken;
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Commerce
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetUsageAggregatesRequest(nextLink, _subscriptionId, _reportedStartTime, _reportedEndTime, _showDetails, _aggregationGranularity, _continuationToken, _context) : _client.CreateGetUsageAggregatesRequest(_subscriptionId, _reportedStartTime, _reportedEndTime, _showDetails, _aggregationGranularity, _continuationToken, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetUsageAggregatesRequest(nextLink, _subscriptionId, _reportedStartsOn, _reportedEndsOn, _showDetails, _aggregationGranularity, _continuationToken, _context) : _client.CreateGetUsageAggregatesRequest(_subscriptionId, _reportedStartsOn, _reportedEndsOn, _showDetails, _aggregationGranularity, _continuationToken, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try
