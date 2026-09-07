@@ -99,15 +99,15 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WritePropertyName("endpointB"u8);
                 writer.WriteStringValue(ScorecardEndpointB.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDateTimeUTC"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endDateTimeUTC"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Country))
             {
@@ -171,8 +171,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
             string description = default;
             Uri scorecardEndpointA = default;
             Uri scorecardEndpointB = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             string country = default;
             IList<LatencyMetric> latencyMetrics = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endDateTimeUTC"u8))
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("country"u8))
@@ -259,8 +259,8 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 description,
                 scorecardEndpointA,
                 scorecardEndpointB,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 country,
                 latencyMetrics ?? new ChangeTrackingList<LatencyMetric>(),
                 additionalBinaryDataProperties);

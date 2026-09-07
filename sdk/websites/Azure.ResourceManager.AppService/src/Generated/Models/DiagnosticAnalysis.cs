@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new DiagnosticAnalysisProperties();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.AppService.Models
                 {
                     Properties = new DiagnosticAnalysisProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 

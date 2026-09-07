@@ -19,6 +19,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
     public static partial class ArmApiCenterModelFactory
     {
 
+        /// <summary> The service entity. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -44,6 +45,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 default);
         }
 
+        /// <summary> The properties of the service. </summary>
         /// <param name="provisioningState"> Provisioning state of the service. </param>
         /// <param name="isRestore"> Flag used to restore soft-deleted API Center service. If specified and set to 'true' all other properties will be ignored. </param>
         /// <returns> A new <see cref="Models.ApiCenterServiceProperties"/> instance for mocking. </returns>
@@ -63,6 +65,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiCenterServicePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), isRestore is null ? default : new ServiceUpdateProperties(isRestore, default), default);
         }
 
+        /// <summary> The metadata schema export request. </summary>
         /// <param name="assignedTo"> An entity the metadata schema is requested for. </param>
         /// <returns> A new <see cref="Models.MetadataSchemaExportContent"/> instance for mocking. </returns>
         public static MetadataSchemaExportContent MetadataSchemaExportContent(MetadataAssignmentEntity? assignedTo = default)
@@ -70,6 +73,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new MetadataSchemaExportContent(assignedTo, default);
         }
 
+        /// <summary> The metadata schema export result. </summary>
         /// <param name="format"> The export format for the schema. </param>
         /// <param name="value"> The result of the export operation. </param>
         /// <returns> A new <see cref="Models.MetadataSchemaExportResult"/> instance for mocking. </returns>
@@ -78,6 +82,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new MetadataSchemaExportResult(format, value, default);
         }
 
+        /// <summary> Soft-deleted service entity. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -95,14 +100,16 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 default);
         }
 
+        /// <summary> Deleted service properties. </summary>
         /// <param name="scheduledPurgeOn"> UTC date and time when the service will be automatically purged. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
-        /// <param name="softDeletionOn"> UTC date and time when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
+        /// <param name="softDeletedOn"> UTC date and time when the service was soft-deleted. The date conforms to the following format: yyyy-MM-ddTHH:mm:ssZ as specified by the ISO 8601 standard. </param>
         /// <returns> A new <see cref="Models.ApiCenterDeletedServiceProperties"/> instance for mocking. </returns>
-        public static ApiCenterDeletedServiceProperties ApiCenterDeletedServiceProperties(DateTimeOffset? scheduledPurgeOn = default, DateTimeOffset? softDeletionOn = default)
+        public static ApiCenterDeletedServiceProperties ApiCenterDeletedServiceProperties(DateTimeOffset? scheduledPurgeOn = default, DateTimeOffset? softDeletedOn = default)
         {
-            return new ApiCenterDeletedServiceProperties(scheduledPurgeOn, softDeletionOn, default);
+            return new ApiCenterDeletedServiceProperties(scheduledPurgeOn, softDeletedOn, default);
         }
 
+        /// <summary> Metadata schema entity. Used to define metadata for the entities in API catalog. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -120,6 +127,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 default);
         }
 
+        /// <summary> Metadata schema properties. </summary>
         /// <param name="schema"> The schema defining the type. </param>
         /// <param name="assignedTo"> The assignees. </param>
         /// <returns> A new <see cref="Models.ApiCenterMetadataSchemaProperties"/> instance for mocking. </returns>
@@ -130,6 +138,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiCenterMetadataSchemaProperties(schema, (assignedTo ?? new ChangeTrackingList<ApiCenterMetadataAssignment>()).ToList(), default);
         }
 
+        /// <summary> Assignment metadata. </summary>
         /// <param name="entity"> The entities this metadata schema component gets applied to. </param>
         /// <param name="required"> Required assignment. </param>
         /// <param name="deprecated"> Deprecated assignment. </param>
@@ -139,6 +148,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiCenterMetadataAssignment(entity, @required, deprecated, default);
         }
 
+        /// <summary> Workspace entity. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -156,6 +166,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 default);
         }
 
+        /// <summary> Workspace properties. </summary>
         /// <param name="title"> Workspace title. </param>
         /// <param name="description"> Workspace description. </param>
         /// <returns> A new <see cref="Models.ApiCenterWorkspaceProperties"/> instance for mocking. </returns>
@@ -164,6 +175,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiCenterWorkspaceProperties(title, description, default);
         }
 
+        /// <summary> API entity. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -211,6 +223,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 default);
         }
 
+        /// <summary> Additional, external documentation for the API. </summary>
         /// <param name="title"> Title of the documentation. </param>
         /// <param name="description"> Description of the documentation. </param>
         /// <param name="uri"> URL pointing to the documentation. </param>
@@ -220,6 +233,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiExternalDocumentation(title, description, uri, default);
         }
 
+        /// <summary> Contact information. </summary>
         /// <param name="name"> Name of the contact. </param>
         /// <param name="uri"> URL for the contact. </param>
         /// <param name="email"> Email address of the contact. </param>
@@ -229,6 +243,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiContactInformation(name, uri, email, default);
         }
 
+        /// <summary> The license information for the API. </summary>
         /// <param name="name"> Name of the license. </param>
         /// <param name="uri">
         /// URL pointing to the license details. The URL field is mutually exclusive of the
@@ -244,6 +259,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiLicenseInformation(name, uri, identifier, default);
         }
 
+        /// <summary> API version entity. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -261,6 +277,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 default);
         }
 
+        /// <summary> API version properties entity. </summary>
         /// <param name="title"> API version title. </param>
         /// <param name="lifecycleStage"> Current lifecycle stage of the API. </param>
         /// <returns> A new <see cref="Models.ApiCenterApiVersionProperties"/> instance for mocking. </returns>
@@ -269,6 +286,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiCenterApiVersionProperties(title, lifecycleStage, default);
         }
 
+        /// <summary> API definition entity. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -286,6 +304,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 default);
         }
 
+        /// <summary> API definition properties entity. </summary>
         /// <param name="title"> API definition title. </param>
         /// <param name="description"> API definition description. </param>
         /// <param name="specification"> API specification details. </param>
@@ -295,6 +314,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiCenterApiDefinitionProperties(title, description, specification, default);
         }
 
+        /// <summary> API specification details. </summary>
         /// <param name="name"> Specification name. </param>
         /// <param name="version"> Specification version. </param>
         /// <returns> A new <see cref="Models.ApiSpecificationDetails"/> instance for mocking. </returns>
@@ -303,6 +323,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiSpecificationDetails(name, version, default);
         }
 
+        /// <summary> The API specification source entity properties. </summary>
         /// <param name="value"> Value of the API specification source. </param>
         /// <param name="format"> Format of the API specification source. </param>
         /// <param name="specification"> API specification details. </param>
@@ -312,6 +333,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiSpecImportContent(value, format, specification, default);
         }
 
+        /// <summary> API specification details. </summary>
         /// <param name="name"> Specification name. </param>
         /// <param name="version"> Specification version. </param>
         /// <returns> A new <see cref="Models.ApiSpecImportRequestSpecification"/> instance for mocking. </returns>
@@ -320,6 +342,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiSpecImportRequestSpecification(name, version, default);
         }
 
+        /// <summary> The API specification export result. </summary>
         /// <param name="format"> The format of exported result. </param>
         /// <param name="value"> The result of the export operation. </param>
         /// <returns> A new <see cref="Models.ApiSpecExportResult"/> instance for mocking. </returns>
@@ -328,6 +351,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiSpecExportResult(format, value, default);
         }
 
+        /// <summary> API source entity. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -345,6 +369,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 default);
         }
 
+        /// <summary> API source properties. </summary>
         /// <param name="importSpecification"> Indicates if the specification should be imported along with metadata. </param>
         /// <param name="azureApiManagementSource"> API source configuration for Azure API Management. </param>
         /// <param name="targetEnvironmentId"> The target environment resource ID. </param>
@@ -362,6 +387,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 default);
         }
 
+        /// <summary> API source configuration for Azure API Management. </summary>
         /// <param name="resourceId"> API Management service resource ID. </param>
         /// <param name="msiResourceId"> The resource ID of the managed identity that has access to the API Management instance. </param>
         /// <returns> A new <see cref="Models.ApiCenterApiManagementSource"/> instance for mocking. </returns>
@@ -370,6 +396,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiCenterApiManagementSource(resourceId, msiResourceId, default);
         }
 
+        /// <summary> The link state. </summary>
         /// <param name="state"> The state of the link. </param>
         /// <param name="message"> The state message. </param>
         /// <param name="lastUpdatedOn"> The timestamp of the last update of the link state. </param>
@@ -379,6 +406,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiCenterLinkState(state, message, lastUpdatedOn, default);
         }
 
+        /// <summary> API deployment entity. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -417,6 +445,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 default);
         }
 
+        /// <summary> Environment entity. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -434,6 +463,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 default);
         }
 
+        /// <summary> Environment properties entity. </summary>
         /// <param name="title"> Environment title. </param>
         /// <param name="description"> The environment description. </param>
         /// <param name="kind"> Environment kind. </param>
@@ -453,6 +483,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
                 default);
         }
 
+        /// <summary> Server information of the environment. </summary>
         /// <param name="environmentServerType"> Type of the server that represents the environment. </param>
         /// <param name="managementPortalUri"> The location of the management portal. </param>
         /// <returns> A new <see cref="Models.ApiCenterEnvironmentServer"/> instance for mocking. </returns>
@@ -463,6 +494,7 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new ApiCenterEnvironmentServer(environmentServerType, (managementPortalUri ?? new ChangeTrackingList<Uri>()).ToList(), default);
         }
 
+        /// <summary> Onboarding information. </summary>
         /// <param name="instructions"> Onboarding guide. </param>
         /// <param name="developerPortalUri"> The location of the development portal. </param>
         /// <returns> A new <see cref="Models.EnvironmentOnboardingInformation"/> instance for mocking. </returns>
@@ -473,14 +505,14 @@ namespace Azure.ResourceManager.ApiCenter.Models
             return new EnvironmentOnboardingInformation(instructions, (developerPortalUri ?? new ChangeTrackingList<Uri>()).ToList(), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ApiCenter.ApiCenterServiceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="apiCenterServiceProvisioningState"> The resource-specific properties for this resource. </param>
+        /// <summary> The service entity. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="apiCenterServiceProvisioningState"> Provisioning state of the service. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ApiCenter.ApiCenterServiceData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]

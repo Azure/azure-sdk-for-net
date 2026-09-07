@@ -61,13 +61,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             }
         }
 
-        /// <summary> The available data types for the connector. </summary>
-        [WirePath("properties.dataTypes")]
-        public McasDataConnectorDataTypes DataTypes
+        /// <summary> Describe whether this data type connection is enabled or not. </summary>
+        [WirePath("properties.dataTypes.discoveryLogs.state")]
+        public SecurityInsightsDataTypeConnectionState? DataTypesDiscoveryLogsState
         {
             get
             {
-                return Properties is null ? default : Properties.DataTypes;
+                return Properties is null ? default : Properties.DataTypesDiscoveryLogsState;
             }
             set
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     Properties = new McasDataConnectorProperties();
                 }
-                Properties.DataTypes = value;
+                Properties.DataTypesDiscoveryLogsState = value;
             }
         }
     }

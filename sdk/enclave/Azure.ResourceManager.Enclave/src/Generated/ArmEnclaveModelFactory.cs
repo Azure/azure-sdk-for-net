@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.Enclave.Models
     public static partial class ArmEnclaveModelFactory
     {
 
+        /// <summary> Workload Model Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -52,6 +53,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveWorkloadProperties(provisioningState, (resourceGroupCollection ?? new ChangeTrackingList<string>()).ToList(), managedOnBehalfOfMoboBrokerResources is null ? default : new ManagedOnBehalfOfConfiguration((managedOnBehalfOfMoboBrokerResources ?? new ChangeTrackingList<VirtualEnclaveManagedOnBehalfOfBroker>()).ToList(), default), default);
         }
 
+        /// <summary> Managed-On-Behalf-Of broker resource. This resource is created by the Resource Provider to manage some resources on behalf of the user. </summary>
         /// <param name="id"> Resource identifier of a Managed-On-Behalf-Of broker resource. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveManagedOnBehalfOfBroker"/> instance for mocking. </returns>
         public static VirtualEnclaveManagedOnBehalfOfBroker VirtualEnclaveManagedOnBehalfOfBroker(ResourceIdentifier id = default)
@@ -69,6 +71,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveWorkloadPatch(workloadPatchResourceGroupCollection is null ? default : new WorkloadPatchProperties((workloadPatchResourceGroupCollection ?? new ChangeTrackingList<string>()).ToList(), default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Virtual Enclave Model Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -142,6 +145,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Enclave Virtual Network Properties. </summary>
         /// <param name="networkName"> Network Name. </param>
         /// <param name="networkSize"> Network Size. </param>
         /// <param name="customCidrRange"> Custom CIDR Range. </param>
@@ -161,6 +165,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Subnet Configuration. </summary>
         /// <param name="subnetName"> Subnet name. </param>
         /// <param name="subnetResourceId"> Subnet Resource ID. </param>
         /// <param name="networkPrefixSize"> Network prefix size. </param>
@@ -180,6 +185,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Enclave Address Spaces. </summary>
         /// <param name="enclaveAddressSpace"> Enclave Address Space. </param>
         /// <param name="managedAddressSpace"> Managed Address Space. </param>
         /// <returns> A new <see cref="Models.EnclaveAddressSpaces"/> instance for mocking. </returns>
@@ -188,6 +194,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new EnclaveAddressSpaces(enclaveAddressSpace, managedAddressSpace, default);
         }
 
+        /// <summary> Role assignment item that indicates which principals should be assigned this role definition. </summary>
         /// <param name="roleDefinitionId"> Role definition identifier. </param>
         /// <param name="principals"> List of principal IDs to which to assign this role definition. </param>
         /// <param name="condition"> Condition under which the principal can be granted permission. </param>
@@ -199,6 +206,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveRoleAssignmentItem(roleDefinitionId, (principals ?? new ChangeTrackingList<VirtualEnclavePrincipal>()).ToList(), condition, default);
         }
 
+        /// <summary> Principal for maintenance mode or role assignments. </summary>
         /// <param name="id"> The object id associated with the principal. </param>
         /// <param name="type"> The type of the object id. We currently allow users, groups, and service principals. </param>
         /// <returns> A new <see cref="Models.VirtualEnclavePrincipal"/> instance for mocking. </returns>
@@ -207,6 +215,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclavePrincipal(id, @type, default);
         }
 
+        /// <summary> GovernedServiceItem Properties. </summary>
         /// <param name="serviceId"> Service ID. </param>
         /// <param name="serviceName"> Service name. </param>
         /// <param name="option"> Governance option for this service (Allow, Deny, ExceptionOnly, or NotApplicable). </param>
@@ -228,6 +237,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Virtual Enclave Default Settings. </summary>
         /// <param name="keyVaultResourceId"> Key Vault Resource Id. </param>
         /// <param name="storageAccountResourceId"> Storage Account Resource Id. </param>
         /// <param name="logAnalyticsResourceIdCollection"> Log Analytics Resource Ids. </param>
@@ -240,6 +250,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new EnclaveDefaultSettings(keyVaultResourceId, storageAccountResourceId, (logAnalyticsResourceIdCollection ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), diagnosticDestination, default);
         }
 
+        /// <summary> Maintenance Mode. </summary>
         /// <param name="mode"> Current mode of Maintenance Mode Configuration. </param>
         /// <param name="principals"> The user, group or service principal object affected by Maintenance Mode. </param>
         /// <param name="justification"> Justification for entering or exiting Maintenance Mode. </param>
@@ -251,6 +262,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveMaintenanceModeConfiguration(mode, (principals ?? new ChangeTrackingList<VirtualEnclavePrincipal>()).ToList(), justification, default);
         }
 
+        /// <summary> Virtual Enclave ApprovalSettings Properties for 2025-11-01-preview and later versions. </summary>
         /// <param name="enclaveEndpointUpdate"> Approval configuration for enclave endpoint updates. </param>
         /// <param name="connectionCreation"> Approval configuration for connection creation. </param>
         /// <param name="connectionUpdate"> Approval configuration for connection updates. </param>
@@ -261,6 +273,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveApprovalSettings(enclaveEndpointUpdate, connectionCreation, connectionUpdate, enclaveMaintenanceMode, default);
         }
 
+        /// <summary> Granular approval setting configuration with policy, minimum approvers, and mandatory approvers. </summary>
         /// <param name="approvalPolicy"> Approval policy (Required or NotRequired). </param>
         /// <param name="minimumApproversRequired"> Minimum number of approvers required for this approval setting. </param>
         /// <param name="mandatoryApprovers"> List of mandatory approvers for this approval setting. </param>
@@ -272,6 +285,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new ApprovalSettingConfiguration(approvalPolicy, minimumApproversRequired, (mandatoryApprovers ?? new ChangeTrackingList<VirtualEnclaveMandatoryApprover>()).ToList(), default);
         }
 
+        /// <summary> Approver Metadata for approvals request. </summary>
         /// <param name="approverEntraId"> EntraId of the approver. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveMandatoryApprover"/> instance for mocking. </returns>
         public static VirtualEnclaveMandatoryApprover VirtualEnclaveMandatoryApprover(string approverEntraId = default)
@@ -279,6 +293,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveMandatoryApprover(approverEntraId, default);
         }
 
+        /// <summary> Monitoring Settings. </summary>
         /// <param name="diagnosticDestinations"> Log Analytics workspace destinations where diagnostic logs will be stored. </param>
         /// <param name="flowLogDestination"> Log Analytics workspace destination where virtual network flow logs will be stored. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveMonitoringSettings"/> instance for mocking. </returns>
@@ -289,6 +304,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveMonitoringSettings((diagnosticDestinations ?? new ChangeTrackingList<VirtualEnclaveMonitoringDestination>()).ToList(), flowLogDestination, default);
         }
 
+        /// <summary> Monitoring destination configuration with multiple workspaces. </summary>
         /// <param name="destinationType"> The type of monitoring workspace destination. </param>
         /// <param name="customWorkspaceResourceId"> Log analytics workspace resource ID for custom workspace. </param>
         /// <param name="diagnosticSettingsName"> Custom name for diagnostic settings. </param>
@@ -298,6 +314,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveMonitoringDestination(destinationType, customWorkspaceResourceId, diagnosticSettingsName, default);
         }
 
+        /// <summary> Virtual Enclave Patch Model. </summary>
         /// <param name="properties"> Virtual Enclave Patch properties. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
@@ -344,6 +361,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Maintenance Mode Patch Model. </summary>
         /// <param name="mode"> Current mode of Maintenance Mode Configuration. </param>
         /// <param name="principals"> The user, group or service principal object affected by Maintenance Mode. </param>
         /// <param name="justification"> Justification for entering or exiting Maintenance Mode. </param>
@@ -355,6 +373,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveMaintenanceModeConfigurationPatch(mode, (principals ?? new ChangeTrackingList<VirtualEnclavePrincipal>()).ToList(), justification, default);
         }
 
+        /// <summary> Virtual Enclave ApprovalSettings Patch Properties. </summary>
         /// <param name="enclaveEndpointUpdate"> Approval configuration for enclave endpoint updates. </param>
         /// <param name="connectionCreation"> Approval configuration for connection creation. </param>
         /// <param name="connectionUpdate"> Approval configuration for connection updates. </param>
@@ -365,6 +384,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveApprovalSettingsPatchProperties(enclaveEndpointUpdate, connectionCreation, connectionUpdate, enclaveMaintenanceMode, default);
         }
 
+        /// <summary> Monitoring Settings Patch Model. </summary>
         /// <param name="diagnosticDestinations"> Log Analytics workspace destinations where diagnostic logs will be stored. </param>
         /// <param name="flowLogDestination"> Log Analytics workspace destination where virtual network flow logs will be stored. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveMonitoringSettingsPatch"/> instance for mocking. </returns>
@@ -375,6 +395,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveMonitoringSettingsPatch((diagnosticDestinations ?? new ChangeTrackingList<VirtualEnclaveMonitoringDestinationPatch>()).ToList(), flowLogDestination, default);
         }
 
+        /// <summary> Monitoring Destination Patch Model. </summary>
         /// <param name="destinationType"> The type of monitoring workspace destination. </param>
         /// <param name="customWorkspaceResourceId"> Log analytics workspace resource ID for custom workspace. </param>
         /// <param name="diagnosticSettingsName"> Custom name for diagnostic settings. </param>
@@ -384,6 +405,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveMonitoringDestinationPatch(destinationType, customWorkspaceResourceId, diagnosticSettingsName, default);
         }
 
+        /// <summary> Request body for calling post-action. </summary>
         /// <param name="resourceRequestAction"> Resource request action indicating action which needed to be performed upon calling approval-callback post action. </param>
         /// <param name="approvalStatus"> Approval status indicating 'Approved' or 'Rejected'. </param>
         /// <param name="approvalCallbackPayload"> Payload requested by client upon approval action. </param>
@@ -393,6 +415,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new ApprovalCallbackContent(resourceRequestAction, approvalStatus, approvalCallbackPayload, default);
         }
 
+        /// <summary> Response body after handling of approvalCallbackRequest. </summary>
         /// <param name="message"> Confirmation message indicating the result of the operation. </param>
         /// <returns> A new <see cref="Models.ApprovalActionResult"/> instance for mocking. </returns>
         public static ApprovalActionResult ApprovalActionResult(string message = default)
@@ -400,6 +423,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new ApprovalActionResult(message, default);
         }
 
+        /// <summary> Request body for calling post-action. </summary>
         /// <param name="resourceRequestAction"> Resource request action indicating action which needed to be performed upon calling approval-deletion-callback post action. </param>
         /// <returns> A new <see cref="Models.ApprovalDeletionCallbackContent"/> instance for mocking. </returns>
         public static ApprovalDeletionCallbackContent ApprovalDeletionCallbackContent(VirtualEnclaveApprovalDeletionCallbackResourceAction resourceRequestAction = default)
@@ -407,6 +431,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new ApprovalDeletionCallbackContent(resourceRequestAction, default);
         }
 
+        /// <summary> Community Model Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -476,6 +501,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Granular ApprovalSettings Properties for 2025-11-01-preview and later versions. </summary>
         /// <param name="communityEndpointUpdate"> Approval configuration for community endpoint updates. </param>
         /// <param name="enclaveEndpointUpdate"> Approval configuration for enclave endpoint updates. </param>
         /// <param name="enclaveCreation"> Approval configuration for enclave creation. </param>
@@ -497,6 +523,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> DedicatedHub Model Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -520,6 +547,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Describes the properties of a Dedicated Hub. </summary>
         /// <param name="vHubResourceId"> Virtual Hub Resource ID. </param>
         /// <param name="firewallResourceId"> Firewall Resource ID. </param>
         /// <param name="firewallPolicyResourceId"> Firewall Policy Resource ID. </param>
@@ -537,6 +565,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Community Patch Resource. </summary>
         /// <param name="properties"> Community Patch properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
@@ -548,6 +577,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveCommunityPatch(properties, tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
 
+        /// <summary> Community Resource Properties without default values. </summary>
         /// <param name="dnsServers"> DNS Servers. </param>
         /// <param name="governedServiceList"> List of services governed by a community. </param>
         /// <param name="policyOverride"> Policy override setting for the community. Specifies whether to apply enclave-specific policies or disable policy enforcement. </param>
@@ -578,6 +608,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Granular ApprovalSettings Patch Properties. </summary>
         /// <param name="communityEndpointUpdate"> Approval configuration for community endpoint updates. </param>
         /// <param name="enclaveEndpointUpdate"> Approval configuration for enclave endpoint updates. </param>
         /// <param name="enclaveCreation"> Approval configuration for enclave creation. </param>
@@ -599,6 +630,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Request to the action call to check address space availability. </summary>
         /// <param name="communityResourceId"> Resource Id of the Community. </param>
         /// <param name="enclaveVirtualNetwork"> Information about the enclave virtual network. </param>
         /// <returns> A new <see cref="Models.CheckAddressSpaceAvailabilityContent"/> instance for mocking. </returns>
@@ -607,6 +639,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new CheckAddressSpaceAvailabilityContent(communityResourceId, enclaveVirtualNetwork, default);
         }
 
+        /// <summary> Response of availability of the requested address space. </summary>
         /// <param name="isAvailable"> Boolean representing whether the address space is available. </param>
         /// <returns> A new <see cref="Models.CheckAddressSpaceAvailabilityResult"/> instance for mocking. </returns>
         public static CheckAddressSpaceAvailabilityResult CheckAddressSpaceAvailabilityResult(bool isAvailable = default)
@@ -614,6 +647,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new CheckAddressSpaceAvailabilityResult(isAvailable, default);
         }
 
+        /// <summary> TransitHub Model Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -637,6 +671,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Describes the properties of an Transit Hub. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="state"> The state of the transitHub. </param>
         /// <param name="transitOption"> The TransitOption of the transitHub. </param>
@@ -656,6 +691,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> TransitOption Properties. </summary>
         /// <param name="type"> Transit Option Type. </param>
         /// <param name="params"> Transit Option Params. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveTransitOptionProperties"/> instance for mocking. </returns>
@@ -664,6 +700,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveTransitOptionProperties(@type, @params, default);
         }
 
+        /// <summary> TransitOptionParams Properties. </summary>
         /// <param name="scaleUnits"> Transit Option Params scaleUnits. </param>
         /// <param name="remoteVirtualNetworkId"> Transit Option Params remoteVirtualNetworkId. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveTransitOptionContent"/> instance for mocking. </returns>
@@ -672,6 +709,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveTransitOptionContent(scaleUnits, remoteVirtualNetworkId, default);
         }
 
+        /// <summary> TH Patch Resource. </summary>
         /// <param name="properties"> The TransitHub resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveTransitHubPatch"/> instance for mocking. </returns>
@@ -682,6 +720,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveTransitHubPatch(properties, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Transit Hub patchable Properties. </summary>
         /// <param name="state"> The state of the transitHub. </param>
         /// <param name="transitOption"> The TransitOption of the transitHub. </param>
         /// <param name="securityProvider"> Specifies the security provider for the transit hub. </param>
@@ -691,6 +730,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveTransitHubPatchProperties(state, transitOption, securityProvider, default);
         }
 
+        /// <summary> EnclaveConnection Model Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -714,6 +754,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Enclave Connection Resource properties. </summary>
         /// <param name="state"> The state of the enclaveConnection. </param>
         /// <param name="communityResourceId"> Community Resource Id. </param>
         /// <param name="sourceResourceId"> Source Resource Id. </param>
@@ -749,6 +790,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveConnectionPatch(enclaveConnectionPatchSourceCidr is null ? default : new EnclaveConnectionPatchProperties(enclaveConnectionPatchSourceCidr, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> EnclaveEndpoint Model Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -772,6 +814,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Enclave Endpoint Resource properties. </summary>
         /// <param name="ruleCollection"> Enclave Endpoint Rule Collection. </param>
         /// <param name="resourceCollection"> List of resource ids created by community endpoint. </param>
         /// <param name="provisioningState"> Provisioning State. </param>
@@ -785,6 +828,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveEndpointProperties((ruleCollection ?? new ChangeTrackingList<EnclaveEndpointDestinationRule>()).ToList(), (resourceCollection ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), provisioningState, updateMode, default);
         }
 
+        /// <summary> Enclave Endpoint Rule Properties. </summary>
         /// <param name="protocols"> Protocols. Options specified by Endpoint Protocol Enum. </param>
         /// <param name="endpointRuleName"> Endpoint Rule Name. </param>
         /// <param name="destination"> Destination address. Can include multiple CIDR/IP Addresses or fqdn tags or fqdns (for community endpoint) separated by commas. </param>
@@ -797,6 +841,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new EnclaveEndpointDestinationRule((protocols ?? new ChangeTrackingList<EnclaveEndpointProtocol>()).ToList(), endpointRuleName, destination, ports, default);
         }
 
+        /// <summary> Enclave Endpoint Patch Resource. </summary>
         /// <param name="properties"> Enclave Endpoint Patch properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveEndpointPatch"/> instance for mocking. </returns>
@@ -807,6 +852,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveEndpointPatch(properties, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Enclave Endpoint patchable Properties. </summary>
         /// <param name="ruleCollection"> Enclave Endpoint Rule Collection. </param>
         /// <param name="updateMode"> Whether update mode is automatic or manual. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveEndpointPatchProperties"/> instance for mocking. </returns>
@@ -817,6 +863,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveEndpointPatchProperties((ruleCollection ?? new ChangeTrackingList<EnclaveEndpointDestinationRule>()).ToList(), updateMode, default);
         }
 
+        /// <summary> CommunityEndpoint Model Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -840,6 +887,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Community Endpoint Resource properties. </summary>
         /// <param name="ruleCollection"> Community Endpoint Rule Collection. </param>
         /// <param name="resourceCollection"> List of resource ids created by community endpoint. </param>
         /// <param name="provisioningState"> Provisioning State. </param>
@@ -853,6 +901,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveCommunityEndpointProperties((ruleCollection ?? new ChangeTrackingList<VirtualEnclaveCommunityEndpointDestinationRule>()).ToList(), (resourceCollection ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), provisioningState, updateMode, default);
         }
 
+        /// <summary> Base type for destination rules. </summary>
         /// <param name="destinationType"> Destination Type. </param>
         /// <param name="protocols"> Protocols. Options specified by Endpoint Protocol Enum. </param>
         /// <param name="transitHubResourceId"> Transit Hub Resource Id. </param>
@@ -874,6 +923,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Community Endpoint Patch Resource. </summary>
         /// <param name="properties"> Community Endpoint Patch properties. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveCommunityEndpointPatch"/> instance for mocking. </returns>
@@ -884,6 +934,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveCommunityEndpointPatch(properties, tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Community Endpoint patchable Properties. </summary>
         /// <param name="ruleCollection"> Community Endpoint Rule Collection. </param>
         /// <param name="updateMode"> Whether update mode is automatic or manual. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveCommunityEndpointPatchProperties"/> instance for mocking. </returns>
@@ -904,6 +955,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveDedicatedHubPatch(virtualEnclaveDedicatedHubPatchDesignation is null ? default : new VirtualEnclaveDedicatedHubPatchProperties(virtualEnclaveDedicatedHubPatchDesignation, default), tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Approval Model Resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -921,6 +973,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Approval Base model. </summary>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="parentResourceId"> Parameter for optimizing query results. </param>
         /// <param name="grandparentResourceId"> Parameter for optimizing query results. </param>
@@ -958,6 +1011,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Approver Metadata for approvals request. </summary>
         /// <param name="approverEntraId"> Entra ObjectID of the approver. </param>
         /// <param name="actionPerformed"> Action Performed by approver. </param>
         /// <param name="lastUpdatedOn"> approval request last updated at. </param>
@@ -970,6 +1024,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveApprover(approverEntraId, actionPerformed, lastUpdatedOn, (mandatoryApprovalGroupMembershipIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Request Metadata for approvals request. </summary>
         /// <param name="resourceAction"> Resource Action of the item being approved or declined. </param>
         /// <param name="approvalCallbackRoute"> Route name for the approval callback. </param>
         /// <param name="approvalCallbackPayload"> Payload to be sent upon any action on approval request. </param>
@@ -980,6 +1035,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new ApprovalRequestMetadata(resourceAction, approvalCallbackRoute, approvalCallbackPayload, approvalStatus, default);
         }
 
+        /// <summary> Approvals patch model. </summary>
         /// <param name="properties"> Approval Patch properties. </param>
         /// <returns> A new <see cref="Models.VirtualEnclaveApprovalPatch"/> instance for mocking. </returns>
         public static VirtualEnclaveApprovalPatch VirtualEnclaveApprovalPatch(VirtualEnclaveApprovalPatchProperties properties = default)
@@ -987,6 +1043,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new VirtualEnclaveApprovalPatch(properties, default);
         }
 
+        /// <summary> Approvals patch properties. </summary>
         /// <param name="parentResourceId"> Parameter for optimizing query results. </param>
         /// <param name="grandparentResourceId"> Parameter for optimizing query results. </param>
         /// <param name="approvers"> List of approvers for the approval request. </param>
@@ -1010,6 +1067,7 @@ namespace Azure.ResourceManager.Enclave.Models
                 default);
         }
 
+        /// <summary> Request Metadata patch properties. </summary>
         /// <param name="resourceAction"> Resource Action of the item being approved or declined. </param>
         /// <param name="approvalCallbackRoute"> Route name for the approval callback. </param>
         /// <param name="approvalCallbackPayload"> Payload to be sent upon any action on approval request. </param>
@@ -1020,6 +1078,7 @@ namespace Azure.ResourceManager.Enclave.Models
             return new ApprovalRequestMetadataPatch(resourceAction, approvalCallbackRoute, approvalCallbackPayload, approvalStatus, default);
         }
 
+        /// <summary> Request body for calling post-action. </summary>
         /// <param name="approvalStatus"> Approval status indicating 'Approved' or 'Rejected'. </param>
         /// <returns> A new <see cref="Models.ApprovalActionContent"/> instance for mocking. </returns>
         public static ApprovalActionContent ApprovalActionContent(ApprovalActionRequestApprovalStatus approvalStatus = default)

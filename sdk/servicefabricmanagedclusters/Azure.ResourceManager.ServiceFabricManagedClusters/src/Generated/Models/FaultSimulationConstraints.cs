@@ -22,15 +22,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="FaultSimulationConstraints"/>. </summary>
-        /// <param name="expireOn"> The absolute expiration timestamp (UTC) after which this fault simulation should be stopped if it's still active. </param>
+        /// <param name="expiresOn"> The absolute expiration timestamp (UTC) after which this fault simulation should be stopped if it's still active. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FaultSimulationConstraints(DateTimeOffset? expireOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FaultSimulationConstraints(DateTimeOffset? expiresOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The absolute expiration timestamp (UTC) after which this fault simulation should be stopped if it's still active. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
     }
 }

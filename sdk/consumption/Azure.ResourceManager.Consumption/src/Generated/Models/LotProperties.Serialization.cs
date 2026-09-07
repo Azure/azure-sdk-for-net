@@ -89,15 +89,15 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDate"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(PoNumber))
             {
@@ -204,8 +204,8 @@ namespace Azure.ResourceManager.Consumption.Models
             ConsumptionAmount originalAmount = default;
             ConsumptionAmount closedBalance = default;
             ConsumptionLotSource? source = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? expiresOn = default;
             string poNumber = default;
             DateTimeOffset? purchasedOn = default;
             ConsumptionLotStatus? status = default;
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expirationDate"u8))
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("poNumber"u8))
@@ -367,8 +367,8 @@ namespace Azure.ResourceManager.Consumption.Models
                 originalAmount,
                 closedBalance,
                 source,
-                startOn,
-                expireOn,
+                startsOn,
+                expiresOn,
                 poNumber,
                 purchasedOn,
                 status,

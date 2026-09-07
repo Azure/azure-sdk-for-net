@@ -99,15 +99,15 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WritePropertyName("author_email"u8);
                 writer.WriteStringValue(AuthorEmail);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("start_time"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("end_time"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(IsActive))
             {
@@ -166,8 +166,8 @@ namespace Azure.ResourceManager.AppService.Models
             string author = default;
             string deployer = default;
             string authorEmail = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             bool? isActive = default;
             string details = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("end_time"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppService.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("active"u8))
@@ -245,8 +245,8 @@ namespace Azure.ResourceManager.AppService.Models
                 author,
                 deployer,
                 authorEmail,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 isActive,
                 details,
                 additionalBinaryDataProperties);

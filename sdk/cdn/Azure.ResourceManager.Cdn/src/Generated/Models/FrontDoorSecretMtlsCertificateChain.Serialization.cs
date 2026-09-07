@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteObjectValue(SecretSource, options);
             writer.WritePropertyName("secretVersion"u8);
             writer.WriteStringValue(SecretVersion);
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.Cdn.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             CdnResourceReference secretSource = default;
             string secretVersion = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FrontDoorSecretMtlsCertificateChain(secretType, additionalBinaryDataProperties, secretSource, secretVersion, expireOn);
+            return new FrontDoorSecretMtlsCertificateChain(secretType, additionalBinaryDataProperties, secretSource, secretVersion, expiresOn);
         }
     }
 }

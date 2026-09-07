@@ -21,14 +21,14 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Initializes a new instance of <see cref="ScheduledActionsExtensionProperties"/>. </summary>
         /// <param name="resourceType"> The type of resource the scheduled action is targeting. </param>
         /// <param name="actionType"> The action the scheduled action should perform in the resources. </param>
-        /// <param name="startOn"> The time which the scheduled action is supposed to start running. </param>
+        /// <param name="startsOn"> The time which the scheduled action is supposed to start running. </param>
         /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
-        internal ScheduledActionsExtensionProperties(ScheduledActionsResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, ScheduledActionsSchedule schedule, IEnumerable<NotificationProperties> notificationSettings)
+        internal ScheduledActionsExtensionProperties(ScheduledActionsResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startsOn, ScheduledActionsSchedule schedule, IEnumerable<NotificationProperties> notificationSettings)
         {
             ResourceType = resourceType;
             ActionType = actionType;
-            StartOn = startOn;
+            StartsOn = startsOn;
             Schedule = schedule;
             NotificationSettings = notificationSettings.ToList();
             ResourceNotificationSettings = new ChangeTrackingList<NotificationProperties>();
@@ -37,20 +37,20 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Initializes a new instance of <see cref="ScheduledActionsExtensionProperties"/>. </summary>
         /// <param name="resourceType"> The type of resource the scheduled action is targeting. </param>
         /// <param name="actionType"> The action the scheduled action should perform in the resources. </param>
-        /// <param name="startOn"> The time which the scheduled action is supposed to start running. </param>
-        /// <param name="endOn"> The time when the scheduled action is supposed to stop scheduling. </param>
+        /// <param name="startsOn"> The time which the scheduled action is supposed to start running. </param>
+        /// <param name="endsOn"> The time when the scheduled action is supposed to stop scheduling. </param>
         /// <param name="schedule"> The schedule the scheduled action is supposed to follow. </param>
         /// <param name="notificationSettings"> The notification settings for the scheduled action. </param>
         /// <param name="disabled"> Tell if the scheduled action is disabled or not. </param>
         /// <param name="provisioningState"> The status of the last provisioning operation performed on the resource. </param>
         /// <param name="resourceNotificationSettings"> The notification settings for the scheduled action at a resource level. Resource level notification settings are scope to specific resources only and submitted through attach requests. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledActionsExtensionProperties(ScheduledActionsResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startOn, DateTimeOffset? endOn, ScheduledActionsSchedule schedule, IList<NotificationProperties> notificationSettings, bool? disabled, ScheduledActionsProvisioningState? provisioningState, IReadOnlyList<NotificationProperties> resourceNotificationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledActionsExtensionProperties(ScheduledActionsResourceType resourceType, ScheduledActionType actionType, DateTimeOffset startsOn, DateTimeOffset? endsOn, ScheduledActionsSchedule schedule, IList<NotificationProperties> notificationSettings, bool? disabled, ScheduledActionsProvisioningState? provisioningState, IReadOnlyList<NotificationProperties> resourceNotificationSettings, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceType = resourceType;
             ActionType = actionType;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Schedule = schedule;
             NotificationSettings = notificationSettings;
             Disabled = disabled;
@@ -66,10 +66,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public ScheduledActionType ActionType { get; }
 
         /// <summary> The time which the scheduled action is supposed to start running. </summary>
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> The time when the scheduled action is supposed to stop scheduling. </summary>
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The schedule the scheduled action is supposed to follow. </summary>
         public ScheduledActionsSchedule Schedule { get; }
