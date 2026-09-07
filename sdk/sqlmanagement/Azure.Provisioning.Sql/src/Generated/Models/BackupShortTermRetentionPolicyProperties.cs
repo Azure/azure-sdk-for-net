@@ -10,11 +10,9 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Sql
 {
-    /// <summary> Properties of a short term retention policy. </summary>
     internal partial class BackupShortTermRetentionPolicyProperties : ProvisionableConstruct
     {
         private BicepValue<int> _retentionDays;
-        private BicepValue<DiffBackupIntervalInHours> _diffBackupIntervalInHours;
 
         /// <summary> Creates a new BackupShortTermRetentionPolicyProperties. </summary>
         public BackupShortTermRetentionPolicyProperties()
@@ -36,27 +34,11 @@ namespace Azure.Provisioning.Sql
             }
         }
 
-        /// <summary> Gets or sets the DiffBackupIntervalInHours. </summary>
-        public BicepValue<DiffBackupIntervalInHours> DiffBackupIntervalInHours
-        {
-            get
-            {
-                Initialize();
-                return _diffBackupIntervalInHours;
-            }
-            set
-            {
-                Initialize();
-                _diffBackupIntervalInHours.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for BackupShortTermRetentionPolicyProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _retentionDays = DefineProperty<int>(nameof(RetentionDays), new string[] { "retentionDays" });
-            _diffBackupIntervalInHours = DefineProperty<DiffBackupIntervalInHours>(nameof(DiffBackupIntervalInHours), new string[] { "diffBackupIntervalInHours" });
             DefineAdditionalProperties();
         }
 

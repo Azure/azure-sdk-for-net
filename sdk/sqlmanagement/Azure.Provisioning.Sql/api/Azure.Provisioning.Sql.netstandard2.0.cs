@@ -101,7 +101,7 @@ namespace Azure.Provisioning.Sql
     public partial class BackupShortTermRetentionPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public BackupShortTermRetentionPolicy(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.DiffBackupIntervalInHours> DiffBackupIntervalInHours { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> DiffBackupIntervalInHours { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.Sql.SqlDatabase Parent { get { throw null; } set { } }
@@ -253,13 +253,6 @@ namespace Azure.Provisioning.Sql
         {
             public static readonly string V2025_01_01;
         }
-    }
-    public enum DiffBackupIntervalInHours
-    {
-        [System.Runtime.Serialization.DataMemberAttribute(Name="12")]
-        Twelve = 0,
-        [System.Runtime.Serialization.DataMemberAttribute(Name="24")]
-        TwentyFour = 1,
     }
     public partial class DistributedAvailabilityGroupDatabase : Azure.Provisioning.Primitives.ProvisionableConstruct
     {

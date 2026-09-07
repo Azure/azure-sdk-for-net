@@ -110,23 +110,6 @@ namespace Azure.Provisioning.Sql
             }
         }
 
-        /// <summary> Gets or sets the DiffBackupIntervalInHours. </summary>
-        public BicepValue<DiffBackupIntervalInHours> DiffBackupIntervalInHours
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DiffBackupIntervalInHours;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new BackupShortTermRetentionPolicyProperties();
-                }
-                Properties.DiffBackupIntervalInHours = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for BackupShortTermRetentionPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
