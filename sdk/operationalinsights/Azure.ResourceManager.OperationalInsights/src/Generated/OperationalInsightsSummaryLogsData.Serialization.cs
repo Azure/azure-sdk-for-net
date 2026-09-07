@@ -101,6 +101,11 @@ namespace Azure.ResourceManager.OperationalInsights
                 writer.WritePropertyName("properties"u8);
                 writer.WriteObjectValue(Properties, options);
             }
+            if (Optional.IsDefined(Identity))
+            {
+                writer.WritePropertyName("identity"u8);
+                writer.WriteObjectValue(Identity, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -148,6 +153,7 @@ namespace Azure.ResourceManager.OperationalInsights
             ResourceType resourceType = default;
             SystemData systemData = default;
             SummaryLogsProperties properties = default;
+            SummaryLogsIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -192,6 +198,15 @@ namespace Azure.ResourceManager.OperationalInsights
                     properties = SummaryLogsProperties.DeserializeSummaryLogsProperties(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("identity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    identity = SummaryLogsIdentity.DeserializeSummaryLogsIdentity(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -203,6 +218,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 resourceType,
                 systemData,
                 properties,
+                identity,
                 additionalBinaryDataProperties);
         }
     }
