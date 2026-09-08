@@ -3,10 +3,14 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -114,6 +118,191 @@ namespace Azure.Security.KeyVault.Tests
             Assert.That(tokenBoundHeaders, Is.EqualTo(new[] { false, true, false }));
         }
 
+        [Test]
+        public async Task RetriesTokenBindingValidationFailure()
+        {
+            MockTransport transport = CreateMockTransport(
+                new MockResponse(401).WithHeader("WWW-Authenticate", KeyVaultChallenge),
+                CreateTokenBindingValidationFailure(nonSeekable: true),
+                new MockResponse(200));
+
+            Response response = await SendGetRequestWithRetry(transport);
+
+            Assert.That(response.Status, Is.EqualTo(200));
+            Assert.That(transport.Requests, Has.Count.EqualTo(3));
+            Assert.That(transport.Requests[2].Headers.TryGetValue("x-ms-tokenboundauth", out string headerValue), Is.True);
+            Assert.That(headerValue, Is.EqualTo("true"));
+        }
+
+        [Test]
+        public async Task RetriesTokenBindingValidationFailureFromSeekableStream()
+        {
+            MockTransport transport = CreateMockTransport(
+                new MockResponse(401).WithHeader("WWW-Authenticate", KeyVaultChallenge),
+                CreateTokenBindingValidationFailure(bufferedStream: true),
+                new MockResponse(200));
+
+            Response response = await SendGetRequestWithRetry(transport);
+
+            Assert.That(response.Status, Is.EqualTo(200));
+            Assert.That(transport.Requests, Has.Count.EqualTo(3));
+        }
+
+        [Test]
+        public async Task RetriesNonBufferedTokenBindingValidationFailure()
+        {
+            MockTransport transport = CreateMockTransport(
+                new MockResponse(401).WithHeader("WWW-Authenticate", KeyVaultChallenge),
+                CreateTokenBindingValidationFailure(nonSeekable: true),
+                new MockResponse(200));
+
+            Response response = await SendGetRequestWithRetry(transport, bufferResponse: false);
+
+            Assert.That(response.Status, Is.EqualTo(200));
+            Assert.That(transport.Requests, Has.Count.EqualTo(3));
+        }
+
+        [Test]
+        public async Task RetriesTokenBindingValidationFailureWithCustomNonErrorClassifier()
+        {
+            MockTransport transport = CreateMockTransport(
+                new MockResponse(401).WithHeader("WWW-Authenticate", KeyVaultChallenge),
+                CreateTokenBindingValidationFailure(),
+                new MockResponse(200));
+
+            Response response = await SendGetRequestWithRetry(transport, new UnauthorizedIsNotErrorClassifier());
+
+            Assert.That(response.Status, Is.EqualTo(200));
+            Assert.That(transport.Requests, Has.Count.EqualTo(3));
+        }
+
+        [Test]
+        public async Task StopsRetryingTokenBindingValidationFailureAtConfiguredLimit()
+        {
+            MockTransport transport = CreateMockTransport(
+                new MockResponse(401).WithHeader("WWW-Authenticate", KeyVaultChallenge),
+                CreateTokenBindingValidationFailure(),
+                CreateTokenBindingValidationFailure());
+
+            Response response = await SendGetRequestWithRetry(transport);
+
+            Assert.That(response.Status, Is.EqualTo(401));
+            Assert.That(transport.Requests, Has.Count.EqualTo(3));
+        }
+
+        [Test]
+        public async Task DoesNotRetryOtherUnauthorizedResponses()
+        {
+            MockTransport transport = CreateMockTransport(
+                new MockResponse(401).WithHeader("WWW-Authenticate", KeyVaultChallenge),
+                new MockResponse(401).WithJson("""
+                {
+                    "error": {
+                        "code": "Unauthorized",
+                        "message": "Access denied."
+                    }
+                }
+                """));
+
+            Response response = await SendGetRequestWithRetry(transport);
+
+            Assert.That(response.Status, Is.EqualTo(401));
+            Assert.That(transport.Requests, Has.Count.EqualTo(2));
+        }
+
+        [Test]
+        public async Task DoesNotRetryWhenMarkerIsOutsideErrorMessage()
+        {
+            MockTransport transport = CreateMockTransport(
+                new MockResponse(401).WithHeader("WWW-Authenticate", KeyVaultChallenge),
+                new MockResponse(401).WithJson("""
+                {
+                    "error": {
+                        "code": "Unauthorized",
+                        "message": "Access denied.",
+                        "details": "[MtlsCnfClaimRequestDataValidationFailed]"
+                    }
+                }
+                """),
+                new MockResponse(200));
+
+            Response response = await SendGetRequestWithRetry(transport);
+
+            Assert.That(response.Status, Is.EqualTo(401));
+            Assert.That(transport.Requests, Has.Count.EqualTo(2));
+        }
+
+        [Test]
+        public async Task DoesNotRetryMalformedUnauthorizedResponse()
+        {
+            MockTransport transport = CreateMockTransport(
+                new MockResponse(401).WithHeader("WWW-Authenticate", KeyVaultChallenge),
+                new MockResponse(401)
+                {
+                    ContentStream = new MemoryStream(Encoding.UTF8.GetBytes("{")),
+                },
+                new MockResponse(200));
+
+            Response response = await SendGetRequestWithRetry(transport);
+
+            Assert.That(response.Status, Is.EqualTo(401));
+            Assert.That(transport.Requests, Has.Count.EqualTo(2));
+        }
+
+        [Test]
+        public async Task DoesNotRetryTokenBindingValidationFailureWithoutBoundHeader()
+        {
+            MockTransport transport = CreateMockTransport(
+                CreateTokenBindingValidationFailure(),
+                new MockResponse(200));
+
+            Response response = await SendGetRequestWithRetry(transport);
+
+            Assert.That(response.Status, Is.EqualTo(401));
+            Assert.That(transport.Requests, Has.Count.EqualTo(1));
+        }
+
+        [Test]
+        public async Task PreservesSeekableResponsePosition()
+        {
+            byte[] content = Encoding.UTF8.GetBytes("""
+            {
+                "error": {
+                    "code": "Unauthorized",
+                    "message": "Access denied."
+                }
+            }
+            """);
+            BufferedStream contentStream = new(new MemoryStream(content));
+            contentStream.Position = 5;
+            MockTransport transport = CreateMockTransport(
+                new MockResponse(401).WithHeader("WWW-Authenticate", KeyVaultChallenge),
+                new MockResponse(401)
+                {
+                    ContentStream = contentStream,
+                });
+
+            Response response = await SendGetRequestWithRetry(transport);
+
+            Assert.That(response.Status, Is.EqualTo(401));
+            Assert.That(response.ContentStream, Is.SameAs(contentStream));
+            Assert.That(response.ContentStream.Position, Is.EqualTo(5));
+            Assert.That(transport.Requests, Has.Count.EqualTo(2));
+        }
+
+        [Test]
+        public async Task PreservesStandardRetryClassification()
+        {
+            MockTransport transport = CreateMockTransport(
+                new MockResponse(500),
+                new MockResponse(200));
+
+            Response response = await SendGetRequestWithRetry(transport);
+
+            Assert.That(response.Status, Is.EqualTo(200));
+            Assert.That(transport.Requests, Has.Count.EqualTo(2));
+        }
+
         [TestCaseSource(nameof(VerifyChallengeResourceData))]
         public async Task VerifyChallengeResource(Uri uri, bool disableVerification)
         {
@@ -154,6 +343,70 @@ namespace Azure.Security.KeyVault.Tests
 
             InvalidOperationException ex = Assert.ThrowsAsync<InvalidOperationException>(async () => await SendGetRequest(transport, policy, uri: uri));
             Assert.That(ex.Message, Is.EqualTo("The challenge contains invalid scope 'invalid-uri/.default'."));
+        }
+
+        private async Task<Response> SendGetRequestWithRetry(
+            MockTransport transport,
+            ResponseClassifier responseClassifier = null,
+            bool bufferResponse = true)
+        {
+            // ResponseBodyPolicy leaves seekable test streams unchanged, while production HTTP response
+            // streams are buffered into MemoryStream before the retry classifier runs.
+            transport.ExpectSyncPipeline = null;
+            TestClientOptions options = new()
+            {
+                Transport = transport,
+            };
+            options.Retry.MaxRetries = 1;
+            options.Retry.Delay = TimeSpan.Zero;
+            ChallengeBasedAuthenticationPolicy policy = new(new MockCredentialThrowsWithNoScopes(MtlsPoPTokenType), false);
+            HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
+
+            return await SendRequestAsync(
+                pipeline,
+                message =>
+                {
+                    message.Request.Method = RequestMethod.Get;
+                    message.Request.Uri.Reset(new Uri("https://myvault.vault.azure.net"));
+                    if (responseClassifier != null)
+                    {
+                        message.ResponseClassifier = responseClassifier;
+                    }
+                },
+                bufferResponse);
+        }
+
+        private static MockResponse CreateTokenBindingValidationFailure(bool nonSeekable = false, bool bufferedStream = false)
+        {
+            byte[] content = Encoding.UTF8.GetBytes("""
+            {
+                "error": {
+                    "code": "Unauthorized",
+                    "message": "[MtlsCnfClaimRequestDataValidationFailed] Could not validate token."
+                }
+            }
+            """);
+
+            Stream contentStream = nonSeekable
+                ? new NonSeekableMemoryStream(content)
+                : bufferedStream
+                    ? new BufferedStream(new MemoryStream(content))
+                    : new MemoryStream(content);
+
+            return new MockResponse(401)
+            {
+                ContentStream = contentStream,
+            };
+        }
+
+        private class TestClientOptions : ClientOptions
+        {
+        }
+
+        private class UnauthorizedIsNotErrorClassifier : ResponseClassifier
+        {
+            public override bool IsErrorResponse(HttpMessage message)
+                => message.Response.Status != (int)HttpStatusCode.Unauthorized && base.IsErrorResponse(message);
         }
 
         public class MockCredentialThrowsWithNoScopes : TokenCredential
