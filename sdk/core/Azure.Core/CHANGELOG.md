@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added `ResponseHeaders.TryGetUrl` for parsing absolute addresses in response headers.
+
 ### Breaking Changes
 
 ### Bugs Fixed

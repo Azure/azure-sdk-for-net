@@ -154,5 +154,45 @@ namespace Azure.Core.Tests
             var mockResponse = new MockResponse(200);
             Assert.Null(mockResponse.Headers.RequestId);
         }
+
+        [TestCase("https://example.test/resource?version=1")]
+        [TestCase("http://example.test:8080/")]
+        public void TryGetUrlParsesAbsoluteHeader(string headerValue)
+        {
+            var response = new MockResponse(200);
+            response.AddHeader(new HttpHeader("Location", headerValue));
+
+            Assert.IsTrue(response.Headers.TryGetUrl("Location", out var value));
+            Assert.AreEqual(new Uri(headerValue, UriKind.Absolute), value);
+        }
+
+        [TestCase("/relative")]
+        [TestCase("not an address")]
+        public void TryGetUrlReturnsFalseForInvalidHeader(string headerValue)
+        {
+            var response = new MockResponse(200);
+            response.AddHeader(new HttpHeader("Location", headerValue));
+
+            Assert.IsFalse(response.Headers.TryGetUrl("Location", out var value));
+            Assert.IsNull(value);
+        }
+
+        [Test]
+        public void TryGetUrlReturnsFalseForMissingHeader()
+        {
+            var response = new MockResponse(200);
+
+            Assert.IsFalse(response.Headers.TryGetUrl("Location", out var value));
+            Assert.IsNull(value);
+        }
+
+        [Test]
+        public void TryGetUrlRejectsNullHeaderName()
+        {
+            var response = new MockResponse(200);
+
+            var exception = Assert.Throws<ArgumentNullException>(() => response.Headers.TryGetUrl(null, out _));
+            Assert.AreEqual("name", exception.ParamName);
+        }
     }
 }
