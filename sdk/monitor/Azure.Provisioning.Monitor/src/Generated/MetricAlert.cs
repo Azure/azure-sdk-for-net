@@ -297,7 +297,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ResolveConfiguration. </summary>
-        public ResolveConfiguration ResolveConfiguration
+        public MetricAlertResolveConfiguration ResolveConfiguration
         {
             get
             {

@@ -11,15 +11,15 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> An Incident receiver. </summary>
-    public partial class IncidentReceiver : ProvisionableConstruct
+    public partial class MonitorIncidentReceiver : ProvisionableConstruct
     {
         private BicepValue<string> _name;
-        private IncidentServiceConnection _connection;
-        private BicepValue<IncidentManagementService> _incidentManagementService;
+        private MonitorIncidentServiceConnection _connection;
+        private BicepValue<MonitorIncidentManagementService> _incidentManagementService;
         private BicepDictionary<string> _mappings;
 
-        /// <summary> Creates a new IncidentReceiver. </summary>
-        public IncidentReceiver()
+        /// <summary> Creates a new MonitorIncidentReceiver. </summary>
+        public MonitorIncidentReceiver()
         {
         }
 
@@ -39,7 +39,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Connection. </summary>
-        public IncidentServiceConnection Connection
+        public MonitorIncidentServiceConnection Connection
         {
             get
             {
@@ -54,7 +54,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the IncidentManagementService. </summary>
-        public BicepValue<IncidentManagementService> IncidentManagementService
+        public BicepValue<MonitorIncidentManagementService> IncidentManagementService
         {
             get
             {
@@ -83,18 +83,18 @@ namespace Azure.Provisioning.Monitor
             }
         }
 
-        /// <summary> Define all the provisionable properties for IncidentReceiver. </summary>
+        /// <summary> Define all the provisionable properties for MonitorIncidentReceiver. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _connection = DefineModelProperty<IncidentServiceConnection>(nameof(Connection), new string[] { "connection" }, isRequired: true);
-            _incidentManagementService = DefineProperty<IncidentManagementService>(nameof(IncidentManagementService), new string[] { "incidentManagementService" }, isRequired: true);
+            _connection = DefineModelProperty<MonitorIncidentServiceConnection>(nameof(Connection), new string[] { "connection" }, isRequired: true);
+            _incidentManagementService = DefineProperty<MonitorIncidentManagementService>(nameof(IncidentManagementService), new string[] { "incidentManagementService" }, isRequired: true);
             _mappings = DefineDictionaryProperty<string>(nameof(Mappings), new string[] { "mappings" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for IncidentReceiver that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for MonitorIncidentReceiver that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

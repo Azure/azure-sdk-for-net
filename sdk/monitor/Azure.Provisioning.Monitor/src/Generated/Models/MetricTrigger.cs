@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Monitor
         private BicepValue<MetricStatisticType> _statistic;
         private BicepValue<TimeSpan> _timeWindow;
         private BicepValue<MetricTriggerTimeAggregationType> _timeAggregation;
-        private BicepValue<MetricTriggerComparisonOperation> _comparisonOperator;
+        private BicepValue<MetricTriggerComparisonOperator> _comparisonOperator;
         private BicepValue<double> _threshold;
         private BicepList<AutoscaleRuleMetricDimension> _dimensions;
         private BicepValue<bool> _isDividedPerInstance;
@@ -154,7 +154,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ComparisonOperator. </summary>
-        public BicepValue<MetricTriggerComparisonOperation> ComparisonOperator
+        public BicepValue<MetricTriggerComparisonOperator> ComparisonOperator
         {
             get
             {
@@ -225,7 +225,7 @@ namespace Azure.Provisioning.Monitor
             _statistic = DefineProperty<MetricStatisticType>(nameof(Statistic), new string[] { "statistic" }, isRequired: true);
             _timeWindow = DefineProperty<TimeSpan>(nameof(TimeWindow), new string[] { "timeWindow" }, isRequired: true, format: "P");
             _timeAggregation = DefineProperty<MetricTriggerTimeAggregationType>(nameof(TimeAggregation), new string[] { "timeAggregation" }, isRequired: true);
-            _comparisonOperator = DefineProperty<MetricTriggerComparisonOperation>(nameof(ComparisonOperator), new string[] { "operator" }, isRequired: true);
+            _comparisonOperator = DefineProperty<MetricTriggerComparisonOperator>(nameof(ComparisonOperator), new string[] { "operator" }, isRequired: true);
             _threshold = DefineProperty<double>(nameof(Threshold), new string[] { "threshold" }, isRequired: true);
             _dimensions = DefineListProperty<AutoscaleRuleMetricDimension>(nameof(Dimensions), new string[] { "dimensions" });
             _isDividedPerInstance = DefineProperty<bool>(nameof(IsDividedPerInstance), new string[] { "dividePerInstance" });

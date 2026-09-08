@@ -26,7 +26,7 @@ namespace Azure.Provisioning.Monitor
         private BicepList<MonitorAzureFunctionReceiver> _azureFunctionReceivers;
         private BicepList<MonitorArmRoleReceiver> _armRoleReceivers;
         private BicepList<MonitorEventHubReceiver> _eventHubReceivers;
-        private BicepList<IncidentReceiver> _incidentReceivers;
+        private BicepList<MonitorIncidentReceiver> _incidentReceivers;
 
         /// <summary> Creates a new ActionGroupProperties. </summary>
         public ActionGroupProperties()
@@ -229,7 +229,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the IncidentReceivers. </summary>
-        public BicepList<IncidentReceiver> IncidentReceivers
+        public BicepList<MonitorIncidentReceiver> IncidentReceivers
         {
             get
             {
@@ -260,7 +260,7 @@ namespace Azure.Provisioning.Monitor
             _azureFunctionReceivers = DefineListProperty<MonitorAzureFunctionReceiver>(nameof(AzureFunctionReceivers), new string[] { "azureFunctionReceivers" });
             _armRoleReceivers = DefineListProperty<MonitorArmRoleReceiver>(nameof(ArmRoleReceivers), new string[] { "armRoleReceivers" });
             _eventHubReceivers = DefineListProperty<MonitorEventHubReceiver>(nameof(EventHubReceivers), new string[] { "eventHubReceivers" });
-            _incidentReceivers = DefineListProperty<IncidentReceiver>(nameof(IncidentReceivers), new string[] { "incidentReceivers" });
+            _incidentReceivers = DefineListProperty<MonitorIncidentReceiver>(nameof(IncidentReceivers), new string[] { "incidentReceivers" });
             DefineAdditionalProperties();
         }
 

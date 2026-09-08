@@ -11,14 +11,14 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.Monitor
 {
-    /// <summary> The ResolveConfiguration. </summary>
-    public partial class ResolveConfiguration : ProvisionableConstruct
+    /// <summary> The MetricAlertResolveConfiguration. </summary>
+    public partial class MetricAlertResolveConfiguration : ProvisionableConstruct
     {
         private BicepValue<bool> _isAutoResolved;
         private BicepValue<TimeSpan> _timeToResolve;
 
-        /// <summary> Creates a new ResolveConfiguration. </summary>
-        public ResolveConfiguration()
+        /// <summary> Creates a new MetricAlertResolveConfiguration. </summary>
+        public MetricAlertResolveConfiguration()
         {
         }
 
@@ -52,7 +52,7 @@ namespace Azure.Provisioning.Monitor
             }
         }
 
-        /// <summary> Define all the provisionable properties for ResolveConfiguration. </summary>
+        /// <summary> Define all the provisionable properties for MetricAlertResolveConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -61,7 +61,7 @@ namespace Azure.Provisioning.Monitor
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for ResolveConfiguration that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for MetricAlertResolveConfiguration that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

@@ -11,13 +11,13 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> The connection info for Incident Receiver. </summary>
-    public partial class IncidentServiceConnection : ProvisionableConstruct
+    public partial class MonitorIncidentServiceConnection : ProvisionableConstruct
     {
         private BicepValue<string> _name;
         private BicepValue<string> _id;
 
-        /// <summary> Creates a new IncidentServiceConnection. </summary>
-        public IncidentServiceConnection()
+        /// <summary> Creates a new MonitorIncidentServiceConnection. </summary>
+        public MonitorIncidentServiceConnection()
         {
         }
 
@@ -51,7 +51,7 @@ namespace Azure.Provisioning.Monitor
             }
         }
 
-        /// <summary> Define all the provisionable properties for IncidentServiceConnection. </summary>
+        /// <summary> Define all the provisionable properties for MonitorIncidentServiceConnection. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -60,7 +60,7 @@ namespace Azure.Provisioning.Monitor
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for IncidentServiceConnection that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for MonitorIncidentServiceConnection that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

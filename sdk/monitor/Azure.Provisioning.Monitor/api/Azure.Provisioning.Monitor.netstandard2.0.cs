@@ -12,7 +12,7 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<string> GroupShortName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.Resources.ManagedServiceIdentity Identity { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.IncidentReceiver> IncidentReceivers { get { throw null; } set { } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.MonitorIncidentReceiver> IncidentReceivers { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.MonitorItsmReceiver> ItsmReceivers { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
@@ -27,7 +27,6 @@ namespace Azure.Provisioning.Monitor
         public static Azure.Provisioning.Monitor.ActionGroup FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2023_01_01;
             public static readonly string V2024_10_01_PREVIEW;
         }
     }
@@ -50,7 +49,6 @@ namespace Azure.Provisioning.Monitor
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2020_10_01;
             public static readonly string V2023_01_01_PREVIEW;
         }
     }
@@ -75,43 +73,6 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<System.Uri> IngestionUri { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class AlertRule : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public AlertRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.Monitor.AlertRuleAction Action { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.AlertRuleAction> Actions { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> AlertRuleName { get { throw null; } set { } }
-        public Azure.Provisioning.Monitor.AlertRuleCondition Condition { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Description { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastUpdatedOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ProvisioningState { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Monitor.AlertRule FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2016_03_01;
-        }
-    }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class AlertRuleAction : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public AlertRuleAction() { }
-        protected override void DefineProvisionableProperties() { }
-    }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class AlertRuleCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public AlertRuleCondition() { }
-        public Azure.Provisioning.Monitor.RuleDataSource DataSource { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class AlertRuleLeafCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -228,7 +189,6 @@ namespace Azure.Provisioning.Monitor
         public static Azure.Provisioning.Monitor.DataCollectionEndpoint FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2022_06_01;
             public static readonly string V2024_03_11;
         }
     }
@@ -305,7 +265,6 @@ namespace Azure.Provisioning.Monitor
         public static Azure.Provisioning.Monitor.DataCollectionRule FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2022_06_01;
             public static readonly string V2024_03_11;
         }
     }
@@ -326,7 +285,6 @@ namespace Azure.Provisioning.Monitor
         public static Azure.Provisioning.Monitor.DataCollectionRuleAssociation FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2022_06_01;
             public static readonly string V2024_03_11;
         }
     }
@@ -598,21 +556,6 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.DataCollectionRuleStorageTableDestination> StorageTablesDirect { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class DiagnosticSetting : Azure.Provisioning.Primitives.ProvisionableResource
-    {
-        public DiagnosticSetting(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Monitor.DiagnosticSettings Properties { get { throw null; } set { } }
-        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
-        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
-        protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Monitor.DiagnosticSetting FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
-        public static partial class ResourceVersions
-        {
-            public static readonly string V2021_05_01_PREVIEW;
-        }
-    }
     public partial class DiagnosticSettings : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DiagnosticSettings() { }
@@ -643,6 +586,21 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
         public static Azure.Provisioning.Monitor.DiagnosticSettingsCategoryResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2021_05_01_PREVIEW;
+        }
+    }
+    public partial class DiagnosticSettingsResource : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DiagnosticSettingsResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Monitor.DiagnosticSettings Properties { get { throw null; } set { } }
+        public Azure.Provisioning.Primitives.ProvisionableResource Scope { get { throw null; } set { } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Monitor.DiagnosticSettingsResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2021_05_01_PREVIEW;
@@ -754,26 +712,6 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<string> TransformKql { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public enum IncidentManagementService
-    {
-        Icm = 0,
-    }
-    public partial class IncidentReceiver : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public IncidentReceiver() { }
-        public Azure.Provisioning.Monitor.IncidentServiceConnection Connection { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Monitor.IncidentManagementService> IncidentManagementService { get { throw null; } set { } }
-        public Azure.Provisioning.BicepDictionary<string> Mappings { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    public partial class IncidentServiceConnection : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public IncidentServiceConnection() { }
-        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
     public partial class IngestionQuotasLogs : Azure.Provisioning.Monitor.LogsQuotaInfo
     {
         public IngestionQuotasLogs() { }
@@ -841,14 +779,6 @@ namespace Azure.Provisioning.Monitor
         Domain = 0,
         Private = 1,
         Public = 2,
-    }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class LocationThresholdRuleCondition : Azure.Provisioning.Monitor.AlertRuleCondition
-    {
-        public LocationThresholdRuleCondition() { }
-        public Azure.Provisioning.BicepValue<int> FailedLocationCount { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.TimeSpan> WindowSize { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
     }
     public partial class LogAnalyticsDestination : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
@@ -933,22 +863,6 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<string> MaxSizePerMinuteInGB { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class ManagementEventAggregationCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ManagementEventAggregationCondition() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Monitor.MonitorConditionOperator> Operator { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<double> Threshold { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.TimeSpan> WindowSize { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class ManagementEventRuleCondition : Azure.Provisioning.Monitor.AlertRuleCondition
-    {
-        public ManagementEventRuleCondition() { }
-        public Azure.Provisioning.Monitor.ManagementEventAggregationCondition Aggregation { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
     public partial class MetricAlert : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public MetricAlert(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -966,7 +880,7 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastUpdatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.Monitor.ResolveConfiguration ResolveConfiguration { get { throw null; } set { } }
+        public Azure.Provisioning.Monitor.MetricAlertResolveConfiguration ResolveConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<string> Scopes { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<int> Severity { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
@@ -978,7 +892,6 @@ namespace Azure.Provisioning.Monitor
         public static Azure.Provisioning.Monitor.MetricAlert FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2018_03_01;
             public static readonly string V2026_01_01;
         }
     }
@@ -998,6 +911,13 @@ namespace Azure.Provisioning.Monitor
     {
         public MetricAlertMultipleResourceMultipleMetricCriteria() { }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.MultiMetricCriteria> AllOf { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class MetricAlertResolveConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public MetricAlertResolveConfiguration() { }
+        public Azure.Provisioning.BicepValue<bool> IsAutoResolved { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.TimeSpan> TimeToResolve { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MetricAlertSingleResourceMultipleMetricCriteria : Azure.Provisioning.Monitor.MetricAlertCriteria
@@ -1058,7 +978,7 @@ namespace Azure.Provisioning.Monitor
     public partial class MetricTrigger : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MetricTrigger() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Monitor.MetricTriggerComparisonOperation> ComparisonOperator { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Monitor.MetricTriggerComparisonOperator> ComparisonOperator { get { throw null; } set { } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.Monitor.AutoscaleRuleMetricDimension> Dimensions { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsDividedPerInstance { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MetricName { get { throw null; } set { } }
@@ -1072,9 +992,9 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<System.TimeSpan> TimeWindow { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public enum MetricTriggerComparisonOperation
+    public enum MetricTriggerComparisonOperator
     {
-        EqualsValue = 0,
+        Equals = 0,
         NotEquals = 1,
         GreaterThan = 2,
         GreaterThanOrEqual = 3,
@@ -1206,6 +1126,26 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<bool> UseCommonAlertSchema { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    public enum MonitorIncidentManagementService
+    {
+        Icm = 0,
+    }
+    public partial class MonitorIncidentReceiver : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public MonitorIncidentReceiver() { }
+        public Azure.Provisioning.Monitor.MonitorIncidentServiceConnection Connection { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Monitor.MonitorIncidentManagementService> IncidentManagementService { get { throw null; } set { } }
+        public Azure.Provisioning.BicepDictionary<string> Mappings { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
+    public partial class MonitorIncidentServiceConnection : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public MonitorIncidentServiceConnection() { }
+        public Azure.Provisioning.BicepValue<string> Id { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class MonitoringAccountDestination : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MonitoringAccountDestination() { }
@@ -1325,9 +1265,9 @@ namespace Azure.Provisioning.Monitor
             public static readonly string V2023_06_01_PREVIEW;
         }
     }
-    public partial class MonitorPrivateLinkScoped : Azure.Provisioning.Primitives.ProvisionableResource
+    public partial class MonitorPrivateLinkScopedResource : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public MonitorPrivateLinkScoped(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public MonitorPrivateLinkScopedResource(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Monitor.MonitorScopedResourceKind> Kind { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> LinkedResourceId { get { throw null; } set { } }
@@ -1337,7 +1277,7 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> SubscriptionLocation { get { throw null; } set { } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.Monitor.MonitorPrivateLinkScoped FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.Monitor.MonitorPrivateLinkScopedResource FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public static partial class ResourceVersions
         {
             public static readonly string V2023_06_01_PREVIEW;
@@ -1666,13 +1606,6 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<string> TimeZone { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    public partial class ResolveConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public ResolveConfiguration() { }
-        public Azure.Provisioning.BicepValue<bool> IsAutoResolved { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.TimeSpan> TimeToResolve { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
     public partial class RetentionPolicy : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public RetentionPolicy() { }
@@ -1680,59 +1613,11 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class RuleDataSource : Azure.Provisioning.Primitives.ProvisionableConstruct
-    {
-        public RuleDataSource() { }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> LegacyResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> MetricNamespace { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ResourceLocation { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class RuleEmailAction : Azure.Provisioning.Monitor.AlertRuleAction
-    {
-        public RuleEmailAction() { }
-        public Azure.Provisioning.BicepList<string> CustomEmails { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<bool> SendToServiceOwners { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class RuleManagementEventDataSource : Azure.Provisioning.Monitor.RuleDataSource
-    {
-        public RuleManagementEventDataSource() { }
-        public Azure.Provisioning.BicepValue<string> ClaimsEmailAddress { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EventName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> EventSource { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Level { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> OperationName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ResourceGroupName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ResourceProviderName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Status { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> SubStatus { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class RuleMetricDataSource : Azure.Provisioning.Monitor.RuleDataSource
-    {
-        public RuleMetricDataSource() { }
-        public Azure.Provisioning.BicepValue<string> MetricName { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
     public partial class RuleResolveConfiguration : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public RuleResolveConfiguration() { }
         public Azure.Provisioning.BicepValue<bool> IsAutoResolved { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.TimeSpan> TimeToResolve { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class RuleWebhookAction : Azure.Provisioning.Monitor.AlertRuleAction
-    {
-        public RuleWebhookAction() { }
-        public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.Uri> ServiceUri { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum ScaleRuleMetricDimensionOperationType
@@ -1776,7 +1661,6 @@ namespace Azure.Provisioning.Monitor
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
-            public static readonly string V2022_06_15;
             public static readonly string V2025_01_01_PREVIEW;
         }
     }
@@ -1959,25 +1843,6 @@ namespace Azure.Provisioning.Monitor
         {
             public static readonly string V2023_05_01_PREVIEW;
         }
-    }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public partial class ThresholdRuleCondition : Azure.Provisioning.Monitor.AlertRuleCondition
-    {
-        public ThresholdRuleCondition() { }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Monitor.MonitorConditionOperator> Operator { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<double> Threshold { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<Azure.Provisioning.Monitor.ThresholdRuleConditionTimeAggregationType> TimeAggregation { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<System.TimeSpan> WindowSize { get { throw null; } set { } }
-        protected override void DefineProvisionableProperties() { }
-    }
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
-    public enum ThresholdRuleConditionTimeAggregationType
-    {
-        Average = 0,
-        Minimum = 1,
-        Maximum = 2,
-        Total = 3,
-        Last = 4,
     }
     public partial class VMInsightsOnboardingStatus : Azure.Provisioning.Primitives.ProvisionableResource
     {

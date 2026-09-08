@@ -14,7 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> The diagnostic setting resource. </summary>
-    public partial class DiagnosticSetting : ProvisionableResource
+    public partial class DiagnosticSettingsResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -22,10 +22,10 @@ namespace Azure.Provisioning.Monitor
         private DiagnosticSettings _properties;
         private ResourceReference<ProvisionableResource> _scope;
 
-        /// <summary> Creates a new DiagnosticSetting. </summary>
+        /// <summary> Creates a new DiagnosticSettingsResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public DiagnosticSetting(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Insights/diagnosticSettings", resourceVersion ?? "2021-05-01-preview")
+        public DiagnosticSettingsResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Insights/diagnosticSettings", resourceVersion ?? "2021-05-01-preview")
         {
         }
 
@@ -94,7 +94,7 @@ namespace Azure.Provisioning.Monitor
             }
         }
 
-        /// <summary> Define all the provisionable properties for DiagnosticSetting. </summary>
+        /// <summary> Define all the provisionable properties for DiagnosticSettingsResource. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -106,17 +106,17 @@ namespace Azure.Provisioning.Monitor
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing DiagnosticSetting. </summary>
+        /// <summary> Creates a reference to an existing DiagnosticSettingsResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static DiagnosticSetting FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static DiagnosticSettingsResource FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            DiagnosticSetting result = new DiagnosticSetting(bicepIdentifier, resourceVersion);
+            DiagnosticSettingsResource result = new DiagnosticSettingsResource(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for DiagnosticSetting that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for DiagnosticSettingsResource that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Monitor
         private BicepValue<AzureLocation> _targetResourceRegion;
         private MetricAlertCriteria _criteria;
         private BicepValue<bool> _isAutoMitigateEnabled;
-        private ResolveConfiguration _resolveConfiguration;
+        private MetricAlertResolveConfiguration _resolveConfiguration;
         private BicepList<MetricAlertAction> _actions;
         private BicepValue<DateTimeOffset> _lastUpdatedOn;
         private BicepValue<bool> _isMigrated;
@@ -188,7 +188,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ResolveConfiguration. </summary>
-        public ResolveConfiguration ResolveConfiguration
+        public MetricAlertResolveConfiguration ResolveConfiguration
         {
             get
             {
@@ -281,7 +281,7 @@ namespace Azure.Provisioning.Monitor
             _targetResourceRegion = DefineProperty<AzureLocation>(nameof(TargetResourceRegion), new string[] { "targetResourceRegion" });
             _criteria = DefineModelProperty<MetricAlertCriteria>(nameof(Criteria), new string[] { "criteria" }, isRequired: true);
             _isAutoMitigateEnabled = DefineProperty<bool>(nameof(IsAutoMitigateEnabled), new string[] { "autoMitigate" });
-            _resolveConfiguration = DefineModelProperty<ResolveConfiguration>(nameof(ResolveConfiguration), new string[] { "resolveConfiguration" });
+            _resolveConfiguration = DefineModelProperty<MetricAlertResolveConfiguration>(nameof(ResolveConfiguration), new string[] { "resolveConfiguration" });
             _actions = DefineListProperty<MetricAlertAction>(nameof(Actions), new string[] { "actions" });
             _lastUpdatedOn = DefineProperty<DateTimeOffset>(nameof(LastUpdatedOn), new string[] { "lastUpdatedTime" }, isOutput: true, format: "O");
             _isMigrated = DefineProperty<bool>(nameof(IsMigrated), new string[] { "isMigrated" }, isOutput: true);

@@ -14,7 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> A private link scoped resource. </summary>
-    public partial class MonitorPrivateLinkScoped : ProvisionableResource
+    public partial class MonitorPrivateLinkScopedResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -22,10 +22,10 @@ namespace Azure.Provisioning.Monitor
         private ScopedResourceProperties _properties;
         private ResourceReference<MonitorPrivateLinkScope> _parent;
 
-        /// <summary> Creates a new MonitorPrivateLinkScoped. </summary>
+        /// <summary> Creates a new MonitorPrivateLinkScopedResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public MonitorPrivateLinkScoped(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Insights/privateLinkScopes/scopedResources", resourceVersion ?? "2023-06-01-preview")
+        public MonitorPrivateLinkScopedResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Insights/privateLinkScopes/scopedResources", resourceVersion ?? "2023-06-01-preview")
         {
         }
 
@@ -158,7 +158,7 @@ namespace Azure.Provisioning.Monitor
             }
         }
 
-        /// <summary> Define all the provisionable properties for MonitorPrivateLinkScoped. </summary>
+        /// <summary> Define all the provisionable properties for MonitorPrivateLinkScopedResource. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -170,17 +170,17 @@ namespace Azure.Provisioning.Monitor
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing MonitorPrivateLinkScoped. </summary>
+        /// <summary> Creates a reference to an existing MonitorPrivateLinkScopedResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static MonitorPrivateLinkScoped FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static MonitorPrivateLinkScopedResource FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            MonitorPrivateLinkScoped result = new MonitorPrivateLinkScoped(bicepIdentifier, resourceVersion);
+            MonitorPrivateLinkScopedResource result = new MonitorPrivateLinkScopedResource(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for MonitorPrivateLinkScoped that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for MonitorPrivateLinkScopedResource that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

@@ -348,7 +348,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the IncidentReceivers. </summary>
-        public BicepList<IncidentReceiver> IncidentReceivers
+        public BicepList<MonitorIncidentReceiver> IncidentReceivers
         {
             get
             {
