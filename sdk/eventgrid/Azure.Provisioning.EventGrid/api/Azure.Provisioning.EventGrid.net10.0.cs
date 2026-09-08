@@ -1293,7 +1293,7 @@ namespace Azure.Provisioning.EventGrid
     }
     public partial class PartnerDestination : Azure.Provisioning.Primitives.ProvisionableResource
     {
-        public PartnerDestination(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public PartnerDestination(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.PartnerDestinationActivationState> ActivationState { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Uri> EndpointBaseUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> EndpointServiceContext { get { throw null; } set { } }
@@ -1307,7 +1307,7 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
         public Azure.Provisioning.BicepDictionary<string> Tags { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
-        public static Azure.Provisioning.EventGrid.PartnerDestination FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static Azure.Provisioning.EventGrid.PartnerDestination FromExisting(string bicepIdentifier, string resourceVersion = null) { throw null; }
         public override Azure.Provisioning.Primitives.ResourceNameRequirements GetResourceNameRequirements() { throw null; }
         public static partial class ResourceVersions
         {
