@@ -146,6 +146,12 @@ namespace Azure.Provisioning.Sql
         [System.Runtime.Serialization.DataMemberAttribute(Name="default")]
         Default = 0,
     }
+    public partial class CreateDatabaseRestorePointDefinition : Azure.Provisioning.Primitives.ProvisionableConstruct
+    {
+        public CreateDatabaseRestorePointDefinition() { }
+        public Azure.Provisioning.BicepValue<string> RestorePointLabel { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+    }
     public partial class DatabaseAdvancedThreatProtection : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public DatabaseAdvancedThreatProtection(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
