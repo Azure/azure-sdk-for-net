@@ -5,7 +5,7 @@
 ### Bugs Fixed
 
 - Fixed a memory leak on the scale-only host path where `MessagingProvider` and its cached `ServiceBusClient`s were never disposed on host teardown. `AddServiceBusScaleForTrigger` now forces construction of `CleanupService`, which the DI container then disposes automatically, tearing down the cached clients and releasing their AMQP connections, CBS-refresh timers, and heartbeat timers. Previously these stayed registered on the process-wide static `TimerQueue` for the life of the process, because a scale-only host (`ConfigureWebJobsScale`) does not initialize `IExtensionConfigProvider`s — the binding path's normal route into `CleanupService`.
-- Wait for 2 secs before scaling out for ScaleMonitor to avoid aggressive scaling (matches with Scale Controller V2) - AB#32302750
+- Fixed overly aggressive scale-out in `ServiceBusScaleMonitor`. When queue time is increasing, the monitor now votes to scale out only once the most recent sample's queue latency reaches 2 seconds, matching Scale Controller V2 behavior. - AB#32302750
 - Fixed AMQP map key deserialization in the settlement path so that `AmqpSymbol` keys use their underlying value rather than `ToString()`. (#60653)
 - Fixed a log message in `ServiceBusMetricsProvider` that was missing string interpolation and emitted literal placeholder text instead of the entity type and path. (#60818)
 
