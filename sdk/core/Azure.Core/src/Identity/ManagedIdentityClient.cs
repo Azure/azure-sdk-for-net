@@ -93,7 +93,9 @@ namespace Azure.Identity
             }
 
             AzureIdentityEventSource.Singleton.ManagedIdentityCredentialSelected(capabilities.Source.ToString(), _options.ManagedIdentityId.ToString());
-            bool isKeyGuardAvailable = capabilities.MaxSupportedBindingStrength >= MtlsBindingStrength.KeyGuard;
+            bool isKeyGuardAvailable =
+                capabilities.IsMtlsPopSupportedByHost &&
+                capabilities.MaxSupportedBindingStrength >= MtlsBindingStrength.KeyGuard;
 
             // If the source is DefaultToImds and the credential is chained, we should probe the IMDS endpoint first.
 #pragma warning disable CS0618 // DefaultToImds is obsolete but still returned by the sync GetManagedIdentitySource path
