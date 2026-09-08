@@ -139,7 +139,7 @@ public class BasicSqlTests
             param location string = resourceGroup().location
 
             resource sql 'Microsoft.Sql/servers@2021-11-01' = {
-              name: take('sql-${uniqueString(resourceGroup().id)}', 63)
+              name: take('sql${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
                 administratorLogin: adminLogin
