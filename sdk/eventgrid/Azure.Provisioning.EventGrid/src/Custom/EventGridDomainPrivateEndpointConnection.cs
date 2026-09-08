@@ -5,8 +5,9 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.EventGrid;
 
-// The generated name repeats the EventGrid service prefix. Map it to the released type name
-// EventGridDomainPrivateEndpointConnection without the duplicated prefix.
+// TODO: Remove this workaround after https://github.com/Azure/azure-sdk-for-net/issues/62757 is fixed.
+// The provisioning generator duplicates the EventGrid service prefix for this resource-name
+// override. Map it to the released EventGridDomainPrivateEndpointConnection type name.
 [CodeGenType("EventGridEventGridDomainPrivateEndpointConnection")]
 public partial class EventGridDomainPrivateEndpointConnection
 {
