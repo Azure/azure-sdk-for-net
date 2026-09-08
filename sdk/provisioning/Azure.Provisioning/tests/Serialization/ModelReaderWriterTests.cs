@@ -54,8 +54,8 @@ public class ModelReaderWriterTests
         string json = jsonData.ToString();
 
         using JsonDocument doc = JsonDocument.Parse(json);
-        JsonElement infraNode = SerializationTestHelpers.GetSingleInfraNode(doc.RootElement);
-        Assert.IsTrue(infraNode.TryGetProperty("fileName", out _));
+        Assert.IsTrue(doc.RootElement.TryGetProperty("fileName", out _));
+        Assert.IsFalse(doc.RootElement.TryGetProperty("infras", out _), "Infrastructure should serialize as one InfraNode");
     }
 
     [Test]

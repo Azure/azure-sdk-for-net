@@ -51,11 +51,11 @@ public class SchemaComplianceTests
         TestContext.Out.WriteLine(json);
 
         using JsonDocument doc = JsonDocument.Parse(json);
-        JsonElement root = SerializationTestHelpers.GetSingleInfraNode(doc.RootElement);
+        JsonElement root = doc.RootElement;
 
-        // === Top-level: SerializationDocument containing InfraNode entries ===
-        // === File-level: fileName, targetScope ===
+        // === InfraNode: fileName, targetScope ===
         Assert.AreEqual("main.bicep", root.GetProperty("fileName").GetString());
+        Assert.IsFalse(root.TryGetProperty("infras", out _), "Infrastructure should serialize as one InfraNode");
         Assert.IsFalse(root.TryGetProperty("targetScope", out _), "targetScope should be omitted for resourceGroup (default)");
 
         // === Resources: keyed by bicepIdentifier ===
@@ -194,7 +194,7 @@ public class SchemaComplianceTests
         infra.Add(storage);
         string json = SerializationTestHelpers.SerializeToJson(infra);
         using var doc = JsonDocument.Parse(json);
-        var file = SerializationTestHelpers.GetSingleInfraNode(doc.RootElement);
+        var file = doc.RootElement;
         Assert.IsFalse(file.TryGetProperty("targetScope", out _), "targetScope should be omitted for resourceGroup (default)");
     }
 
@@ -204,7 +204,7 @@ public class SchemaComplianceTests
         Infrastructure infra = new() { TargetScope = DeploymentScope.Subscription };
         string json = SerializationTestHelpers.SerializeToJson(infra);
         using var doc = JsonDocument.Parse(json);
-        var file = SerializationTestHelpers.GetSingleInfraNode(doc.RootElement);
+        var file = doc.RootElement;
         Assert.AreEqual("subscription", file.GetProperty("targetScope").GetString());
     }
 
@@ -220,7 +220,7 @@ public class SchemaComplianceTests
         infra.Add(param);
         string json = SerializationTestHelpers.SerializeToJson(infra);
         using var doc = JsonDocument.Parse(json);
-        var file = SerializationTestHelpers.GetSingleInfraNode(doc.RootElement);
+        var file = doc.RootElement;
         var paramNode = file.GetProperty("parameters").GetProperty("myParam");
         if (paramNode.TryGetProperty("decorators", out JsonElement decs))
         {
@@ -298,17 +298,13 @@ public class SchemaComplianceTests
     private static HashSet<string> ValidTargetScopes => SchemaOracle.TargetScopes.Value;
 
     /// <summary>
-    /// Validates a serialized JSON document against the TypeSpec schema spec.
-    /// Called by round-trip tests to ensure every serialized document is schema-compliant.
+    /// Validates a serialized infrastructure against the TypeSpec <c>InfraNode</c> schema.
+    /// Called by round-trip tests to ensure every serialized infrastructure is schema-compliant.
     /// </summary>
     internal static void AssertSchemaCompliance(string json)
     {
         using JsonDocument doc = JsonDocument.Parse(json);
-        JsonElement root = doc.RootElement;
-        Assert.IsTrue(root.TryGetProperty("infras", out JsonElement infras), "SerializationDocument is missing 'infras'");
-        Assert.AreEqual(JsonValueKind.Array, infras.ValueKind);
-        foreach (JsonElement infra in infras.EnumerateArray())
-            AssertBicepFileNode(infra);
+        AssertBicepFileNode(doc.RootElement);
     }
 
     private static void AssertBicepFileNode(JsonElement file)
