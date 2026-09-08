@@ -144,22 +144,46 @@ readable and writable scopes. If the resource type is the same but the resource
 models differ, the implementation should not collapse them merely because the
 Bicep type string matches.
 
-### Customizing a projection name
+### Determining a provisioning resource class name
 
 Resource names from individual management resource entries may disagree after
 they are collapsed. A single TypeSpec model can also back multiple resource
 types, so model-level C# renaming is insufficient when each projection needs a
 different name.
 
-After all projections have been identified, their names are determined in this
-order:
+Class names are resolved only after all resource projections have been created.
+This is a two-pass procedure because the generator cannot know whether a model
+is unique until it has identified every projection:
 
-1. Use the resource-type-specific `provisioning-resource-name` override.
-2. If every grouped resource has the same resource name, use that name.
-3. If the resource model is used by only one projection, use the model name.
-4. Otherwise, remove the provider namespace from the ARM resource type,
-   singularize each remaining segment, convert each segment to PascalCase, and
-   concatenate them.
+1. Group detected resource entries by ARM resource type and resource model.
+2. Create a pending projection for each group, retaining:
+   - the complete ARM resource type;
+   - the shared resource model;
+   - any resource name reported by every entry in the group; and
+   - any `provisioning-resource-name` override for that resource type.
+3. Count how many projections use each resource model.
+4. Resolve each pending projection's class name using the following precedence:
+   1. Use the resource-type-specific `provisioning-resource-name` override.
+   2. If every grouped resource reports the same resource name, use that name.
+   3. If only one projection uses the resource model, use the model name.
+   4. Otherwise, derive the name from the ARM resource type.
+
+To derive a name from an ARM resource type, remove the provider namespace,
+singularize each remaining type segment, capitalize each segment, and
+concatenate the results. For example:
+
+```text
+Microsoft.Web/sites/slots/basicPublishingCredentialsPolicies
+  -> sites/slots/basicPublishingCredentialsPolicies
+  -> site/slot/basicPublishingCredentialsPolicy
+  -> SiteSlotBasicPublishingCredentialsPolicy
+```
+
+The result names the generated C# provisioning resource class and its file. It
+does not determine the deployed resource instance's `Name` value; that value is
+derived separately from the resource path and singleton metadata.
+
+#### Customizing a projection name
 
 Use the `provisioning-resource-name` client option on the shared TypeSpec
 resource model to map complete ARM resource types to generated provisioning
