@@ -16,9 +16,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
 {
     [TestFixture(true)]
     [TestFixture(false)]
+    [NonParallelizable]
     public class FleetCRUD : ContainerServiceFleetManagementTestBase
     {
-        public FleetCRUD(bool isAsync): base(isAsync)
+        public FleetCRUD(bool isAsync) : base(isAsync)
         {
         }
 
@@ -50,13 +51,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             Console.WriteLine($"Created Fleet was: {fleetResource.Data}");
 
             // Test GetFleet
-            // Test GetAllAsync - Get all fleets in RG, which should just be 1
-            int fleetCount = 0;
+            // Test GetAllAsync
+            bool createdFleetWasListed = false;
             await foreach (ContainerServiceFleetResource item in fleetCollection.GetAllAsync())
             {
-                fleetCount++;
+                createdFleetWasListed |= item.Data.Name == fleetName;
             }
-            Debug.Assert(fleetCount == 1, "Unexpected amount of fleets exist");
+            Assert.IsTrue(createdFleetWasListed, "The created Fleet was not listed");
 
             // Test GetAsync
             ContainerServiceFleetResource getAsyncResult = await fleetCollection.GetAsync(fleetName);
@@ -154,7 +155,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
                 ManagedClusterUpdate = new ContainerServiceFleetManagedClusterUpdate(
                     new ContainerServiceFleetManagedClusterUpgradeSpec(ContainerServiceFleetManagedClusterUpgradeType.Full)
                     {
-                        KubernetesVersion = "1.33.0", // Kubernetes version
+                        KubernetesVersion = "1.36.3", // Kubernetes version
                     })
                 {
                     NodeImageSelection = new NodeImageSelection(NodeImageSelectionType.Latest)
@@ -334,7 +335,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Tests.Scenario
             {
                 Channel = ContainerServiceFleetUpgradeChannel.TargetKubernetesVersion,
                 IsLongTermSupport = true,
-                TargetKubernetesVersion = "1.30"
+                TargetKubernetesVersion = "1.36"
             };
             ArmOperation<AutoUpgradeProfileResource> createAutoUpgradeProfileLRO = await autoUpgradeProfileCollection.CreateOrUpdateAsync(WaitUntil.Completed, autoUpgradeProfileName, createAutoUpgradeProfileData, ifMatch: (string)null);
             AutoUpgradeProfileResource createAutoUpgradeProfileResult = createAutoUpgradeProfileLRO.Value;
