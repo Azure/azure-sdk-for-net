@@ -360,6 +360,97 @@ namespace Azure.Messaging.ServiceBus.Tests.Receiver
             mockTransportReceiver.Verify(transportReceiver => transportReceiver.CloseAsync(It.Is<CancellationToken>(ct => ct == cts.Token)));
         }
 
+        /// <summary>
+        ///   Verifies that a close which does not complete leaves the receiver usable and closable. Previously the
+        ///   receiver latched its own <see cref="ServiceBusReceiver.IsClosed" /> copy to <c>true</c> before delegating,
+        ///   which failed every subsequent operation and made the close impossible to retry.
+        ///
+        ///   The state itself now comes from the transport, so this covers the public contract - a failed close
+        ///   surfaces, leaves the receiver reporting open, and can be retried - rather than the flag arithmetic.
+        ///   The transport behavior it reflects is pinned separately in <c>AmqpReceiverTests</c>.
+        /// </summary>
+        ///
+        [Test]
+        public void CloseRestoresIsClosedWhenTheCloseDoesNotComplete()
+        {
+            var closeShouldFail = true;
+            var mockTransportReceiver = new Mock<TransportReceiver>();
+
+            mockTransportReceiver
+                .Setup(transportReceiver => transportReceiver.CloseAsync(It.IsAny<CancellationToken>()))
+                .Returns(() => closeShouldFail ? Task.FromException(new TaskCanceledException()) : Task.CompletedTask);
+
+            // Models a real transport: it stays open when its close does not complete, and reports closed once it does.
+
+            mockTransportReceiver
+                .SetupGet(transportReceiver => transportReceiver.IsClosed)
+                .Returns(() => !closeShouldFail);
+
+            var mockConnection = ServiceBusTestUtilities.CreateMockConnection();
+            mockConnection.Setup(
+                connection => connection.CreateTransportReceiver(
+                    It.IsAny<string>(),
+                    It.IsAny<ServiceBusRetryPolicy>(),
+                    It.IsAny<ServiceBusReceiveMode>(),
+                    It.IsAny<uint>(),
+                    It.IsAny<string>(),
+                    It.IsAny<string>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<bool>(),
+                    It.IsAny<Guid?>(),
+                    It.IsAny<CancellationToken>()))
+                .Returns(mockTransportReceiver.Object);
+
+            var receiver = new ServiceBusReceiver(mockConnection.Object, "fake", default, new ServiceBusReceiverOptions());
+
+            Assert.That(async () => await receiver.CloseAsync(),
+                Throws.InstanceOf<TaskCanceledException>(),
+                "The failed close should surface to the caller.");
+
+            Assert.That(receiver.IsClosed, Is.False,
+                "A close that did not complete should leave the receiver open, since its links were not torn down.");
+
+            closeShouldFail = false;
+
+            Assert.That(async () => await receiver.CloseAsync(),
+                Throws.Nothing,
+                "The receiver should still be closable after a close that did not complete.");
+
+            Assert.That(receiver.IsClosed, Is.True,
+                "The receiver should be marked as closed once the close runs to completion.");
+        }
+
+        /// <summary>
+        ///   Verifies that the closed state is safe to read on a receiver built through the mocking constructor,
+        ///   which leaves no transport behind it. The state is derived from the transport, so reading it has to
+        ///   tolerate the transport being absent rather than throwing from a public property.
+        ///
+        ///   This uses a real subclass rather than a mock on purpose: <see cref="ServiceBusReceiver.IsClosed" /> is
+        ///   virtual, so a mock would override it and never reach the implementation under test.
+        /// </summary>
+        ///
+        [Test]
+        public void IsClosedIsSafeToReadOnAReceiverWithNoTransport()
+        {
+            var receiver = new TransportlessReceiver();
+
+            Assert.That(() => receiver.IsClosed, Throws.Nothing,
+                "Reading the closed state of a receiver with no transport should not throw.");
+
+            Assert.That(receiver.IsClosed, Is.False,
+                "A receiver that was never closed should report open, as it did before the state was derived.");
+        }
+
+        /// <summary>
+        ///   A receiver built through the constructor reserved for mocking and derived types, which leaves the
+        ///   transport unset. It deliberately does not override <see cref="ServiceBusReceiver.IsClosed" />.
+        /// </summary>
+        ///
+        private class TransportlessReceiver : ServiceBusReceiver
+        {
+        }
+
         [Test]
         public async Task CallingCloseAsyncUpdatesIsClosed()
         {

@@ -50,7 +50,7 @@ public class BasicMachineLearningTests
                                     },
                                 KeySource = StorageAccountKeySource.Storage,
                             },
-                        MinimumTlsVersion = StorageMinimumTlsVersion.Tls1_2,
+                        MinimumTlsVersion = StorageMinimumTlsVersion.Tls12,
                         NetworkRuleSet =
                             new StorageAccountNetworkRuleSet
                             {

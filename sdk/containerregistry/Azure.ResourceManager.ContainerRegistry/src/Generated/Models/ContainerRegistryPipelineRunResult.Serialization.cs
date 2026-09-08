@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WritePropertyName("progress"u8);
                 writer.WriteObjectValue(Progress, options);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (Optional.IsDefined(FinishOn))
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             string status = default;
             IReadOnlyList<string> importedArtifacts = default;
             ProgressProperties progress = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             DateTimeOffset? finishOn = default;
             ContainerRegistryImportPipelineSourceProperties source = default;
             ContainerRegistryExportPipelineTargetProperties target = default;
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("finishTime"u8))
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 status,
                 importedArtifacts ?? new ChangeTrackingList<string>(),
                 progress,
-                startOn,
+                startsOn,
                 finishOn,
                 source,
                 target,

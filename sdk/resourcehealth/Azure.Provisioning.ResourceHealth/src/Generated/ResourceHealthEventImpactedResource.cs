@@ -78,7 +78,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.TargetResourceType;
+                return Properties is null ? default : Properties.TargetResourceType;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.TargetResourceId;
+                return Properties is null ? default : Properties.TargetResourceId;
             }
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.TargetRegion;
+                return Properties is null ? default : Properties.TargetRegion;
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.Info;
+                return Properties is null ? default : Properties.Info;
             }
         }
 

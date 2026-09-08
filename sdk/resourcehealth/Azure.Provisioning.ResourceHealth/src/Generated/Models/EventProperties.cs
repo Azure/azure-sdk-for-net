@@ -410,7 +410,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return AdditionalInformation.Message;
+                return AdditionalInformation is null ? default : AdditionalInformation.Message;
             }
         }
 

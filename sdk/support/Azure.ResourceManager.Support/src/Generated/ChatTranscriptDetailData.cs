@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Support
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
     }

@@ -17,6 +17,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmManagedApplicationsModelFactory
     {
+        /// <summary> Plan for the managed application. </summary>
         /// <param name="publisher"> The publisher ID. </param>
         /// <param name="offer"> The offer Id. </param>
         /// <param name="plan"> The plan Id. </param>
@@ -27,6 +28,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new ManagedApplicationsRegistryPackagePlan(publisher, offer, plan, version, default);
         }
 
+        /// <summary> Information about an application definition request. </summary>
         /// <param name="publisher"> The publisher. </param>
         /// <param name="offer"> The offer Id. </param>
         /// <param name="plan"> The plan Id. </param>
@@ -44,6 +46,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 default);
         }
 
+        /// <summary> Resource information. </summary>
         /// <param name="createUiDefinitionLink"> The create ui definition link. </param>
         /// <param name="deploymentTemplateLink"> The deployment template link. </param>
         /// <returns> A new <see cref="Models.ManagedApplicationsRegistryPackageLinks"/> instance for mocking. </returns>
@@ -92,6 +95,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 default), plan, kind, identity, default);
         }
 
+        /// <summary> Managed application Jit access policy. </summary>
         /// <param name="isJitAccessEnabled"> Whether the JIT access is enabled. </param>
         /// <param name="jitApprovalMode"> JIT approval mode. </param>
         /// <param name="jitApprovers"> The JIT approvers. </param>
@@ -104,6 +108,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new ApplicationJitAccessPolicy(isJitAccessEnabled, jitApprovalMode, (jitApprovers ?? new ChangeTrackingList<JitApprover>()).ToList(), maximumJitAccessDuration, default);
         }
 
+        /// <summary> JIT approver definition. </summary>
         /// <param name="id"> The approver service principal Id. </param>
         /// <param name="type"> The approver type. </param>
         /// <param name="displayName"> The approver display name. </param>
@@ -113,6 +118,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new JitApprover(id, @type, displayName, default);
         }
 
+        /// <summary> The managed application provider authorization. </summary>
         /// <param name="principalId"> The provider's principal identifier. This is the identity that the provider will use to call ARM to manage the managed application resources. </param>
         /// <param name="roleDefinitionId"> The provider's role definition identifier. This role will define all the permissions that the provider must have on the managed application's container resource group. This role definition cannot have permission to delete the resource group. </param>
         /// <returns> A new <see cref="Models.ApplicationAuthorization"/> instance for mocking. </returns>
@@ -121,6 +127,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new ApplicationAuthorization(principalId, roleDefinitionId, default);
         }
 
+        /// <summary> The application package contact information. </summary>
         /// <param name="contactName"> The contact name. </param>
         /// <param name="email"> The contact email. </param>
         /// <param name="phone"> The contact phone number. </param>
@@ -130,6 +137,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new ApplicationPackageContact(contactName, email, phone, default);
         }
 
+        /// <summary> The appliance package support URLs. </summary>
         /// <param name="publicAzure"> The public azure support URL. </param>
         /// <param name="governmentCloud"> The government cloud support URL. </param>
         /// <returns> A new <see cref="Models.ApplicationPackageSupportUrls"/> instance for mocking. </returns>
@@ -138,6 +146,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new ApplicationPackageSupportUrls(publicAzure, governmentCloud, default);
         }
 
+        /// <summary> Managed application artifact. </summary>
         /// <param name="name"> The managed application artifact name. </param>
         /// <param name="uri"> The managed application artifact blob uri. </param>
         /// <param name="type"> The managed application artifact type. </param>
@@ -147,6 +156,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new ApplicationArtifact(name, uri, @type, default);
         }
 
+        /// <summary> The application client details to track the entity creating/updating the managed app resource. </summary>
         /// <param name="oid"> The client Oid. </param>
         /// <param name="puid"> The client Puid. </param>
         /// <param name="applicationId"> The client application Id. </param>
@@ -156,6 +166,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new ApplicationClientDetails(oid, puid, applicationId, default);
         }
 
+        /// <summary> Plan for the managed application. </summary>
         /// <param name="name"> The plan name. </param>
         /// <param name="publisher"> The publisher ID. </param>
         /// <param name="product"> The product code. </param>
@@ -173,6 +184,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 default);
         }
 
+        /// <summary> Resource information. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -198,6 +210,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 sku);
         }
 
+        /// <summary> SKU for the resource. </summary>
         /// <param name="name"> The SKU name. </param>
         /// <param name="tier"> The SKU tier. </param>
         /// <param name="size"> The SKU size. </param>
@@ -217,6 +230,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 default);
         }
 
+        /// <summary> Resource information. </summary>
         /// <param name="id"> Resource ID. </param>
         /// <param name="name"> Resource name. </param>
         /// <param name="type"> Resource type. </param>
@@ -301,6 +315,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 identity);
         }
 
+        /// <summary> Plan for the managed application. </summary>
         /// <param name="name"> The plan name. </param>
         /// <param name="publisher"> The publisher ID. </param>
         /// <param name="product"> The product code. </param>
@@ -318,6 +333,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 default);
         }
 
+        /// <summary> The array of plan. </summary>
         /// <param name="value"> The array of plans. </param>
         /// <returns> A new <see cref="Models.AllowedUpgradePlansResult"/> instance for mocking. </returns>
         public static AllowedUpgradePlansResult AllowedUpgradePlansResult(IEnumerable<ManagedApplicationsPlan> value = default)
@@ -327,6 +343,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new AllowedUpgradePlansResult((value ?? new ChangeTrackingList<ManagedApplicationsPlan>()).ToList(), default);
         }
 
+        /// <summary> Update access request definition. </summary>
         /// <param name="approver"> The approver name. </param>
         /// <param name="metadata"> The JIT request metadata. </param>
         /// <param name="status"> The JIT status. </param>
@@ -337,6 +354,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new UpdateAccessContent(approver, metadata, status, subStatus, default);
         }
 
+        /// <summary> The JIT request metadata. </summary>
         /// <param name="originRequestId"> The origin request id. </param>
         /// <param name="requestorId"> The requestor id. </param>
         /// <param name="tenantDisplayName"> The publisher's tenant name. </param>
@@ -347,6 +365,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new JitRequestMetadata(originRequestId, requestorId, tenantDisplayName, subjectDisplayName, default);
         }
 
+        /// <summary> List token request body. </summary>
         /// <param name="authorizationAudience"> The authorization audience. </param>
         /// <param name="userAssignedIdentities"> The user assigned identities. </param>
         /// <returns> A new <see cref="Models.ManagedApplicationsListTokenRequestContent"/> instance for mocking. </returns>
@@ -357,6 +376,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new ManagedApplicationsListTokenRequestContent(authorizationAudience, (userAssignedIdentities ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The array of managed identity tokens. </summary>
         /// <param name="value"> The array of managed identity tokens. </param>
         /// <returns> A new <see cref="Models.ManagedIdentityTokenResult"/> instance for mocking. </returns>
         public static ManagedIdentityTokenResult ManagedIdentityTokenResult(IEnumerable<ManagedIdentityToken> value = default)
@@ -366,6 +386,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new ManagedIdentityTokenResult((value ?? new ChangeTrackingList<ManagedIdentityToken>()).ToList(), default);
         }
 
+        /// <summary> The managed identity token for the managed app resource. </summary>
         /// <param name="accessToken"> The requested access token. </param>
         /// <param name="expiresIn"> The number of seconds the access token will be valid. </param>
         /// <param name="expiresOn"> The timespan when the access token expires. This is represented as the number of seconds from epoch. </param>
@@ -424,6 +445,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 default), default);
         }
 
+        /// <summary> Application definition artifact. </summary>
         /// <param name="name"> The managed application definition artifact name. </param>
         /// <param name="uri"> The managed application definition artifact blob uri. </param>
         /// <param name="type"> The managed application definition artifact type. </param>
@@ -433,6 +455,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new ApplicationDefinitionArtifact(name, uri, @type, default);
         }
 
+        /// <summary> Managed application notification endpoint. </summary>
         /// <param name="uri"> The managed application notification endpoint uri. </param>
         /// <returns> A new <see cref="Models.ApplicationNotificationEndpoint"/> instance for mocking. </returns>
         public static ApplicationNotificationEndpoint ApplicationNotificationEndpoint(string uri = default)
@@ -440,6 +463,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new ApplicationNotificationEndpoint(uri, default);
         }
 
+        /// <summary> Managed application locking policy. </summary>
         /// <param name="allowedActions"> The deny assignment excluded actions. </param>
         /// <param name="allowedDataActions"> The deny assignment excluded data actions. </param>
         /// <returns> A new <see cref="Models.ApplicationPackageLockingPolicy"/> instance for mocking. </returns>
@@ -451,6 +475,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new ApplicationPackageLockingPolicy((allowedActions ?? new ChangeTrackingList<string>()).ToList(), (allowedDataActions ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Managed application policy. </summary>
         /// <param name="name"> The policy name. </param>
         /// <param name="policyDefinitionId"> The policy definition Id. </param>
         /// <param name="parameters"> The policy parameters. </param>
@@ -460,6 +485,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new ApplicationPolicy(name, policyDefinitionId, parameters, default);
         }
 
+        /// <summary> Information about an application definition request. </summary>
         /// <param name="tags"> Application definition tags. </param>
         /// <returns> A new <see cref="Models.ApplicationDefinitionPatch"/> instance for mocking. </returns>
         public static ApplicationDefinitionPatch ApplicationDefinitionPatch(IDictionary<string, string> tags = default)
@@ -492,6 +518,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
                 default), default);
         }
 
+        /// <summary> The JIT authorization policies. </summary>
         /// <param name="principalId"> The the principal id that will be granted JIT access. </param>
         /// <param name="roleDefinitionId"> The role definition id that will be granted to the Principal. </param>
         /// <returns> A new <see cref="Models.JitAuthorizationPolicies"/> instance for mocking. </returns>
@@ -500,15 +527,17 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new JitAuthorizationPolicies(principalId, roleDefinitionId, default);
         }
 
+        /// <summary> The JIT scheduling policies. </summary>
         /// <param name="type"> The type of JIT schedule. </param>
         /// <param name="duration"> The required duration of the JIT request. </param>
-        /// <param name="startOn"> The start time of the request. </param>
+        /// <param name="startsOn"> The start time of the request. </param>
         /// <returns> A new <see cref="Models.JitSchedulingPolicy"/> instance for mocking. </returns>
-        public static JitSchedulingPolicy JitSchedulingPolicy(JitSchedulingType @type = default, TimeSpan duration = default, DateTimeOffset startOn = default)
+        public static JitSchedulingPolicy JitSchedulingPolicy(JitSchedulingType @type = default, TimeSpan duration = default, DateTimeOffset startsOn = default)
         {
-            return new JitSchedulingPolicy(@type, duration, startOn, default);
+            return new JitSchedulingPolicy(@type, duration, startsOn, default);
         }
 
+        /// <summary> Information about JIT request. </summary>
         /// <param name="tags"> Jit request tags. </param>
         /// <returns> A new <see cref="Models.JitRequestDefinitionPatch"/> instance for mocking. </returns>
         public static JitRequestDefinitionPatch JitRequestDefinitionPatch(IDictionary<string, string> tags = default)
@@ -518,6 +547,7 @@ namespace Azure.ResourceManager.ManagedApplications.Models
             return new JitRequestDefinitionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> The response of a JitRequestDefinition list operation. </summary>
         /// <param name="value"> The JitRequestDefinition items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <returns> A new <see cref="Models.JitRequestDefinitionListResult"/> instance for mocking. </returns>

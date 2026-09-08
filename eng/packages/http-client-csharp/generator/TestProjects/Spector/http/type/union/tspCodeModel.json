@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "GetResponseProp",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Type.Union.get.Response.prop.anonymous",
       "valueType": {
         "$id": "2",
@@ -69,6 +70,7 @@
       "$id": "6",
       "kind": "enum",
       "name": "GetResponseProp1",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Type.Union.get.Response.prop.anonymous",
       "valueType": {
         "$id": "7",
@@ -118,6 +120,7 @@
       "$id": "10",
       "kind": "enum",
       "name": "StringExtensibleNamedUnion",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Type.Union.StringExtensibleNamedUnion",
       "valueType": {
         "$id": "11",
@@ -167,6 +170,7 @@
       "$id": "14",
       "kind": "enum",
       "name": "GetResponseProp2",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Type.Union.get.Response.prop.anonymous",
       "valueType": {
         "$id": "15",
@@ -230,6 +234,7 @@
       "$id": "19",
       "kind": "enum",
       "name": "GetResponseProp3",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Type.Union.get.Response.prop.anonymous",
       "valueType": {
         "$id": "20",
@@ -293,6 +298,7 @@
       "$id": "24",
       "kind": "enum",
       "name": "EnumsOnlyCasesLr",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Type.Union.EnumsOnlyCases.lr.anonymous",
       "valueType": {
         "$id": "25",
@@ -370,6 +376,7 @@
       "$id": "30",
       "kind": "enum",
       "name": "EnumsOnlyCasesUd",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Type.Union.EnumsOnlyCases.ud.anonymous",
       "valueType": {
         "$id": "31",
@@ -848,6 +855,7 @@
       "$id": "84",
       "kind": "model",
       "name": "GetResponse",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.get.Response.anonymous",
       "usage": "Output,Json",
@@ -863,6 +871,7 @@
           "$id": "85",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$ref": "1"
@@ -887,6 +896,7 @@
       "$id": "86",
       "kind": "model",
       "name": "SendRequest",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.send.Request.anonymous",
       "usage": "Spread,Json",
@@ -902,6 +912,7 @@
           "$id": "87",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$ref": "1"
@@ -926,6 +937,7 @@
       "$id": "88",
       "kind": "model",
       "name": "GetResponse1",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.get.Response.anonymous",
       "usage": "Output,Json",
@@ -941,6 +953,7 @@
           "$id": "89",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$ref": "6"
@@ -965,6 +978,7 @@
       "$id": "90",
       "kind": "model",
       "name": "SendRequest1",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.send.Request.anonymous",
       "usage": "Spread,Json",
@@ -980,6 +994,7 @@
           "$id": "91",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$ref": "6"
@@ -1004,6 +1019,7 @@
       "$id": "92",
       "kind": "model",
       "name": "GetResponse2",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.get.Response.anonymous",
       "usage": "Output,Json",
@@ -1019,6 +1035,7 @@
           "$id": "93",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$ref": "10"
@@ -1043,6 +1060,7 @@
       "$id": "94",
       "kind": "model",
       "name": "SendRequest2",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.send.Request.anonymous",
       "usage": "Spread,Json",
@@ -1058,6 +1076,7 @@
           "$id": "95",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$ref": "10"
@@ -1082,6 +1101,7 @@
       "$id": "96",
       "kind": "model",
       "name": "GetResponse3",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.get.Response.anonymous",
       "usage": "Output,Json",
@@ -1097,6 +1117,7 @@
           "$id": "97",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$ref": "14"
@@ -1121,6 +1142,7 @@
       "$id": "98",
       "kind": "model",
       "name": "SendRequest3",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.send.Request.anonymous",
       "usage": "Spread,Json",
@@ -1136,6 +1158,7 @@
           "$id": "99",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$ref": "14"
@@ -1160,6 +1183,7 @@
       "$id": "100",
       "kind": "model",
       "name": "GetResponse4",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.get.Response.anonymous",
       "usage": "Output,Json",
@@ -1175,6 +1199,7 @@
           "$id": "101",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$ref": "19"
@@ -1199,6 +1224,7 @@
       "$id": "102",
       "kind": "model",
       "name": "SendRequest4",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.send.Request.anonymous",
       "usage": "Spread,Json",
@@ -1214,6 +1240,7 @@
           "$id": "103",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$ref": "19"
@@ -1238,6 +1265,7 @@
       "$id": "104",
       "kind": "model",
       "name": "GetResponse5",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.get.Response.anonymous",
       "usage": "Output,Json",
@@ -1253,6 +1281,7 @@
           "$id": "105",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$id": "106",
@@ -1263,6 +1292,7 @@
                 "$id": "107",
                 "kind": "model",
                 "name": "Cat",
+                "apiVersions": [],
                 "namespace": "Type.Union",
                 "crossLanguageDefinitionId": "Type.Union.Cat",
                 "usage": "Input,Output,Json",
@@ -1278,6 +1308,7 @@
                     "$id": "108",
                     "kind": "property",
                     "name": "name",
+                    "apiVersions": [],
                     "serializedName": "name",
                     "type": {
                       "$id": "109",
@@ -1306,6 +1337,7 @@
                 "$id": "110",
                 "kind": "model",
                 "name": "Dog",
+                "apiVersions": [],
                 "namespace": "Type.Union",
                 "crossLanguageDefinitionId": "Type.Union.Dog",
                 "usage": "Input,Output,Json",
@@ -1321,6 +1353,7 @@
                     "$id": "111",
                     "kind": "property",
                     "name": "bark",
+                    "apiVersions": [],
                     "serializedName": "bark",
                     "type": {
                       "$id": "112",
@@ -1376,6 +1409,7 @@
       "$id": "113",
       "kind": "model",
       "name": "SendRequest5",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.send.Request.anonymous",
       "usage": "Spread,Json",
@@ -1391,6 +1425,7 @@
           "$id": "114",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$ref": "106"
@@ -1415,6 +1450,7 @@
       "$id": "115",
       "kind": "model",
       "name": "GetResponse6",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.get.Response.anonymous",
       "usage": "Output,Json",
@@ -1430,11 +1466,13 @@
           "$id": "116",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$id": "117",
             "kind": "model",
             "name": "EnumsOnlyCases",
+            "apiVersions": [],
             "namespace": "Type.Union",
             "crossLanguageDefinitionId": "Type.Union.EnumsOnlyCases",
             "usage": "Input,Output,Json",
@@ -1450,6 +1488,7 @@
                 "$id": "118",
                 "kind": "property",
                 "name": "lr",
+                "apiVersions": [],
                 "serializedName": "lr",
                 "doc": "This should be receive/send the left variant",
                 "type": {
@@ -1473,6 +1512,7 @@
                 "$id": "119",
                 "kind": "property",
                 "name": "ud",
+                "apiVersions": [],
                 "serializedName": "ud",
                 "doc": "This should be receive/send the up variant",
                 "type": {
@@ -1517,6 +1557,7 @@
       "$id": "120",
       "kind": "model",
       "name": "SendRequest6",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.send.Request.anonymous",
       "usage": "Spread,Json",
@@ -1532,6 +1573,7 @@
           "$id": "121",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$ref": "117"
@@ -1556,6 +1598,7 @@
       "$id": "122",
       "kind": "model",
       "name": "GetResponse7",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.get.Response.anonymous",
       "usage": "Output,Json",
@@ -1571,11 +1614,13 @@
           "$id": "123",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$id": "124",
             "kind": "model",
             "name": "StringAndArrayCases",
+            "apiVersions": [],
             "namespace": "Type.Union",
             "crossLanguageDefinitionId": "Type.Union.StringAndArrayCases",
             "usage": "Input,Output,Json",
@@ -1591,6 +1636,7 @@
                 "$id": "125",
                 "kind": "property",
                 "name": "string",
+                "apiVersions": [],
                 "serializedName": "string",
                 "doc": "This should be receive/send the string variant",
                 "type": {
@@ -1642,6 +1688,7 @@
                 "$id": "130",
                 "kind": "property",
                 "name": "array",
+                "apiVersions": [],
                 "serializedName": "array",
                 "doc": "This should be receive/send the array variant",
                 "type": {
@@ -1703,6 +1750,7 @@
       "$id": "133",
       "kind": "model",
       "name": "SendRequest7",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.send.Request.anonymous",
       "usage": "Spread,Json",
@@ -1718,6 +1766,7 @@
           "$id": "134",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$ref": "124"
@@ -1742,6 +1791,7 @@
       "$id": "135",
       "kind": "model",
       "name": "GetResponse8",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.get.Response.anonymous",
       "usage": "Output,Json",
@@ -1757,11 +1807,13 @@
           "$id": "136",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$id": "137",
             "kind": "model",
             "name": "MixedLiteralsCases",
+            "apiVersions": [],
             "namespace": "Type.Union",
             "crossLanguageDefinitionId": "Type.Union.MixedLiteralsCases",
             "usage": "Input,Output,Json",
@@ -1777,6 +1829,7 @@
                 "$id": "138",
                 "kind": "property",
                 "name": "stringLiteral",
+                "apiVersions": [],
                 "serializedName": "stringLiteral",
                 "doc": "This should be receive/send the \"a\" variant",
                 "type": {
@@ -1819,6 +1872,7 @@
                 "$id": "140",
                 "kind": "property",
                 "name": "intLiteral",
+                "apiVersions": [],
                 "serializedName": "intLiteral",
                 "doc": "This should be receive/send the 2 variant",
                 "type": {
@@ -1842,6 +1896,7 @@
                 "$id": "141",
                 "kind": "property",
                 "name": "floatLiteral",
+                "apiVersions": [],
                 "serializedName": "floatLiteral",
                 "doc": "This should be receive/send the 3.3 variant",
                 "type": {
@@ -1865,6 +1920,7 @@
                 "$id": "142",
                 "kind": "property",
                 "name": "booleanLiteral",
+                "apiVersions": [],
                 "serializedName": "booleanLiteral",
                 "doc": "This should be receive/send the true variant",
                 "type": {
@@ -1909,6 +1965,7 @@
       "$id": "143",
       "kind": "model",
       "name": "SendRequest8",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.send.Request.anonymous",
       "usage": "Spread,Json",
@@ -1924,6 +1981,7 @@
           "$id": "144",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$ref": "137"
@@ -1948,6 +2006,7 @@
       "$id": "145",
       "kind": "model",
       "name": "GetResponse9",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.get.Response.anonymous",
       "usage": "Output,Json",
@@ -1963,11 +2022,13 @@
           "$id": "146",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$id": "147",
             "kind": "model",
             "name": "MixedTypesCases",
+            "apiVersions": [],
             "namespace": "Type.Union",
             "crossLanguageDefinitionId": "Type.Union.MixedTypesCases",
             "usage": "Input,Output,Json",
@@ -1983,6 +2044,7 @@
                 "$id": "148",
                 "kind": "property",
                 "name": "model",
+                "apiVersions": [],
                 "serializedName": "model",
                 "doc": "This should be receive/send the Cat variant",
                 "type": {
@@ -2033,6 +2095,7 @@
                 "$id": "152",
                 "kind": "property",
                 "name": "literal",
+                "apiVersions": [],
                 "serializedName": "literal",
                 "doc": "This should be receive/send the \"a\" variant",
                 "type": {
@@ -2056,6 +2119,7 @@
                 "$id": "153",
                 "kind": "property",
                 "name": "int",
+                "apiVersions": [],
                 "serializedName": "int",
                 "doc": "This should be receive/send the int variant",
                 "type": {
@@ -2079,6 +2143,7 @@
                 "$id": "154",
                 "kind": "property",
                 "name": "boolean",
+                "apiVersions": [],
                 "serializedName": "boolean",
                 "doc": "This should be receive/send the boolean variant",
                 "type": {
@@ -2102,6 +2167,7 @@
                 "$id": "155",
                 "kind": "property",
                 "name": "array",
+                "apiVersions": [],
                 "serializedName": "array",
                 "doc": "This should be receive/send 4 element with Cat, \"a\", int, and boolean",
                 "type": {
@@ -2153,6 +2219,7 @@
       "$id": "157",
       "kind": "model",
       "name": "SendRequest9",
+      "apiVersions": [],
       "namespace": "Type.Union",
       "crossLanguageDefinitionId": "Type.Union.send.Request.anonymous",
       "usage": "Spread,Json",
@@ -2168,6 +2235,7 @@
           "$id": "158",
           "kind": "property",
           "name": "prop",
+          "apiVersions": [],
           "serializedName": "prop",
           "type": {
             "$ref": "147"

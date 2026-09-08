@@ -145,6 +145,7 @@
       "$id": "17",
       "kind": "model",
       "name": "Resource",
+      "apiVersions": [],
       "namespace": "Payload.JsonMergePatch",
       "crossLanguageDefinitionId": "Payload.JsonMergePatch.Resource",
       "usage": "Input,Output,Json",
@@ -161,6 +162,7 @@
           "$id": "18",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "type": {
             "$id": "19",
@@ -187,6 +189,7 @@
           "$id": "20",
           "kind": "property",
           "name": "description",
+          "apiVersions": [],
           "serializedName": "description",
           "type": {
             "$id": "21",
@@ -213,6 +216,7 @@
           "$id": "22",
           "kind": "property",
           "name": "map",
+          "apiVersions": [],
           "serializedName": "map",
           "type": {
             "$id": "23",
@@ -228,6 +232,7 @@
               "$id": "25",
               "kind": "model",
               "name": "InnerModel",
+              "apiVersions": [],
               "namespace": "Payload.JsonMergePatch",
               "crossLanguageDefinitionId": "Payload.JsonMergePatch.InnerModel",
               "usage": "Input,Output,JsonMergePatch,Json",
@@ -244,6 +249,7 @@
                   "$id": "26",
                   "kind": "property",
                   "name": "name",
+                  "apiVersions": [],
                   "serializedName": "name",
                   "type": {
                     "$id": "27",
@@ -270,6 +276,7 @@
                   "$id": "28",
                   "kind": "property",
                   "name": "description",
+                  "apiVersions": [],
                   "serializedName": "description",
                   "type": {
                     "$id": "29",
@@ -314,6 +321,7 @@
           "$id": "30",
           "kind": "property",
           "name": "array",
+          "apiVersions": [],
           "serializedName": "array",
           "type": {
             "$id": "31",
@@ -343,6 +351,7 @@
           "$id": "32",
           "kind": "property",
           "name": "intValue",
+          "apiVersions": [],
           "serializedName": "intValue",
           "type": {
             "$id": "33",
@@ -369,6 +378,7 @@
           "$id": "34",
           "kind": "property",
           "name": "floatValue",
+          "apiVersions": [],
           "serializedName": "floatValue",
           "type": {
             "$id": "35",
@@ -395,6 +405,7 @@
           "$id": "36",
           "kind": "property",
           "name": "innerModel",
+          "apiVersions": [],
           "serializedName": "innerModel",
           "type": {
             "$ref": "25"
@@ -417,6 +428,7 @@
           "$id": "37",
           "kind": "property",
           "name": "intArray",
+          "apiVersions": [],
           "serializedName": "intArray",
           "type": {
             "$id": "38",
@@ -455,6 +467,7 @@
       "$id": "40",
       "kind": "model",
       "name": "ResourcePatch",
+      "apiVersions": [],
       "namespace": "Payload.JsonMergePatch",
       "crossLanguageDefinitionId": "Payload.JsonMergePatch.ResourcePatch",
       "usage": "Input,JsonMergePatch,Json",
@@ -471,6 +484,7 @@
           "$id": "41",
           "kind": "property",
           "name": "description",
+          "apiVersions": [],
           "serializedName": "description",
           "type": {
             "$id": "42",
@@ -497,6 +511,7 @@
           "$id": "43",
           "kind": "property",
           "name": "map",
+          "apiVersions": [],
           "serializedName": "map",
           "type": {
             "$ref": "23"
@@ -519,6 +534,7 @@
           "$id": "44",
           "kind": "property",
           "name": "array",
+          "apiVersions": [],
           "serializedName": "array",
           "type": {
             "$ref": "31"
@@ -541,6 +557,7 @@
           "$id": "45",
           "kind": "property",
           "name": "intValue",
+          "apiVersions": [],
           "serializedName": "intValue",
           "type": {
             "$id": "46",
@@ -567,6 +584,7 @@
           "$id": "47",
           "kind": "property",
           "name": "floatValue",
+          "apiVersions": [],
           "serializedName": "floatValue",
           "type": {
             "$id": "48",
@@ -593,6 +611,7 @@
           "$id": "49",
           "kind": "property",
           "name": "innerModel",
+          "apiVersions": [],
           "serializedName": "innerModel",
           "type": {
             "$ref": "25"
@@ -615,6 +634,7 @@
           "$id": "50",
           "kind": "property",
           "name": "intArray",
+          "apiVersions": [],
           "serializedName": "intArray",
           "type": {
             "$ref": "38"

@@ -652,7 +652,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerAppUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ContainerAppUsage> GetUsagesAsync(AzureLocation location, CancellationToken cancellationToken = default)
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The name of the Azure region. </param>
+        /// <param name="location"> The location for which resource usage is queried. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <returns> A collection of <see cref="ContainerAppUsage"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ContainerAppUsage> GetUsages(AzureLocation location, CancellationToken cancellationToken = default)
