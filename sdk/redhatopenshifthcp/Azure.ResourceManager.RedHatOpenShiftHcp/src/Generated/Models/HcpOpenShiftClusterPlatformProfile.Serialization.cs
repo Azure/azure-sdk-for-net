@@ -148,9 +148,9 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             string managedResourceGroup = default;
             ResourceIdentifier subnetId = default;
             ResourceIdentifier vnetIntegrationSubnetId = default;
-            OutboundType? outboundType = default;
+            HcpOpenShiftClusterOutboundType? outboundType = default;
             ResourceIdentifier networkSecurityGroupId = default;
-            OperatorsAuthenticationProfile operatorsAuthentication = default;
+            HcpOpenShiftClusterOperatorsAuthenticationProfile operatorsAuthentication = default;
             Uri issuerUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    outboundType = new OutboundType(prop.Value.GetString());
+                    outboundType = new HcpOpenShiftClusterOutboundType(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("networkSecurityGroupId"u8))
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 }
                 if (prop.NameEquals("operatorsAuthentication"u8))
                 {
-                    operatorsAuthentication = OperatorsAuthenticationProfile.DeserializeOperatorsAuthenticationProfile(prop.Value, options);
+                    operatorsAuthentication = HcpOpenShiftClusterOperatorsAuthenticationProfile.DeserializeHcpOpenShiftClusterOperatorsAuthenticationProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("issuerUrl"u8))

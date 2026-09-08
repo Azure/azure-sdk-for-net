@@ -35,22 +35,22 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Mocking
             return new HcpOpenShiftClusterResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="NodePoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HcpOpenShiftClusterNodePoolResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="NodePoolResource"/> object. </returns>
-        public virtual NodePoolResource GetNodePoolResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HcpOpenShiftClusterNodePoolResource"/> object. </returns>
+        public virtual HcpOpenShiftClusterNodePoolResource GetHcpOpenShiftClusterNodePoolResource(ResourceIdentifier id)
         {
-            NodePoolResource.ValidateResourceId(id);
-            return new NodePoolResource(Client, id);
+            HcpOpenShiftClusterNodePoolResource.ValidateResourceId(id);
+            return new HcpOpenShiftClusterNodePoolResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ExternalAuthResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="HcpOpenShiftClusterExternalAuthResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ExternalAuthResource"/> object. </returns>
-        public virtual ExternalAuthResource GetExternalAuthResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HcpOpenShiftClusterExternalAuthResource"/> object. </returns>
+        public virtual HcpOpenShiftClusterExternalAuthResource GetHcpOpenShiftClusterExternalAuthResource(ResourceIdentifier id)
         {
-            ExternalAuthResource.ValidateResourceId(id);
-            return new ExternalAuthResource(Client, id);
+            HcpOpenShiftClusterExternalAuthResource.ValidateResourceId(id);
+            return new HcpOpenShiftClusterExternalAuthResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="HcpOpenShiftVersionResource"/> along with the instance operations that can be performed on it but with no data. </summary>

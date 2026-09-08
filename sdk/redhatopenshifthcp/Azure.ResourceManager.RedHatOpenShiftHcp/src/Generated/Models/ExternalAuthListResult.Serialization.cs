@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (ExternalAuthData item in Value)
+            foreach (HcpOpenShiftClusterExternalAuthData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             {
                 return null;
             }
-            IList<ExternalAuthData> value = default;
+            IList<HcpOpenShiftClusterExternalAuthData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<ExternalAuthData> array = new List<ExternalAuthData>();
+                    List<HcpOpenShiftClusterExternalAuthData> array = new List<HcpOpenShiftClusterExternalAuthData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ExternalAuthData.DeserializeExternalAuthData(item, options));
+                        array.Add(HcpOpenShiftClusterExternalAuthData.DeserializeHcpOpenShiftClusterExternalAuthData(item, options));
                     }
                     value = array;
                     continue;

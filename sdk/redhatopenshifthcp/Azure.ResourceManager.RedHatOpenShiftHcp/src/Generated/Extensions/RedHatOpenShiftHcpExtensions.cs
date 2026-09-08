@@ -56,39 +56,39 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="NodePoolResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="HcpOpenShiftClusterNodePoolResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRedHatOpenShiftHcpArmClient.GetNodePoolResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRedHatOpenShiftHcpArmClient.GetHcpOpenShiftClusterNodePoolResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="NodePoolResource"/> object. </returns>
-        public static NodePoolResource GetNodePoolResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HcpOpenShiftClusterNodePoolResource"/> object. </returns>
+        public static HcpOpenShiftClusterNodePoolResource GetHcpOpenShiftClusterNodePoolResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRedHatOpenShiftHcpArmClient(client).GetNodePoolResource(id);
+            return GetMockableRedHatOpenShiftHcpArmClient(client).GetHcpOpenShiftClusterNodePoolResource(id);
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ExternalAuthResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="HcpOpenShiftClusterExternalAuthResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableRedHatOpenShiftHcpArmClient.GetExternalAuthResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableRedHatOpenShiftHcpArmClient.GetHcpOpenShiftClusterExternalAuthResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ExternalAuthResource"/> object. </returns>
-        public static ExternalAuthResource GetExternalAuthResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="HcpOpenShiftClusterExternalAuthResource"/> object. </returns>
+        public static HcpOpenShiftClusterExternalAuthResource GetHcpOpenShiftClusterExternalAuthResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableRedHatOpenShiftHcpArmClient(client).GetExternalAuthResource(id);
+            return GetMockableRedHatOpenShiftHcpArmClient(client).GetHcpOpenShiftClusterExternalAuthResource(id);
         }
 
         /// <summary>

@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (NodePoolData item in Value)
+            foreach (HcpOpenShiftClusterNodePoolData item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             {
                 return null;
             }
-            IList<NodePoolData> value = default;
+            IList<HcpOpenShiftClusterNodePoolData> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<NodePoolData> array = new List<NodePoolData>();
+                    List<HcpOpenShiftClusterNodePoolData> array = new List<HcpOpenShiftClusterNodePoolData>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(NodePoolData.DeserializeNodePoolData(item, options));
+                        array.Add(HcpOpenShiftClusterNodePoolData.DeserializeHcpOpenShiftClusterNodePoolData(item, options));
                     }
                     value = array;
                     continue;

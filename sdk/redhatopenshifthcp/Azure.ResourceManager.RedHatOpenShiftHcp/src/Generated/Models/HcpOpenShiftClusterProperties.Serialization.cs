@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             {
                 writer.WritePropertyName("imageDigestMirrors"u8);
                 writer.WriteStartArray();
-                foreach (ImageDigestMirror item in ImageDigestMirrors)
+                foreach (HcpOpenShiftClusterImageDigestMirror item in ImageDigestMirrors)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -197,18 +197,18 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             }
             ProvisioningState? provisioningState = default;
             HcpOpenShiftClusterVersionProfile version = default;
-            DnsProfile dns = default;
-            NetworkProfile network = default;
-            ConsoleProfile console = default;
+            HcpOpenShiftClusterDnsProfile dns = default;
+            HcpOpenShiftClusterNetworkProfile network = default;
+            HcpOpenShiftClusterConsoleProfile console = default;
             HcpOpenShiftClusterApiProfile api = default;
-            IngressProfile ingress = default;
+            HcpOpenShiftClusterIngressProfile ingress = default;
             HcpOpenShiftClusterPlatformProfile platform = default;
-            ClusterAutoscalingProfile autoscaling = default;
-            EtcdProfile etcd = default;
-            IList<ImageDigestMirror> imageDigestMirrors = default;
+            HcpOpenShiftClusterAutoscalingProfile autoscaling = default;
+            HcpOpenShiftClusterEtcdProfile etcd = default;
+            IList<HcpOpenShiftClusterImageDigestMirror> imageDigestMirrors = default;
             int? nodeDrainTimeoutMinutes = default;
-            ClusterImageRegistryProfile clusterImageRegistry = default;
-            ResourceStatus status = default;
+            HcpOpenShiftClusterImageRegistryProfile clusterImageRegistry = default;
+            HcpOpenShiftClusterResourceStatus status = default;
             CryptoRestrictions? cryptoRestrictions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    dns = DnsProfile.DeserializeDnsProfile(prop.Value, options);
+                    dns = HcpOpenShiftClusterDnsProfile.DeserializeHcpOpenShiftClusterDnsProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("network"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    network = NetworkProfile.DeserializeNetworkProfile(prop.Value, options);
+                    network = HcpOpenShiftClusterNetworkProfile.DeserializeHcpOpenShiftClusterNetworkProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("console"u8))
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    console = ConsoleProfile.DeserializeConsoleProfile(prop.Value, options);
+                    console = HcpOpenShiftClusterConsoleProfile.DeserializeHcpOpenShiftClusterConsoleProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("api"u8))
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    ingress = IngressProfile.DeserializeIngressProfile(prop.Value, options);
+                    ingress = HcpOpenShiftClusterIngressProfile.DeserializeHcpOpenShiftClusterIngressProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("platform"u8))
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    autoscaling = ClusterAutoscalingProfile.DeserializeClusterAutoscalingProfile(prop.Value, options);
+                    autoscaling = HcpOpenShiftClusterAutoscalingProfile.DeserializeHcpOpenShiftClusterAutoscalingProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("etcd"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    etcd = EtcdProfile.DeserializeEtcdProfile(prop.Value, options);
+                    etcd = HcpOpenShiftClusterEtcdProfile.DeserializeHcpOpenShiftClusterEtcdProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("imageDigestMirrors"u8))
@@ -301,10 +301,10 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    List<ImageDigestMirror> array = new List<ImageDigestMirror>();
+                    List<HcpOpenShiftClusterImageDigestMirror> array = new List<HcpOpenShiftClusterImageDigestMirror>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ImageDigestMirror.DeserializeImageDigestMirror(item, options));
+                        array.Add(HcpOpenShiftClusterImageDigestMirror.DeserializeHcpOpenShiftClusterImageDigestMirror(item, options));
                     }
                     imageDigestMirrors = array;
                     continue;
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    clusterImageRegistry = ClusterImageRegistryProfile.DeserializeClusterImageRegistryProfile(prop.Value, options);
+                    clusterImageRegistry = HcpOpenShiftClusterImageRegistryProfile.DeserializeHcpOpenShiftClusterImageRegistryProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                     {
                         continue;
                     }
-                    status = ResourceStatus.DeserializeResourceStatus(prop.Value, options);
+                    status = HcpOpenShiftClusterResourceStatus.DeserializeHcpOpenShiftClusterResourceStatus(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("cryptoRestrictions"u8))
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 platform,
                 autoscaling,
                 etcd,
-                imageDigestMirrors ?? new ChangeTrackingList<ImageDigestMirror>(),
+                imageDigestMirrors ?? new ChangeTrackingList<HcpOpenShiftClusterImageDigestMirror>(),
                 nodeDrainTimeoutMinutes,
                 clusterImageRegistry,
                 status,

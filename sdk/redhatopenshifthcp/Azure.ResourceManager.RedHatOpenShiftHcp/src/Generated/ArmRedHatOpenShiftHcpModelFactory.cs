@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
     public static partial class ArmRedHatOpenShiftHcpModelFactory
     {
 
+        /// <summary> HCP cluster resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -81,29 +82,30 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <param name="statusConditions"> The conditions on the resource. </param>
         /// <param name="cryptoRestrictions"> Cryptographic restrictions for kernel and userspace libraries. </param>
         /// <returns> A new <see cref="Models.HcpOpenShiftClusterProperties"/> instance for mocking. </returns>
-        public static HcpOpenShiftClusterProperties HcpOpenShiftClusterProperties(ProvisioningState? provisioningState = default, HcpOpenShiftClusterVersionProfile version = default, DnsProfile dns = default, NetworkProfile network = default, Uri consoleUri = default, HcpOpenShiftClusterApiProfile api = default, IngressType? ingressType = default, HcpOpenShiftClusterPlatformProfile platform = default, ClusterAutoscalingProfile autoscaling = default, EtcdDataEncryptionProfile etcdDataEncryption = default, IEnumerable<ImageDigestMirror> imageDigestMirrors = default, int? nodeDrainTimeoutMinutes = default, ClusterImageRegistryState? clusterImageRegistryState = default, IEnumerable<HcpOpenShiftClusterCondition> statusConditions = default, CryptoRestrictions? cryptoRestrictions = default)
+        public static HcpOpenShiftClusterProperties HcpOpenShiftClusterProperties(ProvisioningState? provisioningState = default, HcpOpenShiftClusterVersionProfile version = default, HcpOpenShiftClusterDnsProfile dns = default, HcpOpenShiftClusterNetworkProfile network = default, Uri consoleUri = default, HcpOpenShiftClusterApiProfile api = default, HcpOpenShiftClusterIngressType? ingressType = default, HcpOpenShiftClusterPlatformProfile platform = default, HcpOpenShiftClusterAutoscalingProfile autoscaling = default, HcpOpenShiftClusterEtcdDataEncryptionProfile etcdDataEncryption = default, IEnumerable<HcpOpenShiftClusterImageDigestMirror> imageDigestMirrors = default, int? nodeDrainTimeoutMinutes = default, HcpOpenShiftClusterImageRegistryState? clusterImageRegistryState = default, IEnumerable<HcpOpenShiftClusterCondition> statusConditions = default, CryptoRestrictions? cryptoRestrictions = default)
         {
-            imageDigestMirrors ??= new ChangeTrackingList<ImageDigestMirror>();
+            imageDigestMirrors ??= new ChangeTrackingList<HcpOpenShiftClusterImageDigestMirror>();
 
             return new HcpOpenShiftClusterProperties(
                 provisioningState,
                 version,
                 dns,
                 network,
-                consoleUri is null ? default : new ConsoleProfile(consoleUri, default),
+                consoleUri is null ? default : new HcpOpenShiftClusterConsoleProfile(consoleUri, default),
                 api,
-                ingressType is null ? default : new IngressProfile(ingressType, default),
+                ingressType is null ? default : new HcpOpenShiftClusterIngressProfile(ingressType, default),
                 platform,
                 autoscaling,
-                etcdDataEncryption is null ? default : new EtcdProfile(etcdDataEncryption, default),
-                (imageDigestMirrors ?? new ChangeTrackingList<ImageDigestMirror>()).ToList(),
+                etcdDataEncryption is null ? default : new HcpOpenShiftClusterEtcdProfile(etcdDataEncryption, default),
+                (imageDigestMirrors ?? new ChangeTrackingList<HcpOpenShiftClusterImageDigestMirror>()).ToList(),
                 nodeDrainTimeoutMinutes,
-                clusterImageRegistryState is null ? default : new ClusterImageRegistryProfile(clusterImageRegistryState, default),
-                statusConditions is null ? default : new ResourceStatus((statusConditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>()).ToList(), default),
+                clusterImageRegistryState is null ? default : new HcpOpenShiftClusterImageRegistryProfile(clusterImageRegistryState, default),
+                statusConditions is null ? default : new HcpOpenShiftClusterResourceStatus((statusConditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>()).ToList(), default),
                 cryptoRestrictions,
                 default);
         }
 
+        /// <summary> Versions represents an OpenShift version. </summary>
         /// <param name="id"> ID is the desired X.Y version of the cluster control plane. </param>
         /// <param name="channelGroup">
         /// ChannelGroup is the name of the set to which this version belongs.
@@ -116,26 +118,28 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             return new HcpOpenShiftClusterVersionProfile(id, channelGroup, default);
         }
 
+        /// <summary> DNS contains the DNS settings of the cluster. </summary>
         /// <param name="baseDomain"> BaseDomain is the base DNS domain of the cluster. </param>
         /// <param name="baseDomainPrefix">
         /// BaseDomainPrefix is the unique name of the cluster representing the OpenShift's cluster name.
         /// BaseDomainPrefix is the name that will appear in the cluster's DNS, provisioned cloud providers resources
         /// </param>
-        /// <returns> A new <see cref="Models.DnsProfile"/> instance for mocking. </returns>
-        public static DnsProfile DnsProfile(string baseDomain = default, string baseDomainPrefix = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterDnsProfile"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterDnsProfile HcpOpenShiftClusterDnsProfile(string baseDomain = default, string baseDomainPrefix = default)
         {
-            return new DnsProfile(baseDomain, baseDomainPrefix, default);
+            return new HcpOpenShiftClusterDnsProfile(baseDomain, baseDomainPrefix, default);
         }
 
+        /// <summary> OpenShift networking configuration. </summary>
         /// <param name="networkType"> The main controller responsible for rendering the core networking components. </param>
         /// <param name="podCIDR"> The CIDR of the pod IP addresses. </param>
         /// <param name="serviceCIDR"> The CIDR block for assigned service IPs. </param>
         /// <param name="machineCIDR"> The CIDR block from which to assign machine IP addresses. </param>
         /// <param name="hostPrefix"> Network host prefix. </param>
-        /// <returns> A new <see cref="Models.NetworkProfile"/> instance for mocking. </returns>
-        public static NetworkProfile NetworkProfile(NetworkType? networkType = default, string podCIDR = default, string serviceCIDR = default, string machineCIDR = default, int? hostPrefix = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterNetworkProfile"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterNetworkProfile HcpOpenShiftClusterNetworkProfile(HcpOpenShiftClusterNetworkType? networkType = default, string podCIDR = default, string serviceCIDR = default, string machineCIDR = default, int? hostPrefix = default)
         {
-            return new NetworkProfile(
+            return new HcpOpenShiftClusterNetworkProfile(
                 networkType,
                 podCIDR,
                 serviceCIDR,
@@ -144,6 +148,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 default);
         }
 
+        /// <summary> Information about the API of a cluster. </summary>
         /// <param name="uri"> URL endpoint for the API server. </param>
         /// <param name="visibility"> The internet visibility of the OpenShift API server. </param>
         /// <param name="authorizedCIDRs"> The list of authorized IPv4 CIDR blocks allowed to access the API server. Maximum 500 entries. </param>
@@ -187,9 +192,8 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// URL for the OIDC provider to be used for authentication
         /// to authenticate against user Azure cloud account
         /// </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="operatorsAuthenticationUserAssignedIdentities"/> is null. </exception>
         /// <returns> A new <see cref="Models.HcpOpenShiftClusterPlatformProfile"/> instance for mocking. </returns>
-        public static HcpOpenShiftClusterPlatformProfile HcpOpenShiftClusterPlatformProfile(string managedResourceGroup = default, ResourceIdentifier subnetId = default, ResourceIdentifier vnetIntegrationSubnetId = default, OutboundType? outboundType = default, ResourceIdentifier networkSecurityGroupId = default, UserAssignedIdentitiesProfile operatorsAuthenticationUserAssignedIdentities = default, Uri issuerUri = default)
+        public static HcpOpenShiftClusterPlatformProfile HcpOpenShiftClusterPlatformProfile(string managedResourceGroup = default, ResourceIdentifier subnetId = default, ResourceIdentifier vnetIntegrationSubnetId = default, HcpOpenShiftClusterOutboundType? outboundType = default, ResourceIdentifier networkSecurityGroupId = default, HcpOpenShiftClusterUserAssignedIdentitiesProfile operatorsAuthenticationUserAssignedIdentities = default, Uri issuerUri = default)
         {
             return new HcpOpenShiftClusterPlatformProfile(
                 managedResourceGroup,
@@ -197,11 +201,15 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 vnetIntegrationSubnetId,
                 outboundType,
                 networkSecurityGroupId,
-                operatorsAuthenticationUserAssignedIdentities is null ? default : new OperatorsAuthenticationProfile(operatorsAuthenticationUserAssignedIdentities, default),
+                operatorsAuthenticationUserAssignedIdentities is null ? default : new HcpOpenShiftClusterOperatorsAuthenticationProfile(operatorsAuthenticationUserAssignedIdentities, default),
                 issuerUri,
                 default);
         }
 
+        /// <summary>
+        /// Represents the information related to Azure User-Assigned managed identities needed
+        /// to perform Operators authentication based on Azure User-Assigned Managed Identities
+        /// </summary>
         /// <param name="controlPlaneOperators">
         /// The set of Azure User-Assigned Managed Identities leveraged for the Control Plane
         /// operators of the cluster. The set of required managed identities is dependent on the
@@ -216,15 +224,19 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// Represents the information associated to an Azure User-Assigned Managed Identity whose
         /// purpose is to perform service level actions.
         /// </param>
-        /// <returns> A new <see cref="Models.UserAssignedIdentitiesProfile"/> instance for mocking. </returns>
-        public static UserAssignedIdentitiesProfile UserAssignedIdentitiesProfile(IDictionary<string, ResourceIdentifier> controlPlaneOperators = default, IDictionary<string, ResourceIdentifier> dataPlaneOperators = default, ResourceIdentifier serviceManagedIdentity = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterUserAssignedIdentitiesProfile"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterUserAssignedIdentitiesProfile HcpOpenShiftClusterUserAssignedIdentitiesProfile(IDictionary<string, ResourceIdentifier> controlPlaneOperators = default, IDictionary<string, ResourceIdentifier> dataPlaneOperators = default, ResourceIdentifier serviceManagedIdentity = default)
         {
             controlPlaneOperators ??= new ChangeTrackingDictionary<string, ResourceIdentifier>();
             dataPlaneOperators ??= new ChangeTrackingDictionary<string, ResourceIdentifier>();
 
-            return new UserAssignedIdentitiesProfile(controlPlaneOperators ?? new ChangeTrackingDictionary<string, ResourceIdentifier>(), dataPlaneOperators ?? new ChangeTrackingDictionary<string, ResourceIdentifier>(), serviceManagedIdentity, default);
+            return new HcpOpenShiftClusterUserAssignedIdentitiesProfile(controlPlaneOperators ?? new ChangeTrackingDictionary<string, ResourceIdentifier>(), dataPlaneOperators ?? new ChangeTrackingDictionary<string, ResourceIdentifier>(), serviceManagedIdentity, default);
         }
 
+        /// <summary>
+        /// ClusterAutoscaling specifies auto-scaling behavior that
+        /// applies to all NodePools associated with a control plane.
+        /// </summary>
         /// <param name="maxNodesTotal">
         /// maxNodesTotal is the maximum allowable number of nodes for the Autoscaler scale out to be operational.
         /// The autoscaler will not grow the cluster beyond this number. If omitted, the autoscaler will not have a maximum limit.
@@ -243,23 +255,25 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// See the following for more details:
         /// https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/FAQ.md#how-does-cluster-autoscaler-work-with-pod-priority-and-preemption
         /// </param>
-        /// <returns> A new <see cref="Models.ClusterAutoscalingProfile"/> instance for mocking. </returns>
-        public static ClusterAutoscalingProfile ClusterAutoscalingProfile(int? maxNodesTotal = default, int? maxPodGracePeriodSeconds = default, int? maxNodeProvisionTimeSeconds = default, int? podPriorityThreshold = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterAutoscalingProfile"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterAutoscalingProfile HcpOpenShiftClusterAutoscalingProfile(int? maxNodesTotal = default, int? maxPodGracePeriodSeconds = default, int? maxNodeProvisionTimeSeconds = default, int? podPriorityThreshold = default)
         {
-            return new ClusterAutoscalingProfile(maxNodesTotal, maxPodGracePeriodSeconds, maxNodeProvisionTimeSeconds, podPriorityThreshold, default);
+            return new HcpOpenShiftClusterAutoscalingProfile(maxNodesTotal, maxPodGracePeriodSeconds, maxNodeProvisionTimeSeconds, podPriorityThreshold, default);
         }
 
+        /// <summary> The ETCD data encryption settings. </summary>
         /// <param name="keyManagementMode"> Specify the key management strategy used for the encryption key that encrypts the ETCD data. </param>
         /// <param name="customerManaged">
         /// Specify customer managed encryption key details.
         /// Required when keyManagementMode is "CustomerManaged".
         /// </param>
-        /// <returns> A new <see cref="Models.EtcdDataEncryptionProfile"/> instance for mocking. </returns>
-        public static EtcdDataEncryptionProfile EtcdDataEncryptionProfile(EtcdDataEncryptionKeyManagementModeType keyManagementMode = default, CustomerManagedEncryptionProfile customerManaged = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterEtcdDataEncryptionProfile"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterEtcdDataEncryptionProfile HcpOpenShiftClusterEtcdDataEncryptionProfile(HcpOpenShiftClusterEtcdDataEncryptionKeyManagementModeType keyManagementMode = default, HcpOpenShiftClusterCustomerManagedEncryptionProfile customerManaged = default)
         {
-            return new EtcdDataEncryptionProfile(keyManagementMode, customerManaged, default);
+            return new HcpOpenShiftClusterEtcdDataEncryptionProfile(keyManagementMode, customerManaged, default);
         }
 
+        /// <summary> Customer managed encryption key profile. </summary>
         /// <param name="encryptionType">
         /// The encryption type used.
         /// By default, "KMS" is used.
@@ -268,29 +282,39 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// The Key Management Service (KMS) encryption key details.
         /// Required when encryptionType is "KMS".
         /// </param>
-        /// <returns> A new <see cref="Models.CustomerManagedEncryptionProfile"/> instance for mocking. </returns>
-        public static CustomerManagedEncryptionProfile CustomerManagedEncryptionProfile(CustomerManagedEncryptionType? encryptionType = default, KmsEncryptionProfile kms = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterCustomerManagedEncryptionProfile"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterCustomerManagedEncryptionProfile HcpOpenShiftClusterCustomerManagedEncryptionProfile(HcpOpenShiftClusterCustomerManagedEncryptionType? encryptionType = default, HcpOpenShiftClusterKmsEncryptionProfile kms = default)
         {
-            return new CustomerManagedEncryptionProfile(encryptionType, kms, default);
+            return new HcpOpenShiftClusterCustomerManagedEncryptionProfile(encryptionType, kms, default);
         }
 
+        /// <summary>
+        /// Configure etcd encryption Key Management Service (KMS) key.
+        /// Your Microsoft Entra application used to create the cluster must be authorized to access this keyvault,
+        /// e.g using the AzureCLI: `az keyvault set-policy -n $KEYVAULT_NAME --key-permissions decrypt encrypt --spn (YOUR APPLICATION CLIENT ID)`
+        /// </summary>
         /// <param name="vaultName"> vaultName is the name of the keyvault that contains the secret. </param>
         /// <param name="visibility"> visibility of the keyvault that contains the secret. </param>
         /// <param name="activeKey"> The details of the active key. </param>
-        /// <returns> A new <see cref="Models.KmsEncryptionProfile"/> instance for mocking. </returns>
-        public static KmsEncryptionProfile KmsEncryptionProfile(string vaultName = default, KeyVaultVisibility visibility = default, KmsKey activeKey = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterKmsEncryptionProfile"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterKmsEncryptionProfile HcpOpenShiftClusterKmsEncryptionProfile(string vaultName = default, HcpOpenShiftClusterKeyVaultVisibility visibility = default, HcpOpenShiftClusterKmsKey activeKey = default)
         {
-            return new KmsEncryptionProfile(vaultName, visibility, activeKey, default);
+            return new HcpOpenShiftClusterKmsEncryptionProfile(vaultName, visibility, activeKey, default);
         }
 
+        /// <summary> A representation of a KeyVault Secret. </summary>
         /// <param name="name"> name is the name of the keyvault key used for encryption/decryption. </param>
         /// <param name="version"> version contains the version of the key to use. </param>
-        /// <returns> A new <see cref="Models.KmsKey"/> instance for mocking. </returns>
-        public static KmsKey KmsKey(string name = default, string version = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterKmsKey"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterKmsKey HcpOpenShiftClusterKmsKey(string name = default, string version = default)
         {
-            return new KmsKey(name, version, default);
+            return new HcpOpenShiftClusterKmsKey(name, version, default);
         }
 
+        /// <summary>
+        /// ImageDigestMirror specifies a set of mirror registries to redirect image
+        /// pulls targeting the specified source registries.
+        /// </summary>
         /// <param name="source">
         /// source matches the repository that users refer to, e.g. in image pull specifications.
         /// Setting source to a registry hostname, e.g. docker.io, quay.io, or registry.redhat.io,
@@ -325,14 +349,15 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// for more information about the format, see:
         /// https://github.com/containers/image/blob/main/docs/containers-registries.conf.5.md#choosing-a-registry-toml-table
         /// </param>
-        /// <returns> A new <see cref="Models.ImageDigestMirror"/> instance for mocking. </returns>
-        public static ImageDigestMirror ImageDigestMirror(string source = default, IEnumerable<string> mirrors = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterImageDigestMirror"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterImageDigestMirror HcpOpenShiftClusterImageDigestMirror(string source = default, IEnumerable<string> mirrors = default)
         {
             mirrors ??= new ChangeTrackingList<string>();
 
-            return new ImageDigestMirror(source, (mirrors ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new HcpOpenShiftClusterImageDigestMirror(source, (mirrors ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Condition represents an observation of a resource's state. </summary>
         /// <param name="type">
         /// Type of the condition.
         /// This is a PascalCase identifier representing the type of the condition.
@@ -359,13 +384,15 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 default);
         }
 
+        /// <summary> HCP cluster admin credential request body. </summary>
         /// <param name="certificateSigningRequest"> PEM encoded certificate request. </param>
-        /// <returns> A new <see cref="Models.HcpOpenShiftClusterAdminCredentialContent"/> instance for mocking. </returns>
-        public static HcpOpenShiftClusterAdminCredentialContent HcpOpenShiftClusterAdminCredentialContent(string certificateSigningRequest = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterAdminCredentialRequestContent"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterAdminCredentialRequestContent HcpOpenShiftClusterAdminCredentialRequestContent(string certificateSigningRequest = default)
         {
-            return new HcpOpenShiftClusterAdminCredentialContent(certificateSigningRequest, default);
+            return new HcpOpenShiftClusterAdminCredentialRequestContent(certificateSigningRequest, default);
         }
 
+        /// <summary> HCP cluster admin credential. </summary>
         /// <param name="kubeconfig"> Admin kubeconfig with a temporary client certificate. </param>
         /// <param name="expirationTimestampOn"> Expiration timestamp for the kubeconfig's client certificate. </param>
         /// <returns> A new <see cref="Models.HcpOpenShiftClusterAdminCredential"/> instance for mocking. </returns>
@@ -374,6 +401,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             return new HcpOpenShiftClusterAdminCredential(kubeconfig, expirationTimestampOn, default);
         }
 
+        /// <summary> Concrete tracked resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -382,12 +410,12 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <returns> A new <see cref="RedHatOpenShiftHcp.NodePoolData"/> instance for mocking. </returns>
-        public static NodePoolData NodePoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, NodePoolProperties properties = default, ManagedServiceIdentity identity = default)
+        /// <returns> A new <see cref="RedHatOpenShiftHcp.HcpOpenShiftClusterNodePoolData"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterNodePoolData HcpOpenShiftClusterNodePoolData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, HcpOpenShiftClusterNodePoolProperties properties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NodePoolData(
+            return new HcpOpenShiftClusterNodePoolData(
                 id,
                 name,
                 resourceType,
@@ -425,13 +453,13 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// If unset the cluster nodeDrainTimeoutMinutes value is used as a default.
         /// </param>
         /// <param name="statusConditions"> The conditions on the resource. </param>
-        /// <returns> A new <see cref="Models.NodePoolProperties"/> instance for mocking. </returns>
-        public static NodePoolProperties NodePoolProperties(ProvisioningState? provisioningState = default, NodePoolVersionProfile version = default, NodePoolPlatformProfile platform = default, int? replicas = default, bool? canAutoRepair = default, NodePoolAutoScaling autoScaling = default, IEnumerable<HcpOpenShiftClusterNodePoolLabel> labels = default, IEnumerable<Taint> taints = default, int? nodeDrainTimeoutMinutes = default, IEnumerable<HcpOpenShiftClusterCondition> statusConditions = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterNodePoolProperties"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterNodePoolProperties HcpOpenShiftClusterNodePoolProperties(ProvisioningState? provisioningState = default, HcpOpenShiftClusterNodePoolVersionProfile version = default, HcpOpenShiftClusterNodePoolPlatformProfile platform = default, int? replicas = default, bool? canAutoRepair = default, HcpOpenShiftClusterNodePoolAutoScaling autoScaling = default, IEnumerable<HcpOpenShiftClusterNodePoolLabel> labels = default, IEnumerable<HcpOpenShiftClusterNodePoolTaint> taints = default, int? nodeDrainTimeoutMinutes = default, IEnumerable<HcpOpenShiftClusterCondition> statusConditions = default)
         {
             labels ??= new ChangeTrackingList<HcpOpenShiftClusterNodePoolLabel>();
-            taints ??= new ChangeTrackingList<Taint>();
+            taints ??= new ChangeTrackingList<HcpOpenShiftClusterNodePoolTaint>();
 
-            return new NodePoolProperties(
+            return new HcpOpenShiftClusterNodePoolProperties(
                 provisioningState,
                 version,
                 platform,
@@ -439,24 +467,26 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 canAutoRepair,
                 autoScaling,
                 (labels ?? new ChangeTrackingList<HcpOpenShiftClusterNodePoolLabel>()).ToList(),
-                (taints ?? new ChangeTrackingList<Taint>()).ToList(),
+                (taints ?? new ChangeTrackingList<HcpOpenShiftClusterNodePoolTaint>()).ToList(),
                 nodeDrainTimeoutMinutes,
-                statusConditions is null ? default : new ResourceStatus((statusConditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>()).ToList(), default),
+                statusConditions is null ? default : new HcpOpenShiftClusterResourceStatus((statusConditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>()).ToList(), default),
                 default);
         }
 
+        /// <summary> Versions represents an OpenShift version. </summary>
         /// <param name="id"> ID is the unique identifier of the version. </param>
         /// <param name="channelGroup">
         /// ChannelGroup is the name of the set to which this version belongs.
         /// Each version belongs to only a single set.
         /// If not specified, the default value is 'stable'.
         /// </param>
-        /// <returns> A new <see cref="Models.NodePoolVersionProfile"/> instance for mocking. </returns>
-        public static NodePoolVersionProfile NodePoolVersionProfile(string id = default, string channelGroup = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterNodePoolVersionProfile"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterNodePoolVersionProfile HcpOpenShiftClusterNodePoolVersionProfile(string id = default, string channelGroup = default)
         {
-            return new NodePoolVersionProfile(id, channelGroup, default);
+            return new HcpOpenShiftClusterNodePoolVersionProfile(id, channelGroup, default);
         }
 
+        /// <summary> Azure node pool platform configuration. </summary>
         /// <param name="subnetId">
         /// The Azure resource ID of the worker subnet
         /// Note that a subnet cannot be reused between ARO-HCP Clusters, however the
@@ -476,10 +506,10 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// Please read the documentation to see which regions support availability zones
         /// <list type="bullet"><item><description>https://learn.microsoft.com/en-us/azure/availability-zones/az-overview</description></item></list>
         /// </param>
-        /// <returns> A new <see cref="Models.NodePoolPlatformProfile"/> instance for mocking. </returns>
-        public static NodePoolPlatformProfile NodePoolPlatformProfile(ResourceIdentifier subnetId = default, string vmSize = default, bool? enableEncryptionAtHost = default, OSDiskProfile osDisk = default, string availabilityZone = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterNodePoolPlatformProfile"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterNodePoolPlatformProfile HcpOpenShiftClusterNodePoolPlatformProfile(ResourceIdentifier subnetId = default, string vmSize = default, bool? enableEncryptionAtHost = default, HcpOpenShiftClusterNodePoolOSDiskProfile osDisk = default, string availabilityZone = default)
         {
-            return new NodePoolPlatformProfile(
+            return new HcpOpenShiftClusterNodePoolPlatformProfile(
                 subnetId,
                 vmSize,
                 enableEncryptionAtHost,
@@ -488,6 +518,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 default);
         }
 
+        /// <summary> The settings and configuration options for OSDisk. </summary>
         /// <param name="sizeGiB">
         /// The OS disk size in GiB. Maximum is 4095 GiB for Managed disks. For Ephemeral disks,
         /// the maximum is 2040 GiB; Azure may enforce a lower effective limit based on the
@@ -509,12 +540,13 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// The type of the OS disk.
         /// <list type="bullet"><item><description>https://learn.microsoft.com/en-us/azure/virtual-machines/ephemeral-os-disks</description></item></list>
         /// </param>
-        /// <returns> A new <see cref="Models.OSDiskProfile"/> instance for mocking. </returns>
-        public static OSDiskProfile OSDiskProfile(int? sizeGiB = default, DiskStorageAccountType? diskStorageAccountType = default, ResourceIdentifier encryptionSetId = default, OSDiskType? diskType = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterNodePoolOSDiskProfile"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterNodePoolOSDiskProfile HcpOpenShiftClusterNodePoolOSDiskProfile(int? sizeGiB = default, HcpOpenShiftClusterNodePoolDiskStorageAccountType? diskStorageAccountType = default, ResourceIdentifier encryptionSetId = default, HcpOpenShiftClusterNodePoolOSDiskType? diskType = default)
         {
-            return new OSDiskProfile(sizeGiB, diskStorageAccountType, encryptionSetId, diskType, default);
+            return new HcpOpenShiftClusterNodePoolOSDiskProfile(sizeGiB, diskStorageAccountType, encryptionSetId, diskType, default);
         }
 
+        /// <summary> Node pool autoscaling. </summary>
         /// <param name="min">
         /// The minimum number of nodes in the node pool.
         /// Validation:
@@ -525,12 +557,13 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// Validation:
         /// <list type="bullet"><item><description>Minimum: 0 (must be &gt;= min)</description></item><item><description>Maximum: 200 (only when availabilityZone is not specified)</description></item><item><description>No maximum when availabilityZone is specified</description></item></list>
         /// </param>
-        /// <returns> A new <see cref="Models.NodePoolAutoScaling"/> instance for mocking. </returns>
-        public static NodePoolAutoScaling NodePoolAutoScaling(int? min = default, int? max = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterNodePoolAutoScaling"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterNodePoolAutoScaling HcpOpenShiftClusterNodePoolAutoScaling(int? min = default, int? max = default)
         {
-            return new NodePoolAutoScaling(min, max, default);
+            return new HcpOpenShiftClusterNodePoolAutoScaling(min, max, default);
         }
 
+        /// <summary> Label represents the Kubernetes label. </summary>
         /// <param name="key"> The key of the label. </param>
         /// <param name="value"> The value of the label. </param>
         /// <returns> A new <see cref="Models.HcpOpenShiftClusterNodePoolLabel"/> instance for mocking. </returns>
@@ -539,24 +572,26 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             return new HcpOpenShiftClusterNodePoolLabel(key, value, default);
         }
 
+        /// <summary> Taint is controlling the node taint and its effects. </summary>
         /// <param name="key"> The key of the taint. </param>
         /// <param name="value"> The value of the taint. </param>
         /// <param name="effect"> The effect of the taint. </param>
-        /// <returns> A new <see cref="Models.Taint"/> instance for mocking. </returns>
-        public static Taint Taint(string key = default, string value = default, HcpOpenShiftClusterNodePoolTaintEffect effect = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterNodePoolTaint"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterNodePoolTaint HcpOpenShiftClusterNodePoolTaint(string key = default, string value = default, HcpOpenShiftClusterNodePoolTaintEffect effect = default)
         {
-            return new Taint(key, value, effect, default);
+            return new HcpOpenShiftClusterNodePoolTaint(key, value, effect, default);
         }
 
+        /// <summary> ExternalAuth resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="RedHatOpenShiftHcp.ExternalAuthData"/> instance for mocking. </returns>
-        public static ExternalAuthData ExternalAuthData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ExternalAuthProperties properties = default)
+        /// <returns> A new <see cref="RedHatOpenShiftHcp.HcpOpenShiftClusterExternalAuthData"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterExternalAuthData HcpOpenShiftClusterExternalAuthData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, HcpOpenShiftClusterExternalAuthProperties properties = default)
         {
-            return new ExternalAuthData(
+            return new HcpOpenShiftClusterExternalAuthData(
                 id,
                 name,
                 resourceType,
@@ -576,20 +611,25 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// External Auth claim
         /// This configures how claims are validated and applied.
         /// </param>
-        /// <returns> A new <see cref="Models.ExternalAuthProperties"/> instance for mocking. </returns>
-        public static ExternalAuthProperties ExternalAuthProperties(ExternalAuthProvisioningState? provisioningState = default, IEnumerable<HcpOpenShiftClusterCondition> statusConditions = default, TokenIssuerProfile issuer = default, IEnumerable<ExternalAuthClientProfile> clients = default, ExternalAuthClaimProfile claim = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterExternalAuthProperties"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterExternalAuthProperties HcpOpenShiftClusterExternalAuthProperties(ExternalAuthProvisioningState? provisioningState = default, IEnumerable<HcpOpenShiftClusterCondition> statusConditions = default, HcpOpenShiftClusterExternalAuthTokenIssuerProfile issuer = default, IEnumerable<HcpOpenShiftClusterExternalAuthClientProfile> clients = default, HcpOpenShiftClusterExternalAuthClaimProfile claim = default)
         {
-            clients ??= new ChangeTrackingList<ExternalAuthClientProfile>();
+            clients ??= new ChangeTrackingList<HcpOpenShiftClusterExternalAuthClientProfile>();
 
-            return new ExternalAuthProperties(
+            return new HcpOpenShiftClusterExternalAuthProperties(
                 provisioningState,
-                statusConditions is null ? default : new ResourceStatus((statusConditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>()).ToList(), default),
+                statusConditions is null ? default : new HcpOpenShiftClusterResourceStatus((statusConditions ?? new ChangeTrackingList<HcpOpenShiftClusterCondition>()).ToList(), default),
                 issuer,
-                (clients ?? new ChangeTrackingList<ExternalAuthClientProfile>()).ToList(),
+                (clients ?? new ChangeTrackingList<HcpOpenShiftClusterExternalAuthClientProfile>()).ToList(),
                 claim,
                 default);
         }
 
+        /// <summary>
+        /// Token issuer profile
+        /// This configures how the platform interacts with the identity provider and
+        /// how tokens issued from the identity provider are evaluated by the Kubernetes API server.
+        /// </summary>
         /// <param name="uri">
         /// This configures the URL used to issue tokens by the identity provider.
         /// The Kubernetes API server determines how authentication tokens should be handled
@@ -607,14 +647,18 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// Certificate bundle to use to validate server certificates for the configured URL.
         /// It must be PEM encoded and when not specified, the system trust is used.
         /// </param>
-        /// <returns> A new <see cref="Models.TokenIssuerProfile"/> instance for mocking. </returns>
-        public static TokenIssuerProfile TokenIssuerProfile(Uri uri = default, IEnumerable<string> audiences = default, string ca = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterExternalAuthTokenIssuerProfile"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterExternalAuthTokenIssuerProfile HcpOpenShiftClusterExternalAuthTokenIssuerProfile(Uri uri = default, IEnumerable<string> audiences = default, string ca = default)
         {
             audiences ??= new ChangeTrackingList<string>();
 
-            return new TokenIssuerProfile(uri, (audiences ?? new ChangeTrackingList<string>()).ToList(), ca, default);
+            return new HcpOpenShiftClusterExternalAuthTokenIssuerProfile(uri, (audiences ?? new ChangeTrackingList<string>()).ToList(), ca, default);
         }
 
+        /// <summary>
+        /// External Auth client profile
+        /// This configures how on-cluster, platform clients should request tokens from the identity provider.
+        /// </summary>
         /// <param name="component"> External Auth client component. </param>
         /// <param name="clientId">
         /// External Auth client id
@@ -627,14 +671,18 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// When omitted, no additional scopes are requested.
         /// </param>
         /// <param name="type"> Determines the OIDC provider client type. </param>
-        /// <returns> A new <see cref="Models.ExternalAuthClientProfile"/> instance for mocking. </returns>
-        public static ExternalAuthClientProfile ExternalAuthClientProfile(ExternalAuthClientComponentProfile component = default, string clientId = default, IEnumerable<string> extraScopes = default, ExternalAuthClientType @type = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterExternalAuthClientProfile"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterExternalAuthClientProfile HcpOpenShiftClusterExternalAuthClientProfile(HcpOpenShiftClusterExternalAuthClientComponentProfile component = default, string clientId = default, IEnumerable<string> extraScopes = default, HcpOpenShiftClusterExternalAuthClientType @type = default)
         {
             extraScopes ??= new ChangeTrackingList<string>();
 
-            return new ExternalAuthClientProfile(component, clientId, (extraScopes ?? new ChangeTrackingList<string>()).ToList(), @type, default);
+            return new HcpOpenShiftClusterExternalAuthClientProfile(component, clientId, (extraScopes ?? new ChangeTrackingList<string>()).ToList(), @type, default);
         }
 
+        /// <summary>
+        /// External Auth component profile
+        /// Must have unique namespace/name pairs.
+        /// </summary>
         /// <param name="name">
         /// The name of the external auth client
         /// This specifies the name of the platform component being configured to use
@@ -647,30 +695,40 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// to use the identity provider as an authentication mode is running.
         /// It is used in combination with name as a unique identifier.
         /// </param>
-        /// <returns> A new <see cref="Models.ExternalAuthClientComponentProfile"/> instance for mocking. </returns>
-        public static ExternalAuthClientComponentProfile ExternalAuthClientComponentProfile(string name = default, string authClientNamespace = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterExternalAuthClientComponentProfile"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterExternalAuthClientComponentProfile HcpOpenShiftClusterExternalAuthClientComponentProfile(string name = default, string authClientNamespace = default)
         {
-            return new ExternalAuthClientComponentProfile(name, authClientNamespace, default);
+            return new HcpOpenShiftClusterExternalAuthClientComponentProfile(name, authClientNamespace, default);
         }
 
+        /// <summary> External Auth claim profile. </summary>
         /// <param name="mappings"> The claim mappings. </param>
         /// <param name="validationRules"> The claim validation rules. </param>
-        /// <returns> A new <see cref="Models.ExternalAuthClaimProfile"/> instance for mocking. </returns>
-        public static ExternalAuthClaimProfile ExternalAuthClaimProfile(TokenClaimMappingsProfile mappings = default, IEnumerable<TokenClaimValidationRule> validationRules = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterExternalAuthClaimProfile"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterExternalAuthClaimProfile HcpOpenShiftClusterExternalAuthClaimProfile(HcpOpenShiftClusterExternalAuthTokenClaimMappingsProfile mappings = default, IEnumerable<HcpOpenShiftClusterExternalAuthTokenClaimValidationRule> validationRules = default)
         {
-            validationRules ??= new ChangeTrackingList<TokenClaimValidationRule>();
+            validationRules ??= new ChangeTrackingList<HcpOpenShiftClusterExternalAuthTokenClaimValidationRule>();
 
-            return new ExternalAuthClaimProfile(mappings, (validationRules ?? new ChangeTrackingList<TokenClaimValidationRule>()).ToList(), default);
+            return new HcpOpenShiftClusterExternalAuthClaimProfile(mappings, (validationRules ?? new ChangeTrackingList<HcpOpenShiftClusterExternalAuthTokenClaimValidationRule>()).ToList(), default);
         }
 
+        /// <summary>
+        /// External Auth claim mappings profile.
+        /// At a minimum username or groups must be defined.
+        /// </summary>
         /// <param name="username"> The claim mappings username. </param>
         /// <param name="groups"> The claim mappings groups. </param>
-        /// <returns> A new <see cref="Models.TokenClaimMappingsProfile"/> instance for mocking. </returns>
-        public static TokenClaimMappingsProfile TokenClaimMappingsProfile(UsernameClaimProfile username = default, GroupClaimProfile groups = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterExternalAuthTokenClaimMappingsProfile"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterExternalAuthTokenClaimMappingsProfile HcpOpenShiftClusterExternalAuthTokenClaimMappingsProfile(HcpOpenShiftClusterExternalAuthUsernameClaimProfile username = default, HcpOpenShiftClusterExternalAuthGroupClaimProfile groups = default)
         {
-            return new TokenClaimMappingsProfile(username, groups, default);
+            return new HcpOpenShiftClusterExternalAuthTokenClaimMappingsProfile(username, groups, default);
         }
 
+        /// <summary>
+        /// External Auth claim profile
+        /// This configures how the username of a cluster identity should be constructed
+        /// from the claims in a JWT token issued by the identity provider.
+        /// </summary>
         /// <param name="claim"> Claim name of the external profile. </param>
         /// <param name="prefix">
         /// Prefix for the claim external profile
@@ -695,34 +753,44 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// `prefix` is unset, `issuerURL` is set to `https://myoidc.tld`,
         /// the JWT claims include "username":"userA" and "email":"userA
         /// </param>
-        /// <returns> A new <see cref="Models.UsernameClaimProfile"/> instance for mocking. </returns>
-        public static UsernameClaimProfile UsernameClaimProfile(string claim = default, string prefix = default, UsernameClaimPrefixPolicy? prefixPolicy = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterExternalAuthUsernameClaimProfile"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterExternalAuthUsernameClaimProfile HcpOpenShiftClusterExternalAuthUsernameClaimProfile(string claim = default, string prefix = default, HcpOpenShiftClusterExternalAuthUsernameClaimPrefixPolicy? prefixPolicy = default)
         {
-            return new UsernameClaimProfile(claim, prefix, prefixPolicy, default);
+            return new HcpOpenShiftClusterExternalAuthUsernameClaimProfile(claim, prefix, prefixPolicy, default);
         }
 
+        /// <summary>
+        /// External Auth claim profile
+        /// This configures how the groups of a cluster identity should be constructed
+        /// from the claims in a JWT token issued by the identity provider. When
+        /// referencing a claim, if the claim is present in the JWT token, its value
+        /// must be a list of groups separated by a comma (',').
+        /// For example - '"example"' and '"exampleOne", "exampleTwo", "exampleThree"' are valid claim values.
+        /// </summary>
         /// <param name="claim"> Claim name of the external profile. </param>
         /// <param name="prefix">
         /// Prefix for the claim external profile
         /// If this is specified prefixPolicy will be set to "Prefix" by default
         /// </param>
-        /// <returns> A new <see cref="Models.GroupClaimProfile"/> instance for mocking. </returns>
-        public static GroupClaimProfile GroupClaimProfile(string claim = default, string prefix = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterExternalAuthGroupClaimProfile"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterExternalAuthGroupClaimProfile HcpOpenShiftClusterExternalAuthGroupClaimProfile(string claim = default, string prefix = default)
         {
-            return new GroupClaimProfile(claim, prefix, default);
+            return new HcpOpenShiftClusterExternalAuthGroupClaimProfile(claim, prefix, default);
         }
 
+        /// <summary> External Auth claim validation rule. </summary>
         /// <param name="type">
         /// This configures the type of the validation rule.
         /// It defaults to "RequiredClaim"
         /// </param>
         /// <param name="requiredClaim"> The required claim rule to be applied. </param>
-        /// <returns> A new <see cref="Models.TokenClaimValidationRule"/> instance for mocking. </returns>
-        public static TokenClaimValidationRule TokenClaimValidationRule(TokenValidationRuleType? @type = default, TokenRequiredClaim requiredClaim = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterExternalAuthTokenClaimValidationRule"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterExternalAuthTokenClaimValidationRule HcpOpenShiftClusterExternalAuthTokenClaimValidationRule(HcpOpenShiftClusterExternalAuthTokenValidationRuleType? @type = default, HcpOpenShiftClusterExternalAuthTokenRequiredClaim requiredClaim = default)
         {
-            return new TokenClaimValidationRule(@type, requiredClaim, default);
+            return new HcpOpenShiftClusterExternalAuthTokenClaimValidationRule(@type, requiredClaim, default);
         }
 
+        /// <summary> Token required claim validation rule. </summary>
         /// <param name="claim">
         /// Claim name for the validation profile
         /// claim is a required field that configures the name of the required claim.
@@ -734,12 +802,13 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// If the value in the JWT claims does not match, the token
         /// will be rejected for authentication.
         /// </param>
-        /// <returns> A new <see cref="Models.TokenRequiredClaim"/> instance for mocking. </returns>
-        public static TokenRequiredClaim TokenRequiredClaim(string claim = default, string requiredValue = default)
+        /// <returns> A new <see cref="Models.HcpOpenShiftClusterExternalAuthTokenRequiredClaim"/> instance for mocking. </returns>
+        public static HcpOpenShiftClusterExternalAuthTokenRequiredClaim HcpOpenShiftClusterExternalAuthTokenRequiredClaim(string claim = default, string requiredValue = default)
         {
-            return new TokenRequiredClaim(claim, requiredValue, default);
+            return new HcpOpenShiftClusterExternalAuthTokenRequiredClaim(claim, requiredValue, default);
         }
 
+        /// <summary> HcpOpenShiftVersion represents a location based available HCP OpenShift version. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -757,6 +826,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 default);
         }
 
+        /// <summary> HcpOpenShiftVersionProperties contains details of an available HCP Openshift version. </summary>
         /// <param name="channelGroup"> ChannelGroup is the name of the group where this version belongs. </param>
         /// <param name="enabled"> Enabled indicates if this version can be used to create clusters. </param>
         /// <param name="endOfLifeTimestampOn"> EndOfLifeTimestamp is the date and time when this version will reach End of Life. </param>
@@ -766,6 +836,11 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             return new HcpOpenShiftVersionProperties(channelGroup, enabled, endOfLifeTimestampOn, default);
         }
 
+        /// <summary>
+        /// HcpOperatorIdentityRoles represents a location based representation of
+        /// the required platform workload identities and their required roles for a given
+        /// OpenShift version
+        /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -783,6 +858,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
                 default);
         }
 
+        /// <summary> HCP Operator Identity Roles properties. </summary>
         /// <param name="controlPlaneOperators">
         /// The role definitions required for the User-Assigned managed identities used
         /// by Control Plane operators on a cluster.
@@ -800,6 +876,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             return new HcpOperatorIdentityRoleSetProperties((controlPlaneOperators ?? new ChangeTrackingList<OperatorIdentityRoles>()).ToList(), (dataPlaneOperators ?? new ChangeTrackingList<OperatorIdentityRoles>()).ToList(), default);
         }
 
+        /// <summary> Role definitions for a specific operator. </summary>
         /// <param name="name"> Name of the operator. </param>
         /// <param name="required"> Whether or not the operator is required for installation. </param>
         /// <param name="roleDefinitions"> The role definitions required to be assigned to the identity assumed by this operator. </param>
@@ -811,6 +888,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             return new OperatorIdentityRoles(name, @required, (roleDefinitions ?? new ChangeTrackingList<RoleDefinitionInfo>()).ToList(), default);
         }
 
+        /// <summary> A single role definition required by a given operator. </summary>
         /// <param name="name"> The name of the required role definition. </param>
         /// <param name="resourceId"> The resource ID of the role definition. </param>
         /// <returns> A new <see cref="Models.RoleDefinitionInfo"/> instance for mocking. </returns>

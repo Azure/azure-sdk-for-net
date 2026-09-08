@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// to perform Operators authentication based on Azure User-Assigned Managed Identities
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subnetId"/>, <paramref name="vnetIntegrationSubnetId"/>, <paramref name="networkSecurityGroupId"/> or <paramref name="operatorsAuthenticationUserAssignedIdentities"/> is null. </exception>
-        public HcpOpenShiftClusterPlatformProfile(ResourceIdentifier subnetId, ResourceIdentifier vnetIntegrationSubnetId, ResourceIdentifier networkSecurityGroupId, UserAssignedIdentitiesProfile operatorsAuthenticationUserAssignedIdentities)
+        public HcpOpenShiftClusterPlatformProfile(ResourceIdentifier subnetId, ResourceIdentifier vnetIntegrationSubnetId, ResourceIdentifier networkSecurityGroupId, HcpOpenShiftClusterUserAssignedIdentitiesProfile operatorsAuthenticationUserAssignedIdentities)
         {
             Argument.AssertNotNull(subnetId, nameof(subnetId));
             Argument.AssertNotNull(vnetIntegrationSubnetId, nameof(vnetIntegrationSubnetId));
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             SubnetId = subnetId;
             VnetIntegrationSubnetId = vnetIntegrationSubnetId;
             NetworkSecurityGroupId = networkSecurityGroupId;
-            OperatorsAuthentication = new OperatorsAuthenticationProfile(operatorsAuthenticationUserAssignedIdentities);
+            OperatorsAuthentication = new HcpOpenShiftClusterOperatorsAuthenticationProfile(operatorsAuthenticationUserAssignedIdentities);
         }
 
         /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterPlatformProfile"/>. </summary>
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// to authenticate against user Azure cloud account
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HcpOpenShiftClusterPlatformProfile(string managedResourceGroup, ResourceIdentifier subnetId, ResourceIdentifier vnetIntegrationSubnetId, OutboundType? outboundType, ResourceIdentifier networkSecurityGroupId, OperatorsAuthenticationProfile operatorsAuthentication, Uri issuerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterPlatformProfile(string managedResourceGroup, ResourceIdentifier subnetId, ResourceIdentifier vnetIntegrationSubnetId, HcpOpenShiftClusterOutboundType? outboundType, ResourceIdentifier networkSecurityGroupId, HcpOpenShiftClusterOperatorsAuthenticationProfile operatorsAuthentication, Uri issuerUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedResourceGroup = managedResourceGroup;
             SubnetId = subnetId;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public ResourceIdentifier VnetIntegrationSubnetId { get; set; }
 
         /// <summary> The core outgoing configuration. </summary>
-        public OutboundType? OutboundType { get; set; }
+        public HcpOpenShiftClusterOutboundType? OutboundType { get; set; }
 
         /// <summary>
         /// ResourceId for the NSG (network security group) attached to the cluster subnet
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public ResourceIdentifier NetworkSecurityGroupId { get; set; }
 
         /// <summary> The configuration that the operators of the cluster have to authenticate to Azure. </summary>
-        internal OperatorsAuthenticationProfile OperatorsAuthentication { get; set; }
+        internal HcpOpenShiftClusterOperatorsAuthenticationProfile OperatorsAuthentication { get; set; }
 
         /// <summary>
         /// URL for the OIDC provider to be used for authentication
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// Represents the information related to Azure User-Assigned managed identities needed
         /// to perform Operators authentication based on Azure User-Assigned Managed Identities
         /// </summary>
-        public UserAssignedIdentitiesProfile OperatorsAuthenticationUserAssignedIdentities
+        public HcpOpenShiftClusterUserAssignedIdentitiesProfile OperatorsAuthenticationUserAssignedIdentities
         {
             get
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             }
             set
             {
-                OperatorsAuthentication = new OperatorsAuthenticationProfile(value);
+                OperatorsAuthentication = new HcpOpenShiftClusterOperatorsAuthenticationProfile(value);
             }
         }
     }

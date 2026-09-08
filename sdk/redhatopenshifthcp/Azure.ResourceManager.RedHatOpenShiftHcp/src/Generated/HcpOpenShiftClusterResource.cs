@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<HcpOpenShiftClusterAdminCredential>> RequestAdminCredentialAsync(WaitUntil waitUntil, HcpOpenShiftClusterAdminCredentialContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<HcpOpenShiftClusterAdminCredential>> RequestAdminCredentialAsync(WaitUntil waitUntil, HcpOpenShiftClusterAdminCredentialRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOpenShiftClustersRestClient.CreateRequestAdminCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HcpOpenShiftClusterAdminCredentialContent.ToRequestContent(content), context);
+                HttpMessage message = _hcpOpenShiftClustersRestClient.CreateRequestAdminCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HcpOpenShiftClusterAdminCredentialRequestContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 RedHatOpenShiftHcpArmOperation<HcpOpenShiftClusterAdminCredential> operation = new RedHatOpenShiftHcpArmOperation<HcpOpenShiftClusterAdminCredential>(
                     new HcpOpenShiftClusterAdminCredentialOperationSource(),
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<HcpOpenShiftClusterAdminCredential> RequestAdminCredential(WaitUntil waitUntil, HcpOpenShiftClusterAdminCredentialContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<HcpOpenShiftClusterAdminCredential> RequestAdminCredential(WaitUntil waitUntil, HcpOpenShiftClusterAdminCredentialRequestContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hcpOpenShiftClustersRestClient.CreateRequestAdminCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HcpOpenShiftClusterAdminCredentialContent.ToRequestContent(content), context);
+                HttpMessage message = _hcpOpenShiftClustersRestClient.CreateRequestAdminCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, HcpOpenShiftClusterAdminCredentialRequestContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 RedHatOpenShiftHcpArmOperation<HcpOpenShiftClusterAdminCredential> operation = new RedHatOpenShiftHcpArmOperation<HcpOpenShiftClusterAdminCredential>(
                     new HcpOpenShiftClusterAdminCredentialOperationSource(),
@@ -895,11 +895,11 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
             }
         }
 
-        /// <summary> Gets a collection of NodePools in the <see cref="HcpOpenShiftClusterResource"/>. </summary>
-        /// <returns> An object representing collection of NodePools and their operations over a NodePoolResource. </returns>
-        public virtual NodePoolCollection GetNodePools()
+        /// <summary> Gets a collection of HcpOpenShiftClusterNodePools in the <see cref="HcpOpenShiftClusterResource"/>. </summary>
+        /// <returns> An object representing collection of HcpOpenShiftClusterNodePools and their operations over a HcpOpenShiftClusterNodePoolResource. </returns>
+        public virtual HcpOpenShiftClusterNodePoolCollection GetHcpOpenShiftClusterNodePools()
         {
-            return GetCachedClient(client => new NodePoolCollection(client, Id));
+            return GetCachedClient(client => new HcpOpenShiftClusterNodePoolCollection(client, Id));
         }
 
         /// <summary> Get a NodePool. </summary>
@@ -908,11 +908,11 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// <exception cref="ArgumentNullException"> <paramref name="nodePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<NodePoolResource>> GetNodePoolAsync(string nodePoolName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HcpOpenShiftClusterNodePoolResource>> GetHcpOpenShiftClusterNodePoolAsync(string nodePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodePoolName, nameof(nodePoolName));
 
-            return await GetNodePools().GetAsync(nodePoolName, cancellationToken).ConfigureAwait(false);
+            return await GetHcpOpenShiftClusterNodePools().GetAsync(nodePoolName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a NodePool. </summary>
@@ -921,31 +921,18 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// <exception cref="ArgumentNullException"> <paramref name="nodePoolName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="nodePoolName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<NodePoolResource> GetNodePool(string nodePoolName, CancellationToken cancellationToken = default)
+        public virtual Response<HcpOpenShiftClusterNodePoolResource> GetHcpOpenShiftClusterNodePool(string nodePoolName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(nodePoolName, nameof(nodePoolName));
 
-            return GetNodePools().Get(nodePoolName, cancellationToken);
+            return GetHcpOpenShiftClusterNodePools().Get(nodePoolName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ExternalAuths in the <see cref="HcpOpenShiftClusterResource"/>. </summary>
-        /// <returns> An object representing collection of ExternalAuths and their operations over a ExternalAuthResource. </returns>
-        public virtual ExternalAuthCollection GetExternalAuths()
+        /// <summary> Gets a collection of HcpOpenShiftClusterExternalAuths in the <see cref="HcpOpenShiftClusterResource"/>. </summary>
+        /// <returns> An object representing collection of HcpOpenShiftClusterExternalAuths and their operations over a HcpOpenShiftClusterExternalAuthResource. </returns>
+        public virtual HcpOpenShiftClusterExternalAuthCollection GetHcpOpenShiftClusterExternalAuths()
         {
-            return GetCachedClient(client => new ExternalAuthCollection(client, Id));
-        }
-
-        /// <summary> Get a ExternalAuth. </summary>
-        /// <param name="externalAuthName"> The name of the ExternalAuth. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="externalAuthName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="externalAuthName"/> is an empty string, and was expected to be non-empty. </exception>
-        [ForwardsClientCalls]
-        public virtual async Task<Response<ExternalAuthResource>> GetExternalAuthAsync(string externalAuthName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(externalAuthName, nameof(externalAuthName));
-
-            return await GetExternalAuths().GetAsync(externalAuthName, cancellationToken).ConfigureAwait(false);
+            return GetCachedClient(client => new HcpOpenShiftClusterExternalAuthCollection(client, Id));
         }
 
         /// <summary> Get a ExternalAuth. </summary>
@@ -954,11 +941,24 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp
         /// <exception cref="ArgumentNullException"> <paramref name="externalAuthName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="externalAuthName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ExternalAuthResource> GetExternalAuth(string externalAuthName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<HcpOpenShiftClusterExternalAuthResource>> GetHcpOpenShiftClusterExternalAuthAsync(string externalAuthName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(externalAuthName, nameof(externalAuthName));
 
-            return GetExternalAuths().Get(externalAuthName, cancellationToken);
+            return await GetHcpOpenShiftClusterExternalAuths().GetAsync(externalAuthName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get a ExternalAuth. </summary>
+        /// <param name="externalAuthName"> The name of the ExternalAuth. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="externalAuthName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="externalAuthName"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<HcpOpenShiftClusterExternalAuthResource> GetHcpOpenShiftClusterExternalAuth(string externalAuthName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(externalAuthName, nameof(externalAuthName));
+
+            return GetHcpOpenShiftClusterExternalAuths().Get(externalAuthName, cancellationToken);
         }
     }
 }

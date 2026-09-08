@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
 
             Version = version;
             Platform = platform;
-            ImageDigestMirrors = new ChangeTrackingList<ImageDigestMirror>();
+            ImageDigestMirrors = new ChangeTrackingList<HcpOpenShiftClusterImageDigestMirror>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HcpOpenShiftClusterProperties"/>. </summary>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// <param name="status"> Status of the cluster resource. </param>
         /// <param name="cryptoRestrictions"> Cryptographic restrictions for kernel and userspace libraries. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal HcpOpenShiftClusterProperties(ProvisioningState? provisioningState, HcpOpenShiftClusterVersionProfile version, DnsProfile dns, NetworkProfile network, ConsoleProfile console, HcpOpenShiftClusterApiProfile api, IngressProfile ingress, HcpOpenShiftClusterPlatformProfile platform, ClusterAutoscalingProfile autoscaling, EtcdProfile etcd, IList<ImageDigestMirror> imageDigestMirrors, int? nodeDrainTimeoutMinutes, ClusterImageRegistryProfile clusterImageRegistry, ResourceStatus status, CryptoRestrictions? cryptoRestrictions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal HcpOpenShiftClusterProperties(ProvisioningState? provisioningState, HcpOpenShiftClusterVersionProfile version, HcpOpenShiftClusterDnsProfile dns, HcpOpenShiftClusterNetworkProfile network, HcpOpenShiftClusterConsoleProfile console, HcpOpenShiftClusterApiProfile api, HcpOpenShiftClusterIngressProfile ingress, HcpOpenShiftClusterPlatformProfile platform, HcpOpenShiftClusterAutoscalingProfile autoscaling, HcpOpenShiftClusterEtcdProfile etcd, IList<HcpOpenShiftClusterImageDigestMirror> imageDigestMirrors, int? nodeDrainTimeoutMinutes, HcpOpenShiftClusterImageRegistryProfile clusterImageRegistry, HcpOpenShiftClusterResourceStatus status, CryptoRestrictions? cryptoRestrictions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             Version = version;
@@ -88,35 +88,35 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public HcpOpenShiftClusterVersionProfile Version { get; set; }
 
         /// <summary> Cluster DNS configuration. </summary>
-        public DnsProfile Dns { get; set; }
+        public HcpOpenShiftClusterDnsProfile Dns { get; set; }
 
         /// <summary> Cluster network configuration. </summary>
-        public NetworkProfile Network { get; set; }
+        public HcpOpenShiftClusterNetworkProfile Network { get; set; }
 
         /// <summary> Shows the cluster web console information. </summary>
-        internal ConsoleProfile Console { get; }
+        internal HcpOpenShiftClusterConsoleProfile Console { get; }
 
         /// <summary> Shows the cluster API server profile. </summary>
         public HcpOpenShiftClusterApiProfile Api { get; set; }
 
         /// <summary> The cluster ingress configuration. </summary>
-        internal IngressProfile Ingress { get; set; }
+        internal HcpOpenShiftClusterIngressProfile Ingress { get; set; }
 
         /// <summary> Azure platform configuration. </summary>
         public HcpOpenShiftClusterPlatformProfile Platform { get; set; }
 
         /// <summary> Configure ClusterAutoscaling . </summary>
-        public ClusterAutoscalingProfile Autoscaling { get; set; }
+        public HcpOpenShiftClusterAutoscalingProfile Autoscaling { get; set; }
 
         /// <summary> Configure ETCD. </summary>
-        internal EtcdProfile Etcd { get; set; }
+        internal HcpOpenShiftClusterEtcdProfile Etcd { get; set; }
 
         /// <summary>
         /// imageDigestMirrors is a set of rules to allow pulling images from a
         /// mirrored registry by using digest specifications.
         /// WARNING: Updating this array will redeploy all node pools in the cluster.
         /// </summary>
-        public IList<ImageDigestMirror> ImageDigestMirrors { get; }
+        public IList<HcpOpenShiftClusterImageDigestMirror> ImageDigestMirrors { get; }
 
         /// <summary>
         /// nodeDrainTimeoutMinutes is the grace period for how long Pod Disruption Budget-protected workloads will be
@@ -131,10 +131,10 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         public int? NodeDrainTimeoutMinutes { get; set; }
 
         /// <summary> OpenShift internal image registry. </summary>
-        internal ClusterImageRegistryProfile ClusterImageRegistry { get; set; }
+        internal HcpOpenShiftClusterImageRegistryProfile ClusterImageRegistry { get; set; }
 
         /// <summary> Status of the cluster resource. </summary>
-        internal ResourceStatus Status { get; }
+        internal HcpOpenShiftClusterResourceStatus Status { get; }
 
         /// <summary> Cryptographic restrictions for kernel and userspace libraries. </summary>
         public CryptoRestrictions? CryptoRestrictions { get; set; }
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         }
 
         /// <summary> The type of the default cluster ingress. </summary>
-        public IngressType? IngressType
+        public HcpOpenShiftClusterIngressType? IngressType
         {
             get
             {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             {
                 if (Ingress is null)
                 {
-                    Ingress = new IngressProfile();
+                    Ingress = new HcpOpenShiftClusterIngressProfile();
                 }
                 Ingress.Type = value;
             }
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// ETCD Data Encryption settings.
         /// If not specified platform managed keys are used.
         /// </summary>
-        public EtcdDataEncryptionProfile EtcdDataEncryption
+        public HcpOpenShiftClusterEtcdDataEncryptionProfile EtcdDataEncryption
         {
             get
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             {
                 if (Etcd is null)
                 {
-                    Etcd = new EtcdProfile();
+                    Etcd = new HcpOpenShiftClusterEtcdProfile();
                 }
                 Etcd.DataEncryption = value;
             }
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
         /// the cluster. Disabled means the ImageStream-backed image registry will not be present in
         /// the cluster. The default is Enabled.
         /// </summary>
-        public ClusterImageRegistryState? ClusterImageRegistryState
+        public HcpOpenShiftClusterImageRegistryState? ClusterImageRegistryState
         {
             get
             {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.RedHatOpenShiftHcp.Models
             {
                 if (ClusterImageRegistry is null)
                 {
-                    ClusterImageRegistry = new ClusterImageRegistryProfile();
+                    ClusterImageRegistry = new HcpOpenShiftClusterImageRegistryProfile();
                 }
                 ClusterImageRegistry.State = value;
             }
