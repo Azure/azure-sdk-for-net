@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("syncDate"u8);
                 writer.WriteStringValue(SyncOn.Value, "O");
             }
-            if (Optional.IsDefined(ConfigurationChangeOn))
+            if (Optional.IsDefined(ConfigurationChangedOn))
             {
                 writer.WritePropertyName("configurationChangeDate"u8);
-                writer.WriteStringValue(ConfigurationChangeOn.Value, "O");
+                writer.WriteStringValue(ConfigurationChangedOn.Value, "O");
             }
             if (Optional.IsDefined(LastOperationId))
             {
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             bool? isSynced = default;
             bool? isGitEnabled = default;
             DateTimeOffset? syncOn = default;
-            DateTimeOffset? configurationChangeOn = default;
+            DateTimeOffset? configurationChangedOn = default;
             string lastOperationId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    configurationChangeOn = prop.Value.GetDateTimeOffset("O");
+                    configurationChangedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastOperationId"u8))
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 isSynced,
                 isGitEnabled,
                 syncOn,
-                configurationChangeOn,
+                configurationChangedOn,
                 lastOperationId,
                 additionalBinaryDataProperties);
         }

@@ -51,26 +51,8 @@ namespace Azure.ResourceManager.Storage.Models
         [WirePath("executionContext")]
         public StorageTaskAssignmentExecutionContext ExecutionContext { get; set; }
 
-        /// <summary> The storage task assignment report. </summary>
-        [WirePath("report")]
-        internal StorageTaskAssignmentReport Report { get; set; }
-
         /// <summary> Run status of storage task assignment. </summary>
         [WirePath("runStatus")]
         public StorageTaskReportProperties RunStatus { get; set; }
-
-        /// <summary> The container prefix for the location of storage task assignment report. </summary>
-        [WirePath("report.prefix")]
-        public string ReportPrefix
-        {
-            get
-            {
-                return Report is null ? default : Report.Prefix;
-            }
-            set
-            {
-                Report = new StorageTaskAssignmentReport(value);
-            }
-        }
     }
 }

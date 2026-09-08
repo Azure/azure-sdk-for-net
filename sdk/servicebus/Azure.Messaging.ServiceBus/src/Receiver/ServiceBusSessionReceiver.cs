@@ -33,15 +33,15 @@ namespace Azure.Messaging.ServiceBus
         public virtual string SessionId => InnerReceiver.SessionId;
 
         /// <summary>
-        /// Indicates whether or not this <see cref="ServiceBusSessionReceiver"/> has been closed by the user, or whether the underlying
-        /// session link was closed due to either losing the session lock or having the link disconnected. If this is <c>true</c>, the
-        /// receiver cannot be used for any more operations. If this is <c>false</c>, it is still possible that the session lock has been lost
-        /// so it is important to still handle <see cref="ServiceBusException" /> with <see cref="ServiceBusException.Reason" /> equal to
+        /// Indicates whether or not this <see cref="ServiceBusSessionReceiver"/> is currently closed or closing, or whether the underlying
+        /// session link was closed due to either losing the session lock or having the link disconnected. The value may transition from
+        /// <c>true</c> to <c>false</c> if an in-progress close does not complete. If this is <c>false</c>, it is still possible that the
+        /// session lock has been lost so it is important to still handle <see cref="ServiceBusException" /> with <see cref="ServiceBusException.Reason" /> equal to
         /// <see cref="ServiceBusFailureReason.SessionLockLost"/>.
         /// </summary>
         ///
         /// <value>
-        /// <c>true</c> if the session receiver was closed by the user or if the underlying link was closed; otherwise, <c>false</c>.
+        /// <c>true</c> if the session receiver is closed or a close is in progress, or if the underlying link was closed; otherwise, <c>false</c>.
         /// </value>
         public override bool IsClosed => IsDisposed || InnerReceiver.IsSessionLinkClosed;
 

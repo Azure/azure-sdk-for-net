@@ -76,7 +76,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.DisplayName;
+                return Properties is null ? default : Properties.DisplayName;
             }
         }
 
@@ -85,7 +85,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.ApplicableScenarios;
+                return Properties is null ? default : Properties.ApplicableScenarios;
             }
         }
 
@@ -94,7 +94,7 @@ namespace Azure.Provisioning.ResourceHealth
         {
             get
             {
-                return Properties.SupportedValues;
+                return Properties is null ? default : Properties.SupportedValues;
             }
         }
 

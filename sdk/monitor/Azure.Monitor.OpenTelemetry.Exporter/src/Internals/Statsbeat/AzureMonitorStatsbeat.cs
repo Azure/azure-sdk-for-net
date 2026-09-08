@@ -47,6 +47,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         internal MeterProvider? _statsbeatMeterProvider;
 
+        private volatile bool _isDisposed;
+
         // Wall-clock throttle for the Attach observable gauge so it emits at most once per
         // AttachEmissionInterval even though the shared reader collects every 15 min.
         private long _lastAttachEmissionTicks;
@@ -225,7 +227,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
             // attach.
             var exporterOptions = CreateExporterOptions(connectionString);
 
-            _statsbeatMeterProvider = Sdk.CreateMeterProviderBuilder()
+            var meterProvider = Sdk.CreateMeterProviderBuilder()
                 .AddMeter(StatsbeatConstants.AttachStatsbeatMeterName)
                 .AddMeter(StatsbeatConstants.FeatureStatsbeatMeterName)
                 .AddMeter(StatsbeatConstants.DistroFeatureSdkStatsMeterName)
@@ -234,6 +236,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
                 .AddReader(new PeriodicExportingMetricReader(new AzureMonitorMetricExporter(exporterOptions), _networkExportIntervalMilliseconds)
                 { TemporalityPreference = MetricReaderTemporalityPreference.Delta })
                 .Build();
+
+            // A full fence, so the disposed flag below cannot be read before this is visible.
+            Interlocked.Exchange(ref _statsbeatMeterProvider, meterProvider);
+
+            if (!_isDisposed)
+            {
+                return;
+            }
+
+            // The distro path builds this from a background config fetch, which can land after a
+            // short-lived process has already disposed us. Whichever side takes the provider here
+            // owns it, so it is disposed once and never orphaned.
+            var orphaned = Interlocked.Exchange(ref _statsbeatMeterProvider, null);
+            if (orphaned != null)
+            {
+                DisposeInBackground(orphaned);
+            }
         }
 
         internal static AzureMonitorExporterOptions CreateExporterOptions(string connectionString)
@@ -489,7 +508,33 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Statsbeat
 
         public void Dispose()
         {
-            _statsbeatMeterProvider?.Dispose();
+            _isDisposed = true;
+
+            var meterProvider = Interlocked.Exchange(ref _statsbeatMeterProvider, null);
+            if (meterProvider == null)
+            {
+                return;
+            }
+
+            DisposeInBackground(meterProvider);
+        }
+
+        private static void DisposeInBackground(MeterProvider meterProvider)
+        {
+            // Disposing the meter provider exports one last time, which would put an ingestion round
+            // trip on the process exit path. Statsbeat is internal telemetry with no offline storage
+            // behind it, so losing that final export is preferable to delaying exit for it.
+            _ = Task.Run(() =>
+            {
+                try
+                {
+                    meterProvider.Dispose();
+                }
+                catch (Exception)
+                {
+                    // The process is going away; there is nothing useful to report.
+                }
+            });
         }
     }
 }

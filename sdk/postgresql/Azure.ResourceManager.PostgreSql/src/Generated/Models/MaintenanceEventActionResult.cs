@@ -27,18 +27,18 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         /// <param name="maintenanceEventId"> The maintenance event name (maintenance ID). </param>
         /// <param name="serverId"> The full Azure resource ID of the server. </param>
         /// <param name="status"> The status of the maintenance event. </param>
-        /// <param name="plannedStartOn"> The planned start time of the maintenance event (UTC). </param>
-        /// <param name="plannedEndOn"> The planned end time of the maintenance event (UTC). </param>
+        /// <param name="plannedStartsOn"> The planned start time of the maintenance event (UTC). </param>
+        /// <param name="plannedEndsOn"> The planned end time of the maintenance event (UTC). </param>
         /// <param name="isAppliedNow"> A value indicating whether this was an apply-now (immediate) action. True for ApplyNow; false for Reschedule. </param>
         /// <param name="lastUpdatedOn"> The time this maintenance event record was last updated (UTC). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceEventActionResult(string maintenanceEventId, ResourceIdentifier serverId, MaintenanceEventStatus? status, DateTimeOffset? plannedStartOn, DateTimeOffset? plannedEndOn, bool? isAppliedNow, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceEventActionResult(string maintenanceEventId, ResourceIdentifier serverId, MaintenanceEventStatus? status, DateTimeOffset? plannedStartsOn, DateTimeOffset? plannedEndsOn, bool? isAppliedNow, DateTimeOffset? lastUpdatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MaintenanceEventId = maintenanceEventId;
             ServerId = serverId;
             Status = status;
-            PlannedStartOn = plannedStartOn;
-            PlannedEndOn = plannedEndOn;
+            PlannedStartsOn = plannedStartsOn;
+            PlannedEndsOn = plannedEndsOn;
             IsAppliedNow = isAppliedNow;
             LastUpdatedOn = lastUpdatedOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -58,11 +58,11 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> The planned start time of the maintenance event (UTC). </summary>
         [WirePath("plannedStartTime")]
-        public DateTimeOffset? PlannedStartOn { get; }
+        public DateTimeOffset? PlannedStartsOn { get; }
 
         /// <summary> The planned end time of the maintenance event (UTC). </summary>
         [WirePath("plannedEndTime")]
-        public DateTimeOffset? PlannedEndOn { get; }
+        public DateTimeOffset? PlannedEndsOn { get; }
 
         /// <summary> A value indicating whether this was an apply-now (immediate) action. True for ApplyNow; false for Reschedule. </summary>
         [WirePath("appliedNow")]

@@ -112,6 +112,37 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
+            if (options.Format != "W" && Optional.IsDefined(Prefix))
+            {
+                writer.WritePropertyName("prefix"u8);
+                writer.WriteStringValue(Prefix);
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (options.Format != "W" && Optional.IsDefined(ParsingMode))
+            {
+                writer.WritePropertyName("parsingMode"u8);
+                writer.WriteStringValue(ParsingMode.Value.ToString());
+            }
+            if (options.Format != "W" && Optional.IsDefined(ExtractionMode))
+            {
+                writer.WritePropertyName("extractionMode"u8);
+                writer.WriteStringValue(ExtractionMode.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -160,6 +191,10 @@ namespace Azure.Search.Documents.Indexes.Models
             DateTimeOffset? createdOn = default;
             DateTimeOffset? lastUpdatedOn = default;
             string errorMessage = default;
+            string prefix = default;
+            IReadOnlyDictionary<string, string> metadata = default;
+            BlobIndexerParsingMode? parsingMode = default;
+            FileKnowledgeSourceExtractionMode? extractionMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -210,6 +245,50 @@ namespace Azure.Search.Documents.Indexes.Models
                     errorMessage = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("prefix"u8))
+                {
+                    prefix = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("metadata"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
+                    }
+                    metadata = dictionary;
+                    continue;
+                }
+                if (prop.NameEquals("parsingMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    parsingMode = new BlobIndexerParsingMode(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("extractionMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    extractionMode = new FileKnowledgeSourceExtractionMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -222,6 +301,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 createdOn,
                 lastUpdatedOn,
                 errorMessage,
+                prefix,
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
+                parsingMode,
+                extractionMode,
                 additionalBinaryDataProperties);
         }
     }

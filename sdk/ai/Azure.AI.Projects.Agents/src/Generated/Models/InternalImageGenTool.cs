@@ -24,10 +24,7 @@ namespace OpenAI
         /// The quality of the generated image. One of `low`, `medium`, `high`,
         ///   or `auto`. Default: `auto`.
         /// </param>
-        /// <param name="size">
-        /// The size of the generated image. One of `1024x1024`, `1024x1536`,
-        ///   `1536x1024`, or `auto`. Default: `auto`.
-        /// </param>
+        /// <param name="size"> The size of the generated images. For `gpt-image-2` and `gpt-image-2-2026-04-21`, arbitrary resolutions are supported as `WIDTHxHEIGHT` strings, for example `1536x864`. Width and height must both be divisible by 16 and the requested aspect ratio must be between 1:3 and 3:1. Resolutions above `2560x1440` are experimental, and the maximum supported resolution is `3840x2160`. The requested size must also satisfy the model's current pixel and edge limits. The standard sizes `1024x1024`, `1536x1024`, and `1024x1536` are supported by the GPT image models; `auto` is supported for models that allow automatic sizing. For `dall-e-2`, use one of `256x256`, `512x512`, or `1024x1024`. For `dall-e-3`, use one of `1024x1024`, `1792x1024`, or `1024x1792`. </param>
         /// <param name="outputFormat">
         /// The output format of the generated image. One of `png`, `webp`, or
         ///   `jpeg`. Default: `png`.
@@ -75,10 +72,7 @@ namespace OpenAI
         /// </summary>
         public ImageGenToolQuality? Quality { get; set; }
 
-        /// <summary>
-        /// The size of the generated image. One of `1024x1024`, `1024x1536`,
-        ///   `1536x1024`, or `auto`. Default: `auto`.
-        /// </summary>
+        /// <summary> The size of the generated images. For `gpt-image-2` and `gpt-image-2-2026-04-21`, arbitrary resolutions are supported as `WIDTHxHEIGHT` strings, for example `1536x864`. Width and height must both be divisible by 16 and the requested aspect ratio must be between 1:3 and 3:1. Resolutions above `2560x1440` are experimental, and the maximum supported resolution is `3840x2160`. The requested size must also satisfy the model's current pixel and edge limits. The standard sizes `1024x1024`, `1536x1024`, and `1024x1536` are supported by the GPT image models; `auto` is supported for models that allow automatic sizing. For `dall-e-2`, use one of `256x256`, `512x512`, or `1024x1024`. For `dall-e-3`, use one of `1024x1024`, `1792x1024`, or `1024x1792`. </summary>
         public ImageGenToolSize? Size { get; set; }
 
         /// <summary>

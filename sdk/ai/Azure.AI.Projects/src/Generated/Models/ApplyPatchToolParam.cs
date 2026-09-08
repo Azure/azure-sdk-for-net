@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -13,13 +14,19 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="ApplyPatchToolParam"/>. </summary>
         public ApplyPatchToolParam() : base(ToolType.ApplyPatch)
         {
+            AllowedCallers = new ChangeTrackingList<InternalCallableToolAllowedCaller>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplyPatchToolParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ApplyPatchToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        /// <param name="allowedCallers"></param>
+        internal ApplyPatchToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<InternalCallableToolAllowedCaller> allowedCallers) : base(@type, additionalBinaryDataProperties)
         {
+            AllowedCallers = allowedCallers;
         }
+
+        /// <summary> Gets or sets the AllowedCallers. </summary>
+        public IList<InternalCallableToolAllowedCaller> AllowedCallers { get; set; }
     }
 }

@@ -134,6 +134,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             }
             int id = default;
             KnowledgeBaseActivityRecordType @type = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? completedOn = default;
             int? elapsedMs = default;
             KnowledgeBaseErrorDetail error = default;
             string warning = default;
@@ -153,6 +155,24 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new KnowledgeBaseActivityRecordType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("startedAt"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    startedOn = prop.Value.GetDateTimeOffset("O");
+                    continue;
+                }
+                if (prop.NameEquals("completedAt"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    completedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("elapsedMs"u8))
@@ -227,6 +247,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             return new KnowledgeBaseRemoteSharePointActivityRecord(
                 id,
                 @type,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,

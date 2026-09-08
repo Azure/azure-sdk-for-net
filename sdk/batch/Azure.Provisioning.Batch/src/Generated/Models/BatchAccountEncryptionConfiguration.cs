@@ -47,7 +47,7 @@ namespace Azure.Provisioning.Batch
         {
             get
             {
-                return KeyVaultProperties.KeyIdentifier;
+                return KeyVaultProperties is null ? default : KeyVaultProperties.KeyIdentifier;
             }
         }
 

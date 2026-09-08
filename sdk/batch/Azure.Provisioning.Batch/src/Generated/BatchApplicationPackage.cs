@@ -162,8 +162,8 @@ namespace Azure.Provisioning.Batch
             }
         }
 
-        /// <summary> Gets the StorageUriExpireOn. </summary>
-        public BicepValue<DateTimeOffset> StorageUriExpireOn
+        /// <summary> Gets the StorageUriExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> StorageUriExpiresOn
         {
             get
             {
@@ -171,7 +171,7 @@ namespace Azure.Provisioning.Batch
                 {
                     Properties = new ApplicationPackageProperties();
                 }
-                return Properties.StorageUriExpireOn;
+                return Properties.StorageUriExpiresOn;
             }
         }
 

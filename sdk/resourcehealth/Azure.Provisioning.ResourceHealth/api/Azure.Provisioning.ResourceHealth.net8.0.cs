@@ -10,7 +10,7 @@ namespace Azure.Provisioning.ResourceHealth
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastModifiedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ResourceHealth.ResourceHealthEventSeverityLevel> Severity { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.ResourceHealth.ResourceHealthEventStageValue> Stage { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> StartsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Title { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> TrackingId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
@@ -87,7 +87,7 @@ namespace Azure.Provisioning.ResourceHealth
         public Azure.Provisioning.BicepValue<string> Id { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.ResourceHealth.ResourceHealthEventImpact> Impact { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ImpactMitigationOn { get { throw null; } }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ImpactStartOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ImpactStartsOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ImpactType { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsChatWithUsEnabled { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsEventSensitive { get { throw null; } }

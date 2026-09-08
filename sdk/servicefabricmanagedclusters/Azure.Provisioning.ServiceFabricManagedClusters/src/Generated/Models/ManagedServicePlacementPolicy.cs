@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabricManagedClusters
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
     /// </summary>
     public partial class ManagedServicePlacementPolicy : ProvisionableConstruct
     {
+        private BicepValue<ServicePlacementPolicyType> _type;
+
         /// <summary> Creates a new ManagedServicePlacementPolicy. </summary>
         public ManagedServicePlacementPolicy()
         {
+        }
+
+        /// <summary> Gets the Type. </summary>
+        internal BicepValue<ServicePlacementPolicyType> Type
+        {
+            get
+            {
+                Initialize();
+                return _type;
+            }
         }
 
         /// <summary> Define all the provisionable properties for ManagedServicePlacementPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _type = DefineProperty<ServicePlacementPolicyType>(nameof(Type), new string[] { "type" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

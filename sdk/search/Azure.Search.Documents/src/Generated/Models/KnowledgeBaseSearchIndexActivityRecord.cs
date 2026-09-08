@@ -22,6 +22,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <summary> Initializes a new instance of <see cref="KnowledgeBaseSearchIndexActivityRecord"/>. </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
@@ -31,13 +33,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="searchIndexArguments"> The search index arguments for the retrieval activity. </param>
-        internal KnowledgeBaseSearchIndexActivityRecord(int id, KnowledgeBaseActivityRecordType @type, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, string knowledgeSourceName, DateTimeOffset? queryOn, int? count, ImageServingStatistics imageServing, KnowledgeBaseSearchIndexActivityArguments searchIndexArguments) : base(id, @type, elapsedMs, error, warning, additionalBinaryDataProperties)
+        /// <param name="queryHintProcessing"> Details about the expressions generated from query hints for this activity. </param>
+        internal KnowledgeBaseSearchIndexActivityRecord(int id, KnowledgeBaseActivityRecordType @type, DateTimeOffset? startedOn, DateTimeOffset? completedOn, int? elapsedMs, KnowledgeBaseErrorDetail error, string warning, IDictionary<string, BinaryData> additionalBinaryDataProperties, string knowledgeSourceName, DateTimeOffset? queryOn, int? count, ImageServingStatistics imageServing, KnowledgeBaseSearchIndexActivityArguments searchIndexArguments, KnowledgeBaseQueryHintProcessing queryHintProcessing) : base(id, @type, startedOn, completedOn, elapsedMs, error, warning, additionalBinaryDataProperties)
         {
             KnowledgeSourceName = knowledgeSourceName;
             QueryOn = queryOn;
             Count = count;
             ImageServing = imageServing;
             SearchIndexArguments = searchIndexArguments;
+            QueryHintProcessing = queryHintProcessing;
         }
 
         /// <summary> The knowledge source for the retrieval activity. </summary>
@@ -54,5 +58,8 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
 
         /// <summary> The search index arguments for the retrieval activity. </summary>
         public KnowledgeBaseSearchIndexActivityArguments SearchIndexArguments { get; }
+
+        /// <summary> Details about the expressions generated from query hints for this activity. </summary>
+        public KnowledgeBaseQueryHintProcessing QueryHintProcessing { get; }
     }
 }

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.Recommender;
 
 namespace Azure.ResourceManager.Compute.Recommender.Models
 {
-    /// <summary> Spot priority configuration. Required when priority is Spot. </summary>
+    /// <summary> Spot priority configuration. </summary>
     internal partial class SkuMixPlacementSpotPriorityProfile : IJsonModel<SkuMixPlacementSpotPriorityProfile>
     {
         /// <param name="data"> The data to parse. </param>

@@ -17,6 +17,7 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new PatAuthTypeConnectionProperties. </summary>
         public PatAuthTypeConnectionProperties()
         {
+            AuthType.Assign(ConnectionAuthType.PAT);
         }
 
         /// <summary> Gets or sets the Credentials. </summary>
@@ -55,7 +56,6 @@ namespace Azure.Provisioning.CognitiveServices
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("authType", new string[] { "authType" }, defaultValue: "PAT");
             _credentials = DefineModelProperty<ConnectionPersonalAccessToken>(nameof(Credentials), new string[] { "credentials" });
             DefineAdditionalProperties();
         }

@@ -14,20 +14,20 @@ namespace Azure.Provisioning.Kusto
     /// <summary> The database suspension details. If the database is suspended, this object contains information related to the database's suspension state. </summary>
     internal partial class SuspensionDetails : ProvisionableConstruct
     {
-        private BicepValue<DateTimeOffset> _suspensionStartOn;
+        private BicepValue<DateTimeOffset> _suspensionStartsOn;
 
         /// <summary> Creates a new SuspensionDetails. </summary>
         public SuspensionDetails()
         {
         }
 
-        /// <summary> Gets the SuspensionStartOn. </summary>
-        public BicepValue<DateTimeOffset> SuspensionStartOn
+        /// <summary> Gets the SuspensionStartsOn. </summary>
+        public BicepValue<DateTimeOffset> SuspensionStartsOn
         {
             get
             {
                 Initialize();
-                return _suspensionStartOn;
+                return _suspensionStartsOn;
             }
         }
 
@@ -35,7 +35,7 @@ namespace Azure.Provisioning.Kusto
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _suspensionStartOn = DefineProperty<DateTimeOffset>(nameof(SuspensionStartOn), new string[] { "suspensionStartDate" }, format: "O");
+            _suspensionStartsOn = DefineProperty<DateTimeOffset>(nameof(SuspensionStartsOn), new string[] { "suspensionStartDate" }, format: "O");
             DefineAdditionalProperties();
         }
 
