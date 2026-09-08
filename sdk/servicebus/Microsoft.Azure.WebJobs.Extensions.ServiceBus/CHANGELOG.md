@@ -1,19 +1,20 @@
 # Release History
 
-## 5.18.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 5.18.0 (2026-10-06)
 
 ### Bugs Fixed
 
 - Fixed a memory leak on the scale-only host path where `MessagingProvider` and its cached `ServiceBusClient`s were never disposed on host teardown. `AddServiceBusScaleForTrigger` now forces construction of `CleanupService`, which the DI container then disposes automatically, tearing down the cached clients and releasing their AMQP connections, CBS-refresh timers, and heartbeat timers. Previously these stayed registered on the process-wide static `TimerQueue` for the life of the process, because a scale-only host (`ConfigureWebJobsScale`) does not initialize `IExtensionConfigProvider`s — the binding path's normal route into `CleanupService`.
-- Wait for 2 secs before scaling out for ScaleMonitor to avoid aggressive scaling (matches with ScaleControlelr V2) - AB#32302750
+- Wait for 2 secs before scaling out for ScaleMonitor to avoid aggressive scaling (matches with Scale Controller V2) - AB#32302750
+- Fixed AMQP map key deserialization in the settlement path so that `AmqpSymbol` keys use their underlying value rather than `ToString()`. (#60653)
+- Fixed a log message in `ServiceBusMetricsProvider` that was missing string interpolation and emitted literal placeholder text instead of the entity type and path. (#60818)
 
 ### Other Changes
 
 - Replaced scaling warning/error log calls with standardized `LogFunctionScaleWarning` extension method to enable Scale Controller App Insights diagnostics.
+- Added diagnostic logging for the two paths where `ServiceBusScaleMonitor` votes to not scale without explanation — no metrics available, and fewer metric samples than required for a scale decision — along with metric value logging in `ServiceBusMetricsProvider`. (#60818)
+- Added a `net10.0` target and updated .NET runtime dependencies to the 10.x line. The package now targets `net10.0`, `net8.0`, and `netstandard2.0`.
+- Removed the direct `Microsoft.Extensions.Hosting` package reference.
 
 ## 5.17.0 (2025-06-20)
 
