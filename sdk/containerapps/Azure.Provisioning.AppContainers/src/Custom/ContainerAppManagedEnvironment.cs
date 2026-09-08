@@ -4,7 +4,6 @@
 using System;
 using System.ComponentModel;
 using Azure.Provisioning;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.AppContainers
 {
@@ -12,27 +11,12 @@ namespace Azure.Provisioning.AppContainers
     {
         private BicepList<ContainerAppPrivateEndpointConnection> _privateEndpointConnections;
 
-        // The managed-environment and container-app private endpoint resources share the same model schema.
-        // The generator currently selects ContainerAppContainerPrivateEndpointConnection for this property, but the
-        // last stable library released it as ContainerAppPrivateEndpointConnection. Rename the newly selected property
-        // so the released property name and type can be preserved below without a breaking change.
+        // The managed-environment and container-app private endpoint resources share the same model schema. The generator
+        // currently selects ContainerAppContainerPrivateEndpointConnection for this property, which would change the
+        // ContainerAppPrivateEndpointConnection type released by the last stable library. Define the property in custom
+        // code to keep its public type unchanged while continuing to use the same wire path.
         // TODO: Remove this workaround when the generator reads the existing contract and preserves its resource selection.
         // https://github.com/Azure/azure-sdk-for-net/issues/60673
-        /// <summary> Gets the container app private endpoint connection resources. </summary>
-        [CodeGenMember("PrivateEndpointConnections")]
-        public BicepList<ContainerAppContainerPrivateEndpointConnection> PrivateEndpointConnectionResources
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedEnvironmentProperties();
-                }
-                return Properties.PrivateEndpointConnections;
-            }
-        }
-
-        // Preserve the property type from the last stable library.
         /// <summary> Gets the managed environment private endpoint connections. </summary>
         public BicepList<ContainerAppPrivateEndpointConnection> PrivateEndpointConnections
         {
