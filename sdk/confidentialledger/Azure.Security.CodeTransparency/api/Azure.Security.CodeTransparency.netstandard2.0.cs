@@ -37,11 +37,6 @@ namespace Azure.Security.CodeTransparency
         public static void Verify(byte[] receiptCoseSign1Bytes, byte[] signedStatementCoseSign1Bytes, Azure.Security.CodeTransparency.CodeTransparencyVerificationKeySet verificationKeys) { }
         public static void Verify(byte[] receiptCoseSign1Bytes, byte[] signedStatementCoseSign1Bytes, string keyId, System.Security.Cryptography.ECDsa publicKey) { }
     }
-    public static partial class CodeTransparencyCbor
-    {
-        public static string GetStringValueFromCborMapByKey(byte[] cborBytes, int key) { throw null; }
-        public static string GetStringValueFromCborMapByKey(byte[] cborBytes, string key) { throw null; }
-    }
     public partial class CodeTransparencyCertificateClient
     {
         protected CodeTransparencyCertificateClient() { }

@@ -6,7 +6,7 @@
 
 - Replaced the optional `CodeTransparencyClientOptions` constructor parameter with separate endpoint-only and endpoint-plus-options constructors.
 - Changed the long-running `CreateEntry` overloads to return the concrete `CreateEntryOperation` type and hid the retained obsolete overloads from IntelliSense.
-- Renamed `CborUtils` to the service-specific `CodeTransparencyCbor`.
+- Removed the public `CborUtils` wire-format parsing helper; service-specific CBOR parsing is now handled internally.
 - Replaced the generated JWK/JWKS wire models with normalized, verification-oriented public types `CodeTransparencyVerificationKey` and `CodeTransparencyVerificationKeySet`, which store only public asymmetric key material. The `/jwks` (`GetPublicKeys`), COSE_Key_Set (`GetScittKeys`), and single-key (`GetScittKey`) operations now expose `CancellationToken` convenience overloads returning these normalized types, alongside the exact-wire `RequestContext` protocol overloads.
 - Added `CcfReceiptVerifier.Verify` overloads that accept a `CodeTransparencyVerificationKey`, a `string` key ID plus a caller-owned `ECDsa`, or a `CodeTransparencyVerificationKeySet`.
 - Replaced `CodeTransparencyOfflineKeys` and `OfflineKeysBehavior` with `CodeTransparencyTrustStore` and `CodeTransparencyKeyResolutionMode`, using an SDK-owned, versioned, public-only serialization format. `CodeTransparencyVerificationOptions.OfflineKeys`/`OfflineKeysBehavior` are now `TrustStore`/`KeyResolutionMode`.
