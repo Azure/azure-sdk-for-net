@@ -148,6 +148,7 @@ namespace Azure.Identity
         public virtual async ValueTask<AccessToken> AuthenticateCoreAsync(bool async, TokenRequestContext context, bool isKeyGuardAvailable,
             CancellationToken cancellationToken)
         {
+            // IMDS re-enters MSAL after its probe, so preserve the binding capability discovered before probing.
             if (_identitySource.Value is ImdsManagedIdentityProbeSource imdsSource)
             {
                 return await imdsSource.AuthenticateAsync(async, context, isKeyGuardAvailable, cancellationToken).ConfigureAwait(false);
