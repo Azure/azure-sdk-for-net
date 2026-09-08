@@ -215,7 +215,11 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         {
             IEnumerable<BlobItem> currentBlobs;
             int blobPollLimitPerContainer = _scanBlobLimitPerPoll / _scanInfo.Count;
-            string continuationToken = containerScanInfo.ContinuationToken;
+            // Azure.Storage.Blobs can return "" (empty NextMarker) instead of null at end of listing.
+            // Treat both as "no token" so a new sweep cycle actually starts (#61660).
+            string continuationToken = string.IsNullOrEmpty(containerScanInfo.ContinuationToken)
+                ? null
+                : containerScanInfo.ContinuationToken;
             Page<BlobItem> page;
 
             // if starting the cycle, reset the sweep time and set start time
@@ -294,8 +298,8 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             Logger.PollBlobContainer(_logger, container.Name, containerScanInfo.LastSweepCycleLatestModified, clientRequestId,
                 newBlobs.Count, sw.ElapsedMilliseconds, !string.IsNullOrWhiteSpace(page.ContinuationToken));
 
-            // record continuation token for next chunk retrieval
-            containerScanInfo.ContinuationToken = page.ContinuationToken;
+            // record continuation token for next chunk retrieval; normalize empty marker to null
+            containerScanInfo.ContinuationToken = string.IsNullOrEmpty(page.ContinuationToken) ? null : page.ContinuationToken;
 
             // if ending a cycle then copy currentSweepCycleStartTime to lastSweepCycleStartTime, if changed
             if (string.IsNullOrEmpty(page.ContinuationToken) &&
