@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.Monitor
     /// <summary> A pointer to an Azure Action Group. </summary>
     public partial class ActivityLogAlertActionGroup : ProvisionableConstruct
     {
-        private BicepValue<string> _actionGroupId;
+        private BicepValue<ResourceIdentifier> _actionGroupId;
         private BicepDictionary<string> _webhookProperties;
         private BicepDictionary<string> _actionProperties;
 
@@ -23,7 +24,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ActionGroupId. </summary>
-        public BicepValue<string> ActionGroupId
+        public BicepValue<ResourceIdentifier> ActionGroupId
         {
             get
             {
@@ -71,7 +72,7 @@ namespace Azure.Provisioning.Monitor
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _actionGroupId = DefineProperty<string>(nameof(ActionGroupId), new string[] { "actionGroupId" }, isRequired: true);
+            _actionGroupId = DefineProperty<ResourceIdentifier>(nameof(ActionGroupId), new string[] { "actionGroupId" }, isRequired: true);
             _webhookProperties = DefineDictionaryProperty<string>(nameof(WebhookProperties), new string[] { "webhookProperties" });
             _actionProperties = DefineDictionaryProperty<string>(nameof(ActionProperties), new string[] { "actionProperties" });
             DefineAdditionalProperties();

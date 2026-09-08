@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -17,7 +18,7 @@ namespace Azure.Provisioning.Monitor
         private BicepValue<string> _workspaceId;
         private BicepValue<string> _connectionId;
         private BicepValue<string> _ticketConfiguration;
-        private BicepValue<string> _region;
+        private BicepValue<AzureLocation> _region;
 
         /// <summary> Creates a new MonitorItsmReceiver. </summary>
         public MonitorItsmReceiver()
@@ -85,7 +86,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Region. </summary>
-        public BicepValue<string> Region
+        public BicepValue<AzureLocation> Region
         {
             get
             {
@@ -107,7 +108,7 @@ namespace Azure.Provisioning.Monitor
             _workspaceId = DefineProperty<string>(nameof(WorkspaceId), new string[] { "workspaceId" }, isRequired: true);
             _connectionId = DefineProperty<string>(nameof(ConnectionId), new string[] { "connectionId" }, isRequired: true);
             _ticketConfiguration = DefineProperty<string>(nameof(TicketConfiguration), new string[] { "ticketConfiguration" }, isRequired: true);
-            _region = DefineProperty<string>(nameof(Region), new string[] { "region" }, isRequired: true);
+            _region = DefineProperty<AzureLocation>(nameof(Region), new string[] { "region" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

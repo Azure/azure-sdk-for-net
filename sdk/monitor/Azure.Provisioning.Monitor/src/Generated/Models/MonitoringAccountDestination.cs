@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.Monitor
     /// <summary> Monitoring account destination. </summary>
     public partial class MonitoringAccountDestination : ProvisionableConstruct
     {
-        private BicepValue<string> _accountResourceId;
+        private BicepValue<ResourceIdentifier> _accountResourceId;
         private BicepValue<string> _accountId;
         private BicepValue<string> _name;
 
@@ -23,7 +24,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the AccountResourceId. </summary>
-        public BicepValue<string> AccountResourceId
+        public BicepValue<ResourceIdentifier> AccountResourceId
         {
             get
             {
@@ -66,7 +67,7 @@ namespace Azure.Provisioning.Monitor
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _accountResourceId = DefineProperty<string>(nameof(AccountResourceId), new string[] { "accountResourceId" });
+            _accountResourceId = DefineProperty<ResourceIdentifier>(nameof(AccountResourceId), new string[] { "accountResourceId" });
             _accountId = DefineProperty<string>(nameof(AccountId), new string[] { "accountId" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             DefineAdditionalProperties();

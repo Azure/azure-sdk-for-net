@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.Monitor
     /// <summary> Log Analytics destination. </summary>
     public partial class LogAnalyticsDestination : ProvisionableConstruct
     {
-        private BicepValue<string> _workspaceResourceId;
+        private BicepValue<ResourceIdentifier> _workspaceResourceId;
         private BicepValue<string> _workspaceId;
         private BicepValue<string> _name;
 
@@ -23,7 +24,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the WorkspaceResourceId. </summary>
-        public BicepValue<string> WorkspaceResourceId
+        public BicepValue<ResourceIdentifier> WorkspaceResourceId
         {
             get
             {
@@ -66,7 +67,7 @@ namespace Azure.Provisioning.Monitor
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _workspaceResourceId = DefineProperty<string>(nameof(WorkspaceResourceId), new string[] { "workspaceResourceId" });
+            _workspaceResourceId = DefineProperty<ResourceIdentifier>(nameof(WorkspaceResourceId), new string[] { "workspaceResourceId" });
             _workspaceId = DefineProperty<string>(nameof(WorkspaceId), new string[] { "workspaceId" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             DefineAdditionalProperties();

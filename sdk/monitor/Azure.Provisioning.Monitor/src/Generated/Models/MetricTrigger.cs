@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Monitor
         private BicepValue<string> _metricName;
         private BicepValue<string> _metricNamespace;
         private BicepValue<ResourceIdentifier> _metricResourceId;
-        private BicepValue<string> _metricResourceLocation;
+        private BicepValue<AzureLocation> _metricResourceLocation;
         private BicepValue<TimeSpan> _timeGrain;
         private BicepValue<MetricStatisticType> _statistic;
         private BicepValue<TimeSpan> _timeWindow;
@@ -79,7 +79,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the MetricResourceLocation. </summary>
-        public BicepValue<string> MetricResourceLocation
+        public BicepValue<AzureLocation> MetricResourceLocation
         {
             get
             {
@@ -220,7 +220,7 @@ namespace Azure.Provisioning.Monitor
             _metricName = DefineProperty<string>(nameof(MetricName), new string[] { "metricName" }, isRequired: true);
             _metricNamespace = DefineProperty<string>(nameof(MetricNamespace), new string[] { "metricNamespace" });
             _metricResourceId = DefineProperty<ResourceIdentifier>(nameof(MetricResourceId), new string[] { "metricResourceUri" }, isRequired: true);
-            _metricResourceLocation = DefineProperty<string>(nameof(MetricResourceLocation), new string[] { "metricResourceLocation" });
+            _metricResourceLocation = DefineProperty<AzureLocation>(nameof(MetricResourceLocation), new string[] { "metricResourceLocation" });
             _timeGrain = DefineProperty<TimeSpan>(nameof(TimeGrain), new string[] { "timeGrain" }, isRequired: true, format: "P");
             _statistic = DefineProperty<MetricStatisticType>(nameof(Statistic), new string[] { "statistic" }, isRequired: true);
             _timeWindow = DefineProperty<TimeSpan>(nameof(TimeWindow), new string[] { "timeWindow" }, isRequired: true, format: "P");

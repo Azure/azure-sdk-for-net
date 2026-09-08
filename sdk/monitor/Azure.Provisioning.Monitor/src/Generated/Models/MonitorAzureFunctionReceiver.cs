@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,9 +16,9 @@ namespace Azure.Provisioning.Monitor
     public partial class MonitorAzureFunctionReceiver : ProvisionableConstruct
     {
         private BicepValue<string> _name;
-        private BicepValue<string> _functionAppResourceId;
+        private BicepValue<ResourceIdentifier> _functionAppResourceId;
         private BicepValue<string> _functionName;
-        private BicepValue<string> _httpTriggerUri;
+        private BicepValue<Uri> _httpTriggerUri;
         private BicepValue<bool> _useCommonAlertSchema;
         private BicepValue<string> _managedIdentity;
 
@@ -41,7 +43,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the FunctionAppResourceId. </summary>
-        public BicepValue<string> FunctionAppResourceId
+        public BicepValue<ResourceIdentifier> FunctionAppResourceId
         {
             get
             {
@@ -71,7 +73,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the HttpTriggerUri. </summary>
-        public BicepValue<string> HttpTriggerUri
+        public BicepValue<Uri> HttpTriggerUri
         {
             get
             {
@@ -120,9 +122,9 @@ namespace Azure.Provisioning.Monitor
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _functionAppResourceId = DefineProperty<string>(nameof(FunctionAppResourceId), new string[] { "functionAppResourceId" }, isRequired: true);
+            _functionAppResourceId = DefineProperty<ResourceIdentifier>(nameof(FunctionAppResourceId), new string[] { "functionAppResourceId" }, isRequired: true);
             _functionName = DefineProperty<string>(nameof(FunctionName), new string[] { "functionName" }, isRequired: true);
-            _httpTriggerUri = DefineProperty<string>(nameof(HttpTriggerUri), new string[] { "httpTriggerUrl" }, isRequired: true);
+            _httpTriggerUri = DefineProperty<Uri>(nameof(HttpTriggerUri), new string[] { "httpTriggerUrl" }, isRequired: true);
             _useCommonAlertSchema = DefineProperty<bool>(nameof(UseCommonAlertSchema), new string[] { "useCommonAlertSchema" });
             _managedIdentity = DefineProperty<string>(nameof(ManagedIdentity), new string[] { "managedIdentity" });
             DefineAdditionalProperties();

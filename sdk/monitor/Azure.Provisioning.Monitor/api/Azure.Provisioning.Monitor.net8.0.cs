@@ -57,7 +57,7 @@ namespace Azure.Provisioning.Monitor
     public partial class ActivityLogAlertActionGroup : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ActivityLogAlertActionGroup() { }
-        public Azure.Provisioning.BicepValue<string> ActionGroupId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ActionGroupId { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<string> ActionProperties { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<string> WebhookProperties { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -314,7 +314,7 @@ namespace Azure.Provisioning.Monitor
     public partial class DataCollectionRuleBcdrLocationSpec : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DataCollectionRuleBcdrLocationSpec() { }
-        public Azure.Provisioning.BicepValue<string> Location { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Monitor.DataCollectionRuleBcdrLocationSpecProvisioningStatus> ProvisioningStatus { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -375,14 +375,14 @@ namespace Azure.Provisioning.Monitor
     public partial class DataCollectionRuleEventHubDestination : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DataCollectionRuleEventHubDestination() { }
-        public Azure.Provisioning.BicepValue<string> EventHubResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> EventHubResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DataCollectionRuleEventHubDirectDestination : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DataCollectionRuleEventHubDirectDestination() { }
-        public Azure.Provisioning.BicepValue<string> EventHubResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> EventHubResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -399,7 +399,7 @@ namespace Azure.Provisioning.Monitor
     public partial class DataCollectionRulePrivateLinkScopedResourceInfo : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DataCollectionRulePrivateLinkScopedResourceInfo() { }
-        public Azure.Provisioning.BicepValue<string> ResourceId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> ScopeId { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -440,14 +440,14 @@ namespace Azure.Provisioning.Monitor
         public DataCollectionRuleStorageBlobDestination() { }
         public Azure.Provisioning.BicepValue<string> ContainerName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> StorageAccountResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> StorageAccountResourceId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class DataCollectionRuleStorageTableDestination : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DataCollectionRuleStorageTableDestination() { }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> StorageAccountResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> StorageAccountResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> TableName { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -789,7 +789,7 @@ namespace Azure.Provisioning.Monitor
         public LogAnalyticsDestination() { }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> WorkspaceId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> WorkspaceResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> WorkspaceResourceId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class LogFilesDataSource : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -902,7 +902,7 @@ namespace Azure.Provisioning.Monitor
     public partial class MetricAlertAction : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MetricAlertAction() { }
-        public Azure.Provisioning.BicepValue<string> ActionGroupId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ActionGroupId { get { throw null; } set { } }
         public Azure.Provisioning.BicepDictionary<string> WebHookProperties { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -988,7 +988,7 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<string> MetricName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> MetricNamespace { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> MetricResourceId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> MetricResourceLocation { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> MetricResourceLocation { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Monitor.MetricStatisticType> Statistic { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<double> Threshold { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Monitor.MetricTriggerTimeAggregationType> TimeAggregation { get { throw null; } set { } }
@@ -1049,14 +1049,14 @@ namespace Azure.Provisioning.Monitor
     public partial class MonitorAutomationRunbookReceiver : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MonitorAutomationRunbookReceiver() { }
-        public Azure.Provisioning.BicepValue<string> AutomationAccountId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> AutomationAccountId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsGlobalRunbook { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ManagedIdentity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> RunbookName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ServiceUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> ServiceUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> UseCommonAlertSchema { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> WebhookResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> WebhookResourceId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class MonitorAzureAppPushReceiver : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1069,9 +1069,9 @@ namespace Azure.Provisioning.Monitor
     public partial class MonitorAzureFunctionReceiver : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MonitorAzureFunctionReceiver() { }
-        public Azure.Provisioning.BicepValue<string> FunctionAppResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> FunctionAppResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> FunctionName { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> HttpTriggerUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> HttpTriggerUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ManagedIdentity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> UseCommonAlertSchema { get { throw null; } set { } }
@@ -1126,7 +1126,7 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<string> ManagedIdentity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> SubscriptionId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TenantId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> UseCommonAlertSchema { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -1154,7 +1154,7 @@ namespace Azure.Provisioning.Monitor
     {
         public MonitoringAccountDestination() { }
         public Azure.Provisioning.BicepValue<string> AccountId { get { throw null; } }
-        public Azure.Provisioning.BicepValue<string> AccountResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> AccountResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -1163,7 +1163,7 @@ namespace Azure.Provisioning.Monitor
         public MonitorItsmReceiver() { }
         public Azure.Provisioning.BicepValue<string> ConnectionId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Region { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Region { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> TicketConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> WorkspaceId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -1171,10 +1171,10 @@ namespace Azure.Provisioning.Monitor
     public partial class MonitorLogicAppReceiver : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MonitorLogicAppReceiver() { }
-        public Azure.Provisioning.BicepValue<string> CallbackUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> CallbackUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ManagedIdentity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> UseCommonAlertSchema { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
@@ -1337,9 +1337,9 @@ namespace Azure.Provisioning.Monitor
     public partial class MonitorScaleCapacity : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MonitorScaleCapacity() { }
-        public Azure.Provisioning.BicepValue<string> Default { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Maximum { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> Minimum { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Default { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Maximum { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<int> Minimum { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public enum MonitorScaleDirection
@@ -1412,12 +1412,12 @@ namespace Azure.Provisioning.Monitor
     public partial class MonitorWebhookReceiver : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public MonitorWebhookReceiver() { }
-        public Azure.Provisioning.BicepValue<string> IdentifierUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> IdentifierUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ManagedIdentity { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ObjectId { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ServiceUri { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> TenantId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> ServiceUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> TenantId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> UseAadAuth { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> UseCommonAlertSchema { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
@@ -1876,7 +1876,7 @@ namespace Azure.Provisioning.Monitor
     {
         public WebhookNotification() { }
         public Azure.Provisioning.BicepDictionary<string> Properties { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ServiceUri { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Uri> ServiceUri { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class WebhookReceiver : Azure.Provisioning.Primitives.ProvisionableConstruct
@@ -1894,9 +1894,9 @@ namespace Azure.Provisioning.Monitor
     public partial class WebtestLocationAvailabilityCriteria : Azure.Provisioning.Monitor.MetricAlertCriteria
     {
         public WebtestLocationAvailabilityCriteria() { }
-        public Azure.Provisioning.BicepValue<string> ComponentId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ComponentId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<float> FailedLocationCount { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> WebTestId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> WebTestId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
     public partial class WindowsEventLogDataSource : Azure.Provisioning.Primitives.ProvisionableConstruct

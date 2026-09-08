@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.Monitor
     /// <summary> The DataCollectionRuleBcdrLocationSpec. </summary>
     public partial class DataCollectionRuleBcdrLocationSpec : ProvisionableConstruct
     {
-        private BicepValue<string> _location;
+        private BicepValue<AzureLocation> _location;
         private BicepValue<DataCollectionRuleBcdrLocationSpecProvisioningStatus> _provisioningStatus;
 
         /// <summary> Creates a new DataCollectionRuleBcdrLocationSpec. </summary>
@@ -22,7 +23,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the Location. </summary>
-        public BicepValue<string> Location
+        public BicepValue<AzureLocation> Location
         {
             get
             {
@@ -45,7 +46,7 @@ namespace Azure.Provisioning.Monitor
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _location = DefineProperty<string>(nameof(Location), new string[] { "location" });
+            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _provisioningStatus = DefineProperty<DataCollectionRuleBcdrLocationSpecProvisioningStatus>(nameof(ProvisioningStatus), new string[] { "provisioningStatus" });
             DefineAdditionalProperties();
         }

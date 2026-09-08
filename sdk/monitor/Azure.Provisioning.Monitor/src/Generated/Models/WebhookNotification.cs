@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.Monitor
     /// <summary> Webhook notification of an autoscale event. </summary>
     public partial class WebhookNotification : ProvisionableConstruct
     {
-        private BicepValue<string> _serviceUri;
+        private BicepValue<Uri> _serviceUri;
         private BicepDictionary<string> _properties;
 
         /// <summary> Creates a new WebhookNotification. </summary>
@@ -22,7 +23,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ServiceUri. </summary>
-        public BicepValue<string> ServiceUri
+        public BicepValue<Uri> ServiceUri
         {
             get
             {
@@ -55,7 +56,7 @@ namespace Azure.Provisioning.Monitor
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _serviceUri = DefineProperty<string>(nameof(ServiceUri), new string[] { "serviceUri" });
+            _serviceUri = DefineProperty<Uri>(nameof(ServiceUri), new string[] { "serviceUri" });
             _properties = DefineDictionaryProperty<string>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

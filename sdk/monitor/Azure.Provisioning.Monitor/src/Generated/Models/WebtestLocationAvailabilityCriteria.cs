@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 
 namespace Azure.Provisioning.Monitor
@@ -12,8 +13,8 @@ namespace Azure.Provisioning.Monitor
     /// <summary> Specifies the metric alert rule criteria for a web test resource. </summary>
     public partial class WebtestLocationAvailabilityCriteria : MetricAlertCriteria
     {
-        private BicepValue<string> _webTestId;
-        private BicepValue<string> _componentId;
+        private BicepValue<ResourceIdentifier> _webTestId;
+        private BicepValue<ResourceIdentifier> _componentId;
         private BicepValue<float> _failedLocationCount;
 
         /// <summary> Creates a new WebtestLocationAvailabilityCriteria. </summary>
@@ -23,7 +24,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the WebTestId. </summary>
-        public BicepValue<string> WebTestId
+        public BicepValue<ResourceIdentifier> WebTestId
         {
             get
             {
@@ -38,7 +39,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ComponentId. </summary>
-        public BicepValue<string> ComponentId
+        public BicepValue<ResourceIdentifier> ComponentId
         {
             get
             {
@@ -71,8 +72,8 @@ namespace Azure.Provisioning.Monitor
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _webTestId = DefineProperty<string>(nameof(WebTestId), new string[] { "webTestId" }, isRequired: true);
-            _componentId = DefineProperty<string>(nameof(ComponentId), new string[] { "componentId" }, isRequired: true);
+            _webTestId = DefineProperty<ResourceIdentifier>(nameof(WebTestId), new string[] { "webTestId" }, isRequired: true);
+            _componentId = DefineProperty<ResourceIdentifier>(nameof(ComponentId), new string[] { "componentId" }, isRequired: true);
             _failedLocationCount = DefineProperty<float>(nameof(FailedLocationCount), new string[] { "failedLocationCount" }, isRequired: true);
             DefineAdditionalProperties();
         }

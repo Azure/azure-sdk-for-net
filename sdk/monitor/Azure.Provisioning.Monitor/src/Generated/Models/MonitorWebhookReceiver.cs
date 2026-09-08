@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,12 +15,12 @@ namespace Azure.Provisioning.Monitor
     public partial class MonitorWebhookReceiver : ProvisionableConstruct
     {
         private BicepValue<string> _name;
-        private BicepValue<string> _serviceUri;
+        private BicepValue<Uri> _serviceUri;
         private BicepValue<bool> _useCommonAlertSchema;
         private BicepValue<bool> _useAadAuth;
         private BicepValue<string> _objectId;
-        private BicepValue<string> _identifierUri;
-        private BicepValue<string> _tenantId;
+        private BicepValue<Uri> _identifierUri;
+        private BicepValue<Guid> _tenantId;
         private BicepValue<string> _managedIdentity;
 
         /// <summary> Creates a new MonitorWebhookReceiver. </summary>
@@ -43,7 +44,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ServiceUri. </summary>
-        public BicepValue<string> ServiceUri
+        public BicepValue<Uri> ServiceUri
         {
             get
             {
@@ -103,7 +104,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the IdentifierUri. </summary>
-        public BicepValue<string> IdentifierUri
+        public BicepValue<Uri> IdentifierUri
         {
             get
             {
@@ -118,7 +119,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the TenantId. </summary>
-        public BicepValue<string> TenantId
+        public BicepValue<Guid> TenantId
         {
             get
             {
@@ -152,12 +153,12 @@ namespace Azure.Provisioning.Monitor
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _serviceUri = DefineProperty<string>(nameof(ServiceUri), new string[] { "serviceUri" }, isRequired: true);
+            _serviceUri = DefineProperty<Uri>(nameof(ServiceUri), new string[] { "serviceUri" }, isRequired: true);
             _useCommonAlertSchema = DefineProperty<bool>(nameof(UseCommonAlertSchema), new string[] { "useCommonAlertSchema" });
             _useAadAuth = DefineProperty<bool>(nameof(UseAadAuth), new string[] { "useAadAuth" });
             _objectId = DefineProperty<string>(nameof(ObjectId), new string[] { "objectId" });
-            _identifierUri = DefineProperty<string>(nameof(IdentifierUri), new string[] { "identifierUri" });
-            _tenantId = DefineProperty<string>(nameof(TenantId), new string[] { "tenantId" });
+            _identifierUri = DefineProperty<Uri>(nameof(IdentifierUri), new string[] { "identifierUri" });
+            _tenantId = DefineProperty<Guid>(nameof(TenantId), new string[] { "tenantId" });
             _managedIdentity = DefineProperty<string>(nameof(ManagedIdentity), new string[] { "managedIdentity" });
             DefineAdditionalProperties();
         }

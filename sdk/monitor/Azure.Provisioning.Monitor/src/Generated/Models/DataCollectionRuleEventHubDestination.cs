@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.Monitor
     /// <summary> The DataCollectionRuleEventHubDestination. </summary>
     public partial class DataCollectionRuleEventHubDestination : ProvisionableConstruct
     {
-        private BicepValue<string> _eventHubResourceId;
+        private BicepValue<ResourceIdentifier> _eventHubResourceId;
         private BicepValue<string> _name;
 
         /// <summary> Creates a new DataCollectionRuleEventHubDestination. </summary>
@@ -22,7 +23,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the EventHubResourceId. </summary>
-        public BicepValue<string> EventHubResourceId
+        public BicepValue<ResourceIdentifier> EventHubResourceId
         {
             get
             {
@@ -55,7 +56,7 @@ namespace Azure.Provisioning.Monitor
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _eventHubResourceId = DefineProperty<string>(nameof(EventHubResourceId), new string[] { "eventHubResourceId" });
+            _eventHubResourceId = DefineProperty<ResourceIdentifier>(nameof(EventHubResourceId), new string[] { "eventHubResourceId" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             DefineAdditionalProperties();
         }

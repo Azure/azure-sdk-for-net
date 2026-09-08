@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,12 +15,12 @@ namespace Azure.Provisioning.Monitor
     /// <summary> The Azure Automation Runbook notification receiver. </summary>
     public partial class MonitorAutomationRunbookReceiver : ProvisionableConstruct
     {
-        private BicepValue<string> _automationAccountId;
+        private BicepValue<ResourceIdentifier> _automationAccountId;
         private BicepValue<string> _runbookName;
-        private BicepValue<string> _webhookResourceId;
+        private BicepValue<ResourceIdentifier> _webhookResourceId;
         private BicepValue<bool> _isGlobalRunbook;
         private BicepValue<string> _name;
-        private BicepValue<string> _serviceUri;
+        private BicepValue<Uri> _serviceUri;
         private BicepValue<bool> _useCommonAlertSchema;
         private BicepValue<string> _managedIdentity;
 
@@ -28,7 +30,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the AutomationAccountId. </summary>
-        public BicepValue<string> AutomationAccountId
+        public BicepValue<ResourceIdentifier> AutomationAccountId
         {
             get
             {
@@ -58,7 +60,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the WebhookResourceId. </summary>
-        public BicepValue<string> WebhookResourceId
+        public BicepValue<ResourceIdentifier> WebhookResourceId
         {
             get
             {
@@ -103,7 +105,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ServiceUri. </summary>
-        public BicepValue<string> ServiceUri
+        public BicepValue<Uri> ServiceUri
         {
             get
             {
@@ -151,12 +153,12 @@ namespace Azure.Provisioning.Monitor
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _automationAccountId = DefineProperty<string>(nameof(AutomationAccountId), new string[] { "automationAccountId" }, isRequired: true);
+            _automationAccountId = DefineProperty<ResourceIdentifier>(nameof(AutomationAccountId), new string[] { "automationAccountId" }, isRequired: true);
             _runbookName = DefineProperty<string>(nameof(RunbookName), new string[] { "runbookName" }, isRequired: true);
-            _webhookResourceId = DefineProperty<string>(nameof(WebhookResourceId), new string[] { "webhookResourceId" }, isRequired: true);
+            _webhookResourceId = DefineProperty<ResourceIdentifier>(nameof(WebhookResourceId), new string[] { "webhookResourceId" }, isRequired: true);
             _isGlobalRunbook = DefineProperty<bool>(nameof(IsGlobalRunbook), new string[] { "isGlobalRunbook" }, isRequired: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
-            _serviceUri = DefineProperty<string>(nameof(ServiceUri), new string[] { "serviceUri" });
+            _serviceUri = DefineProperty<Uri>(nameof(ServiceUri), new string[] { "serviceUri" });
             _useCommonAlertSchema = DefineProperty<bool>(nameof(UseCommonAlertSchema), new string[] { "useCommonAlertSchema" });
             _managedIdentity = DefineProperty<string>(nameof(ManagedIdentity), new string[] { "managedIdentity" });
             DefineAdditionalProperties();

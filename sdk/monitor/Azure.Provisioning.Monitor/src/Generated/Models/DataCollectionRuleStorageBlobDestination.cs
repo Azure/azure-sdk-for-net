@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,7 +15,7 @@ namespace Azure.Provisioning.Monitor
     public partial class DataCollectionRuleStorageBlobDestination : ProvisionableConstruct
     {
         private BicepValue<string> _containerName;
-        private BicepValue<string> _storageAccountResourceId;
+        private BicepValue<ResourceIdentifier> _storageAccountResourceId;
         private BicepValue<string> _name;
 
         /// <summary> Creates a new DataCollectionRuleStorageBlobDestination. </summary>
@@ -38,7 +39,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the StorageAccountResourceId. </summary>
-        public BicepValue<string> StorageAccountResourceId
+        public BicepValue<ResourceIdentifier> StorageAccountResourceId
         {
             get
             {
@@ -72,7 +73,7 @@ namespace Azure.Provisioning.Monitor
         {
             base.DefineProvisionableProperties();
             _containerName = DefineProperty<string>(nameof(ContainerName), new string[] { "containerName" });
-            _storageAccountResourceId = DefineProperty<string>(nameof(StorageAccountResourceId), new string[] { "storageAccountResourceId" });
+            _storageAccountResourceId = DefineProperty<ResourceIdentifier>(nameof(StorageAccountResourceId), new string[] { "storageAccountResourceId" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             DefineAdditionalProperties();
         }

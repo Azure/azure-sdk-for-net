@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.Monitor
     /// <summary> An alert action. </summary>
     public partial class MetricAlertAction : ProvisionableConstruct
     {
-        private BicepValue<string> _actionGroupId;
+        private BicepValue<ResourceIdentifier> _actionGroupId;
         private BicepDictionary<string> _webHookProperties;
 
         /// <summary> Creates a new MetricAlertAction. </summary>
@@ -22,7 +23,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ActionGroupId. </summary>
-        public BicepValue<string> ActionGroupId
+        public BicepValue<ResourceIdentifier> ActionGroupId
         {
             get
             {
@@ -55,7 +56,7 @@ namespace Azure.Provisioning.Monitor
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _actionGroupId = DefineProperty<string>(nameof(ActionGroupId), new string[] { "actionGroupId" });
+            _actionGroupId = DefineProperty<ResourceIdentifier>(nameof(ActionGroupId), new string[] { "actionGroupId" });
             _webHookProperties = DefineDictionaryProperty<string>(nameof(WebHookProperties), new string[] { "webHookProperties" });
             DefineAdditionalProperties();
         }

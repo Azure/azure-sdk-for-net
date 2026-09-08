@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -13,7 +14,7 @@ namespace Azure.Provisioning.Monitor
     /// <summary> The DataCollectionRulePrivateLinkScopedResourceInfo. </summary>
     public partial class DataCollectionRulePrivateLinkScopedResourceInfo : ProvisionableConstruct
     {
-        private BicepValue<string> _resourceId;
+        private BicepValue<ResourceIdentifier> _resourceId;
         private BicepValue<string> _scopeId;
 
         /// <summary> Creates a new DataCollectionRulePrivateLinkScopedResourceInfo. </summary>
@@ -22,7 +23,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets the ResourceId. </summary>
-        public BicepValue<string> ResourceId
+        public BicepValue<ResourceIdentifier> ResourceId
         {
             get
             {
@@ -45,7 +46,7 @@ namespace Azure.Provisioning.Monitor
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _resourceId = DefineProperty<string>(nameof(ResourceId), new string[] { "resourceId" });
+            _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" });
             _scopeId = DefineProperty<string>(nameof(ScopeId), new string[] { "scopeId" });
             DefineAdditionalProperties();
         }

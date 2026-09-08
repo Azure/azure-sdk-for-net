@@ -5,6 +5,8 @@
 
 #nullable disable
 
+using System;
+using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,8 +16,8 @@ namespace Azure.Provisioning.Monitor
     public partial class MonitorLogicAppReceiver : ProvisionableConstruct
     {
         private BicepValue<string> _name;
-        private BicepValue<string> _resourceId;
-        private BicepValue<string> _callbackUri;
+        private BicepValue<ResourceIdentifier> _resourceId;
+        private BicepValue<Uri> _callbackUri;
         private BicepValue<bool> _useCommonAlertSchema;
         private BicepValue<string> _managedIdentity;
 
@@ -40,7 +42,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the ResourceId. </summary>
-        public BicepValue<string> ResourceId
+        public BicepValue<ResourceIdentifier> ResourceId
         {
             get
             {
@@ -55,7 +57,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the CallbackUri. </summary>
-        public BicepValue<string> CallbackUri
+        public BicepValue<Uri> CallbackUri
         {
             get
             {
@@ -104,8 +106,8 @@ namespace Azure.Provisioning.Monitor
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _resourceId = DefineProperty<string>(nameof(ResourceId), new string[] { "resourceId" }, isRequired: true);
-            _callbackUri = DefineProperty<string>(nameof(CallbackUri), new string[] { "callbackUrl" }, isRequired: true);
+            _resourceId = DefineProperty<ResourceIdentifier>(nameof(ResourceId), new string[] { "resourceId" }, isRequired: true);
+            _callbackUri = DefineProperty<Uri>(nameof(CallbackUri), new string[] { "callbackUrl" }, isRequired: true);
             _useCommonAlertSchema = DefineProperty<bool>(nameof(UseCommonAlertSchema), new string[] { "useCommonAlertSchema" });
             _managedIdentity = DefineProperty<string>(nameof(ManagedIdentity), new string[] { "managedIdentity" });
             DefineAdditionalProperties();

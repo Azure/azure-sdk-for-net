@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -17,7 +18,7 @@ namespace Azure.Provisioning.Monitor
         private BicepValue<string> _eventHubNameSpace;
         private BicepValue<string> _eventHubName;
         private BicepValue<bool> _useCommonAlertSchema;
-        private BicepValue<string> _tenantId;
+        private BicepValue<Guid> _tenantId;
         private BicepValue<string> _subscriptionId;
         private BicepValue<string> _managedIdentity;
 
@@ -87,7 +88,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the TenantId. </summary>
-        public BicepValue<string> TenantId
+        public BicepValue<Guid> TenantId
         {
             get
             {
@@ -139,7 +140,7 @@ namespace Azure.Provisioning.Monitor
             _eventHubNameSpace = DefineProperty<string>(nameof(EventHubNameSpace), new string[] { "eventHubNameSpace" }, isRequired: true);
             _eventHubName = DefineProperty<string>(nameof(EventHubName), new string[] { "eventHubName" }, isRequired: true);
             _useCommonAlertSchema = DefineProperty<bool>(nameof(UseCommonAlertSchema), new string[] { "useCommonAlertSchema" });
-            _tenantId = DefineProperty<string>(nameof(TenantId), new string[] { "tenantId" });
+            _tenantId = DefineProperty<Guid>(nameof(TenantId), new string[] { "tenantId" });
             _subscriptionId = DefineProperty<string>(nameof(SubscriptionId), new string[] { "subscriptionId" }, isRequired: true);
             _managedIdentity = DefineProperty<string>(nameof(ManagedIdentity), new string[] { "managedIdentity" });
             DefineAdditionalProperties();

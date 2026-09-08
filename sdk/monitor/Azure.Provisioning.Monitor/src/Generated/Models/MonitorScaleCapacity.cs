@@ -13,9 +13,9 @@ namespace Azure.Provisioning.Monitor
     /// <summary> The number of instances that can be used during this profile. </summary>
     public partial class MonitorScaleCapacity : ProvisionableConstruct
     {
-        private BicepValue<string> _minimum;
-        private BicepValue<string> _maximum;
-        private BicepValue<string> _default;
+        private BicepValue<int> _minimum;
+        private BicepValue<int> _maximum;
+        private BicepValue<int> _default;
 
         /// <summary> Creates a new MonitorScaleCapacity. </summary>
         public MonitorScaleCapacity()
@@ -23,7 +23,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Minimum. </summary>
-        public BicepValue<string> Minimum
+        public BicepValue<int> Minimum
         {
             get
             {
@@ -38,7 +38,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Maximum. </summary>
-        public BicepValue<string> Maximum
+        public BicepValue<int> Maximum
         {
             get
             {
@@ -53,7 +53,7 @@ namespace Azure.Provisioning.Monitor
         }
 
         /// <summary> Gets or sets the Default. </summary>
-        public BicepValue<string> Default
+        public BicepValue<int> Default
         {
             get
             {
@@ -71,9 +71,9 @@ namespace Azure.Provisioning.Monitor
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _minimum = DefineProperty<string>(nameof(Minimum), new string[] { "minimum" }, isRequired: true);
-            _maximum = DefineProperty<string>(nameof(Maximum), new string[] { "maximum" }, isRequired: true);
-            _default = DefineProperty<string>(nameof(Default), new string[] { "default" }, isRequired: true);
+            _minimum = DefineProperty<int>(nameof(Minimum), new string[] { "minimum" }, isRequired: true);
+            _maximum = DefineProperty<int>(nameof(Maximum), new string[] { "maximum" }, isRequired: true);
+            _default = DefineProperty<int>(nameof(Default), new string[] { "default" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
