@@ -60,7 +60,7 @@ foreach ($localFile in $localFiles) {
         $nugetMean = $nugetMeans[$base]
         $percentThreshold = 10
         $absoluteThresholdNs = 1000  # 1000 nanoseconds
-        $percentDiff = (($localMean - $nugetMean) / $nugetMean) * 100
+        $percentDiff = (($localMean - $nugetMean) / $localMean) * 100
         $absoluteDiff = [math]::Abs($localMean - $nugetMean)
         if ($percentDiff -gt $percentThreshold -and $absoluteDiff -gt $absoluteThresholdNs) {
             Write-Host "[$fileName] FAIL: [$base]: Local is slower by $([math]::Round($percentDiff,2))% ($([math]::Round($absoluteDiff,2)) ns)"

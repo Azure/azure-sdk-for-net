@@ -717,6 +717,7 @@ namespace Azure.Core
         public bool Contains(string name) { throw null; }
         public System.Collections.Generic.IEnumerator<Azure.Core.HttpHeader> GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+        public bool TryGetUrl(string name, out System.Uri? value) { throw null; }
         public bool TryGetValue(string name, out string? value) { throw null; }
         public bool TryGetValues(string name, out System.Collections.Generic.IEnumerable<string>? values) { throw null; }
     }

@@ -138,6 +138,22 @@ namespace Azure.Core
         }
 
         /// <summary>
+        /// Returns a header value parsed as an absolute URI.
+        /// </summary>
+        /// <param name="name">The header name.</param>
+        /// <param name="value">The parsed value, or <c>null</c> if the header is absent or invalid.</param>
+        /// <returns><c>true</c> if the header contains an absolute URI, otherwise <c>false</c>.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="name"/> is <c>null</c>.</exception>
+        public bool TryGetUrl(string name, [NotNullWhen(true)] out Uri? value)
+        {
+            Argument.AssertNotNull(name, nameof(name));
+
+            value = null;
+            return TryGetValue(name, out string? headerValue) &&
+                Uri.TryCreate(headerValue, UriKind.Absolute, out value);
+        }
+
+        /// <summary>
         /// Returns header values if the header is stored in the collection.
         /// </summary>
         /// <param name="name">The header name.</param>
