@@ -35,7 +35,7 @@ namespace Azure.Provisioning.AppContainers
         private ManagedEnvironmentPropertiesPeerTrafficConfiguration _peerTrafficConfiguration;
         private ManagedEnvironmentIngressConfiguration _ingressConfiguration;
         private BicepValue<ManagedEnvironmentMode> _environmentMode;
-        private BicepList<ContainerAppContainerPrivateEndpointConnection> _privateEndpointConnections;
+        private BicepList<ContainerAppPrivateEndpointConnection> _privateEndpointConnections;
         private BicepValue<ContainerAppPublicNetworkAccess> _publicNetworkAccess;
 
         /// <summary> Creates a new ManagedEnvironmentProperties. </summary>
@@ -334,7 +334,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<ContainerAppContainerPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<ContainerAppPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {
@@ -460,7 +460,7 @@ namespace Azure.Provisioning.AppContainers
             _peerTrafficConfiguration = DefineModelProperty<ManagedEnvironmentPropertiesPeerTrafficConfiguration>(nameof(PeerTrafficConfiguration), new string[] { "peerTrafficConfiguration" });
             _ingressConfiguration = DefineModelProperty<ManagedEnvironmentIngressConfiguration>(nameof(IngressConfiguration), new string[] { "ingressConfiguration" });
             _environmentMode = DefineProperty<ManagedEnvironmentMode>(nameof(EnvironmentMode), new string[] { "environmentMode" });
-            _privateEndpointConnections = DefineListProperty<ContainerAppContainerPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
+            _privateEndpointConnections = DefineListProperty<ContainerAppPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "privateEndpointConnections" }, isOutput: true);
             _publicNetworkAccess = DefineProperty<ContainerAppPublicNetworkAccess>(nameof(PublicNetworkAccess), new string[] { "publicNetworkAccess" });
             DefineAdditionalProperties();
         }

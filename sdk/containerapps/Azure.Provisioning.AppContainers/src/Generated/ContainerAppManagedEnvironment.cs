@@ -399,6 +399,19 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
+        /// <summary> Gets the PrivateEndpointConnections. </summary>
+        public BicepList<ContainerAppPrivateEndpointConnection> PrivateEndpointConnections
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedEnvironmentProperties();
+                }
+                return Properties.PrivateEndpointConnections;
+            }
+        }
+
         /// <summary> Gets or sets the PublicNetworkAccess. </summary>
         public BicepValue<ContainerAppPublicNetworkAccess> PublicNetworkAccess
         {

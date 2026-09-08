@@ -9,24 +9,6 @@ namespace Azure.Provisioning.AppContainers
 {
     public partial class ContainerAppManagedEnvironment
     {
-        private BicepList<ContainerAppPrivateEndpointConnection> _privateEndpointConnections;
-
-        // The managed-environment and container-app private endpoint resources share the same model schema. The generator
-        // currently selects ContainerAppContainerPrivateEndpointConnection for this property, which would change the
-        // ContainerAppPrivateEndpointConnection type released by the last stable library. Define the property in custom
-        // code to keep its public type unchanged while continuing to use the same wire path.
-        // TODO: Remove this workaround when the generator reads the existing contract and preserves its resource selection.
-        // https://github.com/Azure/azure-sdk-for-net/issues/60673
-        /// <summary> Gets the managed environment private endpoint connections. </summary>
-        public BicepList<ContainerAppPrivateEndpointConnection> PrivateEndpointConnections
-        {
-            get
-            {
-                Initialize();
-                return _privateEndpointConnections;
-            }
-        }
-
         /// <summary> Gets or sets whether peer traffic encryption is enabled. </summary>
         // The TypeSpec generator uses the improved PeerTrafficEncryptionIsEnabled name after https://github.com/Azure/azure-sdk-for-net/issues/60921.
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -45,11 +27,6 @@ namespace Azure.Provisioning.AppContainers
         {
             get => PeerAuthenticationIsMtlsEnabled;
             set => PeerAuthenticationIsMtlsEnabled = value;
-        }
-
-        partial void DefineAdditionalProperties()
-        {
-            _privateEndpointConnections = DefineListProperty<ContainerAppPrivateEndpointConnection>(nameof(PrivateEndpointConnections), new string[] { "properties", "privateEndpointConnections" }, isOutput: true);
         }
 
         public static partial class ResourceVersions

@@ -1399,7 +1399,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.AppContainers.ContainerAppManagedEnvironment Parent { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> PeerAuthenticationIsMtlsEnabled { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> PeerTrafficEncryptionIsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppContainerPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
+        public Azure.Provisioning.BicepList<Azure.Provisioning.AppContainers.ContainerAppPrivateEndpointConnection> PrivateEndpointConnections { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppEnvironmentProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppContainers.ContainerAppPublicNetworkAccess> PublicNetworkAccess { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.Net.IPAddress> StaticIP { get { throw null; } }

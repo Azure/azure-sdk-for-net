@@ -1567,9 +1567,9 @@ namespace Azure.ResourceManager.AppContainers
             return new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(Client, Id.AppendChildResource("detectorProperties", "rootApi"));
         }
 
-        /// <summary> Gets a collection of ManagedEnvironmentPrivateEndpointConnections in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
-        /// <returns> An object representing collection of ManagedEnvironmentPrivateEndpointConnections and their operations over a ContainerAppPrivateEndpointConnectionResource. </returns>
-        public virtual ContainerAppPrivateEndpointConnectionCollection GetManagedEnvironmentPrivateEndpointConnections()
+        /// <summary> Gets a collection of ContainerAppPrivateEndpointConnections in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppPrivateEndpointConnections and their operations over a ContainerAppPrivateEndpointConnectionResource. </returns>
+        public virtual ContainerAppPrivateEndpointConnectionCollection GetContainerAppPrivateEndpointConnections()
         {
             return GetCachedClient(client => new ContainerAppPrivateEndpointConnectionCollection(client, Id));
         }
@@ -1580,11 +1580,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppPrivateEndpointConnectionResource>> GetManagedEnvironmentPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppPrivateEndpointConnectionResource>> GetContainerAppPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return await GetManagedEnvironmentPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerAppPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a private endpoint connection for a given managed environment. </summary>
@@ -1593,11 +1593,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ContainerAppPrivateEndpointConnectionResource> GetManagedEnvironmentPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppPrivateEndpointConnectionResource> GetContainerAppPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return GetManagedEnvironmentPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetContainerAppPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppHttpRouteConfigs in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>

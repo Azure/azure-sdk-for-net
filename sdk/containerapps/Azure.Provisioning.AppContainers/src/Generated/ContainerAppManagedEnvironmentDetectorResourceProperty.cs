@@ -411,7 +411,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the PrivateEndpointConnections. </summary>
-        public BicepList<ContainerAppContainerPrivateEndpointConnection> PrivateEndpointConnections
+        public BicepList<ContainerAppPrivateEndpointConnection> PrivateEndpointConnections
         {
             get
             {

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.AppContainers
     /// <summary>
     /// A class representing a collection of <see cref="ContainerAppPrivateEndpointConnectionResource"/> and their operations.
     /// Each <see cref="ContainerAppPrivateEndpointConnectionResource"/> in the collection will belong to the same instance of <see cref="ContainerAppManagedEnvironmentResource"/>.
-    /// To get a <see cref="ContainerAppPrivateEndpointConnectionCollection"/> instance call the GetManagedEnvironmentPrivateEndpointConnections method from an instance of <see cref="ContainerAppManagedEnvironmentResource"/>.
+    /// To get a <see cref="ContainerAppPrivateEndpointConnectionCollection"/> instance call the GetContainerAppPrivateEndpointConnections method from an instance of <see cref="ContainerAppManagedEnvironmentResource"/>.
     /// </summary>
     public partial class ContainerAppPrivateEndpointConnectionCollection : ArmCollection, IEnumerable<ContainerAppPrivateEndpointConnectionResource>, IAsyncEnumerable<ContainerAppPrivateEndpointConnectionResource>
     {
@@ -38,9 +38,9 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ContainerAppPrivateEndpointConnectionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            TryGetApiVersion(ContainerAppPrivateEndpointConnectionResource.ResourceType, out string managedEnvironmentPrivateEndpointConnectionApiVersion);
+            TryGetApiVersion(ContainerAppPrivateEndpointConnectionResource.ResourceType, out string containerAppPrivateEndpointConnectionApiVersion);
             _managedEnvironmentPrivateEndpointConnectionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.AppContainers", ContainerAppPrivateEndpointConnectionResource.ResourceType.Namespace, Diagnostics);
-            _managedEnvironmentPrivateEndpointConnectionsRestClient = new ManagedEnvironmentPrivateEndpointConnections(_managedEnvironmentPrivateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, managedEnvironmentPrivateEndpointConnectionApiVersion ?? "2026-07-01");
+            _managedEnvironmentPrivateEndpointConnectionsRestClient = new ManagedEnvironmentPrivateEndpointConnections(_managedEnvironmentPrivateEndpointConnectionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerAppPrivateEndpointConnectionApiVersion ?? "2026-07-01");
             ValidateResourceId(id);
         }
 

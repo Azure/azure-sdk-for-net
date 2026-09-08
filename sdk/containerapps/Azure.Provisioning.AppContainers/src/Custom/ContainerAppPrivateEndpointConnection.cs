@@ -1,13 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
-using Microsoft.TypeSpec.Generator.Customizations;
-
 namespace Azure.Provisioning.AppContainers
 {
-    // Preserve the released managed-environment child resource name after the stable API added
-    // a second private endpoint connection resource under container apps.
-    [CodeGenType("ManagedEnvironmentPrivateEndpointConnection")]
     public partial class ContainerAppPrivateEndpointConnection
     {
         public static partial class ResourceVersions
