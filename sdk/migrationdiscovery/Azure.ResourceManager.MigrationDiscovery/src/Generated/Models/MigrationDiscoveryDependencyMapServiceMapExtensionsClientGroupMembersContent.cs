@@ -11,17 +11,17 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MigrationDiscovery.Models
 {
     /// <summary> DependencyMap ServiceMap extensions Client GroupMembers Request. </summary>
-    public partial class MigrationDiscoveryDependencyMapServiceMapextensionsClientGroupMembersRequestContent
+    public partial class MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapextensionsClientGroupMembersRequestContent"/>. </summary>
-        public MigrationDiscoveryDependencyMapServiceMapextensionsClientGroupMembersRequestContent()
+        /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent"/>. </summary>
+        public MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapextensionsClientGroupMembersRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent"/>. </summary>
         /// <param name="machineId"> id of machine. </param>
         /// <param name="processGroupName"> process group name. </param>
         /// <param name="processName"> name of process. </param>
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="endOn"> end time. </param>
         /// <param name="filters"> optional filters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationDiscoveryDependencyMapServiceMapextensionsClientGroupMembersRequestContent(string machineId, string processGroupName, string processName, DateTimeOffset? startOn, DateTimeOffset? endOn, DependencyMapServiceMapextensionsDependencyMapRequestFilters filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent(string machineId, string processGroupName, string processName, DateTimeOffset? startOn, DateTimeOffset? endOn, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MachineId = machineId;
             ProcessGroupName = processGroupName;
@@ -56,6 +56,6 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> optional filters. </summary>
-        public DependencyMapServiceMapextensionsDependencyMapRequestFilters Filters { get; set; }
+        public MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters Filters { get; set; }
     }
 }

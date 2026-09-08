@@ -10,21 +10,21 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MigrationDiscovery.Models
 {
-    /// <summary> Request body for Proxy site refresh action. </summary>
-    public partial class ProxySiteRefreshBody
+    /// <summary> SQL site refresh. </summary>
+    public partial class SqlSiteRefreshContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ProxySiteRefreshBody"/>. </summary>
-        public ProxySiteRefreshBody()
+        /// <summary> Initializes a new instance of <see cref="SqlSiteRefreshContent"/>. </summary>
+        public SqlSiteRefreshContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProxySiteRefreshBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlSiteRefreshContent"/>. </summary>
         /// <param name="applianceName"> Gets or sets the appliance name of the agent in the site. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ProxySiteRefreshBody(string applianceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlSiteRefreshContent(string applianceName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ApplianceName = applianceName;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;

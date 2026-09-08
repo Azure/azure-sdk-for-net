@@ -14,62 +14,62 @@ using Azure.ResourceManager.MigrationDiscovery;
 
 namespace Azure.ResourceManager.MigrationDiscovery.Models
 {
-    /// <summary> DependencyMap ServiceMap extensions ServerGroup Members Request. </summary>
-    public partial class MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent : IJsonModel<MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent>
+    /// <summary> DependencyMap ServiceMap extensions SingleMachine DetailedMap Request. </summary>
+    public partial class MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent : IJsonModel<MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent(document.RootElement, options);
+                        return DeserializeMigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMigrationDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent IPersistableModel<MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent IPersistableModel<MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="migrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent"> The <see cref="MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent migrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent)
+        /// <param name="migrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent"> The <see cref="MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent migrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent)
         {
-            if (migrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent == null)
+            if (migrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(migrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(migrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ServerPort))
+            if (Optional.IsDefined(MachineId))
             {
-                writer.WritePropertyName("serverPort"u8);
-                writer.WriteNumberValue(ServerPort.Value);
+                writer.WritePropertyName("machineId"u8);
+                writer.WriteStringValue(MachineId);
             }
             if (Optional.IsDefined(StartOn))
             {
@@ -124,43 +124,39 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent IJsonModel<MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent IJsonModel<MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent(document.RootElement, options);
+            return DeserializeMigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent DeserializeMigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent DeserializeMigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? serverPort = default;
+            string machineId = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
-            DependencyMapServiceMapextensionsDependencyMapRequestFilters filters = default;
+            MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("serverPort"u8))
+                if (prop.NameEquals("machineId"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    serverPort = prop.Value.GetInt32();
+                    machineId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("startTime"u8))
@@ -187,7 +183,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    filters = DependencyMapServiceMapextensionsDependencyMapRequestFilters.DeserializeDependencyMapServiceMapextensionsDependencyMapRequestFilters(prop.Value, options);
+                    filters = MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters.DeserializeMigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -195,7 +191,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent(serverPort, startOn, endOn, filters, additionalBinaryDataProperties);
+            return new MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent(machineId, startOn, endOn, filters, additionalBinaryDataProperties);
         }
     }
 }

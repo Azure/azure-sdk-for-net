@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MigrationDiscovery.Models
 {
     /// <summary> DependencyMap ServiceMapextensions Scope MapRequest. </summary>
-    public partial class MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent
+    public partial class MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent"/>. </summary>
-        public MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent()
+        /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent"/>. </summary>
+        public MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent"/>. </summary>
         /// <param name="startOn"> start time. </param>
         /// <param name="endOn"> end time. </param>
         /// <param name="filters"> optional filters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent(DateTimeOffset? startOn, DateTimeOffset? endOn, DependencyMapServiceMapextensionsDependencyMapRequestFilters filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent(DateTimeOffset? startOn, DateTimeOffset? endOn, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> optional filters. </summary>
-        public DependencyMapServiceMapextensionsDependencyMapRequestFilters Filters { get; set; }
+        public MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters Filters { get; set; }
     }
 }

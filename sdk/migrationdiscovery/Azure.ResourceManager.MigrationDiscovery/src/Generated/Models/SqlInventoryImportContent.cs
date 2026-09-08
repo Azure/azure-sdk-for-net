@@ -12,22 +12,22 @@ using Azure.Core;
 namespace Azure.ResourceManager.MigrationDiscovery.Models
 {
     /// <summary> SQL Inventory Import URI response object model. </summary>
-    public partial class SQLInventoryImportBody
+    public partial class SqlInventoryImportContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="SQLInventoryImportBody"/>. </summary>
-        public SQLInventoryImportBody()
+        /// <summary> Initializes a new instance of <see cref="SqlInventoryImportContent"/>. </summary>
+        public SqlInventoryImportContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="SQLInventoryImportBody"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="SqlInventoryImportContent"/>. </summary>
         /// <param name="jobArmId"> Gets or sets the job ARM ID. </param>
         /// <param name="uri"> Gets or sets the SAS URI. </param>
         /// <param name="importType"> Gets or sets the import type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal SQLInventoryImportBody(ResourceIdentifier jobArmId, string uri, SqlImportType? importType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal SqlInventoryImportContent(ResourceIdentifier jobArmId, string uri, SqlImportType? importType, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             JobArmId = jobArmId;
             Uri = uri;

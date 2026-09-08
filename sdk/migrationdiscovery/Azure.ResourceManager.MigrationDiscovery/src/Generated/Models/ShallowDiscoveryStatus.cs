@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
     {
         private readonly string _value;
         /// <summary> DiscoverySucceededAtleastOnce value. </summary>
-        private const string DiscoverySucceededAtleastOnceValue = "DiscoverySucceededAtleastOnce";
+        private const string DiscoverySucceededAtLeastOnceValue = "DiscoverySucceededAtleastOnce";
         /// <summary> DiscoveryFailed value. </summary>
         private const string DiscoveryFailedValue = "DiscoveryFailed";
         /// <summary> RunAsAccountNotAssociated value. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <summary> Disabled value. </summary>
         private const string DisabledValue = "Disabled";
         /// <summary> DiscoveryPartiallySucceded value. </summary>
-        private const string DiscoveryPartiallySuccededValue = "DiscoveryPartiallySucceded";
+        private const string DiscoveryPartiallySucceededValue = "DiscoveryPartiallySucceded";
         /// <summary> DiscoverySucceeded value. </summary>
         private const string DiscoverySucceededValue = "DiscoverySucceeded";
 
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         }
 
         /// <summary> DiscoverySucceededAtleastOnce value. </summary>
-        public static ShallowDiscoveryStatus DiscoverySucceededAtleastOnce { get; } = new ShallowDiscoveryStatus(DiscoverySucceededAtleastOnceValue);
+        public static ShallowDiscoveryStatus DiscoverySucceededAtLeastOnce { get; } = new ShallowDiscoveryStatus(DiscoverySucceededAtLeastOnceValue);
 
         /// <summary> DiscoveryFailed value. </summary>
         public static ShallowDiscoveryStatus DiscoveryFailed { get; } = new ShallowDiscoveryStatus(DiscoveryFailedValue);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public static ShallowDiscoveryStatus Disabled { get; } = new ShallowDiscoveryStatus(DisabledValue);
 
         /// <summary> DiscoveryPartiallySucceded value. </summary>
-        public static ShallowDiscoveryStatus DiscoveryPartiallySucceded { get; } = new ShallowDiscoveryStatus(DiscoveryPartiallySuccededValue);
+        public static ShallowDiscoveryStatus DiscoveryPartiallySucceeded { get; } = new ShallowDiscoveryStatus(DiscoveryPartiallySucceededValue);
 
         /// <summary> DiscoverySucceeded value. </summary>
         public static ShallowDiscoveryStatus DiscoverySucceeded { get; } = new ShallowDiscoveryStatus(DiscoverySucceededValue);

@@ -16,7 +16,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
     {
         private readonly string _value;
         /// <summary> DiscoverySucceededAtleastOnce value. </summary>
-        private const string DiscoverySucceededAtleastOnceValue = "DiscoverySucceededAtleastOnce";
+        private const string DiscoverySucceededAtLeastOnceValue = "DiscoverySucceededAtleastOnce";
         /// <summary> DiscoveryFailed value. </summary>
         private const string DiscoveryFailedValue = "DiscoveryFailed";
         /// <summary> RunAsAccountNotAssociated value. </summary>
@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <summary> Disabled value. </summary>
         private const string DisabledValue = "Disabled";
         /// <summary> DiscoveryPartiallySucceded value. </summary>
-        private const string DiscoveryPartiallySuccededValue = "DiscoveryPartiallySucceded";
+        private const string DiscoveryPartiallySucceededValue = "DiscoveryPartiallySucceded";
         /// <summary> DiscoverySucceeded value. </summary>
         private const string DiscoverySucceededValue = "DiscoverySucceeded";
 
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         }
 
         /// <summary> DiscoverySucceededAtleastOnce value. </summary>
-        public static StaticDiscoveryScopeStatus DiscoverySucceededAtleastOnce { get; } = new StaticDiscoveryScopeStatus(DiscoverySucceededAtleastOnceValue);
+        public static StaticDiscoveryScopeStatus DiscoverySucceededAtLeastOnce { get; } = new StaticDiscoveryScopeStatus(DiscoverySucceededAtLeastOnceValue);
 
         /// <summary> DiscoveryFailed value. </summary>
         public static StaticDiscoveryScopeStatus DiscoveryFailed { get; } = new StaticDiscoveryScopeStatus(DiscoveryFailedValue);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public static StaticDiscoveryScopeStatus Disabled { get; } = new StaticDiscoveryScopeStatus(DisabledValue);
 
         /// <summary> DiscoveryPartiallySucceded value. </summary>
-        public static StaticDiscoveryScopeStatus DiscoveryPartiallySucceded { get; } = new StaticDiscoveryScopeStatus(DiscoveryPartiallySuccededValue);
+        public static StaticDiscoveryScopeStatus DiscoveryPartiallySucceeded { get; } = new StaticDiscoveryScopeStatus(DiscoveryPartiallySucceededValue);
 
         /// <summary> DiscoverySucceeded value. </summary>
         public static StaticDiscoveryScopeStatus DiscoverySucceeded { get; } = new StaticDiscoveryScopeStatus(DiscoverySucceededValue);

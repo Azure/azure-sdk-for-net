@@ -14,62 +14,62 @@ using Azure.ResourceManager.MigrationDiscovery;
 
 namespace Azure.ResourceManager.MigrationDiscovery.Models
 {
-    /// <summary> DependencyMap ServiceMapextensions Scope MapRequest. </summary>
-    public partial class MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent : IJsonModel<MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent>
+    /// <summary> DependencyMap ServiceMap extensions ServerGroup Members Request. </summary>
+    public partial class MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent : IJsonModel<MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent(document.RootElement, options);
+                        return DeserializeMigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMigrationDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent IPersistableModel<MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent IPersistableModel<MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="migrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent"> The <see cref="MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent migrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent)
+        /// <param name="migrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent"> The <see cref="MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent migrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent)
         {
-            if (migrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent == null)
+            if (migrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(migrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(migrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,15 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent)} does not support writing '{format}' format.");
+            }
+            if (Optional.IsDefined(ServerPort))
+            {
+                writer.WritePropertyName("serverPort"u8);
+                writer.WriteNumberValue(ServerPort.Value);
             }
             if (Optional.IsDefined(StartOn))
             {
@@ -119,35 +124,45 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent IJsonModel<MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent IJsonModel<MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent(document.RootElement, options);
+            return DeserializeMigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent DeserializeMigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent(JsonElement element, ModelReaderWriterOptions options)
+        internal static MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent DeserializeMigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            int? serverPort = default;
             DateTimeOffset? startOn = default;
             DateTimeOffset? endOn = default;
-            DependencyMapServiceMapextensionsDependencyMapRequestFilters filters = default;
+            MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("serverPort"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serverPort = prop.Value.GetInt32();
+                    continue;
+                }
                 if (prop.NameEquals("startTime"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -172,7 +187,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     {
                         continue;
                     }
-                    filters = DependencyMapServiceMapextensionsDependencyMapRequestFilters.DeserializeDependencyMapServiceMapextensionsDependencyMapRequestFilters(prop.Value, options);
+                    filters = MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters.DeserializeMigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -180,7 +195,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent(startOn, endOn, filters, additionalBinaryDataProperties);
+            return new MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent(serverPort, startOn, endOn, filters, additionalBinaryDataProperties);
         }
     }
 }

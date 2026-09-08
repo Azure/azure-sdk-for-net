@@ -11,8 +11,7 @@ using Azure.ResourceManager.MigrationDiscovery;
 
 namespace Azure.ResourceManager.MigrationDiscovery.Models
 {
-    /// <summary> Job Error Summary. </summary>
-    public partial class SqlImportJobErrorSummary
+    internal partial class SqlImportJobErrorSummary
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;

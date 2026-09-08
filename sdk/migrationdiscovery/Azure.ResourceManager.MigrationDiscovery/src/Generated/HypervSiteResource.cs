@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BinaryData>> ClientGroupMembersAsync(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapextensionsClientGroupMembersRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BinaryData>> ClientGroupMembersAsync(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateClientGroupMembersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapextensionsClientGroupMembersRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateClientGroupMembersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MigrationDiscoveryArmOperation<BinaryData> operation = new MigrationDiscoveryArmOperation<BinaryData>(
                     new BinaryDataOperationSource(),
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BinaryData> ClientGroupMembers(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapextensionsClientGroupMembersRequestContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BinaryData> ClientGroupMembers(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateClientGroupMembersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapextensionsClientGroupMembersRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateClientGroupMembersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MigrationDiscoveryArmOperation<BinaryData> operation = new MigrationDiscoveryArmOperation<BinaryData>(
                     new BinaryDataOperationSource(),
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BinaryData>> ExportDependenciesAsync(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapextensionsExportDependenciesRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BinaryData>> ExportDependenciesAsync(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -890,7 +890,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateExportDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapextensionsExportDependenciesRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateExportDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MigrationDiscoveryArmOperation<BinaryData> operation = new MigrationDiscoveryArmOperation<BinaryData>(
                     new BinaryDataOperationSource(),
@@ -937,7 +937,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BinaryData> ExportDependencies(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapextensionsExportDependenciesRequestContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BinaryData> ExportDependencies(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateExportDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapextensionsExportDependenciesRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateExportDependenciesRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MigrationDiscoveryArmOperation<BinaryData> operation = new MigrationDiscoveryArmOperation<BinaryData>(
                     new BinaryDataOperationSource(),
@@ -1116,7 +1116,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BinaryData>> GenerateCoarseMapAsync(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BinaryData>> GenerateCoarseMapAsync(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1128,7 +1128,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateGenerateCoarseMapRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateGenerateCoarseMapRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MigrationDiscoveryArmOperation<BinaryData> operation = new MigrationDiscoveryArmOperation<BinaryData>(
                     new BinaryDataOperationSource(),
@@ -1175,7 +1175,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BinaryData> GenerateCoarseMap(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BinaryData> GenerateCoarseMap(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1187,7 +1187,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateGenerateCoarseMapRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateGenerateCoarseMapRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MigrationDiscoveryArmOperation<BinaryData> operation = new MigrationDiscoveryArmOperation<BinaryData>(
                     new BinaryDataOperationSource(),
@@ -1234,7 +1234,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BinaryData>> GenerateDetailedMapAsync(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapextensionsSingleMachineDetailedMapRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BinaryData>> GenerateDetailedMapAsync(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1246,7 +1246,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateGenerateDetailedMapRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapextensionsSingleMachineDetailedMapRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateGenerateDetailedMapRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MigrationDiscoveryArmOperation<BinaryData> operation = new MigrationDiscoveryArmOperation<BinaryData>(
                     new BinaryDataOperationSource(),
@@ -1293,7 +1293,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BinaryData> GenerateDetailedMap(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapextensionsSingleMachineDetailedMapRequestContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BinaryData> GenerateDetailedMap(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1305,7 +1305,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateGenerateDetailedMapRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapextensionsSingleMachineDetailedMapRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateGenerateDetailedMapRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MigrationDiscoveryArmOperation<BinaryData> operation = new MigrationDiscoveryArmOperation<BinaryData>(
                     new BinaryDataOperationSource(),
@@ -1554,7 +1554,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<ArmOperation<BinaryData>> ServerGroupMembersAsync(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<BinaryData>> ServerGroupMembersAsync(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1566,7 +1566,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateServerGroupMembersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateServerGroupMembersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MigrationDiscoveryArmOperation<BinaryData> operation = new MigrationDiscoveryArmOperation<BinaryData>(
                     new BinaryDataOperationSource(),
@@ -1613,7 +1613,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual ArmOperation<BinaryData> ServerGroupMembers(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent content, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<BinaryData> ServerGroupMembers(WaitUntil waitUntil, MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -1625,7 +1625,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateServerGroupMembersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent.ToRequestContent(content), context);
+                HttpMessage message = _hypervDependencyMapControllerRestClient.CreateServerGroupMembersRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MigrationDiscoveryArmOperation<BinaryData> operation = new MigrationDiscoveryArmOperation<BinaryData>(
                     new BinaryDataOperationSource(),

@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MigrationDiscovery.Models
 {
     /// <summary> DependencyMap ServiceMap extensions ServerGroup Members Request. </summary>
-    public partial class MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent
+    public partial class MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent"/>. </summary>
-        public MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent()
+        /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent"/>. </summary>
+        public MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent"/>. </summary>
         /// <param name="serverPort"> port of server. </param>
         /// <param name="startOn"> start time. </param>
         /// <param name="endOn"> end time. </param>
         /// <param name="filters"> optional filters. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent(int? serverPort, DateTimeOffset? startOn, DateTimeOffset? endOn, DependencyMapServiceMapextensionsDependencyMapRequestFilters filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent(int? serverPort, DateTimeOffset? startOn, DateTimeOffset? endOn, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServerPort = serverPort;
             StartOn = startOn;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         public DateTimeOffset? EndOn { get; set; }
 
         /// <summary> optional filters. </summary>
-        public DependencyMapServiceMapextensionsDependencyMapRequestFilters Filters { get; set; }
+        public MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters Filters { get; set; }
     }
 }

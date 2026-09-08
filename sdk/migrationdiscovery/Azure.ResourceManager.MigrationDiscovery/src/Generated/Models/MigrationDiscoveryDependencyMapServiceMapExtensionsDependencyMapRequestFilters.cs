@@ -12,23 +12,23 @@ using Azure.ResourceManager.MigrationDiscovery;
 namespace Azure.ResourceManager.MigrationDiscovery.Models
 {
     /// <summary> DependencyMap Service Map extensions Dependency Map Request Filters. </summary>
-    public partial class DependencyMapServiceMapextensionsDependencyMapRequestFilters
+    public partial class MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="DependencyMapServiceMapextensionsDependencyMapRequestFilters"/>. </summary>
-        public DependencyMapServiceMapextensionsDependencyMapRequestFilters()
+        /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters"/>. </summary>
+        public MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters()
         {
             MachineIds = new ChangeTrackingList<string>();
             ProcessIds = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="DependencyMapServiceMapextensionsDependencyMapRequestFilters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters"/>. </summary>
         /// <param name="machineIds"> array of machine ids. </param>
         /// <param name="processIds"> array of process Ids. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DependencyMapServiceMapextensionsDependencyMapRequestFilters(IList<string> machineIds, IList<string> processIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters(IList<string> machineIds, IList<string> processIds, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MachineIds = machineIds;
             ProcessIds = processIds;

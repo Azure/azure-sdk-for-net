@@ -13,8 +13,7 @@ using Azure.ResourceManager.MigrationDiscovery;
 
 namespace Azure.ResourceManager.MigrationDiscovery.Models
 {
-    /// <summary> Job Error Summary. </summary>
-    public partial class SqlImportJobErrorSummary : IJsonModel<SqlImportJobErrorSummary>
+    internal partial class SqlImportJobErrorSummary : IJsonModel<SqlImportJobErrorSummary>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.MigrationDiscovery;
 using Azure.ResourceManager.Models;
@@ -18,13 +17,6 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmMigrationDiscoveryModelFactory
     {
-
-        /// <param name="error"> The error object. </param>
-        /// <returns> A new <see cref="Models.ErrorResponse"/> instance for mocking. </returns>
-        public static ErrorResponse ErrorResponse(ResponseError error = default)
-        {
-            return new ErrorResponse(error, default);
-        }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -1077,10 +1069,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="startOn"> start time. </param>
         /// <param name="endOn"> end time. </param>
         /// <param name="filters"> optional filters. </param>
-        /// <returns> A new <see cref="Models.MigrationDiscoveryDependencyMapServiceMapextensionsClientGroupMembersRequestContent"/> instance for mocking. </returns>
-        public static MigrationDiscoveryDependencyMapServiceMapextensionsClientGroupMembersRequestContent MigrationDiscoveryDependencyMapServiceMapextensionsClientGroupMembersRequestContent(string machineId = default, string processGroupName = default, string processName = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DependencyMapServiceMapextensionsDependencyMapRequestFilters filters = default)
+        /// <returns> A new <see cref="Models.MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent"/> instance for mocking. </returns>
+        public static MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent(string machineId = default, string processGroupName = default, string processName = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = default)
         {
-            return new MigrationDiscoveryDependencyMapServiceMapextensionsClientGroupMembersRequestContent(
+            return new MigrationDiscoveryDependencyMapServiceMapExtensionsClientGroupMembersContent(
                 machineId,
                 processGroupName,
                 processName,
@@ -1092,50 +1084,50 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
 
         /// <param name="machineIds"> array of machine ids. </param>
         /// <param name="processIds"> array of process Ids. </param>
-        /// <returns> A new <see cref="Models.DependencyMapServiceMapextensionsDependencyMapRequestFilters"/> instance for mocking. </returns>
-        public static DependencyMapServiceMapextensionsDependencyMapRequestFilters DependencyMapServiceMapextensionsDependencyMapRequestFilters(IEnumerable<string> machineIds = default, IEnumerable<string> processIds = default)
+        /// <returns> A new <see cref="Models.MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters"/> instance for mocking. </returns>
+        public static MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters(IEnumerable<string> machineIds = default, IEnumerable<string> processIds = default)
         {
             machineIds ??= new ChangeTrackingList<string>();
             processIds ??= new ChangeTrackingList<string>();
 
-            return new DependencyMapServiceMapextensionsDependencyMapRequestFilters((machineIds ?? new ChangeTrackingList<string>()).ToList(), (processIds ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters((machineIds ?? new ChangeTrackingList<string>()).ToList(), (processIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="startOn"> start time. </param>
         /// <param name="endOn"> end time. </param>
-        /// <returns> A new <see cref="Models.MigrationDiscoveryDependencyMapServiceMapextensionsExportDependenciesRequestContent"/> instance for mocking. </returns>
-        public static MigrationDiscoveryDependencyMapServiceMapextensionsExportDependenciesRequestContent MigrationDiscoveryDependencyMapServiceMapextensionsExportDependenciesRequestContent(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default)
+        /// <returns> A new <see cref="Models.MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent"/> instance for mocking. </returns>
+        public static MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default)
         {
-            return new MigrationDiscoveryDependencyMapServiceMapextensionsExportDependenciesRequestContent(startOn, endOn, default);
+            return new MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent(startOn, endOn, default);
         }
 
         /// <param name="startOn"> start time. </param>
         /// <param name="endOn"> end time. </param>
         /// <param name="filters"> optional filters. </param>
-        /// <returns> A new <see cref="Models.MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent"/> instance for mocking. </returns>
-        public static MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DependencyMapServiceMapextensionsDependencyMapRequestFilters filters = default)
+        /// <returns> A new <see cref="Models.MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent"/> instance for mocking. </returns>
+        public static MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent(DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = default)
         {
-            return new MigrationDiscoveryDependencyMapServiceMapextensionsScopeMapRequestContent(startOn, endOn, filters, default);
+            return new MigrationDiscoveryDependencyMapServiceMapExtensionsScopeMapContent(startOn, endOn, filters, default);
         }
 
         /// <param name="machineId"> id of machine. </param>
         /// <param name="startOn"> start time. </param>
         /// <param name="endOn"> end time. </param>
         /// <param name="filters"> optional filters. </param>
-        /// <returns> A new <see cref="Models.MigrationDiscoveryDependencyMapServiceMapextensionsSingleMachineDetailedMapRequestContent"/> instance for mocking. </returns>
-        public static MigrationDiscoveryDependencyMapServiceMapextensionsSingleMachineDetailedMapRequestContent MigrationDiscoveryDependencyMapServiceMapextensionsSingleMachineDetailedMapRequestContent(string machineId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DependencyMapServiceMapextensionsDependencyMapRequestFilters filters = default)
+        /// <returns> A new <see cref="Models.MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent"/> instance for mocking. </returns>
+        public static MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent(string machineId = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = default)
         {
-            return new MigrationDiscoveryDependencyMapServiceMapextensionsSingleMachineDetailedMapRequestContent(machineId, startOn, endOn, filters, default);
+            return new MigrationDiscoveryDependencyMapServiceMapExtensionsSingleMachineDetailedMapContent(machineId, startOn, endOn, filters, default);
         }
 
         /// <param name="serverPort"> port of server. </param>
         /// <param name="startOn"> start time. </param>
         /// <param name="endOn"> end time. </param>
         /// <param name="filters"> optional filters. </param>
-        /// <returns> A new <see cref="Models.MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent"/> instance for mocking. </returns>
-        public static MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent(int? serverPort = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DependencyMapServiceMapextensionsDependencyMapRequestFilters filters = default)
+        /// <returns> A new <see cref="Models.MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent"/> instance for mocking. </returns>
+        public static MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent(int? serverPort = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, MigrationDiscoveryDependencyMapServiceMapExtensionsDependencyMapRequestFilters filters = default)
         {
-            return new MigrationDiscoveryDependencyMapServiceMapextensionsServerGroupMembersRequestContent(serverPort, startOn, endOn, filters, default);
+            return new MigrationDiscoveryDependencyMapServiceMapExtensionsServerGroupMembersContent(serverPort, startOn, endOn, filters, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2307,10 +2299,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="jobArmId"> Gets or sets the job ARM ID. </param>
         /// <param name="uri"> Gets or sets the SAS URI. </param>
         /// <param name="importType"> Gets or sets the import type. </param>
-        /// <returns> A new <see cref="Models.SQLInventoryImportBody"/> instance for mocking. </returns>
-        public static SQLInventoryImportBody SQLInventoryImportBody(ResourceIdentifier jobArmId = default, string uri = default, SqlImportType? importType = default)
+        /// <returns> A new <see cref="Models.SqlInventoryImportContent"/> instance for mocking. </returns>
+        public static SqlInventoryImportContent SqlInventoryImportContent(ResourceIdentifier jobArmId = default, string uri = default, SqlImportType? importType = default)
         {
-            return new SQLInventoryImportBody(jobArmId, uri, importType, default);
+            return new SqlInventoryImportContent(jobArmId, uri, importType, default);
         }
 
         /// <param name="applianceName"> Gets or sets the Appliance Name. </param>
@@ -2322,10 +2314,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         }
 
         /// <param name="applianceName"> Gets or sets the appliance name of the agent in the site. </param>
-        /// <returns> A new <see cref="Models.SqlSiteRefreshBody"/> instance for mocking. </returns>
-        public static SqlSiteRefreshBody SqlSiteRefreshBody(string applianceName = default)
+        /// <returns> A new <see cref="Models.SqlSiteRefreshContent"/> instance for mocking. </returns>
+        public static SqlSiteRefreshContent SqlSiteRefreshContent(string applianceName = default)
         {
-            return new SqlSiteRefreshBody(applianceName, default);
+            return new SqlSiteRefreshContent(applianceName, default);
         }
 
         /// <param name="serverCount"> Gets or sets the number of servers discovered in the site. </param>
@@ -2370,40 +2362,6 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                 systemData,
                 properties,
                 default);
-        }
-
-        /// <param name="blobName"> Gets the Blob name for the blob to fetch Import file from. </param>
-        /// <param name="blobSasUri"> Gets the blob SAS Uri of the input import file. </param>
-        /// <param name="jobResult"> Gets the Job Result status. </param>
-        /// <param name="numberOfServersImported"> Gets the Number of servers imported. </param>
-        /// <param name="numberOfDatabasesImported"> Gets the Number of databases imported. </param>
-        /// <param name="numberOfAvailabilityGroupsImported"> Gets the Number of availability groups imported. </param>
-        /// <param name="blobCreationTimeStamp"> Gets the Blob creation time stamp. </param>
-        /// <param name="errorSummary"> Gets the Job Error Summary. </param>
-        /// <returns> A new <see cref="Models.ImportSqlInventoryJobProperties"/> instance for mocking. </returns>
-        public static ImportSqlInventoryJobProperties ImportSqlInventoryJobProperties(string blobName = default, string blobSasUri = default, ImportSqlInventoryJobResult? jobResult = default, int? numberOfServersImported = default, int? numberOfDatabasesImported = default, int? numberOfAvailabilityGroupsImported = default, DateTimeOffset? blobCreationTimeStamp = default, SqlImportJobErrorSummary errorSummary = default)
-        {
-            return new ImportSqlInventoryJobProperties(
-                blobName,
-                blobSasUri,
-                jobResult,
-                numberOfServersImported,
-                numberOfDatabasesImported,
-                numberOfAvailabilityGroupsImported,
-                blobCreationTimeStamp,
-                errorSummary,
-                default);
-        }
-
-        /// <param name="errors"> Collection of errors encountered during the SQL import operation. </param>
-        /// <param name="errorCount"> Gets or sets the Number of errors while trying to import SQL Inventory from CSV. </param>
-        /// <param name="warningCount"> Gets or sets the Number of warnings while trying to import SQL Inventory from CSV. Warnings are included in the 'errors' array. </param>
-        /// <returns> A new <see cref="Models.SqlImportJobErrorSummary"/> instance for mocking. </returns>
-        public static SqlImportJobErrorSummary SqlImportJobErrorSummary(IEnumerable<ErrorResponse> errors = default, int? errorCount = default, int? warningCount = default)
-        {
-            errors ??= new ChangeTrackingList<ErrorResponse>();
-
-            return new SqlImportJobErrorSummary((errors ?? new ChangeTrackingList<ErrorResponse>()).ToList(), errorCount, warningCount, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2920,10 +2878,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         }
 
         /// <param name="applianceName"> Gets or sets the appliance name of the agent in the site. </param>
-        /// <returns> A new <see cref="Models.ProxySiteRefreshBody"/> instance for mocking. </returns>
-        public static ProxySiteRefreshBody ProxySiteRefreshBody(string applianceName = default)
+        /// <returns> A new <see cref="Models.ProxySiteRefreshContent"/> instance for mocking. </returns>
+        public static ProxySiteRefreshContent ProxySiteRefreshContent(string applianceName = default)
         {
-            return new ProxySiteRefreshBody(applianceName, default);
+            return new ProxySiteRefreshContent(applianceName, default);
         }
 
         /// <param name="webServerCount"> Gets or sets the number of web servers discovered in the site. </param>

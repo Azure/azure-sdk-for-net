@@ -1,5 +1,5 @@
 directory: specification/migrate/resource-manager/Microsoft.OffAzure/OffAzure
-commit: c4797496e3f5466e26bb2a0da49b075f07cd302c
+commit: 854caced56cb16c95544eb0074fdedf3a80d437d
 repo: Azure/azure-rest-api-specs
 additionalDirectories: 
 

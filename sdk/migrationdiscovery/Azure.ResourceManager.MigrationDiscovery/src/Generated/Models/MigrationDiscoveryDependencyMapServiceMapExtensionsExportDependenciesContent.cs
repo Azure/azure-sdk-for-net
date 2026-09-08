@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.MigrationDiscovery.Models
 {
     /// <summary> DependencyMap ServiceMap extensions ExportDependencies Request. </summary>
-    public partial class MigrationDiscoveryDependencyMapServiceMapextensionsExportDependenciesRequestContent
+    public partial class MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapextensionsExportDependenciesRequestContent"/>. </summary>
-        public MigrationDiscoveryDependencyMapServiceMapextensionsExportDependenciesRequestContent()
+        /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent"/>. </summary>
+        public MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapextensionsExportDependenciesRequestContent"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent"/>. </summary>
         /// <param name="startOn"> start time. </param>
         /// <param name="endOn"> end time. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MigrationDiscoveryDependencyMapServiceMapextensionsExportDependenciesRequestContent(DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MigrationDiscoveryDependencyMapServiceMapExtensionsExportDependenciesContent(DateTimeOffset? startOn, DateTimeOffset? endOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartOn = startOn;
             EndOn = endOn;

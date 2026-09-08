@@ -16,68 +16,68 @@ using Azure.ResourceManager.MigrationDiscovery;
 namespace Azure.ResourceManager.MigrationDiscovery.Models
 {
     /// <summary> SQL Inventory Import URI response object model. </summary>
-    public partial class SQLInventoryImportBody : IJsonModel<SQLInventoryImportBody>
+    public partial class SqlInventoryImportContent : IJsonModel<SqlInventoryImportContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SQLInventoryImportBody PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SqlInventoryImportContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SQLInventoryImportBody>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlInventoryImportContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeSQLInventoryImportBody(document.RootElement, options);
+                        return DeserializeSqlInventoryImportContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SQLInventoryImportBody)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlInventoryImportContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SQLInventoryImportBody>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlInventoryImportContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMigrationDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(SQLInventoryImportBody)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlInventoryImportContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<SQLInventoryImportBody>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SqlInventoryImportContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SQLInventoryImportBody IPersistableModel<SQLInventoryImportBody>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SqlInventoryImportContent IPersistableModel<SqlInventoryImportContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<SQLInventoryImportBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SqlInventoryImportContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="sqlInventoryImportBody"> The <see cref="SQLInventoryImportBody"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(SQLInventoryImportBody sqlInventoryImportBody)
+        /// <param name="sqlInventoryImportContent"> The <see cref="SqlInventoryImportContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SqlInventoryImportContent sqlInventoryImportContent)
         {
-            if (sqlInventoryImportBody == null)
+            if (sqlInventoryImportContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(sqlInventoryImportBody, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(sqlInventoryImportContent, ModelSerializationExtensions.WireOptions);
         }
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SQLInventoryImportBody"/> from. </param>
-        internal static SQLInventoryImportBody FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="SqlInventoryImportContent"/> from. </param>
+        internal static SqlInventoryImportContent FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeSQLInventoryImportBody(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeSqlInventoryImportContent(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<SQLInventoryImportBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SqlInventoryImportContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -88,10 +88,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SQLInventoryImportBody>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlInventoryImportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SQLInventoryImportBody)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlInventoryImportContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(JobArmId))
             {
@@ -127,24 +127,24 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        SQLInventoryImportBody IJsonModel<SQLInventoryImportBody>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SqlInventoryImportContent IJsonModel<SqlInventoryImportContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual SQLInventoryImportBody JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SqlInventoryImportContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<SQLInventoryImportBody>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlInventoryImportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SQLInventoryImportBody)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlInventoryImportContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeSQLInventoryImportBody(document.RootElement, options);
+            return DeserializeSqlInventoryImportContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static SQLInventoryImportBody DeserializeSQLInventoryImportBody(JsonElement element, ModelReaderWriterOptions options)
+        internal static SqlInventoryImportContent DeserializeSqlInventoryImportContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SQLInventoryImportBody(jobArmId, uri, importType, additionalBinaryDataProperties);
+            return new SqlInventoryImportContent(jobArmId, uri, importType, additionalBinaryDataProperties);
         }
     }
 }

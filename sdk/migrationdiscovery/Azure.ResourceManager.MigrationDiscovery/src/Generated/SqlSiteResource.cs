@@ -773,12 +773,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<SQLInventoryImportBody>> ExportUriAsync(SQLInventoryImportBody body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<SqlInventoryImportContent>> ExportUriAsync(SqlInventoryImportContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlSitesControllerClientDiagnostics.CreateScope("SqlSiteResource.ExportUri");
             scope.Start();
@@ -788,9 +788,9 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlSitesControllerRestClient.CreateExportUriRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SQLInventoryImportBody.ToRequestContent(body), context);
+                HttpMessage message = _sqlSitesControllerRestClient.CreateExportUriRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlInventoryImportContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SQLInventoryImportBody> response = Response.FromValue(SQLInventoryImportBody.FromResponse(result), result);
+                Response<SqlInventoryImportContent> response = Response.FromValue(SqlInventoryImportContent.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -825,12 +825,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<SQLInventoryImportBody> ExportUri(SQLInventoryImportBody body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<SqlInventoryImportContent> ExportUri(SqlInventoryImportContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlSitesControllerClientDiagnostics.CreateScope("SqlSiteResource.ExportUri");
             scope.Start();
@@ -840,9 +840,9 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlSitesControllerRestClient.CreateExportUriRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SQLInventoryImportBody.ToRequestContent(body), context);
+                HttpMessage message = _sqlSitesControllerRestClient.CreateExportUriRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlInventoryImportContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SQLInventoryImportBody> response = Response.FromValue(SQLInventoryImportBody.FromResponse(result), result);
+                Response<SqlInventoryImportContent> response = Response.FromValue(SqlInventoryImportContent.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -984,12 +984,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Import parameters. </param>
+        /// <param name="content"> Import parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation> ImportUriAsync(WaitUntil waitUntil, SQLInventoryImportBody body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation> ImportUriAsync(WaitUntil waitUntil, SqlInventoryImportContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlSitesControllerClientDiagnostics.CreateScope("SqlSiteResource.ImportUri");
             scope.Start();
@@ -999,7 +999,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlSitesControllerRestClient.CreateImportUriRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SQLInventoryImportBody.ToRequestContent(body), context);
+                HttpMessage message = _sqlSitesControllerRestClient.CreateImportUriRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlInventoryImportContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MigrationDiscoveryArmOperation operation = new MigrationDiscoveryArmOperation(_sqlSitesControllerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1037,12 +1037,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> Import parameters. </param>
+        /// <param name="content"> Import parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation ImportUri(WaitUntil waitUntil, SQLInventoryImportBody body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation ImportUri(WaitUntil waitUntil, SqlInventoryImportContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlSitesControllerClientDiagnostics.CreateScope("SqlSiteResource.ImportUri");
             scope.Start();
@@ -1052,7 +1052,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlSitesControllerRestClient.CreateImportUriRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SQLInventoryImportBody.ToRequestContent(body), context);
+                HttpMessage message = _sqlSitesControllerRestClient.CreateImportUriRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlInventoryImportContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MigrationDiscoveryArmOperation operation = new MigrationDiscoveryArmOperation(_sqlSitesControllerClientDiagnostics, Pipeline, message.Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
@@ -1090,12 +1090,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<ArmOperation<BinaryData>> RefreshAsync(WaitUntil waitUntil, SqlSiteRefreshBody body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<ArmOperation<BinaryData>> RefreshAsync(WaitUntil waitUntil, SqlSiteRefreshContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlSitesControllerClientDiagnostics.CreateScope("SqlSiteResource.Refresh");
             scope.Start();
@@ -1105,7 +1105,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlSitesControllerRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlSiteRefreshBody.ToRequestContent(body), context);
+                HttpMessage message = _sqlSitesControllerRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlSiteRefreshContent.ToRequestContent(content), context);
                 Response response = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 MigrationDiscoveryArmOperation<BinaryData> operation = new MigrationDiscoveryArmOperation<BinaryData>(
                     new BinaryDataOperationSource(),
@@ -1149,12 +1149,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual ArmOperation<BinaryData> Refresh(WaitUntil waitUntil, SqlSiteRefreshBody body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual ArmOperation<BinaryData> Refresh(WaitUntil waitUntil, SqlSiteRefreshContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlSitesControllerClientDiagnostics.CreateScope("SqlSiteResource.Refresh");
             scope.Start();
@@ -1164,7 +1164,7 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlSitesControllerRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlSiteRefreshBody.ToRequestContent(body), context);
+                HttpMessage message = _sqlSitesControllerRestClient.CreateRefreshRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlSiteRefreshContent.ToRequestContent(content), context);
                 Response response = Pipeline.ProcessMessage(message, context);
                 MigrationDiscoveryArmOperation<BinaryData> operation = new MigrationDiscoveryArmOperation<BinaryData>(
                     new BinaryDataOperationSource(),
@@ -1303,12 +1303,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual async Task<Response<SQLInventoryImportBody>> ValidateAndImportUriAsync(SQLInventoryImportBody body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual async Task<Response<SqlInventoryImportContent>> ValidateAndImportUriAsync(SqlInventoryImportContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlSitesControllerClientDiagnostics.CreateScope("SqlSiteResource.ValidateAndImportUri");
             scope.Start();
@@ -1318,9 +1318,9 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlSitesControllerRestClient.CreateValidateAndImportUriRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SQLInventoryImportBody.ToRequestContent(body), context);
+                HttpMessage message = _sqlSitesControllerRestClient.CreateValidateAndImportUriRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlInventoryImportContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<SQLInventoryImportBody> response = Response.FromValue(SQLInventoryImportBody.FromResponse(result), result);
+                Response<SqlInventoryImportContent> response = Response.FromValue(SqlInventoryImportContent.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1355,12 +1355,12 @@ namespace Azure.ResourceManager.MigrationDiscovery
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="body"> The content of the action request. </param>
+        /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        public virtual Response<SQLInventoryImportBody> ValidateAndImportUri(SQLInventoryImportBody body, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public virtual Response<SqlInventoryImportContent> ValidateAndImportUri(SqlInventoryImportContent content, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(body, nameof(body));
+            Argument.AssertNotNull(content, nameof(content));
 
             using DiagnosticScope scope = _sqlSitesControllerClientDiagnostics.CreateScope("SqlSiteResource.ValidateAndImportUri");
             scope.Start();
@@ -1370,9 +1370,9 @@ namespace Azure.ResourceManager.MigrationDiscovery
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _sqlSitesControllerRestClient.CreateValidateAndImportUriRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SQLInventoryImportBody.ToRequestContent(body), context);
+                HttpMessage message = _sqlSitesControllerRestClient.CreateValidateAndImportUriRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, SqlInventoryImportContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<SQLInventoryImportBody> response = Response.FromValue(SQLInventoryImportBody.FromResponse(result), result);
+                Response<SqlInventoryImportContent> response = Response.FromValue(SqlInventoryImportContent.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

@@ -15,8 +15,7 @@ using Azure.ResourceManager.MigrationDiscovery;
 
 namespace Azure.ResourceManager.MigrationDiscovery.Models
 {
-    /// <summary> Error response. </summary>
-    public partial class ErrorResponse : IJsonModel<ErrorResponse>
+    internal partial class ErrorResponse : IJsonModel<ErrorResponse>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

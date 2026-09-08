@@ -64,8 +64,5 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
 
         /// <summary> Gets the Blob creation time stamp. </summary>
         public DateTimeOffset? BlobCreationTimeStamp { get; }
-
-        /// <summary> Gets the Job Error Summary. </summary>
-        public SqlImportJobErrorSummary ErrorSummary { get; }
     }
 }

@@ -14,62 +14,62 @@ using Azure.ResourceManager.MigrationDiscovery;
 
 namespace Azure.ResourceManager.MigrationDiscovery.Models
 {
-    /// <summary> Request body for Proxy site refresh action. </summary>
-    public partial class ProxySiteRefreshBody : IJsonModel<ProxySiteRefreshBody>
+    /// <summary> SQL site refresh. </summary>
+    public partial class SqlSiteRefreshContent : IJsonModel<SqlSiteRefreshContent>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProxySiteRefreshBody PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual SqlSiteRefreshContent PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProxySiteRefreshBody>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlSiteRefreshContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeProxySiteRefreshBody(document.RootElement, options);
+                        return DeserializeSqlSiteRefreshContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProxySiteRefreshBody)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlSiteRefreshContent)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProxySiteRefreshBody>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlSiteRefreshContent>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerMigrationDiscoveryContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ProxySiteRefreshBody)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlSiteRefreshContent)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ProxySiteRefreshBody>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<SqlSiteRefreshContent>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProxySiteRefreshBody IPersistableModel<ProxySiteRefreshBody>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        SqlSiteRefreshContent IPersistableModel<SqlSiteRefreshContent>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ProxySiteRefreshBody>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<SqlSiteRefreshContent>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="proxySiteRefreshBody"> The <see cref="ProxySiteRefreshBody"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(ProxySiteRefreshBody proxySiteRefreshBody)
+        /// <param name="sqlSiteRefreshContent"> The <see cref="SqlSiteRefreshContent"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(SqlSiteRefreshContent sqlSiteRefreshContent)
         {
-            if (proxySiteRefreshBody == null)
+            if (sqlSiteRefreshContent == null)
             {
                 return null;
             }
-            return RequestContent.Create(proxySiteRefreshBody, ModelSerializationExtensions.WireOptions);
+            return RequestContent.Create(sqlSiteRefreshContent, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ProxySiteRefreshBody>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<SqlSiteRefreshContent>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProxySiteRefreshBody>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlSiteRefreshContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProxySiteRefreshBody)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlSiteRefreshContent)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(ApplianceName))
             {
@@ -109,24 +109,24 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ProxySiteRefreshBody IJsonModel<ProxySiteRefreshBody>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        SqlSiteRefreshContent IJsonModel<SqlSiteRefreshContent>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ProxySiteRefreshBody JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual SqlSiteRefreshContent JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ProxySiteRefreshBody>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SqlSiteRefreshContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProxySiteRefreshBody)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlSiteRefreshContent)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeProxySiteRefreshBody(document.RootElement, options);
+            return DeserializeSqlSiteRefreshContent(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ProxySiteRefreshBody DeserializeProxySiteRefreshBody(JsonElement element, ModelReaderWriterOptions options)
+        internal static SqlSiteRefreshContent DeserializeSqlSiteRefreshContent(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MigrationDiscovery.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProxySiteRefreshBody(applianceName, additionalBinaryDataProperties);
+            return new SqlSiteRefreshContent(applianceName, additionalBinaryDataProperties);
         }
     }
 }
