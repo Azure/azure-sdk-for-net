@@ -82,15 +82,15 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Duration))
             {

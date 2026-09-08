@@ -82,17 +82,17 @@ namespace Azure.ResourceManager.Chaos.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn, "O");
+                writer.WriteStringValue(StartsOn, "O");
             }
             if (Optional.IsDefined(ExecutionPlanJson))
             {
                 writer.WritePropertyName("executionPlanJson"u8);
                 writer.WriteStringValue(ExecutionPlanJson);
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Resources))
             {
@@ -172,9 +172,9 @@ namespace Azure.ResourceManager.Chaos.Models
                 return null;
             }
             ScenarioValidationState status = default;
-            DateTimeOffset startOn = default;
+            DateTimeOffset startsOn = default;
             string executionPlanJson = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? endsOn = default;
             IReadOnlyList<ScenarioRunResource> resources = default;
             IReadOnlyList<ScenarioRunResource> excludedResources = default;
             IReadOnlyList<ChaosOperationError> errors = default;
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("executionPlanJson"u8))
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("resources"u8))
@@ -264,9 +264,9 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             return new ValidationProperties(
                 status,
-                startOn,
+                startsOn,
                 executionPlanJson,
-                endOn,
+                endsOn,
                 resources ?? new ChangeTrackingList<ScenarioRunResource>(),
                 excludedResources ?? new ChangeTrackingList<ScenarioRunResource>(),
                 errors ?? new ChangeTrackingList<ChaosOperationError>(),

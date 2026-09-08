@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Support
         {
             get
             {
-                return Properties is null ? default : Properties.ProblemStartOn;
+                return Properties is null ? default : Properties.ProblemStartsOn;
             }
             set
             {
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Support
                 {
                     Properties = new SupportTicketDetailsProperties();
                 }
-                Properties.ProblemStartOn = value;
+                Properties.ProblemStartsOn = value;
             }
         }
 
