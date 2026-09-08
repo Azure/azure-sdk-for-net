@@ -548,6 +548,21 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
             RunExecuteWithMultiPollingInterval(secondSetExpectedNames, product, executor, blobItemsUpdated.Count);
         }
 
+        [Test]
+        public async Task ExecuteAsync_CompleteListing_IncludesBlobsModifiedAfterPollStart()
+        {
+            IBlobListenerStrategy product = new ScanBlobScanLogHybridPollingStrategy(new TestBlobScanInfoManager(), _exceptionHandler, NullLogger<BlobListener>.Instance);
+            LambdaBlobTriggerExecutor executor = new LambdaBlobTriggerExecutor();
+
+            List<string> expectedNames = new List<string>();
+            expectedNames.Add(CreateBlobAndUploadToContainer(_blobContainerMock, _blobItems, lastModified: DateTimeOffset.UtcNow.AddMinutes(-1)));
+            expectedNames.Add(CreateBlobAndUploadToContainer(_blobContainerMock, _blobItems, lastModified: DateTimeOffset.UtcNow.AddSeconds(5)));
+
+            await product.RegisterAsync(_blobClientMock.Object, _blobContainerMock.Object, executor, CancellationToken.None);
+
+            RunExecuterWithExpectedBlobs(expectedNames, product, executor);
+        }
+
         private void RunExecuterWithExpectedBlobsInternal(IDictionary<string, int> blobNameMap, IBlobListenerStrategy product, LambdaBlobTriggerExecutor executor, int expectedCount)
         {
             if (blobNameMap.Count == 0)

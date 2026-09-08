@@ -199,9 +199,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
         /// <summary>
         /// This method is called each polling interval for all containers. The method divides the
         /// budget of allocated number of blobs to query, for each container we query a page of
-        /// that size and we keep the continuation token for the next time. AS a curser, we use
-        /// the time stamp when the current cycle on the container started. blobs newer than that
-        /// time will be considered new and registrations will be notified
+        /// that size and we keep the continuation token for the next time. As a cursor, we use
+        /// the time stamp when the current cycle on the container started. On a multi-page scan,
+        /// only blobs with LastModified at or before that time are considered new. On a complete
+        /// single-page listing, concurrently modified blobs are also notified.
         /// </summary>
         /// <param name="container"></param>
         /// <param name="containerScanInfo"> Information that includes the last cycle start
@@ -259,6 +260,13 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
             List<BlobBaseClient> newBlobs = new List<BlobBaseClient>();
 
+            // A listing with no incoming continuation token and no next page is a complete
+            // scan of the container. Concurrent creates/updates (LastModified after PollingStartTime)
+            // were listed, so they can be notified and used as the high-water mark. On a multi-page
+            // scan, keep the PollingStartTime window from #53767 so blobs that land on a later page
+            // are not skipped forever.
+            bool completeContainerListing = continuationToken == null && string.IsNullOrEmpty(page.ContinuationToken);
+
             // Type cast to IStorageBlob is safe due to useFlatBlobListing: true above.
             foreach (BlobItem currentBlob in currentBlobs)
             {
@@ -266,9 +274,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
 
                 var properties = currentBlob.Properties;
                 DateTimeOffset lastModifiedTimestamp = properties.LastModified.Value;
+                bool withinPollWindow = lastModifiedTimestamp <= containerScanInfo.PollingStartTime;
 
                 if (lastModifiedTimestamp > containerScanInfo.CurrentSweepCycleLatestModified &&
-                    (continuationToken == null || lastModifiedTimestamp <= containerScanInfo.PollingStartTime))
+                    (completeContainerListing || withinPollWindow))
                 {
                     containerScanInfo.CurrentSweepCycleLatestModified = lastModifiedTimestamp;
                 }
@@ -276,7 +285,7 @@ namespace Microsoft.Azure.WebJobs.Extensions.Storage.Blobs.Listeners
                 // Blob timestamps are rounded to the nearest second, so make sure we continue to check
                 // the previous timestamp to catch any blobs that came in slightly after our previous poll.
                 if (lastModifiedTimestamp >= containerScanInfo.LastSweepCycleLatestModified &&
-                    lastModifiedTimestamp <= containerScanInfo.PollingStartTime)
+                    (completeContainerListing || withinPollWindow))
                 {
                     newBlobs.Add(container.GetBlobClient(currentBlob.Name));
                 }

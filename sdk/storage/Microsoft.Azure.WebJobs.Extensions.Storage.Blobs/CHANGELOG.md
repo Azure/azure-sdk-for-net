@@ -7,6 +7,7 @@
 ### Breaking Changes
 
 ### Bugs Fixed
+- Fixed a regression from 5.3.8 where a complete (single-page) container scan could skip blobs whose `LastModified` was after `PollingStartTime`, then advance the stored scan watermark past those blobs so listing never notified them (#62763).
 
 ### Other Changes
 
