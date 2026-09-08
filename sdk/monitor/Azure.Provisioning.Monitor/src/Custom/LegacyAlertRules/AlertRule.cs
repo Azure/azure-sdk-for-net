@@ -11,12 +11,15 @@ using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
 using System;
+using System.ComponentModel;
 
 namespace Azure.Provisioning.Monitor;
 
+// This compatibility type preserves the previously shipped classic Alert Rule API, which is not represented in the current TypeSpec specification.
 /// <summary>
 /// AlertRule.
 /// </summary>
+[EditorBrowsable(EditorBrowsableState.Never)]
 public partial class AlertRule : ProvisionableResource
 {
     /// <summary>

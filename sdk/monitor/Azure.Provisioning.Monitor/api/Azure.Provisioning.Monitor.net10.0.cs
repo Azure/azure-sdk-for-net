@@ -79,6 +79,7 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ResourceId { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class AlertRule : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public AlertRule(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
@@ -102,11 +103,13 @@ namespace Azure.Provisioning.Monitor
             public static readonly string V2016_03_01;
         }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class AlertRuleAction : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AlertRuleAction() { }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class AlertRuleCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AlertRuleCondition() { }
@@ -843,6 +846,7 @@ namespace Azure.Provisioning.Monitor
         Private = 1,
         Public = 2,
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class LocationThresholdRuleCondition : Azure.Provisioning.Monitor.AlertRuleCondition
     {
         public LocationThresholdRuleCondition() { }
@@ -933,6 +937,7 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<string> MaxSizePerMinuteInGB { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class ManagementEventAggregationCondition : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public ManagementEventAggregationCondition() { }
@@ -941,6 +946,7 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<System.TimeSpan> WindowSize { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class ManagementEventRuleCondition : Azure.Provisioning.Monitor.AlertRuleCondition
     {
         public ManagementEventRuleCondition() { }
@@ -1682,6 +1688,7 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class RuleDataSource : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public RuleDataSource() { }
@@ -1691,6 +1698,7 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<string> ResourceLocation { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class RuleEmailAction : Azure.Provisioning.Monitor.AlertRuleAction
     {
         public RuleEmailAction() { }
@@ -1698,6 +1706,7 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<bool> SendToServiceOwners { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class RuleManagementEventDataSource : Azure.Provisioning.Monitor.RuleDataSource
     {
         public RuleManagementEventDataSource() { }
@@ -1712,6 +1721,7 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<string> SubStatus { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class RuleMetricDataSource : Azure.Provisioning.Monitor.RuleDataSource
     {
         public RuleMetricDataSource() { }
@@ -1725,6 +1735,7 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<System.TimeSpan> TimeToResolve { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class RuleWebhookAction : Azure.Provisioning.Monitor.AlertRuleAction
     {
         public RuleWebhookAction() { }
@@ -1959,6 +1970,7 @@ namespace Azure.Provisioning.Monitor
             public static readonly string V2023_05_01_PREVIEW;
         }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public partial class ThresholdRuleCondition : Azure.Provisioning.Monitor.AlertRuleCondition
     {
         public ThresholdRuleCondition() { }
@@ -1968,6 +1980,7 @@ namespace Azure.Provisioning.Monitor
         public Azure.Provisioning.BicepValue<System.TimeSpan> WindowSize { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
     public enum ThresholdRuleConditionTimeAggregationType
     {
         Average = 0,
