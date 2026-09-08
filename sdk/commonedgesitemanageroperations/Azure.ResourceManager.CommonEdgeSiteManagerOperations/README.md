@@ -1,4 +1,4 @@
-# Azure.ResourceManager.CommonEdgeSiteManagerOperations management client library for .NET
+# Azure Common Edge Site Manager Operations management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
