@@ -7,7 +7,7 @@ namespace Azure.Provisioning.Expressions;
 /// Represents a Bicep integer literal expression.
 /// </summary>
 /// <param name="value">The integer value.</param>
-public class IntLiteralExpression(int value) : LiteralExpression(value)
+public partial class IntLiteralExpression(int value) : LiteralExpression(value)
 {
     /// <summary>
     /// Gets the integer value.

@@ -7,7 +7,7 @@ namespace Azure.Provisioning.Expressions;
 /// Represents a Bicep statement that wraps a single expression.
 /// </summary>
 /// <param name="expression">The expression.</param>
-public class ExpressionStatement(BicepExpression expression) : BicepStatement
+public partial class ExpressionStatement(BicepExpression expression) : BicepStatement
 {
     /// <summary>
     /// Gets the expression.

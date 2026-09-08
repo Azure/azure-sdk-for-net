@@ -7,7 +7,7 @@ namespace Azure.Provisioning.Expressions;
 /// Represents a Bicep array expression.
 /// </summary>
 /// <param name="values">The array element expressions.</param>
-public class ArrayExpression(params BicepExpression[] values) : BicepExpression
+public partial class ArrayExpression(params BicepExpression[] values) : BicepExpression
 {
     /// <summary>
     /// Gets the array element expressions.

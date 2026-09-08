@@ -7,7 +7,7 @@ namespace Azure.Provisioning.Expressions;
 /// Represents a Bicep string literal expression.
 /// </summary>
 /// <param name="value">The string value.</param>
-public class StringLiteralExpression(string value) : LiteralExpression(value)
+public partial class StringLiteralExpression(string value) : LiteralExpression(value)
 {
     /// <summary>
     /// Gets the string value.
