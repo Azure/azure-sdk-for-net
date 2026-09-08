@@ -36,14 +36,14 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="startDay"> The day of the week when the scheduled start occurs. </param>
         /// <param name="startTime"> The local time of day when the scheduled start occurs in 24-hour (HH:mm) format. </param>
         /// <param name="utcOffset"> The UTC offset for the scheduled time in HH:mm format, -14:00 to +14:00. </param>
-        /// <param name="absoluteStartOn"> The absolute UTC time when the gate will complete. Set when the gate is created. </param>
+        /// <param name="absoluteStartsOn"> The absolute UTC time when the gate will complete. Set when the gate is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledStartProperties(DayOfWeek startDay, string startTime, string utcOffset, DateTimeOffset? absoluteStartOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ScheduledStartProperties(DayOfWeek startDay, string startTime, string utcOffset, DateTimeOffset? absoluteStartsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartDay = startDay;
             StartTime = startTime;
             UtcOffset = utcOffset;
-            AbsoluteStartOn = absoluteStartOn;
+            AbsoluteStartsOn = absoluteStartsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,6 +57,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public string UtcOffset { get; set; }
 
         /// <summary> The absolute UTC time when the gate will complete. Set when the gate is created. </summary>
-        public DateTimeOffset? AbsoluteStartOn { get; }
+        public DateTimeOffset? AbsoluteStartsOn { get; }
     }
 }

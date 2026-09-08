@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public static Azure.ResourceManager.ContainerServiceFleet.Models.PropertySelectorRequirementPatch PropertySelectorRequirementPatch(string name = null, Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetPropertySelectorOperator? @operator = default(Azure.ResourceManager.ContainerServiceFleet.Models.ContainerServiceFleetPropertySelectorOperator?), System.Collections.Generic.IEnumerable<string> values = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.RolloutStrategy RolloutStrategy(Azure.ResourceManager.ContainerServiceFleet.Models.RolloutStrategyType? type = default(Azure.ResourceManager.ContainerServiceFleet.Models.RolloutStrategyType?), string clusterUpdateStrategyName = null) { throw null; }
         public static Azure.ResourceManager.ContainerServiceFleet.Models.ScheduledStartConfiguration ScheduledStartConfiguration(Azure.ResourceManager.ContainerServiceFleet.Models.DayOfWeek startDay = default(Azure.ResourceManager.ContainerServiceFleet.Models.DayOfWeek), string startTime = null, string utcOffset = null) { throw null; }
-        public static Azure.ResourceManager.ContainerServiceFleet.Models.ScheduledStartProperties ScheduledStartProperties(Azure.ResourceManager.ContainerServiceFleet.Models.DayOfWeek startDay = default(Azure.ResourceManager.ContainerServiceFleet.Models.DayOfWeek), string startTime = null, string utcOffset = null, System.DateTimeOffset? absoluteStartOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.ContainerServiceFleet.Models.ScheduledStartProperties ScheduledStartProperties(Azure.ResourceManager.ContainerServiceFleet.Models.DayOfWeek startDay = default(Azure.ResourceManager.ContainerServiceFleet.Models.DayOfWeek), string startTime = null, string utcOffset = null, System.DateTimeOffset? absoluteStartsOn = default(System.DateTimeOffset?)) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct AutoUpgradeLastTriggerStatus : System.IEquatable<Azure.ResourceManager.ContainerServiceFleet.Models.AutoUpgradeLastTriggerStatus>
@@ -2166,7 +2166,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
     public partial class ScheduledStartProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.ContainerServiceFleet.Models.ScheduledStartProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.ContainerServiceFleet.Models.ScheduledStartProperties>
     {
         public ScheduledStartProperties(Azure.ResourceManager.ContainerServiceFleet.Models.DayOfWeek startDay, string startTime, string utcOffset) { }
-        public System.DateTimeOffset? AbsoluteStartOn { get { throw null; } }
+        public System.DateTimeOffset? AbsoluteStartsOn { get { throw null; } }
         public Azure.ResourceManager.ContainerServiceFleet.Models.DayOfWeek StartDay { get { throw null; } set { } }
         public string StartTime { get { throw null; } set { } }
         public string UtcOffset { get { throw null; } set { } }

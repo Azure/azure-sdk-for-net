@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             writer.WriteStringValue(StartTime);
             writer.WritePropertyName("utcOffset"u8);
             writer.WriteStringValue(UtcOffset);
-            if (options.Format != "W" && Optional.IsDefined(AbsoluteStartOn))
+            if (options.Format != "W" && Optional.IsDefined(AbsoluteStartsOn))
             {
                 writer.WritePropertyName("absoluteStartTime"u8);
-                writer.WriteStringValue(AbsoluteStartOn.Value, "O");
+                writer.WriteStringValue(AbsoluteStartsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             DayOfWeek startDay = default;
             string startTime = default;
             string utcOffset = default;
-            DateTimeOffset? absoluteStartOn = default;
+            DateTimeOffset? absoluteStartsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    absoluteStartOn = prop.Value.GetDateTimeOffset("O");
+                    absoluteStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScheduledStartProperties(startDay, startTime, utcOffset, absoluteStartOn, additionalBinaryDataProperties);
+            return new ScheduledStartProperties(startDay, startTime, utcOffset, absoluteStartsOn, additionalBinaryDataProperties);
         }
     }
 }
