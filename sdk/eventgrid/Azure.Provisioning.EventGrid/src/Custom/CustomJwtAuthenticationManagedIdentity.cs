@@ -13,8 +13,10 @@ public partial class CustomJwtAuthenticationManagedIdentity
     private BicepValue<string> _userAssignedIdentity;
 
     /// <summary> The user-assigned identity to use. </summary>
-    // TypeSpec and the management library use ResourceIdentifier. Preserve the released
-    // provisioning string type on the same wire path to avoid a breaking API change.
+    // Changing the released BicepValue<string> property to BicepValue<ResourceIdentifier>
+    // fails ApiCompat with CP0002. The C# alternate type is shared with the management
+    // library, where ResourceIdentifier is the existing API, so preserve the provisioning
+    // string type on the same wire path with custom code.
     [CodeGenMember("UserAssignedIdentity")]
     public BicepValue<string> UserAssignedIdentity
     {

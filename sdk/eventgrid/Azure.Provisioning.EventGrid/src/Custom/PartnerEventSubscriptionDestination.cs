@@ -13,8 +13,10 @@ public partial class PartnerEventSubscriptionDestination
     private BicepValue<string> _resourceId;
 
     /// <summary> The Azure Resource ID of the partner destination. </summary>
-    // TypeSpec and the management library use ResourceIdentifier. Preserve the released
-    // provisioning string type and nested wire path to avoid a breaking API change.
+    // Changing the released BicepValue<string> property to BicepValue<ResourceIdentifier>
+    // fails ApiCompat with CP0002. The C# alternate type is shared with the management
+    // library, where ResourceIdentifier is the existing API, so preserve the provisioning
+    // string type and nested wire path with custom code.
     [CodeGenMember("ResourceId")]
     public BicepValue<string> ResourceId
     {
