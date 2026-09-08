@@ -55,8 +55,27 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="schedule"> Schedule information for the Job Definition. </param>
         /// <param name="dataIntegrityValidation"> The checksum validation mode for the job definition. </param>
         /// <param name="isPermissionsPreserved"> Boolean to preserve permissions or not. </param>
+        /// <param name="isCrossTenantJob">
+        /// Indicates that this Job Definition is a cross-tenant job where the
+        /// counterpart endpoint resides in a different Azure AD tenant. When true,
+        /// `crossTenantEndpointTenantId` and `crossTenantEndpointResourceId` must be
+        /// provided. Defaults to false. Cannot be modified after the Job Definition is
+        /// created.
+        /// </param>
+        /// <param name="crossTenantEndpointTenantId">
+        /// The Azure AD tenant ID of the cross-tenant source endpoint. Required when
+        /// `isCrossTenantJob` is true. Cannot be modified after the Job Definition is
+        /// created.
+        /// </param>
+        /// <param name="crossTenantEndpointResourceId">
+        /// Full ARM resource ID of the cross-tenant (foreign) endpoint. On the
+        /// source-tenant copy this is the TARGET endpoint; on the
+        /// target-tenant copy this is the SOURCE endpoint.
+        /// </param>
+        /// <param name="syncMode"> The synchronization mode for the Job Definition. </param>
+        /// <param name="moverSyncedUntil"> The last time the mover was synchronized. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobDefinitionProperties(string description, JobType? jobType, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, JobDefinitionPropertiesSourceTargetMap sourceTargetMap, StorageMoverProvisioningState? provisioningState, IList<ResourceIdentifier> connections, StorageMoverScheduleInfo schedule, StorageMoverDataIntegrityValidation? dataIntegrityValidation, bool? isPermissionsPreserved, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobDefinitionProperties(string description, JobType? jobType, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, JobDefinitionPropertiesSourceTargetMap sourceTargetMap, StorageMoverProvisioningState? provisioningState, IList<ResourceIdentifier> connections, StorageMoverScheduleInfo schedule, StorageMoverDataIntegrityValidation? dataIntegrityValidation, bool? isPermissionsPreserved, bool? isCrossTenantJob, string crossTenantEndpointTenantId, string crossTenantEndpointResourceId, string syncMode, DateTimeOffset? moverSyncedUntil, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             JobType = jobType;
@@ -78,6 +97,11 @@ namespace Azure.ResourceManager.StorageMover.Models
             Schedule = schedule;
             DataIntegrityValidation = dataIntegrityValidation;
             IsPermissionsPreserved = isPermissionsPreserved;
+            IsCrossTenantJob = isCrossTenantJob;
+            CrossTenantEndpointTenantId = crossTenantEndpointTenantId;
+            CrossTenantEndpointResourceId = crossTenantEndpointResourceId;
+            SyncMode = syncMode;
+            MoverSyncedUntil = moverSyncedUntil;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -140,6 +164,35 @@ namespace Azure.ResourceManager.StorageMover.Models
 
         /// <summary> Boolean to preserve permissions or not. </summary>
         public bool? IsPermissionsPreserved { get; set; }
+
+        /// <summary>
+        /// Indicates that this Job Definition is a cross-tenant job where the
+        /// counterpart endpoint resides in a different Azure AD tenant. When true,
+        /// `crossTenantEndpointTenantId` and `crossTenantEndpointResourceId` must be
+        /// provided. Defaults to false. Cannot be modified after the Job Definition is
+        /// created.
+        /// </summary>
+        public bool? IsCrossTenantJob { get; set; }
+
+        /// <summary>
+        /// The Azure AD tenant ID of the cross-tenant source endpoint. Required when
+        /// `isCrossTenantJob` is true. Cannot be modified after the Job Definition is
+        /// created.
+        /// </summary>
+        public string CrossTenantEndpointTenantId { get; set; }
+
+        /// <summary>
+        /// Full ARM resource ID of the cross-tenant (foreign) endpoint. On the
+        /// source-tenant copy this is the TARGET endpoint; on the
+        /// target-tenant copy this is the SOURCE endpoint.
+        /// </summary>
+        public string CrossTenantEndpointResourceId { get; set; }
+
+        /// <summary> The synchronization mode for the Job Definition. </summary>
+        public string SyncMode { get; set; }
+
+        /// <summary> The last time the mover was synchronized. </summary>
+        public DateTimeOffset? MoverSyncedUntil { get; set; }
 
         /// <summary> Gets the Value. </summary>
         public IReadOnlyList<SourceTargetMap> SourceTargetMapValue
