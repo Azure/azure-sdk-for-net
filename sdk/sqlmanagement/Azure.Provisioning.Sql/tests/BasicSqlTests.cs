@@ -10,6 +10,35 @@ namespace Azure.Provisioning.Sql.Tests;
 public class BasicSqlTests
 {
     [Test]
+    public void CompatibilityResourcesAreUsable()
+    {
+#pragma warning disable CS0618 // Compatibility APIs are intentionally exercised.
+        Assert.DoesNotThrow(() =>
+        {
+            ManagedInstance managedInstance = new(nameof(managedInstance));
+            DistributedAvailabilityGroup group = new(nameof(group))
+            {
+                Parent = managedInstance,
+                Name = "group",
+                PrimaryAvailabilityGroupName = "primary",
+                ReplicationMode = DistributedAvailabilityGroupReplicationMode.Async,
+                SecondaryAvailabilityGroupName = "secondary",
+                SourceEndpoint = "source",
+                TargetDatabase = "database"
+            };
+
+            SqlServer server = new(nameof(server));
+            SqlServerCommunicationLink communicationLink = new(nameof(communicationLink))
+            {
+                Parent = server,
+                Name = "link",
+                PartnerServer = "partner"
+            };
+        });
+#pragma warning restore CS0618
+    }
+
+    [Test]
     public void SensitivityLabelPropertiesAreWritable()
     {
         Assert.DoesNotThrow(() =>

@@ -260,6 +260,32 @@ namespace Azure.Provisioning.Sql
             public static readonly string V2025_01_01;
         }
     }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release. Please use SqlDistributedAvailabilityGroup instead.", false)]
+    public partial class DistributedAvailabilityGroup : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public DistributedAvailabilityGroup(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<System.Guid> DistributedAvailabilityGroupId { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> LastHardenedLsn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> LinkState { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Sql.ManagedInstance? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> PrimaryAvailabilityGroupName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.DistributedAvailabilityGroupReplicationMode> ReplicationMode { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SecondaryAvailabilityGroupName { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> SourceEndpoint { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> SourceReplicaId { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> TargetDatabase { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.Guid> TargetReplicaId { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Sql.DistributedAvailabilityGroup FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2021_11_01;
+            public static readonly string V2023_08_01;
+        }
+    }
     public partial class DistributedAvailabilityGroupDatabase : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public DistributedAvailabilityGroupDatabase() { }
@@ -285,6 +311,12 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> SeedingProgress { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlReplicaSynchronizationHealth> SynchronizationHealth { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
+    }
+    [System.ObsoleteAttribute("This type is obsolete and will be removed in a future release. Please use SqlReplicationModeType instead.", false)]
+    public enum DistributedAvailabilityGroupReplicationMode
+    {
+        Async = 0,
+        Sync = 1,
     }
     public enum DtcName
     {
@@ -3291,6 +3323,25 @@ namespace Azure.Provisioning.Sql
         public Azure.Provisioning.BicepValue<string> CertificateName { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiryOn { get { throw null; } }
         protected override void DefineProvisionableProperties() { }
+    }
+    public partial class SqlServerCommunicationLink : Azure.Provisioning.Primitives.ProvisionableResource
+    {
+        public SqlServerCommunicationLink(string bicepIdentifier, string? resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Kind { get { throw null; } }
+        public Azure.Provisioning.BicepValue<Azure.Core.AzureLocation> Location { get { throw null; } }
+        public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
+        public Azure.Provisioning.Sql.SqlServer? Parent { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> PartnerServer { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<string> State { get { throw null; } }
+        public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
+        protected override void DefineProvisionableProperties() { }
+        public static Azure.Provisioning.Sql.SqlServerCommunicationLink FromExisting(string bicepIdentifier, string? resourceVersion = null) { throw null; }
+        public static partial class ResourceVersions
+        {
+            public static readonly string V2014_01_01;
+            public static readonly string V2014_04_01;
+        }
     }
     public partial class SqlServerConnectionPolicy : Azure.Provisioning.Primitives.ProvisionableResource
     {
