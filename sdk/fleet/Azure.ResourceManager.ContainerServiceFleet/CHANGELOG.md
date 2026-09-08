@@ -4,6 +4,11 @@
 
 ### Features Added
 
+- Upgraded the service API version to `2026-06-02-preview`.
+- Added Fleet managed namespace placement and propagation policy support.
+- Added scheduled start configuration for update run gates.
+- Added rollout strategy and cluster selection support for Fleet managed namespaces.
+
 ### Breaking Changes
 
 ### Bugs Fixed
