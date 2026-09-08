@@ -14,6 +14,8 @@ namespace Azure.Security.KeyVault
     internal class ChallengeBasedAuthenticationPolicy : BearerTokenAuthenticationPolicy
     {
         private const string KeyVaultStashedContentKey = "KeyVaultContent";
+        private const string TokenBoundAuthHeaderName = "x-ms-tokenboundauth";
+        private const string MtlsPoPTokenTypePrefix = "mtls_pop ";
         private readonly bool _verifyChallengeResource;
 
         /// <summary>
@@ -50,7 +52,14 @@ namespace Azure.Security.KeyVault
             if (s_challengeCache.TryGetValue(authority, out ChallengeParameters challenge))
             {
                 // We fetched the challenge from the cache, but we have not initialized the Scopes in the base yet.
-                var context = new TokenRequestContext(challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: challenge.TenantId, isCaeEnabled: true);
+                var context = new TokenRequestContext(
+                    challenge.Scopes,
+                    parentRequestId: message.Request.ClientRequestId,
+                    tenantId: challenge.TenantId,
+                    isCaeEnabled: true,
+                    isProofOfPossessionEnabled: true,
+                    requestUri: message.Request.Uri.ToUri(),
+                    requestMethod: message.Request.Method.ToString());
                 if (async)
                 {
                     await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -60,6 +69,7 @@ namespace Azure.Security.KeyVault
                     AuthenticateAndAuthorizeRequest(message, context);
                 }
 
+                UpdateTokenBoundAuthHeader(message);
                 return;
             }
 
@@ -177,7 +187,15 @@ namespace Azure.Security.KeyVault
                 s_challengeCache[authority] = challenge;
             }
 
-            var context = new TokenRequestContext(challenge.Scopes, parentRequestId: message.Request.ClientRequestId, tenantId: challenge.TenantId, isCaeEnabled: true, claims: claims);
+            var context = new TokenRequestContext(
+                challenge.Scopes,
+                parentRequestId: message.Request.ClientRequestId,
+                tenantId: challenge.TenantId,
+                isCaeEnabled: true,
+                claims: claims,
+                isProofOfPossessionEnabled: true,
+                requestUri: message.Request.Uri.ToUri(),
+                requestMethod: message.Request.Method.ToString());
             if (async)
             {
                 await AuthenticateAndAuthorizeRequestAsync(message, context).ConfigureAwait(false);
@@ -187,7 +205,21 @@ namespace Azure.Security.KeyVault
                 AuthenticateAndAuthorizeRequest(message, context);
             }
 
+            UpdateTokenBoundAuthHeader(message);
             return true;
+        }
+
+        private static void UpdateTokenBoundAuthHeader(HttpMessage message)
+        {
+            if (message.Request.Headers.TryGetValue(HttpHeader.Names.Authorization, out string authorization)
+                && authorization.StartsWith(MtlsPoPTokenTypePrefix, StringComparison.OrdinalIgnoreCase))
+            {
+                message.Request.Headers.SetValue(TokenBoundAuthHeaderName, "true");
+            }
+            else
+            {
+                message.Request.Headers.Remove(TokenBoundAuthHeaderName);
+            }
         }
 
         /// <inheritdoc />

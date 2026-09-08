@@ -1,6 +1,6 @@
 # Release History
 
-## 4.12.0-beta.1 (Unreleased)
+## 4.12.0-beta.2 (Unreleased)
 
 ### Features Added
 
@@ -14,6 +14,12 @@
 ### Other Changes
 
 - Internal: the `SecretClient` transport now delegates to a TypeSpec-generated implementation. Public API surface, default service version, exception contracts, on-the-wire requests, and OpenTelemetry / `DiagnosticListener` activity names are all unchanged. `SecretClientOptions` (custom retry, transport, diagnostics allow-lists, `AddPolicy` entries) continues to flow end-to-end. The TypeSpec emitter incidentally adds one additive public type (`AzureSecurityKeyVaultSecretsContext`, the `ModelReaderWriterContext` required for AOT-friendly `ModelReaderWriter` round-trip), matching the sibling `Azure.Security.KeyVault.Administration` package convention.
+
+## 4.12.0-beta.1 (2026-06-10)
+
+### Features Added
+
+- Added support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy.
 
 ## 4.11.0 (2026-05-05)
 
