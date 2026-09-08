@@ -1630,7 +1630,7 @@ namespace Azure.AI.Projects.Agents
         public static Azure.AI.Projects.Agents.VersionRefIndicator VersionRefIndicator(string agentVersion = null) { throw null; }
         public static Azure.AI.Projects.Agents.VersionSelectionRule VersionSelectionRule(string type = null, string agentVersion = null) { throw null; }
         public static Azure.AI.Projects.Agents.VersionSelector VersionSelector(System.Collections.Generic.IEnumerable<Azure.AI.Projects.Agents.VersionSelectionRule> versionSelectionRules = null) { throw null; }
-        public static Azure.AI.Projects.Agents.WebIQPreviewToolboxTool WebIQPreviewToolboxTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null, string projectConnectionId = null, string serverLabel = null, System.BinaryData requireApproval = null) { throw null; }
+        public static Azure.AI.Projects.Agents.WebIQPreviewToolboxTool WebIQPreviewToolboxTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null, string projectConnectionId = null, string serverLabel = null, System.BinaryData requireApprovalInternal = null) { throw null; }
         public static Azure.AI.Projects.Agents.WebSearchToolboxTool WebSearchToolboxTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null, OpenAI.Responses.WebSearchToolFilters filters = null, OpenAI.Responses.WebSearchToolApproximateLocation userLocation = null, OpenAI.WebSearchToolSearchContextSize? searchContextSize = default(OpenAI.WebSearchToolSearchContextSize?), Azure.AI.Extensions.OpenAI.WebSearchConfiguration customSearchConfiguration = null) { throw null; }
         public static Azure.AI.Projects.Agents.WorkflowAgentDefinition WorkflowAgentDefinition(Azure.AI.Projects.Agents.ContentFilterConfiguration contentFilterConfiguration = null, string workflowYaml = null) { throw null; }
         public static Azure.AI.Projects.Agents.WorkIQPreviewToolboxTool WorkIQPreviewToolboxTool(string name = null, string description = null, System.Collections.Generic.IDictionary<string, Azure.AI.Extensions.OpenAI.ToolConfig> toolConfigs = null, string projectConnectionId = null) { throw null; }
@@ -2358,7 +2358,8 @@ namespace Azure.AI.Projects.Agents
     {
         public WebIQPreviewToolboxTool(string projectConnectionId) { }
         public string ProjectConnectionId { get { throw null; } set { } }
-        public System.BinaryData RequireApproval { get { throw null; } set { } }
+        public OpenAI.Responses.McpToolCallApprovalPolicy RequireApproval { get { throw null; } set { } }
+        public System.BinaryData RequireApprovalInternal { get { throw null; } set { } }
         public string ServerLabel { get { throw null; } set { } }
         protected override Azure.AI.Projects.Agents.ToolboxTool JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected override void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

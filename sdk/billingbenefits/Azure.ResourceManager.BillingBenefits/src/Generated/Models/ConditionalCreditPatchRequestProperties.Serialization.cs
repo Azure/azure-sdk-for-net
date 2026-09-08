@@ -79,10 +79,10 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endAt"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(AllowContributors))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 return null;
             }
             string displayName = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? endsOn = default;
             EnablementMode? allowContributors = default;
             IList<ConditionalCreditMilestone> milestones = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("allowContributors"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ConditionalCreditPatchRequestProperties(displayName, endOn, allowContributors, milestones ?? new ChangeTrackingList<ConditionalCreditMilestone>(), additionalBinaryDataProperties);
+            return new ConditionalCreditPatchRequestProperties(displayName, endsOn, allowContributors, milestones ?? new ChangeTrackingList<ConditionalCreditMilestone>(), additionalBinaryDataProperties);
         }
     }
 }

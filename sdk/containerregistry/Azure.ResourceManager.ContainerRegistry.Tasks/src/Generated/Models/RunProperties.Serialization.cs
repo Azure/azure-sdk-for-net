@@ -104,10 +104,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 writer.WritePropertyName("createTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (Optional.IsDefined(FinishOn))
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
             ContainerRegistryTaskRunType? runType = default;
             string agentPoolName = default;
             DateTimeOffset? createdOn = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             DateTimeOffset? finishOn = default;
             IList<ContainerRegistryTaskImageDescriptor> outputImages = default;
             string task = default;
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("finishTime"u8))
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks.Models
                 runType,
                 agentPoolName,
                 createdOn,
-                startOn,
+                startsOn,
                 finishOn,
                 outputImages ?? new ChangeTrackingList<ContainerRegistryTaskImageDescriptor>(),
                 task,

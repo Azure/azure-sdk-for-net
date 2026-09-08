@@ -79,15 +79,15 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WritePropertyName("allocation"u8);
                 writer.WriteObjectValue(Allocation, options);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startAt"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endAt"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsCollectionDefined(Dimensions))
             {
@@ -142,8 +142,8 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 return null;
             }
             BillingBenefitsCommitment allocation = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             IList<CreditDimension> dimensions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endAt"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("dimensions"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CreditBreakdownItem(allocation, startOn, endOn, dimensions ?? new ChangeTrackingList<CreditDimension>(), additionalBinaryDataProperties);
+            return new CreditBreakdownItem(allocation, startsOn, endsOn, dimensions ?? new ChangeTrackingList<CreditDimension>(), additionalBinaryDataProperties);
         }
     }
 }

@@ -13,7 +13,6 @@ using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> AATP (Azure Advanced Threat Protection) data connector properties. </summary>
     internal partial class AatpDataConnectorProperties : IJsonModel<AatpDataConnectorProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AatpDataConnectorProperties"/> for deserialization. </summary>

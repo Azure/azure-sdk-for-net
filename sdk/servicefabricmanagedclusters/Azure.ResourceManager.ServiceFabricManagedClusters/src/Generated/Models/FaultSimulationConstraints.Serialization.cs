@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 throw new FormatException($"The model {nameof(FaultSimulationConstraints)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(ExpireOn))
+            if (Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             {
                 return null;
             }
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FaultSimulationConstraints(expireOn, additionalBinaryDataProperties);
+            return new FaultSimulationConstraints(expiresOn, additionalBinaryDataProperties);
         }
     }
 }

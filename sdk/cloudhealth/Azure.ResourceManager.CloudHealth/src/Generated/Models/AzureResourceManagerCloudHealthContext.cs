@@ -78,6 +78,7 @@ namespace Azure.ResourceManager.CloudHealth
     [ModelReaderWriterBuildable(typeof(ResourceMetricSignalDefinitionProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceSignal))]
     [ModelReaderWriterBuildable(typeof(ResourceSignals))]
+    [ModelReaderWriterBuildable(typeof(SignalAggregationGroup))]
     [ModelReaderWriterBuildable(typeof(SignalConfiguration))]
     [ModelReaderWriterBuildable(typeof(SignalDefinitionListResult))]
     [ModelReaderWriterBuildable(typeof(SignalHistoryDataPoint))]
