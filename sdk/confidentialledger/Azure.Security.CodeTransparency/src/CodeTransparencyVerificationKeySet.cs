@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Azure.Security.CodeTransparency
 {
@@ -54,7 +55,7 @@ namespace Azure.Security.CodeTransparency
                 list.Add(key);
             }
 
-            _keys = list;
+            _keys = new ReadOnlyCollection<CodeTransparencyVerificationKey>(list);
             _keysById = byId;
         }
 

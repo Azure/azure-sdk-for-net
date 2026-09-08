@@ -13,11 +13,10 @@ namespace Azure.Security.CodeTransparency
     /// Tracks the status of a call to <see cref="CodeTransparencyClient.CreateEntry(WaitUntil, BinaryData, CancellationToken)"/>
     /// or <see cref="CodeTransparencyClient.CreateEntryAsync(WaitUntil, BinaryData, CancellationToken)"/> until completion.
     /// </summary>
-    public class CreateEntryOperation : Operation<BinaryData>, IOperation
+    public class CreateEntryOperation : Operation<BinaryData>, IOperation<BinaryData>
     {
         private readonly CodeTransparencyClient _client;
-        private readonly OperationInternal _operationInternal;
-        private readonly BinaryData _value;
+        private readonly OperationInternal<BinaryData> _operationInternal;
 
         /// <summary>
         /// A constructor for mocking.
@@ -30,11 +29,12 @@ namespace Azure.Security.CodeTransparency
         /// </summary>
         /// <param name="client"> The <see cref="CodeTransparencyClient"/>. </param>
         /// <param name="operationId"> The operation id from a previous call to create the entry. </param>
-        internal CreateEntryOperation(CodeTransparencyClient client, string operationId)
+        /// <param name="rawResponse"> The initial response returned by the create entry call. </param>
+        internal CreateEntryOperation(CodeTransparencyClient client, string operationId, Response rawResponse)
         {
             _client = client;
             Id = operationId;
-            _operationInternal = new(this, _client.ClientDiagnostics, rawResponse: null, nameof(CreateEntryOperation));
+            _operationInternal = new(this, _client.ClientDiagnostics, rawResponse, nameof(CreateEntryOperation));
         }
 
         /// <summary>
@@ -47,8 +47,7 @@ namespace Azure.Security.CodeTransparency
         internal CreateEntryOperation(string entryId, Response rawResponse, BinaryData value)
         {
             Id = entryId;
-            _value = value;
-            _operationInternal = OperationInternal.Succeeded(rawResponse);
+            _operationInternal = OperationInternal<BinaryData>.Succeeded(rawResponse, value);
         }
 
         /// <summary>
@@ -71,13 +70,13 @@ namespace Azure.Security.CodeTransparency
             _operationInternal.UpdateStatus(cancellationToken);
 
         /// <inheritdoc />
-        public override bool HasValue => _operationInternal.HasCompleted && _operationInternal.RawResponse != null;
+        public override bool HasValue => _operationInternal.HasValue;
 
         /// <inheritdoc />
-        public override BinaryData Value => _value ?? _operationInternal.RawResponse.Content;
+        public override BinaryData Value => _operationInternal.Value;
 
-        // Part of IOperation which is used in _operationInternal
-        async ValueTask<OperationState> IOperation.UpdateStateAsync(bool async, CancellationToken cancellationToken)
+        // Part of IOperation<T> which is used in _operationInternal
+        async ValueTask<OperationState<BinaryData>> IOperation<BinaryData>.UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
             Response response = async
                 ? await _client.GetEntryV09Async(
@@ -88,22 +87,21 @@ namespace Azure.Security.CodeTransparency
 
             if (response.Status == (int)HttpStatusCode.OK)
             {
-                return OperationState.Success(response);
+                return OperationState<BinaryData>.Success(
+                    response,
+                    CodeTransparencyClient.CreateEntryIdCborValue(Id));
             }
 
             if (response.Status == (int)HttpStatusCode.Found)
             {
-                return OperationState.Pending(response);
+                return OperationState<BinaryData>.Pending(response);
             }
 
-            RequestFailedException ex = new(response);
-            return OperationState.Failure(
-                response,
-                new RequestFailedException($"Operation status check failed. OperationId '{Id}'", ex));
+            return OperationState<BinaryData>.Failure(response, new RequestFailedException(response));
         }
 
         // This method is never invoked since we don't override Operation<T>.GetRehydrationToken.
-        RehydrationToken IOperation.GetRehydrationToken() =>
+        RehydrationToken IOperation<BinaryData>.GetRehydrationToken() =>
             throw new NotSupportedException($"{nameof(GetRehydrationToken)} is not supported.");
     }
 }

@@ -163,6 +163,17 @@ namespace Azure.Security.CodeTransparency.Tests
         }
 
         [Test]
+        public void VerificationKeySet_KeysCannotBeMutated()
+        {
+            CodeTransparencyVerificationKeySet set = CreateKeySet("key-1");
+            var collection = (ICollection<CodeTransparencyVerificationKey>)set.Keys;
+
+            Assert.Throws<NotSupportedException>(() => collection.Clear());
+            Assert.AreEqual(1, set.Keys.Count);
+            Assert.IsTrue(set.TryGetKey("key-1", out _));
+        }
+
+        [Test]
         public void VerificationKey_ConstructorValidatesArguments()
         {
             using ECDsa ecdsa = ECDsa.Create(ECCurve.NamedCurves.nistP256);

@@ -256,7 +256,7 @@ namespace Azure.Security.CodeTransparency
 
                 RequestContext context = CreateStartedRequestContext(cancellationToken);
                 Response responseStarted = CreateEntry(RequestContent.Create(body), false, context);
-                return new CreateEntryOperation(this, GetEntryIdFromLocation(responseStarted));
+                return new CreateEntryOperation(this, GetEntryIdFromLocation(responseStarted), responseStarted);
             }
             catch (Exception e)
             {
@@ -288,7 +288,7 @@ namespace Azure.Security.CodeTransparency
 
                 RequestContext context = CreateStartedRequestContext(cancellationToken);
                 Response responseStarted = await CreateEntryAsync(RequestContent.Create(body), false, context).ConfigureAwait(false);
-                return new CreateEntryOperation(this, GetEntryIdFromLocation(responseStarted));
+                return new CreateEntryOperation(this, GetEntryIdFromLocation(responseStarted), responseStarted);
             }
             catch (Exception e)
             {
@@ -380,7 +380,7 @@ namespace Azure.Security.CodeTransparency
             return string.IsNullOrEmpty(entryId) ? null : entryId;
         }
 
-        private static BinaryData CreateEntryIdCborValue(string entryId)
+        internal static BinaryData CreateEntryIdCborValue(string entryId)
         {
             CborWriter writer = new CborWriter();
             writer.WriteStartMap(1);

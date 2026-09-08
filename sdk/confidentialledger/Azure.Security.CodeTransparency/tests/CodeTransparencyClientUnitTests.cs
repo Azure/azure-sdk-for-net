@@ -238,11 +238,18 @@ namespace Azure.Security.CodeTransparency.Tests
             Assert.AreEqual(1, mockTransport.Requests.Count);
             Assert.IsFalse(response.HasCompleted);
             Assert.AreEqual("12.345", response.Id);
+            Assert.AreEqual(303, response.GetRawResponse().Status);
+            Assert.IsTrue(response.GetRawResponse().Headers.TryGetValue("Location", out string initialLocation));
+            Assert.AreEqual("https://foo.bar.com/entries/12.345", initialLocation);
 
             await response.UpdateStatusAsync();
             Assert.IsFalse(response.HasCompleted);
             await response.UpdateStatusAsync();
             Assert.IsTrue(response.HasCompleted);
+            Assert.IsTrue(response.HasValue);
+            Assert.AreEqual(
+                "12.345",
+                CodeTransparencyCbor.GetStringValueFromCborMapByKey(response.Value.ToArray(), "EntryId"));
             Assert.AreEqual("https://foo.bar.com/entries/12.345?api-version=2026-03-26", mockTransport.Requests[1].Uri.ToString());
         }
 
@@ -317,6 +324,34 @@ namespace Azure.Security.CodeTransparency.Tests
             Assert.AreEqual("https://foo.bar.com/entries?api-version=2026-03-26&waitForCommit=false", mockTransport.Requests[0].Uri.ToString());
             Assert.IsFalse(result.HasCompleted);
             Assert.AreEqual("12.345", result.Id);
+            Assert.AreEqual(303, result.GetRawResponse().Status);
+            Assert.IsTrue(result.GetRawResponse().Headers.TryGetValue("Location", out string initialLocation));
+            Assert.AreEqual("https://foo.bar.com/entries/12.345", initialLocation);
+        }
+
+        [Test]
+        public async Task CreateEntryStarted_FailedPollingDoesNotExposeValue()
+        {
+            var acceptedResponse = new MockResponse(303);
+            acceptedResponse.AddHeader("Location", "https://foo.bar.com/entries/12.345");
+            var failedResponse = new MockResponse(400);
+            failedResponse.SetContent("invalid entry");
+            var mockTransport = new MockTransport(acceptedResponse, failedResponse);
+            CodeTransparencyClient client = CreatePipelineClient(mockTransport);
+
+            CreateEntryOperation operation = await client.CreateEntryAsync(
+                WaitUntil.Started,
+                BinaryData.FromString("test-body"));
+
+            RequestFailedException exception = Assert.ThrowsAsync<RequestFailedException>(
+                async () => await operation.UpdateStatusAsync());
+
+            Assert.AreEqual(400, exception.Status);
+            Assert.IsTrue(operation.HasCompleted);
+            Assert.IsFalse(operation.HasValue);
+            Assert.AreEqual(400, operation.GetRawResponse().Status);
+            RequestFailedException valueException = Assert.Throws<RequestFailedException>(() => _ = operation.Value);
+            Assert.AreEqual(400, valueException.Status);
         }
 
         private static CodeTransparencyClient CreatePipelineClient(

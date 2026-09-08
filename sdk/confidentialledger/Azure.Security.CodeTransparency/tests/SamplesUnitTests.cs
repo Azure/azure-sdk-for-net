@@ -94,8 +94,8 @@ namespace Azure.Security.CodeTransparency.Tests
             #endregion Snippet:CodeTransparencySubmission
 
             #region Snippet:CodeTransparencyDownloadTransparentStatement
-            Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
-            string entryId = CodeTransparencyCbor.GetStringValueFromCborMapByKey(operationResult.Value.ToArray(), "EntryId");
+            await operation.WaitForCompletionAsync();
+            string entryId = operation.Id;
             Console.WriteLine($"The entry ID to use to retrieve the receipt and transparent statement is {{{entryId}}}");
             #region Snippet:CodeTransparencySample2_GetEntryStatement
             Response<BinaryData> transparentStatementResponse = await client.GetEntryStatementAsync(entryId);

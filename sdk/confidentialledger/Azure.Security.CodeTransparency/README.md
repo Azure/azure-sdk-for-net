@@ -57,8 +57,8 @@ CreateEntryOperation operation = await client.CreateEntryAsync(WaitUntil.Started
 Then obtain the transparent statement:
 
 ```C# Snippet:CodeTransparencyDownloadTransparentStatement
-Response<BinaryData> operationResult = await operation.WaitForCompletionAsync();
-string entryId = CodeTransparencyCbor.GetStringValueFromCborMapByKey(operationResult.Value.ToArray(), "EntryId");
+await operation.WaitForCompletionAsync();
+string entryId = operation.Id;
 Console.WriteLine($"The entry ID to use to retrieve the receipt and transparent statement is {{{entryId}}}");
 Response<BinaryData> transparentStatementResponse = await client.GetEntryStatementAsync(entryId);
 byte[] transparentStatementBytes = transparentStatementResponse.Value.ToArray();
