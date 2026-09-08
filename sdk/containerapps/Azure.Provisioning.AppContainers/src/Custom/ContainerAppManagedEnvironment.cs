@@ -12,7 +12,12 @@ namespace Azure.Provisioning.AppContainers
     {
         private BicepList<ContainerAppPrivateEndpointConnection> _privateEndpointConnections;
 
-        // Keep the new stable resource list available under a distinct name while preserving the released property below.
+        // The managed-environment and container-app private endpoint resources share the same model schema.
+        // The generator currently selects ContainerAppContainerPrivateEndpointConnection for this property, but the
+        // last stable library released it as ContainerAppPrivateEndpointConnection. Rename the newly selected property
+        // so the released property name and type can be preserved below without a breaking change.
+        // TODO: Remove this workaround when the generator reads the existing contract and preserves its resource selection.
+        // https://github.com/Azure/azure-sdk-for-net/issues/60673
         /// <summary> Gets the container app private endpoint connection resources. </summary>
         [CodeGenMember("PrivateEndpointConnections")]
         public BicepList<ContainerAppContainerPrivateEndpointConnection> PrivateEndpointConnectionResources
@@ -27,7 +32,7 @@ namespace Azure.Provisioning.AppContainers
             }
         }
 
-        // Preserve the released managed-environment private endpoint connection list type.
+        // Preserve the property type from the last stable library.
         /// <summary> Gets the managed environment private endpoint connections. </summary>
         public BicepList<ContainerAppPrivateEndpointConnection> PrivateEndpointConnections
         {
