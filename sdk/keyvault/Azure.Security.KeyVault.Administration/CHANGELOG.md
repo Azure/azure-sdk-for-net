@@ -1,8 +1,10 @@
 # Release History
 
-## 4.9.0-beta.3 (Unreleased)
+## 4.9.0-beta.2 (Unreleased)
 
 ### Features Added
+
+- Added support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy.
 
 ### Breaking Changes
 
@@ -13,12 +15,6 @@
 - Fixed an issue in the challenge-based authentication policy where a cached authentication challenge, and the access token acquired for it, could be reused for a request to a different Key Vault or Managed HSM endpoint. The policy now resolves the challenge per request endpoint, ensuring a token acquired for one vault is never attached to a request to another.
 
 ### Other Changes
-
-## 4.9.0-beta.2 (2026-06-10)
-
-### Features Added
-
-- Added support for Proof-of-Possession (PoP) token binding in the Key Vault authentication policy.
 
 ## 4.9.0-beta.1 (2026-06-04)
 
