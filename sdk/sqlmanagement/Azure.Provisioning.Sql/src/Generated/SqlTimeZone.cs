@@ -77,7 +77,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.TimeZoneId;
+                return Properties is null ? default : Properties.TimeZoneId;
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.DisplayName;
+                return Properties is null ? default : Properties.DisplayName;
             }
         }
 

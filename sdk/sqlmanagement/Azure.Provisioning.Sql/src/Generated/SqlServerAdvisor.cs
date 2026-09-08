@@ -116,7 +116,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.AdvisorStatus;
+                return Properties is null ? default : Properties.AdvisorStatus;
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.AutoExecuteStatus;
+                return Properties is null ? default : Properties.AutoExecuteStatus;
             }
         }
 
@@ -134,7 +134,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.AutoExecuteStatusInheritedFrom;
+                return Properties is null ? default : Properties.AutoExecuteStatusInheritedFrom;
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.RecommendationsStatus;
+                return Properties is null ? default : Properties.RecommendationsStatus;
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.LastCheckedOn;
+                return Properties is null ? default : Properties.LastCheckedOn;
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.RecommendedActions;
+                return Properties is null ? default : Properties.RecommendedActions;
             }
         }
 

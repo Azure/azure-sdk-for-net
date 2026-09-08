@@ -94,7 +94,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ManagedInstanceName;
+                return Properties is null ? default : Properties.ManagedInstanceName;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.Operation;
+                return Properties is null ? default : Properties.Operation;
             }
         }
 
@@ -112,7 +112,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.OperationFriendlyName;
+                return Properties is null ? default : Properties.OperationFriendlyName;
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.PercentComplete;
+                return Properties is null ? default : Properties.PercentComplete;
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.StartsOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.State;
+                return Properties is null ? default : Properties.State;
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ErrorCode;
+                return Properties is null ? default : Properties.ErrorCode;
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ErrorDescription;
+                return Properties is null ? default : Properties.ErrorDescription;
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ErrorSeverity;
+                return Properties is null ? default : Properties.ErrorSeverity;
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.IsUserError;
+                return Properties is null ? default : Properties.IsUserError;
             }
         }
 
@@ -184,7 +184,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.EstimatedCompleteOn;
+                return Properties is null ? default : Properties.EstimatedCompleteOn;
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -202,7 +202,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.IsCancellable;
+                return Properties is null ? default : Properties.IsCancellable;
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.OperationParameters;
+                return Properties is null ? default : Properties.OperationParameters;
             }
         }
 
@@ -220,7 +220,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.OperationSteps;
+                return Properties is null ? default : Properties.OperationSteps;
             }
         }
 

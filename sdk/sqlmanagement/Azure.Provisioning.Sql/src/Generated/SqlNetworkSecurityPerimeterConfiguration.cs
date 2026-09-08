@@ -93,7 +93,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.NetworkSecurityPerimeter;
+                return Properties is null ? default : Properties.NetworkSecurityPerimeter;
             }
         }
 
@@ -111,7 +111,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ResourceAssociation;
+                return Properties is null ? default : Properties.ResourceAssociation;
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.Profile;
+                return Properties is null ? default : Properties.Profile;
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ProvisioningIssues;
+                return Properties is null ? default : Properties.ProvisioningIssues;
             }
         }
 

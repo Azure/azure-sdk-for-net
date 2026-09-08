@@ -127,7 +127,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.DatabaseName;
+                return Properties is null ? default : Properties.DatabaseName;
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.MaxSizeBytes;
+                return Properties is null ? default : Properties.MaxSizeBytes;
             }
         }
 
@@ -145,7 +145,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.CreatedOn;
+                return Properties is null ? default : Properties.CreatedOn;
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.DeletedOn;
+                return Properties is null ? default : Properties.DeletedOn;
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.EarliestRestoreOn;
+                return Properties is null ? default : Properties.EarliestRestoreOn;
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.BackupStorageRedundancy;
+                return Properties is null ? default : Properties.BackupStorageRedundancy;
             }
         }
 
@@ -181,7 +181,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.Keys;
+                return Properties is null ? default : Properties.Keys;
             }
         }
 

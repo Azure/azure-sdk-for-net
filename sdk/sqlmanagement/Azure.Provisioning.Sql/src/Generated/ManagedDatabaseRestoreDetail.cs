@@ -94,7 +94,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.RestoreType;
+                return Properties is null ? default : Properties.RestoreType;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -112,7 +112,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.BlockReason;
+                return Properties is null ? default : Properties.BlockReason;
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.LastUploadedFileName;
+                return Properties is null ? default : Properties.LastUploadedFileName;
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.LastUploadedFileOn;
+                return Properties is null ? default : Properties.LastUploadedFileOn;
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.LastRestoredFileName;
+                return Properties is null ? default : Properties.LastRestoredFileName;
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.LastRestoredFileOn;
+                return Properties is null ? default : Properties.LastRestoredFileOn;
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.CompletedPercent;
+                return Properties is null ? default : Properties.CompletedPercent;
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.CurrentRestoredSizeInMB;
+                return Properties is null ? default : Properties.CurrentRestoredSizeInMB;
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.CurrentRestorePlanSizeInMB;
+                return Properties is null ? default : Properties.CurrentRestorePlanSizeInMB;
             }
         }
 
@@ -184,7 +184,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.CurrentBackupType;
+                return Properties is null ? default : Properties.CurrentBackupType;
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.CurrentRestoringFileName;
+                return Properties is null ? default : Properties.CurrentRestoringFileName;
             }
         }
 
@@ -202,7 +202,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.NumberOfFilesFound;
+                return Properties is null ? default : Properties.NumberOfFilesFound;
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.NumberOfFilesQueued;
+                return Properties is null ? default : Properties.NumberOfFilesQueued;
             }
         }
 
@@ -220,7 +220,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.NumberOfFilesSkipped;
+                return Properties is null ? default : Properties.NumberOfFilesSkipped;
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.NumberOfFilesRestoring;
+                return Properties is null ? default : Properties.NumberOfFilesRestoring;
             }
         }
 
@@ -238,7 +238,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.NumberOfFilesRestored;
+                return Properties is null ? default : Properties.NumberOfFilesRestored;
             }
         }
 
@@ -247,7 +247,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.NumberOfFilesUnrestorable;
+                return Properties is null ? default : Properties.NumberOfFilesUnrestorable;
             }
         }
 
@@ -256,7 +256,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.FullBackupSets;
+                return Properties is null ? default : Properties.FullBackupSets;
             }
         }
 
@@ -265,7 +265,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.DiffBackupSets;
+                return Properties is null ? default : Properties.DiffBackupSets;
             }
         }
 
@@ -274,7 +274,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.LogBackupSets;
+                return Properties is null ? default : Properties.LogBackupSets;
             }
         }
 
@@ -283,7 +283,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.UnrestorableFileList;
+                return Properties is null ? default : Properties.UnrestorableFileList;
             }
         }
 

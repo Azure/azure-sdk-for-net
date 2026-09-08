@@ -93,7 +93,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ActiveQueriesCount;
+                return Properties is null ? default : Properties.ActiveQueriesCount;
             }
         }
 

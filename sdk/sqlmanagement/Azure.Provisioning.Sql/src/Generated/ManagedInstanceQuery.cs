@@ -93,7 +93,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.QueryText;
+                return Properties is null ? default : Properties.QueryText;
             }
         }
 

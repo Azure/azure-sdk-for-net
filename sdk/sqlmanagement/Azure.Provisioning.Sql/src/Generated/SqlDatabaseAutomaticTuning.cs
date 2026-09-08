@@ -88,7 +88,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.DesiredState;
+                return Properties is null ? default : Properties.DesiredState;
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ActualState;
+                return Properties is null ? default : Properties.ActualState;
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.Options;
+                return Properties is null ? default : Properties.Options;
             }
         }
 

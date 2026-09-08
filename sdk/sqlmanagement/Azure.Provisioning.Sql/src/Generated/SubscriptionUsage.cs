@@ -77,7 +77,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.DisplayName;
+                return Properties is null ? default : Properties.DisplayName;
             }
         }
 
@@ -86,7 +86,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.CurrentValue;
+                return Properties is null ? default : Properties.CurrentValue;
             }
         }
 
@@ -95,7 +95,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.Limit;
+                return Properties is null ? default : Properties.Limit;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.Unit;
+                return Properties is null ? default : Properties.Unit;
             }
         }
 

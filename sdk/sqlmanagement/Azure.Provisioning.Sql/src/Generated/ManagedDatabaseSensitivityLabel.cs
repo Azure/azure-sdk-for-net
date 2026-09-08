@@ -97,7 +97,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.SchemaName;
+                return Properties is null ? default : Properties.SchemaName;
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.TableName;
+                return Properties is null ? default : Properties.TableName;
             }
         }
 
@@ -115,7 +115,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ColumnName;
+                return Properties is null ? default : Properties.ColumnName;
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.IsDisabled;
+                return Properties is null ? default : Properties.IsDisabled;
             }
         }
 

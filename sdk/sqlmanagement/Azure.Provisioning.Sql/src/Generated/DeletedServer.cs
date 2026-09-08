@@ -78,7 +78,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.Version;
+                return Properties is null ? default : Properties.Version;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.DeletedOn;
+                return Properties is null ? default : Properties.DeletedOn;
             }
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.OriginalId;
+                return Properties is null ? default : Properties.OriginalId;
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.FullyQualifiedDomainName;
+                return Properties is null ? default : Properties.FullyQualifiedDomainName;
             }
         }
 

@@ -93,7 +93,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.TemporalType;
+                return Properties is null ? default : Properties.TemporalType;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.IsMemoryOptimized;
+                return Properties is null ? default : Properties.IsMemoryOptimized;
             }
         }
 

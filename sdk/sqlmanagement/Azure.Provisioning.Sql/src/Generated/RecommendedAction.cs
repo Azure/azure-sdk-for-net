@@ -116,7 +116,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.RecommendationReason;
+                return Properties is null ? default : Properties.RecommendationReason;
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ValidSince;
+                return Properties is null ? default : Properties.ValidSince;
             }
         }
 
@@ -134,7 +134,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.LastRefresh;
+                return Properties is null ? default : Properties.LastRefresh;
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.State;
+                return Properties is null ? default : Properties.State;
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.IsExecutableAction;
+                return Properties is null ? default : Properties.IsExecutableAction;
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.IsRevertableAction;
+                return Properties is null ? default : Properties.IsRevertableAction;
             }
         }
 
@@ -170,7 +170,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.IsArchivedAction;
+                return Properties is null ? default : Properties.IsArchivedAction;
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ExecuteActionStartsOn;
+                return Properties is null ? default : Properties.ExecuteActionStartsOn;
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ExecuteActionDuration;
+                return Properties is null ? default : Properties.ExecuteActionDuration;
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.RevertActionStartsOn;
+                return Properties is null ? default : Properties.RevertActionStartsOn;
             }
         }
 
@@ -206,7 +206,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.RevertActionDuration;
+                return Properties is null ? default : Properties.RevertActionDuration;
             }
         }
 
@@ -215,7 +215,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ExecuteActionInitiatedBy;
+                return Properties is null ? default : Properties.ExecuteActionInitiatedBy;
             }
         }
 
@@ -224,7 +224,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ExecuteActionInitiatedOn;
+                return Properties is null ? default : Properties.ExecuteActionInitiatedOn;
             }
         }
 
@@ -233,7 +233,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.RevertActionInitiatedBy;
+                return Properties is null ? default : Properties.RevertActionInitiatedBy;
             }
         }
 
@@ -242,7 +242,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.RevertActionInitiatedOn;
+                return Properties is null ? default : Properties.RevertActionInitiatedOn;
             }
         }
 
@@ -251,7 +251,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.Score;
+                return Properties is null ? default : Properties.Score;
             }
         }
 
@@ -260,7 +260,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ImplementationDetails;
+                return Properties is null ? default : Properties.ImplementationDetails;
             }
         }
 
@@ -269,7 +269,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ErrorDetails;
+                return Properties is null ? default : Properties.ErrorDetails;
             }
         }
 
@@ -278,7 +278,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.EstimatedImpact;
+                return Properties is null ? default : Properties.EstimatedImpact;
             }
         }
 
@@ -287,7 +287,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ObservedImpact;
+                return Properties is null ? default : Properties.ObservedImpact;
             }
         }
 
@@ -296,7 +296,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.TimeSeries;
+                return Properties is null ? default : Properties.TimeSeries;
             }
         }
 
@@ -305,7 +305,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.LinkedObjects;
+                return Properties is null ? default : Properties.LinkedObjects;
             }
         }
 
@@ -314,7 +314,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ActionDetails;
+                return Properties is null ? default : Properties.ActionDetails;
             }
         }
 

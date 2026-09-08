@@ -78,7 +78,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ServerName;
+                return Properties is null ? default : Properties.ServerName;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ServerCreateOn;
+                return Properties is null ? default : Properties.ServerCreateOn;
             }
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.DatabaseName;
+                return Properties is null ? default : Properties.DatabaseName;
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.DatabaseDeletedOn;
+                return Properties is null ? default : Properties.DatabaseDeletedOn;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.BackupOn;
+                return Properties is null ? default : Properties.BackupOn;
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.BackupExpireOn;
+                return Properties is null ? default : Properties.BackupExpireOn;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.BackupStorageRedundancy;
+                return Properties is null ? default : Properties.BackupStorageRedundancy;
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.RequestedBackupStorageRedundancy;
+                return Properties is null ? default : Properties.RequestedBackupStorageRedundancy;
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.IsBackupImmutable;
+                return Properties is null ? default : Properties.IsBackupImmutable;
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.TimeBasedImmutability;
+                return Properties is null ? default : Properties.TimeBasedImmutability;
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.TimeBasedImmutabilityMode;
+                return Properties is null ? default : Properties.TimeBasedImmutabilityMode;
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.LegalHoldImmutability;
+                return Properties is null ? default : Properties.LegalHoldImmutability;
             }
         }
 
@@ -186,7 +186,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.BackupStorageAccessTier;
+                return Properties is null ? default : Properties.BackupStorageAccessTier;
             }
         }
 

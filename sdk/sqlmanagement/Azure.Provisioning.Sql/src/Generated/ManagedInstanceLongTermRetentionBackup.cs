@@ -78,7 +78,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ManagedInstanceName;
+                return Properties is null ? default : Properties.ManagedInstanceName;
             }
         }
 
@@ -87,7 +87,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ManagedInstanceCreateOn;
+                return Properties is null ? default : Properties.ManagedInstanceCreateOn;
             }
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.DatabaseName;
+                return Properties is null ? default : Properties.DatabaseName;
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.DatabaseDeletedOn;
+                return Properties is null ? default : Properties.DatabaseDeletedOn;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.BackupOn;
+                return Properties is null ? default : Properties.BackupOn;
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.BackupExpireOn;
+                return Properties is null ? default : Properties.BackupExpireOn;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.BackupStorageRedundancy;
+                return Properties is null ? default : Properties.BackupStorageRedundancy;
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.BackupStorageAccessTier;
+                return Properties is null ? default : Properties.BackupStorageAccessTier;
             }
         }
 

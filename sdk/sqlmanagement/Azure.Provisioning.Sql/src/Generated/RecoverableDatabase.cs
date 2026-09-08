@@ -94,7 +94,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.Edition;
+                return Properties is null ? default : Properties.Edition;
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ServiceLevelObjective;
+                return Properties is null ? default : Properties.ServiceLevelObjective;
             }
         }
 
@@ -112,7 +112,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.ElasticPoolName;
+                return Properties is null ? default : Properties.ElasticPoolName;
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.LastAvailableBackupOn;
+                return Properties is null ? default : Properties.LastAvailableBackupOn;
             }
         }
 
@@ -130,7 +130,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.Keys;
+                return Properties is null ? default : Properties.Keys;
             }
         }
 

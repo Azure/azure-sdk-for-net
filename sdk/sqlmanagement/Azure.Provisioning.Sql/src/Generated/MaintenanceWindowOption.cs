@@ -88,7 +88,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.IsEnabled;
+                return Properties is null ? default : Properties.IsEnabled;
             }
         }
 
@@ -97,7 +97,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.MaintenanceWindowCycles;
+                return Properties is null ? default : Properties.MaintenanceWindowCycles;
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.MinDurationInMinutes;
+                return Properties is null ? default : Properties.MinDurationInMinutes;
             }
         }
 
@@ -115,7 +115,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.DefaultDurationInMinutes;
+                return Properties is null ? default : Properties.DefaultDurationInMinutes;
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.MinCycles;
+                return Properties is null ? default : Properties.MinCycles;
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.TimeGranularityInMinutes;
+                return Properties is null ? default : Properties.TimeGranularityInMinutes;
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.AllowMultipleMaintenanceWindowsPerCycle;
+                return Properties is null ? default : Properties.AllowMultipleMaintenanceWindowsPerCycle;
             }
         }
 

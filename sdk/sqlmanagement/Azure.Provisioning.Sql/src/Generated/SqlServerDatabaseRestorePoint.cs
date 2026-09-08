@@ -98,7 +98,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.RestorePointType;
+                return Properties is null ? default : Properties.RestorePointType;
             }
         }
 
@@ -107,7 +107,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.EarliestRestoreOn;
+                return Properties is null ? default : Properties.EarliestRestoreOn;
             }
         }
 
@@ -116,7 +116,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.RestorePointCreatedOn;
+                return Properties is null ? default : Properties.RestorePointCreatedOn;
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.Provisioning.Sql
         {
             get
             {
-                return Properties.RestorePointLabel;
+                return Properties is null ? default : Properties.RestorePointLabel;
             }
         }
 
