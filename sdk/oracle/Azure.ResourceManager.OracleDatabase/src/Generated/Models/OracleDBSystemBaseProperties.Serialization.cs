@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.OracleDatabase.Models
                 writer.WritePropertyName("dataStorageSizeInGbs"u8);
                 writer.WriteNumberValue(DataStorageSizeInGbs.Value);
             }
-            if (Optional.IsDefined(DbSystemOptions))
+            if (Optional.IsDefined(DBSystemOptions))
             {
                 writer.WritePropertyName("dbSystemOptions"u8);
-                writer.WriteObjectValue(DbSystemOptions, options);
+                writer.WriteObjectValue(DBSystemOptions, options);
             }
             if (Optional.IsDefined(DiskRedundancy))
             {

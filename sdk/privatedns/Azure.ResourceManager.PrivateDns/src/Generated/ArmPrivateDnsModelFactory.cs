@@ -21,6 +21,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
     public static partial class ArmPrivateDnsModelFactory
     {
 
+        /// <summary> An A record. </summary>
         /// <param name="ipv4Address"> The IPv4 address of this A record. </param>
         /// <returns> A new <see cref="Models.PrivateDnsARecordInfo"/> instance for mocking. </returns>
         public static PrivateDnsARecordInfo PrivateDnsARecordInfo(IPAddress ipv4Address = default)
@@ -28,6 +29,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             return new PrivateDnsARecordInfo(ipv4Address, default);
         }
 
+        /// <summary> An AAAA record. </summary>
         /// <param name="ipv6Address"> The IPv6 address of this AAAA record. </param>
         /// <returns> A new <see cref="Models.PrivateDnsAaaaRecordInfo"/> instance for mocking. </returns>
         public static PrivateDnsAaaaRecordInfo PrivateDnsAaaaRecordInfo(IPAddress ipv6Address = default)
@@ -35,6 +37,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             return new PrivateDnsAaaaRecordInfo(ipv6Address, default);
         }
 
+        /// <summary> An MX record. </summary>
         /// <param name="preference"> The preference value for this MX record. </param>
         /// <param name="exchange"> The domain name of the mail host for this MX record. </param>
         /// <returns> A new <see cref="Models.PrivateDnsMXRecordInfo"/> instance for mocking. </returns>
@@ -43,6 +46,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             return new PrivateDnsMXRecordInfo(preference, exchange, default);
         }
 
+        /// <summary> A PTR record. </summary>
         /// <param name="ptrDomainName"> The PTR target domain name for this PTR record. </param>
         /// <returns> A new <see cref="Models.PrivateDnsPtrRecordInfo"/> instance for mocking. </returns>
         public static PrivateDnsPtrRecordInfo PrivateDnsPtrRecordInfo(string ptrDomainName = default)
@@ -50,6 +54,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             return new PrivateDnsPtrRecordInfo(ptrDomainName, default);
         }
 
+        /// <summary> An SOA record. </summary>
         /// <param name="host"> The domain name of the authoritative name server for this SOA record. </param>
         /// <param name="email"> The email contact for this SOA record. </param>
         /// <param name="serialNumber"> The serial number for this SOA record. </param>
@@ -71,6 +76,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 default);
         }
 
+        /// <summary> An SRV record. </summary>
         /// <param name="priority"> The priority value for this SRV record. </param>
         /// <param name="weight"> The weight value for this SRV record. </param>
         /// <param name="port"> The port value for this SRV record. </param>
@@ -81,6 +87,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
             return new PrivateDnsSrvRecordInfo(priority, weight, port, target, default);
         }
 
+        /// <summary> A TXT record. </summary>
         /// <param name="values"> The text value of this TXT record. </param>
         /// <returns> A new <see cref="Models.PrivateDnsTxtRecordInfo"/> instance for mocking. </returns>
         public static PrivateDnsTxtRecordInfo PrivateDnsTxtRecordInfo(IEnumerable<string> values = default)
@@ -131,13 +138,13 @@ namespace Azure.ResourceManager.PrivateDns.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="PrivateDns.PrivateDnsZoneData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Describes a Private DNS zone. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="etag"> The ETag of the zone. </param>
         /// <param name="maxNumberOfRecords"> The maximum number of record sets that can be created in this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>
         /// <param name="numberOfRecords"> The current number of record sets in this Private DNS zone. This is a read-only property and any attempt to set this value will be ignored. </param>

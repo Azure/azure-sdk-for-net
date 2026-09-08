@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Container App Job.
+        /// Get the properties for a given Container App Job.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Get the properties of a Container App Job.
+        /// Get the properties for a given Container App Job.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
