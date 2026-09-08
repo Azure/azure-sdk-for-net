@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 throw new FormatException($"The model {nameof(ContinuousBackupInformation)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(LatestRestorableTimestamp))
+            if (Optional.IsDefined(LatestRestorableOn))
             {
                 writer.WritePropertyName("latestRestorableTimestamp"u8);
-                writer.WriteStringValue(LatestRestorableTimestamp.Value, "O");
+                writer.WriteStringValue(LatestRestorableOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            DateTimeOffset? latestRestorableTimestamp = default;
+            DateTimeOffset? latestRestorableOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    latestRestorableTimestamp = prop.Value.GetDateTimeOffset("O");
+                    latestRestorableOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ContinuousBackupInformation(latestRestorableTimestamp, additionalBinaryDataProperties);
+            return new ContinuousBackupInformation(latestRestorableOn, additionalBinaryDataProperties);
         }
     }
 }

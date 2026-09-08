@@ -136,6 +136,21 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
+            {
+                writer.WritePropertyName("privateEndpointConnections"u8);
+                writer.WriteStartArray();
+                foreach (SubResource item in PrivateEndpointConnections)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<SubResource>)item).Write(writer, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(SecurityPolicyConfigurations))
             {
                 writer.WritePropertyName("securityPolicyConfigurations"u8);
@@ -192,6 +207,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
             IReadOnlyList<SubResource> frontends = default;
             IReadOnlyList<SubResource> associations = default;
             IReadOnlyList<SubResource> securityPolicies = default;
+            IReadOnlyList<SubResource> privateEndpointConnections = default;
             SecurityPolicyConfigurations securityPolicyConfigurations = default;
             ServiceNetworkingProvisioningState? trafficControllerProvisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -281,6 +297,27 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                     securityPolicies = array;
                     continue;
                 }
+                if (prop.NameEquals("privateEndpointConnections"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<SubResource> array = new List<SubResource>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<SubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerServiceNetworkingContext.Default));
+                        }
+                    }
+                    privateEndpointConnections = array;
+                    continue;
+                }
                 if (prop.NameEquals("securityPolicyConfigurations"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -309,6 +346,7 @@ namespace Azure.ResourceManager.ServiceNetworking.Models
                 frontends ?? new ChangeTrackingList<SubResource>(),
                 associations ?? new ChangeTrackingList<SubResource>(),
                 securityPolicies ?? new ChangeTrackingList<SubResource>(),
+                privateEndpointConnections ?? new ChangeTrackingList<SubResource>(),
                 securityPolicyConfigurations,
                 trafficControllerProvisioningState,
                 additionalBinaryDataProperties);

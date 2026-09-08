@@ -25,8 +25,8 @@ namespace Azure.ResourceManager.Commerce.Models
         /// <summary> Initializes a new instance of <see cref="UsageSample"/>. </summary>
         /// <param name="subscriptionId"> The subscription identifier for the Azure user. </param>
         /// <param name="meterId"> Unique ID for the resource that was consumed (aka ResourceID). </param>
-        /// <param name="usageStartOn"> UTC start time for the usage bucket to which this usage aggregate belongs. </param>
-        /// <param name="usageEndOn"> UTC end time for the usage bucket to which this usage aggregate belongs. </param>
+        /// <param name="usageStartsOn"> UTC start time for the usage bucket to which this usage aggregate belongs. </param>
+        /// <param name="usageEndsOn"> UTC end time for the usage bucket to which this usage aggregate belongs. </param>
         /// <param name="quantity"> The amount of the resource consumption that occurred in this time frame. </param>
         /// <param name="unit"> The unit in which the usage for this resource is being counted, e.g. Hours, GB. </param>
         /// <param name="meterName"> Friendly name of the resource being consumed. </param>
@@ -36,12 +36,12 @@ namespace Azure.ResourceManager.Commerce.Models
         /// <param name="infoFields"> Key-value pairs of instance details (legacy format). </param>
         /// <param name="instanceData"> Key-value pairs of instance details represented as a string. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal UsageSample(Guid? subscriptionId, string meterId, DateTimeOffset? usageStartOn, DateTimeOffset? usageEndOn, float? quantity, string unit, string meterName, string meterCategory, string meterSubCategory, string meterRegion, BinaryData infoFields, string instanceData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal UsageSample(Guid? subscriptionId, string meterId, DateTimeOffset? usageStartsOn, DateTimeOffset? usageEndsOn, float? quantity, string unit, string meterName, string meterCategory, string meterSubCategory, string meterRegion, BinaryData infoFields, string instanceData, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             SubscriptionId = subscriptionId;
             MeterId = meterId;
-            UsageStartOn = usageStartOn;
-            UsageEndOn = usageEndOn;
+            UsageStartsOn = usageStartsOn;
+            UsageEndsOn = usageEndsOn;
             Quantity = quantity;
             Unit = unit;
             MeterName = meterName;
@@ -60,10 +60,10 @@ namespace Azure.ResourceManager.Commerce.Models
         public string MeterId { get; }
 
         /// <summary> UTC start time for the usage bucket to which this usage aggregate belongs. </summary>
-        public DateTimeOffset? UsageStartOn { get; }
+        public DateTimeOffset? UsageStartsOn { get; }
 
         /// <summary> UTC end time for the usage bucket to which this usage aggregate belongs. </summary>
-        public DateTimeOffset? UsageEndOn { get; }
+        public DateTimeOffset? UsageEndsOn { get; }
 
         /// <summary> The amount of the resource consumption that occurred in this time frame. </summary>
         public float? Quantity { get; }

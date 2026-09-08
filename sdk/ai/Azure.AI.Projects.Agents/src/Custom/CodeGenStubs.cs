@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 global using Microsoft.TypeSpec.Generator.Customizations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Projects.Agents;
 

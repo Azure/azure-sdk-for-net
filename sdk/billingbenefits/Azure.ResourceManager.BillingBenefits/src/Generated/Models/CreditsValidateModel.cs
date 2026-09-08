@@ -265,11 +265,11 @@ namespace Azure.ResourceManager.BillingBenefits.Models
         }
 
         /// <summary> Start DateTime. </summary>
-        public DateTimeOffset? StartOn
+        public DateTimeOffset? StartsOn
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -277,16 +277,16 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new CreditData();
                 }
-                Properties.StartOn = value;
+                Properties.StartsOn = value;
             }
         }
 
         /// <summary> End DateTime in UTC. </summary>
-        public DateTimeOffset? EndOn
+        public DateTimeOffset? EndsOn
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 {
                     Properties = new CreditData();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 

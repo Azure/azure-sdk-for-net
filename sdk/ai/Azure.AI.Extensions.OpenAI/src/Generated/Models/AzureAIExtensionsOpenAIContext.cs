@@ -3,6 +3,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure.AI.Extensions.OpenAI.Internal;
 
 namespace Azure.AI.Extensions.OpenAI
 {
@@ -154,6 +155,7 @@ namespace Azure.AI.Extensions.OpenAI
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.ProceduralMemoryItem is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ProceduralMemoryItem))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.ProceduralMemoryItem is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(PromptCacheOptionsParam))]
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.SharePointGroundingToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SharePointGroundingToolCall))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.SharePointGroundingToolCall is experimental and may change in future versions.

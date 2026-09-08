@@ -8,10 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.ResourceManager.Dns;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Dns.Models
 {
@@ -76,18 +74,13 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 throw new FormatException($"The model {nameof(DnsResourceReferenceRequestProperties)} does not support writing '{format}' format.");
             }
-            if (Optional.IsCollectionDefined(TargetResources))
+            if (Optional.IsCollectionDefined(TargetResourceReferences))
             {
                 writer.WritePropertyName("targetResources"u8);
                 writer.WriteStartArray();
-                foreach (WritableSubResource item in TargetResources)
+                foreach (DnsSubResourceInfo item in TargetResourceReferences)
                 {
-                    if (item == null)
-                    {
-                        writer.WriteNullValue();
-                        continue;
-                    }
-                    ((IJsonModel<WritableSubResource>)item).Write(writer, options);
+                    writer.WriteObjectValue(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -133,7 +126,7 @@ namespace Azure.ResourceManager.Dns.Models
             {
                 return null;
             }
-            IList<WritableSubResource> targetResources = default;
+            IList<DnsSubResourceInfo> targetResourceReferences = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -143,19 +136,12 @@ namespace Azure.ResourceManager.Dns.Models
                     {
                         continue;
                     }
-                    List<WritableSubResource> array = new List<WritableSubResource>();
+                    List<DnsSubResourceInfo> array = new List<DnsSubResourceInfo>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        if (item.ValueKind == JsonValueKind.Null)
-                        {
-                            array.Add(null);
-                        }
-                        else
-                        {
-                            array.Add(ModelReaderWriter.Read<WritableSubResource>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), ModelSerializationExtensions.WireOptions, AzureResourceManagerDnsContext.Default));
-                        }
+                        array.Add(DnsSubResourceInfo.DeserializeDnsSubResourceInfo(item, options));
                     }
-                    targetResources = array;
+                    targetResourceReferences = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -163,7 +149,7 @@ namespace Azure.ResourceManager.Dns.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DnsResourceReferenceRequestProperties(targetResources ?? new ChangeTrackingList<WritableSubResource>(), additionalBinaryDataProperties);
+            return new DnsResourceReferenceRequestProperties(targetResourceReferences ?? new ChangeTrackingList<DnsSubResourceInfo>(), additionalBinaryDataProperties);
         }
     }
 }
