@@ -446,7 +446,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
         /// the EXISTING stream after <c>Last-Event-ID</c> (SSE) or returns a JSON status
         /// snapshot. This is a read of durable state — it never starts a new run.</item>
         /// <item><b>POST /invocations/{id}/cancel</b> (<see cref="CancelAsync"/>) — cancel the
-        /// active run for the session.</item>
+        /// active or steering-queued invocation.</item>
         /// </list>
         /// </summary>
         public class ResilientResearchHandler : InvocationHandler
@@ -456,6 +456,11 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
             // an in-memory map populated on POST so GET/cancel can find the run.
             private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, string> s_taskIdByInvocation =
                 new System.Collections.Concurrent.ConcurrentDictionary<string, string>();
+
+            // Python parity: a queued steering input is cancelled through the TaskRun returned by
+            // StartAsync, not by widening active-run lookup to include queued inputs.
+            private static readonly System.Collections.Concurrent.ConcurrentDictionary<string, TaskRun<ResearchResult>> s_queuedRunsByInvocation =
+                new System.Collections.Concurrent.ConcurrentDictionary<string, TaskRun<ResearchResult>>();
 
             private static string TaskIdForSession(string sessionId) => $"research-{sessionId}";
 
@@ -484,7 +489,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
 
                 // Start a new turn or steer the running one. With the same TaskId, the engine
                 // transparently enqueues this input as steering while a turn is in flight.
-                _ = await research.StartAsync(
+                TaskRun<ResearchResult> run = await research.StartAsync(
                     new ResearchRequest(
                         body.Topic,
                         invId,
@@ -492,6 +497,10 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                         context.PlatformContext.CallId),
                     new RunOptions { TaskId = taskId, InputId = invId },
                     cancellationToken);
+                if (run.IsQueued)
+                {
+                    TrackQueuedRun(invId, run);
+                }
 
                 // Non-streaming clients get 202 + the invocation id to resume later via GET.
                 if (!AcceptsEventStream(request))
@@ -547,7 +556,7 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 }, cancellationToken);
             }
 
-            // POST /invocations/{id}/cancel — cancel the active run for this session.
+            // POST /invocations/{id}/cancel — cancel an active or steering-queued invocation.
             public override async Task CancelAsync(
                 string invocationId,
                 HttpRequest request,
@@ -562,8 +571,8 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                     ? mapped
                     : TaskIdForSession(context.SessionId);
 
-                TaskRun<ResearchResult>? run = await research
-                    .GetActiveRunAsync(taskId, invocationId, cancellationToken);
+                bool queued = s_queuedRunsByInvocation.TryGetValue(invocationId, out TaskRun<ResearchResult>? run);
+                run ??= await research.GetActiveRunAsync(taskId, invocationId, cancellationToken);
 
                 if (run is null)
                 {
@@ -572,9 +581,36 @@ namespace Azure.AI.AgentServer.Invocations.Tests.Snippets
                 }
 
                 await run.RequestCancellationAsync();
+                if (queued)
+                {
+                    s_queuedRunsByInvocation.TryRemove(invocationId, out _);
+                }
+
                 response.StatusCode = StatusCodes.Status202Accepted;
                 await response.WriteAsJsonAsync(new { invocation_id = invocationId, status = "cancelling" },
                     cancellationToken);
+            }
+
+            private static void TrackQueuedRun(string invocationId, TaskRun<ResearchResult> run)
+            {
+                s_queuedRunsByInvocation[invocationId] = run;
+                _ = run.Completion.ContinueWith(
+                    static (completion, state) =>
+                    {
+                        _ = completion.Exception;
+                        var tracked = ((string InvocationId, TaskRun<ResearchResult> Run))state!;
+                        if (s_queuedRunsByInvocation.TryGetValue(
+                                tracked.InvocationId,
+                                out TaskRun<ResearchResult>? current)
+                            && ReferenceEquals(current, tracked.Run))
+                        {
+                            s_queuedRunsByInvocation.TryRemove(tracked.InvocationId, out _);
+                        }
+                    },
+                    (invocationId, run),
+                    CancellationToken.None,
+                    TaskContinuationOptions.ExecuteSynchronously,
+                    TaskScheduler.Default);
             }
 
             private static bool AcceptsEventStream(HttpRequest request) =>
