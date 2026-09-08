@@ -5,15 +5,11 @@
 ### Features Added
 
 - Upgraded the service API version to `2026-06-02-preview`.
-- Added Fleet managed namespace placement and propagation policy support.
-- Added scheduled start configuration for update run gates.
-- Added rollout strategy and cluster selection support for Fleet managed namespaces.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added Cluster Mesh Profile management and Fleet member mesh status.
+- Added Fleet managed namespace update support, including placement and propagation policies, rollout strategies, and cluster selectors.
+- Added scheduled start gates for update runs.
+- Added label-based member selection and configurable failure thresholds for update stages and groups.
+- Added the `SecurityPatch` auto-upgrade channel and additional trigger status details.
 
 ## 1.2.0 (2026-08-07)
 
