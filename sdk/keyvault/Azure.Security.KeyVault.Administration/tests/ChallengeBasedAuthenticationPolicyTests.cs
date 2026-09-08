@@ -232,6 +232,27 @@ namespace Azure.Security.KeyVault.Tests
             Assert.That(transport.Requests, Has.Count.EqualTo(2));
         }
 
+        [TestCase("[]")]
+        [TestCase("\"Access denied.\"")]
+        [TestCase("null")]
+        [TestCase("42")]
+        [TestCase("true")]
+        public async Task DoesNotRetryNonObjectJsonResponse(string content)
+        {
+            MockTransport transport = CreateMockTransport(
+                new MockResponse(401).WithHeader("WWW-Authenticate", KeyVaultChallenge),
+                new MockResponse(401)
+                {
+                    ContentStream = new MemoryStream(Encoding.UTF8.GetBytes(content)),
+                },
+                new MockResponse(200));
+
+            Response response = await SendGetRequestWithRetry(transport);
+
+            Assert.That(response.Status, Is.EqualTo(401));
+            Assert.That(transport.Requests, Has.Count.EqualTo(2));
+        }
+
         [Test]
         public async Task DoesNotRetryMalformedUnauthorizedResponse()
         {

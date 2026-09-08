@@ -389,7 +389,8 @@ namespace Azure.Security.KeyVault
                     content.Position = 0;
                     using JsonDocument document = JsonDocument.Parse(content);
 
-                    return document.RootElement.TryGetProperty("error", out JsonElement error)
+                    return document.RootElement.ValueKind == JsonValueKind.Object
+                        && document.RootElement.TryGetProperty("error", out JsonElement error)
                         && error.ValueKind == JsonValueKind.Object
                         && error.TryGetProperty("message", out JsonElement errorMessage)
                         && errorMessage.ValueKind == JsonValueKind.String
