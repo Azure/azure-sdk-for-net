@@ -157,12 +157,28 @@ function Invoke-AutoReleaseResolution {
   # the correct group and are not confused by name collisions across groups. Packages pulled in solely
   # for validation are not releasable.
   $releasableKeys = New-Object 'System.Collections.Generic.HashSet[string]' ([System.StringComparer]::OrdinalIgnoreCase)
+  $artifactNameToPackageName = [System.Collections.Generic.Dictionary[string, string]]::new()
   foreach ($package in $changedPackages) {
     if ($package.IncludedForValidation) { continue }
 
     $names = @()
-    if ($package.Name) { $names += [string]$package.Name }
-    if ($package.PSObject.Properties['ArtifactName'] -and $package.ArtifactName) { $names += [string]$package.ArtifactName }
+    $packageName = $null
+    $artifactName = $null
+    if ($package.Name)
+    {
+      $names += [string]$package.Name
+      $packageName = [string]$package.Name
+    }
+    if ($package.PSObject.Properties['ArtifactName'] -and $package.ArtifactName)
+    {
+      $names += [string]$package.ArtifactName
+      $artifactName = [string]$package.ArtifactName
+    }
+
+    # Set package name as artifact name if artifact name is missing
+    # Set artifact name- package name map
+    if (-not $artifactName) { $artifactName = $packageName }
+    $artifactNameToPackageName[$artifactName] = $packageName
 
     $group = $null
     if ($package.PSObject.Properties['Group'] -and $package.Group) { $group = [string]$package.Group }
@@ -203,29 +219,34 @@ function Invoke-AutoReleaseResolution {
         # The release status is updated to "Released" after successful completion; until then, mark it as "Release In Progress" to indicate that the release is underway.
         try
         {
+          $packageName = $name
+          if ($artifactNameToPackageName.ContainsKey($name)) {
+            $packageName = $artifactNameToPackageName[$name]
+          }
           if($AzsdkExePath)
           {
             $sdkPullRequestUrl = $pr.html_url
-            $cliArgs = @("release-plan", "update-release-status", "--package-name", $name, "--language", $LanguageDisplayName, "--status", "Release In Progress", "--sdk-pull-request", $sdkPullRequestUrl)
+            Write-Host "Updating release plan for package '$packageName' (artifact name: '$name', package name: '$packageName')"
+            $cliArgs = @("release-plan", "update-release-status", "--package-name", $packageName, "--language", $LanguageDisplayName, "--status", "Release In Progress", "--sdk-pull-request", $sdkPullRequestUrl)
             if ($PipelineUrl)
             {
                 $cliArgs += @("--release-pipeline", $PipelineUrl)
             }
             else
             {
-              LogWarning "Pipeline URL is not set; Not setting release pipeline link for package '$name' in release plan."
+              LogWarning "Pipeline URL is not set; Not setting release pipeline link for package '$packageName' in release plan."
             }
 
             & $AzsdkExePath @cliArgs
             if ($LASTEXITCODE -ne 0)
             {
                 ## Not all releases have a release plan. So we should not fail the script even if a release plan is missing.
-                Write-Host "Failed to update release pending status for package '$name' using azsdk. Exit code: $LASTEXITCODE"
+                Write-Host "Failed to update release pending status for package '$packageName' using azsdk. Exit code: $LASTEXITCODE"
             }
           }
           else
           {
-            Write-Host "AzsdkExePath is not set; skipping release plan update for package '$name'."
+            Write-Host "AzsdkExePath is not set; skipping release plan update for package '$packageName'."
           }          
         }
         catch
