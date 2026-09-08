@@ -1,6 +1,5 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
-
 using System.Diagnostics.CodeAnalysis;
 
 namespace Azure.AI.Extensions.OpenAI
@@ -8,7 +7,7 @@ namespace Azure.AI.Extensions.OpenAI
     /// <summary>
     /// The approval required for the tool.
     /// </summary>
-    public partial class FabricIQPreviewToolRequireApprovalChoice
+    public partial class WebIQPreviewToolRequireApprovalChoice
     {
         /// <summary>
         /// The approval choice.
@@ -26,7 +25,7 @@ namespace Azure.AI.Extensions.OpenAI
         /// </summary>
         /// <param name="approvalPolicy">The approval policy for the tool.</param>
         [Experimental("OPENAI001")]
-        public FabricIQPreviewToolRequireApprovalChoice(global::OpenAI.Responses.McpToolCallApprovalPolicy approvalPolicy)
+        public WebIQPreviewToolRequireApprovalChoice(global::OpenAI.Responses.McpToolCallApprovalPolicy approvalPolicy)
         {
             ApprovalPolicy = approvalPolicy;
         }
@@ -35,27 +34,27 @@ namespace Azure.AI.Extensions.OpenAI
         /// Creates an options class with single tool name.
         /// </summary>
         /// <param name="approvalChoice">The approval choice for the tool.</param>
-        public FabricIQPreviewToolRequireApprovalChoice(string approvalChoice)
+        public WebIQPreviewToolRequireApprovalChoice(string approvalChoice)
         {
             ApprovalString = approvalChoice;
         }
 
-        internal FabricIQPreviewToolRequireApprovalChoice() { }
+        internal WebIQPreviewToolRequireApprovalChoice() { }
 
         /// <summary>
         /// Creates a ToolChoiceOption class from an integer value.
         /// </summary>
         /// <param name="approvalChoice">The approval choice for the tool.</param>
-        public static implicit operator FabricIQPreviewToolRequireApprovalChoice(string approvalChoice)
+        public static implicit operator WebIQPreviewToolRequireApprovalChoice(string approvalChoice)
             => new(approvalChoice);
 
         /// <summary>
-        /// Creates a FabricIQPreviewToolRequireApprovalChoice class from an integer value.
+        /// Creates a WebIQPreviewToolRequireApprovalChoice class from an integer value.
         /// </summary>
         /// <param name="approvalPolicy">The approval policy for the tool.</param>
         [Experimental("OPENAI001")]
 #pragma warning disable OPENAI001
-        public static implicit operator FabricIQPreviewToolRequireApprovalChoice(global::OpenAI.Responses.McpToolCallApprovalPolicy approvalPolicy)
+        public static implicit operator WebIQPreviewToolRequireApprovalChoice(global::OpenAI.Responses.McpToolCallApprovalPolicy approvalPolicy)
             => new(approvalPolicy);
 #pragma warning restore OPENAI001
     }

@@ -832,12 +832,12 @@ namespace Azure.AI.Projects.Agents
         /// <summary> A WebIQ server-side tool. </summary>
         /// <param name="projectConnectionId"> The ID of the WebIQ project connection. </param>
         /// <param name="serverLabel"> The label of the WebIQ MCP server to connect to. When omitted, the service defaults to connection name extracted from project_connection_id. </param>
-        /// <param name="requireApproval"> Whether the agent requires approval before executing actions. When omitted, the service defaults to "always". </param>
+        /// <param name="requireApprovalInternal"> Whether the agent requires approval before executing actions. When omitted, the service defaults to "always". </param>
         /// <returns> A new <see cref="Agents.WebIQPreviewTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static WebIQPreviewTool WebIQPreviewTool(string projectConnectionId = default, string serverLabel = default, BinaryData requireApproval = default)
+        public static WebIQPreviewTool WebIQPreviewTool(string projectConnectionId = default, string serverLabel = default, BinaryData requireApprovalInternal = default)
         {
-            return new WebIQPreviewTool(ToolType.WebIqPreview, additionalBinaryDataProperties: null, projectConnectionId, serverLabel, requireApproval);
+            return new WebIQPreviewTool(ToolType.WebIqPreview, additionalBinaryDataProperties: null, projectConnectionId, serverLabel, requireApprovalInternal);
         }
 
         /// <summary> A tool for integrating memories into the agent. </summary>
@@ -1804,10 +1804,10 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="projectConnectionId"> The ID of the WebIQ project connection. </param>
         /// <param name="serverLabel"> The label of the WebIQ MCP server to connect to. When omitted, the service defaults to connection name extracted from project_connection_id. </param>
-        /// <param name="requireApproval"> Whether the agent requires approval before executing actions. When omitted, the service defaults to "always". </param>
+        /// <param name="requireApprovalInternal"> Whether the agent requires approval before executing actions. When omitted, the service defaults to "always". </param>
         /// <returns> A new <see cref="Agents.WebIQPreviewToolboxTool"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static WebIQPreviewToolboxTool WebIQPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string projectConnectionId = default, string serverLabel = default, BinaryData requireApproval = default)
+        public static WebIQPreviewToolboxTool WebIQPreviewToolboxTool(string name = default, string description = default, IDictionary<string, ToolConfig> toolConfigs = default, string projectConnectionId = default, string serverLabel = default, BinaryData requireApprovalInternal = default)
         {
             toolConfigs ??= new ChangeTrackingDictionary<string, ToolConfig>();
 
@@ -1819,7 +1819,7 @@ namespace Azure.AI.Projects.Agents
                 additionalBinaryDataProperties: null,
                 projectConnectionId,
                 serverLabel,
-                requireApproval);
+                requireApprovalInternal);
         }
 
         /// <summary> A toolbox search tool stored in a toolbox. </summary>

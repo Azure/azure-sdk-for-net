@@ -6,21 +6,16 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using OpenAI;
+using OpenAI.Responses;
 
-namespace Azure.AI.Projects.Agents
+namespace Azure.AI.Extensions.OpenAI
 {
     /// <summary> A WebIQ server-side tool. </summary>
-    public partial class WebIQPreviewTool : ProjectsAgentTool, IJsonModel<WebIQPreviewTool>
+    public partial class WebIQPreviewTool : ResponseTool, IJsonModel<WebIQPreviewTool>
     {
-        /// <summary> Initializes a new instance of <see cref="WebIQPreviewTool"/> for deserialization. </summary>
-        internal WebIQPreviewTool()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProjectsAgentTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override ResponseTool PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<WebIQPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -42,7 +37,7 @@ namespace Azure.AI.Projects.Agents
             switch (format)
             {
                 case "J":
-                    return ModelReaderWriter.Write(this, options, AzureAIProjectsAgentsContext.Default);
+                    return ModelReaderWriter.Write(this, options, AzureAIExtensionsOpenAIContext.Default);
                 default:
                     throw new FormatException($"The model {nameof(WebIQPreviewTool)} does not support writing '{options.Format}' format.");
             }
@@ -84,17 +79,25 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("server_label"u8);
                 writer.WriteStringValue(ServerLabel);
             }
-            if (Optional.IsDefined(RequireApprovalInternal))
+            if (Optional.IsDefined(RequireApproval))
             {
                 writer.WritePropertyName("require_approval"u8);
-#if NET6_0_OR_GREATER
-                writer.WriteRawValue(RequireApprovalInternal);
-#else
-                using (JsonDocument document = JsonDocument.Parse(RequireApprovalInternal))
+                writer.WriteObjectValue(RequireApproval, options);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
-                    JsonSerializer.Serialize(writer, document.RootElement);
-                }
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
 #endif
+                }
             }
         }
 
@@ -104,7 +107,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override ProjectsAgentTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override ResponseTool JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<WebIQPreviewTool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
@@ -123,16 +126,16 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            ToolType @type = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            ResponseToolKind @type = "web_iq_preview";
             string projectConnectionId = default;
             string serverLabel = default;
-            BinaryData requireApprovalInternal = default;
+            WebIQPreviewToolRequireApprovalChoice requireApproval = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
-                    @type = new ToolType(prop.Value.GetString());
+                    @type = new ResponseToolKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("project_connection_id"u8))
@@ -149,10 +152,10 @@ namespace Azure.AI.Projects.Agents
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        requireApprovalInternal = null;
+                        requireApproval = null;
                         continue;
                     }
-                    requireApprovalInternal = BinaryData.FromString(prop.Value.GetRawText());
+                    requireApproval = WebIQPreviewToolRequireApprovalChoice.DeserializeWebIQPreviewToolRequireApprovalChoice(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -160,7 +163,7 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WebIQPreviewTool(@type, additionalBinaryDataProperties, projectConnectionId, serverLabel, requireApprovalInternal);
+            return new WebIQPreviewTool(@type, projectConnectionId, serverLabel, requireApproval, additionalBinaryDataProperties);
         }
     }
 }
