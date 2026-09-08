@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -73,6 +75,30 @@ namespace Azure.Security.KeyVault.Tests
             Assert.That(credential.LastRequestContext.ResourceRequestMethod, Is.EqualTo(RequestMethod.Get.ToString()));
             Assert.That(credential.LastRequestContext.ResourceRequestUri, Is.EqualTo(new Uri("https://myvault.vault.azure.net/")));
         }
+
+#if NET8_0_OR_GREATER
+        [Test]
+        public async Task AppliesBindingCertificateForMtlsPoPToken()
+        {
+            using RSA key = RSA.Create(2048);
+            CertificateRequest request = new("CN=KeyVaultPoPTest", key, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+            using X509Certificate2 certificate = request.CreateSelfSigned(DateTimeOffset.UtcNow.AddMinutes(-1), DateTimeOffset.UtcNow.AddMinutes(1));
+            MockCredentialThrowsWithNoScopes credential = new(MtlsPoPTokenType, certificate);
+            ChallengeBasedAuthenticationPolicy policy = new(credential, false);
+            MockTransport transport = CreateMockTransport(
+                new MockResponse(401).WithHeader("WWW-Authenticate", KeyVaultChallenge),
+                new MockResponse(200));
+
+            Response response = await SendGetRequest(transport, policy, uri: new Uri("https://myvault.vault.azure.net"));
+
+            Assert.That(response.Status, Is.EqualTo(200));
+            Assert.That(transport.TransportUpdates, Has.Count.EqualTo(1));
+            Assert.That(transport.TransportUpdates[0].ClientCertificates, Has.Count.EqualTo(1));
+            Assert.That(transport.TransportUpdates[0].ClientCertificates[0], Is.SameAs(certificate));
+            Assert.That(transport.Requests[1].Headers.TryGetValue("x-ms-tokenboundauth", out string headerValue), Is.True);
+            Assert.That(headerValue, Is.EqualTo("true"));
+        }
+#endif
 
         [Test]
         public async Task DoesNotAddTokenBoundAuthHeaderForBearerToken()
@@ -163,7 +189,7 @@ namespace Azure.Security.KeyVault.Tests
         }
 
         [Test]
-        public async Task RetriesTokenBindingValidationFailureWithCustomNonErrorClassifier()
+        public async Task PreservesCustomNonErrorClassifierForTokenBindingValidationFailure()
         {
             MockTransport transport = CreateMockTransport(
                 new MockResponse(401).WithHeader("WWW-Authenticate", KeyVaultChallenge),
@@ -172,8 +198,27 @@ namespace Azure.Security.KeyVault.Tests
 
             Response response = await SendGetRequestWithRetry(transport, new UnauthorizedIsNotErrorClassifier());
 
-            Assert.That(response.Status, Is.EqualTo(200));
-            Assert.That(transport.Requests, Has.Count.EqualTo(3));
+            Assert.That(response.Status, Is.EqualTo(401));
+            Assert.That(transport.Requests, Has.Count.EqualTo(2));
+        }
+
+        [Test]
+        public async Task TokenBindingValidationChallengeHonorsConfiguredRetryLimit()
+        {
+            MockTransport warmupTransport = CreateMockTransport(
+                new MockResponse(401).WithHeader("WWW-Authenticate", KeyVaultChallenge),
+                new MockResponse(200));
+            _ = await SendGetRequest(warmupTransport, _policy, uri: new Uri("https://myvault.vault.azure.net"));
+
+            MockTransport transport = CreateMockTransport(
+                CreateTokenBindingValidationFailure()
+                    .WithHeader("WWW-Authenticate", KeyVaultChallenge),
+                new MockResponse(200));
+
+            Response response = await SendGetRequestWithRetry(transport, maxRetries: 0);
+
+            Assert.That(response.Status, Is.EqualTo(401));
+            Assert.That(transport.Requests, Has.Count.EqualTo(1));
         }
 
         [Test]
@@ -369,7 +414,8 @@ namespace Azure.Security.KeyVault.Tests
         private async Task<Response> SendGetRequestWithRetry(
             MockTransport transport,
             ResponseClassifier responseClassifier = null,
-            bool bufferResponse = true)
+            bool bufferResponse = true,
+            int maxRetries = 1)
         {
             // ResponseBodyPolicy leaves seekable test streams unchanged, while production HTTP response
             // streams are buffered into MemoryStream before the retry classifier runs.
@@ -378,7 +424,7 @@ namespace Azure.Security.KeyVault.Tests
             {
                 Transport = transport,
             };
-            options.Retry.MaxRetries = 1;
+            options.Retry.MaxRetries = maxRetries;
             options.Retry.Delay = TimeSpan.Zero;
             ChallengeBasedAuthenticationPolicy policy = new(new MockCredentialThrowsWithNoScopes(MtlsPoPTokenType), false);
             HttpPipeline pipeline = HttpPipelineBuilder.Build(options, policy);
@@ -433,10 +479,12 @@ namespace Azure.Security.KeyVault.Tests
         public class MockCredentialThrowsWithNoScopes : TokenCredential
         {
             private readonly string _tokenType;
+            private readonly X509Certificate2 _bindingCertificate;
 
-            public MockCredentialThrowsWithNoScopes(string tokenType = "Bearer")
+            public MockCredentialThrowsWithNoScopes(string tokenType = "Bearer", X509Certificate2 bindingCertificate = null)
             {
                 _tokenType = tokenType;
+                _bindingCertificate = bindingCertificate;
             }
 
             public TokenRequestContext LastRequestContext { get; private set; }
@@ -454,7 +502,9 @@ namespace Azure.Security.KeyVault.Tests
                 }
 
                 LastRequestContext = requestContext;
-                return new AccessToken("TEST TOKEN " + string.Join(" ", requestContext.Scopes), DateTimeOffset.MaxValue, refreshOn: null, tokenType: _tokenType);
+                return _bindingCertificate is null
+                    ? new AccessToken("TEST TOKEN " + string.Join(" ", requestContext.Scopes), DateTimeOffset.MaxValue, refreshOn: null, tokenType: _tokenType)
+                    : new AccessToken("TEST TOKEN " + string.Join(" ", requestContext.Scopes), DateTimeOffset.MaxValue, refreshOn: null, tokenType: _tokenType, bindingCertificate: _bindingCertificate);
             }
         }
 

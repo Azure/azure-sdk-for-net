@@ -260,6 +260,14 @@ namespace Azure.Security.KeyVault
                 ProcessNext(message, pipeline);
             }
 
+            await BufferTokenBindingFailureResponseAsync(message, async).ConfigureAwait(false);
+            if (TokenBindingResponseClassifier.IsTokenBindingValidationFailure(message))
+            {
+                // Let the outer RetryPolicy enforce the configured retry count and delay instead of
+                // treating the binding failure as an authentication challenge and resending here.
+                return;
+            }
+
             // Check if we have received a challenge or we have not yet issued the first request.
             if (message.Response.Status == (int)HttpStatusCode.Unauthorized && message.Response.Headers.Contains(HttpHeader.Names.WwwAuthenticate))
             {
@@ -368,13 +376,9 @@ namespace Azure.Security.KeyVault
                 => _inner.IsRetriable(message, exception);
 
             public override bool IsErrorResponse(HttpMessage message)
-                // The transport classifies the response before a non-seekable body can be buffered.
-                // Exact body matching in IsRetriableResponse still controls whether this 401 is retried.
-                => message.Response.Status == (int)HttpStatusCode.Unauthorized
-                    && message.Request.Headers.Contains(TokenBoundAuthHeaderName)
-                    || _inner.IsErrorResponse(message);
+                => _inner.IsErrorResponse(message);
 
-            private static bool IsTokenBindingValidationFailure(HttpMessage message)
+            internal static bool IsTokenBindingValidationFailure(HttpMessage message)
             {
                 if (message.Response.Status != (int)HttpStatusCode.Unauthorized
                     || !message.Request.Headers.Contains(TokenBoundAuthHeaderName)
