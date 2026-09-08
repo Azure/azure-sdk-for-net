@@ -72,11 +72,15 @@ stimuli:
           required: ["azsdk-common-pipeline-fixer"]
           disallowed: ["azsdk-common-pipeline-analysis"]
   - name: anti-trigger-write-a-typespec-definition
-    prompt: "write a TypeSpec definition"
-    environment: *targetSkill
+    prompt: "Add an optional color property to the WidgetSuite model in main.tsp."
+    environment:
+      skills:
+        - ..
+        - ../../azure-typespec-author
     graders:
       - type: skill-invocation
         config:
+          required: ["azure-typespec-author"]
           disallowed: ["azsdk-common-pipeline-analysis"]
   - name: anti-trigger-create-a-new-skill
     prompt: "create a new skill"
