@@ -1,4 +1,4 @@
-# Azure.ResourceManager.AppService.SreAgent management client library for .NET
+# Azure App Service SRE Agent management client library for .NET
 
 This library supports managing Microsoft Azure resources.
 
