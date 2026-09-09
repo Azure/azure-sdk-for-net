@@ -175,13 +175,24 @@ function Invoke-AutoReleaseResolution {
       $artifactName = [string]$package.ArtifactName
     }
 
-    # Set package name as artifact name if artifact name is missing
-    # Set artifact name- package name map
-    if (-not $artifactName) { $artifactName = $packageName }
-    $artifactNameToPackageName[$artifactName] = $packageName
-
     $group = $null
     if ($package.PSObject.Properties['Group'] -and $package.Group) { $group = [string]$package.Group }
+
+    # Map all relevant name variants to the canonical package name so later lookups work for both
+    # ungrouped and group-qualified artifact keys. This keeps the release-plan update aligned with the
+    # releasable key matching used above.
+    $lookupNames = @()
+    if ($packageName) { $lookupNames += [string]$packageName }
+    if ($artifactName) { $lookupNames += [string]$artifactName }
+    if ($group) {
+      if ($packageName) { $lookupNames += "$group/$packageName" }
+      if ($artifactName) { $lookupNames += "$group/$artifactName" }
+    }
+
+    foreach ($lookupName in ($lookupNames | Sort-Object -Unique)) {
+      if (-not $lookupName) { continue }
+      $artifactNameToPackageName[$lookupName] = $packageName
+    }
 
     foreach ($name in ($names | Sort-Object -Unique)) {
       [void]$releasableKeys.Add($name)
@@ -220,8 +231,13 @@ function Invoke-AutoReleaseResolution {
         try
         {
           $packageName = $name
-          if ($artifactNameToPackageName.ContainsKey($name)) {
-            $packageName = $artifactNameToPackageName[$name]
+          $lookupKeys = @($name)
+          if ($groupId) { $lookupKeys += "$groupId/$name" }
+          foreach ($artifactKey in $lookupKeys) {
+            if ($artifactNameToPackageName.ContainsKey($artifactKey)) {
+              $packageName = $artifactNameToPackageName[$artifactKey]
+              break
+            }
           }
           if($AzsdkExePath)
           {
@@ -241,7 +257,7 @@ function Invoke-AutoReleaseResolution {
             if ($LASTEXITCODE -ne 0)
             {
                 ## Not all releases have a release plan. So we should not fail the script even if a release plan is missing.
-                Write-Host "Failed to update release pending status for package '$packageName' using azsdk. Exit code: $LASTEXITCODE"
+                Write-Host "Failed to update release in progress status for package '$packageName' using azsdk. Exit code: $LASTEXITCODE"
             }
           }
           else
@@ -251,7 +267,7 @@ function Invoke-AutoReleaseResolution {
         }
         catch
         {
-          Write-Host "Failed to update release pending status in release plan for package '$name'. $($_.Exception.Message)"
+          Write-Host "Failed to update release in progress status in release plan for package '$name'. $($_.Exception.Message)"
         }
       }
       else {
