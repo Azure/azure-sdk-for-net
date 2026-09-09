@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary>
         /// Parameters for Backup Datasource
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.KubernetesClusterBackupDataSourceSettings"/>, <see cref="Models.BlobBackupDataSourceSettings"/>, <see cref="Models.BlobBackupDatasourceParametersForAutoProtection"/>, <see cref="Models.AdlsBlobBackupDataSourceSettings"/>, and <see cref="Models.AdlsBlobBackupDatasourceParametersForAutoProtection"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.KubernetesClusterBackupDataSourceSettings"/>, <see cref="Models.BlobBackupDataSourceSettings"/>, <see cref="Models.BlobBackupDatasourceParametersForAutoProtection"/>, <see cref="Models.AdlsBlobBackupDataSourceSettings"/>, <see cref="Models.AdlsBlobBackupDatasourceParametersForAutoProtection"/>, and <see cref="Models.GenericBackupDataSourceSettings"/>.
         /// </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <returns> A new <see cref="Models.BackupDataSourceSettings"/> instance for mocking. </returns>
@@ -318,13 +318,14 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new AdlsBlobBackupDatasourceParametersForAutoProtection(default, default, autoProtectionSettings);
         }
 
+        /// <summary> Generic parameters to be used during configuration of backup. </summary>
         /// <param name="resourceSelectors"> List of resource selectors to be backed up during configuration of backup. </param>
-        /// <returns> A new <see cref="Models.GenericBackupDatasourceParameters"/> instance for mocking. </returns>
-        public static GenericBackupDatasourceParameters GenericBackupDatasourceParameters(IEnumerable<string> resourceSelectors = default)
+        /// <returns> A new <see cref="Models.GenericBackupDataSourceSettings"/> instance for mocking. </returns>
+        public static GenericBackupDataSourceSettings GenericBackupDataSourceSettings(IEnumerable<string> resourceSelectors = default)
         {
             resourceSelectors ??= new ChangeTrackingList<string>();
 
-            return new GenericBackupDatasourceParameters(default, default, (resourceSelectors ?? new ChangeTrackingList<string>()).ToList());
+            return new GenericBackupDataSourceSettings(default, default, (resourceSelectors ?? new ChangeTrackingList<string>()).ToList());
         }
 
         /// <summary> Protection status details. </summary>
@@ -1099,7 +1100,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <summary>
         /// Class to contain criteria for item level restore
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ItemPathBasedRestoreCriteria"/>, <see cref="Models.RangeBasedItemLevelRestoreCriteria"/>, <see cref="Models.KubernetesStorageClassRestoreCriteria"/>, <see cref="Models.KubernetesPVRestoreCriteria"/>, <see cref="Models.KubernetesClusterRestoreCriteria"/>, and <see cref="Models.KubernetesClusterVaultTierRestoreCriteria"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ItemPathBasedRestoreCriteria"/>, <see cref="Models.RangeBasedItemLevelRestoreCriteria"/>, <see cref="Models.GenericRestoreDatasourceCriteria"/>, <see cref="Models.KubernetesStorageClassRestoreCriteria"/>, <see cref="Models.KubernetesPVRestoreCriteria"/>, <see cref="Models.KubernetesClusterRestoreCriteria"/>, and <see cref="Models.KubernetesClusterVaultTierRestoreCriteria"/>.
         /// </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <returns> A new <see cref="Models.ItemLevelRestoreCriteria"/> instance for mocking. </returns>
@@ -1136,6 +1137,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new RangeBasedItemLevelRestoreCriteria(default, default, minMatchingValue, maxMatchingValue);
         }
 
+        /// <summary> Generic criteria to be used during restore. </summary>
         /// <param name="resourceSelectors"> List of resource identifiers that need to be restored. </param>
         /// <returns> A new <see cref="Models.GenericRestoreDatasourceCriteria"/> instance for mocking. </returns>
         public static GenericRestoreDatasourceCriteria GenericRestoreDatasourceCriteria(ResourceListSelectionCriteria resourceSelectors = default)
@@ -1143,6 +1145,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new GenericRestoreDatasourceCriteria(default, default, resourceSelectors);
         }
 
+        /// <summary> Specifies the list of resources to be restored. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="resourceIdentifiers"> List of resource identifiers to restore from. </param>
         /// <param name="resourceNameOverrides"> This is a map of source resource names to target resources names to restore into. Any source name not included in the map will be restored with a default naming format. </param>
@@ -2053,7 +2056,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             return new CrossRegionRestoreJobsContent(sourceRegion, sourceBackupVaultId, default);
         }
 
-        /// <param name="monitoringAlertSettingsForAllJobFailures"> Gets or sets the AlertSettingsForAllJobFailures. </param>
+        /// <summary> Backup Vault. </summary>
+        /// <param name="monitoringAlertSettingsForAllJobFailures"></param>
         /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
         /// <param name="resourceMoveState"> Resource move state for backup vault. </param>
         /// <param name="resourceMoveDetails"> Resource move details for backup vault. </param>
@@ -2086,7 +2090,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 default);
         }
 
-        /// <param name="monitoringAlertSettingsForAllJobFailures"> Gets or sets the AlertSettingsForAllJobFailures. </param>
+        /// <summary> Backup Vault Contract for Patch Backup Vault API. </summary>
+        /// <param name="monitoringAlertSettingsForAllJobFailures"></param>
         /// <param name="securitySettings"> Security Settings. </param>
         /// <param name="featureSettings"> Feature Settings. </param>
         /// <param name="resourceGuardOperationRequests"> ResourceGuardOperationRequests on which LAC check will be performed. </param>
@@ -2103,7 +2108,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 default);
         }
 
-        /// <param name="monitoringAlertSettingsForAllJobFailures"> Gets or sets the AlertSettingsForAllJobFailures. </param>
+        /// <summary> Deleted Backup Vault - uses composition with BackupVault and additional deletion metadata. </summary>
+        /// <param name="monitoringAlertSettingsForAllJobFailures"></param>
         /// <param name="provisioningState"> Provisioning state of the BackupVault resource. </param>
         /// <param name="resourceMoveState"> Resource move state for backup vault. </param>
         /// <param name="resourceMoveDetails"> Resource move details for backup vault. </param>

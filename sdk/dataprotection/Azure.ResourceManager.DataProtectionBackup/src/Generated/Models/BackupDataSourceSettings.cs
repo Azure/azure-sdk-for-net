@@ -12,7 +12,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary>
     /// Parameters for Backup Datasource
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KubernetesClusterBackupDataSourceSettings"/>, <see cref="BlobBackupDataSourceSettings"/>, <see cref="BlobBackupDatasourceParametersForAutoProtection"/>, <see cref="AdlsBlobBackupDataSourceSettings"/>, <see cref="AdlsBlobBackupDatasourceParametersForAutoProtection"/>, and <see cref="GenericBackupDatasourceParameters"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KubernetesClusterBackupDataSourceSettings"/>, <see cref="BlobBackupDataSourceSettings"/>, <see cref="BlobBackupDatasourceParametersForAutoProtection"/>, <see cref="AdlsBlobBackupDataSourceSettings"/>, <see cref="AdlsBlobBackupDatasourceParametersForAutoProtection"/>, and <see cref="GenericBackupDataSourceSettings"/>.
     /// </summary>
     public abstract partial class BackupDataSourceSettings
     {

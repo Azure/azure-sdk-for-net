@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataProtectionBackup
     [ModelReaderWriterBuildable(typeof(DppResourceList))]
     [ModelReaderWriterBuildable(typeof(DppTrackedResourceList))]
     [ModelReaderWriterBuildable(typeof(FetchSecondaryRPsRequestContent))]
-    [ModelReaderWriterBuildable(typeof(GenericBackupDatasourceParameters))]
+    [ModelReaderWriterBuildable(typeof(GenericBackupDataSourceSettings))]
     [ModelReaderWriterBuildable(typeof(GenericRestoreDatasourceCriteria))]
     [ModelReaderWriterBuildable(typeof(ImmediateCopySetting))]
     [ModelReaderWriterBuildable(typeof(ImmutabilitySettings))]

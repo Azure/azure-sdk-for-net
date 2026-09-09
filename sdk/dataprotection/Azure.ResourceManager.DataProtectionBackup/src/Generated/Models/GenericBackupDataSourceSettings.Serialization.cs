@@ -14,10 +14,10 @@ using Azure.ResourceManager.DataProtectionBackup;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Generic parameters to be used during configuration of backup. </summary>
-    public partial class GenericBackupDatasourceParameters : BackupDataSourceSettings, IJsonModel<GenericBackupDatasourceParameters>
+    public partial class GenericBackupDataSourceSettings : BackupDataSourceSettings, IJsonModel<GenericBackupDataSourceSettings>
     {
-        /// <summary> Initializes a new instance of <see cref="GenericBackupDatasourceParameters"/> for deserialization. </summary>
-        internal GenericBackupDatasourceParameters()
+        /// <summary> Initializes a new instance of <see cref="GenericBackupDataSourceSettings"/> for deserialization. </summary>
+        internal GenericBackupDataSourceSettings()
         {
         }
 
@@ -25,45 +25,45 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BackupDataSourceSettings PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenericBackupDatasourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenericBackupDataSourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeGenericBackupDatasourceParameters(document.RootElement, options);
+                        return DeserializeGenericBackupDataSourceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GenericBackupDatasourceParameters)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenericBackupDataSourceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenericBackupDatasourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenericBackupDataSourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerDataProtectionBackupContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(GenericBackupDatasourceParameters)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GenericBackupDataSourceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<GenericBackupDatasourceParameters>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<GenericBackupDataSourceSettings>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GenericBackupDatasourceParameters IPersistableModel<GenericBackupDatasourceParameters>.Create(BinaryData data, ModelReaderWriterOptions options) => (GenericBackupDatasourceParameters)PersistableModelCreateCore(data, options);
+        GenericBackupDataSourceSettings IPersistableModel<GenericBackupDataSourceSettings>.Create(BinaryData data, ModelReaderWriterOptions options) => (GenericBackupDataSourceSettings)PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<GenericBackupDatasourceParameters>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<GenericBackupDataSourceSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<GenericBackupDatasourceParameters>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<GenericBackupDataSourceSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenericBackupDatasourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenericBackupDataSourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenericBackupDatasourceParameters)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(GenericBackupDataSourceSettings)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("resourceSelectors"u8);
@@ -96,24 +96,24 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        GenericBackupDatasourceParameters IJsonModel<GenericBackupDatasourceParameters>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GenericBackupDatasourceParameters)JsonModelCreateCore(ref reader, options);
+        GenericBackupDataSourceSettings IJsonModel<GenericBackupDataSourceSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (GenericBackupDataSourceSettings)JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override BackupDataSourceSettings JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<GenericBackupDatasourceParameters>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<GenericBackupDataSourceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GenericBackupDatasourceParameters)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(GenericBackupDataSourceSettings)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeGenericBackupDatasourceParameters(document.RootElement, options);
+            return DeserializeGenericBackupDataSourceSettings(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static GenericBackupDatasourceParameters DeserializeGenericBackupDatasourceParameters(JsonElement element, ModelReaderWriterOptions options)
+        internal static GenericBackupDataSourceSettings DeserializeGenericBackupDataSourceSettings(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GenericBackupDatasourceParameters(objectType, additionalBinaryDataProperties, resourceSelectors);
+            return new GenericBackupDataSourceSettings(objectType, additionalBinaryDataProperties, resourceSelectors);
         }
     }
 }

@@ -13,23 +13,23 @@ using Azure.ResourceManager.DataProtectionBackup;
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
     /// <summary> Generic parameters to be used during configuration of backup. </summary>
-    public partial class GenericBackupDatasourceParameters : BackupDataSourceSettings
+    public partial class GenericBackupDataSourceSettings : BackupDataSourceSettings
     {
-        /// <summary> Initializes a new instance of <see cref="GenericBackupDatasourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericBackupDataSourceSettings"/>. </summary>
         /// <param name="resourceSelectors"> List of resource selectors to be backed up during configuration of backup. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="resourceSelectors"/> is null. </exception>
-        public GenericBackupDatasourceParameters(IEnumerable<string> resourceSelectors) : base("GenericBackupDatasourceParameters")
+        public GenericBackupDataSourceSettings(IEnumerable<string> resourceSelectors) : base("GenericBackupDatasourceParameters")
         {
             Argument.AssertNotNull(resourceSelectors, nameof(resourceSelectors));
 
             ResourceSelectors = resourceSelectors.ToList();
         }
 
-        /// <summary> Initializes a new instance of <see cref="GenericBackupDatasourceParameters"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="GenericBackupDataSourceSettings"/>. </summary>
         /// <param name="objectType"> Type of the specific object - used for deserializing. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="resourceSelectors"> List of resource selectors to be backed up during configuration of backup. </param>
-        internal GenericBackupDatasourceParameters(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> resourceSelectors) : base(objectType, additionalBinaryDataProperties)
+        internal GenericBackupDataSourceSettings(string objectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<string> resourceSelectors) : base(objectType, additionalBinaryDataProperties)
         {
             ResourceSelectors = resourceSelectors;
         }
