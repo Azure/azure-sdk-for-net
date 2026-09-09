@@ -53,7 +53,7 @@ namespace Azure.Provisioning.Network
             get { return Properties is null ? default : Properties.CustomIPPrefixParent; }
             set
             {
-                Properties ??= new CustomIpPrefixPropertiesFormat();
+                Properties ??= new CustomIPPrefixPropertiesFormat();
                 Properties.CustomIPPrefixParent = value;
             }
         }
@@ -64,7 +64,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                Properties ??= new CustomIpPrefixPropertiesFormat();
+                Properties ??= new CustomIPPrefixPropertiesFormat();
                 return Properties.ChildCustomIPPrefixes;
             }
         }
@@ -289,11 +289,11 @@ namespace Azure.Provisioning.Network
         [CodeGenMember("EnableL4ClientIpPreservation")]
         public BicepValue<bool> IsL4ClientIPPreservationEnabled
         {
-            get { return Properties is null ? default : Properties.EnableL4ClientIpPreservation; }
+            get { return Properties is null ? default : Properties.EnableL4ClientIPPreservation; }
             set
             {
                 Properties ??= new ApplicationGatewayBackendSettingsPropertiesFormat();
-                Properties.EnableL4ClientIpPreservation = value;
+                Properties.EnableL4ClientIPPreservation = value;
             }
         }
 
@@ -319,7 +319,7 @@ namespace Azure.Provisioning.Network
             get { return Properties is null ? default : Properties.Primary; }
             set
             {
-                Properties ??= new ApplicationGatewayPrivateLinkIpConfigurationProperties();
+                Properties ??= new ApplicationGatewayPrivateLinkIPConfigurationProperties();
                 Properties.Primary = value;
             }
         }

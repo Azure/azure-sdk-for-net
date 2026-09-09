@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure;
 using Azure.Core;
 using Azure.Provisioning;
@@ -79,7 +78,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        internal PublicIPAddressPropertiesFormat Properties
+        public PublicIPAddressPropertiesFormat Properties
         {
             get
             {
@@ -89,7 +88,7 @@ namespace Azure.Provisioning.Network
             set
             {
                 Initialize();
-                AssignOrReplace(ref _properties, value);
+                this.AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -104,7 +103,7 @@ namespace Azure.Provisioning.Network
             set
             {
                 Initialize();
-                AssignOrReplace(ref _extendedLocation, value);
+                this.AssignOrReplace(ref _extendedLocation, value);
             }
         }
 
@@ -119,7 +118,7 @@ namespace Azure.Provisioning.Network
             set
             {
                 Initialize();
-                AssignOrReplace(ref _sku, value);
+                this.AssignOrReplace(ref _sku, value);
             }
         }
 
@@ -148,262 +147,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the PublicIPAllocationMethod. </summary>
-        public BicepValue<NetworkIPAllocationMethod> PublicIPAllocationMethod
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PublicIPAllocationMethod;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PublicIPAddressPropertiesFormat();
-                }
-                Properties.PublicIPAllocationMethod = value;
-            }
-        }
-
-        /// <summary> Gets or sets the PublicIPAddressVersion. </summary>
-        public BicepValue<NetworkIPVersion> PublicIPAddressVersion
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PublicIPAddressVersion;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PublicIPAddressPropertiesFormat();
-                }
-                Properties.PublicIPAddressVersion = value;
-            }
-        }
-
-        /// <summary> Gets the IPConfiguration. </summary>
-        public NetworkIPConfiguration IPConfiguration
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IPConfiguration;
-            }
-        }
-
-        /// <summary> Gets or sets the DnsSettings. </summary>
-        public PublicIPAddressDnsSettings DnsSettings
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DnsSettings;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PublicIPAddressPropertiesFormat();
-                }
-                Properties.DnsSettings = value;
-            }
-        }
-
-        /// <summary> Gets or sets the DdosSettings. </summary>
-        public DdosSettings DdosSettings
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DdosSettings;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PublicIPAddressPropertiesFormat();
-                }
-                Properties.DdosSettings = value;
-            }
-        }
-
-        /// <summary> Gets or sets the IPTags. </summary>
-        public BicepList<IPTag> IPTags
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IPTags;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PublicIPAddressPropertiesFormat();
-                }
-                Properties.IPTags = value;
-            }
-        }
-
-        /// <summary> Gets or sets the IPAddress. </summary>
-        public BicepValue<string> IPAddress
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IPAddress;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PublicIPAddressPropertiesFormat();
-                }
-                Properties.IPAddress = value;
-            }
-        }
-
-        /// <summary> Gets or sets the IdleTimeoutInMinutes. </summary>
-        public BicepValue<int> IdleTimeoutInMinutes
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IdleTimeoutInMinutes;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PublicIPAddressPropertiesFormat();
-                }
-                Properties.IdleTimeoutInMinutes = value;
-            }
-        }
-
-        /// <summary> Gets the ResourceGuid. </summary>
-        public BicepValue<Guid> ResourceGuid
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new PublicIPAddressPropertiesFormat();
-                }
-                return Properties.ResourceGuid;
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<NetworkProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new PublicIPAddressPropertiesFormat();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets or sets the ServicePublicIPAddress. </summary>
-        public PublicIPAddress ServicePublicIPAddress
-        {
-            get
-            {
-                return Properties is null ? default : Properties.ServicePublicIPAddress;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PublicIPAddressPropertiesFormat();
-                }
-                Properties.ServicePublicIPAddress = value;
-            }
-        }
-
-        /// <summary> Gets or sets the NatGateway. </summary>
-        public NatGateway NatGateway
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NatGateway;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PublicIPAddressPropertiesFormat();
-                }
-                Properties.NatGateway = value;
-            }
-        }
-
-        /// <summary> Gets or sets the MigrationPhase. </summary>
-        public BicepValue<PublicIPAddressMigrationPhase> MigrationPhase
-        {
-            get
-            {
-                return Properties is null ? default : Properties.MigrationPhase;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PublicIPAddressPropertiesFormat();
-                }
-                Properties.MigrationPhase = value;
-            }
-        }
-
-        /// <summary> Gets or sets the LinkedPublicIPAddress. </summary>
-        public PublicIPAddress LinkedPublicIPAddress
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LinkedPublicIPAddress;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PublicIPAddressPropertiesFormat();
-                }
-                Properties.LinkedPublicIPAddress = value;
-            }
-        }
-
-        /// <summary> Gets or sets the DeleteOption. </summary>
-        public BicepValue<IPAddressDeleteOption> DeleteOption
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DeleteOption;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PublicIPAddressPropertiesFormat();
-                }
-                Properties.DeleteOption = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> PublicIPPrefixId
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PublicIPPrefixId;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new PublicIPAddressPropertiesFormat();
-                }
-                Properties.PublicIPPrefixId = value;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for PublicIPAddress. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -416,7 +159,7 @@ namespace Azure.Provisioning.Network
             _sku = DefineModelProperty<PublicIPAddressSku>(nameof(Sku), new string[] { "sku" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });
-            DefineAdditionalProperties();
+            this.DefineAdditionalProperties();
         }
 
         /// <summary> Creates a reference to an existing PublicIPAddress. </summary>

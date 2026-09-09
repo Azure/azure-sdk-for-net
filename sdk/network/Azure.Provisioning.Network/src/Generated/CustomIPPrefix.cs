@@ -21,7 +21,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
-        private CustomIpPrefixPropertiesFormat _properties;
+        private CustomIPPrefixPropertiesFormat _properties;
         private ExtendedAzureLocation _extendedLocation;
         private BicepValue<ETag> _eTag;
         private BicepList<string> _zones;
@@ -89,7 +89,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        internal CustomIpPrefixPropertiesFormat Properties
+        internal CustomIPPrefixPropertiesFormat Properties
         {
             get
             {
@@ -154,7 +154,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.Asn = value;
             }
@@ -171,7 +171,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.Cidr = value;
             }
@@ -188,7 +188,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.SignedMessage = value;
             }
@@ -205,7 +205,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.AuthorizationMessage = value;
             }
@@ -222,7 +222,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.CommissionedState = value;
             }
@@ -239,7 +239,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.ExpressRouteAdvertise = value;
             }
@@ -256,7 +256,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.Geo = value;
             }
@@ -273,7 +273,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.NoInternetAdvertise = value;
             }
@@ -290,7 +290,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 Properties.PrefixType = value;
             }
@@ -303,7 +303,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 return Properties.PublicIPPrefixes;
             }
@@ -316,7 +316,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 return Properties.ResourceGuid;
             }
@@ -329,7 +329,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 return Properties.FailedReason;
             }
@@ -342,7 +342,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new CustomIpPrefixPropertiesFormat();
+                    Properties = new CustomIPPrefixPropertiesFormat();
                 }
                 return Properties.ProvisioningState;
             }
@@ -356,7 +356,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _properties = DefineModelProperty<CustomIpPrefixPropertiesFormat>(nameof(Properties), new string[] { "properties" });
+            _properties = DefineModelProperty<CustomIPPrefixPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _extendedLocation = DefineModelProperty<ExtendedAzureLocation>(nameof(ExtendedLocation), new string[] { "extendedLocation" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });

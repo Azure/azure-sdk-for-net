@@ -247,7 +247,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<NspAccessRuleProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<NetworkSecurityPerimeterProfile>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<NetworkSecurityPerimeterProfile>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

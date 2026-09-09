@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Network
     /// <summary> The private link service ip configuration. </summary>
     public partial class PrivateLinkServiceIPConfiguration : NetworkSubResource
     {
-        private PrivateLinkServiceIpConfigurationProperties _properties;
+        private PrivateLinkServiceIPConfigurationProperties _properties;
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
         private BicepValue<ResourceType> _resourceType;
@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        internal PrivateLinkServiceIpConfigurationProperties Properties
+        internal PrivateLinkServiceIPConfigurationProperties Properties
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new PrivateLinkServiceIpConfigurationProperties();
+                    Properties = new PrivateLinkServiceIPConfigurationProperties();
                 }
                 Properties.PrivateIPAddress = value;
             }
@@ -102,7 +102,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new PrivateLinkServiceIpConfigurationProperties();
+                    Properties = new PrivateLinkServiceIPConfigurationProperties();
                 }
                 Properties.PrivateIPAllocationMethod = value;
             }
@@ -119,7 +119,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new PrivateLinkServiceIpConfigurationProperties();
+                    Properties = new PrivateLinkServiceIPConfigurationProperties();
                 }
                 Properties.Subnet = value;
             }
@@ -136,7 +136,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new PrivateLinkServiceIpConfigurationProperties();
+                    Properties = new PrivateLinkServiceIPConfigurationProperties();
                 }
                 Properties.Primary = value;
             }
@@ -149,7 +149,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new PrivateLinkServiceIpConfigurationProperties();
+                    Properties = new PrivateLinkServiceIPConfigurationProperties();
                 }
                 return Properties.ProvisioningState;
             }
@@ -166,7 +166,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new PrivateLinkServiceIpConfigurationProperties();
+                    Properties = new PrivateLinkServiceIPConfigurationProperties();
                 }
                 Properties.PrivateIPAddressVersion = value;
             }
@@ -176,7 +176,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<PrivateLinkServiceIpConfigurationProperties>(nameof(Properties), new string[] { "properties" });
+            _properties = DefineModelProperty<PrivateLinkServiceIPConfigurationProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);

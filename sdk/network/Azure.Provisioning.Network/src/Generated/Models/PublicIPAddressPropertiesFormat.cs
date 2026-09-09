@@ -13,7 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Network
 {
     /// <summary> Public IP address properties. </summary>
-    internal partial class PublicIPAddressPropertiesFormat : ProvisionableConstruct
+    public partial class PublicIPAddressPropertiesFormat : ProvisionableConstruct
     {
         private BicepValue<NetworkIPAllocationMethod> _publicIPAllocationMethod;
         private BicepValue<NetworkIPVersion> _publicIPAddressVersion;

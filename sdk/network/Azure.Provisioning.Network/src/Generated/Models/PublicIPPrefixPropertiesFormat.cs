@@ -162,7 +162,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return LoadBalancerFrontendIPConfiguration.Id;
+                return LoadBalancerFrontendIPConfiguration is null ? default : LoadBalancerFrontendIPConfiguration.Id;
             }
         }
 

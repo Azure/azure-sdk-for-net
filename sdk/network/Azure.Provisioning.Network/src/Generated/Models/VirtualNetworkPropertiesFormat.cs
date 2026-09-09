@@ -297,7 +297,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return DefaultPublicNatGateway.Id;
+                return DefaultPublicNatGateway is null ? default : DefaultPublicNatGateway.Id;
             }
         }
 

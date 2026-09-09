@@ -95,7 +95,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.RemotePerimeterResourceId;
+                return Properties is null ? default : Properties.RemotePerimeterResourceId;
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.RemotePerimeterGuid;
+                return Properties is null ? default : Properties.RemotePerimeterGuid;
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.RemotePerimeterLocation;
+                return Properties is null ? default : Properties.RemotePerimeterLocation;
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.LocalInboundProfiles;
+                return Properties is null ? default : Properties.LocalInboundProfiles;
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.LocalOutboundProfiles;
+                return Properties is null ? default : Properties.LocalOutboundProfiles;
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.RemoteInboundProfiles;
+                return Properties is null ? default : Properties.RemoteInboundProfiles;
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.RemoteOutboundProfiles;
+                return Properties is null ? default : Properties.RemoteOutboundProfiles;
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.Description;
+                return Properties is null ? default : Properties.Description;
             }
         }
 
@@ -176,7 +176,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.Status;
+                return Properties is null ? default : Properties.Status;
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<NspLinkReferenceProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<NetworkSecurityPerimeter>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<NetworkSecurityPerimeter>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

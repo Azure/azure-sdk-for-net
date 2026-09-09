@@ -98,7 +98,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.Vendor;
+                return Properties is null ? default : Properties.Vendor;
             }
         }
 
@@ -107,7 +107,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.AvailableVersions;
+                return Properties is null ? default : Properties.AvailableVersions;
             }
         }
 
@@ -116,7 +116,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.AvailableScaleUnits;
+                return Properties is null ? default : Properties.AvailableScaleUnits;
             }
         }
 

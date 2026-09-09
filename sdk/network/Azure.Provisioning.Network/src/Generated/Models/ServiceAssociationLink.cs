@@ -58,7 +58,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 

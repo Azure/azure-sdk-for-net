@@ -16,12 +16,23 @@ namespace Azure.Provisioning.Network
     /// </summary>
     public partial class FirewallPolicyRuleCollectionInfo : ProvisionableConstruct
     {
+        private BicepValue<FirewallPolicyRuleCollectionType> _ruleCollectionType;
         private BicepValue<string> _name;
         private BicepValue<int> _priority;
 
         /// <summary> Creates a new FirewallPolicyRuleCollectionInfo. </summary>
         public FirewallPolicyRuleCollectionInfo()
         {
+        }
+
+        /// <summary> The type of the rule collection. </summary>
+        internal BicepValue<FirewallPolicyRuleCollectionType> RuleCollectionType
+        {
+            get
+            {
+                Initialize();
+                return _ruleCollectionType;
+            }
         }
 
         /// <summary> Gets or sets the Name. </summary>
@@ -58,6 +69,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _ruleCollectionType = DefineProperty<FirewallPolicyRuleCollectionType>(nameof(RuleCollectionType), new string[] { "ruleCollectionType" }, isRequired: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _priority = DefineProperty<int>(nameof(Priority), new string[] { "priority" });
             DefineAdditionalProperties();

@@ -175,7 +175,7 @@ namespace Azure.Provisioning.Network
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _properties = DefineModelProperty<AdminRuleCollectionPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _parent = DefineResource<SecurityAdminConfiguration>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<SecurityAdminConfiguration>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

@@ -267,7 +267,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _properties = DefineModelProperty<PacketCaptureResultProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<NetworkWatcher>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<NetworkWatcher>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

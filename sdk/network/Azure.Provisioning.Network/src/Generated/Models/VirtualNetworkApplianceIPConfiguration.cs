@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Network
     /// <summary> The virtual network appliance ip configuration. </summary>
     public partial class VirtualNetworkApplianceIPConfiguration : NetworkSubResource
     {
-        private VirtualNetworkApplianceIpConfigurationProperties _properties;
+        private VirtualNetworkApplianceIPConfigurationProperties _properties;
         private BicepValue<ETag> _eTag;
         private BicepValue<ResourceType> _resourceType;
 
@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the Properties. </summary>
-        internal VirtualNetworkApplianceIpConfigurationProperties Properties
+        internal VirtualNetworkApplianceIPConfigurationProperties Properties
         {
             get
             {
@@ -58,7 +58,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<VirtualNetworkApplianceIpConfigurationProperties>(nameof(Properties), new string[] { "properties" });
+            _properties = DefineModelProperty<VirtualNetworkApplianceIPConfigurationProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();

@@ -71,7 +71,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _properties = DefineModelProperty<VpnLinkConnectionSharedKeyProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<VpnSiteLinkConnection>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<VpnSiteLinkConnection>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

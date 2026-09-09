@@ -26,6 +26,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new ApplicationRule. </summary>
         public ApplicationRule()
         {
+            RuleType.Assign(FirewallPolicyRuleType.ApplicationRule);
         }
 
         /// <summary> Gets or sets the SourceAddresses. </summary>
@@ -182,7 +183,6 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("ruleType", new string[] { "ruleType" }, defaultValue: "ApplicationRule");
             _sourceAddresses = DefineListProperty<string>(nameof(SourceAddresses), new string[] { "sourceAddresses" });
             _destinationAddresses = DefineListProperty<string>(nameof(DestinationAddresses), new string[] { "destinationAddresses" });
             _protocols = DefineListProperty<FirewallPolicyRuleApplicationProtocol>(nameof(Protocols), new string[] { "protocols" });

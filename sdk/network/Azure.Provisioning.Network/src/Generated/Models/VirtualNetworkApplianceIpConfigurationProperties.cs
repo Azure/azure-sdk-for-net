@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Network
 {
     /// <summary> Properties of virtual network appliance IP configuration. </summary>
-    internal partial class VirtualNetworkApplianceIpConfigurationProperties : ProvisionableConstruct
+    internal partial class VirtualNetworkApplianceIPConfigurationProperties : ProvisionableConstruct
     {
         private BicepValue<string> _privateIPAddress;
         private BicepValue<NetworkIPAllocationMethod> _privateIPAllocationMethod;
@@ -19,8 +19,8 @@ namespace Azure.Provisioning.Network
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepValue<NetworkIPVersion> _privateIPAddressVersion;
 
-        /// <summary> Creates a new VirtualNetworkApplianceIpConfigurationProperties. </summary>
-        public VirtualNetworkApplianceIpConfigurationProperties()
+        /// <summary> Creates a new VirtualNetworkApplianceIPConfigurationProperties. </summary>
+        public VirtualNetworkApplianceIPConfigurationProperties()
         {
         }
 
@@ -74,7 +74,7 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Define all the provisionable properties for VirtualNetworkApplianceIpConfigurationProperties. </summary>
+        /// <summary> Define all the provisionable properties for VirtualNetworkApplianceIPConfigurationProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -86,7 +86,7 @@ namespace Azure.Provisioning.Network
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for VirtualNetworkApplianceIpConfigurationProperties that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for VirtualNetworkApplianceIPConfigurationProperties that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

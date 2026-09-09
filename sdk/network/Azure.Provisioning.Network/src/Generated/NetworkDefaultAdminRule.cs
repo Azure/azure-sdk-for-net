@@ -20,6 +20,7 @@ namespace Azure.Provisioning.Network
         /// <param name="resourceVersion"> The resource API version. </param>
         public NetworkDefaultAdminRule(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, resourceVersion)
         {
+            Kind.Assign(AdminRuleKind.Default);
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -201,7 +202,6 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("kind", new string[] { "kind" }, defaultValue: "Default");
             _properties = DefineModelProperty<DefaultAdminPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }

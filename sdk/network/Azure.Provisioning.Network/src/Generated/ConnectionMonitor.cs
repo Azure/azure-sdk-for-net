@@ -292,8 +292,8 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
@@ -301,7 +301,7 @@ namespace Azure.Provisioning.Network
                 {
                     Properties = new ConnectionMonitorResultProperties();
                 }
-                return Properties.StartOn;
+                return Properties.StartsOn;
             }
         }
 
@@ -328,7 +328,7 @@ namespace Azure.Provisioning.Network
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _properties = DefineModelProperty<ConnectionMonitorResultProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<NetworkWatcher>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<NetworkWatcher>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

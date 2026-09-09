@@ -102,7 +102,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<ReachabilityAnalysisRunProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<NetworkVerifierWorkspace>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<NetworkVerifierWorkspace>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

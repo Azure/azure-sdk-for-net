@@ -69,7 +69,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Container.Id;
+                return Container is null ? default : Container.Id;
             }
         }
 

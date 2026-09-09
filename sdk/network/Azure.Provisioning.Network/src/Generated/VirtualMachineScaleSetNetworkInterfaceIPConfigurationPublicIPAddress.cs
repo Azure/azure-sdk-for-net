@@ -444,7 +444,7 @@ namespace Azure.Provisioning.Network
             _sku = DefineModelProperty<PublicIPAddressSku>(nameof(Sku), new string[] { "sku" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });
-            _parent = DefineResource<VirtualMachineScaleSetNetworkInterfaceIPConfiguration>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<VirtualMachineScaleSetNetworkInterfaceIPConfiguration>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

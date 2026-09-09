@@ -103,7 +103,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return ExpressRouteCircuitPeering.Id;
+                return ExpressRouteCircuitPeering is null ? default : ExpressRouteCircuitPeering.Id;
             }
         }
 
@@ -112,7 +112,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return PeerExpressRouteCircuitPeering.Id;
+                return PeerExpressRouteCircuitPeering is null ? default : PeerExpressRouteCircuitPeering.Id;
             }
         }
 

@@ -98,7 +98,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.PortPairDescriptor;
+                return Properties is null ? default : Properties.PortPairDescriptor;
             }
         }
 
@@ -107,7 +107,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.PrimaryAzurePort;
+                return Properties is null ? default : Properties.PrimaryAzurePort;
             }
         }
 
@@ -116,7 +116,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.SecondaryAzurePort;
+                return Properties is null ? default : Properties.SecondaryAzurePort;
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.PeeringLocation;
+                return Properties is null ? default : Properties.PeeringLocation;
             }
         }
 
@@ -134,7 +134,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.OverprovisionFactor;
+                return Properties is null ? default : Properties.OverprovisionFactor;
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.PortBandwidthInMbps;
+                return Properties is null ? default : Properties.PortBandwidthInMbps;
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.UsedBandwidthInMbps;
+                return Properties is null ? default : Properties.UsedBandwidthInMbps;
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.RemainingBandwidthInMbps;
+                return Properties is null ? default : Properties.RemainingBandwidthInMbps;
             }
         }
 

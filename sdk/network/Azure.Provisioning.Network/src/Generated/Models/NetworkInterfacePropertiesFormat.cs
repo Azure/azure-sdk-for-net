@@ -13,7 +13,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Network
 {
     /// <summary> NetworkInterface properties. </summary>
-    internal partial class NetworkInterfacePropertiesFormat : ProvisionableConstruct
+    public partial class NetworkInterfacePropertiesFormat : ProvisionableConstruct
     {
         private NetworkSubResource _virtualMachine;
         private NetworkSecurityGroup _networkSecurityGroup;
@@ -339,7 +339,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return VirtualMachine.Id;
+                return VirtualMachine is null ? default : VirtualMachine.Id;
             }
         }
 
@@ -348,7 +348,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return DscpConfiguration.Id;
+                return DscpConfiguration is null ? default : DscpConfiguration.Id;
             }
         }
 

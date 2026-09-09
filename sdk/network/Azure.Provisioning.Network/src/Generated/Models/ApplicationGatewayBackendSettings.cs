@@ -160,6 +160,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the EnableL4ClientIPPreservation. </summary>
+        public BicepValue<bool> EnableL4ClientIPPreservation
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableL4ClientIPPreservation;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
+                }
+                Properties.EnableL4ClientIPPreservation = value;
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {

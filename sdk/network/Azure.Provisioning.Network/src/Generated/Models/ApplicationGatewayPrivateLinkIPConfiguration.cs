@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Network
     /// <summary> The application gateway private link ip configuration. </summary>
     public partial class ApplicationGatewayPrivateLinkIPConfiguration : NetworkSubResource
     {
-        private ApplicationGatewayPrivateLinkIpConfigurationProperties _properties;
+        private ApplicationGatewayPrivateLinkIPConfigurationProperties _properties;
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
         private BicepValue<ResourceType> _resourceType;
@@ -25,7 +25,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        internal ApplicationGatewayPrivateLinkIpConfigurationProperties Properties
+        internal ApplicationGatewayPrivateLinkIPConfigurationProperties Properties
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new ApplicationGatewayPrivateLinkIpConfigurationProperties();
+                    Properties = new ApplicationGatewayPrivateLinkIPConfigurationProperties();
                 }
                 Properties.PrivateIPAddress = value;
             }
@@ -102,7 +102,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new ApplicationGatewayPrivateLinkIpConfigurationProperties();
+                    Properties = new ApplicationGatewayPrivateLinkIPConfigurationProperties();
                 }
                 Properties.PrivateIPAllocationMethod = value;
             }
@@ -115,7 +115,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new ApplicationGatewayPrivateLinkIpConfigurationProperties();
+                    Properties = new ApplicationGatewayPrivateLinkIPConfigurationProperties();
                 }
                 return Properties.ProvisioningState;
             }
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new ApplicationGatewayPrivateLinkIpConfigurationProperties();
+                    Properties = new ApplicationGatewayPrivateLinkIPConfigurationProperties();
                 }
                 Properties.SubnetId = value;
             }
@@ -142,7 +142,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<ApplicationGatewayPrivateLinkIpConfigurationProperties>(nameof(Properties), new string[] { "properties" });
+            _properties = DefineModelProperty<ApplicationGatewayPrivateLinkIPConfigurationProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);

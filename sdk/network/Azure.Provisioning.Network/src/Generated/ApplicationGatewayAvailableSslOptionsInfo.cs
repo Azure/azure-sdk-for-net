@@ -82,7 +82,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.PredefinedPolicies;
+                return Properties is null ? default : Properties.PredefinedPolicies;
             }
         }
 
@@ -91,7 +91,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.DefaultPolicy;
+                return Properties is null ? default : Properties.DefaultPolicy;
             }
         }
 
@@ -100,7 +100,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.AvailableCipherSuites;
+                return Properties is null ? default : Properties.AvailableCipherSuites;
             }
         }
 
@@ -109,7 +109,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.AvailableProtocols;
+                return Properties is null ? default : Properties.AvailableProtocols;
             }
         }
 

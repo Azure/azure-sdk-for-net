@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Network
     internal partial class ConnectionMonitorResultProperties : ConnectionMonitorCreateOrUpdateContent
     {
         private BicepValue<NetworkProvisioningState> _provisioningState;
-        private BicepValue<DateTimeOffset> _startOn;
+        private BicepValue<DateTimeOffset> _startsOn;
         private BicepValue<string> _monitoringStatus;
         private BicepValue<ConnectionMonitorEndpointType> _connectionMonitorType;
 
@@ -33,13 +33,13 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets the StartOn. </summary>
-        public BicepValue<DateTimeOffset> StartOn
+        /// <summary> Gets the StartsOn. </summary>
+        public BicepValue<DateTimeOffset> StartsOn
         {
             get
             {
                 Initialize();
-                return _startOn;
+                return _startsOn;
             }
         }
 
@@ -68,7 +68,7 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
-            _startOn = DefineProperty<DateTimeOffset>(nameof(StartOn), new string[] { "startTime" }, isOutput: true, format: "O");
+            _startsOn = DefineProperty<DateTimeOffset>(nameof(StartsOn), new string[] { "startTime" }, isOutput: true, format: "O");
             _monitoringStatus = DefineProperty<string>(nameof(MonitoringStatus), new string[] { "monitoringStatus" }, isOutput: true);
             _connectionMonitorType = DefineProperty<ConnectionMonitorEndpointType>(nameof(ConnectionMonitorType), new string[] { "connectionMonitorType" }, isOutput: true);
             DefineAdditionalProperties();

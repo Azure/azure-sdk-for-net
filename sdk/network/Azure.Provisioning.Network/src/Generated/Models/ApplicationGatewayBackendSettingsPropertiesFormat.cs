@@ -22,7 +22,7 @@ namespace Azure.Provisioning.Network
         private BicepList<WritableSubResource> _trustedRootCertificates;
         private BicepValue<string> _hostName;
         private BicepValue<bool> _pickHostNameFromBackendAddress;
-        private BicepValue<bool> _enableL4ClientIpPreservation;
+        private BicepValue<bool> _enableL4ClientIPPreservation;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
         /// <summary> Creates a new ApplicationGatewayBackendSettingsPropertiesFormat. </summary>
@@ -135,18 +135,18 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the EnableL4ClientIpPreservation. </summary>
-        public BicepValue<bool> EnableL4ClientIpPreservation
+        /// <summary> Gets or sets the EnableL4ClientIPPreservation. </summary>
+        public BicepValue<bool> EnableL4ClientIPPreservation
         {
             get
             {
                 Initialize();
-                return _enableL4ClientIpPreservation;
+                return _enableL4ClientIPPreservation;
             }
             set
             {
                 Initialize();
-                _enableL4ClientIpPreservation.Assign(value);
+                _enableL4ClientIPPreservation.Assign(value);
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.Provisioning.Network
             _trustedRootCertificates = DefineListProperty<WritableSubResource>(nameof(TrustedRootCertificates), new string[] { "trustedRootCertificates" });
             _hostName = DefineProperty<string>(nameof(HostName), new string[] { "hostName" });
             _pickHostNameFromBackendAddress = DefineProperty<bool>(nameof(PickHostNameFromBackendAddress), new string[] { "pickHostNameFromBackendAddress" });
-            _enableL4ClientIpPreservation = DefineProperty<bool>(nameof(EnableL4ClientIpPreservation), new string[] { "enableL4ClientIpPreservation" });
+            _enableL4ClientIPPreservation = DefineProperty<bool>(nameof(EnableL4ClientIPPreservation), new string[] { "enableL4ClientIpPreservation" });
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

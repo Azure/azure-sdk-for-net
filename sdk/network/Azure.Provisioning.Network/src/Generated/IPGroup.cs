@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
-        private IpGroupPropertiesFormat _properties;
+        private IPGroupPropertiesFormat _properties;
         private BicepValue<ETag> _eTag;
 
         /// <summary> Creates a new IPGroup. </summary>
@@ -86,7 +86,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        internal IpGroupPropertiesFormat Properties
+        internal IPGroupPropertiesFormat Properties
         {
             get
             {
@@ -117,7 +117,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new IpGroupPropertiesFormat();
+                    Properties = new IPGroupPropertiesFormat();
                 }
                 return Properties.ProvisioningState;
             }
@@ -134,7 +134,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new IpGroupPropertiesFormat();
+                    Properties = new IPGroupPropertiesFormat();
                 }
                 Properties.IPAddresses = value;
             }
@@ -147,7 +147,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new IpGroupPropertiesFormat();
+                    Properties = new IPGroupPropertiesFormat();
                 }
                 return Properties.Firewalls;
             }
@@ -160,7 +160,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new IpGroupPropertiesFormat();
+                    Properties = new IPGroupPropertiesFormat();
                 }
                 return Properties.FirewallPolicies;
             }
@@ -174,7 +174,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _properties = DefineModelProperty<IpGroupPropertiesFormat>(nameof(Properties), new string[] { "properties" });
+            _properties = DefineModelProperty<IPGroupPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();
         }

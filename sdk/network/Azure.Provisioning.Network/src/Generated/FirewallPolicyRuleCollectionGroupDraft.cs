@@ -118,7 +118,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _properties = DefineModelProperty<FirewallPolicyRuleCollectionGroupDraftProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<FirewallPolicyRuleCollectionGroup>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<FirewallPolicyRuleCollectionGroup>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

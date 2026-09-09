@@ -24,6 +24,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new NatRule. </summary>
         public NatRule()
         {
+            RuleType.Assign(FirewallPolicyRuleType.NatRule);
         }
 
         /// <summary> Gets or sets the IPProtocols. </summary>
@@ -150,7 +151,6 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("ruleType", new string[] { "ruleType" }, defaultValue: "NatRule");
             _ipProtocols = DefineListProperty<FirewallPolicyRuleNetworkProtocol>(nameof(IPProtocols), new string[] { "ipProtocols" });
             _sourceAddresses = DefineListProperty<string>(nameof(SourceAddresses), new string[] { "sourceAddresses" });
             _destinationAddresses = DefineListProperty<string>(nameof(DestinationAddresses), new string[] { "destinationAddresses" });

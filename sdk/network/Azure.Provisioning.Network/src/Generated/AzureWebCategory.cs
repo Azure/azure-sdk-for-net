@@ -77,7 +77,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.Group;
+                return Properties is null ? default : Properties.Group;
             }
         }
 

@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure;
 using Azure.Core;
 using Azure.Provisioning;
@@ -205,23 +204,6 @@ namespace Azure.Provisioning.Network
                     Properties = new LoadBalancerInboundNatPoolProperties();
                 }
                 Properties.FrontendIPConfigurationId = value;
-            }
-        }
-
-        /// <summary> Gets or sets the AdditionalProperties. </summary>
-        public BicepDictionary<BinaryData> AdditionalProperties
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AdditionalProperties;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new LoadBalancerInboundNatPoolProperties();
-                }
-                Properties.AdditionalProperties = value;
             }
         }
 

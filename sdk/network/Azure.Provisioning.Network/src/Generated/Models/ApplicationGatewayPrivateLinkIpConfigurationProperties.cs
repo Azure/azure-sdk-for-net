@@ -12,7 +12,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Network
 {
     /// <summary> Properties of an application gateway private link IP configuration. </summary>
-    internal partial class ApplicationGatewayPrivateLinkIpConfigurationProperties : ProvisionableConstruct
+    internal partial class ApplicationGatewayPrivateLinkIPConfigurationProperties : ProvisionableConstruct
     {
         private BicepValue<string> _privateIPAddress;
         private BicepValue<NetworkIPAllocationMethod> _privateIPAllocationMethod;
@@ -20,8 +20,8 @@ namespace Azure.Provisioning.Network
         private BicepValue<bool> _primary;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
-        /// <summary> Creates a new ApplicationGatewayPrivateLinkIpConfigurationProperties. </summary>
-        public ApplicationGatewayPrivateLinkIpConfigurationProperties()
+        /// <summary> Creates a new ApplicationGatewayPrivateLinkIPConfigurationProperties. </summary>
+        public ApplicationGatewayPrivateLinkIPConfigurationProperties()
         {
         }
 
@@ -112,7 +112,7 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Define all the provisionable properties for ApplicationGatewayPrivateLinkIpConfigurationProperties. </summary>
+        /// <summary> Define all the provisionable properties for ApplicationGatewayPrivateLinkIPConfigurationProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -124,7 +124,7 @@ namespace Azure.Provisioning.Network
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for ApplicationGatewayPrivateLinkIpConfigurationProperties that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ApplicationGatewayPrivateLinkIPConfigurationProperties that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

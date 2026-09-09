@@ -58,7 +58,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.ContainerNetworkInterfaceConfiguration;
+                return Properties is null ? default : Properties.ContainerNetworkInterfaceConfiguration;
             }
         }
 
@@ -67,7 +67,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.IPConfigurations;
+                return Properties is null ? default : Properties.IPConfigurations;
             }
         }
 
@@ -76,7 +76,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 

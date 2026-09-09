@@ -12,7 +12,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Network
 {
     /// <summary> Properties of the IpAllocation. </summary>
-    internal partial class IpAllocationPropertiesFormat : ProvisionableConstruct
+    internal partial class IPAllocationPropertiesFormat : ProvisionableConstruct
     {
         private NetworkSubResource _subnet;
         private NetworkSubResource _virtualNetwork;
@@ -23,8 +23,8 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _ipamAllocationId;
         private BicepDictionary<string> _allocationTags;
 
-        /// <summary> Creates a new IpAllocationPropertiesFormat. </summary>
-        public IpAllocationPropertiesFormat()
+        /// <summary> Creates a new IPAllocationPropertiesFormat. </summary>
+        public IPAllocationPropertiesFormat()
         {
         }
 
@@ -143,7 +143,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Subnet.Id;
+                return Subnet is null ? default : Subnet.Id;
             }
         }
 
@@ -152,11 +152,11 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return VirtualNetwork.Id;
+                return VirtualNetwork is null ? default : VirtualNetwork.Id;
             }
         }
 
-        /// <summary> Define all the provisionable properties for IpAllocationPropertiesFormat. </summary>
+        /// <summary> Define all the provisionable properties for IPAllocationPropertiesFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -171,7 +171,7 @@ namespace Azure.Provisioning.Network
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for IpAllocationPropertiesFormat that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for IPAllocationPropertiesFormat that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

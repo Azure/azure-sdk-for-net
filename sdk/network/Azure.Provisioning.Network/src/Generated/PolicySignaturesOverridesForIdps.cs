@@ -88,7 +88,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _properties = DefineModelProperty<SignaturesOverridesProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<FirewallPolicy>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<FirewallPolicy>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

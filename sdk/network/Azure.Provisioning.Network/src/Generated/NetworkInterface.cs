@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure;
 using Azure.Core;
 using Azure.Provisioning;
@@ -77,7 +76,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        internal NetworkInterfacePropertiesFormat Properties
+        public NetworkInterfacePropertiesFormat Properties
         {
             get
             {
@@ -87,7 +86,7 @@ namespace Azure.Provisioning.Network
             set
             {
                 Initialize();
-                AssignOrReplace(ref _properties, value);
+                this.AssignOrReplace(ref _properties, value);
             }
         }
 
@@ -102,7 +101,7 @@ namespace Azure.Provisioning.Network
             set
             {
                 Initialize();
-                AssignOrReplace(ref _extendedLocation, value);
+                this.AssignOrReplace(ref _extendedLocation, value);
             }
         }
 
@@ -116,349 +115,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the NetworkSecurityGroup. </summary>
-        public NetworkSecurityGroup NetworkSecurityGroup
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NetworkSecurityGroup;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                Properties.NetworkSecurityGroup = value;
-            }
-        }
-
-        /// <summary> Gets the PrivateEndpoint. </summary>
-        public PrivateEndpoint PrivateEndpoint
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateEndpoint;
-            }
-        }
-
-        /// <summary> Gets or sets the IPConfigurations. </summary>
-        public BicepList<NetworkInterfaceIPConfiguration> IPConfigurations
-        {
-            get
-            {
-                return Properties is null ? default : Properties.IPConfigurations;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                Properties.IPConfigurations = value;
-            }
-        }
-
-        /// <summary> Gets the TapConfigurations. </summary>
-        public BicepList<NetworkInterfaceTapConfiguration> TapConfigurations
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                return Properties.TapConfigurations;
-            }
-        }
-
-        /// <summary> Gets or sets the DnsSettings. </summary>
-        public NetworkInterfaceDnsSettings DnsSettings
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DnsSettings;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                Properties.DnsSettings = value;
-            }
-        }
-
-        /// <summary> Gets the MacAddress. </summary>
-        public BicepValue<string> MacAddress
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                return Properties.MacAddress;
-            }
-        }
-
-        /// <summary> Gets the Primary. </summary>
-        public BicepValue<bool> Primary
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                return Properties.Primary;
-            }
-        }
-
-        /// <summary> Gets the VnetEncryptionSupported. </summary>
-        public BicepValue<bool> VnetEncryptionSupported
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                return Properties.VnetEncryptionSupported;
-            }
-        }
-
-        /// <summary> Gets the DefaultOutboundConnectivityEnabled. </summary>
-        public BicepValue<bool> DefaultOutboundConnectivityEnabled
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                return Properties.DefaultOutboundConnectivityEnabled;
-            }
-        }
-
-        /// <summary> Gets or sets the EnableAcceleratedNetworking. </summary>
-        public BicepValue<bool> EnableAcceleratedNetworking
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableAcceleratedNetworking;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                Properties.EnableAcceleratedNetworking = value;
-            }
-        }
-
-        /// <summary> Gets or sets the DisableTcpStateTracking. </summary>
-        public BicepValue<bool> DisableTcpStateTracking
-        {
-            get
-            {
-                return Properties is null ? default : Properties.DisableTcpStateTracking;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                Properties.DisableTcpStateTracking = value;
-            }
-        }
-
-        /// <summary> Gets or sets the EnableIPForwarding. </summary>
-        public BicepValue<bool> EnableIPForwarding
-        {
-            get
-            {
-                return Properties is null ? default : Properties.EnableIPForwarding;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                Properties.EnableIPForwarding = value;
-            }
-        }
-
-        /// <summary> Gets the HostedWorkloads. </summary>
-        public BicepList<string> HostedWorkloads
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                return Properties.HostedWorkloads;
-            }
-        }
-
-        /// <summary> Gets the ResourceGuid. </summary>
-        public BicepValue<Guid> ResourceGuid
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                return Properties.ResourceGuid;
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<NetworkProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets or sets the WorkloadType. </summary>
-        public BicepValue<string> WorkloadType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.WorkloadType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                Properties.WorkloadType = value;
-            }
-        }
-
-        /// <summary> Gets or sets the NicType. </summary>
-        public BicepValue<NetworkInterfaceNicType> NicType
-        {
-            get
-            {
-                return Properties is null ? default : Properties.NicType;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                Properties.NicType = value;
-            }
-        }
-
-        /// <summary> Gets or sets the PrivateLinkService. </summary>
-        public PrivateLinkService PrivateLinkService
-        {
-            get
-            {
-                return Properties is null ? default : Properties.PrivateLinkService;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                Properties.PrivateLinkService = value;
-            }
-        }
-
-        /// <summary> Gets or sets the MigrationPhase. </summary>
-        public BicepValue<NetworkInterfaceMigrationPhase> MigrationPhase
-        {
-            get
-            {
-                return Properties is null ? default : Properties.MigrationPhase;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                Properties.MigrationPhase = value;
-            }
-        }
-
-        /// <summary> Gets or sets the AuxiliaryMode. </summary>
-        public BicepValue<NetworkInterfaceAuxiliaryMode> AuxiliaryMode
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AuxiliaryMode;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                Properties.AuxiliaryMode = value;
-            }
-        }
-
-        /// <summary> Gets or sets the AuxiliarySku. </summary>
-        public BicepValue<NetworkInterfaceAuxiliarySku> AuxiliarySku
-        {
-            get
-            {
-                return Properties is null ? default : Properties.AuxiliarySku;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                Properties.AuxiliarySku = value;
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> VirtualMachineId
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                return Properties.VirtualMachineId;
-            }
-        }
-
-        /// <summary> Gets or sets the Id. </summary>
-        public BicepValue<ResourceIdentifier> DscpConfigurationId
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new NetworkInterfacePropertiesFormat();
-                }
-                return Properties.DscpConfigurationId;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for NetworkInterface. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -469,7 +125,7 @@ namespace Azure.Provisioning.Network
             _properties = DefineModelProperty<NetworkInterfacePropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _extendedLocation = DefineModelProperty<ExtendedAzureLocation>(nameof(ExtendedLocation), new string[] { "extendedLocation" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            DefineAdditionalProperties();
+            this.DefineAdditionalProperties();
         }
 
         /// <summary> Creates a reference to an existing NetworkInterface. </summary>

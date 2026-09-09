@@ -14,7 +14,7 @@ namespace Azure.Provisioning.Network
     /// <summary> The ip configuration for a container network interface. </summary>
     public partial class ContainerNetworkInterfaceIPConfiguration : ProvisionableConstruct
     {
-        private ContainerNetworkInterfaceIpConfigurationPropertiesFormat _properties;
+        private ContainerNetworkInterfaceIPConfigurationPropertiesFormat _properties;
         private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
 
@@ -24,7 +24,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets the Properties. </summary>
-        internal ContainerNetworkInterfaceIpConfigurationPropertiesFormat Properties
+        internal ContainerNetworkInterfaceIPConfigurationPropertiesFormat Properties
         {
             get
             {
@@ -58,7 +58,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -66,7 +66,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _properties = DefineModelProperty<ContainerNetworkInterfaceIpConfigurationPropertiesFormat>(nameof(Properties), new string[] { "properties" });
+            _properties = DefineModelProperty<ContainerNetworkInterfaceIPConfigurationPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();

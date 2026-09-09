@@ -18,7 +18,7 @@ namespace Azure.Provisioning.Network
         private NetworkSubResource _peerExpressRouteCircuitPeering;
         private BicepValue<string> _addressPrefix;
         private BicepValue<string> _authorizationKey;
-        private IPv6CircuitConnectionConfig _iPv6CircuitConnectionConfig;
+        private IPv6CircuitConnectionConfig _ipv6CircuitConnectionConfig;
         private BicepValue<CircuitConnectionStatus> _circuitConnectionStatus;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
@@ -93,12 +93,12 @@ namespace Azure.Provisioning.Network
             get
             {
                 Initialize();
-                return _iPv6CircuitConnectionConfig;
+                return _ipv6CircuitConnectionConfig;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _iPv6CircuitConnectionConfig, value);
+                AssignOrReplace(ref _ipv6CircuitConnectionConfig, value);
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.Provisioning.Network
             _peerExpressRouteCircuitPeering = DefineModelProperty<NetworkSubResource>(nameof(PeerExpressRouteCircuitPeering), new string[] { "peerExpressRouteCircuitPeering" });
             _addressPrefix = DefineProperty<string>(nameof(AddressPrefix), new string[] { "addressPrefix" });
             _authorizationKey = DefineProperty<string>(nameof(AuthorizationKey), new string[] { "authorizationKey" });
-            _iPv6CircuitConnectionConfig = DefineModelProperty<IPv6CircuitConnectionConfig>(nameof(IPv6CircuitConnectionConfig), new string[] { "ipv6CircuitConnectionConfig" });
+            _ipv6CircuitConnectionConfig = DefineModelProperty<IPv6CircuitConnectionConfig>(nameof(IPv6CircuitConnectionConfig), new string[] { "ipv6CircuitConnectionConfig" });
             _circuitConnectionStatus = DefineProperty<CircuitConnectionStatus>(nameof(CircuitConnectionStatus), new string[] { "circuitConnectionStatus" }, isOutput: true);
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();

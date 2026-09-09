@@ -18,6 +18,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<string> _name;
         private BicepValue<string> _description;
+        private BicepValue<FirewallPolicyRuleType> _ruleType;
 
         /// <summary> Creates a new FirewallPolicyRule. </summary>
         public FirewallPolicyRule()
@@ -54,12 +55,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Rule Type. </summary>
+        internal BicepValue<FirewallPolicyRuleType> RuleType
+        {
+            get
+            {
+                Initialize();
+                return _ruleType;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for FirewallPolicyRule. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
+            _ruleType = DefineProperty<FirewallPolicyRuleType>(nameof(RuleType), new string[] { "ruleType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

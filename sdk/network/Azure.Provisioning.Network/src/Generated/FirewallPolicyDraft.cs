@@ -258,7 +258,7 @@ namespace Azure.Provisioning.Network
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _properties = DefineModelProperty<FirewallPolicyDraftProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<FirewallPolicy>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<FirewallPolicy>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

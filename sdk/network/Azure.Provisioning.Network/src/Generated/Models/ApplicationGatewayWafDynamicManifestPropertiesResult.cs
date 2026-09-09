@@ -46,7 +46,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return DefaultRuleSet.RuleSetType;
+                return DefaultRuleSet is null ? default : DefaultRuleSet.RuleSetType;
             }
         }
 
@@ -55,7 +55,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return DefaultRuleSet.RuleSetVersion;
+                return DefaultRuleSet is null ? default : DefaultRuleSet.RuleSetVersion;
             }
         }
 

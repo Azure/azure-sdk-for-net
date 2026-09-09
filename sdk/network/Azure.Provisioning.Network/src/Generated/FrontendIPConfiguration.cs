@@ -303,7 +303,7 @@ namespace Azure.Provisioning.Network
             _properties = DefineModelProperty<FrontendIPConfigurationPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });
-            _parent = DefineResource<LoadBalancer>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<LoadBalancer>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

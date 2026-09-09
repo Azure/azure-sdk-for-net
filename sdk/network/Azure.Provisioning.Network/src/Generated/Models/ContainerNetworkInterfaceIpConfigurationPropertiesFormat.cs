@@ -11,12 +11,12 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Network
 {
     /// <summary> Properties of the container network interface IP configuration. </summary>
-    internal partial class ContainerNetworkInterfaceIpConfigurationPropertiesFormat : ProvisionableConstruct
+    internal partial class ContainerNetworkInterfaceIPConfigurationPropertiesFormat : ProvisionableConstruct
     {
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
-        /// <summary> Creates a new ContainerNetworkInterfaceIpConfigurationPropertiesFormat. </summary>
-        public ContainerNetworkInterfaceIpConfigurationPropertiesFormat()
+        /// <summary> Creates a new ContainerNetworkInterfaceIPConfigurationPropertiesFormat. </summary>
+        public ContainerNetworkInterfaceIPConfigurationPropertiesFormat()
         {
         }
 
@@ -30,7 +30,7 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Define all the provisionable properties for ContainerNetworkInterfaceIpConfigurationPropertiesFormat. </summary>
+        /// <summary> Define all the provisionable properties for ContainerNetworkInterfaceIPConfigurationPropertiesFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -38,7 +38,7 @@ namespace Azure.Provisioning.Network
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for ContainerNetworkInterfaceIpConfigurationPropertiesFormat that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ContainerNetworkInterfaceIPConfigurationPropertiesFormat that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

@@ -12,15 +12,15 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Network
 {
     /// <summary> The IpGroups property information. </summary>
-    internal partial class IpGroupPropertiesFormat : ProvisionableConstruct
+    internal partial class IPGroupPropertiesFormat : ProvisionableConstruct
     {
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepList<string> _ipAddresses;
         private BicepList<WritableSubResource> _firewalls;
         private BicepList<WritableSubResource> _firewallPolicies;
 
-        /// <summary> Creates a new IpGroupPropertiesFormat. </summary>
-        public IpGroupPropertiesFormat()
+        /// <summary> Creates a new IPGroupPropertiesFormat. </summary>
+        public IPGroupPropertiesFormat()
         {
         }
 
@@ -69,7 +69,7 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Define all the provisionable properties for IpGroupPropertiesFormat. </summary>
+        /// <summary> Define all the provisionable properties for IPGroupPropertiesFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -80,7 +80,7 @@ namespace Azure.Provisioning.Network
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for IpGroupPropertiesFormat that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for IPGroupPropertiesFormat that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

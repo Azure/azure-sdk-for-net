@@ -14,7 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Network
 {
     /// <summary> Custom IP prefix properties. </summary>
-    internal partial class CustomIpPrefixPropertiesFormat : ProvisionableConstruct
+    internal partial class CustomIPPrefixPropertiesFormat : ProvisionableConstruct
     {
         private BicepValue<string> _asn;
         private BicepValue<string> _cidr;
@@ -32,8 +32,8 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _failedReason;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
-        /// <summary> Creates a new CustomIpPrefixPropertiesFormat. </summary>
-        public CustomIpPrefixPropertiesFormat()
+        /// <summary> Creates a new CustomIPPrefixPropertiesFormat. </summary>
+        public CustomIPPrefixPropertiesFormat()
         {
         }
 
@@ -237,7 +237,7 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Define all the provisionable properties for CustomIpPrefixPropertiesFormat. </summary>
+        /// <summary> Define all the provisionable properties for CustomIPPrefixPropertiesFormat. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -259,7 +259,7 @@ namespace Azure.Provisioning.Network
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for CustomIpPrefixPropertiesFormat that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for CustomIPPrefixPropertiesFormat that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

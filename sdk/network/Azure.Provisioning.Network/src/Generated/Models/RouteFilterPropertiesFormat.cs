@@ -15,7 +15,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepList<RouteFilterRule> _rules;
         private BicepList<ExpressRouteCircuitPeering> _peerings;
-        private BicepList<ExpressRouteCircuitPeering> _iPv6Peerings;
+        private BicepList<ExpressRouteCircuitPeering> _ipv6Peerings;
         private BicepValue<NetworkProvisioningState> _provisioningState;
 
         /// <summary> Creates a new RouteFilterPropertiesFormat. </summary>
@@ -54,7 +54,7 @@ namespace Azure.Provisioning.Network
             get
             {
                 Initialize();
-                return _iPv6Peerings;
+                return _ipv6Peerings;
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _rules = DefineListProperty<RouteFilterRule>(nameof(Rules), new string[] { "rules" });
             _peerings = DefineListProperty<ExpressRouteCircuitPeering>(nameof(Peerings), new string[] { "peerings" }, isOutput: true);
-            _iPv6Peerings = DefineListProperty<ExpressRouteCircuitPeering>(nameof(IPv6Peerings), new string[] { "ipv6Peerings" }, isOutput: true);
+            _ipv6Peerings = DefineListProperty<ExpressRouteCircuitPeering>(nameof(IPv6Peerings), new string[] { "ipv6Peerings" }, isOutput: true);
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             DefineAdditionalProperties();
         }

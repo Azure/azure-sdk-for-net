@@ -18,6 +18,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new FirewallPolicyFilterRuleCollectionInfo. </summary>
         public FirewallPolicyFilterRuleCollectionInfo()
         {
+            RuleCollectionType.Assign(FirewallPolicyRuleCollectionType.FirewallPolicyFilterRuleCollection);
         }
 
         /// <summary> Gets or sets the Action. </summary>
@@ -71,7 +72,6 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("ruleCollectionType", new string[] { "ruleCollectionType" }, defaultValue: "FirewallPolicyFilterRuleCollection");
             _action = DefineModelProperty<FirewallPolicyFilterRuleCollectionAction>(nameof(Action), new string[] { "action" });
             _rules = DefineListProperty<FirewallPolicyRule>(nameof(Rules), new string[] { "rules" });
             DefineAdditionalProperties();

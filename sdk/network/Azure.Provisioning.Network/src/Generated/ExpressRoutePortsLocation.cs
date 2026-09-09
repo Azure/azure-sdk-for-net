@@ -87,7 +87,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.Address;
+                return Properties is null ? default : Properties.Address;
             }
         }
 
@@ -96,7 +96,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.Contact;
+                return Properties is null ? default : Properties.Contact;
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.AvailableBandwidths;
+                return Properties is null ? default : Properties.AvailableBandwidths;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 

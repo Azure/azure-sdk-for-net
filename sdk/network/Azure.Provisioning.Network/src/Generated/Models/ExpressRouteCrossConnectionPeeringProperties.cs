@@ -27,7 +27,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepValue<string> _gatewayManagerETag;
         private BicepValue<string> _lastModifiedBy;
-        private IPv6ExpressRouteCircuitPeeringConfig _iPv6PeeringConfig;
+        private IPv6ExpressRouteCircuitPeeringConfig _ipv6PeeringConfig;
 
         /// <summary> Creates a new ExpressRouteCrossConnectionPeeringProperties. </summary>
         public ExpressRouteCrossConnectionPeeringProperties()
@@ -225,12 +225,12 @@ namespace Azure.Provisioning.Network
             get
             {
                 Initialize();
-                return _iPv6PeeringConfig;
+                return _ipv6PeeringConfig;
             }
             set
             {
                 Initialize();
-                AssignOrReplace(ref _iPv6PeeringConfig, value);
+                AssignOrReplace(ref _ipv6PeeringConfig, value);
             }
         }
 
@@ -252,7 +252,7 @@ namespace Azure.Provisioning.Network
             _provisioningState = DefineProperty<NetworkProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _gatewayManagerETag = DefineProperty<string>(nameof(GatewayManagerETag), new string[] { "gatewayManagerEtag" });
             _lastModifiedBy = DefineProperty<string>(nameof(LastModifiedBy), new string[] { "lastModifiedBy" }, isOutput: true);
-            _iPv6PeeringConfig = DefineModelProperty<IPv6ExpressRouteCircuitPeeringConfig>(nameof(IPv6PeeringConfig), new string[] { "ipv6PeeringConfig" });
+            _ipv6PeeringConfig = DefineModelProperty<IPv6ExpressRouteCircuitPeeringConfig>(nameof(IPv6PeeringConfig), new string[] { "ipv6PeeringConfig" });
             DefineAdditionalProperties();
         }
 

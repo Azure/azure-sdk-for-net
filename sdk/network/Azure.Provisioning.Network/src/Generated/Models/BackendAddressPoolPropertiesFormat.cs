@@ -188,7 +188,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return OutboundRule.Id;
+                return OutboundRule is null ? default : OutboundRule.Id;
             }
         }
 

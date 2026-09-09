@@ -93,7 +93,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.AddressPrefix;
+                return Properties is null ? default : Properties.AddressPrefix;
             }
         }
 
@@ -102,7 +102,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.CircuitConnectionStatus;
+                return Properties is null ? default : Properties.CircuitConnectionStatus;
             }
         }
 
@@ -111,7 +111,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.ConnectionName;
+                return Properties is null ? default : Properties.ConnectionName;
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.AuthResourceGuid;
+                return Properties is null ? default : Properties.AuthResourceGuid;
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.ProvisioningState;
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.ExpressRouteCircuitPeeringId;
+                return Properties is null ? default : Properties.ExpressRouteCircuitPeeringId;
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.PeerExpressRouteCircuitPeeringId;
+                return Properties is null ? default : Properties.PeerExpressRouteCircuitPeeringId;
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<PeerExpressRouteCircuitConnectionPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<ExpressRouteCircuitPeering>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ExpressRouteCircuitPeering>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

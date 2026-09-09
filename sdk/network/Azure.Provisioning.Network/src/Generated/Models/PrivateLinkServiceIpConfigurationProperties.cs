@@ -11,7 +11,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Network
 {
     /// <summary> Properties of private link service IP configuration. </summary>
-    internal partial class PrivateLinkServiceIpConfigurationProperties : ProvisionableConstruct
+    internal partial class PrivateLinkServiceIPConfigurationProperties : ProvisionableConstruct
     {
         private BicepValue<string> _privateIPAddress;
         private BicepValue<NetworkIPAllocationMethod> _privateIPAllocationMethod;
@@ -20,8 +20,8 @@ namespace Azure.Provisioning.Network
         private BicepValue<NetworkProvisioningState> _provisioningState;
         private BicepValue<NetworkIPVersion> _privateIPAddressVersion;
 
-        /// <summary> Creates a new PrivateLinkServiceIpConfigurationProperties. </summary>
-        public PrivateLinkServiceIpConfigurationProperties()
+        /// <summary> Creates a new PrivateLinkServiceIPConfigurationProperties. </summary>
+        public PrivateLinkServiceIPConfigurationProperties()
         {
         }
 
@@ -110,7 +110,7 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Define all the provisionable properties for PrivateLinkServiceIpConfigurationProperties. </summary>
+        /// <summary> Define all the provisionable properties for PrivateLinkServiceIPConfigurationProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.Network
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for PrivateLinkServiceIpConfigurationProperties that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for PrivateLinkServiceIPConfigurationProperties that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

@@ -186,7 +186,7 @@ namespace Azure.Provisioning.Network
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<ExpressRouteConnectionProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<ExpressRouteGateway>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ExpressRouteGateway>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

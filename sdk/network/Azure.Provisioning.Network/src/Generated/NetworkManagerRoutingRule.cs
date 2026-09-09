@@ -193,7 +193,7 @@ namespace Azure.Provisioning.Network
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _properties = DefineModelProperty<RoutingRulePropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _parent = DefineResource<NetworkManagerRoutingRules>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<NetworkManagerRoutingRules>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

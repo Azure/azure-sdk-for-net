@@ -287,7 +287,7 @@ namespace Azure.Provisioning.Network
             _properties = DefineModelProperty<FlowLogPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<NetworkWatcher>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<NetworkWatcher>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

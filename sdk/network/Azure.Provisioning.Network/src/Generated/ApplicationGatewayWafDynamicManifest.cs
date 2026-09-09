@@ -65,7 +65,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.AvailableRuleSets;
+                return Properties is null ? default : Properties.AvailableRuleSets;
             }
         }
 
@@ -74,7 +74,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.RuleSetType;
+                return Properties is null ? default : Properties.RuleSetType;
             }
         }
 
@@ -83,7 +83,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.RuleSetVersion;
+                return Properties is null ? default : Properties.RuleSetVersion;
             }
         }
 

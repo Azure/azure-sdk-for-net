@@ -18,6 +18,7 @@ namespace Azure.Provisioning.Network
         /// <summary> Creates a new FirewallPolicyNatRuleCollectionInfo. </summary>
         public FirewallPolicyNatRuleCollectionInfo()
         {
+            RuleCollectionType.Assign(FirewallPolicyRuleCollectionType.FirewallPolicyNatRuleCollection);
         }
 
         /// <summary> Gets or sets the Action. </summary>
@@ -71,7 +72,6 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("ruleCollectionType", new string[] { "ruleCollectionType" }, defaultValue: "FirewallPolicyNatRuleCollection");
             _action = DefineModelProperty<FirewallPolicyNatRuleCollectionAction>(nameof(Action), new string[] { "action" });
             _rules = DefineListProperty<FirewallPolicyRule>(nameof(Rules), new string[] { "rules" });
             DefineAdditionalProperties();

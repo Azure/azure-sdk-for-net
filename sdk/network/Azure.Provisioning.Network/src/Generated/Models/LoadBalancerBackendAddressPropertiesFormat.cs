@@ -161,7 +161,7 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return NetworkInterfaceIPConfiguration.Id;
+                return NetworkInterfaceIPConfiguration is null ? default : NetworkInterfaceIPConfiguration.Id;
             }
         }
 

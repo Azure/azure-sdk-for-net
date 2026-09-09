@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<string> _name;
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
-        private IpAllocationPropertiesFormat _properties;
+        private IPAllocationPropertiesFormat _properties;
         private BicepValue<ETag> _eTag;
 
         /// <summary> Creates a new IPAllocation. </summary>
@@ -85,7 +85,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        internal IpAllocationPropertiesFormat Properties
+        internal IPAllocationPropertiesFormat Properties
         {
             get
             {
@@ -120,7 +120,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new IpAllocationPropertiesFormat();
+                    Properties = new IPAllocationPropertiesFormat();
                 }
                 Properties.IPAllocationType = value;
             }
@@ -137,7 +137,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new IpAllocationPropertiesFormat();
+                    Properties = new IPAllocationPropertiesFormat();
                 }
                 Properties.Prefix = value;
             }
@@ -154,7 +154,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new IpAllocationPropertiesFormat();
+                    Properties = new IPAllocationPropertiesFormat();
                 }
                 Properties.PrefixLength = value;
             }
@@ -171,7 +171,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new IpAllocationPropertiesFormat();
+                    Properties = new IPAllocationPropertiesFormat();
                 }
                 Properties.PrefixType = value;
             }
@@ -188,7 +188,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new IpAllocationPropertiesFormat();
+                    Properties = new IPAllocationPropertiesFormat();
                 }
                 Properties.IpamAllocationId = value;
             }
@@ -205,7 +205,7 @@ namespace Azure.Provisioning.Network
             {
                 if (Properties is null)
                 {
-                    Properties = new IpAllocationPropertiesFormat();
+                    Properties = new IPAllocationPropertiesFormat();
                 }
                 Properties.AllocationTags = value;
             }
@@ -219,7 +219,7 @@ namespace Azure.Provisioning.Network
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
-            _properties = DefineModelProperty<IpAllocationPropertiesFormat>(nameof(Properties), new string[] { "properties" });
+            _properties = DefineModelProperty<IPAllocationPropertiesFormat>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();
         }

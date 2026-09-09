@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System;
 using Azure;
 using Azure.Core;
 using Azure.Provisioning;
@@ -205,15 +204,6 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Gets or sets the AdditionalProperties. </summary>
-        public BicepDictionary<BinaryData> AdditionalProperties
-        {
-            get
-            {
-                return Properties.AdditionalProperties;
-            }
-        }
-
         /// <summary> Define all the provisionable properties for LoadBalancingRule. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -221,7 +211,7 @@ namespace Azure.Provisioning.Network
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<LoadBalancer>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<LoadBalancer>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
