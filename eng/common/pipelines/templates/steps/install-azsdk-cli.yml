@@ -1,57 +1,17 @@
-# DEMO HARNESS ONLY -- do not sync this file back to azure-sdk-tools.
-#
-# The released azsdk build does not yet carry the ownership-YAML commands, so this variant builds
-# the CLI from a branch instead of downloading it. Everything below reverts to the upstream
-# azure-sdk-mcp.ps1 install once those commands ship.
 parameters:
   InstallDirectory: $(Agent.TempDirectory)
   SourceRootPath: '$(System.DefaultWorkingDirectory)'
   Condition: succeeded()
-  ToolsRepositoryUri: 'https://github.com/Azure/azure-sdk-tools'
-  ToolsBranch: 'djurek/codeowners-file-data-model'
 
 steps:
-  # azure-sdk-tools pins its SDK in global.json with rollForward 'feature', so the agent's preinstalled
-  # SDK is not guaranteed to satisfy it. Pin the same version rather than hope for a match.
-  - task: UseDotNet@2
-    displayName: 'Use .NET SDK 9.0.306 (azsdk-cli build)'
-    condition: ${{ parameters.Condition }}
-    inputs:
-      packageType: sdk
-      version: '9.0.306'
-
   - task: Powershell@2
-    displayName: 'Build Azure SDK Tools CLI from source'
+    displayName: 'Install Azure SDK Tools CLI'
     condition: ${{ parameters.Condition }}
     inputs:
       targetType: 'inline'
       script: |
-        $ErrorActionPreference = 'Stop'
-
-        $checkout = Join-Path '${{ parameters.InstallDirectory }}' 'azure-sdk-tools'
-        if (Test-Path $checkout) {
-          Remove-Item -Recurse -Force $checkout
-        }
-
-        Write-Host "Cloning ${{ parameters.ToolsRepositoryUri }} at ${{ parameters.ToolsBranch }}"
-        git clone --depth 1 --branch '${{ parameters.ToolsBranch }}' '${{ parameters.ToolsRepositoryUri }}' $checkout
-        if ($LASTEXITCODE -ne 0) {
-          throw "git clone failed with exit code $LASTEXITCODE"
-        }
-
-        $publishDir = Join-Path '${{ parameters.InstallDirectory }}' 'azsdk-cli'
-        $project = Join-Path $checkout 'tools/azsdk-cli/Azure.Sdk.Tools.Cli/Azure.Sdk.Tools.Cli.csproj'
-
-        dotnet publish $project --configuration Release --output $publishDir --nologo
-        if ($LASTEXITCODE -ne 0) {
-          throw "dotnet publish failed with exit code $LASTEXITCODE"
-        }
-
-        $azsdkPath = Join-Path $publishDir ($IsWindows ? 'azsdk.exe' : 'azsdk')
-        if (!(Test-Path $azsdkPath)) {
-          throw "Expected the built CLI at $azsdkPath but it was not produced."
-        }
-
+        & "${{ parameters.SourceRootPath }}/eng/common/mcp/azure-sdk-mcp.ps1" -InstallDirectory ${{ parameters.InstallDirectory }}
+        $azsdkPath = Join-Path "${{ parameters.InstallDirectory }}" "azsdk$(if ($IsWindows) { '.exe' } else { '' })"
         Write-Host "##vso[task.setvariable variable=AZSDK]$azsdkPath"
         Write-Host "Set AZSDK variable to: $azsdkPath"
       pwsh: true

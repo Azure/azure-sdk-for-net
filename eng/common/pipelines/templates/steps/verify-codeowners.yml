@@ -54,6 +54,61 @@ steps:
           -AdditionalSkipAliases '${{ parameters.AllowSkipAliases }}'
         workingDirectory: $(Build.SourcesDirectory)
 
+    # Only meaningful once a repository generates .github/CODEOWNERS from ownership YAML. Until then
+    # the file is hand maintained and this step stays quiet. It needs no CLI, so it runs ahead of the
+    # install below.
+    - pwsh: |
+        if (!(Test-Path ".github/owners.config.yaml")) {
+          Write-Host "This repository does not generate CODEOWNERS from ownership YAML."
+          exit 0
+        }
+
+        $scriptPath = [System.IO.Path]::Combine("$(Build.SourcesDirectory)", "eng", "common", "scripts", "get-changedfiles.ps1")
+        try {
+          $changedFiles = & $scriptPath `
+            -DiffPath ".github/CODEOWNERS" `
+            -DiffFilterType ''
+
+          if ($LASTEXITCODE -gt 1) {
+            Write-Host "git diff returned exit code $LASTEXITCODE, which indicates an error. Output: $changedFiles"
+            exit 1
+          }
+        } catch {
+          Write-Host "Error running get-changedfiles.ps1: $_"
+          exit 1
+        }
+
+        if (!$changedFiles) {
+          Write-Host "CODEOWNERS file has not changed."
+          exit 0
+        }
+
+        # The render is published by automation, which is the one author allowed to touch the
+        # generated file.
+        $prNumber = "$(System.PullRequest.PullRequestNumber)"
+        $repoName = "${{ parameters.Repo }}"
+        $prUrl = "https://api.github.com/repos/$repoName/pulls/$prNumber"
+        $prData = Invoke-RestMethod -Uri $prUrl -MaximumRetryCount 10 -RetryIntervalSec 6
+        $prAuthor = $prData.user.login
+        Write-Host "PR author: $prAuthor"
+
+        if ($prAuthor -ieq 'azure-sdk-automation[bot]') {
+          Write-Host "PR opened by azure-sdk-automation[bot]. CODEOWNERS may be updated."
+          exit 0
+        }
+
+        Write-Host "##vso[task.logissue type=error].github/CODEOWNERS is a generated file and was modified by hand."
+        Write-Host ""
+        Write-Host "Revert the change and edit the owners YAML instead:"
+        Write-Host "    .github/owners.config.yaml   repository-wide sections and static entries"
+        Write-Host "    sdk/<service>/owners.yaml    per-service ownership"
+        Write-Host ""
+        Write-Host "See https://aka.ms/azsdk/codeowners"
+        exit 1
+      displayName: 'Block direct CODEOWNERS edits'
+      workingDirectory: $(Build.SourcesDirectory)
+      condition: and(succeeded(), ne(variables['ShouldSkipVerifyCodeowners'], 'true'))
+
     - template: /eng/common/pipelines/templates/steps/install-azsdk-cli.yml
       parameters:
         Condition: and(succeeded(), ne(variables['ShouldSkipVerifyCodeowners'], 'true'))
@@ -82,6 +137,63 @@ steps:
           -Repo '${{ parameters.Repo }}'
           -PrDiffFile '${{ parameters.DiffDirectory }}/diff.json'
         workingDirectory: $(Build.SourcesDirectory)
+
+    # A change to sdk/<service>/owners.yaml produces no package artifacts, so the artifact check
+    # above never looks at it. Lint is what catches an invalid owner before it merges.
+    - pwsh: |
+        if (!(Test-Path ".github/owners.config.yaml")) {
+          Write-Host "This repository does not use ownership YAML yet."
+          Write-Host "##vso[task.setvariable variable=ShouldLintCodeowners]false"
+          exit 0
+        }
+
+        $scriptPath = [System.IO.Path]::Combine("$(Build.SourcesDirectory)", "eng", "common", "scripts", "get-changedfiles.ps1")
+        try {
+          # A single pathspec, so match both owners.yaml fragments and the repo-level config and
+          # filter the result below rather than diffing twice.
+          $changedFiles = & $scriptPath `
+            -DiffPath "*owners*.y*ml" `
+            -DiffFilterType ''
+
+          if ($LASTEXITCODE -gt 1) {
+            Write-Host "git diff returned exit code $LASTEXITCODE, which indicates an error. Output: $changedFiles"
+            exit 1
+          }
+        } catch {
+          Write-Host "Error running get-changedfiles.ps1: $_"
+          exit 1
+        }
+
+        $ownershipFiles = @($changedFiles | Where-Object { $_ -match '(^|/)owners\.ya?ml$' -or $_ -eq ".github/owners.config.yaml" })
+
+        if (!$ownershipFiles) {
+          Write-Host "No ownership YAML changed."
+          Write-Host "##vso[task.setvariable variable=ShouldLintCodeowners]false"
+          exit 0
+        }
+
+        Write-Host "Ownership YAML changed:"
+        $ownershipFiles | ForEach-Object { Write-Host "    $_" }
+        Write-Host "##vso[task.setvariable variable=ShouldLintCodeowners]true"
+      displayName: 'Check if ownership YAML changed'
+      workingDirectory: $(Build.SourcesDirectory)
+      condition: and(succeeded(), ne(variables['ShouldSkipVerifyCodeowners'], 'true'))
+
+    # Every fragment, not just the changed ones. The config carries the owner minimums, so a change
+    # to it invalidates fragments nobody touched, and the whole set is what makes the repository-wide
+    # discovery rules apply -- linting named files one at a time skips them.
+    #
+    # No credential: lint reads the membership caches from anonymously readable blob storage.
+    - pwsh: |
+        & "$(AZSDK)" config codeowners lint-fragments --repo-root "$(Build.SourcesDirectory)"
+
+        if ($LASTEXITCODE) {
+          Write-Host "##vso[task.logissue type=error]Ownership YAML failed lint. See the violations above."
+          exit 1
+        }
+      displayName: 'Lint ownership YAML'
+      workingDirectory: $(Build.SourcesDirectory)
+      condition: and(succeeded(), eq(variables['ShouldLintCodeowners'], 'true'))
 
   - ${{ elseif eq(variables['Build.Reason'], 'Manual') }}:
     - task: PowerShell@2
