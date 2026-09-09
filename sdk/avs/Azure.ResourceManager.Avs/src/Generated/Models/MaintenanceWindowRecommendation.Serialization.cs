@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Avs.Models
             if (options.Format != "W")
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn, "O");
+                writer.WriteStringValue(StartsOn, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Reason))
             {
@@ -126,14 +126,14 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            DateTimeOffset startOn = default;
+            DateTimeOffset startsOn = default;
             string reason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("reason"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Avs.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MaintenanceWindowRecommendation(startOn, reason, additionalBinaryDataProperties);
+            return new MaintenanceWindowRecommendation(startsOn, reason, additionalBinaryDataProperties);
         }
     }
 }

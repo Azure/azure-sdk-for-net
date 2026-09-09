@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Avs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="MaintenanceWindowRecommendation"/>. </summary>
-        /// <param name="startOn"> Recommended start time for maintenance. </param>
+        /// <param name="startsOn"> Recommended start time for maintenance. </param>
         /// <param name="reason"> Reason for recommending this window. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MaintenanceWindowRecommendation(DateTimeOffset startOn, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MaintenanceWindowRecommendation(DateTimeOffset startsOn, string reason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            StartOn = startOn;
+            StartsOn = startsOn;
             Reason = reason;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Recommended start time for maintenance. </summary>
-        public DateTimeOffset StartOn { get; }
+        public DateTimeOffset StartsOn { get; }
 
         /// <summary> Reason for recommending this window. </summary>
         public string Reason { get; }

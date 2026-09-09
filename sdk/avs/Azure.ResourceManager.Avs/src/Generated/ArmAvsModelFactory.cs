@@ -346,6 +346,10 @@ namespace Azure.ResourceManager.Avs.Models
                 default);
         }
 
+        /// <summary>
+        /// A license assigned to a host.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.WindowsServerLicense"/>.
+        /// </summary>
         /// <param name="kind"> License kind. </param>
         /// <returns> A new <see cref="Models.HostLicense"/> instance for mocking. </returns>
         public static HostLicense HostLicense(string kind = default)
@@ -353,6 +357,7 @@ namespace Azure.ResourceManager.Avs.Models
             return new UnknownHostLicense(default, default);
         }
 
+        /// <summary> The host is to be used with Azure Hybrid Benefit for Windows Server. </summary>
         /// <returns> A new <see cref="Models.WindowsServerLicense"/> instance for mocking. </returns>
         public static WindowsServerLicense WindowsServerLicense()
         {
@@ -518,6 +523,7 @@ namespace Azure.ResourceManager.Avs.Models
             return new AvsSubscriptionQuotaAvailabilityResult(hostsRemaining ?? new ChangeTrackingDictionary<string, int>(), quotaEnabled, default);
         }
 
+        /// <summary> A cluster resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -576,6 +582,7 @@ namespace Azure.ResourceManager.Avs.Models
                 default);
         }
 
+        /// <summary> Represents a maintenance activity performed as part of an operation. </summary>
         /// <param name="kind"> The type of activity. </param>
         /// <param name="component"> The component on which the activity is performed. </param>
         /// <param name="version"> Target version of the component. </param>
@@ -593,6 +600,7 @@ namespace Azure.ResourceManager.Avs.Models
                 default);
         }
 
+        /// <summary> Represents a maintenance group. </summary>
         /// <param name="id"> Unique identifier of the group. </param>
         /// <param name="name"> Display name of the group. </param>
         /// <param name="kind"> Type of the group. </param>
@@ -602,6 +610,7 @@ namespace Azure.ResourceManager.Avs.Models
             return new MaintenanceGroup(id, name, kind, default);
         }
 
+        /// <summary> Defines relationship details between maintenance groups. </summary>
         /// <param name="dependencies"> List of dependent group identifiers. </param>
         /// <param name="prerequisites"> List of prerequisite group identifiers. </param>
         /// <returns> A new <see cref="Models.MaintenanceRelationships"/> instance for mocking. </returns>
@@ -635,7 +644,6 @@ namespace Azure.ResourceManager.Avs.Models
             return new UnknownAvsMaintenanceManagementOperation(default, default);
         }
 
-        /// <summary> Scheduling window constraint. </summary>
         /// <param name="isDisabled"> If scheduling is disabled. </param>
         /// <param name="disabledReason"> Reason for schedule disabled. </param>
         /// <param name="constraints"> Constraints for scheduling maintenance. </param>
@@ -656,7 +664,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary>
         /// Defines constraints for schedule operation on maintenance
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AvsSchedulingWindow"/>, <see cref="Models.AvailableWindowForMaintenanceWhileScheduleOperation"/>, and <see cref="Models.BlockedWhileScheduleOperation"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AvsSchedulingWindow"/>, <see cref="Models.WeekendSchedulingConstraint"/>, <see cref="Models.AvailableWindowForMaintenanceWhileScheduleOperation"/>, and <see cref="Models.BlockedWhileScheduleOperation"/>.
         /// </summary>
         /// <param name="kind"> The kind of operation. </param>
         /// <returns> A new <see cref="Models.AvsScheduleOperationConstraint"/> instance for mocking. </returns>
@@ -674,6 +682,7 @@ namespace Azure.ResourceManager.Avs.Models
             return new AvsSchedulingWindow(default, default, startsOn, endsOn);
         }
 
+        /// <summary> Constraint defining weekend scheduling restrictions. </summary>
         /// <param name="isDisabled"> Indicates if scheduling is disabled on weekends. </param>
         /// <param name="disabledReason"> Reason why weekend scheduling is disabled. </param>
         /// <returns> A new <see cref="Models.WeekendSchedulingConstraint"/> instance for mocking. </returns>
@@ -712,15 +721,15 @@ namespace Azure.ResourceManager.Avs.Models
             return new BlockedDatesConstraintTimeRange(startsOn, endsOn, reason, default);
         }
 
-        /// <param name="startOn"> Recommended start time for maintenance. </param>
+        /// <summary> Represents a recommended maintenance start window. </summary>
+        /// <param name="startsOn"> Recommended start time for maintenance. </param>
         /// <param name="reason"> Reason for recommending this window. </param>
         /// <returns> A new <see cref="Models.MaintenanceWindowRecommendation"/> instance for mocking. </returns>
-        public static MaintenanceWindowRecommendation MaintenanceWindowRecommendation(DateTimeOffset startOn = default, string reason = default)
+        public static MaintenanceWindowRecommendation MaintenanceWindowRecommendation(DateTimeOffset startsOn = default, string reason = default)
         {
-            return new MaintenanceWindowRecommendation(startOn, reason, default);
+            return new MaintenanceWindowRecommendation(startsOn, reason, default);
         }
 
-        /// <summary> Constraints for rescheduling maintenance. </summary>
         /// <param name="isDisabled"> If rescheduling is disabled. </param>
         /// <param name="disabledReason"> Reason for reschedule disabled. </param>
         /// <param name="constraints"> Constraints for rescheduling maintenance. </param>
@@ -741,7 +750,7 @@ namespace Azure.ResourceManager.Avs.Models
 
         /// <summary>
         /// Defines constraints for reschedule operation on maintenance
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AvailableWindowForMaintenanceWhileRescheduleOperation"/> and <see cref="Models.BlockedWhileRescheduleOperation"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ReschedulingWindowConstraint"/>, <see cref="Models.WeekendReschedulingConstraint"/>, <see cref="Models.AvailableWindowForMaintenanceWhileRescheduleOperation"/>, and <see cref="Models.BlockedWhileRescheduleOperation"/>.
         /// </summary>
         /// <param name="kind"> The kind of operation. </param>
         /// <returns> A new <see cref="Models.AvsRescheduleOperationConstraint"/> instance for mocking. </returns>
@@ -750,7 +759,7 @@ namespace Azure.ResourceManager.Avs.Models
             return new UnknownAvsRescheduleOperationConstraint(default, default);
         }
 
-        /// <summary> Time window in which Customer can reschedule maintenance. </summary>
+        /// <summary> Constraint defining allowed time window for rescheduling. </summary>
         /// <param name="startsOn"> Start date time. </param>
         /// <param name="endsOn"> End date Time. </param>
         /// <returns> A new <see cref="Models.ReschedulingWindowConstraint"/> instance for mocking. </returns>
@@ -759,6 +768,7 @@ namespace Azure.ResourceManager.Avs.Models
             return new ReschedulingWindowConstraint(default, default, startsOn, endsOn);
         }
 
+        /// <summary> Constraint defining weekend rescheduling restrictions. </summary>
         /// <param name="isDisabled"> Indicates if rescheduling is disabled on weekends. </param>
         /// <param name="disabledReason"> Reason why weekend rescheduling is disabled. </param>
         /// <returns> A new <see cref="Models.WeekendReschedulingConstraint"/> instance for mocking. </returns>
@@ -767,6 +777,7 @@ namespace Azure.ResourceManager.Avs.Models
             return new WeekendReschedulingConstraint(default, default, isDisabled, disabledReason);
         }
 
+        /// <summary> Time window in which Customer can reschedule maintenance. </summary>
         /// <param name="startsOn"> Start date time. </param>
         /// <param name="endsOn"> End date Time. </param>
         /// <returns> A new <see cref="Models.AvailableWindowForMaintenanceWhileRescheduleOperation"/> instance for mocking. </returns>
@@ -2032,11 +2043,11 @@ namespace Azure.ResourceManager.Avs.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Avs.AvsPrivateCloudClusterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> A cluster resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="sku"> The SKU (Stock Keeping Unit) assigned to this resource. </param>
         /// <param name="clusterSize"> The cluster size. </param>
         /// <param name="provisioningState"> The state of the cluster provisioning. </param>
