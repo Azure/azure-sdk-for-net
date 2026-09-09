@@ -80,15 +80,15 @@ namespace Azure.ResourceManager.Chaos.Models
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartOn))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndOn))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
             {
@@ -153,8 +153,8 @@ namespace Azure.ResourceManager.Chaos.Models
                 return null;
             }
             WorkspaceDiscoveryStatus status = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             IReadOnlyList<ChaosOperationError> errors = default;
             ResourceIdentifier workspaceId = default;
             string resourceSnapshotId = default;
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("errors"u8))
@@ -215,8 +215,8 @@ namespace Azure.ResourceManager.Chaos.Models
             }
             return new WorkspaceDiscoveryProperties(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 errors ?? new ChangeTrackingList<ChaosOperationError>(),
                 workspaceId,
                 resourceSnapshotId,

@@ -1,15 +1,19 @@
 # Release History
 
-## 3.0.0-beta.2 (Unreleased)
+## 3.0.0-beta.3 (Unreleased)
 
 ### Features Added
-- Added `AgentInsightMonitors` sub-client.
 
 ### Breaking Changes
 
 ### Bugs Fixed
 
 ### Other Changes
+
+## 3.0.0-beta.2 (2026-09-03)
+
+### Features Added
+- Added `AgentInsightMonitors` sub-client.
 
 ## 3.0.0-beta.1 (2026-08-24)
 

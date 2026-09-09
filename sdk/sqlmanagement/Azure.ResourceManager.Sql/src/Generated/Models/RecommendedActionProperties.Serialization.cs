@@ -111,20 +111,20 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("isArchivedAction"u8);
                 writer.WriteBooleanValue(IsArchivedAction.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecuteActionStartOn))
+            if (options.Format != "W" && Optional.IsDefined(ExecuteActionStartsOn))
             {
                 writer.WritePropertyName("executeActionStartTime"u8);
-                writer.WriteStringValue(ExecuteActionStartOn.Value, "O");
+                writer.WriteStringValue(ExecuteActionStartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ExecuteActionDuration))
             {
                 writer.WritePropertyName("executeActionDuration"u8);
                 writer.WriteStringValue(ExecuteActionDuration.Value, "P");
             }
-            if (options.Format != "W" && Optional.IsDefined(RevertActionStartOn))
+            if (options.Format != "W" && Optional.IsDefined(RevertActionStartsOn))
             {
                 writer.WritePropertyName("revertActionStartTime"u8);
-                writer.WriteStringValue(RevertActionStartOn.Value, "O");
+                writer.WriteStringValue(RevertActionStartsOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(RevertActionDuration))
             {
@@ -276,9 +276,9 @@ namespace Azure.ResourceManager.Sql.Models
             bool? isExecutableAction = default;
             bool? isRevertableAction = default;
             bool? isArchivedAction = default;
-            DateTimeOffset? executeActionStartOn = default;
+            DateTimeOffset? executeActionStartsOn = default;
             TimeSpan? executeActionDuration = default;
-            DateTimeOffset? revertActionStartOn = default;
+            DateTimeOffset? revertActionStartsOn = default;
             TimeSpan? revertActionDuration = default;
             RecommendedActionInitiatedBy? executeActionInitiatedBy = default;
             DateTimeOffset? executeActionInitiatedOn = default;
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    executeActionStartOn = prop.Value.GetDateTimeOffset("O");
+                    executeActionStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("executeActionDuration"u8))
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    revertActionStartOn = prop.Value.GetDateTimeOffset("O");
+                    revertActionStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("revertActionDuration"u8))
@@ -546,9 +546,9 @@ namespace Azure.ResourceManager.Sql.Models
                 isExecutableAction,
                 isRevertableAction,
                 isArchivedAction,
-                executeActionStartOn,
+                executeActionStartsOn,
                 executeActionDuration,
-                revertActionStartOn,
+                revertActionStartsOn,
                 revertActionDuration,
                 executeActionInitiatedBy,
                 executeActionInitiatedOn,

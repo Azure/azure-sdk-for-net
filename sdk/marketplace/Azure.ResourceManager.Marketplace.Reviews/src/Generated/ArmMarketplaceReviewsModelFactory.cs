@@ -16,6 +16,7 @@ namespace Azure.ResourceManager.Marketplace.Reviews.Models
     public static partial class ArmMarketplaceReviewsModelFactory
     {
 
+        /// <summary> Response to check user has already submitted a review for the product. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -33,6 +34,7 @@ namespace Azure.ResourceManager.Marketplace.Reviews.Models
                 default);
         }
 
+        /// <summary> Response of the check user has review operation. </summary>
         /// <param name="hasReview"> Indicates whether user has already submitted a review. </param>
         /// <param name="updatedOn"> The date and time when the review was last updated. </param>
         /// <returns> A new <see cref="Models.UserHasReviewProperties"/> instance for mocking. </returns>
