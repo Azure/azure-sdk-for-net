@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Added support for configuring a `ClientCertificateCredential` by certificate subject name and issuer.
+
 ### Breaking Changes
 
 ### Bugs Fixed
