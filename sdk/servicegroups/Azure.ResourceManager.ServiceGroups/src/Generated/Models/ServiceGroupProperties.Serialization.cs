@@ -84,6 +84,11 @@ namespace Azure.ResourceManager.ServiceGroups.Models
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
+            if (Optional.IsDefined(Attributes))
+            {
+                writer.WritePropertyName("attributes"u8);
+                writer.WriteObjectValue(Attributes, options);
+            }
             if (Optional.IsDefined(Parent))
             {
                 writer.WritePropertyName("parent"u8);
@@ -133,6 +138,7 @@ namespace Azure.ResourceManager.ServiceGroups.Models
             }
             ServiceGroupProvisioningState? provisioningState = default;
             string displayName = default;
+            ServiceGroupAttributes attributes = default;
             ParentServiceGroupProperties parent = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -151,6 +157,15 @@ namespace Azure.ResourceManager.ServiceGroups.Models
                     displayName = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("attributes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    attributes = ServiceGroupAttributes.DeserializeServiceGroupAttributes(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("parent"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -165,7 +180,7 @@ namespace Azure.ResourceManager.ServiceGroups.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ServiceGroupProperties(provisioningState, displayName, parent, additionalBinaryDataProperties);
+            return new ServiceGroupProperties(provisioningState, displayName, attributes, parent, additionalBinaryDataProperties);
         }
     }
 }

@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="folder"> The folder that this Dataset is in. If not specified, Dataset will appear at the root level. </param>
         /// <param name="additionalProperties"></param>
         /// <param name="typeProperties"> MongoDB Atlas database dataset properties. </param>
-        internal MongoDBAtlasCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, MongoDbAtlasCollectionDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
+        internal MongoDBAtlasCollectionDataset(string datasetType, string description, DataFactoryElement<IList<DatasetDataElement>> structure, DataFactoryElement<IList<DatasetSchemaDataElement>> schema, DataFactoryLinkedServiceReference linkedServiceName, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, DatasetFolder folder, IDictionary<string, BinaryData> additionalProperties, MongoDBAtlasCollectionDatasetTypeProperties typeProperties) : base(datasetType, description, structure, schema, linkedServiceName, parameters, annotations, folder, additionalProperties)
         {
             TypeProperties = typeProperties;
         }
 
         /// <summary> MongoDB Atlas database dataset properties. </summary>
-        internal MongoDbAtlasCollectionDatasetTypeProperties TypeProperties { get; set; }
+        internal MongoDBAtlasCollectionDatasetTypeProperties TypeProperties { get; set; }
 
         /// <summary> The collection name of the MongoDB Atlas database. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Collection
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 if (TypeProperties is null)
                 {
-                    TypeProperties = new MongoDbAtlasCollectionDatasetTypeProperties();
+                    TypeProperties = new MongoDBAtlasCollectionDatasetTypeProperties();
                 }
                 TypeProperties.Collection = value;
             }

@@ -31,32 +31,18 @@ internal static class Program
         ];
         List<Specification> rpSpecs =
         [
-            new AppContainersSpecification(),
             new AppServiceSpecification(),
             new AppConfigurationSpecification(),
             new ApiManagementSpecification(),
-            new ApplicationInsightsSpecification(),
-            new ComputeSpecification(),
-            new CognitiveServicesSpecification(),
-            new CosmosDBSpecification(),
             new DataFactorySpecification(),
             //new DnsSpecification(), // the Dns's mgmt SDK is majority hand-crafted, therefore here we just use this to generate a scaffold, and then hand-craft the rest.
             new EventGridSpecification(),
-            new FrontDoorSpecification(),
-            new KubernetesConfigurationSpecification(),
-            new KustoSpecification(),
             new LogicSpecification(),
             new MonitorSpecification(),
-            new OperationalInsightsSpecification(),
-            new PostgreSqlSpecification(),
             //new PrivateDnsSpecification(), // the Dns's mgmt SDK is majority hand-crafted, therefore here we just use this to generate a scaffold, and then hand-craft the rest.
-            new RedisSpecification(),
             new RedisEnterpriseSpecification(),
             new SecurityCenterSpecification(),
-            new ServiceBusSpecification(),
-            new SignalRSpecification(),
             new SqlSpecification(),
-            new StorageSpecification(),
             new WebPubSubSpecification(),
         ];
 

@@ -108,7 +108,7 @@ namespace Azure.AI.Language.Text
             {
                 return null;
             }
-            DateTimeOffset lastUpdateDateTime = default;
+            DateTimeOffset lastUpdateOn = default;
             TextActionState status = default;
             string taskName = default;
             AnalyzeTextOperationResultsKind kind = default;
@@ -118,7 +118,7 @@ namespace Azure.AI.Language.Text
             {
                 if (prop.NameEquals("lastUpdateDateTime"u8))
                 {
-                    lastUpdateDateTime = prop.Value.GetDateTimeOffset("O");
+                    lastUpdateOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("status"u8))
@@ -147,7 +147,7 @@ namespace Azure.AI.Language.Text
                 }
             }
             return new SentimentOperationResult(
-                lastUpdateDateTime,
+                lastUpdateOn,
                 status,
                 taskName,
                 kind,

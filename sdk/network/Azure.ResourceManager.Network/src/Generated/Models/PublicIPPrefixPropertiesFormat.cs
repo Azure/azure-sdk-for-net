@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Azure.Core;
 using Azure.ResourceManager.Network;
-using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
         public PublicIPPrefixPropertiesFormat()
         {
             IPTags = new ChangeTrackingList<IPTag>();
-            PublicIPAddresses = new ChangeTrackingList<SubResource>();
+            PublicIPAddresses = new ChangeTrackingList<ReferencedPublicIpAddress>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PublicIPPrefixPropertiesFormat"/>. </summary>
@@ -37,8 +36,9 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="resourceGuid"> The resource GUID property of the public IP prefix resource. </param>
         /// <param name="provisioningState"> The provisioning state of the public IP prefix resource. </param>
         /// <param name="natGateway"> NatGateway of Public IP Prefix. </param>
+        /// <param name="isUpgradedToV2"> Whether the public IP prefix SKU has been upgraded from Standard to StandardV2. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PublicIPPrefixPropertiesFormat(NetworkIPVersion? publicIPAddressVersion, IList<IPTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<SubResource> publicIPAddresses, NetworkSubResource loadBalancerFrontendIPConfiguration, NetworkSubResource customIPPrefix, Guid? resourceGuid, NetworkProvisioningState? provisioningState, NatGatewayData natGateway, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PublicIPPrefixPropertiesFormat(NetworkIPVersion? publicIPAddressVersion, IList<IPTag> ipTags, int? prefixLength, string ipPrefix, IReadOnlyList<ReferencedPublicIpAddress> publicIPAddresses, NetworkSubResource loadBalancerFrontendIPConfiguration, NetworkSubResource customIPPrefix, Guid? resourceGuid, NetworkProvisioningState? provisioningState, NatGatewayData natGateway, bool? isUpgradedToV2, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PublicIPAddressVersion = publicIPAddressVersion;
             IPTags = ipTags;
@@ -50,6 +50,7 @@ namespace Azure.ResourceManager.Network.Models
             ResourceGuid = resourceGuid;
             ProvisioningState = provisioningState;
             NatGateway = natGateway;
+            IsUpgradedToV2 = isUpgradedToV2;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -71,7 +72,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> The list of all referenced PublicIPAddresses. </summary>
         [WirePath("publicIPAddresses")]
-        public IReadOnlyList<SubResource> PublicIPAddresses { get; } = new ChangeTrackingList<SubResource>();
+        public IReadOnlyList<ReferencedPublicIpAddress> PublicIPAddresses { get; } = new ChangeTrackingList<ReferencedPublicIpAddress>();
 
         /// <summary> The reference to load balancer frontend IP configuration associated with the public IP prefix. </summary>
         [WirePath("loadBalancerFrontendIpConfiguration")]
@@ -92,6 +93,10 @@ namespace Azure.ResourceManager.Network.Models
         /// <summary> NatGateway of Public IP Prefix. </summary>
         [WirePath("natGateway")]
         public NatGatewayData NatGateway { get; set; }
+
+        /// <summary> Whether the public IP prefix SKU has been upgraded from Standard to StandardV2. </summary>
+        [WirePath("upgradedToV2")]
+        public bool? IsUpgradedToV2 { get; }
 
         /// <summary> Resource ID. </summary>
         [WirePath("loadBalancerFrontendIpConfiguration.id")]

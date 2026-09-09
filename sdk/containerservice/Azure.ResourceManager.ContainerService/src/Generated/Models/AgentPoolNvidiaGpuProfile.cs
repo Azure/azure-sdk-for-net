@@ -24,11 +24,16 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolNvidiaGpuProfile"/>. </summary>
         /// <param name="managementMode"> The Managed GPU experience installs additional components, such as the Data Center GPU Manager (DCGM) metrics for monitoring, on top of the GPU driver for you. For more details of what is installed, check out aka.ms/aks/managed-gpu. </param>
+        /// <param name="driverMode">
+        /// NVIDIA GPU resource allocation mode. DevicePlugin installs the NVIDIA
+        /// Kubernetes device plugin. DRA installs the NVIDIA DRA driver.
+        /// </param>
         /// <param name="migStrategy"> Sets the MIG (Multi-Instance GPU) strategy that will be used for managed MIG support. For more information about the different strategies, visit aka.ms/aks/managed-gpu. When not specified, the default is None. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolNvidiaGpuProfile(GpuManagementMode? managementMode, MultiInstanceGpuStrategy? migStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolNvidiaGpuProfile(GpuManagementMode? managementMode, NvidiaDriverMode? driverMode, MultiInstanceGpuStrategy? migStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagementMode = managementMode;
+            DriverMode = driverMode;
             MigStrategy = migStrategy;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -36,6 +41,13 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> The Managed GPU experience installs additional components, such as the Data Center GPU Manager (DCGM) metrics for monitoring, on top of the GPU driver for you. For more details of what is installed, check out aka.ms/aks/managed-gpu. </summary>
         [WirePath("managementMode")]
         public GpuManagementMode? ManagementMode { get; set; }
+
+        /// <summary>
+        /// NVIDIA GPU resource allocation mode. DevicePlugin installs the NVIDIA
+        /// Kubernetes device plugin. DRA installs the NVIDIA DRA driver.
+        /// </summary>
+        [WirePath("driverMode")]
+        public NvidiaDriverMode? DriverMode { get; set; }
 
         /// <summary> Sets the MIG (Multi-Instance GPU) strategy that will be used for managed MIG support. For more information about the different strategies, visit aka.ms/aks/managed-gpu. When not specified, the default is None. </summary>
         [WirePath("migStrategy")]

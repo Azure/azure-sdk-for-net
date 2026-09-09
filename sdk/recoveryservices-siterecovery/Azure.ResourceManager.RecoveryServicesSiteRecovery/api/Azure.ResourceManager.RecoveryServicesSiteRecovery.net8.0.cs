@@ -2211,7 +2211,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MultiVmGroupCreateOption? MultiVmGroupCreateOption { get { throw null; } }
         public string MultiVmGroupId { get { throw null; } }
         public string MultiVmGroupName { get { throw null; } }
-        public string OsFamilyName { get { throw null; } }
+        public string OSFamilyName { get { throw null; } }
         public string OSType { get { throw null; } }
         public int? PlatformFaultDomain { get { throw null; } }
         public string PrimaryAvailabilityZone { get { throw null; } }
@@ -6167,7 +6167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string LatestAgentReleaseDate { get { throw null; } }
         public string LatestUpgradableVersionWithoutReboot { get { throw null; } }
         public string LatestVersion { get { throw null; } }
-        public string OsFamilyName { get { throw null; } }
+        public string OSFamilyName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AgentReinstallBlockedReason> ReasonsBlockingReinstall { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmAgentReinstallBlockingErrorDetails> ReasonsBlockingReinstallDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AgentUpgradeBlockedReason> ReasonsBlockingUpgrade { get { throw null; } }

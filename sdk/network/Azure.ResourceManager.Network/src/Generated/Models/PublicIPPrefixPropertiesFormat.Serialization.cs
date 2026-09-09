@@ -141,6 +141,11 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WritePropertyName("natGateway"u8);
                 writer.WriteObjectValue(NatGateway, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(IsUpgradedToV2))
+            {
+                writer.WritePropertyName("upgradedToV2"u8);
+                writer.WriteBooleanValue(IsUpgradedToV2.Value);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -193,6 +198,7 @@ namespace Azure.ResourceManager.Network.Models
             Guid? resourceGuid = default;
             NetworkProvisioningState? provisioningState = default;
             NatGatewayData natGateway = default;
+            bool? isUpgradedToV2 = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -299,6 +305,15 @@ namespace Azure.ResourceManager.Network.Models
                     natGateway = NatGatewayData.DeserializeNatGatewayData(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("upgradedToV2"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isUpgradedToV2 = prop.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -315,6 +330,7 @@ namespace Azure.ResourceManager.Network.Models
                 resourceGuid,
                 provisioningState,
                 natGateway,
+                isUpgradedToV2,
                 additionalBinaryDataProperties);
         }
     }

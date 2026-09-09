@@ -212,7 +212,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return VmHealth.Status;
+                return VmHealth is null ? default : VmHealth.Status;
             }
         }
 
@@ -221,7 +221,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return InterconnectInstanceView.InterconnectSubgroupId;
+                return InterconnectInstanceView is null ? default : InterconnectInstanceView.InterconnectSubgroupId;
             }
         }
 

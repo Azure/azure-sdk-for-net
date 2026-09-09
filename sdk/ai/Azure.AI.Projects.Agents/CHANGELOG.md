@@ -1,6 +1,21 @@
 # Release History
 
-## 3.0.0-beta.1 (Unreleased)
+## 3.0.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 3.0.0-beta.2 (2026-09-03)
+
+### Other Changes
+- No user-facing changes
+
+## 3.0.0-beta.1 (2026-08-24)
 
 ### Features Added
 
@@ -8,11 +23,31 @@
 
 ### Breaking Changes
 
+- The Agent optimization-related classes were renamed
+
+| Old (2.x) | New (3.0.0-beta.1) |
+| --- | --- |
+| `OptimizationCandidate` | `AgentOptimizationCandidate` |
+| `OptimizationDatasetCriterion` | `AgentOptimizationDatasetCriterion` |
+| `OptimizationDatasetInput` | `AgentOptimizationDatasetInput` |
+| `OptimizationDatasetItem` | `AgentOptimizationDatasetItem` |
+| `OptimizationEvaluatorRef` | `AgentOptimizationEvaluatorRef` |
+| `OptimizationInlineDatasetInput` | `AgentOptimizationInlineDatasetInput` |
+| `OptimizationJob` | `AgentOptimizationJob` |
+| `OptimizationJobInputs` | `AgentOptimizationJobInputs` |
+| `OptimizationJobListItem` | `AgentOptimizationJobListItem` |
+| `OptimizationJobProgress` | `AgentOptimizationJobProgress` |
+| `OptimizationJobResult` | `AgentOptimizationJobResult` |
+| `OptimizationOptions` | `AgentOptimizationOptions` |
+| `OptimizationReferenceDatasetInput` | `AgentOptimizationReferenceDatasetInput` |
+| `OptimizationAgentIdentifier` | `OptimizedAgentIdentifier` |
+
 ### Bugs Fixed
 - Fixed listing of Agent Optimization Jobs.
 - Fixed the `StopSession` and `StopSessionAsync` calls.
 
 ### Other Changes
+- Updated the `OpenAI` package dependency to `2.12.0`.
 
 ### Sample Updates
 - Added sample demonstrating disabling and enabling Hosted Agent.

@@ -114,6 +114,11 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("useSystemTrustStore"u8);
                 writer.WriteObjectValue<DataFactoryElement<int>>(UseSystemTrustStore, options);
             }
+            if (Optional.IsDefined(Password))
+            {
+                writer.WritePropertyName("password"u8);
+                writer.WriteObjectValue<DataFactoryKeyVaultSecret>(Password, options);
+            }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
@@ -204,6 +209,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> database = default;
             DataFactoryElement<int> sslMode = default;
             DataFactoryElement<int> useSystemTrustStore = default;
+            DataFactoryKeyVaultSecret password = default;
             string encryptedCredential = default;
             DataFactoryElement<bool> allowZeroDateTime = default;
             DataFactoryElement<int> connectionTimeout = default;
@@ -281,6 +287,15 @@ namespace Azure.ResourceManager.DataFactory.Models
                         continue;
                     }
                     useSystemTrustStore = ModelReaderWriter.Read<DataFactoryElement<int>>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
+                    continue;
+                }
+                if (prop.NameEquals("password"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    password = ModelReaderWriter.Read<DataFactoryKeyVaultSecret>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureResourceManagerDataFactoryContext.Default);
                     continue;
                 }
                 if (prop.NameEquals("encryptedCredential"u8))
@@ -365,6 +380,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 database,
                 sslMode,
                 useSystemTrustStore,
+                password,
                 encryptedCredential,
                 allowZeroDateTime,
                 connectionTimeout,

@@ -25,14 +25,31 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> Initializes a new instance of <see cref="ContainerConfiguration"/>. </summary>
         /// <param name="image"> The container image for the hosted agent. </param>
+        /// <param name="registryConnectionId">
+        /// The id (or name) of the Foundry project connection that provides the credentials used to
+        /// authenticate to the private container registry hosting `image`. The connection abstracts the
+        /// auth mechanism — for example a managed-identity-federated token exchange, or a username/token
+        /// secret — so registry credentials are never part of the agent definition. Omit for public images
+        /// or registries already reachable by the platform's default identity (for example, Azure Container Registry).
+        /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerConfiguration(string image, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerConfiguration(string image, string registryConnectionId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Image = image;
+            RegistryConnectionId = registryConnectionId;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The container image for the hosted agent. </summary>
         public string Image { get; set; }
+
+        /// <summary>
+        /// The id (or name) of the Foundry project connection that provides the credentials used to
+        /// authenticate to the private container registry hosting `image`. The connection abstracts the
+        /// auth mechanism — for example a managed-identity-federated token exchange, or a username/token
+        /// secret — so registry credentials are never part of the agent definition. Omit for public images
+        /// or registries already reachable by the platform's default identity (for example, Azure Container Registry).
+        /// </summary>
+        public string RegistryConnectionId { get; set; }
     }
 }

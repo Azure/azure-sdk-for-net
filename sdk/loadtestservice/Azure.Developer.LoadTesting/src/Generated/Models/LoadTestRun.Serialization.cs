@@ -200,20 +200,20 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(StartDateTime))
+            if (options.Format != "W" && Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
-                writer.WriteStringValue(StartDateTime.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(EndDateTime))
+            if (options.Format != "W" && Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endDateTime"u8);
-                writer.WriteStringValue(EndDateTime.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecutedDateTime))
+            if (options.Format != "W" && Optional.IsDefined(ExecutedOn))
             {
                 writer.WritePropertyName("executedDateTime"u8);
-                writer.WriteStringValue(ExecutedDateTime.Value, "O");
+                writer.WriteStringValue(ExecutedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(PortalUri))
             {
@@ -250,10 +250,10 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("debugLogsEnabled"u8);
                 writer.WriteBooleanValue(DebugLogsEnabled.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(PublicIpDisabled))
+            if (options.Format != "W" && Optional.IsDefined(PublicIPDisabled))
             {
                 writer.WritePropertyName("publicIPDisabled"u8);
-                writer.WriteBooleanValue(PublicIpDisabled.Value);
+                writer.WriteBooleanValue(PublicIPDisabled.Value);
             }
             if (Optional.IsDefined(CreatedByType))
             {
@@ -270,30 +270,30 @@ namespace Azure.Developer.LoadTesting
                 writer.WritePropertyName("estimatedVirtualUserHours"u8);
                 writer.WriteNumberValue(EstimatedVirtualUserHours.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecutionStartDateTime))
+            if (options.Format != "W" && Optional.IsDefined(ExecutionStartsOn))
             {
                 writer.WritePropertyName("executionStartDateTime"u8);
-                writer.WriteStringValue(ExecutionStartDateTime.Value, "O");
+                writer.WriteStringValue(ExecutionStartsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(ExecutionEndDateTime))
+            if (options.Format != "W" && Optional.IsDefined(ExecutionEndsOn))
             {
                 writer.WritePropertyName("executionEndDateTime"u8);
-                writer.WriteStringValue(ExecutionEndDateTime.Value, "O");
+                writer.WriteStringValue(ExecutionEndsOn.Value, "O");
             }
-            if (options.Format != "W" && Optional.IsDefined(CreatedDateTime))
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDateTime"u8);
-                writer.WriteStringValue(CreatedDateTime.Value, "O");
+                writer.WriteStringValue(CreatedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (options.Format != "W" && Optional.IsDefined(LastModifiedDateTime))
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedDateTime"u8);
-                writer.WriteStringValue(LastModifiedDateTime.Value, "O");
+                writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastModifiedBy))
             {
@@ -359,9 +359,9 @@ namespace Azure.Developer.LoadTesting
             string testId = default;
             string description = default;
             TestRunStatus? status = default;
-            DateTimeOffset? startDateTime = default;
-            DateTimeOffset? endDateTime = default;
-            DateTimeOffset? executedDateTime = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
+            DateTimeOffset? executedOn = default;
             Uri portalUri = default;
             long? duration = default;
             double? virtualUserHours = default;
@@ -369,15 +369,15 @@ namespace Azure.Developer.LoadTesting
             LoadTestKind? kind = default;
             RequestDataLevel? requestDataLevel = default;
             bool? debugLogsEnabled = default;
-            bool? publicIpDisabled = default;
+            bool? publicIPDisabled = default;
             CreatedByType? createdByType = default;
             Uri createdByUri = default;
             double? estimatedVirtualUserHours = default;
-            DateTimeOffset? executionStartDateTime = default;
-            DateTimeOffset? executionEndDateTime = default;
-            DateTimeOffset? createdDateTime = default;
+            DateTimeOffset? executionStartsOn = default;
+            DateTimeOffset? executionEndsOn = default;
+            DateTimeOffset? createdOn = default;
             string createdBy = default;
-            DateTimeOffset? lastModifiedDateTime = default;
+            DateTimeOffset? lastModifiedOn = default;
             string lastModifiedBy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -557,7 +557,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    startDateTime = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endDateTime"u8))
@@ -566,7 +566,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    endDateTime = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("executedDateTime"u8))
@@ -575,7 +575,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    executedDateTime = prop.Value.GetDateTimeOffset("O");
+                    executedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("portalUrl"u8))
@@ -643,7 +643,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    publicIpDisabled = prop.Value.GetBoolean();
+                    publicIPDisabled = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("createdByType"u8))
@@ -679,7 +679,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    executionStartDateTime = prop.Value.GetDateTimeOffset("O");
+                    executionStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("executionEndDateTime"u8))
@@ -688,7 +688,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    executionEndDateTime = prop.Value.GetDateTimeOffset("O");
+                    executionEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("createdDateTime"u8))
@@ -697,7 +697,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    createdDateTime = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("createdBy"u8))
@@ -711,7 +711,7 @@ namespace Azure.Developer.LoadTesting
                     {
                         continue;
                     }
-                    lastModifiedDateTime = prop.Value.GetDateTimeOffset("O");
+                    lastModifiedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastModifiedBy"u8))
@@ -742,9 +742,9 @@ namespace Azure.Developer.LoadTesting
                 testId,
                 description,
                 status,
-                startDateTime,
-                endDateTime,
-                executedDateTime,
+                startsOn,
+                endsOn,
+                executedOn,
                 portalUri,
                 duration,
                 virtualUserHours,
@@ -752,15 +752,15 @@ namespace Azure.Developer.LoadTesting
                 kind,
                 requestDataLevel,
                 debugLogsEnabled,
-                publicIpDisabled,
+                publicIPDisabled,
                 createdByType,
                 createdByUri,
                 estimatedVirtualUserHours,
-                executionStartDateTime,
-                executionEndDateTime,
-                createdDateTime,
+                executionStartsOn,
+                executionEndsOn,
+                createdOn,
                 createdBy,
-                lastModifiedDateTime,
+                lastModifiedOn,
                 lastModifiedBy,
                 additionalBinaryDataProperties);
         }

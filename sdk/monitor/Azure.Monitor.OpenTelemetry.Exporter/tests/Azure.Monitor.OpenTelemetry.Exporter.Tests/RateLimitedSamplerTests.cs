@@ -15,6 +15,27 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests;
 public class RateLimitedSamplerTests
 {
     [Fact]
+    public void DuplicateSampleRateAttributesFromMultipleProvidersDoNotThrow()
+    {
+        const string activitySourceName = "Azure.Monitor.OpenTelemetry.Exporter.Tests.DuplicateSampleRate";
+        using var activitySource = new ActivitySource(activitySourceName);
+        using var firstProvider = Sdk.CreateTracerProviderBuilder()
+            .AddSource(activitySourceName)
+            .SetSampler(new RateLimitedSampler(1e9))
+            .Build();
+        using var secondProvider = Sdk.CreateTracerProviderBuilder()
+            .AddSource(activitySourceName)
+            .SetSampler(new RateLimitedSampler(1e9))
+            .Build();
+
+        System.Threading.Thread.Sleep(50);
+        using var activity = activitySource.StartActivity("root");
+
+        Assert.NotNull(activity);
+        Assert.NotNull(activity.GetTagItem("microsoft.sample_rate"));
+    }
+
+    [Fact]
     public void RespectLocalParentDecision()
     {
         ActivitySource MyActivitySource = new("MyCompany.MyProduct.MyLibrary");

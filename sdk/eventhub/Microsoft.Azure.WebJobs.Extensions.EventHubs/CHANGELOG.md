@@ -1,10 +1,6 @@
 # Release History
 
-## 6.6.0-beta.1 (Unreleased)
-
-### Features Added
-
-### Breaking Changes
+## 6.5.4 (2026-09-09)
 
 ### Bugs Fixed
 
@@ -13,6 +9,8 @@
 ### Other Changes
 
 - Replaced scaling warning/error log calls with standardized `LogFunctionScaleWarning` extension method to enable Scale Controller App Insights diagnostics.
+- Added a `net10.0` target and updated .NET runtime dependencies to the 10.x line. The package now targets `net10.0`, `net8.0`, and `netstandard2.0`.
+- Removed the direct `Microsoft.Extensions.Hosting` package reference.
 
 ## 6.5.3 (2025-10-20)
 

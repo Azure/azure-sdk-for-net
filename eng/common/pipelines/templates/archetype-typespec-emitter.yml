@@ -632,3 +632,5 @@ extends:
                   scriptLocation: "inlineScript"
                   inlineScript: npx tsp-spector upload-coverage --coverageFile $(Build.ArtifactStagingDirectory)/tsp-spector-coverage-azure.json --generatorName @azure-typespec/$(SpectorName) --storageAccountName typespec --containerName coverages --generatorVersion $(node -p -e "require('./package.json').version") --generatorMode azure
                   workingDirectory: $(Build.SourcesDirectory)/eng/packages/$(SpectorName)
+                env:
+                  npm_config_userconfig: $(emitterNpmrcPath)

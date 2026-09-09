@@ -118,7 +118,7 @@ namespace Azure.Provisioning.OperationalInsights
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<LinkedStorageAccountsProperties>(nameof(Properties), new string[] { "properties" }, isRequired: true);
-            _parent = DefineResource<OperationalInsightsWorkspace>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<OperationalInsightsWorkspace>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

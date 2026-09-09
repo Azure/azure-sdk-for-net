@@ -11,19 +11,29 @@ using System.Text.Json;
 
 namespace Azure.ResourceManager.HybridContainerService
 {
+    /// <summary></summary>
     public partial class HybridContainerServiceAgentPoolResource : IJsonModel<HybridContainerServiceAgentPoolData>
     {
-        private static HybridContainerServiceAgentPoolData s_dataDeserializationInstance;
-        private static HybridContainerServiceAgentPoolData DataDeserializationInstance => s_dataDeserializationInstance ??= new();
+        private static IJsonModel<HybridContainerServiceAgentPoolData> s_dataDeserializationInstance;
 
+        private static IJsonModel<HybridContainerServiceAgentPoolData> DataDeserializationInstance => s_dataDeserializationInstance ??= new HybridContainerServiceAgentPoolData();
+
+        /// <param name="writer"> The writer to serialize the model to. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HybridContainerServiceAgentPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options) => ((IJsonModel<HybridContainerServiceAgentPoolData>)Data).Write(writer, options);
 
-        HybridContainerServiceAgentPoolData IJsonModel<HybridContainerServiceAgentPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => ((IJsonModel<HybridContainerServiceAgentPoolData>)DataDeserializationInstance).Create(ref reader, options);
+        /// <param name="reader"> The reader for deserializing the model. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridContainerServiceAgentPoolData IJsonModel<HybridContainerServiceAgentPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => DataDeserializationInstance.Create(ref reader, options);
 
+        /// <param name="options"> The client options for reading and writing models. </param>
         BinaryData IPersistableModel<HybridContainerServiceAgentPoolData>.Write(ModelReaderWriterOptions options) => ModelReaderWriter.Write<HybridContainerServiceAgentPoolData>(Data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
+        /// <param name="data"> The binary data to be processed. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         HybridContainerServiceAgentPoolData IPersistableModel<HybridContainerServiceAgentPoolData>.Create(BinaryData data, ModelReaderWriterOptions options) => ModelReaderWriter.Read<HybridContainerServiceAgentPoolData>(data, options, AzureResourceManagerHybridContainerServiceContext.Default);
 
-        string IPersistableModel<HybridContainerServiceAgentPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => ((IPersistableModel<HybridContainerServiceAgentPoolData>)DataDeserializationInstance).GetFormatFromOptions(options);
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HybridContainerServiceAgentPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => DataDeserializationInstance.GetFormatFromOptions(options);
     }
 }

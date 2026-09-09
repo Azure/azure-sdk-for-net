@@ -13,13 +13,13 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new VmWorkloadSapHanaDBInstanceProtectedItem. </summary>
         public VmWorkloadSapHanaDBInstanceProtectedItem()
         {
+            ProtectedItemType.Assign("AzureVmWorkloadSAPHanaDBInstance");
         }
 
         /// <summary> Define all the provisionable properties for VmWorkloadSapHanaDBInstanceProtectedItem. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("protectedItemType", new string[] { "protectedItemType" }, defaultValue: "AzureVmWorkloadSAPHanaDBInstance");
             DefineAdditionalProperties();
         }
 

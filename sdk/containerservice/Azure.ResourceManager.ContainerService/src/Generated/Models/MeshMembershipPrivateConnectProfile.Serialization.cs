@@ -75,10 +75,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 throw new FormatException($"The model {nameof(MeshMembershipPrivateConnectProfile)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(PrivateIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
-                writer.WriteStringValue(PrivateIpAddress);
+                writer.WriteStringValue(PrivateIPAddress);
             }
             if (Optional.IsDefined(SubnetResourceId))
             {
@@ -127,14 +127,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            string privateIpAddress = default;
+            string privateIPAddress = default;
             ResourceIdentifier subnetResourceId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("privateIpAddress"u8))
                 {
-                    privateIpAddress = prop.Value.GetString();
+                    privateIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("subnetResourceId"u8))
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new MeshMembershipPrivateConnectProfile(privateIpAddress, subnetResourceId, additionalBinaryDataProperties);
+            return new MeshMembershipPrivateConnectProfile(privateIPAddress, subnetResourceId, additionalBinaryDataProperties);
         }
     }
 }

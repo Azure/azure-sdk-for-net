@@ -33,15 +33,15 @@ namespace Azure.ResourceManager.Authorization.Models
         /// <param name="assignmentType"> Assignment type of the role assignment schedule. </param>
         /// <param name="memberType"> Membership type of the role assignment schedule. </param>
         /// <param name="status"> The status of the role assignment schedule. </param>
-        /// <param name="startOn"> Start DateTime when role assignment schedule. </param>
-        /// <param name="endOn"> End DateTime when role assignment schedule. </param>
+        /// <param name="startsOn"> Start DateTime when role assignment schedule. </param>
+        /// <param name="endsOn"> End DateTime when role assignment schedule. </param>
         /// <param name="condition"> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </param>
         /// <param name="conditionVersion"> Version of the condition. Currently accepted value is '2.0'. </param>
         /// <param name="createdOn"> DateTime when role assignment schedule was created. </param>
         /// <param name="updatedOn"> DateTime when role assignment schedule was modified. </param>
         /// <param name="expandedProperties"> Additional properties of principal, scope and role definition. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RoleAssignmentScheduleProperties(string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, ResourceIdentifier roleAssignmentScheduleRequestId, ResourceIdentifier linkedRoleEligibilityScheduleId, RoleAssignmentScheduleAssignmentType? assignmentType, RoleManagementScheduleMemberType? memberType, RoleManagementScheduleStatus? status, DateTimeOffset? startOn, DateTimeOffset? endOn, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, RoleManagementExpandedProperties expandedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal RoleAssignmentScheduleProperties(string scope, ResourceIdentifier roleDefinitionId, Guid? principalId, RoleManagementPrincipalType? principalType, ResourceIdentifier roleAssignmentScheduleRequestId, ResourceIdentifier linkedRoleEligibilityScheduleId, RoleAssignmentScheduleAssignmentType? assignmentType, RoleManagementScheduleMemberType? memberType, RoleManagementScheduleStatus? status, DateTimeOffset? startsOn, DateTimeOffset? endsOn, string condition, string conditionVersion, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, RoleManagementExpandedProperties expandedProperties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Scope = scope;
             RoleDefinitionId = roleDefinitionId;
@@ -52,8 +52,8 @@ namespace Azure.ResourceManager.Authorization.Models
             AssignmentType = assignmentType;
             MemberType = memberType;
             Status = status;
-            StartOn = startOn;
-            EndOn = endOn;
+            StartsOn = startsOn;
+            EndsOn = endsOn;
             Condition = condition;
             ConditionVersion = conditionVersion;
             CreatedOn = createdOn;
@@ -100,11 +100,11 @@ namespace Azure.ResourceManager.Authorization.Models
 
         /// <summary> Start DateTime when role assignment schedule. </summary>
         [WirePath("startDateTime")]
-        public DateTimeOffset? StartOn { get; }
+        public DateTimeOffset? StartsOn { get; }
 
         /// <summary> End DateTime when role assignment schedule. </summary>
         [WirePath("endDateTime")]
-        public DateTimeOffset? EndOn { get; }
+        public DateTimeOffset? EndsOn { get; }
 
         /// <summary> The conditions on the role assignment. This limits the resources it can be assigned to. e.g.: @Resource[Microsoft.Storage/storageAccounts/blobServices/containers:ContainerName] StringEqualsIgnoreCase 'foo_storage_container'. </summary>
         [WirePath("condition")]

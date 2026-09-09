@@ -40,7 +40,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _scheduleRunTimes = DefineListProperty<DateTimeOffset>(nameof(ScheduleRunTimes), new string[] { "scheduleRunTimes" });
+            _scheduleRunTimes = DefineListProperty<DateTimeOffset>(nameof(ScheduleRunTimes), new string[] { "scheduleRunTimes" }, format: "O");
             DefineAdditionalProperties();
         }
 

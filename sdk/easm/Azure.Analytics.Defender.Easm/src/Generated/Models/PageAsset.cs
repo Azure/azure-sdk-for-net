@@ -16,7 +16,7 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Initializes a new instance of <see cref="PageAsset"/>. </summary>
         internal PageAsset()
         {
-            IpAddresses = new ChangeTrackingList<ObservedString>();
+            IPAddresses = new ChangeTrackingList<ObservedString>();
             Successful = new ChangeTrackingList<ObservedBoolean>();
             HttpResponseCodes = new ChangeTrackingList<ObservedInteger>();
             HttpResponseMessages = new ChangeTrackingList<ObservedString>();
@@ -48,11 +48,11 @@ namespace Azure.Analytics.Defender.Easm
             ParkedPage = new ChangeTrackingList<ObservedBoolean>();
             ResourceUrls = new ChangeTrackingList<ResourceUri>();
             Guids = new ChangeTrackingList<GuidPair>();
-            FinalIpAddresses = new ChangeTrackingList<ObservedString>();
+            FinalIPAddresses = new ChangeTrackingList<ObservedString>();
             Asns = new ChangeTrackingList<ObservedLong>();
-            IpBlocks = new ChangeTrackingList<IpBlock>();
+            IPBlocks = new ChangeTrackingList<IPBlock>();
             FinalAsns = new ChangeTrackingList<ObservedLong>();
-            FinalIpBlocks = new ChangeTrackingList<IpBlock>();
+            FinalIPBlocks = new ChangeTrackingList<IPBlock>();
             ResponseBodies = new ChangeTrackingList<ObservedString>();
             Location = new ChangeTrackingList<ObservedLocation>();
             Services = new ChangeTrackingList<AssetService>();
@@ -60,8 +60,8 @@ namespace Azure.Analytics.Defender.Easm
             Cdns = new ChangeTrackingList<ObservedString>();
             SslServerConfig = new ChangeTrackingList<SslServerConfig>();
             GdprAssetSecurityPolicies = new ChangeTrackingList<AssetSecurityPolicy>();
-            Ipv4 = new ChangeTrackingList<ObservedBoolean>();
-            Ipv6 = new ChangeTrackingList<ObservedBoolean>();
+            IPv4 = new ChangeTrackingList<ObservedBoolean>();
+            IPv6 = new ChangeTrackingList<ObservedBoolean>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PageAsset"/>. </summary>
@@ -107,11 +107,11 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="parkedPage"></param>
         /// <param name="resourceUrls"></param>
         /// <param name="guids"></param>
-        /// <param name="finalIpAddresses"></param>
+        /// <param name="finalIPAddresses"></param>
         /// <param name="asns"></param>
         /// <param name="ipBlocks"></param>
         /// <param name="finalAsns"></param>
-        /// <param name="finalIpBlocks"></param>
+        /// <param name="finalIPBlocks"></param>
         /// <param name="responseBodies"></param>
         /// <param name="domainAsset"></param>
         /// <param name="rootUrl"></param>
@@ -127,12 +127,12 @@ namespace Azure.Analytics.Defender.Easm
         /// <param name="gdprAssetSecurityPolicies"></param>
         /// <param name="ipv4"></param>
         /// <param name="ipv6"></param>
-        internal PageAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri url, string httpMethod, string service, IList<ObservedString> ipAddresses, IList<ObservedBoolean> successful, IList<ObservedInteger> httpResponseCodes, IList<ObservedString> httpResponseMessages, IList<ObservedLong> responseTimes, IList<ObservedBoolean> frames, IList<ObservedBoolean> windows, IList<ObservedBoolean> nonHtmlFrames, IList<ObservedBoolean> undirectedContent, IList<ObservedString> contentTypes, IList<ObservedLong> contentLengths, IList<ObservedString> windowNames, IList<ObservedString> charsets, IList<ObservedString> titles, IList<ObservedString> languages, IList<ObservedHeader> responseHeaders, IList<CookieDetails> cookies, IList<WebComponent> webComponents, IList<AttributeDetails> attributes, IList<AssetSecurityPolicy> assetSecurityPolicies, IList<ObservedIntegers> responseBodyMinhashSignatures, IList<ObservedIntegers> fullDomMinhashSignatures, IList<ObservedString> responseBodyHashSignatures, IList<ObservedString> errors, IList<SslCertAsset> sslCerts, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, PageCause cause, string referrer, IList<ObservedString> redirectUrls, PageAssetRedirectType? redirectType, IList<ObservedString> finalUrls, IList<ObservedInteger> finalResponseCodes, IList<ObservedBoolean> parkedPage, IList<ResourceUri> resourceUrls, IList<GuidPair> guids, IList<ObservedString> finalIpAddresses, IList<ObservedLong> asns, IList<IpBlock> ipBlocks, IList<ObservedLong> finalAsns, IList<IpBlock> finalIpBlocks, IList<ObservedString> responseBodies, DomainAsset domainAsset, ObservedBoolean rootUrl, bool? isRootUrl, IList<ObservedLocation> location, IList<AssetService> services, string siteStatus, IList<ObservedString> cnames, IList<ObservedString> cdns, string host, string domain, IList<SslServerConfig> sslServerConfig, IList<AssetSecurityPolicy> gdprAssetSecurityPolicies, IList<ObservedBoolean> ipv4, IList<ObservedBoolean> ipv6) : base(additionalBinaryDataProperties)
+        internal PageAsset(IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri url, string httpMethod, string service, IList<ObservedString> ipAddresses, IList<ObservedBoolean> successful, IList<ObservedInteger> httpResponseCodes, IList<ObservedString> httpResponseMessages, IList<ObservedLong> responseTimes, IList<ObservedBoolean> frames, IList<ObservedBoolean> windows, IList<ObservedBoolean> nonHtmlFrames, IList<ObservedBoolean> undirectedContent, IList<ObservedString> contentTypes, IList<ObservedLong> contentLengths, IList<ObservedString> windowNames, IList<ObservedString> charsets, IList<ObservedString> titles, IList<ObservedString> languages, IList<ObservedHeader> responseHeaders, IList<CookieDetails> cookies, IList<WebComponent> webComponents, IList<AttributeDetails> attributes, IList<AssetSecurityPolicy> assetSecurityPolicies, IList<ObservedIntegers> responseBodyMinhashSignatures, IList<ObservedIntegers> fullDomMinhashSignatures, IList<ObservedString> responseBodyHashSignatures, IList<ObservedString> errors, IList<SslCertAsset> sslCerts, IList<SourceDetails> sources, DateTimeOffset? firstSeen, DateTimeOffset? lastSeen, long? count, PageCause cause, string referrer, IList<ObservedString> redirectUrls, PageAssetRedirectType? redirectType, IList<ObservedString> finalUrls, IList<ObservedInteger> finalResponseCodes, IList<ObservedBoolean> parkedPage, IList<ResourceUri> resourceUrls, IList<GuidPair> guids, IList<ObservedString> finalIPAddresses, IList<ObservedLong> asns, IList<IPBlock> ipBlocks, IList<ObservedLong> finalAsns, IList<IPBlock> finalIPBlocks, IList<ObservedString> responseBodies, DomainAsset domainAsset, ObservedBoolean rootUrl, bool? isRootUrl, IList<ObservedLocation> location, IList<AssetService> services, string siteStatus, IList<ObservedString> cnames, IList<ObservedString> cdns, string host, string domain, IList<SslServerConfig> sslServerConfig, IList<AssetSecurityPolicy> gdprAssetSecurityPolicies, IList<ObservedBoolean> ipv4, IList<ObservedBoolean> ipv6) : base(additionalBinaryDataProperties)
         {
             Url = url;
             HttpMethod = httpMethod;
             Service = service;
-            IpAddresses = ipAddresses;
+            IPAddresses = ipAddresses;
             Successful = successful;
             HttpResponseCodes = httpResponseCodes;
             HttpResponseMessages = httpResponseMessages;
@@ -170,11 +170,11 @@ namespace Azure.Analytics.Defender.Easm
             ParkedPage = parkedPage;
             ResourceUrls = resourceUrls;
             Guids = guids;
-            FinalIpAddresses = finalIpAddresses;
+            FinalIPAddresses = finalIPAddresses;
             Asns = asns;
-            IpBlocks = ipBlocks;
+            IPBlocks = ipBlocks;
             FinalAsns = finalAsns;
-            FinalIpBlocks = finalIpBlocks;
+            FinalIPBlocks = finalIPBlocks;
             ResponseBodies = responseBodies;
             DomainAsset = domainAsset;
             RootUrl = rootUrl;
@@ -188,8 +188,8 @@ namespace Azure.Analytics.Defender.Easm
             Domain = domain;
             SslServerConfig = sslServerConfig;
             GdprAssetSecurityPolicies = gdprAssetSecurityPolicies;
-            Ipv4 = ipv4;
-            Ipv6 = ipv6;
+            IPv4 = ipv4;
+            IPv6 = ipv6;
         }
 
         /// <summary> Gets the Url. </summary>
@@ -201,8 +201,8 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the Service. </summary>
         public string Service { get; }
 
-        /// <summary> Gets the IpAddresses. </summary>
-        public IList<ObservedString> IpAddresses { get; }
+        /// <summary> Gets the IPAddresses. </summary>
+        public IList<ObservedString> IPAddresses { get; }
 
         /// <summary> Gets the Successful. </summary>
         public IList<ObservedBoolean> Successful { get; }
@@ -315,20 +315,20 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the Guids. </summary>
         public IList<GuidPair> Guids { get; }
 
-        /// <summary> Gets the FinalIpAddresses. </summary>
-        public IList<ObservedString> FinalIpAddresses { get; }
+        /// <summary> Gets the FinalIPAddresses. </summary>
+        public IList<ObservedString> FinalIPAddresses { get; }
 
         /// <summary> Gets the Asns. </summary>
         public IList<ObservedLong> Asns { get; }
 
-        /// <summary> Gets the IpBlocks. </summary>
-        public IList<IpBlock> IpBlocks { get; }
+        /// <summary> Gets the IPBlocks. </summary>
+        public IList<IPBlock> IPBlocks { get; }
 
         /// <summary> Gets the FinalAsns. </summary>
         public IList<ObservedLong> FinalAsns { get; }
 
-        /// <summary> Gets the FinalIpBlocks. </summary>
-        public IList<IpBlock> FinalIpBlocks { get; }
+        /// <summary> Gets the FinalIPBlocks. </summary>
+        public IList<IPBlock> FinalIPBlocks { get; }
 
         /// <summary> Gets the ResponseBodies. </summary>
         public IList<ObservedString> ResponseBodies { get; }
@@ -369,10 +369,10 @@ namespace Azure.Analytics.Defender.Easm
         /// <summary> Gets the GdprAssetSecurityPolicies. </summary>
         public IList<AssetSecurityPolicy> GdprAssetSecurityPolicies { get; }
 
-        /// <summary> Gets the Ipv4. </summary>
-        public IList<ObservedBoolean> Ipv4 { get; }
+        /// <summary> Gets the IPv4. </summary>
+        public IList<ObservedBoolean> IPv4 { get; }
 
-        /// <summary> Gets the Ipv6. </summary>
-        public IList<ObservedBoolean> Ipv6 { get; }
+        /// <summary> Gets the IPv6. </summary>
+        public IList<ObservedBoolean> IPv6 { get; }
     }
 }

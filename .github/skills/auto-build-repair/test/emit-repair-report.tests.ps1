@@ -16,6 +16,7 @@
     4. The collapsible <details>/<summary> structure is present (allow-listed GFM
        tags the sanitizer preserves).
     5. No stripped <!-- --> HTML comment is relied upon for identity.
+    6. Failed repairs never claim that partial progress was committed.
 
   Pure static checks — no network and no gh-aw install required, so it runs anywhere
   (locally and in CI). The live byte-for-byte round-trip through the real sanitizer
@@ -77,9 +78,18 @@ try {
     [ordered]@{ success = $false; buildResult = "Custom.cs(1,1): error CS0117: bad$nl@evil https://x.test fixes #9"; errorCode = 'maxIterations'; specChangeRequired = @('AZC0012: rename') } |
         ConvertTo-Json -Depth 6 | Set-Content (Join-Path $failedDir 'result-1.json')
 
+    $failedProgressDir = Join-Path $tmp 'failed-progress'; New-Item -ItemType Directory -Path $failedProgressDir | Out-Null
+    [ordered]@{
+        success = $false
+        buildResult = 'Custom.cs(1,1): error CS0111: duplicate member'
+        errorCode = 'maxIterations'
+        appliedPatches = @(@{ filePath = 'sdk/foo/Azure.Foo/src/Custom.cs'; description = 'attempted fix'; replacementCount = 1 })
+    } | ConvertTo-Json -Depth 6 | Set-Content (Join-Path $failedProgressDir 'result-1.json')
+
     $cases = @(
         @{ name = 'repaired';              args = @('-ResultsDir', $repairedDir, '-PackagePath', 'sdk/foo/Azure.Foo', '-PreRepairSha', '', '-PreRepairErrorsFile', $repairedPre) ; expect = 'repaired' }
         @{ name = 'failed';                args = @('-ResultsDir', $failedDir,   '-PackagePath', 'sdk/foo/Azure.Foo') ; expect = 'failed' }
+        @{ name = 'failed_with_progress';  args = @('-ResultsDir', $failedProgressDir, '-PackagePath', 'sdk/foo/Azure.Foo') ; expect = 'failed' }
         @{ name = 'ineligible';            args = @('-Eligible:$false') ; expect = 'ineligible' }
         @{ name = 'skipped_already_green'; args = @('-ForcedStatus', 'skipped_already_green', '-PackagePath', 'sdk/foo/Azure.Foo') ; expect = 'skipped_already_green' }
     )
@@ -128,9 +138,15 @@ try {
         }
         if ($c.expect -eq 'failed') {
             Assert ($body -match '(?m)^### Remaining Build Errors$') "failed: 'Remaining Build Errors' section present"
-            # This fixture carries specChangeRequired, so the invariant must NOT claim a commit.
-            Assert ($body -notmatch 'Fix committed as a reviewable commit') "failed(spec-change): does not falsely claim a committed fix"
-            Assert ($body -match 'requires a spec-repo change; nothing committed here') "failed(spec-change): reports out-of-scope, nothing committed"
+            Assert ($body -notmatch '(?i)(fix|progress) committed as a reviewable commit') "failed: does not falsely claim a committed fix"
+            Assert ($body -match 'Build remains red - repair changes were not committed') "failed: reports attempted changes as uncommitted"
+        }
+        if ($c.name -eq 'failed') {
+            Assert ($body -match 'Requires a spec-repo change') "failed(spec-change): reports the out-of-scope spec change"
+        }
+        if ($c.name -eq 'failed_with_progress') {
+            Assert ($body -match 'Custom\.cs') "failed(progress): reports the attempted file change"
+            Assert ($body -match '\| \*\*Stop reason\*\* \| `maxIterations` \|') "failed(progress): reports the iteration-limit stop reason"
         }
         if ($c.expect -eq 'skipped_already_green') {
             # Already-green runs commit nothing; the invariant line must not claim a fix.

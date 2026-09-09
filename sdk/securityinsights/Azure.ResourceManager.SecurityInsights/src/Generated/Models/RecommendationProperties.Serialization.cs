@@ -9,6 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using Azure.Core;
 using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
@@ -171,7 +172,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             DateTimeOffset lastEvaluatedOn = default;
             DateTimeOffset lastModifiedOn = default;
             IList<RecommendedSuggestion> suggestions = default;
-            string resourceId = default;
+            ResourceIdentifier resourceId = default;
             IDictionary<string, string> additionalProperties = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -225,10 +226,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        resourceId = null;
                         continue;
                     }
-                    resourceId = prop.Value.GetString();
+                    resourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("additionalProperties"u8))

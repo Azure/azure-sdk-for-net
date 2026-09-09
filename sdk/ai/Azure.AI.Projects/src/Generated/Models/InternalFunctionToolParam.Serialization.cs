@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -93,10 +94,43 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
+            if (Optional.IsCollectionDefined(OutputSchema))
+            {
+                writer.WritePropertyName("output_schema"u8);
+                writer.WriteStartObject();
+                foreach (var item in OutputSchema)
+                {
+                    writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+#if NET6_0_OR_GREATER
+                    writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+                writer.WriteEndObject();
+            }
             if (Optional.IsDefined(DeferLoading))
             {
                 writer.WritePropertyName("defer_loading"u8);
                 writer.WriteBooleanValue(DeferLoading.Value);
+            }
+            if (Optional.IsCollectionDefined(AllowedCallers))
+            {
+                writer.WritePropertyName("allowed_callers"u8);
+                writer.WriteStartArray();
+                foreach (InternalCallableToolAllowedCaller item in AllowedCallers)
+                {
+                    writer.WriteStringValue(item.ToString());
+                }
+                writer.WriteEndArray();
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -145,7 +179,9 @@ namespace Azure.AI.Projects
             InternalEmptyModelParam parameters = default;
             bool? strict = default;
             string @type = default;
+            IDictionary<string, BinaryData> outputSchema = default;
             bool? deferLoading = default;
+            IList<InternalCallableToolAllowedCaller> allowedCallers = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -189,6 +225,27 @@ namespace Azure.AI.Projects
                     @type = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("output_schema"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, BinaryData> dictionary = new Dictionary<string, BinaryData>();
+                    foreach (var prop0 in prop.Value.EnumerateObject())
+                    {
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, BinaryData.FromString(prop0.Value.GetRawText()));
+                        }
+                    }
+                    outputSchema = dictionary;
+                    continue;
+                }
                 if (prop.NameEquals("defer_loading"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -196,6 +253,20 @@ namespace Azure.AI.Projects
                         continue;
                     }
                     deferLoading = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("allowed_callers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<InternalCallableToolAllowedCaller> array = new List<InternalCallableToolAllowedCaller>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(new InternalCallableToolAllowedCaller(item.GetString()));
+                    }
+                    allowedCallers = array;
                     continue;
                 }
                 if (options.Format != "W")
@@ -209,7 +280,9 @@ namespace Azure.AI.Projects
                 parameters,
                 strict,
                 @type,
+                outputSchema ?? new ChangeTrackingDictionary<string, BinaryData>(),
                 deferLoading,
+                allowedCallers ?? new ChangeTrackingList<InternalCallableToolAllowedCaller>(),
                 additionalBinaryDataProperties);
         }
     }

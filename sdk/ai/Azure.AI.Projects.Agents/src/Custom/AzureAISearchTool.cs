@@ -17,16 +17,6 @@ public partial class AzureAISearchTool
     [CodeGenMember("AzureAiSearch")]
     public AzureAISearchToolOptions Options { get; set; }
 
-    /// <param name="options"> The azure ai search index resource. </param>
-    /// <exception cref="ArgumentNullException"> <paramref name="options"/> is null. </exception>
-    public AzureAISearchTool(AzureAISearchToolOptions options) : base(ToolType.AzureAiSearch)
-    {
-        Argument.AssertNotNull(options, nameof(options));
-
-        Options = options;
-        ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
-    }
-
     internal AzureAISearchTool()
     { }
 }

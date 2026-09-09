@@ -371,6 +371,24 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ExpressRouteLagResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetExpressRouteLagResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ExpressRouteLagResource"/> object. </returns>
+        public static ExpressRouteLagResource GetExpressRouteLagResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetExpressRouteLagResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="FirewallPolicyResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -404,6 +422,24 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNetworkArmClient(client).GetFirewallPolicyRuleCollectionGroupResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="FirewallPolicyKubeSelectorGroupResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetFirewallPolicyKubeSelectorGroupResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FirewallPolicyKubeSelectorGroupResource"/> object. </returns>
+        public static FirewallPolicyKubeSelectorGroupResource GetFirewallPolicyKubeSelectorGroupResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetFirewallPolicyKubeSelectorGroupResource(id);
         }
 
         /// <summary>
@@ -1109,6 +1145,24 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets an object representing a <see cref="ConnectionAnalyzerResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetConnectionAnalyzerResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ConnectionAnalyzerResource"/> object. </returns>
+        public static ConnectionAnalyzerResource GetConnectionAnalyzerResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetConnectionAnalyzerResource(id);
+        }
+
+        /// <summary>
         /// Gets an object representing a <see cref="FlowLogResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
@@ -1772,6 +1826,42 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableNetworkArmClient(client).GetInterconnectGroupSubgroupResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="FirstPartyServiceTagResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetFirstPartyServiceTagResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="FirstPartyServiceTagResource"/> object. </returns>
+        public static FirstPartyServiceTagResource GetFirstPartyServiceTagResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetFirstPartyServiceTagResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing a <see cref="AddressPrefixSetResource"/> along with the instance operations that can be performed on it but with no data.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkArmClient.GetAddressPrefixSetResource(ResourceIdentifier)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="AddressPrefixSetResource"/> object. </returns>
+        public static AddressPrefixSetResource GetAddressPrefixSetResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableNetworkArmClient(client).GetAddressPrefixSetResource(id);
         }
 
         /// <summary>
@@ -3256,6 +3346,61 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetExpressRoutePort(expressRoutePortName, cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets a collection of ExpressRouteLags in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetExpressRouteLags()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of ExpressRouteLags and their operations over a ExpressRouteLagResource. </returns>
+        public static ExpressRouteLagCollection GetExpressRouteLags(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetExpressRouteLags();
+        }
+
+        /// <summary>
+        /// Retrieves the requested ExpressRouteLag resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetExpressRouteLagAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="expressRouteLagName"> The name of ExpressRouteLag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<ExpressRouteLagResource>> GetExpressRouteLagAsync(this ResourceGroupResource resourceGroupResource, string expressRouteLagName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).GetExpressRouteLagAsync(expressRouteLagName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves the requested ExpressRouteLag resource.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetExpressRouteLag(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="expressRouteLagName"> The name of ExpressRouteLag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<ExpressRouteLagResource> GetExpressRouteLag(this ResourceGroupResource resourceGroupResource, string expressRouteLagName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetExpressRouteLag(expressRouteLagName, cancellationToken);
         }
 
         /// <summary>
@@ -5163,6 +5308,61 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// Gets a collection of FirstPartyServiceTags in the <see cref="ResourceGroupResource"/>
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetFirstPartyServiceTags()"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        /// <returns> An object representing collection of FirstPartyServiceTags and their operations over a FirstPartyServiceTagResource. </returns>
+        public static FirstPartyServiceTagCollection GetFirstPartyServiceTags(this ResourceGroupResource resourceGroupResource)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetFirstPartyServiceTags();
+        }
+
+        /// <summary>
+        /// Gets the specified first party service tag.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetFirstPartyServiceTagAsync(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="firstPartyServiceTagName"> The name of the first party service tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static async Task<Response<FirstPartyServiceTagResource>> GetFirstPartyServiceTagAsync(this ResourceGroupResource resourceGroupResource, string firstPartyServiceTagName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return await GetMockableNetworkResourceGroupResource(resourceGroupResource).GetFirstPartyServiceTagAsync(firstPartyServiceTagName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Gets the specified first party service tag.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkResourceGroupResource.GetFirstPartyServiceTag(string, CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="resourceGroupResource"> The <see cref="ResourceGroupResource"/> the method will execute against. </param>
+        /// <param name="firstPartyServiceTagName"> The name of the first party service tag. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="resourceGroupResource"/> is null. </exception>
+        [ForwardsClientCalls]
+        public static Response<FirstPartyServiceTagResource> GetFirstPartyServiceTag(this ResourceGroupResource resourceGroupResource, string firstPartyServiceTagName, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
+
+            return GetMockableNetworkResourceGroupResource(resourceGroupResource).GetFirstPartyServiceTag(firstPartyServiceTagName, cancellationToken);
+        }
+
+        /// <summary>
         /// Gets a collection of CustomIPPrefixes in the <see cref="ResourceGroupResource"/>
         /// <item>
         /// <term> Mocking. </term>
@@ -6480,6 +6680,42 @@ namespace Azure.ResourceManager.Network
         }
 
         /// <summary>
+        /// List all the ExpressRouteLag resources in the specified subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetExpressRouteLagsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ExpressRouteLagResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ExpressRouteLagResource> GetExpressRouteLagsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetExpressRouteLagsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// List all the ExpressRouteLag resources in the specified subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetExpressRouteLags(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="ExpressRouteLagResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ExpressRouteLagResource> GetExpressRouteLags(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetExpressRouteLags(cancellationToken);
+        }
+
+        /// <summary>
         /// Gets all the Firewall Policies in a subscription.
         /// <item>
         /// <term> Mocking. </term>
@@ -7565,6 +7801,42 @@ namespace Azure.ResourceManager.Network
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableNetworkSubscriptionResource(subscriptionResource).GetInterconnectGroups(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all the first party service tags in a subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetFirstPartyServiceTagsAsync(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="FirstPartyServiceTagResource"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<FirstPartyServiceTagResource> GetFirstPartyServiceTagsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetFirstPartyServiceTagsAsync(cancellationToken);
+        }
+
+        /// <summary>
+        /// Gets all the first party service tags in a subscription.
+        /// <item>
+        /// <term> Mocking. </term>
+        /// <description> To mock this method, please mock <see cref="MockableNetworkSubscriptionResource.GetFirstPartyServiceTags(CancellationToken)"/> instead. </description>
+        /// </item>
+        /// </summary>
+        /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
+        /// <returns> A collection of <see cref="FirstPartyServiceTagResource"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<FirstPartyServiceTagResource> GetFirstPartyServiceTags(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
+
+            return GetMockableNetworkSubscriptionResource(subscriptionResource).GetFirstPartyServiceTags(cancellationToken);
         }
 
         /// <summary>

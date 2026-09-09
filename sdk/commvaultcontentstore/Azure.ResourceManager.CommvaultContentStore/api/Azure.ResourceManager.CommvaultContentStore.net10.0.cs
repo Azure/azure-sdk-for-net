@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public static Azure.ResourceManager.CommvaultContentStore.Models.RoleMappingProperties RoleMappingProperties(System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.CommvaultRoleAssignment> roles = null, Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState? provisioningState = default(Azure.ResourceManager.CommvaultContentStore.Models.ResourceProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.SaaSResourceDetailsData SaaSResourceDetailsData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier saaSResourceId = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.StopBackupProtectionGroupContent StopBackupProtectionGroupContent(string reason = null, string comment = null) { throw null; }
-        public static Azure.ResourceManager.CommvaultContentStore.Models.VmInfo VmInfo(string sourceVmGuid = null, string storageAccountId = null, bool? shouldPowerOnVmAfterRestore = default(bool?), string name = null, string resourceGroup = null, string region = null, string networkId = null, string subnetId = null, bool? shouldAttachAndSwapOsDisk = default(bool?), string targetVmGuid = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.VmTag> vmTags = null) { throw null; }
+        public static Azure.ResourceManager.CommvaultContentStore.Models.VmInfo VmInfo(string sourceVmGuid = null, string storageAccountId = null, bool? shouldPowerOnVmAfterRestore = default(bool?), string name = null, string resourceGroup = null, string region = null, string networkId = null, string subnetId = null, bool? shouldAttachAndSwapOSDisk = default(bool?), string targetVmGuid = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.CommvaultContentStore.Models.VmTag> vmTags = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.VmListItem VmListItem(string vmGuid = null) { throw null; }
         public static Azure.ResourceManager.CommvaultContentStore.Models.VmTag VmTag(string name = null, string value = null) { throw null; }
     }
@@ -1321,7 +1321,7 @@ namespace Azure.ResourceManager.CommvaultContentStore.Models
         public string NetworkId { get { throw null; } set { } }
         public string Region { get { throw null; } set { } }
         public string ResourceGroup { get { throw null; } set { } }
-        public bool? ShouldAttachAndSwapOsDisk { get { throw null; } set { } }
+        public bool? ShouldAttachAndSwapOSDisk { get { throw null; } set { } }
         public bool? ShouldPowerOnVmAfterRestore { get { throw null; } set { } }
         public string SourceVmGuid { get { throw null; } }
         public string StorageAccountId { get { throw null; } }

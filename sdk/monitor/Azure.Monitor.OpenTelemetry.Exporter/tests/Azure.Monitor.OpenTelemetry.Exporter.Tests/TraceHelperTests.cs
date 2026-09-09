@@ -377,6 +377,44 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(0, telemetryCounter._traceCount);
         }
 
+        [Fact]
+        public void OtelToAzureMonitorTrace_ClassifiesRequestAndDependencySuccess()
+        {
+            using ActivitySource activitySource = new ActivitySource(ActivitySourceName);
+            using var successfulRequest = activitySource.StartActivity("Successful request", ActivityKind.Server);
+            using var failedRequest = activitySource.StartActivity("Failed request", ActivityKind.Server);
+            using var successfulDependency = activitySource.StartActivity("Successful dependency", ActivityKind.Client);
+            using var failedDependency = activitySource.StartActivity("Failed dependency", ActivityKind.Client);
+
+            Assert.NotNull(successfulRequest);
+            Assert.NotNull(failedRequest);
+            Assert.NotNull(successfulDependency);
+            Assert.NotNull(failedDependency);
+
+            failedRequest.SetStatus(ActivityStatusCode.Error);
+            failedDependency.SetStatus(ActivityStatusCode.Error);
+            successfulRequest.Stop();
+            failedRequest.Stop();
+            successfulDependency.Stop();
+            failedDependency.Stop();
+
+            Activity[] activities = [successfulRequest, failedRequest, successfulDependency, failedDependency];
+            var batch = new Batch<Activity>(activities, activities.Length);
+
+            var (_, telemetryCounter) = TraceHelper.OtelToAzureMonitorTrace(
+                batch,
+                new AzureMonitorResource(),
+                "00000000-0000-0000-0000-000000000000",
+                1.0f);
+
+            Assert.Equal(2, telemetryCounter._requestCount);
+            Assert.Equal(1, telemetryCounter._requestSuccessCount);
+            Assert.Equal(1, telemetryCounter._requestFailureCount);
+            Assert.Equal(2, telemetryCounter._dependencyCount);
+            Assert.Equal(1, telemetryCounter._dependencySuccessCount);
+            Assert.Equal(1, telemetryCounter._dependencyFailureCount);
+        }
+
         private string? GetExpectedMSlinks(IEnumerable<ActivityLink> links)
         {
             if (links != null && links.Any())
