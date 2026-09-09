@@ -7,7 +7,6 @@ updates:
       interval: "daily"
     labels:
       - "dependencies"
-    open-pull-requests-limit: 0
     cooldown:
       default-days: 7
       exclude:
@@ -42,7 +41,6 @@ updates:
       interval: "daily"
     labels:
       - "dependencies"
-    open-pull-requests-limit: 0
     cooldown:
       default-days: 7
       exclude:
@@ -77,7 +75,6 @@ updates:
       interval: "daily"
     labels:
       - "dependencies"
-    open-pull-requests-limit: 0
     cooldown:
       default-days: 7
       exclude:
@@ -112,7 +109,6 @@ updates:
       interval: "daily"
     labels:
       - "dependencies"
-    open-pull-requests-limit: 0
     cooldown:
       default-days: 7
       exclude:
