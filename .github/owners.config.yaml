@@ -65,6 +65,7 @@ sections:
 
   - name: Client Libraries
     defined-in-files: true
+    sort: true
     paths:
       - path: "/sdk/azurestack*/"
         owners: [bganapa]
@@ -127,8 +128,6 @@ sections:
         service-owners: [abhinav-ghai, johngallardo, sjiherzig]
       - labels: [Discovery]
         service-owners: [ahall-msft, danica-du, mike-menaker]
-      - labels: [EngSys]
-        service-owners: [danieljurek, lmazuel]
         azure-sdk-owners: [danieljurek]
       - labels: [Event Grid]
         service-owners: [Kishp01, rajeshka, shankarsama]

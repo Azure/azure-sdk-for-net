@@ -8,5 +8,9 @@ paths:
     owners: [danieljurek]
     pr-labels: [EngSys]
   - path: Azure.Template/
-    owners: [danieljurek, lmazuel]
+    owners: [danieljurek, danieljurek-extern]
     pr-labels: [EngSys]
+
+label-owners:
+  - labels: [EngSys]
+    service-owners: [danieljurek]
