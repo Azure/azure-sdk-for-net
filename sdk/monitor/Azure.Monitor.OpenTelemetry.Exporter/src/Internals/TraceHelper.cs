@@ -117,10 +117,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                         var telemetryItems = group.TelemetryItems;
 
                         // The _APPRESOURCEPREVIEW_ envelope is withheld: it describes the host
-                        // process and would be filed as the tenant's own application. Note the
-                        // envelope below still carries the host's ai.cloud.role and roleInstance;
-                        // deciding what those should say for a routed tenant is still open.
-                        var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, sampleRate);
+                        // process and would be filed as the tenant's own application.
+                        var tenantCloudRole = TenantRouting.GetTenantCloudRole(ref activityTagsProcessor.MappedTags);
+                        var telemetryItem = new TelemetryItem(activity, ref activityTagsProcessor, azureMonitorResource, instrumentationKey, sampleRate, tenantCloudRole);
 
                         if (activity.Events.Any())
                         {

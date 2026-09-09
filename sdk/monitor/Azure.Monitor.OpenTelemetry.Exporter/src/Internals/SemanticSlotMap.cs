@@ -79,6 +79,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             // dimensions as any other attribute would.
             [SemanticConventions.AttributeMicrosoftInstrumentationKey] = SemanticSlot.MicrosoftInstrumentationKey,
             [SemanticConventions.AttributeMicrosoftIngestionEndpoint] = SemanticSlot.MicrosoftIngestionEndpoint,
+            [SemanticConventions.AttributeMicrosoftTenantCloudRole] = SemanticSlot.MicrosoftTenantCloudRole,
         };
 
         /// <remarks>

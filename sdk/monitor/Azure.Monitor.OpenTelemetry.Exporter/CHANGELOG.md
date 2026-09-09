@@ -4,6 +4,8 @@
 
 ### Features Added
 
+- Multi-tenant trace export now maps the `microsoft.tenant_cloud_role` Activity attribute to `ai.cloud.role`. Missing or invalid values use `unknown_service`, while `ai.cloud.roleInstance` remains host-derived.
+
 ### Breaking Changes
 
 ### Bugs Fixed

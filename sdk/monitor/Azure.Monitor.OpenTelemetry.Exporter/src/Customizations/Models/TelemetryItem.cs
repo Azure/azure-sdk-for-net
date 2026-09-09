@@ -2,13 +2,11 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Linq;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
-
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
-
 using OpenTelemetry.Logs;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
@@ -19,7 +17,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         private static volatile string? s_cloudRoleInstanceOverride;
         private static volatile string? s_componentVersionOverride;
 
-        public TelemetryItem(Activity activity, ref ActivityTagsProcessor activityTagsProcessor, AzureMonitorResource? resource, string instrumentationKey, float sampleRate) :
+        public TelemetryItem(Activity activity, ref ActivityTagsProcessor activityTagsProcessor, AzureMonitorResource? resource, string instrumentationKey, float sampleRate, string? tenantCloudRole = null) :
             this(activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency", FormatUtcTimestamp(activity.StartTimeUtc))
         {
             if (activity.ParentSpanId != default)
@@ -97,6 +95,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
 
+            if (tenantCloudRole != null)
+            {
+                Tags[ContextTagKeys.AiCloudRole.ToString()] = tenantCloudRole.Truncate(SchemaConstants.Tags_AiCloudRole_MaxLength);
+            }
+
             if (sampleRate != 100f)
             {
                 SampleRate = sampleRate;
@@ -136,7 +139,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
         }
 
-        public TelemetryItem (string name, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, LogContextInfo logContext) :
+        public TelemetryItem(string name, LogRecord logRecord, AzureMonitorResource? resource, string instrumentationKey, LogContextInfo logContext) :
             this(name, FormatUtcTimestamp(logRecord.Timestamp), logRecord, resource, instrumentationKey, logContext)
         {
         }

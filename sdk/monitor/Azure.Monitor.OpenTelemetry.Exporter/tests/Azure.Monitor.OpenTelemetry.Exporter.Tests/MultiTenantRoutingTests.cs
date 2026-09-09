@@ -101,11 +101,12 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         [Fact]
         public void RoutedTelemetryDoesNotCarryTheRoutingTagsAsCustomDimensions()
         {
-            var routeBatch = Convert(CreateActivity("ikey-a", EastUs));
+            var routeBatch = Convert(CreateActivity("ikey-a", EastUs, tenantCloudRole: "tenant-role"));
 
             var properties = ((RequestData)routeBatch[0].TelemetryItems.Single().Data!.BaseData).Properties;
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftInstrumentationKey, properties.Keys);
             Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftIngestionEndpoint, properties.Keys);
+            Assert.DoesNotContain(SemanticConventions.AttributeMicrosoftTenantCloudRole, properties.Keys);
         }
 
         [Theory]
@@ -230,15 +231,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal(3, routeBatch[0].TelemetryItems.Count);
         }
 
-        /// <summary>
-        /// Characterizes what a routed envelope currently says about identity when the host has a
-        /// real resource. The resource metric is withheld, but the role tags on the envelope are the
-        /// host's, so a tenant sees the relaying service's name and instance as its own application.
-        /// This is a recorded gap, not settled behaviour: the test exists so that changing it is a
-        /// deliberate act rather than an accident.
-        /// </summary>
         [Fact]
-        public void RoutedEnvelopesCarryTheHostsCloudRole()
+        public void RoutedEnvelopesCarryTheTenantCloudRoleAndHostRoleInstance()
         {
             var resource = ResourceBuilder.CreateDefault()
                 .AddAttributes(new Dictionary<string, object>
@@ -253,7 +247,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
             var routeBatch = new EndpointRouteBatch();
             TraceHelper.OtelToAzureMonitorTraceMultiTenant(
-                CreateBatch(CreateActivity("ikey-a", EastUs)),
+                CreateBatch(CreateActivity("ikey-a", EastUs, tenantCloudRole: "tenant-role")),
                 resource,
                 sampleRate: 100,
                 routeBatch);
@@ -261,8 +255,84 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var telemetryItem = routeBatch[0].TelemetryItems.Single();
 
             Assert.Equal("ikey-a", telemetryItem.InstrumentationKey);
-            Assert.Equal("relay-host", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
+            Assert.Equal("tenant-role", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
             Assert.Equal("relay-instance", telemetryItem.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+        }
+
+        [Fact]
+        public void TenantCloudRoleIsResolvedPerEnvelopeWithinAnEndpointGroup()
+        {
+            var routeBatch = Convert(
+                CreateActivity("ikey-a", EastUs, tenantCloudRole: "tenant-a"),
+                CreateActivity("ikey-b", EastUs, tenantCloudRole: "tenant-b"));
+
+            Assert.Equal(
+                new[] { "tenant-a", "tenant-b" },
+                routeBatch[0].TelemetryItems.Select(item => item.Tags[ContextTagKeys.AiCloudRole.ToString()]));
+        }
+
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        [InlineData("   ")]
+        [InlineData(42)]
+        public void InvalidTenantCloudRoleUsesUnknownService(object? tenantCloudRole)
+        {
+            var routeBatch = Convert(CreateActivity("ikey-a", EastUs, tenantCloudRole: tenantCloudRole));
+
+            Assert.Equal(
+                "unknown_service",
+                routeBatch[0].TelemetryItems.Single().Tags[ContextTagKeys.AiCloudRole.ToString()]);
+        }
+
+        [Fact]
+        public void TenantCloudRoleIsTrimmedAndTruncated()
+        {
+            var tenantCloudRole = new string('a', SchemaConstants.Tags_AiCloudRole_MaxLength + 1);
+            var routeBatch = Convert(
+                CreateActivity("ikey-a", EastUs, tenantCloudRole: $" {tenantCloudRole} "));
+
+            Assert.Equal(
+                tenantCloudRole.Substring(0, SchemaConstants.Tags_AiCloudRole_MaxLength),
+                routeBatch[0].TelemetryItems.Single().Tags[ContextTagKeys.AiCloudRole.ToString()]);
+        }
+
+        [Fact]
+        public void ActivityEventEnvelopesInheritTenantCloudRoleAndHostRoleInstance()
+        {
+            var resource = ResourceBuilder.CreateDefault()
+                .AddAttributes(new Dictionary<string, object>
+                {
+                    { "service.name", "relay-host" },
+                    { "service.instance.id", "relay-instance" },
+                })
+                .Build()
+                .CreateAzureMonitorResource("exporter-ikey");
+            var activity = s_activitySource.StartActivity("Test", ActivityKind.Server)!;
+            activity.SetTag(SemanticConventions.AttributeMicrosoftInstrumentationKey, "ikey-a");
+            activity.SetTag(SemanticConventions.AttributeMicrosoftIngestionEndpoint, EastUs);
+            activity.SetTag(SemanticConventions.AttributeMicrosoftTenantCloudRole, "tenant-role");
+            activity.AddEvent(new ActivityEvent("tenant-event"));
+            activity.AddEvent(new ActivityEvent(
+                SemanticConventions.AttributeExceptionEventName,
+                tags: new ActivityTagsCollection
+                {
+                    { SemanticConventions.AttributeExceptionType, "TenantException" },
+                    { SemanticConventions.AttributeExceptionMessage, "Tenant exception message" },
+                }));
+            activity.Stop();
+
+            var routeBatch = new EndpointRouteBatch();
+            TraceHelper.OtelToAzureMonitorTraceMultiTenant(CreateBatch(activity), resource, 100, routeBatch);
+
+            Assert.Equal(3, routeBatch[0].TelemetryItems.Count);
+            Assert.All(
+                routeBatch[0].TelemetryItems,
+                item =>
+                {
+                    Assert.Equal("tenant-role", item.Tags[ContextTagKeys.AiCloudRole.ToString()]);
+                    Assert.Equal("relay-instance", item.Tags[ContextTagKeys.AiCloudRoleInstance.ToString()]);
+                });
         }
 
         [Fact]
@@ -295,7 +365,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         public void SingleTenantPathKeepsRoutingTagsAsCustomDimensions()
         {
             var (telemetryItems, _) = TraceHelper.OtelToAzureMonitorTrace(
-                CreateBatch(CreateActivity("ikey-a", EastUs)),
+                CreateBatch(CreateActivity("ikey-a", EastUs, tenantCloudRole: "tenant-role")),
                 null,
                 "exporter-ikey",
                 sampleRate: 100);
@@ -306,6 +376,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             var properties = ((RequestData)telemetryItem.Data!.BaseData).Properties;
             Assert.Equal("ikey-a", properties[SemanticConventions.AttributeMicrosoftInstrumentationKey]);
             Assert.Equal(EastUs, properties[SemanticConventions.AttributeMicrosoftIngestionEndpoint]);
+            Assert.Equal("tenant-role", properties[SemanticConventions.AttributeMicrosoftTenantCloudRole]);
         }
 
         /// <summary>
@@ -503,13 +574,18 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         }
 
         /// <summary>
-        /// The non-negotiable constraint: routing changes where an envelope goes and nothing about
-        /// how it is built. Both sides use the same key, so this compares the conversion itself;
-        /// the key is covered by <c>RoutedTelemetryNeverCarriesTheExportersOwnInstrumentationKey</c>.
+        /// Apart from the explicitly tested tenant routing fields, routing must not change how an
+        /// envelope is built. Both paths receive the same role and instrumentation key here so this
+        /// compares the rest of the conversion.
         /// </summary>
         [Fact]
         public void RoutedConversionProducesTheSameEnvelopesAsSingleTenant()
         {
+            var resource = new AzureMonitorResource(
+                roleName: "unknown_service",
+                roleInstance: null,
+                serviceVersion: null,
+                monitorBaseData: null);
             var corpus = new Func<Activity>[]
             {
                 () => CreateActivity("ikey-a", EastUs, ActivityKind.Server),
@@ -521,11 +597,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // is the conversion itself rather than the tags one path consumes.
             var (singleTenantItems, _) = TraceHelper.OtelToAzureMonitorTrace(
                 CreateBatch(corpus.Select(create => StripRoutingTags(create())).ToArray()),
-                null,
+                resource,
                 "ikey-a",
                 sampleRate: 100);
 
-            var routeBatch = Convert(corpus.Select(create => create()).ToArray());
+            var routeBatch = new EndpointRouteBatch();
+            TraceHelper.OtelToAzureMonitorTraceMultiTenant(
+                CreateBatch(corpus.Select(create => create()).ToArray()),
+                resource,
+                sampleRate: 100,
+                routeBatch);
 
             var singleTenant = Encoding.UTF8.GetString(HttpPipelineHelper.GetSerializedContent(singleTenantItems));
             var multiTenant = Encoding.UTF8.GetString(HttpPipelineHelper.GetSerializedContent(routeBatch[0].TelemetryItems));
@@ -624,7 +705,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
 
         private static Batch<Activity> CreateBatch(params Activity[] activities) => new(activities, activities.Length);
 
-        private static Activity CreateActivity(string? instrumentationKey, string? ingestionEndpoint, ActivityKind kind = ActivityKind.Server)
+        private static Activity CreateActivity(string? instrumentationKey, string? ingestionEndpoint, ActivityKind kind = ActivityKind.Server, object? tenantCloudRole = null)
         {
             var activity = s_activitySource.StartActivity("Test", kind)!;
 
@@ -636,6 +717,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             if (ingestionEndpoint != null)
             {
                 activity.SetTag(SemanticConventions.AttributeMicrosoftIngestionEndpoint, ingestionEndpoint);
+            }
+
+            if (tenantCloudRole != null)
+            {
+                activity.SetTag(SemanticConventions.AttributeMicrosoftTenantCloudRole, tenantCloudRole);
             }
 
             activity.Stop();

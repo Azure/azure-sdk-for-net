@@ -250,6 +250,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
         /// </summary>
         public const string AttributeMicrosoftIngestionEndpoint = "microsoft.ingestion_endpoint";
 
+        /// <summary>
+        /// Attribute carrying the tenant-facing cloud role for multi-tenant export.
+        /// </summary>
+        public const string AttributeMicrosoftTenantCloudRole = "microsoft.tenant_cloud_role";
+
         // Context tag attributes set by the Application Insights shim (TelemetryClient.Context)
         public const string AttributeMicrosoftClientIp = "microsoft.client.ip";
         public const string AttributeMicrosoftSessionId = "microsoft.session.id";
