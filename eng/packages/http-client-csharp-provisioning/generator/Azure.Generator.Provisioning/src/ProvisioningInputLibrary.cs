@@ -20,6 +20,8 @@ namespace Azure.Generator.Provisioning
         private const string ProvisioningProviderSchemaDecoratorName = "Azure.ClientGenerator.Core.@provisioningProviderSchema";
         private IReadOnlyList<ProvisioningResourceProjection>? _resourceProjections;
         private Dictionary<string, bool>? _modelSettableUsage;
+        private HashSet<string>? _previewOnlyModels;
+        private Dictionary<string, HashSet<string>>? _previewOnlyProperties;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ProvisioningInputLibrary"/> class.
@@ -55,9 +57,27 @@ namespace Azure.Generator.Provisioning
             return _modelSettableUsage!.ContainsKey(model.CrossLanguageDefinitionId);
         }
 
+        internal bool IsModelPreviewOnly(InputModelType model)
+        {
+            EnsureProvisioningMetadata();
+            return _previewOnlyModels!.Contains(model.CrossLanguageDefinitionId);
+        }
+
+        internal bool IsPropertyPreviewOnly(InputModelProperty property)
+        {
+            EnsureProvisioningMetadata();
+            var modelId = property.EnclosingType?.CrossLanguageDefinitionId;
+            return modelId != null &&
+                _previewOnlyProperties!.TryGetValue(modelId, out var properties) &&
+                properties.Contains(property.Name);
+        }
+
         private void EnsureProvisioningMetadata()
         {
-            if (_resourceProjections != null && _modelSettableUsage != null)
+            if (_resourceProjections != null &&
+                _modelSettableUsage != null &&
+                _previewOnlyModels != null &&
+                _previewOnlyProperties != null)
             {
                 return;
             }
@@ -105,8 +125,40 @@ namespace Azure.Generator.Provisioning
                 }
             }
 
+            var previewOnlyModels = new HashSet<string>(StringComparer.Ordinal);
+            if (arguments.TryGetValue("previewOnlyModels", out var modelsData))
+            {
+                using var document = JsonDocument.Parse(modelsData);
+                foreach (var modelElement in document.RootElement.EnumerateArray())
+                {
+                    previewOnlyModels.Add(modelElement.GetString()
+                        ?? throw new JsonException("A preview-only model ID cannot be null."));
+                }
+            }
+
+            var previewOnlyProperties = new Dictionary<string, HashSet<string>>(StringComparer.Ordinal);
+            if (arguments.TryGetValue("previewOnlyProperties", out var propertiesData))
+            {
+                using var document = JsonDocument.Parse(propertiesData);
+                foreach (var propertyElement in document.RootElement.EnumerateArray())
+                {
+                    var modelId = propertyElement.GetProperty("modelId").GetString()
+                        ?? throw new JsonException("A preview-only property model ID cannot be null.");
+                    var propertyName = propertyElement.GetProperty("propertyName").GetString()
+                        ?? throw new JsonException("A preview-only property name cannot be null.");
+                    if (!previewOnlyProperties.TryGetValue(modelId, out var properties))
+                    {
+                        properties = new HashSet<string>(StringComparer.Ordinal);
+                        previewOnlyProperties.Add(modelId, properties);
+                    }
+                    properties.Add(propertyName);
+                }
+            }
+
             _resourceProjections = projections;
             _modelSettableUsage = modelSettableUsage;
+            _previewOnlyModels = previewOnlyModels;
+            _previewOnlyProperties = previewOnlyProperties;
         }
     }
 }

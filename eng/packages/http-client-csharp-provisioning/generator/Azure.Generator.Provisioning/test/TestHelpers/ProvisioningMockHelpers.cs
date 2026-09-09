@@ -33,6 +33,8 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
             string? primaryNamespace = null,
             IEnumerable<string>? customizationSources = null,
             IReadOnlyDictionary<string, bool>? modelSettableUsage = null,
+            IEnumerable<string>? previewOnlyModels = null,
+            IEnumerable<(string ModelId, string PropertyName)>? previewOnlyProperties = null,
             IEnumerable<string>? lastContractSources = null)
         {
             IReadOnlyList<string> inputNsApiVersions = apiVersions?.Invoke() ?? [];
@@ -50,20 +52,32 @@ namespace Azure.Generator.Provisioning.Tests.TestHelpers
                 new InputAuth(null, null));
             var mockInputLibrary = new Mock<ProvisioningInputLibrary>(_configFilePath);
             mockInputLibrary.Setup(p => p.InputNamespace).Returns(mockInputNamespace.Object);
-            if (armProviderSchema is not null)
-            {
-                typeof(ProvisioningInputLibrary)
-                    .GetField("_resourceProjections", BindingFlags.Instance | BindingFlags.NonPublic)!
-                    .SetValue(
-                        mockInputLibrary.Object,
-                        armProviderSchema().Resources.Select(CreateProjection).ToArray());
-                typeof(ProvisioningInputLibrary)
-                    .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
-                    .SetValue(
-                        mockInputLibrary.Object,
-                        modelSettableUsage ??
-                            inputNsModels.ToDictionary(model => model.CrossLanguageDefinitionId, _ => true));
-            }
+            typeof(ProvisioningInputLibrary)
+                .GetField("_resourceProjections", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(
+                    mockInputLibrary.Object,
+                    (armProviderSchema?.Invoke().Resources ?? []).Select(CreateProjection).ToArray());
+            typeof(ProvisioningInputLibrary)
+                .GetField("_modelSettableUsage", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(
+                    mockInputLibrary.Object,
+                    modelSettableUsage ??
+                        inputNsModels.ToDictionary(model => model.CrossLanguageDefinitionId, _ => true));
+            typeof(ProvisioningInputLibrary)
+                .GetField("_previewOnlyModels", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(
+                    mockInputLibrary.Object,
+                    new HashSet<string>(previewOnlyModels ?? [], StringComparer.Ordinal));
+            typeof(ProvisioningInputLibrary)
+                .GetField("_previewOnlyProperties", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(
+                    mockInputLibrary.Object,
+                    (previewOnlyProperties ?? [])
+                        .GroupBy(property => property.ModelId, StringComparer.Ordinal)
+                        .ToDictionary(
+                            group => group.Key,
+                            group => group.Select(property => property.PropertyName).ToHashSet(StringComparer.Ordinal),
+                            StringComparer.Ordinal));
 
             var loadMethod = typeof(Configuration).GetMethod("Load", BindingFlags.Static | BindingFlags.NonPublic);
             var config = loadMethod!.Invoke(null, [_configFilePath, null]);

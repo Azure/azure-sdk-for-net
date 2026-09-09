@@ -178,6 +178,13 @@ namespace Azure.Generator.Provisioning.Providers
         protected override TypeSignatureModifiers BuildDeclarationModifiers()
             => TypeSignatureModifiers.Public | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
 
+        protected override IReadOnlyList<MethodBodyStatement> BuildAttributes()
+            => [.. base.BuildAttributes(), .. ApiVersionHelpers.BuildExperimentalAttributes(
+                _resourceProjection is not null
+                    ? _resourceProjection.ApiVersions.Count > 0 &&
+                        _resourceProjection.ApiVersions.All(ApiVersionHelpers.IsPreviewApiVersion)
+                    : ProvisioningGenerator.Instance.InputLibrary.IsModelPreviewOnly(_inputModel))];
+
         protected override CSharpType? BuildBaseType()
         {
             // Derived discriminated resources inherit from their base resource type
@@ -396,9 +403,9 @@ namespace Azure.Generator.Provisioning.Providers
 
             // When the current (default) API version is GA, exclude preview versions.
             // Preview versions are only included when the current version is itself a preview.
-            if (!IsPreviewApiVersion(apiVersions[^1]))
+            if (!ApiVersionHelpers.IsPreviewApiVersion(apiVersions[^1]))
             {
-                var gaVersions = apiVersions.Where(v => !IsPreviewApiVersion(v)).ToList();
+                var gaVersions = apiVersions.Where(v => !ApiVersionHelpers.IsPreviewApiVersion(v)).ToList();
                 if (gaVersions.Count == 0)
                     return [];
                 apiVersions = gaVersions;
@@ -971,7 +978,7 @@ namespace Azure.Generator.Provisioning.Providers
                     var fieldName = "V" + version.Replace('.', '_').Replace('-', '_').ToUpperInvariant();
 
                     // Preview API versions are marked with [Experimental] to signal they may change or be removed.
-                    var isPreview = IsPreviewApiVersion(version);
+                    var isPreview = ApiVersionHelpers.IsPreviewApiVersion(version);
                     var attributes = isPreview
                         ? [new AttributeStatement(typeof(ExperimentalAttribute), [Literal("AZPROVISION001")])]
                         : Array.Empty<AttributeStatement>();
@@ -989,8 +996,5 @@ namespace Azure.Generator.Provisioning.Providers
                 return [.. fields];
             }
         }
-
-        internal static bool IsPreviewApiVersion(string version)
-            => version.Contains("preview", StringComparison.OrdinalIgnoreCase);
     }
 }

@@ -66,7 +66,9 @@ namespace Azure.Generator.Provisioning.Providers
                 name,
                 body,
                 enclosingType,
-                wireInfo: wireInfo)
+                wireInfo: wireInfo,
+                attributes: ApiVersionHelpers.BuildExperimentalAttributes(
+                    ProvisioningGenerator.Instance.InputLibrary.IsPropertyPreviewOnly(inputProperty)))
         {
             InputProperty = inputProperty;
             BackingField = backingField;
@@ -104,7 +106,9 @@ namespace Azure.Generator.Provisioning.Providers
                 type: type,
                 name: name,
                 body: body,
-                wireInfo: wireInfo);
+                wireInfo: wireInfo,
+                attributes: ApiVersionHelpers.BuildExperimentalAttributes(
+                    ProvisioningGenerator.Instance.InputLibrary.IsPropertyPreviewOnly(inputProperty)));
             BackingField = backingField;
             BicepPath = bicepPath;
             IsOutput = isOutput;
