@@ -6,7 +6,6 @@ version: 1
 configs:
   allowed-owner-yaml-paths:
     - "sdk/*/owners.yaml"
-    - "sdk/*/owners.yml"
   default-section: Client Libraries
   output: .github/CODEOWNERS
   minimum-path-owners: 2
