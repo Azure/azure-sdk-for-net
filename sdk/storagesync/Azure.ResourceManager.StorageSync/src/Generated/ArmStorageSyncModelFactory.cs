@@ -79,6 +79,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default);
         }
 
+        /// <summary> A collection of information about the state of the connection between service consumer and provider. </summary>
         /// <param name="status"> Indicates whether the connection has been Approved/Rejected/Removed by the owner of the service. </param>
         /// <param name="description"> The reason for approval/rejection of the connection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -163,6 +164,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default);
         }
 
+        /// <summary> The parameters used when creating a sync group. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -219,6 +221,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default);
         }
 
+        /// <summary> Cloud endpoint change enumeration status object. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="lastEnumerationStatus"> Status of last completed change enumeration. </param>
         /// <param name="activity"> Change enumeration activity. </param>
@@ -228,6 +231,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudEndpointChangeEnumerationStatus(lastUpdatedOn, lastEnumerationStatus, activity, default);
         }
 
+        /// <summary> Cloud endpoint change enumeration status object. </summary>
         /// <param name="startedOn"> Timestamp when change enumeration started. </param>
         /// <param name="completedOn"> Timestamp when change enumeration completed. </param>
         /// <param name="namespaceFilesCount"> Count of files in the namespace. </param>
@@ -247,6 +251,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default);
         }
 
+        /// <summary> Cloud endpoint change enumeration activity object. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="operationState"> Change enumeration operation state. </param>
         /// <param name="statusCode"> When non-zero, indicates an issue that is delaying change enumeration. </param>
@@ -314,6 +319,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudEndpointPatch(changeEnumerationIntervalDays is null ? default : new CloudEndpointUpdateProperties(changeEnumerationIntervalDays, default), default);
         }
 
+        /// <summary> Backup request. </summary>
         /// <param name="azureFileShare"> Azure File Share. </param>
         /// <returns> A new <see cref="Models.CloudEndpointBackupContent"/> instance for mocking. </returns>
         public static CloudEndpointBackupContent CloudEndpointBackupContent(string azureFileShare = default)
@@ -328,6 +334,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudEndpointPostBackupResult(cloudEndpointName is null ? default : new PostBackupResponseProperties(cloudEndpointName, default), default);
         }
 
+        /// <summary> Pre Restore request object. </summary>
         /// <param name="partition"> Pre Restore partition. </param>
         /// <param name="replicaGroup"> Pre Restore replica group. </param>
         /// <param name="requestId"> Pre Restore request id. </param>
@@ -355,6 +362,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default);
         }
 
+        /// <summary> Restore file spec. </summary>
         /// <param name="path"> Restore file spec path. </param>
         /// <param name="isDirectory"> Restore file spec isdir. </param>
         /// <returns> A new <see cref="Models.RestoreFileSpec"/> instance for mocking. </returns>
@@ -363,6 +371,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new RestoreFileSpec(path, isDirectory, default);
         }
 
+        /// <summary> Post Restore Request. </summary>
         /// <param name="partition"> Post Restore partition. </param>
         /// <param name="replicaGroup"> Post Restore replica group. </param>
         /// <param name="requestId"> Post Restore request id. </param>
@@ -388,6 +397,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default);
         }
 
+        /// <summary> The parameters used when calling trigger change detection action on cloud endpoint. </summary>
         /// <param name="directoryPath"> Relative path to a directory Azure File share for which change detection is to be performed. </param>
         /// <param name="changeDetectionMode"> Change Detection Mode. Applies to a directory specified in directoryPath parameter. </param>
         /// <param name="paths"> Array of relative paths on the Azure File share to be included in the change detection. Can be files and directories. </param>
@@ -399,6 +409,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new TriggerChangeDetectionContent(directoryPath, changeDetectionMode, (paths ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Cloud endpoint AFS file share metadata signing certificate public keys. </summary>
         /// <param name="firstKey"> The first public key. </param>
         /// <param name="secondKey"> The second public key. </param>
         /// <returns> A new <see cref="Models.CloudEndpointAfsShareMetadataCertificatePublicKeys"/> instance for mocking. </returns>
@@ -466,6 +477,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default);
         }
 
+        /// <summary> Server Endpoint sync status. </summary>
         /// <param name="downloadHealth"> Download Health Status. </param>
         /// <param name="uploadHealth"> Upload Health Status. </param>
         /// <param name="combinedHealth"> Combined Health Status. </param>
@@ -497,6 +509,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default);
         }
 
+        /// <summary> Sync Session status object. </summary>
         /// <param name="lastSyncResult"> Last sync result (HResult). </param>
         /// <param name="lastSyncTimestamp"> Last sync timestamp. </param>
         /// <param name="lastSyncSuccessTimestamp"> Last sync success timestamp. </param>
@@ -522,6 +535,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default);
         }
 
+        /// <summary> Files not syncing error object. </summary>
         /// <param name="errorCode"> Error code (HResult). </param>
         /// <param name="persistentCount"> Count of persistent files not syncing with the specified error code. </param>
         /// <param name="transientCount"> Count of transient files not syncing with the specified error code. </param>
@@ -531,6 +545,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointFilesNotSyncingError(errorCode, persistentCount, transientCount, default);
         }
 
+        /// <summary> Sync Session status object. </summary>
         /// <param name="timestamp"> Timestamp when properties were updated. </param>
         /// <param name="perItemErrorCount"> Per item error count. </param>
         /// <param name="appliedItemCount"> Applied item count. </param>
@@ -576,6 +591,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default);
         }
 
+        /// <summary> Background data download activity object. </summary>
         /// <param name="timestamp"> Timestamp when properties were updated. </param>
         /// <param name="startedOn"> Timestamp when the operation started. </param>
         /// <param name="percentProgress"> Progress percentage. </param>
@@ -586,6 +602,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointBackgroundDataDownloadActivity(timestamp, startedOn, percentProgress, downloadedBytes, default);
         }
 
+        /// <summary> Server endpoint cloud tiering status object. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="health"> Cloud tiering health state. </param>
         /// <param name="healthLastUpdatedOn"> The last updated timestamp of health state. </param>
@@ -615,6 +632,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default);
         }
 
+        /// <summary> Server endpoint cloud tiering status object. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="volumeSizeInBytes"> Volume size. </param>
         /// <param name="cloudTotalSizeInBytes"> Total size of content in the azure file share. </param>
@@ -634,6 +652,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default);
         }
 
+        /// <summary> Server endpoint cloud tiering status object. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="cacheHitBytes"> Count of bytes that were served from the local server. </param>
         /// <param name="cacheMissBytes"> Count of bytes that were served from the cloud. </param>
@@ -644,6 +663,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudTieringCachePerformance(lastUpdatedOn, cacheHitBytes, cacheMissBytes, cacheHitBytesPercent, default);
         }
 
+        /// <summary> Server endpoint cloud tiering status object. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="totalFileCount"> Last cloud tiering result (HResult). </param>
         /// <param name="errors"> Array of tiering errors. </param>
@@ -655,6 +675,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudTieringFilesNotTiering(lastUpdatedOn, totalFileCount, (errors ?? new ChangeTrackingList<FilesNotTieringError>()).ToList(), default);
         }
 
+        /// <summary> Files not tiering error object. </summary>
         /// <param name="errorCode"> Error code (HResult). </param>
         /// <param name="fileCount"> Count of files with this error. </param>
         /// <returns> A new <see cref="Models.FilesNotTieringError"/> instance for mocking. </returns>
@@ -663,6 +684,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new FilesNotTieringError(errorCode, fileCount, default);
         }
 
+        /// <summary> Status of the volume free space policy. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="effectiveVolumeFreeSpacePolicy"> In the case where multiple server endpoints are present in a volume, an effective free space policy is applied. </param>
         /// <param name="currentVolumeFreeSpacePercent"> Current volume free space percentage. </param>
@@ -672,6 +694,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudTieringVolumeFreeSpacePolicyStatus(lastUpdatedOn, effectiveVolumeFreeSpacePolicy, currentVolumeFreeSpacePercent, default);
         }
 
+        /// <summary> Status of the date policy. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="tieredFilesMostRecentAccessTimestamp"> Most recent access time of tiered files. </param>
         /// <returns> A new <see cref="Models.CloudTieringDatePolicyStatus"/> instance for mocking. </returns>
@@ -680,6 +703,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudTieringDatePolicyStatus(lastUpdatedOn, tieredFilesMostRecentAccessTimestamp, default);
         }
 
+        /// <summary> Information regarding the low disk mode state. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="state"> Low disk mode state. </param>
         /// <returns> A new <see cref="Models.CloudTieringLowDiskMode"/> instance for mocking. </returns>
@@ -688,6 +712,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new CloudTieringLowDiskMode(lastUpdatedOn, state, default);
         }
 
+        /// <summary> Server endpoint recall status object. </summary>
         /// <param name="lastUpdatedOn"> Last updated timestamp. </param>
         /// <param name="totalRecallErrorsCount"> Total count of recall errors. </param>
         /// <param name="recallErrors"> Array of recall errors. </param>
@@ -699,6 +724,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointRecallStatus(lastUpdatedOn, totalRecallErrorsCount, (recallErrors ?? new ChangeTrackingList<ServerEndpointRecallError>()).ToList(), default);
         }
 
+        /// <summary> Server endpoint recall error object. </summary>
         /// <param name="errorCode"> Error code (HResult). </param>
         /// <param name="count"> Count of occurences of the error. </param>
         /// <returns> A new <see cref="Models.ServerEndpointRecallError"/> instance for mocking. </returns>
@@ -707,6 +733,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new ServerEndpointRecallError(errorCode, count, default);
         }
 
+        /// <summary> Server endpoint provisioning status information. </summary>
         /// <param name="provisioningStatus"> Server Endpoint provisioning status. </param>
         /// <param name="provisioningType"> Server Endpoint provisioning type. </param>
         /// <param name="provisioningStepStatuses"> Provisioning Step status information for each step in the provisioning process. </param>
@@ -718,6 +745,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new StorageSyncServerEndpointProvisioningStatus(provisioningStatus, provisioningType, (provisioningStepStatuses ?? new ChangeTrackingList<ServerEndpointProvisioningStepStatus>()).ToList(), default);
         }
 
+        /// <summary> Server endpoint provisioning step status object. </summary>
         /// <param name="name"> Name of the provisioning step. </param>
         /// <param name="status"> Status of the provisioning step. </param>
         /// <param name="startOn"> Start time of the provisioning step. </param>
@@ -801,6 +829,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default), default);
         }
 
+        /// <summary> The parameters used when calling recall action on server endpoint. </summary>
         /// <param name="pattern"> Pattern of the files. </param>
         /// <param name="recallPath"> Recall path. </param>
         /// <returns> A new <see cref="Models.RecallActionContent"/> instance for mocking. </returns>
@@ -937,6 +966,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default);
         }
 
+        /// <summary> Trigger Rollover Request. </summary>
         /// <param name="serverCertificate"> Certificate Data. </param>
         /// <returns> A new <see cref="Models.TriggerRolloverContent"/> instance for mocking. </returns>
         public static TriggerRolloverContent TriggerRolloverContent(BinaryData serverCertificate = default)
@@ -977,6 +1007,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default);
         }
 
+        /// <summary> Parameters for a check name availability request. </summary>
         /// <param name="name"> The name to check for availability. </param>
         /// <param name="resourceType"> The resource type. Must be set to Microsoft.StorageSync/storageSyncServices. </param>
         /// <returns> A new <see cref="Models.StorageSyncNameAvailabilityContent"/> instance for mocking. </returns>
@@ -985,6 +1016,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new StorageSyncNameAvailabilityContent(name, resourceType, default);
         }
 
+        /// <summary> The CheckNameAvailability operation response. </summary>
         /// <param name="isNameAvailable"> Gets a boolean value that indicates whether the name is available for you to use. If true, the name is available. If false, the name has already been taken or invalid and cannot be used. </param>
         /// <param name="reason"> Gets the reason that a Storage Sync Service name could not be used. The Reason element is only returned if NameAvailable is false. </param>
         /// <param name="message"> Gets an error message explaining the Reason value in more detail. </param>
@@ -994,6 +1026,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             return new StorageSyncNameAvailabilityResult(isNameAvailable, reason, message, default);
         }
 
+        /// <summary> Cloud Endpoint object. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1033,6 +1066,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default);
         }
 
+        /// <summary> The parameters used when creating a cloud endpoint. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1060,6 +1094,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 default);
         }
 
+        /// <summary> Sync Session status object. </summary>
         /// <param name="timestamp"> Timestamp when properties were updated. </param>
         /// <param name="perItemErrorCount"> Per item error count. </param>
         /// <param name="appliedItemCount"> Applied item count. </param>

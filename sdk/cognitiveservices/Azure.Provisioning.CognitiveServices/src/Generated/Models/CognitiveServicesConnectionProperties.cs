@@ -18,6 +18,7 @@ namespace Azure.Provisioning.CognitiveServices
     /// </summary>
     public partial class CognitiveServicesConnectionProperties : ProvisionableConstruct
     {
+        private BicepValue<ConnectionAuthType> _authType;
         private BicepValue<CognitiveServicesConnectionCategory> _category;
         private BicepValue<ResourceIdentifier> _createdByWorkspaceArmId;
         private BicepValue<string> _error;
@@ -34,6 +35,16 @@ namespace Azure.Provisioning.CognitiveServices
         /// <summary> Creates a new CognitiveServicesConnectionProperties. </summary>
         public CognitiveServicesConnectionProperties()
         {
+        }
+
+        /// <summary> Authentication type of the connection target. </summary>
+        internal BicepValue<ConnectionAuthType> AuthType
+        {
+            get
+            {
+                Initialize();
+                return _authType;
+            }
         }
 
         /// <summary> Gets or sets the Category. </summary>
@@ -210,6 +221,7 @@ namespace Azure.Provisioning.CognitiveServices
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _authType = DefineProperty<ConnectionAuthType>(nameof(AuthType), new string[] { "authType" }, isRequired: true);
             _category = DefineProperty<CognitiveServicesConnectionCategory>(nameof(Category), new string[] { "category" });
             _createdByWorkspaceArmId = DefineProperty<ResourceIdentifier>(nameof(CreatedByWorkspaceArmId), new string[] { "createdByWorkspaceArmId" }, isOutput: true);
             _error = DefineProperty<string>(nameof(Error), new string[] { "error" });

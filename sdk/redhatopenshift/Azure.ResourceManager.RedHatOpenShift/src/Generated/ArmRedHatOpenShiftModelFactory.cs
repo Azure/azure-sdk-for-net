@@ -54,6 +54,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 default);
         }
 
+        /// <summary> PlatformWorkloadIdentityRole represents a mapping from a particular OCP operator to the built-in role that should be assigned to that operator's corresponding managed identity. </summary>
         /// <param name="operatorName"> OperatorName represents the name of the operator that this role is for. </param>
         /// <param name="roleDefinitionName"> RoleDefinitionName represents the name of the role. </param>
         /// <param name="roleDefinitionId"> RoleDefinitionID represents the resource ID of the role definition. </param>
@@ -110,6 +111,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 default);
         }
 
+        /// <summary> ClusterProfile represents a cluster profile. </summary>
         /// <param name="pullSecret"> The pull secret for the cluster. </param>
         /// <param name="domain"> The domain for the cluster. </param>
         /// <param name="version"> The version of the cluster. </param>
@@ -129,6 +131,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 default);
         }
 
+        /// <summary> ServicePrincipalProfile represents a service principal profile. </summary>
         /// <param name="clientId"> The client ID used for the cluster. </param>
         /// <param name="clientSecret"> The client secret used for the cluster. </param>
         /// <returns> A new <see cref="Models.OpenShiftServicePrincipalProfile"/> instance for mocking. </returns>
@@ -137,6 +140,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             return new OpenShiftServicePrincipalProfile(clientId, clientSecret, default);
         }
 
+        /// <summary> PlatformWorkloadIdentityProfile encapsulates all information that is specific to workload identity clusters. </summary>
         /// <param name="upgradeableTo"> UpgradeableTo stores a single OpenShift version a workload identity cluster can be upgraded to. </param>
         /// <param name="platformWorkloadIdentities"> Dictionary of &lt;PlatformWorkloadIdentity&gt;. </param>
         /// <returns> A new <see cref="Models.OpenShiftPlatformWorkloadIdentityProfile"/> instance for mocking. </returns>
@@ -147,6 +151,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             return new OpenShiftPlatformWorkloadIdentityProfile(upgradeableTo, platformWorkloadIdentities ?? new ChangeTrackingDictionary<string, OpenShiftPlatformWorkloadIdentity>(), default);
         }
 
+        /// <summary> PlatformWorkloadIdentity stores information representing a single workload identity. </summary>
         /// <param name="resourceId"> The resource ID of the PlatformWorkloadIdentity resource. </param>
         /// <param name="clientId"> The ClientID of the PlatformWorkloadIdentity resource. </param>
         /// <param name="objectId"> The ObjectID of the PlatformWorkloadIdentity resource. </param>
@@ -156,6 +161,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             return new OpenShiftPlatformWorkloadIdentity(resourceId, clientId, objectId, default);
         }
 
+        /// <summary> NetworkProfile represents a network profile. </summary>
         /// <param name="podCidr"> The CIDR used for OpenShift/Kubernetes Pods. </param>
         /// <param name="serviceCidr"> The CIDR used for OpenShift/Kubernetes Services. </param>
         /// <param name="outboundType"> The OutboundType used for egress traffic. </param>
@@ -183,6 +189,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             return new OpenShiftLoadBalancerProfile(managedOutboundIpsCount is null ? default : new OpenShiftManagedOutboundIPs(managedOutboundIpsCount, default), (effectiveOutboundIps ?? new ChangeTrackingList<EffectiveOutboundIP>()).ToList(), default);
         }
 
+        /// <summary> EffectiveOutboundIP represents an effective outbound IP resource of the cluster public load balancer. </summary>
         /// <param name="id"> The fully qualified Azure resource id of an IP address resource. </param>
         /// <returns> A new <see cref="Models.EffectiveOutboundIP"/> instance for mocking. </returns>
         public static EffectiveOutboundIP EffectiveOutboundIP(ResourceIdentifier id = default)
@@ -190,6 +197,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             return new EffectiveOutboundIP(id, default);
         }
 
+        /// <summary> MasterProfile represents a master profile. </summary>
         /// <param name="vmSize"> The size of the master VMs. </param>
         /// <param name="subnetId"> The Azure resource ID of the master subnet. </param>
         /// <param name="encryptionAtHost"> Whether master virtual machines are encrypted at host. </param>
@@ -200,6 +208,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             return new OpenShiftMasterProfile(vmSize, subnetId, encryptionAtHost, diskEncryptionSetId, default);
         }
 
+        /// <summary> WorkerProfile represents a worker profile. </summary>
         /// <param name="name"> The worker profile name. </param>
         /// <param name="vmSize"> The size of the worker VMs. </param>
         /// <param name="diskSizeGB"> The disk size of the worker VMs. </param>
@@ -221,6 +230,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 default);
         }
 
+        /// <summary> APIServerProfile represents an API server profile. </summary>
         /// <param name="visibility"> API server visibility. </param>
         /// <param name="uri"> The URL to access the cluster API server. </param>
         /// <param name="ip"> The IP of the cluster API server. </param>
@@ -230,6 +240,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             return new OpenShiftApiServerProfile(visibility, uri, ip, default);
         }
 
+        /// <summary> IngressProfile represents an ingress profile. </summary>
         /// <param name="name"> The ingress profile name. </param>
         /// <param name="visibility"> Ingress visibility. </param>
         /// <param name="ip"> The IP of the ingress. </param>
@@ -272,6 +283,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
                 default), identity, default);
         }
 
+        /// <summary> OpenShiftClusterAdminKubeconfig represents an OpenShift cluster's admin kubeconfig. </summary>
         /// <param name="kubeconfig"> The base64-encoded kubeconfig file. </param>
         /// <returns> A new <see cref="Models.OpenShiftClusterAdminKubeconfig"/> instance for mocking. </returns>
         public static OpenShiftClusterAdminKubeconfig OpenShiftClusterAdminKubeconfig(string kubeconfig = default)
@@ -279,6 +291,7 @@ namespace Azure.ResourceManager.RedHatOpenShift.Models
             return new OpenShiftClusterAdminKubeconfig(kubeconfig, default);
         }
 
+        /// <summary> OpenShiftClusterCredentials represents an OpenShift cluster's credentials. </summary>
         /// <param name="kubeadminUsername"> The username for the kubeadmin user. </param>
         /// <param name="kubeadminPassword"> The password for the kubeadmin user. </param>
         /// <returns> A new <see cref="Models.OpenShiftClusterCredentials"/> instance for mocking. </returns>

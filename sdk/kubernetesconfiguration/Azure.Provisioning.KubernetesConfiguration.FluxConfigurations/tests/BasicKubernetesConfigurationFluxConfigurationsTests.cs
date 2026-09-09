@@ -43,10 +43,10 @@ public class BasicKubernetesConfigurationFluxConfigurationsTests
             resource flux 'Microsoft.KubernetesConfiguration/fluxConfigurations@2025-04-01' = {
               name: take('flux${uniqueString(resourceGroup().id)}', 24)
               properties: {
-                namespace: 'flux-system'
                 gitRepository: {
                   url: 'https://github.com/Azure/arc-k8s-demo'
                 }
+                namespace: 'flux-system'
               }
             }
             """);

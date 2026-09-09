@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.CognitiveServices
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.CognitiveServices
     /// </summary>
     public partial class CognitiveServicesApplicationAuthorizationPolicy : ProvisionableConstruct
     {
+        private BicepValue<BuiltInAuthorizationScheme> _type;
+
         /// <summary> Creates a new CognitiveServicesApplicationAuthorizationPolicy. </summary>
         public CognitiveServicesApplicationAuthorizationPolicy()
         {
+        }
+
+        /// <summary> Authorization scheme type. </summary>
+        internal BicepValue<BuiltInAuthorizationScheme> Type
+        {
+            get
+            {
+                Initialize();
+                return _type;
+            }
         }
 
         /// <summary> Define all the provisionable properties for CognitiveServicesApplicationAuthorizationPolicy. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _type = DefineProperty<BuiltInAuthorizationScheme>(nameof(Type), new string[] { "type" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

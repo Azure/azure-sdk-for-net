@@ -102,9 +102,15 @@ public class BasicSignalRTests
             resource signalr 'Microsoft.SignalRService/signalR@2022-02-01' = {
               name: take('signalr-${uniqueString(resourceGroup().id)}', 63)
               location: location
+              identity: {
+                type: 'SystemAssigned'
+              }
+              kind: 'SignalR'
               properties: {
-                tls: {
-                  clientCertEnabled: false
+                cors: {
+                  allowedOrigins: [
+                    '*'
+                  ]
                 }
                 features: [
                   {
@@ -120,28 +126,8 @@ public class BasicSignalRTests
                     value: 'true'
                   }
                 ]
-                cors: {
-                  allowedOrigins: [
-                    '*'
-                  ]
-                }
-                upstream: {
-                  templates: [
-                    {
-                      hubPattern: '*'
-                      eventPattern: 'connect,disconnect'
-                      categoryPattern: '*'
-                      urlTemplate: 'https://example.com/chat/api/connect'
-                    }
-                  ]
-                }
                 networkACLs: {
                   defaultAction: 'Deny'
-                  publicNetwork: {
-                    allow: [
-                      'ClientConnection'
-                    ]
-                  }
                   privateEndpoints: [
                     {
                       allow: [
@@ -150,15 +136,29 @@ public class BasicSignalRTests
                       name: endpointName
                     }
                   ]
+                  publicNetwork: {
+                    allow: [
+                      'ClientConnection'
+                    ]
+                  }
+                }
+                tls: {
+                  clientCertEnabled: false
+                }
+                upstream: {
+                  templates: [
+                    {
+                      categoryPattern: '*'
+                      eventPattern: 'connect,disconnect'
+                      hubPattern: '*'
+                      urlTemplate: 'https://example.com/chat/api/connect'
+                    }
+                  ]
                 }
               }
               sku: {
-                name: 'Standard_S1'
                 capacity: 1
-              }
-              kind: 'SignalR'
-              identity: {
-                type: 'SystemAssigned'
+                name: 'Standard_S1'
               }
             }
             """);

@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.RecoveryServicesBackup
@@ -15,15 +16,28 @@ namespace Azure.Provisioning.RecoveryServicesBackup
     /// </summary>
     public partial class BackupGenericRecoveryPoint : ProvisionableConstruct
     {
+        private BicepValue<string> _objectType;
+
         /// <summary> Creates a new BackupGenericRecoveryPoint. </summary>
         public BackupGenericRecoveryPoint()
         {
+        }
+
+        /// <summary> This property will be used as the discriminator for deciding the specific types in the polymorphic chain of types. </summary>
+        internal BicepValue<string> ObjectType
+        {
+            get
+            {
+                Initialize();
+                return _objectType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for BackupGenericRecoveryPoint. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _objectType = DefineProperty<string>(nameof(ObjectType), new string[] { "objectType" });
             DefineAdditionalProperties();
         }
 

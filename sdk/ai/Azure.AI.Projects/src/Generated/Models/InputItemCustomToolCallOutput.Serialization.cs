@@ -83,6 +83,11 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
+            if (Optional.IsDefined(Caller))
+            {
+                writer.WritePropertyName("caller"u8);
+                writer.WriteObjectValue(Caller, options);
+            }
             writer.WritePropertyName("output"u8);
 #if NET6_0_OR_GREATER
             writer.WriteRawValue(Output);
@@ -123,6 +128,7 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
+            ToolCallCallerParam caller = default;
             BinaryData output = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,6 +147,16 @@ namespace Azure.AI.Projects
                     callId = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("caller"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        caller = null;
+                        continue;
+                    }
+                    caller = ToolCallCallerParam.DeserializeToolCallCallerParam(prop.Value, options);
+                    continue;
+                }
                 if (prop.NameEquals("output"u8))
                 {
                     output = BinaryData.FromString(prop.Value.GetRawText());
@@ -151,7 +167,13 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new InputItemCustomToolCallOutput(@type, additionalBinaryDataProperties, id, callId, output);
+            return new InputItemCustomToolCallOutput(
+                @type,
+                additionalBinaryDataProperties,
+                id,
+                callId,
+                caller,
+                output);
         }
     }
 }

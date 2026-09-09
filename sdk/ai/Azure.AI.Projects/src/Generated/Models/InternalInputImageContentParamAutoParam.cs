@@ -22,13 +22,15 @@ namespace Azure.AI.Projects
         /// <param name="imageUrl"></param>
         /// <param name="fileId"></param>
         /// <param name="detail"></param>
+        /// <param name="promptCacheBreakpoint"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalInputImageContentParamAutoParam(string @type, Uri imageUrl, string fileId, InternalImageDetailLevel? detail, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal InternalInputImageContentParamAutoParam(string @type, Uri imageUrl, string fileId, InternalImageDetailLevel? detail, PromptCacheBreakpointParam promptCacheBreakpoint, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ImageUrl = imageUrl;
             FileId = fileId;
             Detail = detail;
+            PromptCacheBreakpoint = promptCacheBreakpoint;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -43,5 +45,8 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets or sets the Detail. </summary>
         public InternalImageDetailLevel? Detail { get; set; }
+
+        /// <summary> Gets or sets the PromptCacheBreakpoint. </summary>
+        public PromptCacheBreakpointParam PromptCacheBreakpoint { get; set; }
     }
 }

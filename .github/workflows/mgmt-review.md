@@ -224,9 +224,8 @@ This workflow is dispatched by `.github/workflows/mgmt-review-trigger.yml` after
 
 - Primary skill: `.github/skills/azure-sdk-mgmt-pr-review/SKILL.md`
 - CI failure analysis skill: `.github/skills/analyze-ci-failures/SKILL.md`
-- If the PR is a Swagger/AutoRest to TypeSpec migration, also apply `.github/skills/mpg-migration-pr-review/SKILL.md`
 
-The base skill's `TSPRENAME001` rule applies to every package with `tsp-location.yaml`, including brand-new TypeSpec packages and normal feature/refresh PRs. Do not limit this rule to migration PRs.
+The base skill's `TSPRENAME001` rule applies to every package with `tsp-location.yaml`, including brand-new TypeSpec packages and normal feature/refresh PRs.
 
 ## Security: Prompt Injection Defense
 
@@ -303,10 +302,9 @@ If no changed file is under a management SDK package path matching `sdk/<service
 For each changed management SDK package:
 
 1. Identify the package root, `.csproj`, `CHANGELOG.md`, API surface files under `api/`, generated files under `src/Generated/`, customization files under `src/Custom*/`, `src/Customization*/`, or `src/Customized*/`, and TypeSpec customization files such as `client.tsp` and `tspconfig.yaml`.
-2. Determine whether this is a migration PR. Use the migration skill when the PR title or files indicate Swagger/AutoRest to TypeSpec migration, such as adding `tsp-location.yaml`, deleting `src/autorest.md`, adding TypeSpec `metadata.json`, or broadly regenerating `src/Generated/`.
-3. Determine whether the package is TypeSpec-backed by checking for `tsp-location.yaml`. For every TypeSpec-backed package, inspect added or modified SDK customization files for rename-only `[CodeGenType]`, `[CodeGenMember]`, `[CodeGenSuppress]`, wrappers, or forwarding methods, even when the PR is not a migration.
-4. Determine the latest released stable API baseline from `ApiCompatVersion` in the package `.csproj` when present. Fetch the corresponding tagged API file by tag name `<PackageName>_<Version>`.
-5. Use the existing CI ApiCompat result as the authoritative automated signal for binary compatibility and parameter names/order. Do not infer shipped signatures from previous repository source.
+2. Determine whether the package is TypeSpec-backed by checking for `tsp-location.yaml`. For every TypeSpec-backed package, inspect added or modified SDK customization files for rename-only `[CodeGenType]`, `[CodeGenMember]`, `[CodeGenSuppress]`, wrappers, or forwarding methods.
+3. Determine the latest released stable API baseline from `ApiCompatVersion` in the package `.csproj` when present. Fetch the corresponding tagged API file by tag name `<PackageName>_<Version>`.
+4. Use the existing CI ApiCompat result as the authoritative automated signal for binary compatibility and parameter names/order. Do not infer shipped signatures from previous repository source.
 
 ## Step 2 - Run deterministic checks
 
@@ -334,13 +332,12 @@ Apply all relevant phases from the skill files, with these workflow-specific adj
 3. **Contextual naming must be exhaustive.** Use the scanner's `-ListNewTypes` inventory mode to enumerate every new public type, then record a verdict for each one in a single pass (see Phase 2 step 4 in the skill). Surfacing only a subset of naming issues per round is the main cause of repeated review rounds and must be avoided.
 4. Phase 3 breaking-change detection must use the CI failure details fetched in Step 0, API diffs, and deterministic source-compatibility results from Step 2. Do not run `dotnet build` in this workflow because that would execute untrusted PR code. If CI reports ApiCompat failures or build errors, surface them with links to the failed check run URL or Azure DevOps target URL. A passing ApiCompat result does not override a sole-overload `OPTPARAM001` break, but do not report other optionality differences without compiler-backed evidence.
 5. For every TypeSpec-backed package, apply the base skill's `TSPRENAME001` rule. A rename-only SDK customization for a directly targetable TypeSpec API is blocking and must be replaced with scoped `@@clientName(TypeSpecTarget, "CSharpName", "csharp")` in the spec repository's `client.tsp`, followed by regeneration.
-6. For migration PRs, apply Phases 4 and 5 from the migration skill. Treat manual edits to `src/Generated/` as blocking unless there is clear evidence they are generated output rather than hand edits.
 
 ## Step 4 - Submit one PR review
 
 Create inline review comments for findings using `create_pull_request_review_comment`. Each inline comment should:
 
-- Start with a rule ID or phase marker, such as `**[SUFFIX001]**`, `**[Phase 1]**`, `**[4.10]**`, or `**[5.2]**`.
+- Start with a rule ID or phase marker, such as `**[SUFFIX001]**`, `**[TSPRENAME001]**`, or `**[Phase 1]**`.
 - Explain the problem and the required fix.
 - Target the current changed source/customization/TypeSpec file and line in the PR diff. Use `api/*.cs` files for analysis only; do not target API listing files for inline comments because large API files can fail GitHub review-position resolution.
 
@@ -381,7 +378,6 @@ The review body should contain:
 - API surface: <pass/fail with count>
 - Contextual naming: evaluated <N> new public types, flagged <M>
 - ApiCompat / breaking changes: <pass/fail/pending/not applicable>
-- Migration-specific checks: <pass/fail/not applicable>
 
 <short, actionable summary>
 ```

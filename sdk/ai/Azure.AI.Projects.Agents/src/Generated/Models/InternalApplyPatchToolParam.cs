@@ -13,13 +13,19 @@ namespace OpenAI
         /// <summary> Initializes a new instance of <see cref="InternalApplyPatchToolParam"/>. </summary>
         public InternalApplyPatchToolParam() : base(ToolType.ApplyPatch)
         {
+            AllowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalApplyPatchToolParam"/>. </summary>
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InternalApplyPatchToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(@type, additionalBinaryDataProperties)
+        /// <param name="allowedCallers"></param>
+        internal InternalApplyPatchToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<CallableToolAllowedCaller> allowedCallers) : base(@type, additionalBinaryDataProperties)
         {
+            AllowedCallers = allowedCallers;
         }
+
+        /// <summary> Gets or sets the AllowedCallers. </summary>
+        public IList<CallableToolAllowedCaller> AllowedCallers { get; set; }
     }
 }

@@ -96,7 +96,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         {
             get
             {
-                return Properties.ObjectId;
+                return Properties is null ? default : Properties.ObjectId;
             }
         }
 
@@ -105,7 +105,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         {
             get
             {
-                return Properties.UserPrincipalName;
+                return Properties is null ? default : Properties.UserPrincipalName;
             }
         }
 
@@ -114,7 +114,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         {
             get
             {
-                return Properties.ApplicationType;
+                return Properties is null ? default : Properties.ApplicationType;
             }
         }
 
@@ -123,7 +123,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         {
             get
             {
-                return Properties.SessionState;
+                return Properties is null ? default : Properties.SessionState;
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         {
             get
             {
-                return Properties.ActiveDirectoryUserName;
+                return Properties is null ? default : Properties.ActiveDirectoryUserName;
             }
         }
 
@@ -141,7 +141,7 @@ namespace Azure.Provisioning.DesktopVirtualization
         {
             get
             {
-                return Properties.CreateOn;
+                return Properties is null ? default : Properties.CreateOn;
             }
         }
 

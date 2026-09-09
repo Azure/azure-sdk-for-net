@@ -85,20 +85,20 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 throw new FormatException($"The model {nameof(BookmarkExpandContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(ExpansionId))
             {
                 writer.WritePropertyName("expansionId"u8);
                 writer.WriteStringValue(ExpansionId.Value);
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -142,9 +142,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 return null;
             }
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? endsOn = default;
             Guid? expansionId = default;
-            DateTimeOffset? startOn = default;
+            DateTimeOffset? startsOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("expansionId"u8))
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new BookmarkExpandContent(endOn, expansionId, startOn, additionalBinaryDataProperties);
+            return new BookmarkExpandContent(endsOn, expansionId, startsOn, additionalBinaryDataProperties);
         }
     }
 }

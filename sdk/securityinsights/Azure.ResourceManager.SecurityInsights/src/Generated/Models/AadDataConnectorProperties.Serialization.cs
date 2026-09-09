@@ -13,7 +13,6 @@ using Azure.ResourceManager.SecurityInsights;
 
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
-    /// <summary> AADIP (Azure Active Directory Identity Protection) data connector properties. </summary>
     internal partial class AadDataConnectorProperties : IJsonModel<AadDataConnectorProperties>
     {
         /// <summary> Initializes a new instance of <see cref="AadDataConnectorProperties"/> for deserialization. </summary>

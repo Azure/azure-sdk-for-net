@@ -26,16 +26,16 @@ namespace Azure.ResourceManager.Automation.Models
         /// <summary> Initializes a new instance of <see cref="WebhookCreateOrUpdateProperties"/>. </summary>
         /// <param name="isEnabled"> Gets or sets the value of the enabled flag of webhook. </param>
         /// <param name="uri"> Gets or sets the uri. </param>
-        /// <param name="expireOn"> Gets or sets the expiry time. </param>
+        /// <param name="expiresOn"> Gets or sets the expiry time. </param>
         /// <param name="parameters"> Gets or sets the parameters of the job. </param>
         /// <param name="runbook"> Gets or sets the runbook. </param>
         /// <param name="runOn"> Gets or sets the name of the hybrid worker group the webhook job will run on. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebhookCreateOrUpdateProperties(bool? isEnabled, Uri uri, DateTimeOffset? expireOn, IDictionary<string, string> parameters, RunbookAssociationProperty runbook, string runOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebhookCreateOrUpdateProperties(bool? isEnabled, Uri uri, DateTimeOffset? expiresOn, IDictionary<string, string> parameters, RunbookAssociationProperty runbook, string runOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             IsEnabled = isEnabled;
             Uri = uri;
-            ExpireOn = expireOn;
+            ExpiresOn = expiresOn;
             Parameters = parameters;
             Runbook = runbook;
             RunOn = runOn;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.Automation.Models
         public Uri Uri { get; set; }
 
         /// <summary> Gets or sets the expiry time. </summary>
-        public DateTimeOffset? ExpireOn { get; set; }
+        public DateTimeOffset? ExpiresOn { get; set; }
 
         /// <summary> Gets or sets the parameters of the job. </summary>
         public IDictionary<string, string> Parameters { get; } = new ChangeTrackingDictionary<string, string>();

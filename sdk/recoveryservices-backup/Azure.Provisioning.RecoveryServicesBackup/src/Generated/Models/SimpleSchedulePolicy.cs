@@ -22,6 +22,7 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         /// <summary> Creates a new SimpleSchedulePolicy. </summary>
         public SimpleSchedulePolicy()
         {
+            SchedulePolicyType.Assign("SimpleSchedulePolicy");
         }
 
         /// <summary> Gets or sets the ScheduleRunFrequency. </summary>
@@ -103,7 +104,6 @@ namespace Azure.Provisioning.RecoveryServicesBackup
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("schedulePolicyType", new string[] { "schedulePolicyType" }, defaultValue: "SimpleSchedulePolicy");
             _scheduleRunFrequency = DefineProperty<ScheduleRunType>(nameof(ScheduleRunFrequency), new string[] { "scheduleRunFrequency" });
             _scheduleRunDays = DefineListProperty<BackupDayOfWeek>(nameof(ScheduleRunDays), new string[] { "scheduleRunDays" });
             _scheduleRunTimes = DefineListProperty<DateTimeOffset>(nameof(ScheduleRunTimes), new string[] { "scheduleRunTimes" }, format: "O");

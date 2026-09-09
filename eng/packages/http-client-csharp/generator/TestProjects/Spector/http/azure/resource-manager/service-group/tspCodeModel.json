@@ -8,6 +8,9 @@
       "$id": "1",
       "kind": "enum",
       "name": "ProvisioningState",
+      "apiVersions": [
+        "2023-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ProvisioningState",
       "valueType": {
         "$id": "2",
@@ -130,6 +133,12 @@
       "$id": "10",
       "kind": "enum",
       "name": "createdByType",
+      "apiVersions": [
+        "v3",
+        "v4",
+        "v5",
+        "v6"
+      ],
       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.createdByType",
       "valueType": {
         "$id": "11",
@@ -212,6 +221,7 @@
       "$id": "16",
       "kind": "enum",
       "name": "ResourceProvisioningState",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceProvisioningState",
       "valueType": {
         "$id": "17",
@@ -279,6 +289,9 @@
       "$id": "21",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "2023-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.Versions",
       "valueType": {
         "$id": "22",
@@ -456,6 +469,9 @@
       "$id": "40",
       "kind": "model",
       "name": "ServiceGroupExtensionResource",
+      "apiVersions": [
+        "2023-12-01-preview"
+      ],
       "namespace": "Azure.ResourceManager.ServiceGroupExtension",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResource",
       "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -471,6 +487,12 @@
         "$id": "41",
         "kind": "model",
         "name": "ExtensionResource",
+        "apiVersions": [
+          "v3",
+          "v4",
+          "v5",
+          "v6"
+        ],
         "namespace": "Azure.ResourceManager.CommonTypes",
         "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ExtensionResource",
         "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -486,6 +508,12 @@
           "$id": "42",
           "kind": "model",
           "name": "Resource",
+          "apiVersions": [
+            "v3",
+            "v4",
+            "v5",
+            "v6"
+          ],
           "namespace": "Azure.ResourceManager.CommonTypes",
           "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.Resource",
           "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -503,6 +531,12 @@
               "$id": "43",
               "kind": "property",
               "name": "id",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
               "serializedName": "id",
               "doc": "Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}",
               "type": {
@@ -537,6 +571,12 @@
               "$id": "46",
               "kind": "property",
               "name": "name",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
               "serializedName": "name",
               "doc": "The name of the resource",
               "type": {
@@ -564,6 +604,12 @@
               "$id": "48",
               "kind": "property",
               "name": "type",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
               "serializedName": "type",
               "doc": "The type of the resource. E.g. \"Microsoft.Compute/virtualMachines\" or \"Microsoft.Storage/storageAccounts\"",
               "type": {
@@ -598,12 +644,24 @@
               "$id": "51",
               "kind": "property",
               "name": "systemData",
+              "apiVersions": [
+                "v3",
+                "v4",
+                "v5",
+                "v6"
+              ],
               "serializedName": "systemData",
               "doc": "Azure Resource Manager metadata containing createdBy and modifiedBy information.",
               "type": {
                 "$id": "52",
                 "kind": "model",
                 "name": "SystemData",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "namespace": "Azure.ResourceManager.CommonTypes",
                 "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.SystemData",
                 "usage": "Output,Json,LroInitial,LroFinalEnvelope",
@@ -620,6 +678,12 @@
                     "$id": "53",
                     "kind": "property",
                     "name": "createdBy",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "serializedName": "createdBy",
                     "doc": "The identity that created the resource.",
                     "type": {
@@ -647,6 +711,12 @@
                     "$id": "55",
                     "kind": "property",
                     "name": "createdByType",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "serializedName": "createdByType",
                     "doc": "The type of identity that created the resource.",
                     "type": {
@@ -670,6 +740,12 @@
                     "$id": "56",
                     "kind": "property",
                     "name": "createdAt",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "serializedName": "createdAt",
                     "doc": "The timestamp of resource creation (UTC).",
                     "type": {
@@ -705,6 +781,12 @@
                     "$id": "59",
                     "kind": "property",
                     "name": "lastModifiedBy",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "serializedName": "lastModifiedBy",
                     "doc": "The identity that last modified the resource.",
                     "type": {
@@ -732,6 +814,12 @@
                     "$id": "61",
                     "kind": "property",
                     "name": "lastModifiedByType",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "serializedName": "lastModifiedByType",
                     "doc": "The type of identity that last modified the resource.",
                     "type": {
@@ -755,6 +843,12 @@
                     "$id": "62",
                     "kind": "property",
                     "name": "lastModifiedAt",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "serializedName": "lastModifiedAt",
                     "doc": "The timestamp of resource last modification (UTC)",
                     "type": {
@@ -811,12 +905,16 @@
           "$id": "65",
           "kind": "property",
           "name": "properties",
+          "apiVersions": [],
           "serializedName": "properties",
           "doc": "The resource-specific properties for this resource.",
           "type": {
             "$id": "66",
             "kind": "model",
             "name": "ServiceGroupExtensionResourceProperties",
+            "apiVersions": [
+              "2023-12-01-preview"
+            ],
             "namespace": "Azure.ResourceManager.ServiceGroupExtension",
             "crossLanguageDefinitionId": "Azure.ResourceManager.ServiceGroupExtension.ServiceGroupExtensionResourceProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
@@ -833,6 +931,9 @@
                 "$id": "67",
                 "kind": "property",
                 "name": "description",
+                "apiVersions": [
+                  "2023-12-01-preview"
+                ],
                 "serializedName": "description",
                 "doc": "The description of the resource.",
                 "type": {
@@ -860,6 +961,9 @@
                 "$id": "69",
                 "kind": "property",
                 "name": "provisioningState",
+                "apiVersions": [
+                  "2023-12-01-preview"
+                ],
                 "serializedName": "provisioningState",
                 "doc": "The status of the last operation.",
                 "type": {
@@ -899,6 +1003,7 @@
           "$id": "70",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the ServiceGroupExtensionResource",
           "type": {
@@ -940,6 +1045,12 @@
       "$id": "72",
       "kind": "model",
       "name": "ErrorResponse",
+      "apiVersions": [
+        "v3",
+        "v4",
+        "v5",
+        "v6"
+      ],
       "namespace": "Azure.ResourceManager.CommonTypes",
       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse",
       "usage": "Json,Exception",
@@ -957,12 +1068,24 @@
           "$id": "73",
           "kind": "property",
           "name": "error",
+          "apiVersions": [
+            "v3",
+            "v4",
+            "v5",
+            "v6"
+          ],
           "serializedName": "error",
           "doc": "The error object.",
           "type": {
             "$id": "74",
             "kind": "model",
             "name": "ErrorDetail",
+            "apiVersions": [
+              "v3",
+              "v4",
+              "v5",
+              "v6"
+            ],
             "namespace": "Azure.ResourceManager.CommonTypes",
             "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail",
             "usage": "Json,Exception,LroPolling",
@@ -979,6 +1102,12 @@
                 "$id": "75",
                 "kind": "property",
                 "name": "code",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "code",
                 "doc": "The error code.",
                 "type": {
@@ -1006,6 +1135,12 @@
                 "$id": "77",
                 "kind": "property",
                 "name": "message",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "message",
                 "doc": "The error message.",
                 "type": {
@@ -1033,6 +1168,12 @@
                 "$id": "79",
                 "kind": "property",
                 "name": "target",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "target",
                 "doc": "The error target.",
                 "type": {
@@ -1060,6 +1201,12 @@
                 "$id": "81",
                 "kind": "property",
                 "name": "details",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "details",
                 "doc": "The error details.",
                 "type": {
@@ -1090,6 +1237,12 @@
                 "$id": "83",
                 "kind": "property",
                 "name": "additionalInfo",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "additionalInfo",
                 "doc": "The error additional info.",
                 "type": {
@@ -1100,6 +1253,12 @@
                     "$id": "85",
                     "kind": "model",
                     "name": "ErrorAdditionalInfo",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "namespace": "Azure.ResourceManager.CommonTypes",
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo",
                     "usage": "Json,Exception,LroPolling",
@@ -1116,6 +1275,12 @@
                         "$id": "86",
                         "kind": "property",
                         "name": "type",
+                        "apiVersions": [
+                          "v3",
+                          "v4",
+                          "v5",
+                          "v6"
+                        ],
                         "serializedName": "type",
                         "doc": "The additional info type.",
                         "type": {
@@ -1143,6 +1308,12 @@
                         "$id": "88",
                         "kind": "property",
                         "name": "info",
+                        "apiVersions": [
+                          "v3",
+                          "v4",
+                          "v5",
+                          "v6"
+                        ],
                         "serializedName": "info",
                         "doc": "The additional info.",
                         "type": {
@@ -1213,6 +1384,7 @@
       "$id": "90",
       "kind": "model",
       "name": "ArmOperationStatusResourceProvisioningState",
+      "apiVersions": [],
       "namespace": "Azure.ResourceManager",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ArmOperationStatus",
       "usage": "LroPolling",
@@ -1229,6 +1401,7 @@
           "$id": "91",
           "kind": "property",
           "name": "status",
+          "apiVersions": [],
           "serializedName": "status",
           "doc": "The operation status",
           "type": {
@@ -1252,6 +1425,7 @@
           "$id": "92",
           "kind": "property",
           "name": "id",
+          "apiVersions": [],
           "serializedName": "id",
           "doc": "The unique identifier for the operationStatus resource",
           "type": {
@@ -1279,6 +1453,7 @@
           "$id": "94",
           "kind": "property",
           "name": "name",
+          "apiVersions": [],
           "serializedName": "name",
           "doc": "The name of the operationStatus resource",
           "type": {
@@ -1306,6 +1481,7 @@
           "$id": "96",
           "kind": "property",
           "name": "startTime",
+          "apiVersions": [],
           "serializedName": "startTime",
           "doc": "Operation start time",
           "type": {
@@ -1341,6 +1517,7 @@
           "$id": "99",
           "kind": "property",
           "name": "endTime",
+          "apiVersions": [],
           "serializedName": "endTime",
           "doc": "Operation complete time",
           "type": {
@@ -1376,6 +1553,7 @@
           "$id": "102",
           "kind": "property",
           "name": "percentComplete",
+          "apiVersions": [],
           "serializedName": "percentComplete",
           "doc": "The progress made toward completing the operation",
           "type": {
@@ -1403,6 +1581,7 @@
           "$id": "104",
           "kind": "property",
           "name": "error",
+          "apiVersions": [],
           "serializedName": "error",
           "doc": "Errors that occurred if the operation ended with Canceled or Failed status",
           "type": {
@@ -1428,6 +1607,7 @@
       "$id": "105",
       "kind": "model",
       "name": "ServiceGroupExtensionResourceListResult",
+      "apiVersions": [],
       "namespace": "Azure.ResourceManager",
       "crossLanguageDefinitionId": "Azure.ResourceManager.ResourceListResult",
       "usage": "Output,Json",
@@ -1444,6 +1624,7 @@
           "$id": "106",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "doc": "The ServiceGroupExtensionResource items on this page",
           "type": {
@@ -1474,6 +1655,7 @@
           "$id": "108",
           "kind": "property",
           "name": "nextLink",
+          "apiVersions": [],
           "serializedName": "nextLink",
           "doc": "The link to the next page of items",
           "type": {
