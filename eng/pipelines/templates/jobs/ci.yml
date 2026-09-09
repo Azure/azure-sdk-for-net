@@ -59,9 +59,7 @@ jobs:
           Path: eng/pipelines/templates/stages/build-matrix.json
           Selection: sparse
           GenerateVMJobs: true
-        SparseCheckoutPaths:
-          - "/*"
-          - "!SessionRecords"
+        SparseCheckout: false
         EnablePRGeneration: true
         PRMatrixSetting: ProjectNames
         PRJobBatchSize: 1
@@ -72,6 +70,9 @@ jobs:
           SDKType: ${{ parameters.SDKType }}
           BuildSnippets: ${{ parameters.BuildSnippets }}
         PreGenerationSteps:
+          - checkout: self
+            fetchDepth: 1
+            fetchTags: false
           - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
             parameters:
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
@@ -96,9 +97,7 @@ jobs:
           Path: eng/pipelines/templates/stages/build-matrix.json
           Selection: sparse
           GenerateVMJobs: true
-        SparseCheckoutPaths:
-          - "/*"
-          - "!SessionRecords"
+        SparseCheckout: false
         EnablePRGeneration: true
         PRMatrixSetting: ProjectNames
         PRJobBatchSize: 1
@@ -109,6 +108,9 @@ jobs:
           BuildSnippets: ${{ parameters.BuildSnippets }}
           ArtifactName: AnalyzePackageInfoArtifact
         PreGenerationSteps:
+          - checkout: self
+            fetchDepth: 1
+            fetchTags: false
           - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
             parameters:
               ServiceDirectory: ${{ parameters.ServiceDirectory }}
@@ -176,6 +178,7 @@ jobs:
         os: windows
       steps:
         - checkout: self
+          fetchDepth: 1
           fetchFilter: tree:0
           fetchTags: false
 
@@ -225,9 +228,7 @@ jobs:
         CloudConfig:
           Cloud: public
         ${{ if eq(parameters.ServiceDirectory, 'auto') }}:
-          SparseCheckoutPaths:
-            - "/*"
-            - "!SessionRecords"
+          SparseCheckout: false
           EnablePRGeneration: true
           PRMatrixSetting: ProjectNames
           # Runtime weighting first creates small balanced buckets. Linux and Windows
@@ -242,6 +243,9 @@ jobs:
             - 'AdditionalTestArguments=.*true'
             - 'Pool=.*LinuxPool$'
           PreGenerationSteps:
+            - checkout: self
+              fetchDepth: 1
+              fetchTags: false
             - template: /eng/pipelines/templates/steps/pr-matrix-presteps.yml
               parameters:
                 ServiceDirectory: ${{ parameters.ServiceDirectory }}
@@ -269,10 +273,11 @@ jobs:
               - ${{ matrixReplace }}
         CloudConfig:
           Cloud: public
-        SparseCheckoutPaths:
-          - /*
-          - '!/sdk/*/**/SessionRecords/*'
+        SparseCheckout: false
         PreGenerationSteps:
+          - checkout: self
+            fetchDepth: 1
+            fetchTags: false
           - ${{ each config in parameters.MatrixConfigs }}:
               - template: /eng/pipelines/templates/steps/dependency.tests.yml
                 parameters:
