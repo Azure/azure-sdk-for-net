@@ -4,21 +4,21 @@
 #nullable disable
 
 using System;
+using System.ComponentModel;
 using Azure.Provisioning;
-using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.AppConfiguration
 {
-    [CodeGenSuppress("ExpiresOn")]
     public partial class AppConfigurationSnapshot
     {
-        private BicepValue<DateTimeOffset> _expireOn;
         private BicepValue<string> _snapshotType;
 
         /// <summary> Gets the expiration date of the snapshot. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Please use ExpiresOn instead.")]
         public BicepValue<DateTimeOffset> ExpireOn
         {
-            get { Initialize(); return _expireOn; }
+            get { return ExpiresOn; }
         }
 
         /// <summary> Gets the type of the resource. </summary>
@@ -29,7 +29,6 @@ namespace Azure.Provisioning.AppConfiguration
 
         partial void DefineAdditionalProperties()
         {
-            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "properties", "expires" }, isOutput: true);
             _snapshotType = DefineProperty<string>(nameof(SnapshotType), new string[] { "type" }, isOutput: true);
         }
 

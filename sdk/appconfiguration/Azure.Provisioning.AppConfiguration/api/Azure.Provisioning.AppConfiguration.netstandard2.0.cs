@@ -197,7 +197,9 @@ namespace Azure.Provisioning.AppConfiguration
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.SnapshotCompositionType> CompositionType { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> CreatedOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.ETag> ETag { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use ExpiresOn instead.")]
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } }
         public Azure.Provisioning.BicepList<Azure.Provisioning.AppConfiguration.SnapshotKeyValueFilter> Filters { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> ItemsCount { get { throw null; } }

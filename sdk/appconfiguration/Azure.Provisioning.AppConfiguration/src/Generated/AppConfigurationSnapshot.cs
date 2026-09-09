@@ -170,6 +170,19 @@ namespace Azure.Provisioning.AppConfiguration
             }
         }
 
+        /// <summary> Gets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SnapshotProperties();
+                }
+                return Properties.ExpiresOn;
+            }
+        }
+
         /// <summary> Gets or sets the RetentionPeriod. </summary>
         public BicepValue<long> RetentionPeriod
         {
