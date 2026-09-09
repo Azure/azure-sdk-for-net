@@ -153,9 +153,17 @@ namespace Azure.Generator.Management.Visitors
 
             var arguments = new List<ValueExpression>(constructorParameters.Count);
             var changed = constructorParameters.Count != newInstanceExpression.Parameters.Count;
-            var unavailableDirectParameterNames = GetUnavailableDirectParameterNames(method, constructorParameters, newInstanceExpression.Parameters);
-            foreach (var constructorParameter in constructorParameters)
+            for (var constructorParameterIndex = 0; constructorParameterIndex < constructorParameters.Count; constructorParameterIndex++)
             {
+                var constructorParameter = constructorParameters[constructorParameterIndex];
+                // Parameters referenced by this constructor slot belong to that slot and remain available while it is
+                // rebuilt. Only references from sibling slots make a same-named nested parameter ambiguous. This keeps
+                // the repair idempotent when it runs once during visitation and again after constructors are finalized.
+                var unavailableDirectParameterNames = GetUnavailableDirectParameterNames(
+                    method,
+                    constructorParameters,
+                    newInstanceExpression.Parameters,
+                    excludedArgumentIndex: constructorParameterIndex);
                 if (TryBuildCompatibilityArgument(method, constructorParameter, unavailableDirectParameterNames, out var argument))
                 {
                     arguments.Add(argument.Argument);
@@ -439,16 +447,23 @@ namespace Azure.Generator.Management.Visitors
         /// Returns true when a matched old parameter is still used by an original non-default constructor argument.
         /// Used to preserve existing null-coalescing assignments needed by unrepaired direct arguments.
         /// </summary>
-        private static bool IsParameterUsedByOriginalArgument(ParameterProvider parameter, IReadOnlyList<ValueExpression> originalArguments)
+        private static bool IsParameterUsedByOriginalArgument(ParameterProvider parameter, IEnumerable<ValueExpression> originalArguments)
         {
             return originalArguments.Any(argument =>
                 !IsDefaultExpression(argument)
                 && ReferencesParameter(argument, parameter));
         }
 
-        private static HashSet<string> GetUnavailableDirectParameterNames(MethodProvider method, IReadOnlyList<ParameterProvider> constructorParameters, IReadOnlyList<ValueExpression> originalArguments)
+        private static HashSet<string> GetUnavailableDirectParameterNames(
+            MethodProvider method,
+            IReadOnlyList<ParameterProvider> constructorParameters,
+            IReadOnlyList<ValueExpression> originalArguments,
+            int? excludedArgumentIndex = null)
         {
-            var result = GetParameterNamesUsedByOriginalArguments(method.Signature.Parameters, originalArguments);
+            var argumentsToInspect = excludedArgumentIndex is int index && index < originalArguments.Count
+                ? originalArguments.Where((_, argumentIndex) => argumentIndex != index)
+                : originalArguments;
+            var result = GetParameterNamesUsedByOriginalArguments(method.Signature.Parameters, argumentsToInspect);
             foreach (var constructorParameter in constructorParameters)
             {
                 if (TryGetMethodParameter(method, constructorParameter.Name, constructorParameter.Type, constructorParameter.Property, out _))
@@ -460,7 +475,7 @@ namespace Azure.Generator.Management.Visitors
             return result;
         }
 
-        private static HashSet<string> GetParameterNamesUsedByOriginalArguments(IReadOnlyList<ParameterProvider> parameters, IReadOnlyList<ValueExpression> originalArguments)
+        private static HashSet<string> GetParameterNamesUsedByOriginalArguments(IReadOnlyList<ParameterProvider> parameters, IEnumerable<ValueExpression> originalArguments)
             => parameters
                 .Where(parameter => IsParameterUsedByOriginalArgument(parameter, originalArguments))
                 .Select(parameter => parameter.Name)

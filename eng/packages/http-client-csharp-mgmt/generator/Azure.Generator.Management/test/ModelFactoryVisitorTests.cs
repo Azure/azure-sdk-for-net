@@ -648,7 +648,7 @@ namespace Azure.Generator.Mgmt.Tests
                 BindingFlags.NonPublic | BindingFlags.Instance)!;
             visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
 
-            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            var rendered = plugin.Object.GetWriter(modelFactory).Write().Content;
             Assert.That(rendered, Does.Contain("new global::Samples.Models.TestProperties(annotation, count,"));
             Assert.That(rendered, Does.Not.Contain("annotation is null) ? default"));
         }
