@@ -92,10 +92,11 @@ function buildResourceProjections(
   const groups = new Map<string, ArmResourceSchema[]>();
 
   // A logical provisioning resource can have multiple ARM metadata entries,
-  // such as different request paths or scopes. Preserve distinct SDK resource
-  // names even when they share the same serialized resource type and body model.
+  // such as different request paths or scopes. Collapse entries only when both
+  // the serialized resource type and body model match; the C# generator later
+  // resolves the complete set through their resource ID patterns.
   for (const resource of armProviderSchema.resources) {
-    const key = getResourceProjectionGroupKey(resource);
+    const key = `${resource.metadata.resourceType}\0${resource.resourceModelId}`;
     const group = groups.get(key);
     if (group) {
       group.push(resource);
@@ -104,7 +105,7 @@ function buildResourceProjections(
     }
   }
 
-  const projections = Array.from(groups.values(), (resources) => {
+  return Array.from(groups.values(), (resources) => {
     const resourceModel = modelsById.get(resources[0].resourceModelId);
     if (!resourceModel) {
       throw new Error(
@@ -125,28 +126,6 @@ function buildResourceProjections(
       isSettable: projection.writableScopes.length > 0
     };
   });
-
-  return preferSettableResourceProjections(projections);
-}
-
-export function getResourceProjectionGroupKey(resource: {
-  resourceModelId: string;
-  metadata: { resourceType: string; resourceName: string };
-}): string {
-  return `${resource.metadata.resourceType}\0${resource.resourceModelId}\0${resource.metadata.resourceName}`;
-}
-
-export function preferSettableResourceProjections<
-  T extends Pick<ResourceProjection, "resourceName" | "isSettable">
->(projections: T[]): T[] {
-  const selected = new Map<string, T>();
-  for (const projection of projections) {
-    const existing = selected.get(projection.resourceName);
-    if (!existing || (!existing.isSettable && projection.isSettable)) {
-      selected.set(projection.resourceName, projection);
-    }
-  }
-  return Array.from(selected.values());
 }
 
 export function buildResourceProjectionMetadata(
