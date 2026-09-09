@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 writer.WritePropertyName("managedNetworkKind"u8);
                 writer.WriteStringValue(ManagedNetworkKind.Value.ToString());
             }
-            if (options.Format != "W" && Optional.IsDefined(FirewallPublicIpAddress))
+            if (options.Format != "W" && Optional.IsDefined(FirewallPublicIPAddress))
             {
                 writer.WritePropertyName("firewallPublicIpAddress"u8);
-                writer.WriteStringValue(FirewallPublicIpAddress);
+                writer.WriteStringValue(FirewallPublicIPAddress);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             CognitiveServicesManagedNetworkProvisionStatus status = default;
             CognitiveServicesFirewallSku? firewallSku = default;
             CognitiveServicesManagedNetworkKind? managedNetworkKind = default;
-            string firewallPublicIpAddress = default;
+            string firewallPublicIPAddress = default;
             CognitiveServicesManagedNetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -232,10 +232,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        firewallPublicIpAddress = null;
+                        firewallPublicIPAddress = null;
                         continue;
                     }
-                    firewallPublicIpAddress = prop.Value.GetString();
+                    firewallPublicIPAddress = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 status,
                 firewallSku,
                 managedNetworkKind,
-                firewallPublicIpAddress,
+                firewallPublicIPAddress,
                 provisioningState,
                 additionalBinaryDataProperties);
         }

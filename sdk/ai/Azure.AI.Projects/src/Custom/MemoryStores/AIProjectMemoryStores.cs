@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
 using System;
@@ -139,11 +139,26 @@ public partial class AIProjectMemoryStores
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual async Task<ClientResult<MemoryUpdateResult>> UpdateMemoriesAsync(string memoryStoreName, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
     {
+        OperationResult operation = await UpdateMemoriesAsync(false, memoryStoreName, options, cancellationToken).ConfigureAwait(false);
+        ClientResult result = ClientResult.FromResponse(operation.GetRawResponse());
+        return ClientResult.FromValue((MemoryUpdateResult)result, result.GetRawResponse());
+    }
+
+    /// <summary> Submit an update to the specified memory store. </summary>
+    /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+    /// <param name="memoryStoreName"> The ID of the memory store to update. </param>
+    /// <param name="options"> Memory update options. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="memoryStoreName"/> or <paramref name="options"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="memoryStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("SCME0006")]
+    public virtual async Task<OperationResult> UpdateMemoriesAsync(bool waitUntilCompleted, string memoryStoreName, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
+    {
         Argument.AssertNotNullOrEmpty(memoryStoreName, nameof(memoryStoreName));
         Argument.AssertNotNull(options, nameof(options));
 
-        ClientResult protocolResult = await UpdateMemoriesAsync(memoryStoreName, BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default)), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-        return ClientResult.FromValue((MemoryUpdateResult)protocolResult, protocolResult.GetRawResponse());
+        return await UpdateMemoriesAsync(waitUntilCompleted, memoryStoreName, BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default)), cancellationToken.ToRequestOptions()).ConfigureAwait(false);
     }
 
     /// <summary> Submit an update to the specified memory store. </summary>
@@ -155,11 +170,26 @@ public partial class AIProjectMemoryStores
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
     public virtual ClientResult<MemoryUpdateResult> UpdateMemories(string memoryStoreName, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
     {
+        OperationResult operation = UpdateMemories(false, memoryStoreName, options, cancellationToken);
+        ClientResult result = ClientResult.FromResponse(operation.GetRawResponse());
+        return ClientResult.FromValue((MemoryUpdateResult)result, result.GetRawResponse());
+    }
+
+    /// <summary> Submit an update to the specified memory store. </summary>
+    /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+    /// <param name="memoryStoreName"> The ID of the memory store to update. </param>
+    /// <param name="options"> Memory update options. </param>
+    /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="memoryStoreName"/> or <paramref name="options"/> is null. </exception>
+    /// <exception cref="ArgumentException"> <paramref name="memoryStoreName"/> is an empty string, and was expected to be non-empty. </exception>
+    /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
+    [Experimental("SCME0006")]
+    public virtual OperationResult UpdateMemories(bool waitUntilCompleted, string memoryStoreName, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
+    {
         Argument.AssertNotNullOrEmpty(memoryStoreName, nameof(memoryStoreName));
         Argument.AssertNotNull(options, nameof(options));
 
-        ClientResult protocolResult = UpdateMemories(memoryStoreName, BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default)), cancellationToken.ToRequestOptions());
-        return ClientResult.FromValue((MemoryUpdateResult)protocolResult, protocolResult.GetRawResponse());
+        return UpdateMemories(waitUntilCompleted, memoryStoreName, BinaryContent.Create(ModelReaderWriter.Write(options, ModelSerializationExtensions.WireOptions, AzureAIProjectsContext.Default)), cancellationToken.ToRequestOptions());
     }
 
     private static void ValidateMemoryStoreItems(MemoryUpdateOptions options)
@@ -183,7 +213,9 @@ public partial class AIProjectMemoryStores
     public async virtual Task<MemoryUpdateResult> WaitForMemoriesUpdateAsync(string memoryStoreName, int pollingInterval, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
     {
         ValidateMemoryStoreItems(options);
-        MemoryUpdateResult updateResult = await UpdateMemoriesAsync(memoryStoreName: memoryStoreName, options: options, cancellationToken: cancellationToken).ConfigureAwait(false);
+        OperationResult operation = await UpdateMemoriesAsync(waitUntilCompleted: false, memoryStoreName: memoryStoreName, options: options, cancellationToken: cancellationToken).ConfigureAwait(false);
+        ClientResult initialResult = ClientResult.FromResponse(operation.GetRawResponse());
+        MemoryUpdateResult updateResult = (MemoryUpdateResult)initialResult;
         while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
         {
             await Task.Delay(TimeSpan.FromMilliseconds(pollingInterval), cancellationToken: cancellationToken).ConfigureAwait(false);
@@ -199,7 +231,9 @@ public partial class AIProjectMemoryStores
     public virtual MemoryUpdateResult WaitForMemoriesUpdate(string memoryStoreName, int pollingInterval, MemoryUpdateOptions options, CancellationToken cancellationToken = default)
     {
         ValidateMemoryStoreItems(options);
-        MemoryUpdateResult updateResult = UpdateMemories(memoryStoreName: memoryStoreName, options: options, cancellationToken: cancellationToken);
+        OperationResult operation = UpdateMemories(waitUntilCompleted: false, memoryStoreName: memoryStoreName, options: options, cancellationToken: cancellationToken);
+        ClientResult initialResult = ClientResult.FromResponse(operation.GetRawResponse());
+        MemoryUpdateResult updateResult = (MemoryUpdateResult)initialResult;
         while (updateResult.Status != MemoryStoreUpdateStatus.Failed && updateResult.Status != MemoryStoreUpdateStatus.Completed)
         {
             Thread.Sleep(TimeSpan.FromMilliseconds(pollingInterval));
@@ -234,7 +268,7 @@ public partial class AIProjectMemoryStores
     /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
     /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
     /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-    public virtual CollectionResult<MemoryItem> GetMemories(string name, string scope, MemoryItemKind? kind=default, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
+    public virtual CollectionResult<MemoryItem> GetMemories(string name, string scope, MemoryItemKind? kind = default, int? limit = default, MemoryStoreListOrder? order = default, string after = default, string before = default, CancellationToken cancellationToken = default)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
         ListMemoriesRequest spreadModel = new ListMemoriesRequest(scope, default);

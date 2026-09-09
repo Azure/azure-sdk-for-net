@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Text.Json;
 using Azure.AI.AgentServer.Responses.Internal;
+using Azure.AI.AgentServer.Responses.Internal.Resilience;
 using Azure.AI.AgentServer.Responses.Models;
 
 namespace Azure.AI.AgentServer.Responses;
@@ -38,6 +40,31 @@ public class ResponseEventStream
             Conversation = conversationId != null ? new ConversationReference(conversationId) : null,
             PreviousResponseId = request.PreviousResponseId,
         };
+    }
+
+    /// <summary>
+    /// Initializes a new instance of <see cref="ResponseEventStream"/> seeded from a prior durable
+    /// snapshot for a crash-recovery re-invocation. The recovered handler passes
+    /// <see cref="ResponseContext.PersistedResponse"/> so the resumed stream continues from the
+    /// output items already emitted before the crash rather than restarting: the seeded response's
+    /// output items are retained and the output-index allocator is advanced to
+    /// <c>persistedResponse.Output.Count</c> so new <c>AddOutputItem*</c> calls do not collide with
+    /// the already-emitted slots (mirrors Python's <c>ResponseEventStream(response=...)</c> recovery
+    /// branch). Emit <see cref="EmitCreated"/> (idempotent on recovery) then
+    /// <see cref="EmitInProgress"/> as the client-visible reset carrying the seeded output.
+    /// </summary>
+    /// <param name="context">Context providing the response ID and recovery state.</param>
+    /// <param name="persistedResponse">The last durable snapshot to seed the resumed stream from.</param>
+    public ResponseEventStream(ResponseContext context, Models.ResponseObject persistedResponse)
+    {
+        _context = context ?? throw new ArgumentNullException(nameof(context));
+        ArgumentNullException.ThrowIfNull(persistedResponse);
+
+        _response = persistedResponse;
+
+        // Advance the output-index allocator past the already-emitted items so the resumed handler's
+        // next AddOutputItem* lands at the correct next slot (no collision with seeded output).
+        _outputIndex = persistedResponse.Output.Count;
     }
 
     /// <summary>
@@ -107,6 +134,22 @@ public class ResponseEventStream
         _response.Status = ResponseStatus.InProgress;
         return new ResponseInProgressEvent(NextSequenceNumber(), _response);
     }
+
+    /// <summary>
+    /// Produces a checkpoint control signal to <c>yield</c> at a phase boundary so the framework
+    /// persists the current <see cref="Response"/> snapshot as a resume watermark.
+    /// <para>
+    /// Usage inside a handler: <c>yield return stream.Checkpoint();</c>. The <c>yield</c> is
+    /// <b>backpressured</b> — control does not return to the handler until the persist completes.
+    /// The checkpoint is a <b>no-op</b> unless the response is a resilient background response
+    /// (<c>ResilientBackground=true</c> + <c>store=true</c> + <c>background=true</c>). On recovery,
+    /// <see cref="ResponseContext.PersistedResponse"/> is hydrated from the last successful
+    /// checkpoint, so an idempotent handler resumes from its last phase rather than restarting.
+    /// </para>
+    /// The signal is never emitted to the SSE wire; it does not consume a sequence number.
+    /// </summary>
+    /// <returns>A checkpoint control event to yield for persistence.</returns>
+    public ResponseStreamEvent Checkpoint() => new ResponseCheckpointEvent(_response);
 
     /// <summary>
     /// Produces a <c>response.completed</c> event.
@@ -948,4 +991,161 @@ public class ResponseEventStream
     /// </summary>
     /// <returns>The next sequence number.</returns>
     public virtual long NextSequenceNumber() => _sequenceNumber++;
+
+    /// <summary>
+    /// Gets the internal metadata map for this response — the .NET equivalent of Python's
+    /// <c>stream.internal_metadata</c>. Unlike <see cref="Models.ResponseObject.Metadata"/> (the
+    /// client's own metadata, which is never stripped), internal metadata is framework-reserved:
+    /// every mutation is folded into the response snapshot as a compact JSON string under the
+    /// reserved key <c>_internal_metadata</c> inside <see cref="Models.ResponseObject.Metadata"/>,
+    /// so it is persisted <em>with</em> the response on every snapshot the orchestrator writes and
+    /// survives crash/recovery (read back on recovery via
+    /// <see cref="ResponseContext.PersistedResponse"/>). It is stripped from every client-facing
+    /// ingress/egress payload by <see cref="Internal.Resilience.InternalMetadataEgress"/>. Keys are
+    /// free-form; values are strings. On a mock-constructed stream (no backing response) the map is
+    /// purely in-memory.
+    /// </summary>
+    public virtual IDictionary<string, string> InternalMetadata => _internalMetadata ??= new WriteThroughInternalMetadata(this);
+
+    private WriteThroughInternalMetadata? _internalMetadata;
+
+    /// <summary>
+    /// Serializes the accumulated internal-metadata map into
+    /// <c>_response.Metadata["_internal_metadata"]</c> so it rides on — and is persisted with —
+    /// the response snapshot. A no-op when there is no backing response (mock ctor).
+    /// </summary>
+    private void PersistInternalMetadata(IReadOnlyDictionary<string, string> map)
+    {
+        if (_response is null)
+        {
+            return;
+        }
+
+        if (map.Count == 0)
+        {
+            _response.Metadata?.AdditionalProperties.Remove(InternalMetadataEgress.ResponseInternalMetadataKey);
+            return;
+        }
+
+        _response.Metadata ??= new Models.Metadata();
+        _response.Metadata.AdditionalProperties[InternalMetadataEgress.ResponseInternalMetadataKey] =
+            JsonSerializer.Serialize(map);
+    }
+
+    /// <summary>
+    /// Reads the internal-metadata map previously folded into the backing response's metadata
+    /// (e.g., seeded from a persisted snapshot on recovery), or an empty map when absent.
+    /// </summary>
+    private Dictionary<string, string> ReadPersistedInternalMetadata()
+    {
+        if (_response?.Metadata is { } metadata &&
+            metadata.AdditionalProperties.TryGetValue(InternalMetadataEgress.ResponseInternalMetadataKey, out var json) &&
+            !string.IsNullOrEmpty(json))
+        {
+            try
+            {
+                var parsed = JsonSerializer.Deserialize<Dictionary<string, string>>(json);
+                if (parsed is not null)
+                {
+                    return new Dictionary<string, string>(parsed, StringComparer.Ordinal);
+                }
+            }
+            catch (JsonException)
+            {
+                // A malformed value is treated as absent rather than faulting the handler.
+            }
+        }
+
+        return new Dictionary<string, string>(StringComparer.Ordinal);
+    }
+
+    /// <summary>
+    /// A write-through <see cref="IDictionary{TKey, TValue}"/> that re-folds the accumulated map
+    /// into the owning stream's response snapshot on every mutation, so developer writes to
+    /// <see cref="InternalMetadata"/> are durably persisted with the response.
+    /// </summary>
+    private sealed class WriteThroughInternalMetadata : IDictionary<string, string>
+    {
+        private readonly ResponseEventStream _owner;
+        private readonly Dictionary<string, string> _inner;
+
+        public WriteThroughInternalMetadata(ResponseEventStream owner)
+        {
+            _owner = owner;
+            _inner = owner.ReadPersistedInternalMetadata();
+        }
+
+        private void Persist() => _owner.PersistInternalMetadata(_inner);
+
+        public string this[string key]
+        {
+            get => _inner[key];
+            set
+            {
+                _inner[key] = value;
+                Persist();
+            }
+        }
+
+        public ICollection<string> Keys => _inner.Keys;
+
+        public ICollection<string> Values => _inner.Values;
+
+        public int Count => _inner.Count;
+
+        public bool IsReadOnly => false;
+
+        public void Add(string key, string value)
+        {
+            _inner.Add(key, value);
+            Persist();
+        }
+
+        public void Add(KeyValuePair<string, string> item)
+        {
+            ((IDictionary<string, string>)_inner).Add(item);
+            Persist();
+        }
+
+        public void Clear()
+        {
+            _inner.Clear();
+            Persist();
+        }
+
+        public bool Contains(KeyValuePair<string, string> item) => ((IDictionary<string, string>)_inner).Contains(item);
+
+        public bool ContainsKey(string key) => _inner.ContainsKey(key);
+
+        public void CopyTo(KeyValuePair<string, string>[] array, int arrayIndex)
+            => ((IDictionary<string, string>)_inner).CopyTo(array, arrayIndex);
+
+        public IEnumerator<KeyValuePair<string, string>> GetEnumerator() => _inner.GetEnumerator();
+
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() => _inner.GetEnumerator();
+
+        public bool Remove(string key)
+        {
+            if (_inner.Remove(key))
+            {
+                Persist();
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool Remove(KeyValuePair<string, string> item)
+        {
+            if (((IDictionary<string, string>)_inner).Remove(item))
+            {
+                Persist();
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool TryGetValue(string key, out string value) => _inner.TryGetValue(key, out value!);
+    }
 }

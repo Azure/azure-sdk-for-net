@@ -184,6 +184,16 @@ namespace Azure.ResourceManager.HybridCompute
             }
         }
 
+        /// <summary> Indicates whether the service has detected that this Arc machine is a clone of another onboarded machine. Service-computed; not settable by the user. </summary>
+        [WirePath("properties.statusReason")]
+        public MachineStatusReason? StatusReason
+        {
+            get
+            {
+                return Properties is null ? default : Properties.StatusReason;
+            }
+        }
+
         /// <summary> The provisioning state, which only appears in the response. </summary>
         [WirePath("properties.provisioningState")]
         public string ProvisioningState

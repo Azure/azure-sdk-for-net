@@ -231,7 +231,7 @@ namespace Azure.Security.CodeTransparency
             scope.Start();
             try
             {
-                Response<BinaryData> response = CreateEntry(body, waitForCommit: true, cancellationToken);
+                NullableResponse<BinaryData> response = CreateEntry(body, waitForCommit: true, cancellationToken);
                 return CreateCompletedEntryOperation(response.GetRawResponse());
             }
             catch (Exception e)
@@ -254,7 +254,7 @@ namespace Azure.Security.CodeTransparency
             scope.Start();
             try
             {
-                Response<BinaryData> response = await CreateEntryAsync(body, waitForCommit: true, cancellationToken).ConfigureAwait(false);
+                NullableResponse<BinaryData> response = await CreateEntryAsync(body, waitForCommit: true, cancellationToken).ConfigureAwait(false);
                 return CreateCompletedEntryOperation(response.GetRawResponse());
             }
             catch (Exception e)
@@ -644,10 +644,10 @@ namespace Azure.Security.CodeTransparency
         public virtual async Task<Response> CreateEntryAsync(RequestContent content, bool? waitForCommit = default, RequestContext context = null) => await CreateEntryV09Async(content, waitForCommit, context).ConfigureAwait(false);
 
         /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
-        public virtual Response<BinaryData> CreateEntry(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => CreateEntryV09(body, waitForCommit, cancellationToken);
+        public virtual NullableResponse<BinaryData> CreateEntry(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => CreateEntryV09(body, waitForCommit, cancellationToken);
 
         /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
-        public virtual async Task<Response<BinaryData>> CreateEntryAsync(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => await CreateEntryV09Async(body, waitForCommit, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<NullableResponse<BinaryData>> CreateEntryAsync(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => await CreateEntryV09Async(body, waitForCommit, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Get receipt. </summary>
         public virtual Response GetEntry(string entryId, RequestContext context) => GetEntryV09(entryId, context);
@@ -656,10 +656,10 @@ namespace Azure.Security.CodeTransparency
         public virtual async Task<Response> GetEntryAsync(string entryId, RequestContext context) => await GetEntryV09Async(entryId, context).ConfigureAwait(false);
 
         /// <summary> Get receipt. </summary>
-        public virtual Response<BinaryData> GetEntry(string entryId, CancellationToken cancellationToken = default) => GetEntryV09(entryId, cancellationToken);
+        public virtual NullableResponse<BinaryData> GetEntry(string entryId, CancellationToken cancellationToken = default) => GetEntryV09(entryId, cancellationToken);
 
         /// <summary> Get receipt. </summary>
-        public virtual async Task<Response<BinaryData>> GetEntryAsync(string entryId, CancellationToken cancellationToken = default) => await GetEntryV09Async(entryId, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<NullableResponse<BinaryData>> GetEntryAsync(string entryId, CancellationToken cancellationToken = default) => await GetEntryV09Async(entryId, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Get the transparent statement. </summary>
         public virtual Response GetEntryStatement(string entryId, RequestContext context) => GetEntryStatementV09(entryId, context);
@@ -683,11 +683,11 @@ namespace Azure.Security.CodeTransparency
 
         /// <summary> Get operation status. </summary>
         [Obsolete("GetOperation is deprecated as it was removed from the recent IETF SCITT draft.")]
-        public virtual Response<BinaryData> GetOperation(string operationId, CancellationToken cancellationToken = default) => GetOperationV09(operationId, cancellationToken);
+        public virtual NullableResponse<BinaryData> GetOperation(string operationId, CancellationToken cancellationToken = default) => GetOperationV09(operationId, cancellationToken);
 
         /// <summary> Get operation status. </summary>
         [Obsolete("GetOperationAsync is deprecated as it was removed from the recent IETF SCITT draft.")]
-        public virtual async Task<Response<BinaryData>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default) => await GetOperationV09Async(operationId, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<NullableResponse<BinaryData>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default) => await GetOperationV09Async(operationId, cancellationToken).ConfigureAwait(false);
 
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });

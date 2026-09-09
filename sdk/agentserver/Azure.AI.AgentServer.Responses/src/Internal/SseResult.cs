@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 using System.Diagnostics;
+using System.Net.ServerSentEvents;
 using System.Text.Json;
 using Azure.AI.AgentServer.Core;
 using Azure.AI.AgentServer.Responses.Models;
@@ -19,7 +20,7 @@ namespace Azure.AI.AgentServer.Responses.Internal;
 /// </summary>
 internal sealed class SseResult : IResult
 {
-    private readonly IAsyncEnumerable<ResponseStreamEvent> _events;
+    private readonly IAsyncEnumerable<SseItem<string>> _events;
     private readonly ResponseExecution _execution;
     private readonly CancellationTokenSource _linkedCts;
     private readonly JsonSerializerOptions _jsonOptions;
@@ -27,7 +28,7 @@ internal sealed class SseResult : IResult
     private readonly TimeSpan _keepAliveInterval;
 
     public SseResult(
-        IAsyncEnumerable<ResponseStreamEvent> events,
+        IAsyncEnumerable<SseItem<string>> events,
         ResponseExecution execution,
         CancellationTokenSource linkedCts,
         JsonSerializerOptions jsonOptions,
@@ -61,13 +62,13 @@ internal sealed class SseResult : IResult
         {
             var sseDisconnected = false;
 
-            await foreach (var evt in _events)
+            await foreach (var item in _events)
             {
                 if (!sseDisconnected)
                 {
                     try
                     {
-                        await sseWriter.WriteEventAsync(evt, evt.SequenceNumber,
+                        await sseWriter.WriteRawEventAsync(item.EventType, item.Data,
                             _execution.IsBackground ? CancellationToken.None : httpContext.RequestAborted);
                     }
                     catch when (_execution.IsBackground && httpContext.RequestAborted.IsCancellationRequested)

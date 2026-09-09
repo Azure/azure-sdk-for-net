@@ -23,7 +23,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
         {
 #if !SNIPPET
             string endpoint = TestEnvironment.Endpoint;
-            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var options = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             var sourceClient = InstrumentClient(new ContentUnderstandingClient(new Uri(endpoint), TestEnvironment.Credential, options));
 #endif
 
@@ -61,14 +61,26 @@ namespace Azure.AI.ContentUnderstanding.Samples
             // Get source and target resource information from test environment
             // Note: For testing, we use the same endpoint for both source and target
             // In production, these would be different resources
-            string sourceResourceId = TestEnvironment.SourceResourceId ?? throw new InvalidOperationException("SOURCE_RESOURCE_ID is required");
-            string sourceRegion = TestEnvironment.SourceRegion ?? throw new InvalidOperationException("SOURCE_REGION is required");
+            if (string.IsNullOrWhiteSpace(TestEnvironment.SourceResourceId) ||
+                string.IsNullOrWhiteSpace(TestEnvironment.SourceRegion) ||
+                string.IsNullOrWhiteSpace(TestEnvironment.TargetResourceId) ||
+                string.IsNullOrWhiteSpace(TestEnvironment.TargetRegion))
+            {
+                Assert.Inconclusive(
+                    "Cross-resource copy environment variables are required: " +
+                    "AZURE_CONTENT_UNDERSTANDING_SOURCE_RESOURCE_ID, AZURE_CONTENT_UNDERSTANDING_SOURCE_REGION, " +
+                    "AZURE_CONTENT_UNDERSTANDING_TARGET_RESOURCE_ID, and AZURE_CONTENT_UNDERSTANDING_TARGET_REGION.");
+                return;
+            }
+
+            string sourceResourceId = TestEnvironment.SourceResourceId!;
+            string sourceRegion = TestEnvironment.SourceRegion!;
             string targetEndpoint = TestEnvironment.TargetEndpoint;
-            string targetResourceId = TestEnvironment.TargetResourceId ?? throw new InvalidOperationException("TARGET_RESOURCE_ID is required");
-            string targetRegion = TestEnvironment.TargetRegion ?? throw new InvalidOperationException("TARGET_REGION is required");
+            string targetResourceId = TestEnvironment.TargetResourceId!;
+            string targetRegion = TestEnvironment.TargetRegion!;
 
             // Create target client using DefaultAzureCredential
-            var targetClientOptions = InstrumentClientOptions(new ContentUnderstandingClientOptions());
+            var targetClientOptions = InstrumentClientOptions(new ContentUnderstandingClientOptions(_serviceVersion));
             ContentUnderstandingClient targetClient = InstrumentClient(new ContentUnderstandingClient(new Uri(targetEndpoint), TestEnvironment.Credential, targetClientOptions));
 #endif
 
@@ -110,7 +122,11 @@ namespace Azure.AI.ContentUnderstanding.Samples
                 Config = sourceConfig,
                 FieldSchema = sourceFieldSchema
             };
-            sourceAnalyzer.Models["completion"] = "gpt-4.1";
+#if SNIPPET
+            sourceAnalyzer.Models["completion"] = "gpt-5.2";
+#else
+            sourceAnalyzer.Models["completion"] = ModelProfile.CompletionModel;
+#endif
 
             var createOperation = await sourceClient.CreateAnalyzerAsync(
                 WaitUntil.Completed,
@@ -296,7 +312,7 @@ namespace Azure.AI.ContentUnderstanding.Samples
             Assert.AreEqual("prebuilt-document", sourceAnalyzer.BaseAnalyzerId, "Base analyzer ID should match");
             Assert.AreEqual("Source analyzer for cross-resource copying", sourceAnalyzer.Description, "Description should match");
             Assert.IsTrue(sourceAnalyzer.Models.ContainsKey("completion"), "Should have completion model");
-            Assert.AreEqual("gpt-4.1", sourceAnalyzer.Models["completion"], "Completion model should be gpt-4.1");
+            Assert.AreEqual(ModelProfile.CompletionModel, sourceAnalyzer.Models["completion"], "Completion model should match the configured model");
             Console.WriteLine("Source analyzer object verified");
 
             // Verify create operation

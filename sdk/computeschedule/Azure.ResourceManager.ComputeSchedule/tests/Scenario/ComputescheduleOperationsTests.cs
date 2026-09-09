@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 Properties = new BulkActionVirtualMachineProperties
                 {
                     HardwareProfile = new VirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
-                    OsProfile = new VirtualMachineOSProfile
+                    OSProfile = new VirtualMachineOSProfile
                     {
                         ComputerName = "testflexvm",
                         AdminUsername = "testadmin",
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Tests.Scenario
                 Properties = new BulkActionVirtualMachineProperties
                 {
                     HardwareProfile = new VirtualMachineHardwareProfile { VmSize = "Standard_D2ads_v5" },
-                    OsProfile = new VirtualMachineOSProfile
+                    OSProfile = new VirtualMachineOSProfile
                     {
                         ComputerName = "testcreatevm",
                         AdminUsername = "testadmin",

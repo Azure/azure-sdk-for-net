@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.RecoveryServicesSiteRecovery.Models;
 
@@ -342,6 +343,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
     [ModelReaderWriterBuildable(typeof(ResolveHealthError))]
     [ModelReaderWriterBuildable(typeof(ResolveHealthInputProperties))]
     [ModelReaderWriterBuildable(typeof(ResourceHealthSummary))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ResumeReplicationContent))]
     [ModelReaderWriterBuildable(typeof(ResumeReplicationProperties))]
     [ModelReaderWriterBuildable(typeof(ResumeReplicationProviderSpecificContent))]

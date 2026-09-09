@@ -35,6 +35,11 @@ namespace Azure.AI.Agents.Persistent
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
+        /// <summary> Initializes a new instance of <see cref="RunStepDetails"/>. </summary>
+        protected RunStepDetails() : this(default)
+        {
+        }
+
         /// <summary> The object type. </summary>
         internal RunStepType Type { get; set; }
     }

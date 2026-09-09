@@ -54,7 +54,7 @@ namespace Azure.Storage.Blobs.Models
         /// <summary> Invalid range. </summary>
         private const string InvalidRangeValue = "InvalidRange";
         /// <summary> Invalid request URL. </summary>
-        private const string InvalidRequestUrlValue = "InvalidRequestUrl";
+        private const string InvalidRequestUriValue = "InvalidRequestUrl";
         /// <summary> Invalid resource name. </summary>
         private const string InvalidResourceNameValue = "InvalidResourceName";
         /// <summary> Invalid URI. </summary>
@@ -314,7 +314,7 @@ namespace Azure.Storage.Blobs.Models
         public static BlobErrorCode InvalidRange { get; } = new BlobErrorCode(InvalidRangeValue);
 
         /// <summary> Invalid request URL. </summary>
-        public static BlobErrorCode InvalidRequestUrl { get; } = new BlobErrorCode(InvalidRequestUrlValue);
+        public static BlobErrorCode InvalidRequestUri { get; } = new BlobErrorCode(InvalidRequestUriValue);
 
         /// <summary> Invalid resource name. </summary>
         public static BlobErrorCode InvalidResourceName { get; } = new BlobErrorCode(InvalidResourceNameValue);

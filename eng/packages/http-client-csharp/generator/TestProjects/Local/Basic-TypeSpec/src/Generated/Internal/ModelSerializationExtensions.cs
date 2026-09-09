@@ -6,6 +6,8 @@
 #nullable disable
 
 using System;
+using System.Buffers;
+using System.Buffers.Text;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -178,6 +180,59 @@ namespace BasicTypeSpec
             }
         }
 
+        public static void WriteBase64StringValue(this Utf8JsonWriter writer, BinaryData value, string format)
+        {
+            if (value == null)
+            {
+                writer.WriteNullValue();
+                return;
+            }
+            switch (format)
+            {
+                case "U":
+                    writer.WriteBase64UrlStringValue(value.ToMemory().Span);
+                    break;
+                case "D":
+                    writer.WriteBase64StringValue(value.ToMemory().Span);
+                    break;
+                default:
+                    throw new ArgumentException($"Format is not supported: '{format}'", nameof(format));
+            }
+        }
+
+        public static void WriteBase64UrlStringValue(this Utf8JsonWriter writer, ReadOnlySpan<byte> source)
+        {
+            byte[] encoded = new byte[Base64.GetMaxEncodedToUtf8Length(source.Length)];
+            OperationStatus status = Base64.EncodeToUtf8(source, encoded, out int bytesConsumed, out int bytesWritten);
+            if (status != OperationStatus.Done || bytesConsumed != source.Length)
+            {
+                throw new InvalidOperationException("Base64Url encoding did not complete.");
+            }
+            for (int index = 0; index < bytesWritten; index++)
+            {
+                if (encoded[index] == (byte)'+')
+                {
+                    encoded[index] = (byte)'-';
+                }
+                else
+                {
+                    if (encoded[index] == (byte)'/')
+                    {
+                        encoded[index] = (byte)'_';
+                    }
+                    else
+                    {
+                        if (encoded[index] == (byte)'=')
+                        {
+                            bytesWritten = index;
+                            break;
+                        }
+                    }
+                }
+            }
+            writer.WriteStringValue(encoded.AsSpan(0, bytesWritten));
+        }
+
         public static void WriteNumberValue(this Utf8JsonWriter writer, DateTimeOffset value, string format)
         {
             if (format != "U")
@@ -280,6 +335,86 @@ namespace BasicTypeSpec
 #else
             return BinaryData.FromString(element.GetRawText());
 #endif
+        }
+
+        public static ReadOnlySpan<byte> SliceToStartOfPropertyName(this ReadOnlySpan<byte> jsonPath)
+        {
+            ReadOnlySpan<byte> local = jsonPath;
+            if (local.Length < 3)
+            {
+                return ReadOnlySpan<byte>.Empty;
+            }
+            if (local[0] != '$')
+            {
+                return ReadOnlySpan<byte>.Empty;
+            }
+            if (local[1] == '.')
+            {
+                return local.Slice(2);
+            }
+            return local.Length >= 4 && local[1] == '[' && (local[2] == '\'' || local[2] == '"') ? local.Slice(3) : ReadOnlySpan<byte>.Empty;
+        }
+
+        public static string GetFirstPropertyName(this ReadOnlySpan<byte> jsonPath, out int bytesConsumed)
+        {
+            ReadOnlySpan<byte> local = jsonPath;
+            for (bytesConsumed = 0; bytesConsumed < local.Length; bytesConsumed++)
+            {
+                byte current = local[bytesConsumed];
+                if (current == '.')
+                {
+                    break;
+                }
+                else
+                {
+                    if (current == '\'' || current == '"')
+                    {
+                        if (bytesConsumed + 1 < local.Length && local[bytesConsumed + 1] == ']')
+                        {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            string key;
+#if NET6_0_OR_GREATER
+            key = global::System.Text.Encoding.UTF8.GetString(local.Slice(0, bytesConsumed));
+#else
+            key = Encoding.UTF8.GetString(local.Slice(0, bytesConsumed).ToArray());
+#endif
+            bytesConsumed += jsonPath.Length - local.Length;
+            return key;
+        }
+
+        public static bool TryGetIndex(this ReadOnlySpan<byte> indexSlice, out int index, out int bytesConsumed)
+        {
+            index = -1;
+            bytesConsumed = 0;
+
+            if (indexSlice.IsEmpty || indexSlice[0] != '[')
+            {
+                return false;
+            }
+
+            indexSlice = indexSlice.Slice(1);
+            if (indexSlice.IsEmpty || indexSlice[0] == '-')
+            {
+                return false;
+            }
+
+            int indexEnd = indexSlice.Slice(1).IndexOf((byte)']');
+            if (indexEnd < 0)
+            {
+                return false;
+            }
+
+            return Utf8Parser.TryParse(indexSlice.Slice(0, indexEnd + 1), out index, out bytesConsumed);
+        }
+
+        public static ReadOnlySpan<byte> GetRemainder(this ReadOnlySpan<byte> jsonPath, int index)
+        {
+            return index >= jsonPath.Length ? ReadOnlySpan<byte>.Empty : jsonPath[index] == '.' ? jsonPath.Slice(index) : jsonPath.Slice(index + 2);
         }
 
         public static DateTimeOffset GetDateTimeOffset(this XElement element, string format) => format switch

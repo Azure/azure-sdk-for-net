@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             {
                 throw new FormatException($"The model {nameof(EnrichmentIPAddressContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(IpAddress))
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
-                writer.WriteStringValue(IpAddress);
+                writer.WriteStringValue(IPAddress);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

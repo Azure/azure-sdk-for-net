@@ -28,12 +28,17 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="docName"> The document name for the reference. </param>
-        internal KnowledgeBaseFileReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, IDictionary<string, BinaryData> additionalBinaryDataProperties, string docName) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
+        /// <param name="citationUrl"> A Search-owned URL that points at the backing document for this reference, usable as a citation target. </param>
+        internal KnowledgeBaseFileReference(KnowledgeBaseReferenceType @type, string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, IDictionary<string, BinaryData> additionalBinaryDataProperties, string docName, Uri citationUrl) : base(@type, id, activitySource, sourceData, rerankerScore, additionalBinaryDataProperties)
         {
             DocName = docName;
+            CitationUrl = citationUrl;
         }
 
         /// <summary> The document name for the reference. </summary>
         public string DocName { get; }
+
+        /// <summary> A Search-owned URL that points at the backing document for this reference, usable as a citation target. </summary>
+        public Uri CitationUrl { get; }
     }
 }

@@ -20,6 +20,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new RequestSchemeMatchCondition. </summary>
         public RequestSchemeMatchCondition()
         {
+            TypeName.Assign(DeliveryRuleConditionParametersType.DeliveryRuleRequestSchemeConditionParameters);
         }
 
         /// <summary> Gets or sets the RequestSchemeOperator. </summary>
@@ -86,7 +87,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("typeName", new string[] { "typeName" }, defaultValue: "DeliveryRuleRequestSchemeConditionParameters");
             _requestSchemeOperator = DefineProperty<RequestSchemeOperator>(nameof(RequestSchemeOperator), new string[] { "operator" }, isRequired: true);
             _negateCondition = DefineProperty<bool>(nameof(NegateCondition), new string[] { "negateCondition" });
             _transforms = DefineListProperty<PreTransformCategory>(nameof(Transforms), new string[] { "transforms" });

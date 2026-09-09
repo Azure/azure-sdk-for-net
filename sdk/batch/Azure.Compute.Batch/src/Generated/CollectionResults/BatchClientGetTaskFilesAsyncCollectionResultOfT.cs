@@ -20,7 +20,7 @@ namespace Azure.Compute.Batch
         private readonly string _jobId;
         private readonly string _taskId;
         private readonly TimeSpan? _timeout;
-        private readonly DateTimeOffset? _requestDate;
+        private readonly DateTimeOffset? _requestOn;
         private readonly int? _maxResults;
         private readonly string _filter;
         private readonly bool? _recursive;
@@ -32,7 +32,7 @@ namespace Azure.Compute.Batch
         /// <param name="jobId"> The ID of the Job that contains the Task. </param>
         /// <param name="taskId"> The ID of the Task whose files you want to list. </param>
         /// <param name="timeout"> The maximum time that the server can spend processing the request, in seconds. The default is 30 seconds. If the value is larger than 30, the default will be used instead.". </param>
-        /// <param name="requestDate">
+        /// <param name="requestOn">
         /// The time the request was issued. Client libraries typically set this to the
         /// current system clock time; set it explicitly if you are calling the REST API
         /// directly.
@@ -51,13 +51,13 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public BatchClientGetTaskFilesAsyncCollectionResultOfT(BatchClient client, string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestDate, int? maxResults, string filter, bool? recursive, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public BatchClientGetTaskFilesAsyncCollectionResultOfT(BatchClient client, string jobId, string taskId, TimeSpan? timeout, DateTimeOffset? requestOn, int? maxResults, string filter, bool? recursive, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _jobId = jobId;
             _taskId = taskId;
             _timeout = timeout;
-            _requestDate = requestDate;
+            _requestOn = requestOn;
             _maxResults = maxResults;
             _filter = filter;
             _recursive = recursive;
@@ -94,7 +94,7 @@ namespace Azure.Compute.Batch
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private async ValueTask<Response> GetNextResponseAsync(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetTaskFilesRequest(nextLink, _jobId, _taskId, _timeout, _requestDate, _maxResults, _filter, _recursive, _context) : _client.CreateGetTaskFilesRequest(_jobId, _taskId, _timeout, _requestDate, _maxResults, _filter, _recursive, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetTaskFilesRequest(nextLink, _jobId, _taskId, _timeout, _requestOn, _maxResults, _filter, _recursive, _context) : _client.CreateGetTaskFilesRequest(_jobId, _taskId, _timeout, _requestOn, _maxResults, _filter, _recursive, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

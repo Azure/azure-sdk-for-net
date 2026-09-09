@@ -13,6 +13,11 @@ namespace Azure.AI.Projects.Tests
 {
     public class AIProjectsTestEnvironment : TestEnvironment
     {
+        public AIProjectsTestEnvironment()
+        {
+            PathToTestResourceBootstrappingScript = AiTestEnvironmentBootstrap.BootstrappingScriptPath;
+        }
+
         public string FOUNDRY_PROJECT_ENDPOINT => GetRecordedVariable(nameof(FOUNDRY_PROJECT_ENDPOINT), options => options.IsSecret("https://sanitized-host.services.ai.azure.com/api/projects/sanitized-project"));
         public string DATASETNAME => GetRecordedVariable("DATASET_NAME");
         public string DATASETVERSION1 => GetRecordedVariable("DATASET_VERSION_1");
@@ -67,6 +72,7 @@ namespace Azure.AI.Projects.Tests
         public string TRACE_LOOKBACK_HOURS => GetRecordedVariable(nameof(TRACE_LOOKBACK_HOURS));
         public string STORAGE_QUEUE_URI => GetRecordedVariable(nameof(STORAGE_QUEUE_URI));
         public string WORKIQ_CONNECTION_ID => GetRecordedVariable(nameof(WORKIQ_CONNECTION_ID));
+        public string WEBIQ_CONNECTION_ID => GetRecordedVariable(nameof(WEBIQ_CONNECTION_ID));
         public string HOSTED_AGENT_NAME => GetRecordedVariable(nameof(HOSTED_AGENT_NAME));
         public string TEAMS_CONNECTION_NAME => GetRecordedVariable(nameof(TEAMS_CONNECTION_NAME));
         public string TEAMS_GROUP_ID => GetRecordedVariable(nameof(TEAMS_GROUP_ID));

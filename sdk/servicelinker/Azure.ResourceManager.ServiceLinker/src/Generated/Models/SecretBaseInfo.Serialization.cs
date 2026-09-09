@@ -8,15 +8,59 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ServiceLinker;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
+    /// <summary>
+    /// The secret info
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="RawValueSecretInfo"/>, <see cref="KeyVaultSecretReferenceSecretInfo"/>, and <see cref="KeyVaultSecretUriSecretInfo"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownSecretInfoBase))]
-    public partial class SecretBaseInfo : IUtf8JsonSerializable, IJsonModel<SecretBaseInfo>
+    public abstract partial class SecretBaseInfo : IJsonModel<SecretBaseInfo>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SecretBaseInfo>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SecretBaseInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecretBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeSecretBaseInfo(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(SecretBaseInfo)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<SecretBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(SecretBaseInfo)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<SecretBaseInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecretBaseInfo IPersistableModel<SecretBaseInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<SecretBaseInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<SecretBaseInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,23 +72,22 @@ namespace Azure.ResourceManager.ServiceLinker.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecretBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecretBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecretBaseInfo)} does not support writing '{format}' format.");
             }
-
             writer.WritePropertyName("secretType"u8);
             writer.WriteStringValue(SecretType.ToString());
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -53,67 +96,44 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             }
         }
 
-        SecretBaseInfo IJsonModel<SecretBaseInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        SecretBaseInfo IJsonModel<SecretBaseInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual SecretBaseInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<SecretBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<SecretBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(SecretBaseInfo)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeSecretBaseInfo(document.RootElement, options);
         }
 
-        internal static SecretBaseInfo DeserializeSecretBaseInfo(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static SecretBaseInfo DeserializeSecretBaseInfo(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            if (element.TryGetProperty("secretType", out JsonElement discriminator))
+            if (element.TryGetProperty("secretType"u8, out JsonElement discriminator))
             {
                 switch (discriminator.GetString())
                 {
-                    case "keyVaultSecretReference": return KeyVaultSecretReferenceSecretInfo.DeserializeKeyVaultSecretReferenceSecretInfo(element, options);
-                    case "keyVaultSecretUri": return KeyVaultSecretUriSecretInfo.DeserializeKeyVaultSecretUriSecretInfo(element, options);
-                    case "rawValue": return RawValueSecretInfo.DeserializeRawValueSecretInfo(element, options);
+                    case "rawValue":
+                        return RawValueSecretInfo.DeserializeRawValueSecretInfo(element, options);
+                    case "keyVaultSecretReference":
+                        return KeyVaultSecretReferenceSecretInfo.DeserializeKeyVaultSecretReferenceSecretInfo(element, options);
+                    case "keyVaultSecretUri":
+                        return KeyVaultSecretUriSecretInfo.DeserializeKeyVaultSecretUriSecretInfo(element, options);
                 }
             }
             return UnknownSecretInfoBase.DeserializeUnknownSecretInfoBase(element, options);
         }
-
-        BinaryData IPersistableModel<SecretBaseInfo>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecretBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerServiceLinkerContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(SecretBaseInfo)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        SecretBaseInfo IPersistableModel<SecretBaseInfo>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<SecretBaseInfo>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeSecretBaseInfo(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(SecretBaseInfo)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<SecretBaseInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

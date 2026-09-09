@@ -101,7 +101,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public string Answer { get { throw null; } set { } }
         public Azure.AI.Language.QuestionAnswering.Authoring.QnaDialog Dialog { get { throw null; } set { } }
         public int Id { get { throw null; } }
-        public System.DateTimeOffset? LastUpdatedDateTime { get { throw null; } set { } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public System.Collections.Generic.IList<string> Questions { get { throw null; } }
         public string Source { get { throw null; } set { } }
@@ -163,22 +163,22 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0004")]
         public static Azure.AI.Language.QuestionAnswering.Authoring.ImportFiles ImportFiles(System.Collections.Generic.IEnumerable<System.ClientModel.FileBinaryContent> files = null) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Authoring.ImportJobOptions ImportJobOptions(Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringProject metadata = null, Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets assets = null, System.Uri fileUri = null) { throw null; }
-        public static Azure.AI.Language.QuestionAnswering.Authoring.ImportQnaRecord ImportQnaRecord(int id = 0, string answer = null, string source = null, System.Collections.Generic.IEnumerable<string> questions = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.AI.Language.QuestionAnswering.Authoring.QnaDialog dialog = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster> activeLearningSuggestions = null, System.DateTimeOffset? lastUpdatedDateTime = default(System.DateTimeOffset?), string sourceDisplayName = null) { throw null; }
-        public static Azure.AI.Language.QuestionAnswering.Authoring.ProjectDeployment ProjectDeployment(string deploymentName = null, System.DateTimeOffset? lastDeployedDateTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.ImportQnaRecord ImportQnaRecord(int id = 0, string answer = null, string source = null, System.Collections.Generic.IEnumerable<string> questions = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.AI.Language.QuestionAnswering.Authoring.QnaDialog dialog = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster> activeLearningSuggestions = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?), string sourceDisplayName = null) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.ProjectDeployment ProjectDeployment(string deploymentName = null, System.DateTimeOffset? lastDeployedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Authoring.ProjectSettings ProjectSettings(string defaultAnswer = null) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Authoring.QnaDialog QnaDialog(bool? isContextOnly = default(bool?), System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Authoring.QnaPrompt> prompts = null) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Authoring.QnaPrompt QnaPrompt(int? displayOrder = default(int?), int? qnaId = default(int?), Azure.AI.Language.QuestionAnswering.Authoring.QnaRecord qna = null, string displayText = null) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Authoring.QnaRecord QnaRecord(int id = 0, string answer = null, string source = null, System.Collections.Generic.IEnumerable<string> questions = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.AI.Language.QuestionAnswering.Authoring.QnaDialog dialog = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster> activeLearningSuggestions = null) { throw null; }
-        public static Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord QnaSourceRecord(string displayName = null, string source = null, System.Uri sourceUri = null, Azure.AI.Language.QuestionAnswering.Authoring.SourceKind sourceKind = default(Azure.AI.Language.QuestionAnswering.Authoring.SourceKind), Azure.AI.Language.QuestionAnswering.Authoring.SourceContentStructureKind? contentStructureKind = default(Azure.AI.Language.QuestionAnswering.Authoring.SourceContentStructureKind?), System.DateTimeOffset? lastUpdatedDateTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.QnaSourceRecord QnaSourceRecord(string displayName = null, string source = null, System.Uri sourceUri = null, Azure.AI.Language.QuestionAnswering.Authoring.SourceKind sourceKind = default(Azure.AI.Language.QuestionAnswering.Authoring.SourceKind), Azure.AI.Language.QuestionAnswering.Authoring.SourceContentStructureKind? contentStructureKind = default(Azure.AI.Language.QuestionAnswering.Authoring.SourceContentStructureKind?), System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringAssets QuestionAnsweringAuthoringAssets(System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations> synonyms = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Authoring.ImportQnaRecord> qnas = null) { throw null; }
-        public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringExportJobState QuestionAnsweringAuthoringExportJobState(System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset? expirationDateTime = default(System.DateTimeOffset?), string jobId = null, System.DateTimeOffset lastUpdatedDateTime = default(System.DateTimeOffset), Azure.AI.Language.QuestionAnswering.Authoring.JobStatus status = default(Azure.AI.Language.QuestionAnswering.Authoring.JobStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null, string resultUrl = null) { throw null; }
-        public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringImportJobState QuestionAnsweringAuthoringImportJobState(System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset? expirationDateTime = default(System.DateTimeOffset?), string jobId = null, System.DateTimeOffset lastUpdatedDateTime = default(System.DateTimeOffset), Azure.AI.Language.QuestionAnswering.Authoring.JobStatus status = default(Azure.AI.Language.QuestionAnswering.Authoring.JobStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
-        public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeletionJobState QuestionAnsweringAuthoringProjectDeletionJobState(System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset? expirationDateTime = default(System.DateTimeOffset?), string jobId = null, System.DateTimeOffset lastUpdatedDateTime = default(System.DateTimeOffset), Azure.AI.Language.QuestionAnswering.Authoring.JobStatus status = default(Azure.AI.Language.QuestionAnswering.Authoring.JobStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
-        public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeploymentJobState QuestionAnsweringAuthoringProjectDeploymentJobState(System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset? expirationDateTime = default(System.DateTimeOffset?), string jobId = null, System.DateTimeOffset lastUpdatedDateTime = default(System.DateTimeOffset), Azure.AI.Language.QuestionAnswering.Authoring.JobStatus status = default(Azure.AI.Language.QuestionAnswering.Authoring.JobStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
-        public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateQnasJobState QuestionAnsweringAuthoringUpdateQnasJobState(System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset? expirationDateTime = default(System.DateTimeOffset?), string jobId = null, System.DateTimeOffset lastUpdatedDateTime = default(System.DateTimeOffset), Azure.AI.Language.QuestionAnswering.Authoring.JobStatus status = default(Azure.AI.Language.QuestionAnswering.Authoring.JobStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
-        public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateSourcesJobState QuestionAnsweringAuthoringUpdateSourcesJobState(System.DateTimeOffset createdDateTime = default(System.DateTimeOffset), System.DateTimeOffset? expirationDateTime = default(System.DateTimeOffset?), string jobId = null, System.DateTimeOffset lastUpdatedDateTime = default(System.DateTimeOffset), Azure.AI.Language.QuestionAnswering.Authoring.JobStatus status = default(Azure.AI.Language.QuestionAnswering.Authoring.JobStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
-        public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringProject QuestionAnsweringProject(string projectName = null, string description = null, string language = null, bool? multilingualResource = default(bool?), Azure.AI.Language.QuestionAnswering.Authoring.ProjectSettings settings = null, System.DateTimeOffset? createdDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedDateTime = default(System.DateTimeOffset?), System.DateTimeOffset? lastDeployedDateTime = default(System.DateTimeOffset?), bool? configureSemanticRanking = default(bool?)) { throw null; }
-        public static Azure.AI.Language.QuestionAnswering.Authoring.RetrieveQnaRecord RetrieveQnaRecord(int id = 0, string answer = null, string source = null, System.Collections.Generic.IEnumerable<string> questions = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.AI.Language.QuestionAnswering.Authoring.QnaDialog dialog = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster> activeLearningSuggestions = null, System.DateTimeOffset? lastUpdatedDateTime = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringExportJobState QuestionAnsweringAuthoringExportJobState(System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), string jobId = null, System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), Azure.AI.Language.QuestionAnswering.Authoring.JobStatus status = default(Azure.AI.Language.QuestionAnswering.Authoring.JobStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null, string resultUrl = null) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringImportJobState QuestionAnsweringAuthoringImportJobState(System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), string jobId = null, System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), Azure.AI.Language.QuestionAnswering.Authoring.JobStatus status = default(Azure.AI.Language.QuestionAnswering.Authoring.JobStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeletionJobState QuestionAnsweringAuthoringProjectDeletionJobState(System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), string jobId = null, System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), Azure.AI.Language.QuestionAnswering.Authoring.JobStatus status = default(Azure.AI.Language.QuestionAnswering.Authoring.JobStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeploymentJobState QuestionAnsweringAuthoringProjectDeploymentJobState(System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), string jobId = null, System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), Azure.AI.Language.QuestionAnswering.Authoring.JobStatus status = default(Azure.AI.Language.QuestionAnswering.Authoring.JobStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateQnasJobState QuestionAnsweringAuthoringUpdateQnasJobState(System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), string jobId = null, System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), Azure.AI.Language.QuestionAnswering.Authoring.JobStatus status = default(Azure.AI.Language.QuestionAnswering.Authoring.JobStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateSourcesJobState QuestionAnsweringAuthoringUpdateSourcesJobState(System.DateTimeOffset createdOn = default(System.DateTimeOffset), System.DateTimeOffset? expiresOn = default(System.DateTimeOffset?), string jobId = null, System.DateTimeOffset lastUpdatedOn = default(System.DateTimeOffset), Azure.AI.Language.QuestionAnswering.Authoring.JobStatus status = default(Azure.AI.Language.QuestionAnswering.Authoring.JobStatus), System.Collections.Generic.IEnumerable<Azure.ResponseError> errors = null) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringProject QuestionAnsweringProject(string projectName = null, string description = null, string language = null, bool? multilingualResource = default(bool?), Azure.AI.Language.QuestionAnswering.Authoring.ProjectSettings settings = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastDeployedOn = default(System.DateTimeOffset?), bool? configureSemanticRanking = default(bool?)) { throw null; }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.RetrieveQnaRecord RetrieveQnaRecord(int id = 0, string answer = null, string source = null, System.Collections.Generic.IEnumerable<string> questions = null, System.Collections.Generic.IDictionary<string, string> metadata = null, Azure.AI.Language.QuestionAnswering.Authoring.QnaDialog dialog = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster> activeLearningSuggestions = null, System.DateTimeOffset? lastUpdatedOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestion SuggestedQuestion(string question = null, int? userSuggestedCount = default(int?), int? autoSuggestedCount = default(int?)) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestionsCluster SuggestedQuestionsCluster(string clusterHead = null, System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Authoring.SuggestedQuestion> suggestedQuestions = null) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Authoring.SynonymAssets SynonymAssets(System.Collections.Generic.IEnumerable<Azure.AI.Language.QuestionAnswering.Authoring.WordAlterations> value = null, System.Uri nextLink = null) { throw null; }
@@ -188,7 +188,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     {
         internal ProjectDeployment() { }
         public string DeploymentName { get { throw null; } }
-        public System.DateTimeOffset? LastDeployedDateTime { get { throw null; } }
+        public System.DateTimeOffset? LastDeployedOn { get { throw null; } }
         protected virtual Azure.AI.Language.QuestionAnswering.Authoring.ProjectDeployment JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         protected virtual Azure.AI.Language.QuestionAnswering.Authoring.ProjectDeployment PersistableModelCreateCore(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -270,7 +270,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         internal QnaSourceRecord() { }
         public Azure.AI.Language.QuestionAnswering.Authoring.SourceContentStructureKind? ContentStructureKind { get { throw null; } }
         public string DisplayName { get { throw null; } }
-        public System.DateTimeOffset? LastUpdatedDateTime { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public string Source { get { throw null; } }
         public Azure.AI.Language.QuestionAnswering.Authoring.SourceKind SourceKind { get { throw null; } }
         public System.Uri SourceUri { get { throw null; } }
@@ -442,11 +442,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class QuestionAnsweringAuthoringExportJobState : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringExportJobState>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringExportJobState>
     {
         internal QuestionAnsweringAuthoringExportJobState() { }
-        public System.DateTimeOffset CreatedDateTime { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
-        public System.DateTimeOffset? ExpirationDateTime { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string JobId { get { throw null; } }
-        public System.DateTimeOffset LastUpdatedDateTime { get { throw null; } }
+        public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public string ResultUrl { get { throw null; } }
         public Azure.AI.Language.QuestionAnswering.Authoring.JobStatus Status { get { throw null; } }
         protected virtual Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringExportJobState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -463,11 +463,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class QuestionAnsweringAuthoringImportJobState : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringImportJobState>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringImportJobState>
     {
         internal QuestionAnsweringAuthoringImportJobState() { }
-        public System.DateTimeOffset CreatedDateTime { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
-        public System.DateTimeOffset? ExpirationDateTime { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string JobId { get { throw null; } }
-        public System.DateTimeOffset LastUpdatedDateTime { get { throw null; } }
+        public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public Azure.AI.Language.QuestionAnswering.Authoring.JobStatus Status { get { throw null; } }
         protected virtual Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringImportJobState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -483,11 +483,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class QuestionAnsweringAuthoringProjectDeletionJobState : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeletionJobState>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeletionJobState>
     {
         internal QuestionAnsweringAuthoringProjectDeletionJobState() { }
-        public System.DateTimeOffset CreatedDateTime { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
-        public System.DateTimeOffset? ExpirationDateTime { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string JobId { get { throw null; } }
-        public System.DateTimeOffset LastUpdatedDateTime { get { throw null; } }
+        public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public Azure.AI.Language.QuestionAnswering.Authoring.JobStatus Status { get { throw null; } }
         protected virtual Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeletionJobState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -503,11 +503,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class QuestionAnsweringAuthoringProjectDeploymentJobState : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeploymentJobState>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeploymentJobState>
     {
         internal QuestionAnsweringAuthoringProjectDeploymentJobState() { }
-        public System.DateTimeOffset CreatedDateTime { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
-        public System.DateTimeOffset? ExpirationDateTime { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string JobId { get { throw null; } }
-        public System.DateTimeOffset LastUpdatedDateTime { get { throw null; } }
+        public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public Azure.AI.Language.QuestionAnswering.Authoring.JobStatus Status { get { throw null; } }
         protected virtual Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringProjectDeploymentJobState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -523,11 +523,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class QuestionAnsweringAuthoringUpdateQnasJobState : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateQnasJobState>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateQnasJobState>
     {
         internal QuestionAnsweringAuthoringUpdateQnasJobState() { }
-        public System.DateTimeOffset CreatedDateTime { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
-        public System.DateTimeOffset? ExpirationDateTime { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string JobId { get { throw null; } }
-        public System.DateTimeOffset LastUpdatedDateTime { get { throw null; } }
+        public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public Azure.AI.Language.QuestionAnswering.Authoring.JobStatus Status { get { throw null; } }
         protected virtual Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateQnasJobState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -543,11 +543,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     public partial class QuestionAnsweringAuthoringUpdateSourcesJobState : System.ClientModel.Primitives.IJsonModel<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateSourcesJobState>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateSourcesJobState>
     {
         internal QuestionAnsweringAuthoringUpdateSourcesJobState() { }
-        public System.DateTimeOffset CreatedDateTime { get { throw null; } }
+        public System.DateTimeOffset CreatedOn { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResponseError> Errors { get { throw null; } }
-        public System.DateTimeOffset? ExpirationDateTime { get { throw null; } }
+        public System.DateTimeOffset? ExpiresOn { get { throw null; } }
         public string JobId { get { throw null; } }
-        public System.DateTimeOffset LastUpdatedDateTime { get { throw null; } }
+        public System.DateTimeOffset LastUpdatedOn { get { throw null; } }
         public Azure.AI.Language.QuestionAnswering.Authoring.JobStatus Status { get { throw null; } }
         protected virtual Azure.AI.Language.QuestionAnswering.Authoring.QuestionAnsweringAuthoringUpdateSourcesJobState JsonModelCreateCore(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         protected virtual void JsonModelWriteCore(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -564,11 +564,11 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
     {
         public QuestionAnsweringProject() { }
         public bool? ConfigureSemanticRanking { get { throw null; } set { } }
-        public System.DateTimeOffset? CreatedDateTime { get { throw null; } }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string Language { get { throw null; } set { } }
-        public System.DateTimeOffset? LastDeployedDateTime { get { throw null; } }
-        public System.DateTimeOffset? LastModifiedDateTime { get { throw null; } }
+        public System.DateTimeOffset? LastDeployedOn { get { throw null; } }
+        public System.DateTimeOffset? LastModifiedOn { get { throw null; } }
         public bool? MultilingualResource { get { throw null; } set { } }
         public string ProjectName { get { throw null; } }
         public Azure.AI.Language.QuestionAnswering.Authoring.ProjectSettings Settings { get { throw null; } set { } }
@@ -590,7 +590,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public string Answer { get { throw null; } }
         public Azure.AI.Language.QuestionAnswering.Authoring.QnaDialog Dialog { get { throw null; } }
         public int Id { get { throw null; } }
-        public System.DateTimeOffset? LastUpdatedDateTime { get { throw null; } }
+        public System.DateTimeOffset? LastUpdatedOn { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Metadata { get { throw null; } }
         public System.Collections.Generic.IList<string> Questions { get { throw null; } }
         public string Source { get { throw null; } }
@@ -627,7 +627,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         private readonly int _dummyPrimitive;
         public SourceKind(string value) { throw null; }
         public static Azure.AI.Language.QuestionAnswering.Authoring.SourceKind File { get { throw null; } }
-        public static Azure.AI.Language.QuestionAnswering.Authoring.SourceKind Url { get { throw null; } }
+        public static Azure.AI.Language.QuestionAnswering.Authoring.SourceKind Uri { get { throw null; } }
         public bool Equals(Azure.AI.Language.QuestionAnswering.Authoring.SourceKind other) { throw null; }
         public override bool Equals(object obj) { throw null; }
         public override int GetHashCode() { throw null; }

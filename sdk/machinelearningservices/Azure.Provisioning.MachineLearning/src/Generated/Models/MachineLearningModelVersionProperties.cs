@@ -7,12 +7,11 @@
 
 using System;
 using Azure.Provisioning;
-using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary> Model asset version details. </summary>
-    public partial class MachineLearningModelVersionProperties : ProvisionableConstruct
+    public partial class MachineLearningModelVersionProperties : MachineLearningAssetBase
     {
         private BicepDictionary<MachineLearningFlavorData> _flavors;
         private BicepValue<string> _jobName;
@@ -21,11 +20,6 @@ namespace Azure.Provisioning.MachineLearning
         private BicepValue<RegistryAssetProvisioningState> _provisioningState;
         private BicepValue<string> _stage;
         private BicepList<DatasetReference> _datasets;
-        private BicepValue<bool> _isAnonymous;
-        private BicepValue<bool> _isArchived;
-        private BicepValue<string> _description;
-        private BicepDictionary<string> _properties;
-        private BicepDictionary<string> _tags;
 
         /// <summary> Creates a new MachineLearningModelVersionProperties. </summary>
         public MachineLearningModelVersionProperties()
@@ -132,81 +126,6 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
-        /// <summary> Gets or sets the IsAnonymous. </summary>
-        public BicepValue<bool> IsAnonymous
-        {
-            get
-            {
-                Initialize();
-                return _isAnonymous;
-            }
-            set
-            {
-                Initialize();
-                _isAnonymous.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the IsArchived. </summary>
-        public BicepValue<bool> IsArchived
-        {
-            get
-            {
-                Initialize();
-                return _isArchived;
-            }
-            set
-            {
-                Initialize();
-                _isArchived.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Description. </summary>
-        public BicepValue<string> Description
-        {
-            get
-            {
-                Initialize();
-                return _description;
-            }
-            set
-            {
-                Initialize();
-                _description.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Properties. </summary>
-        public BicepDictionary<string> Properties
-        {
-            get
-            {
-                Initialize();
-                return _properties;
-            }
-            set
-            {
-                Initialize();
-                _properties.Assign(value);
-            }
-        }
-
-        /// <summary> Gets or sets the Tags. </summary>
-        public BicepDictionary<string> Tags
-        {
-            get
-            {
-                Initialize();
-                return _tags;
-            }
-            set
-            {
-                Initialize();
-                _tags.Assign(value);
-            }
-        }
-
         /// <summary> Define all the provisionable properties for MachineLearningModelVersionProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -218,11 +137,6 @@ namespace Azure.Provisioning.MachineLearning
             _provisioningState = DefineProperty<RegistryAssetProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _stage = DefineProperty<string>(nameof(Stage), new string[] { "stage" });
             _datasets = DefineListProperty<DatasetReference>(nameof(Datasets), new string[] { "datasets" });
-            _isAnonymous = DefineProperty<bool>(nameof(IsAnonymous), new string[] { "isAnonymous" });
-            _isArchived = DefineProperty<bool>(nameof(IsArchived), new string[] { "isArchived" });
-            _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
-            _properties = DefineDictionaryProperty<string>(nameof(Properties), new string[] { "properties" });
-            _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             DefineAdditionalProperties();
         }
 

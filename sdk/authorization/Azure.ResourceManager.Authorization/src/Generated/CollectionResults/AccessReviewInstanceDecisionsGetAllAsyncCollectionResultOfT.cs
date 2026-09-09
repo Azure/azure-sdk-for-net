@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Authorization
     internal partial class AccessReviewInstanceDecisionsGetAllAsyncCollectionResultOfT : AsyncPageable<AccessReviewDecisionData>
     {
         private readonly AccessReviewInstanceDecisions _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _scheduleDefinitionId;
         private readonly string _id;
         private readonly string _filter;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="filter"> The filter to apply on the operation. Other than standard filters, one custom filter option is supported : 'assignedToMeToReview()'. When one specified $filter=assignedToMeToReview(), only items that are assigned to the calling user to review are returned. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AccessReviewInstanceDecisionsGetAllAsyncCollectionResultOfT(AccessReviewInstanceDecisions client, string subscriptionId, string scheduleDefinitionId, string id, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public AccessReviewInstanceDecisionsGetAllAsyncCollectionResultOfT(AccessReviewInstanceDecisions client, Guid subscriptionId, string scheduleDefinitionId, string id, string filter, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

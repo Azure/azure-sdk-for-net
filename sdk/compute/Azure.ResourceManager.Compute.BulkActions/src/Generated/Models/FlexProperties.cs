@@ -23,13 +23,13 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="osType"> The operating system type for the VMs. </param>
         /// <param name="priorityProfile"> The priority profile for VM allocation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="vmSizeProfiles"/> or <paramref name="priorityProfile"/> is null. </exception>
-        public FlexProperties(IEnumerable<VmSizeProfile> vmSizeProfiles, OsType osType, PriorityProfile priorityProfile)
+        public FlexProperties(IEnumerable<VmSizeProfile> vmSizeProfiles, OSType osType, PriorityProfile priorityProfile)
         {
             Argument.AssertNotNull(vmSizeProfiles, nameof(vmSizeProfiles));
             Argument.AssertNotNull(priorityProfile, nameof(priorityProfile));
 
             VmSizeProfiles = vmSizeProfiles.ToList();
-            OsType = osType;
+            OSType = osType;
             PriorityProfile = priorityProfile;
         }
 
@@ -40,10 +40,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="zoneAllocationPolicy"> The zone allocation policy for distributing VMs across availability zones. </param>
         /// <param name="minCapacity"> The minimum number of VMs that must be successfully created for the request to proceed. If fewer than this number can be allocated, the entire request is automatically rejected. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FlexProperties(IList<VmSizeProfile> vmSizeProfiles, OsType osType, PriorityProfile priorityProfile, ZoneAllocationPolicy zoneAllocationPolicy, int? minCapacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FlexProperties(IList<VmSizeProfile> vmSizeProfiles, OSType osType, PriorityProfile priorityProfile, ZoneAllocationPolicy zoneAllocationPolicy, int? minCapacity, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSizeProfiles = vmSizeProfiles;
-            OsType = osType;
+            OSType = osType;
             PriorityProfile = priorityProfile;
             ZoneAllocationPolicy = zoneAllocationPolicy;
             MinCapacity = minCapacity;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         public IList<VmSizeProfile> VmSizeProfiles { get; }
 
         /// <summary> The operating system type for the VMs. </summary>
-        public OsType OsType { get; }
+        public OSType OSType { get; }
 
         /// <summary> The priority profile for VM allocation. </summary>
         public PriorityProfile PriorityProfile { get; }

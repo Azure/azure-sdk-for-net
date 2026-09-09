@@ -78,10 +78,10 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 writer.WritePropertyName("deploymentName"u8);
                 writer.WriteStringValue(DeploymentName);
             }
-            if (Optional.IsDefined(LastDeployedDateTime))
+            if (Optional.IsDefined(LastDeployedOn))
             {
                 writer.WritePropertyName("lastDeployedDateTime"u8);
-                writer.WriteStringValue(LastDeployedDateTime.Value, "O");
+                writer.WriteStringValue(LastDeployedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -126,7 +126,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                 return null;
             }
             string deploymentName = default;
-            DateTimeOffset? lastDeployedDateTime = default;
+            DateTimeOffset? lastDeployedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -141,7 +141,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     {
                         continue;
                     }
-                    lastDeployedDateTime = prop.Value.GetDateTimeOffset("O");
+                    lastDeployedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ProjectDeployment(deploymentName, lastDeployedDateTime, additionalBinaryDataProperties);
+            return new ProjectDeployment(deploymentName, lastDeployedOn, additionalBinaryDataProperties);
         }
     }
 }

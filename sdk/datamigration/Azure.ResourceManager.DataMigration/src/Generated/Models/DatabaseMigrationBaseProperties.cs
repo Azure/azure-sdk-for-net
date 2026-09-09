@@ -13,7 +13,7 @@ namespace Azure.ResourceManager.DataMigration.Models
 {
     /// <summary>
     /// Database Migration Base Resource properties.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DatabaseMigrationPropertiesCosmosDbMongo"/>, <see cref="DatabaseMigrationSqlDBProperties"/>, <see cref="DatabaseMigrationProperties"/>, <see cref="DatabaseMigrationSqlMIProperties"/>, and <see cref="DatabaseMigrationSqlVmProperties"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="DatabaseMigrationPropertiesCosmosDBMongo"/>, <see cref="DatabaseMigrationSqlDBProperties"/>, <see cref="DatabaseMigrationProperties"/>, <see cref="DatabaseMigrationSqlMIProperties"/>, and <see cref="DatabaseMigrationSqlVmProperties"/>.
     /// </summary>
     public abstract partial class DatabaseMigrationBaseProperties
     {

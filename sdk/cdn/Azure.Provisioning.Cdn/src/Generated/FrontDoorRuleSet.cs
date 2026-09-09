@@ -93,19 +93,6 @@ namespace Azure.Provisioning.Cdn
             }
         }
 
-        /// <summary> Gets the ProfileName. </summary>
-        public BicepValue<string> ProfileName
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new CdnRuleSetProperties();
-                }
-                return Properties.ProfileName;
-            }
-        }
-
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<FrontDoorProvisioningState> ProvisioningState
         {
@@ -132,6 +119,19 @@ namespace Azure.Provisioning.Cdn
             }
         }
 
+        /// <summary> Gets the ProfileName. </summary>
+        public BicepValue<string> ProfileName
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CdnRuleSetProperties();
+                }
+                return Properties.ProfileName;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for FrontDoorRuleSet. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -140,7 +140,7 @@ namespace Azure.Provisioning.Cdn
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<CdnRuleSetProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<CdnProfile>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<CdnProfile>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

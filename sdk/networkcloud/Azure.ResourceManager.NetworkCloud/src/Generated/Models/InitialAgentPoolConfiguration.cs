@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <summary> Initializes a new instance of <see cref="InitialAgentPoolConfiguration"/>. </summary>
         /// <param name="count"> The number of virtual machines that use this configuration. </param>
         /// <param name="mode"> The selection of how this agent pool is utilized, either as a system pool or a user pool. System pools run the features and critical services for the Kubernetes Cluster, while user pools are dedicated to user workloads. Every Kubernetes cluster must contain at least one system node pool with at least one node. </param>
-        /// <param name="vmSkuName"> The name of the VM SKU that determines the size of resources allocated for node VMs. </param>
         /// <param name="name"> The name that will be used for the agent pool resource representing this agent pool. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="vmSkuName"/> or <paramref name="name"/> is null. </exception>
-        public InitialAgentPoolConfiguration(long count, NetworkCloudAgentPoolMode mode, string vmSkuName, string name)
+        /// <param name="vmSkuName"> The name of the VM SKU that determines the size of resources allocated for node VMs. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="vmSkuName"/> is null. </exception>
+        public InitialAgentPoolConfiguration(long count, NetworkCloudAgentPoolMode mode, string name, string vmSkuName)
         {
             Argument.AssertNotNull(vmSkuName, nameof(vmSkuName));
             Argument.AssertNotNull(name, nameof(name));

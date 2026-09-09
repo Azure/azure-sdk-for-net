@@ -89,11 +89,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("applicationSharingPolicy"u8);
                 writer.WriteStringValue(ApplicationSharingPolicy.Value.ToString());
             }
-            if (Optional.IsDefined(AutologgerSettings))
-            {
-                writer.WritePropertyName("autologgerSettings"u8);
-                writer.WriteObjectValue(AutologgerSettings, options);
-            }
             if (Optional.IsDefined(SshSettings))
             {
                 writer.WritePropertyName("sshSettings"u8);
@@ -154,25 +149,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("computeInstanceAuthorizationType"u8);
                 writer.WriteStringValue(ComputeInstanceAuthorizationType.Value.ToString());
             }
-            if (Optional.IsDefined(EnableOSPatching))
-            {
-                writer.WritePropertyName("enableOSPatching"u8);
-                writer.WriteBooleanValue(EnableOSPatching.Value);
-            }
-            if (Optional.IsDefined(EnableRootAccess))
-            {
-                writer.WritePropertyName("enableRootAccess"u8);
-                writer.WriteBooleanValue(EnableRootAccess.Value);
-            }
             if (Optional.IsDefined(EnableSSO))
             {
                 writer.WritePropertyName("enableSSO"u8);
                 writer.WriteBooleanValue(EnableSSO.Value);
-            }
-            if (Optional.IsDefined(ShouldReleaseQuotaOnStop))
-            {
-                writer.WritePropertyName("releaseQuotaOnStop"u8);
-                writer.WriteBooleanValue(ShouldReleaseQuotaOnStop.Value);
             }
             if (Optional.IsDefined(PersonalComputeInstanceSettings))
             {
@@ -284,7 +264,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string vmSize = default;
             ResourceId subnet = default;
             MachineLearningApplicationSharingPolicy? applicationSharingPolicy = default;
-            ComputeInstanceAutologgerSettings autologgerSettings = default;
             MachineLearningComputeInstanceSshSettings sshSettings = default;
             IList<CustomService> customServices = default;
             ImageMetadata osImageMetadata = default;
@@ -294,10 +273,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             IReadOnlyList<MachineLearningError> errors = default;
             MachineLearningComputeInstanceState? state = default;
             MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType = default;
-            bool? enableOSPatching = default;
-            bool? enableRootAccess = default;
             bool? enableSSO = default;
-            bool? shouldReleaseQuotaOnStop = default;
             PersonalComputeInstanceSettings personalComputeInstanceSettings = default;
             SetupScripts setupScriptsSettings = default;
             MachineLearningComputeInstanceLastOperation lastOperation = default;
@@ -333,16 +309,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     applicationSharingPolicy = new MachineLearningApplicationSharingPolicy(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("autologgerSettings"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        autologgerSettings = null;
-                        continue;
-                    }
-                    autologgerSettings = ComputeInstanceAutologgerSettings.DeserializeComputeInstanceAutologgerSettings(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("sshSettings"u8))
@@ -443,26 +409,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     computeInstanceAuthorizationType = new MachineLearningComputeInstanceAuthorizationType(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("enableOSPatching"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        enableOSPatching = null;
-                        continue;
-                    }
-                    enableOSPatching = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("enableRootAccess"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        enableRootAccess = null;
-                        continue;
-                    }
-                    enableRootAccess = prop.Value.GetBoolean();
-                    continue;
-                }
                 if (prop.NameEquals("enableSSO"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -471,16 +417,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         continue;
                     }
                     enableSSO = prop.Value.GetBoolean();
-                    continue;
-                }
-                if (prop.NameEquals("releaseQuotaOnStop"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        shouldReleaseQuotaOnStop = null;
-                        continue;
-                    }
-                    shouldReleaseQuotaOnStop = prop.Value.GetBoolean();
                     continue;
                 }
                 if (prop.NameEquals("personalComputeInstanceSettings"u8))
@@ -598,7 +534,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 vmSize,
                 subnet,
                 applicationSharingPolicy,
-                autologgerSettings,
                 sshSettings,
                 customServices ?? new ChangeTrackingList<CustomService>(),
                 osImageMetadata,
@@ -608,10 +543,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 errors ?? new ChangeTrackingList<MachineLearningError>(),
                 state,
                 computeInstanceAuthorizationType,
-                enableOSPatching,
-                enableRootAccess,
                 enableSSO,
-                shouldReleaseQuotaOnStop,
                 personalComputeInstanceSettings,
                 setupScriptsSettings,
                 lastOperation,

@@ -3,8 +3,11 @@
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
     <!--Ignore XML doc comments on test types and members-->
     <NoWarn>$(NoWarn);CS1591</NoWarn>
-    <!-- OPENAI001 - Ignore experimental warnings-->
-    <NoWarn>$(NoWarn);OPENAI001;SCME0001;</NoWarn>
+    <!-- Experimental surface consumed by tests. AAIP002 and OPENAI001/OPENAICUA001 mark surface that is
+         experimental because of the underlying OpenAI dependency (not because we are changing it), so they
+         are suppressed project-wide here just like the OpenAI ids. Our own intentional AAIP001 surface is
+         acknowledged per-file with #pragma so each test opts in explicitly. -->
+    <NoWarn>$(NoWarn);OPENAI001;OPENAICUA001;AAIP002;SCME0001;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Assets\favorite_foods.pdf" />

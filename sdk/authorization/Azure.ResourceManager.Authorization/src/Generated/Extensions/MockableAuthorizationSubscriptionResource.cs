@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new AsyncPageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetAllAsyncCollectionResultOfT(DenyAssignmentsRestClient, Id.SubscriptionId, filter, context, "MockableAuthorizationSubscriptionResource.GetDenyAssignments"), data => new DenyAssignmentResource(Client, data));
+            return new AsyncPageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetAllAsyncCollectionResultOfT(DenyAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableAuthorizationSubscriptionResource.GetDenyAssignments"), data => new DenyAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new PageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetAllCollectionResultOfT(DenyAssignmentsRestClient, Id.SubscriptionId, filter, context, "MockableAuthorizationSubscriptionResource.GetDenyAssignments"), data => new DenyAssignmentResource(Client, data));
+            return new PageableWrapper<DenyAssignmentData, DenyAssignmentResource>(new DenyAssignmentsGetAllCollectionResultOfT(DenyAssignmentsRestClient, Guid.Parse(Id.SubscriptionId), filter, context, "MockableAuthorizationSubscriptionResource.GetDenyAssignments"), data => new DenyAssignmentResource(Client, data));
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             };
             return new AsyncPageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentsGetForSubscriptionAsyncCollectionResultOfT(
                 RoleAssignmentsRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 filter,
                 tenantId,
                 context,
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             };
             return new PageableWrapper<RoleAssignmentData, RoleAssignmentResource>(new RoleAssignmentsGetForSubscriptionCollectionResultOfT(
                 RoleAssignmentsRestClient,
-                Id.SubscriptionId,
+                Guid.Parse(Id.SubscriptionId),
                 filter,
                 tenantId,
                 context,
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ClassicAdministratorsGetClassicAdministratorsAsyncCollectionResultOfT(ClassicAdministratorsRestClient, Id.SubscriptionId, context, "MockableAuthorizationSubscriptionResource.GetClassicAdministrators");
+            return new ClassicAdministratorsGetClassicAdministratorsAsyncCollectionResultOfT(ClassicAdministratorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAuthorizationSubscriptionResource.GetClassicAdministrators");
         }
 
         /// <summary>
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.Authorization.Mocking
             {
                 CancellationToken = cancellationToken
             };
-            return new ClassicAdministratorsGetClassicAdministratorsCollectionResultOfT(ClassicAdministratorsRestClient, Id.SubscriptionId, context, "MockableAuthorizationSubscriptionResource.GetClassicAdministrators");
+            return new ClassicAdministratorsGetClassicAdministratorsCollectionResultOfT(ClassicAdministratorsRestClient, Guid.Parse(Id.SubscriptionId), context, "MockableAuthorizationSubscriptionResource.GetClassicAdministrators");
         }
     }
 }

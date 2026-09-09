@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Diagnostics;
+using Azure.Messaging.ServiceBus.Amqp.Framing;
 using Azure.Messaging.ServiceBus.Authorization;
 using Azure.Messaging.ServiceBus.Core;
 using Azure.Messaging.ServiceBus.Diagnostics;
@@ -362,6 +363,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="sessionId">The session to connect to.</param>
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver.</param>
+        /// <param name="isSessionExclusive">Whether or not the session is locked exclusively. Only applicable for session receivers.</param>
+        /// <param name="sessionLockToken">The session lock token to present when cooperatively taking over a non-exclusive session. Only applicable for session receivers.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A link for use with consumer operations.</returns>
         public virtual async Task<ReceivingAmqpLink> OpenReceiverLinkAsync(
@@ -372,7 +375,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
-            CancellationToken cancellationToken)
+            bool isSessionExclusive = true,
+            Guid? sessionLockToken = null,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(_disposed, nameof(AmqpConnectionScope));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -392,6 +397,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
                 receiveMode: receiveMode,
                 sessionId: sessionId,
                 isSessionReceiver: isSessionReceiver,
+                isSessionExclusive: isSessionExclusive,
+                sessionLockToken: sessionLockToken,
                 cancellationToken: cancellationToken
             ).ConfigureAwait(false);
 
@@ -637,6 +644,8 @@ namespace Azure.Messaging.ServiceBus.Amqp
         /// <param name="receiveMode">The <see cref="ServiceBusReceiveMode"/> used to specify how messages are received. Defaults to PeekLock mode.</param>
         /// <param name="sessionId">The session to receive from.</param>
         /// <param name="isSessionReceiver">Whether or not this is a sessionful receiver.</param>
+        /// <param name="isSessionExclusive">Whether or not the session is locked exclusively. Only applicable for session receivers.</param>
+        /// <param name="sessionLockToken">The session lock token to present when cooperatively taking over a non-exclusive session. Only applicable for session receivers.</param>
         /// <param name="cancellationToken">An optional <see cref="CancellationToken"/> instance to signal the request to cancel the operation.</param>
         /// <returns>A link for use for operations related to receiving events.</returns>
         protected virtual async Task<ReceivingAmqpLink> CreateReceivingLinkAsync(
@@ -649,7 +658,9 @@ namespace Azure.Messaging.ServiceBus.Amqp
             ServiceBusReceiveMode receiveMode,
             string sessionId,
             bool isSessionReceiver,
-            CancellationToken cancellationToken)
+            bool isSessionExclusive = true,
+            Guid? sessionLockToken = null,
+            CancellationToken cancellationToken = default)
         {
             Argument.AssertNotDisposed(IsDisposed, nameof(AmqpConnectionScope));
             cancellationToken.ThrowIfCancellationRequested<TaskCanceledException>();
@@ -683,10 +694,25 @@ namespace Azure.Messaging.ServiceBus.Amqp
 
                 var filters = new FilterSet();
 
-                // even if supplied sessionId is null, we need to add the Session filter if it is a session receiver
+                // even if the supplied sessionId is null, a session receiver needs a session filter on the link:
+                // the plain session filter for an exclusive session, or the composite non-exclusive session filter otherwise.
                 if (isSessionReceiver)
                 {
-                    filters.Add(AmqpClientConstants.SessionFilterName, sessionId);
+                    if (isSessionExclusive)
+                    {
+                        filters.Add(AmqpClientConstants.SessionFilterName, sessionId);
+                    }
+                    else
+                    {
+                        // Non-exclusive locking: a single composite filter carries the session id and (for takeover)
+                        // the lock token. Presence of this filter implies non-exclusive mode. The plain session
+                        // filter is omitted. A service that predates this change does not silently ignore the unknown
+                        // filter - it rejects the attach with an "invalid filter type" error - so this path depends on
+                        // the service-side change being deployed in the target region.
+                        filters.Add(
+                            AmqpClientConstants.NonExclusiveSessionFilterName,
+                            new AmqpNonExclusiveSessionFilterCodec { SessionId = sessionId, LockToken = sessionLockToken });
+                    }
                 }
 
                 var linkSettings = new AmqpLinkSettings

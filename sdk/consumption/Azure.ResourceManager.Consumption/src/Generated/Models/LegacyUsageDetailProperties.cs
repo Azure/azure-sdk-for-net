@@ -24,8 +24,8 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <summary> Initializes a new instance of <see cref="LegacyUsageDetailProperties"/>. </summary>
         /// <param name="billingAccountId"> Billing Account identifier. </param>
         /// <param name="billingAccountName"> Billing Account Name. </param>
-        /// <param name="billingPeriodStartOn"> The billing period start date. </param>
-        /// <param name="billingPeriodEndOn"> The billing period end date. </param>
+        /// <param name="billingPeriodStartsOn"> The billing period start date. </param>
+        /// <param name="billingPeriodEndsOn"> The billing period end date. </param>
         /// <param name="billingProfileId"> Billing Profile identifier. </param>
         /// <param name="billingProfileName"> Billing Profile Name. </param>
         /// <param name="accountOwnerId"> Account Owner Id. </param>
@@ -69,12 +69,12 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="benefitName"> Name of the applicable benefit. </param>
         /// <param name="pricingModel"> Identifier that indicates how the meter is priced. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LegacyUsageDetailProperties(string billingAccountId, string billingAccountName, DateTimeOffset? billingPeriodStartOn, DateTimeOffset? billingPeriodEndOn, string billingProfileId, string billingProfileName, string accountOwnerId, string accountName, string subscriptionId, string subscriptionName, DateTimeOffset? @on, string product, string partNumber, Guid? meterId, ConsumptionMeterDetailsInfo meterDetails, decimal? quantity, decimal? effectivePrice, decimal? cost, decimal? unitPrice, string billingCurrency, string resourceLocation, string consumedService, string resourceId, string resourceName, string serviceInfo1, string serviceInfo2, string additionalInfo, string invoiceSection, string costCenter, string resourceGroup, string reservationId, string reservationName, string productOrderId, string productOrderName, string offerId, bool? isAzureCreditEligible, string term, string publisherName, string publisherType, string planName, string chargeType, string frequency, decimal? payGPrice, string benefitId, string benefitName, ConsumptionPricingModelType? pricingModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal LegacyUsageDetailProperties(string billingAccountId, string billingAccountName, DateTimeOffset? billingPeriodStartsOn, DateTimeOffset? billingPeriodEndsOn, string billingProfileId, string billingProfileName, string accountOwnerId, string accountName, string subscriptionId, string subscriptionName, DateTimeOffset? @on, string product, string partNumber, Guid? meterId, ConsumptionMeterDetailsInfo meterDetails, decimal? quantity, decimal? effectivePrice, decimal? cost, decimal? unitPrice, string billingCurrency, string resourceLocation, string consumedService, string resourceId, string resourceName, string serviceInfo1, string serviceInfo2, string additionalInfo, string invoiceSection, string costCenter, string resourceGroup, string reservationId, string reservationName, string productOrderId, string productOrderName, string offerId, bool? isAzureCreditEligible, string term, string publisherName, string publisherType, string planName, string chargeType, string frequency, decimal? payGPrice, string benefitId, string benefitName, ConsumptionPricingModelType? pricingModel, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             BillingAccountId = billingAccountId;
             BillingAccountName = billingAccountName;
-            BillingPeriodStartOn = billingPeriodStartOn;
-            BillingPeriodEndOn = billingPeriodEndOn;
+            BillingPeriodStartsOn = billingPeriodStartsOn;
+            BillingPeriodEndsOn = billingPeriodEndsOn;
             BillingProfileId = billingProfileId;
             BillingProfileName = billingProfileName;
             AccountOwnerId = accountOwnerId;
@@ -127,10 +127,10 @@ namespace Azure.ResourceManager.Consumption.Models
         public string BillingAccountName { get; }
 
         /// <summary> The billing period start date. </summary>
-        public DateTimeOffset? BillingPeriodStartOn { get; }
+        public DateTimeOffset? BillingPeriodStartsOn { get; }
 
         /// <summary> The billing period end date. </summary>
-        public DateTimeOffset? BillingPeriodEndOn { get; }
+        public DateTimeOffset? BillingPeriodEndsOn { get; }
 
         /// <summary> Billing Profile identifier. </summary>
         public string BillingProfileId { get; }

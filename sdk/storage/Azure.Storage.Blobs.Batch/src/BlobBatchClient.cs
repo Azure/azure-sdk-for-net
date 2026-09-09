@@ -660,7 +660,7 @@ namespace Azure.Storage.Blobs.Specialized
             IEnumerable<Uri> blobUris,
             DeleteSnapshotsOption snapshotsOption = default,
             CancellationToken cancellationToken = default) =>
-            DeleteBlobsInteral(
+            DeleteBlobsInternal(
                 blobUris,
                 snapshotsOption,
                 false, // async
@@ -692,7 +692,7 @@ namespace Azure.Storage.Blobs.Specialized
             IEnumerable<Uri> blobUris,
             DeleteSnapshotsOption snapshotsOption = default,
             CancellationToken cancellationToken = default) =>
-            await DeleteBlobsInteral(
+            await DeleteBlobsInternal(
                 blobUris,
                 snapshotsOption,
                 true, // async
@@ -722,7 +722,7 @@ namespace Azure.Storage.Blobs.Specialized
         /// a failure to submit the batch occurs.  Individual sub-operation
         /// failures will be wrapped in an <see cref="AggregateException"/>.
         /// </remarks>
-        internal async Task<Response[]> DeleteBlobsInteral(
+        internal async Task<Response[]> DeleteBlobsInternal(
             IEnumerable<Uri> blobUris,
             DeleteSnapshotsOption snapshotsOption,
             bool async,

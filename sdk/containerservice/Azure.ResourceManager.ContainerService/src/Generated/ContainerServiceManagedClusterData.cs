@@ -204,24 +204,6 @@ namespace Azure.ResourceManager.ContainerService
             }
         }
 
-        /// <summary> The profile for Linux VMs in the Managed Cluster. </summary>
-        [WirePath("properties.linuxProfile")]
-        public ContainerServiceLinuxProfile LinuxProfile
-        {
-            get
-            {
-                return Properties is null ? default : Properties.LinuxProfile;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ManagedClusterProperties();
-                }
-                Properties.LinuxProfile = value;
-            }
-        }
-
         /// <summary> The profile for Windows VMs in the Managed Cluster. </summary>
         [WirePath("properties.windowsProfile")]
         public ManagedClusterWindowsProfile WindowsProfile
@@ -377,6 +359,24 @@ namespace Azure.ResourceManager.ContainerService
                     Properties = new ManagedClusterProperties();
                 }
                 Properties.IsFipsEnabled = value;
+            }
+        }
+
+        /// <summary> Whether to enable node hardening at the cluster level. When enabled, AKS applies hardened defaults for soft eviction thresholds, kube-reserved, and system-reserved on all Linux node pools in the cluster. Per-node-pool kubeletConfig settings take precedence over hardening defaults. On agent pools running Kubernetes 1.37 or later, node hardening is enabled by default and cannot be disabled; setting this field to false has no effect on those pools. </summary>
+        [WirePath("properties.enableNodeHardening")]
+        public bool? EnableNodeHardening
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableNodeHardening;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ManagedClusterProperties();
+                }
+                Properties.EnableNodeHardening = value;
             }
         }
 

@@ -156,13 +156,13 @@ namespace Azure.ResourceManager.Chaos.Mocking
             return new ChaosPrivateAccessResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="ChaosPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="PrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="ChaosPrivateEndpointConnectionResource"/> object. </returns>
-        public virtual ChaosPrivateEndpointConnectionResource GetChaosPrivateEndpointConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="PrivateEndpointConnectionResource"/> object. </returns>
+        public virtual PrivateEndpointConnectionResource GetPrivateEndpointConnectionResource(ResourceIdentifier id)
         {
-            ChaosPrivateEndpointConnectionResource.ValidateResourceId(id);
-            return new ChaosPrivateEndpointConnectionResource(Client, id);
+            PrivateEndpointConnectionResource.ValidateResourceId(id);
+            return new PrivateEndpointConnectionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ChaosActionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -235,6 +235,15 @@ namespace Azure.ResourceManager.Chaos.Mocking
         {
             ChaosScenarioRunResource.ValidateResourceId(id);
             return new ChaosScenarioRunResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="ChaosConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ChaosConnectionResource"/> object. </returns>
+        public virtual ChaosConnectionResource GetChaosConnectionResource(ResourceIdentifier id)
+        {
+            ChaosConnectionResource.ValidateResourceId(id);
+            return new ChaosConnectionResource(Client, id);
         }
     }
 }

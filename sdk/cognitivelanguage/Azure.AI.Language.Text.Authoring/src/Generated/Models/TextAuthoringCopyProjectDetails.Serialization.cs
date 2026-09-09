@@ -104,7 +104,7 @@ namespace Azure.AI.Language.Text.Authoring
             writer.WritePropertyName("accessToken"u8);
             writer.WriteStringValue(AccessToken);
             writer.WritePropertyName("expiresAt"u8);
-            writer.WriteStringValue(ExpiresAt, "O");
+            writer.WriteStringValue(ExpiresOn, "O");
             writer.WritePropertyName("targetResourceId"u8);
             writer.WriteStringValue(TargetResourceId);
             writer.WritePropertyName("targetResourceRegion"u8);
@@ -154,7 +154,7 @@ namespace Azure.AI.Language.Text.Authoring
             TextAuthoringProjectKind projectKind = default;
             string targetProjectName = default;
             string accessToken = default;
-            DateTimeOffset expiresAt = default;
+            DateTimeOffset expiresOn = default;
             string targetResourceId = default;
             string targetResourceRegion = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -177,7 +177,7 @@ namespace Azure.AI.Language.Text.Authoring
                 }
                 if (prop.NameEquals("expiresAt"u8))
                 {
-                    expiresAt = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("targetResourceId"u8))
@@ -199,7 +199,7 @@ namespace Azure.AI.Language.Text.Authoring
                 projectKind,
                 targetProjectName,
                 accessToken,
-                expiresAt,
+                expiresOn,
                 targetResourceId,
                 targetResourceRegion,
                 additionalBinaryDataProperties);

@@ -96,7 +96,7 @@ namespace Azure.Provisioning.MachineLearning
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<MachineLearningFeatureProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<MachineLearningFeatureSetVersion>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<MachineLearningFeatureSetVersion>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

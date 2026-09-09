@@ -170,7 +170,7 @@ namespace Azure.Provisioning.MachineLearning
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _sku = DefineModelProperty<MachineLearningSku>(nameof(Sku), new string[] { "sku" });
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
-            _parent = DefineResource<MachineLearningWorkspace>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<MachineLearningWorkspace>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

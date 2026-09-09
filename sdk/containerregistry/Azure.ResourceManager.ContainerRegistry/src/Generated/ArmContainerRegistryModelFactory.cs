@@ -92,6 +92,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
+        /// <summary> The status of an Azure resource at the time the operation was called. </summary>
         /// <param name="displayStatus"> The short label for the status. </param>
         /// <param name="message"> The detailed message for the status, including alerts and error messages. </param>
         /// <param name="timestamp"> The timestamp when the status was changed to the current value. </param>
@@ -101,6 +102,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryResourceStatus(displayStatus, message, timestamp, default);
         }
 
+        /// <summary> The network rule set for a container registry. </summary>
         /// <param name="defaultAction"> The default action of allow or deny when no other rules match. </param>
         /// <param name="virtualNetworkRules"> The virtual network rules. </param>
         /// <param name="ipRules"> The IP ACL rules. </param>
@@ -113,6 +115,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryNetworkRuleSet(defaultAction, (virtualNetworkRules ?? new ChangeTrackingList<ContainerRegistryVirtualNetworkRule>()).ToList(), (ipRules ?? new ChangeTrackingList<ContainerRegistryIPRule>()).ToList(), default);
         }
 
+        /// <summary> Virtual network rule. </summary>
         /// <param name="action"> The action of virtual network rule. </param>
         /// <param name="virtualNetworkSubnetResourceId"> Resource ID of a subnet, for example: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/virtualNetworks/{vnetName}/subnets/{subnetName}. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryVirtualNetworkRule"/> instance for mocking. </returns>
@@ -121,6 +124,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryVirtualNetworkRule(action, virtualNetworkSubnetResourceId, default);
         }
 
+        /// <summary> IP rule with specific IP or IP range in CIDR format. </summary>
         /// <param name="action"> The action of IP ACL rule. </param>
         /// <param name="ipAddressOrRange"> Specifies the IP or IP range in CIDR format. Only IPV4 address is allowed. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryIPRule"/> instance for mocking. </returns>
@@ -148,6 +152,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
+        /// <summary> The content trust policy for a container registry. </summary>
         /// <param name="policyType"> The type of trust policy. </param>
         /// <param name="status"> The value that indicates whether the policy is enabled or not. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryTrustPolicy"/> instance for mocking. </returns>
@@ -156,6 +161,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryTrustPolicy(policyType, status, default);
         }
 
+        /// <summary> The retention policy for a container registry. </summary>
         /// <param name="days"> The number of days to retain an untagged manifest after which it gets purged. </param>
         /// <param name="lastUpdatedOn"> The timestamp when the policy was last updated. </param>
         /// <param name="status"> The value that indicates whether the policy is enabled or not. </param>
@@ -165,6 +171,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryRetentionPolicy(days, lastUpdatedOn, status, default);
         }
 
+        /// <summary> The soft delete policy for a container registry. </summary>
         /// <param name="retentionDays"> The number of days after which a soft-deleted item is permanently deleted. </param>
         /// <param name="lastUpdatedOn"> The timestamp when the policy was last updated. </param>
         /// <param name="status"> The value that indicates whether the policy is enabled or not. </param>
@@ -174,6 +181,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistrySoftDeletePolicy(retentionDays, lastUpdatedOn, status, default);
         }
 
+        /// <summary> The ContainerRegistryEncryption. </summary>
         /// <param name="status"> Indicates whether or not the encryption is enabled for container registry. </param>
         /// <param name="keyVaultProperties"> Key vault properties. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryEncryption"/> instance for mocking. </returns>
@@ -182,6 +190,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryEncryption(status, keyVaultProperties, default);
         }
 
+        /// <summary> The ContainerRegistryKeyVaultProperties. </summary>
         /// <param name="keyIdentifier"> Key vault uri to access the encryption key. </param>
         /// <param name="versionedKeyIdentifier"> The fully qualified key identifier that includes the version of the key that is actually used for encryption. </param>
         /// <param name="identity"> The client id of the identity which will be used to access key vault. </param>
@@ -218,6 +227,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
+        /// <summary> The state of a private link service connection. </summary>
         /// <param name="status"> The private link service connection status. </param>
         /// <param name="description"> The description for connection status. For example if connection is rejected it can indicate reason for rejection. </param>
         /// <param name="actionsRequired"> A message indicating if changes on the service provider require any updates on the consumer. </param>
@@ -227,6 +237,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryPrivateLinkServiceConnectionState(status, description, actionsRequired, default);
         }
 
+        /// <summary> The SKU of a container registry. </summary>
         /// <param name="name"> The SKU name of the container registry. Required for registry creation. </param>
         /// <param name="tier"> The SKU tier based on the SKU name. </param>
         /// <returns> A new <see cref="Models.ContainerRegistrySku"/> instance for mocking. </returns>
@@ -275,6 +286,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default), default);
         }
 
+        /// <summary> The ContainerRegistryImportImageContent. </summary>
         /// <param name="source"> The source of the image. </param>
         /// <param name="targetTags"> List of strings of the form repo[:tag]. When tag is omitted the source will be used (or 'latest' if source tag is also omitted). </param>
         /// <param name="untaggedTargetRepositories"> List of strings of repository names to do a manifest only copy. No tag will be created. </param>
@@ -288,6 +300,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryImportImageContent(source, (targetTags ?? new ChangeTrackingList<string>()).ToList(), (untaggedTargetRepositories ?? new ChangeTrackingList<string>()).ToList(), mode, default);
         }
 
+        /// <summary> The ContainerRegistryImportSource. </summary>
         /// <param name="resourceId"> The resource identifier of the source Azure Container Registry. </param>
         /// <param name="registryUri"> The address of the source registry (e.g. 'mcr.microsoft.com'). </param>
         /// <param name="credentials"> Credentials used when importing from a registry uri. </param>
@@ -303,6 +316,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryImportSource(resourceId, registryUri, credentials, sourceImage, default);
         }
 
+        /// <summary> The ContainerRegistryImportSourceCredentials. </summary>
         /// <param name="username"> The username to authenticate with the source registry. </param>
         /// <param name="password"> The password used to authenticate with the source registry. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryImportSourceCredentials"/> instance for mocking. </returns>
@@ -311,6 +325,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryImportSourceCredentials(username, password, default);
         }
 
+        /// <summary> The quota usage for a container registry. </summary>
         /// <param name="name"> The name of the usage. </param>
         /// <param name="limit"> The limit of the usage. </param>
         /// <param name="currentValue"> The current value of the usage. </param>
@@ -321,6 +336,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryUsage(name, limit, currentValue, unit, default);
         }
 
+        /// <summary> The response from the ListCredentials operation. </summary>
         /// <param name="username"> The username for a container registry. </param>
         /// <param name="passwords"> The list of passwords for a container registry. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryListCredentialsResult"/> instance for mocking. </returns>
@@ -331,6 +347,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryListCredentialsResult(username, (passwords ?? new ChangeTrackingList<ContainerRegistryPassword>()).ToList(), default);
         }
 
+        /// <summary> The login password for the container registry. </summary>
         /// <param name="name"> The password name. </param>
         /// <param name="value"> The password value. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryPassword"/> instance for mocking. </returns>
@@ -339,6 +356,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryPassword(name, value, default);
         }
 
+        /// <summary> The parameters used to regenerate the login credential. </summary>
         /// <param name="name"> Specifies name of the password which should be regenerated -- password or password2. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryCredentialRegenerateContent"/> instance for mocking. </returns>
         public static ContainerRegistryCredentialRegenerateContent ContainerRegistryCredentialRegenerateContent(ContainerRegistryPasswordName name = default)
@@ -346,6 +364,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryCredentialRegenerateContent(name, default);
         }
 
+        /// <summary> The parameters used to generate credentials for a specified token or user of a container registry. </summary>
         /// <param name="tokenId"> The resource ID of the token for which credentials have to be generated. </param>
         /// <param name="expireOn"> The expiry date of the generated credentials after which the credentials become invalid. </param>
         /// <param name="name"> Specifies name of the password which should be regenerated if any -- password1 or password2. </param>
@@ -355,6 +374,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryGenerateCredentialsContent(tokenId, expireOn, name, default);
         }
 
+        /// <summary> The response from the GenerateCredentials operation. </summary>
         /// <param name="username"> The username for a container registry. </param>
         /// <param name="passwords"> The list of passwords for a container registry. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryGenerateCredentialsResult"/> instance for mocking. </returns>
@@ -365,6 +385,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryGenerateCredentialsResult(username, (passwords ?? new ChangeTrackingList<ContainerRegistryTokenPassword>()).ToList(), default);
         }
 
+        /// <summary> The password that will be used for authenticating the token of a container registry. </summary>
         /// <param name="createdOn"> The creation datetime of the password. </param>
         /// <param name="expireOn"> The expiry datetime of the password. </param>
         /// <param name="name"> The password name "password1" or "password2". </param>
@@ -375,6 +396,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryTokenPassword(createdOn, expireOn, name, value, default);
         }
 
+        /// <summary> A request to check whether a container registry name is available. </summary>
         /// <param name="name"> The name of the container registry. </param>
         /// <param name="resourceType"> The resource type of the container registry. This field must be set to 'Microsoft.ContainerRegistry/registries'. </param>
         /// <param name="resourceGroupName"> The resource group name of the container registry. </param>
@@ -385,6 +407,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryNameAvailabilityContent(name, resourceType, resourceGroupName, autoGeneratedDomainNameLabelScope, default);
         }
 
+        /// <summary> The result of a request to check the availability of a container registry name. </summary>
         /// <param name="availableLoginServerName"> The complete login server name with domain name label (DNL) hash, if available. </param>
         /// <param name="isNameAvailable"> The value that indicates whether the name is available. </param>
         /// <param name="reason"> If any, the reason that the name is not available. </param>
@@ -441,6 +464,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
+        /// <summary> The properties of the archive package source. </summary>
         /// <param name="sourceType"> The type of package source for a archive. </param>
         /// <param name="uri"> The external repository url. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryArchivePackageSourceProperties"/> instance for mocking. </returns>
@@ -508,6 +532,10 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
+        /// <summary>
+        /// Authentication configuration used by a cache rule to access an upstream registry.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.GoogleArtifactRegistryCacheAuthentication"/>.
+        /// </summary>
         /// <param name="authenticationType"> Authentication type discriminator. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryCacheAuthentication"/> instance for mocking. </returns>
         public static ContainerRegistryCacheAuthentication ContainerRegistryCacheAuthentication(string authenticationType = default)
@@ -515,6 +543,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new UnknownContainerRegistryCacheAuthentication(default, default);
         }
 
+        /// <summary> Google Artifact Registry (GAR) authentication configuration. </summary>
         /// <param name="projectNumber">
         /// The Google Cloud Platform project that is configured for authentication
         /// Permissions should be granted to principal://iam.googleapis.com/projects/{ProjectNumber}/locations/global/workloadIdentityPools/{WorkloadIdentityPool}/providers/{WorkloadIdentityProvider}/subject/{ManagedIdentityPrincipal}
@@ -561,6 +590,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
+        /// <summary> Authentication credential stored for an upstream. </summary>
         /// <param name="name"> The name of the credential. </param>
         /// <param name="usernameSecretIdentifier"> KeyVault Secret URI for accessing the username. </param>
         /// <param name="passwordSecretIdentifier"> KeyVault Secret URI for accessing the password. </param>
@@ -571,6 +601,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryAuthCredential(name, usernameSecretIdentifier, passwordSecretIdentifier, credentialHealth, default);
         }
 
+        /// <summary> The health of the auth credential. </summary>
         /// <param name="status"> The health status of credential. </param>
         /// <param name="errorCode"> Error code representing the health check error. </param>
         /// <param name="errorMessage"> Descriptive message representing the health check error. </param>
@@ -636,6 +667,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
+        /// <summary> The properties of the connected registry parent. </summary>
         /// <param name="id"> The resource ID of the parent to which the connected registry will be associated. </param>
         /// <param name="syncProperties"> The sync properties of the connected registry with its parent. </param>
         /// <returns> A new <see cref="Models.ConnectedRegistryParent"/> instance for mocking. </returns>
@@ -644,6 +676,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ConnectedRegistryParent(id, syncProperties, default);
         }
 
+        /// <summary> The sync properties of the connected registry with its parent. </summary>
         /// <param name="tokenId"> The resource ID of the ACR token used to authenticate the connected registry to its parent during sync. </param>
         /// <param name="schedule"> The cron expression indicating the schedule that the connected registry will sync with its parent. </param>
         /// <param name="syncWindow"> The time window during which sync is enabled for each schedule occurrence. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
@@ -663,6 +696,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
+        /// <summary> The login server properties of the connected registry. </summary>
         /// <param name="host"> The host of the connected registry. Can be FQDN or IP. </param>
         /// <param name="tls"> The TLS properties of the connected registry login server. </param>
         /// <returns> A new <see cref="Models.ConnectedRegistryLoginServer"/> instance for mocking. </returns>
@@ -671,6 +705,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ConnectedRegistryLoginServer(host, tls, default);
         }
 
+        /// <summary> The TLS properties of the connected registry login server. </summary>
         /// <param name="status"> Indicates whether HTTPS is enabled for the login server. </param>
         /// <param name="certificate"> The certificate used to configure HTTPS for the login server. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryTlsProperties"/> instance for mocking. </returns>
@@ -679,6 +714,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryTlsProperties(status, certificate, default);
         }
 
+        /// <summary> The TLS certificate properties of the connected registry login server. </summary>
         /// <param name="certificateType"> The type of certificate location. </param>
         /// <param name="certificateLocation"> Indicates the location of the certificates. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryTlsCertificateProperties"/> instance for mocking. </returns>
@@ -687,6 +723,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryTlsCertificateProperties(certificateType, certificateLocation, default);
         }
 
+        /// <summary> The logging properties of the connected registry. </summary>
         /// <param name="logLevel"> The verbosity of logs persisted on the connected registry. </param>
         /// <param name="auditLogStatus"> Indicates whether audit logs are enabled on the connected registry. </param>
         /// <returns> A new <see cref="Models.ConnectedRegistryLogging"/> instance for mocking. </returns>
@@ -695,6 +732,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ConnectedRegistryLogging(logLevel, auditLogStatus, default);
         }
 
+        /// <summary> The status detail properties of the connected registry. </summary>
         /// <param name="statusDetailType"> The component of the connected registry corresponding to the status. </param>
         /// <param name="code"> The HTTP status code. </param>
         /// <param name="description"> The description of the status. </param>
@@ -712,6 +750,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
+        /// <summary> The garbage collection properties of the connected registry. </summary>
         /// <param name="enabled"> Indicates whether garbage collection is enabled for the connected registry. </param>
         /// <param name="schedule"> The cron expression indicating the schedule that the connected registry will run garbage collection. </param>
         /// <returns> A new <see cref="Models.GarbageCollectionProperties"/> instance for mocking. </returns>
@@ -720,20 +759,21 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new GarbageCollectionProperties(enabled, schedule, default);
         }
 
+        /// <summary> The registry sync result of the connected registry. </summary>
         /// <param name="syncTrigger"> The action that triggered the most recent registry sync. </param>
         /// <param name="syncState"> The status of the connected registry's most recent sync. </param>
-        /// <param name="lastSyncStartOn"> The time that the connected registry's most recent sync started. </param>
-        /// <param name="lastSyncEndOn"> The time that the connected registry's most recent sync ended. </param>
-        /// <param name="lastSuccessfulSyncEndOn"> The time that the connected registry's most recent successful sync ended. </param>
+        /// <param name="lastSyncStartsOn"> The time that the connected registry's most recent sync started. </param>
+        /// <param name="lastSyncEndsOn"> The time that the connected registry's most recent sync ended. </param>
+        /// <param name="lastSuccessfulSyncEndsOn"> The time that the connected registry's most recent successful sync ended. </param>
         /// <returns> A new <see cref="Models.ContainerRegistrySyncResult"/> instance for mocking. </returns>
-        public static ContainerRegistrySyncResult ContainerRegistrySyncResult(ContainerRegistrySyncTrigger syncTrigger = default, ContainerRegistrySyncState syncState = default, DateTimeOffset? lastSyncStartOn = default, DateTimeOffset? lastSyncEndOn = default, DateTimeOffset? lastSuccessfulSyncEndOn = default)
+        public static ContainerRegistrySyncResult ContainerRegistrySyncResult(ContainerRegistrySyncTrigger syncTrigger = default, ContainerRegistrySyncState syncState = default, DateTimeOffset? lastSyncStartsOn = default, DateTimeOffset? lastSyncEndsOn = default, DateTimeOffset? lastSuccessfulSyncEndsOn = default)
         {
             return new ContainerRegistrySyncResult(
                 syncTrigger,
                 syncState,
-                lastSyncStartOn,
-                lastSyncEndOn,
-                lastSuccessfulSyncEndOn,
+                lastSyncStartsOn,
+                lastSyncEndsOn,
+                lastSuccessfulSyncEndsOn,
                 default);
         }
 
@@ -754,6 +794,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default), default);
         }
 
+        /// <summary> The parameters for updating the sync properties of the connected registry with its parent. </summary>
         /// <param name="schedule"> The cron expression indicating the schedule that the connected registry will sync with its parent. </param>
         /// <param name="syncWindow"> The time window during which sync is enabled for each schedule occurrence. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
         /// <param name="messageTtl"> The period of time for which a message is available to sync before it is expired. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
@@ -869,6 +910,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
+        /// <summary> The properties of the credentials that can be used for authenticating the token. </summary>
         /// <param name="certificates"></param>
         /// <param name="passwords"></param>
         /// <returns> A new <see cref="Models.ContainerRegistryTokenCredentials"/> instance for mocking. </returns>
@@ -880,6 +922,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryTokenCredentials((certificates ?? new ChangeTrackingList<ContainerRegistryTokenCertificate>()).ToList(), (passwords ?? new ChangeTrackingList<ContainerRegistryTokenPassword>()).ToList(), default);
         }
 
+        /// <summary> The properties of a certificate used for authenticating a token. </summary>
         /// <param name="name"></param>
         /// <param name="expireOn"> The expiry datetime of the certificate. </param>
         /// <param name="thumbprint"> The thumbprint of the certificate. </param>
@@ -922,6 +965,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
+        /// <summary> The properties of the export pipeline target. </summary>
         /// <param name="exportPipelineTargetPropertiesType"> The type of target for the export pipeline. </param>
         /// <param name="uri">
         /// The target uri of the export pipeline.
@@ -960,6 +1004,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
+        /// <summary> The properties of the import pipeline source. </summary>
         /// <param name="sourceType"> The type of source for the import pipeline. </param>
         /// <param name="uri">
         /// The source uri of the import pipeline.
@@ -994,6 +1039,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
+        /// <summary> The request properties provided for a pipeline run. </summary>
         /// <param name="pipelineResourceId"> The resource ID of the pipeline to run. </param>
         /// <param name="artifacts">
         /// List of source artifacts to be transferred by the pipeline. 
@@ -1018,6 +1064,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
+        /// <summary> The pipeline run source properties. </summary>
         /// <param name="sourceType"> The type of the source. </param>
         /// <param name="name"> The name of the source. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryPipelineRunSourceProperties"/> instance for mocking. </returns>
@@ -1026,6 +1073,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryPipelineRunSourceProperties(sourceType, name, default);
         }
 
+        /// <summary> The pipeline run target properties. </summary>
         /// <param name="targetType"> The type of the target. </param>
         /// <param name="name"> The name of the target. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryPipelineRunTargetProperties"/> instance for mocking. </returns>
@@ -1037,7 +1085,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="status"> The current status of the pipeline run. </param>
         /// <param name="importedArtifacts"> The artifacts imported in the pipeline run. </param>
         /// <param name="progressPercentage"> The percentage complete of the copy operation. </param>
-        /// <param name="startOn"> The time the pipeline run started. </param>
+        /// <param name="startsOn"> The time the pipeline run started. </param>
         /// <param name="finishOn"> The time the pipeline run finished. </param>
         /// <param name="source"> The source of the pipeline run. </param>
         /// <param name="target"> The target of the pipeline run. </param>
@@ -1045,7 +1093,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="sourceTriggerOn"> The timestamp when the source update happened. </param>
         /// <param name="pipelineRunErrorMessage"> The detailed error message for the pipeline run in the case of failure. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryPipelineRunResult"/> instance for mocking. </returns>
-        public static ContainerRegistryPipelineRunResult ContainerRegistryPipelineRunResult(string status = default, IEnumerable<string> importedArtifacts = default, string progressPercentage = default, DateTimeOffset? startOn = default, DateTimeOffset? finishOn = default, ContainerRegistryImportPipelineSourceProperties source = default, ContainerRegistryExportPipelineTargetProperties target = default, string catalogDigest = default, DateTimeOffset? sourceTriggerOn = default, string pipelineRunErrorMessage = default)
+        public static ContainerRegistryPipelineRunResult ContainerRegistryPipelineRunResult(string status = default, IEnumerable<string> importedArtifacts = default, string progressPercentage = default, DateTimeOffset? startsOn = default, DateTimeOffset? finishOn = default, ContainerRegistryImportPipelineSourceProperties source = default, ContainerRegistryExportPipelineTargetProperties target = default, string catalogDigest = default, DateTimeOffset? sourceTriggerOn = default, string pipelineRunErrorMessage = default)
         {
             importedArtifacts ??= new ChangeTrackingList<string>();
 
@@ -1053,7 +1101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 status,
                 (importedArtifacts ?? new ChangeTrackingList<string>()).ToList(),
                 progressPercentage is null ? default : new ProgressProperties(progressPercentage, default),
-                startOn,
+                startsOn,
                 finishOn,
                 source,
                 target,
@@ -1109,6 +1157,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default), default);
         }
 
+        /// <summary> The basic information of an event. </summary>
         /// <param name="id"> The event ID. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookEventInfo"/> instance for mocking. </returns>
         public static ContainerRegistryWebhookEventInfo ContainerRegistryWebhookEventInfo(Guid? id = default)
@@ -1116,6 +1165,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryWebhookEventInfo(id, default);
         }
 
+        /// <summary> The event for a webhook. </summary>
         /// <param name="id"> The event ID. </param>
         /// <param name="eventRequestMessage"> The event request message sent to the service URI. </param>
         /// <param name="eventResponseMessage"> The event response message received from the service URI. </param>
@@ -1125,6 +1175,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryWebhookEvent(id, default, eventRequestMessage, eventResponseMessage);
         }
 
+        /// <summary> The event request message sent to the service URI. </summary>
         /// <param name="content"> The content of the event request message. </param>
         /// <param name="headers"> The headers of the event request message. </param>
         /// <param name="method"> The HTTP method used to send the event request message. </param>
@@ -1165,6 +1216,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
+        /// <summary> The target of the event. </summary>
         /// <param name="mediaType"> The MIME type of the referenced object. </param>
         /// <param name="size"> The number of bytes of the content. Same as Length field. </param>
         /// <param name="digest"> The digest of the content, as defined by the Registry V2 HTTP API Specification. </param>
@@ -1190,6 +1242,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
+        /// <summary> The request that generated the event. </summary>
         /// <param name="id"> The ID of the request that initiated the event. </param>
         /// <param name="addr"> The IP or hostname and possibly port of the client connection that initiated the event. This is the RemoteAddr from the standard http request. </param>
         /// <param name="host"> The externally accessible hostname of the registry instance, as specified by the http host header on incoming requests. </param>
@@ -1207,6 +1260,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
+        /// <summary> The registry node that generated the event. Put differently, while the actor initiates the event, the source generates it. </summary>
         /// <param name="addr"> The IP or hostname and the port of the registry node that generated the event. Generally, this will be resolved by os.Hostname() along with the running port. </param>
         /// <param name="instanceId"> The running instance of an application. Changes after each restart. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookEventSource"/> instance for mocking. </returns>
@@ -1215,6 +1269,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryWebhookEventSource(addr, instanceId, default);
         }
 
+        /// <summary> The event response message received from the service URI. </summary>
         /// <param name="content"> The content of the event response message. </param>
         /// <param name="headers"> The headers of the event response message. </param>
         /// <param name="reasonPhrase"> The reason phrase of the event response message. </param>
@@ -1234,6 +1289,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
+        /// <summary> The configuration of service URI and custom headers for the webhook. </summary>
         /// <param name="serviceUri"> The service URI for the webhook to post notifications. </param>
         /// <param name="customHeaders"> Custom headers that will be added to the webhook notifications. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryWebhookCallbackConfig"/> instance for mocking. </returns>
@@ -1244,13 +1300,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryWebhookCallbackConfig(serviceUri, customHeaders ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> An object that represents a container registry. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the private link resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> The SKU of the container registry. </param>
         /// <param name="identity"> The identity of the container registry. </param>
         /// <param name="loginServer"> The URL that can be used to log into the container registry. </param>
@@ -1312,12 +1368,12 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryPrivateEndpointConnectionData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="privateEndpointId"> The resource of private endpoint. </param>
+        /// <summary> An object that represents a private endpoint connection for a container registry. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the private link resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="privateEndpointId"> This is private endpoint resource created with Microsoft.Network resource provider. </param>
         /// <param name="connectionState"> A collection of information about the state of the connection between service consumer and provider. </param>
         /// <param name="provisioningState"> The provisioning state of private endpoint connection resource. </param>
         /// <returns> A new <see cref="ContainerRegistry.ContainerRegistryPrivateEndpointConnectionData"/> instance for mocking. </returns>
@@ -1333,16 +1389,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryCacheRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> An object that represents a cache rule for a container registry. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the private link resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="credentialSetResourceId"> The ARM resource ID of the credential store which is associated with the cache rule. </param>
         /// <param name="sourceRepository"> Source repository pulled from upstream. </param>
         /// <param name="targetRepository">
         /// Target repository specified in docker pull command.
-        ///             Eg: docker pull myregistry.azurecr.io/{targetRepository}:{tag}
+        /// Eg: docker pull myregistry.azurecr.io/{targetRepository}:{tag}
         /// </param>
         /// <param name="createdOn"> The creation date of the cache rule. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -1367,17 +1423,17 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ConnectedRegistryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> An object that represents a connected registry for a container registry. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the private link resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="mode"> The mode of the connected registry resource that indicates the permissions of the registry. </param>
         /// <param name="version"> The current version of ACR runtime on the connected registry. </param>
         /// <param name="connectionState"> The current connection state of the connected registry. </param>
         /// <param name="lastActivityOn"> The last activity time of the connected registry. </param>
-        /// <param name="activationStatus"> The activation properties of the connected registry. </param>
+        /// <param name="activationStatus"> The activation status of the connected registry. </param>
         /// <param name="parent"> The parent of the connected registry. </param>
         /// <param name="clientTokenIds"> The list of the ACR token resource IDs used to authenticate clients to the connected registry. </param>
         /// <param name="loginServer"> The login server properties of the connected registry. </param>
@@ -1413,16 +1469,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryCredentialSetData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> An object that represents a credential set resource for a container registry. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the private link resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="identity"> Identities associated with the resource. This is used to access the KeyVault secrets. </param>
         /// <param name="loginServer"> The credentials are stored for this upstream or login server. </param>
         /// <param name="authCredentials">
         /// List of authentication credentials stored for an upstream.
-        ///             Usually consists of a primary and an optional secondary credential.
+        /// Usually consists of a primary and an optional secondary credential.
         /// </param>
         /// <param name="createdOn"> The creation date of credential store resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -1440,15 +1496,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryImportSource"/>. </summary>
+        /// <summary> The ContainerRegistryImportSource. </summary>
         /// <param name="resourceId"> The resource identifier of the source Azure Container Registry. </param>
-        /// <param name="registryAddress"> The address of the source registry (e.g. 'mcr.microsoft.com'). </param>
+        /// <param name="registryAddress"></param>
         /// <param name="credentials"> Credentials used when importing from a registry uri. </param>
         /// <param name="sourceImage">
         /// Repository name of the source image.
-        ///             Specify an image by repository ('hello-world'). This will use the 'latest' tag.
-        ///             Specify an image by tag ('hello-world:latest').
-        ///             Specify an image by sha256-based manifest digest ('hello-world@sha256:abc123').
+        /// Specify an image by repository ('hello-world'). This will use the 'latest' tag.
+        /// Specify an image by tag ('hello-world:latest').
+        /// Specify an image by sha256-based manifest digest ('hello-world@sha256:abc123').
         /// </param>
         /// <returns> A new <see cref="Models.ContainerRegistryImportSource"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -1457,7 +1513,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryImportSource(resourceId, default, credentials, sourceImage, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryWebhookCreateOrUpdateContent"/>. </summary>
+        /// <summary> The parameters for creating a webhook. </summary>
         /// <param name="tags"> The tags for the webhook. </param>
         /// <param name="location"> The location of the webhook. This cannot be changed after the resource is created. </param>
         /// <param name="serviceUri"> The service URI for the webhook to post notifications. </param>
@@ -1478,7 +1534,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default), default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryNameAvailabilityContent"/>. </summary>
+        /// <summary> A request to check whether a container registry name is available. </summary>
         /// <param name="name"> The name of the container registry. </param>
         /// <param name="resourceType"> The resource type of the container registry. This field must be set to 'Microsoft.ContainerRegistry/registries'. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryNameAvailabilityContent"/> instance for mocking. </returns>
@@ -1488,7 +1544,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryNameAvailabilityContent(name, resourceType, default, default, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryNameAvailableResult"/>. </summary>
+        /// <summary> The result of a request to check the availability of a container registry name. </summary>
         /// <param name="isNameAvailable"> The value that indicates whether the name is available. </param>
         /// <param name="reason"> If any, the reason that the name is not available. </param>
         /// <param name="message"> If any, the error message that provides more detail for the reason that the name is not available. </param>
@@ -1499,13 +1555,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             return new ContainerRegistryNameAvailableResult(default, isNameAvailable, reason, message, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> An object that represents a container registry. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the private link resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> The SKU of the container registry. </param>
         /// <param name="identity"> The identity of the container registry. </param>
         /// <param name="loginServer"> The URL that can be used to log into the container registry. </param>
@@ -1564,13 +1620,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ContainerRegistry.ContainerRegistryData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> An object that represents a container registry. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the private link resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="sku"> The SKU of the container registry. </param>
         /// <param name="identity"> The identity of the container registry. </param>
         /// <param name="loginServer"> The URL that can be used to log into the container registry. </param>

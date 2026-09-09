@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="properties"> The properties of the Workspace resource. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="properties"/> is null. </exception>
-        public ChaosWorkspaceData(AzureLocation location, ChaosWorkspaceProperties properties) : base(location)
+        public ChaosWorkspaceData(AzureLocation location, WorkspaceProperties properties) : base(location)
         {
             Argument.AssertNotNull(properties, nameof(properties));
 
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Chaos
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="properties"> The properties of the Workspace resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ChaosWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, ChaosWorkspaceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
+        internal ChaosWorkspaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ManagedServiceIdentity identity, WorkspaceProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Identity = identity;
             Properties = properties;
@@ -51,6 +51,6 @@ namespace Azure.ResourceManager.Chaos
         public ManagedServiceIdentity Identity { get; set; }
 
         /// <summary> The properties of the Workspace resource. </summary>
-        public ChaosWorkspaceProperties Properties { get; set; }
+        public WorkspaceProperties Properties { get; set; }
     }
 }

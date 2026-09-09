@@ -373,11 +373,12 @@
 
   <!--TODO: end-->
 
-  <!-- *********** Files needed for System.ClientModel distributed tracing ************* -->
+  <!-- *********** Files needed for System.ClientModel shared client features ************* -->
   <ItemGroup Condition="'$(IncludeSystemClientModelSharedSourceForTracing)' == 'true'">
     <Compile Include="$(SystemClientModelSharedSource)ClientDiagnostics.cs" LinkBase="Shared/SystemClientModel" />
     <Compile Include="$(SystemClientModelSharedSource)DiagnosticScope.cs" LinkBase="Shared/SystemClientModel" />
     <Compile Include="$(SystemClientModelSharedSource)DiagnosticScopeFactory.cs" LinkBase="Shared/SystemClientModel" />
+    <Compile Include="$(SystemClientModelSharedSource)OperationResultHelpers.cs" LinkBase="Shared/SystemClientModel" />
   </ItemGroup>
 
   <!-- *********** Files needed for LRO ************* -->

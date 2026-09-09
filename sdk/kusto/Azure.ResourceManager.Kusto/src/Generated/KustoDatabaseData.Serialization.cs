@@ -15,7 +15,10 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Kusto
 {
-    /// <summary> Class representing a Kusto database. </summary>
+    /// <summary>
+    /// Class representing a Kusto database.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="KustoReadWriteDatabase"/> and <see cref="KustoReadOnlyFollowingDatabase"/>.
+    /// </summary>
     public partial class KustoDatabaseData : ResourceData, IJsonModel<KustoDatabaseData>
     {
         /// <param name="data"> The data to parse. </param>

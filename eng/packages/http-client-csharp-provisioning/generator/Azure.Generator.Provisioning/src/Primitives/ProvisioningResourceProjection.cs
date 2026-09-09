@@ -18,7 +18,7 @@ namespace Azure.Generator.Provisioning.Primitives
         internal ProvisioningResourceProjection(
             InputModelType resourceModel,
             string resourceName,
-            string resourceType,
+            ResourceTypePattern resourceType,
             string? singletonResourceName,
             RequestPathPattern? parentResourceId,
             ArmResourceNameConstraints nameConstraints,
@@ -58,7 +58,7 @@ namespace Azure.Generator.Provisioning.Primitives
         /// <summary>
         /// Gets the concrete ARM resource type emitted in Bicep.
         /// </summary>
-        internal string ResourceType { get; }
+        internal ResourceTypePattern ResourceType { get; }
 
         /// <summary>
         /// Gets the fixed singleton resource name when all collapsed metadata
@@ -153,7 +153,7 @@ namespace Azure.Generator.Provisioning.Primitives
             return new(
                 resourceModel,
                 GetRequiredString(element, "resourceName"),
-                GetRequiredString(element, "resourceType"),
+                new ResourceTypePattern(GetRequiredString(element, "resourceType")),
                 GetOptionalString(element, "singletonResourceName"),
                 GetOptionalString(element, "parentResourceId") is string parentResourceId
                     ? new RequestPathPattern(parentResourceId)

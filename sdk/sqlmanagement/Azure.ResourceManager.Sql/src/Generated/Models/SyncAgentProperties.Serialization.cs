@@ -100,10 +100,10 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WritePropertyName("isUpToDate"u8);
                 writer.WriteBooleanValue(IsUpToDate.Value);
             }
-            if (options.Format != "W" && Optional.IsDefined(ExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
-                writer.WriteStringValue(ExpireOn.Value, "O");
+                writer.WriteStringValue(ExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(Version))
             {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql.Models
             DateTimeOffset? lastAliveOn = default;
             SyncAgentState? state = default;
             bool? isUpToDate = default;
-            DateTimeOffset? expireOn = default;
+            DateTimeOffset? expiresOn = default;
             string version = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Sql.Models
                     {
                         continue;
                     }
-                    expireOn = prop.Value.GetDateTimeOffset("O");
+                    expiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("version"u8))
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sql.Models
                 lastAliveOn,
                 state,
                 isUpToDate,
-                expireOn,
+                expiresOn,
                 version,
                 additionalBinaryDataProperties);
         }
