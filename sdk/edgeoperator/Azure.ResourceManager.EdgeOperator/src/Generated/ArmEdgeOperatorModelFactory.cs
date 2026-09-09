@@ -18,6 +18,15 @@ namespace Azure.ResourceManager.EdgeOperator.Models
     public static partial class ArmEdgeOperatorModelFactory
     {
 
+        /// <summary>
+        /// The system readiness status for Azure Local Disconnected Operations (ALDO).
+        /// Reports whether the ALDO system is ready. This is a read-only singleton resource — the only
+        /// accepted resource name is `default`.
+        /// The subscription in the request path must be the Operator subscription. This subscription is used
+        /// only for the access check: the resource provider verifies it on every request, and only operators
+        /// have access to the Operator subscription and can therefore invoke the Microsoft.EdgeOperator APIs.
+        /// Requests scoped to any other subscription are rejected.
+        /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -35,6 +44,10 @@ namespace Azure.ResourceManager.EdgeOperator.Models
                 default);
         }
 
+        /// <summary>
+        /// The readiness state of the Azure Local Disconnected Operations (ALDO) system.
+        /// All fields are computed by the resource provider and are read-only.
+        /// </summary>
         /// <param name="systemReady"> Indicates whether the system is ready. `true` when every readiness category has reported 100 percent. </param>
         /// <param name="categories"> The readiness state reported for each provider-defined category. </param>
         /// <returns> A new <see cref="Models.SystemReadinessProperties"/> instance for mocking. </returns>
@@ -45,6 +58,7 @@ namespace Azure.ResourceManager.EdgeOperator.Models
             return new SystemReadinessProperties(systemReady, (categories ?? new ChangeTrackingList<SystemReadinessCategory>()).ToList(), default);
         }
 
+        /// <summary> The readiness state reported for a single provider-defined category. </summary>
         /// <param name="categoryName"> The provider-defined name of the readiness category (for example, `services`, `diagnostics`, `identity`, `networking`). Categories may be added, renamed, or removed without an API-version change and must be treated as an open string. </param>
         /// <param name="readinessPercentage"> The readiness percentage reported by the category, from 0 (not ready) to 100 (fully ready). </param>
         /// <param name="errorMessageDetails"> The error messages reported for the category. The list is empty when no specific errors are available. </param>
