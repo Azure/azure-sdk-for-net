@@ -95,6 +95,24 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
             }
         }
 
+        /// <summary> Scope at which the operator will be installed. </summary>
+        [CodeGenMember("Scope")]
+        public BicepValue<FluxConfigurationScopeType> InstallationScope
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstallationScope;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FluxConfigurationProperties();
+                }
+                Properties.InstallationScope = value;
+            }
+        }
+
         /// <summary> Gets or sets the Namespace. </summary>
         public BicepValue<string> Namespace
         {
@@ -383,24 +401,6 @@ namespace Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
                     Properties = new FluxConfigurationProperties();
                 }
                 return Properties.ErrorMessage;
-            }
-        }
-
-        /// <summary> Gets or sets the InstallationScope. </summary>
-        [CodeGenMember("Scope")]
-        public BicepValue<FluxConfigurationScopeType> InstallationScope
-        {
-            get
-            {
-                return Properties is null ? default : Properties.InstallationScope;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new FluxConfigurationProperties();
-                }
-                Properties.InstallationScope = value;
             }
         }
 

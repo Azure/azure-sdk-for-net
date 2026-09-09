@@ -10,6 +10,9 @@
 
 ### Other Changes
 
+### Sample Updates
+- Added sample for `WebIQPreviewTool`.
+
 ## 3.0.0-beta.2 (2026-09-03)
 
 ### Other Changes

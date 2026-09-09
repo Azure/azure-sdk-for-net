@@ -211,7 +211,8 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         BrowserAutomation,
         ReminderPreview,
         WorkIQ,
-        FabricIQ
+        FabricIQ,
+        WebIQ
     }
 
     private AzureAISearchToolIndex GetAISearchIndex()
@@ -331,6 +332,12 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
             {
                 Name = "reminder-preview",
                 Description = "Test reminder preview"
+            },
+            ToolType.WebIQ => new WebIQPreviewToolboxTool(TestEnvironment.WEBIQ_CONNECTION_ID)
+            {
+                Name = "web-iq",
+                Description = "Test Web IQ",
+                RequireApproval = new McpToolCallApprovalPolicy(GlobalMcpToolCallApprovalPolicy.NeverRequireApproval),
             },
             _ => throw new InvalidOperationException($"Unknown tool type {toolType}")
         };
