@@ -763,14 +763,18 @@ namespace Azure.Generator.Management.Visitors
         /// </summary>
         private static ScopedApi<bool>? BuildAllNullCondition(IEnumerable<ParameterProvider> parameters)
         {
-            ScopedApi<bool>? result = null;
-            foreach (var parameter in parameters)
+            var parameterList = parameters.ToArray();
+            // A non-nullable value-type factory parameter is always present, so the nested model must always be
+            // constructed. Building a guard from only its nullable siblings would discard that value whenever
+            // all of those siblings are null.
+            if (parameterList.Any(parameter => parameter.Type.IsValueType && !parameter.Type.IsNullable))
             {
-                if (parameter.Type.IsValueType && !parameter.Type.IsNullable)
-                {
-                    continue;
-                }
+                return null;
+            }
 
+            ScopedApi<bool>? result = null;
+            foreach (var parameter in parameterList)
+            {
                 result = result is null
                     ? parameter.Is(Null)
                     : result.And(parameter.Is(Null));

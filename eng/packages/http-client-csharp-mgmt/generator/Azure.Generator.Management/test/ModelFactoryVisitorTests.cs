@@ -609,6 +609,51 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void ModelFactoryVisitorAlwaysConstructsNestedModelForNonNullableValueParameter()
+        {
+            var nestedModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("annotation", InputPrimitiveType.String),
+                    InputFactory.Property("count", InputPrimitiveType.Int32, isRequired: true)
+                ]);
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("properties", nestedModel)]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel, nestedModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            _ = plugin.Object.TypeFactory.CreateModel(nestedModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var annotationParameter = new ParameterProvider("annotation", $"", typeof(string), Default);
+            var countParameter = new ParameterProvider("count", $"", typeof(int), Default);
+            var signature = new MethodSignature(
+                "TestModel",
+                $"Creates a test model.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"A test model.",
+                [annotationParameter, countParameter]);
+            var constructorArguments = model.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name == "properties" ? Default : parameter.DefaultValue ?? Default)
+                .ToArray();
+            modelFactory.Update(methods:
+                [new MethodProvider(signature, Return(New.Instance(model.Type, constructorArguments)), modelFactory)]);
+
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType",
+                BindingFlags.NonPublic | BindingFlags.Instance)!;
+            visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+
+            var rendered = new TypeProviderWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.TestProperties(annotation, count,"));
+            Assert.That(rendered, Does.Not.Contain("annotation is null) ? default"));
+        }
+
+        [Test]
         public void SkipsAmbiguousDuplicateFactoryParameters()
         {
             var inputModel = InputFactory.Model(
