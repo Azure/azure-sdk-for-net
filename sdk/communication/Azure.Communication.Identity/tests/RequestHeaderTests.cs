@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Azure.Core;
+using Azure.Core.Pipeline;
 using Azure.Core.TestFramework;
 using NUnit.Framework;
 
@@ -93,39 +94,64 @@ namespace Azure.Communication.Identity.Tests
             Assert.That(Value(headers, "x-ms-return-client-request-id"), Is.EqualTo("true"));
         }
 
-        /// <summary>Operations that return a body must negotiate JSON.</summary>
+        /// <summary>Every operation negotiates JSON, including the two that return 204.</summary>
         [TestCaseSource(nameof(BodyOperations))]
-        public async Task OperationsReturningContentSendAcceptAndContentType(Func<CommunicationIdentityClient, Task> act, int status, string? payload)
+        [TestCaseSource(nameof(NoContentOperations))]
+        public async Task EveryOperationSendsAccept(Func<CommunicationIdentityClient, Task> act, int status, string? payload)
         {
             HttpHeader[] headers = await Send(act, status, payload);
 
-            Assert.That(Value(headers, "Accept"), Is.EqualTo("application/json"));
+            Assert.That(Value(headers, "Accept"), Is.EqualTo("application/json"),
+                "AutoRest sent Accept on every operation. The DPG emitter omits it for no-content " +
+                "responses, so DeleteUser and RevokeTokens restore it explicitly.");
+        }
+
+        /// <summary>Operations that send a body declare its type.</summary>
+        [TestCaseSource(nameof(BodyOperations))]
+        public async Task OperationsSendingContentSendContentType(Func<CommunicationIdentityClient, Task> act, int status, string? payload)
+        {
+            HttpHeader[] headers = await Send(act, status, payload);
+
             Assert.That(Value(headers, "Content-Type"), Is.EqualTo("application/json"));
         }
 
         /// <summary>
-        /// Characterises a known deviation, deliberately pinned rather than ignored.
-        ///
-        /// Under AutoRest, DeleteUser and RevokeTokens sent "Accept: application/json" even though
-        /// both return 204 No Content. The TypeSpec DPG emitter does not emit an Accept header for
-        /// no-content responses, so these two requests now go out without one. Java measured the
-        /// same change on the same two operations independently, so this is emitter behaviour
-        /// rather than anything specific to this package.
-        ///
-        /// It is assessed as low risk, because the service returns no body to negotiate, and no
-        /// recorded session exercises either operation. It is pinned here so the difference is
-        /// visible and so that restoring the header is a deliberate, reviewed change: when Accept
-        /// comes back, this test fails and must be replaced by an assertion that it is present.
+        /// Restoring a default must not remove the ability to override it. A caller-registered
+        /// policy that sets Accept has to reach the wire unchanged, which is what the pre-migration
+        /// client did. A fix that writes the header unconditionally passes the tests above and
+        /// fails this one.
         /// </summary>
         [TestCaseSource(nameof(NoContentOperations))]
-        public async Task NoContentOperationsDoNotSendAccept_KnownDeviationFromAutoRest(Func<CommunicationIdentityClient, Task> act, int status, string? payload)
+        public async Task CallerSuppliedAcceptIsNotOverwritten(Func<CommunicationIdentityClient, Task> act, int status, string? payload)
         {
-            HttpHeader[] headers = await Send(act, status, payload);
+            var sent = new List<HttpHeader[]>();
+            var transport = new MockTransport(request =>
+            {
+                sent.Add(request.Headers.ToArray());
+                return new MockResponse(status);
+            });
 
-            Assert.That(Value(headers, "Accept"), Is.Null,
-                "Accept is now being sent on a no-content operation. If that is intended, this test " +
-                "should be replaced by an assertion that Accept equals application/json, matching " +
-                "the pre-migration AutoRest behaviour.");
+            var options = new CommunicationIdentityClientOptions { Transport = transport };
+            options.AddPolicy(new SetAcceptPolicy("application/custom"), HttpPipelinePosition.PerCall);
+
+            var client = new CommunicationIdentityClient(
+                new Uri("https://contoso.communication.azure.com"),
+                new AzureKeyCredential(Convert.ToBase64String(Encoding.UTF8.GetBytes("probe-key"))),
+                options);
+
+            try { await act(client).ConfigureAwait(false); } catch { }
+
+            Assert.That(sent, Is.Not.Empty, "no request reached the transport");
+            Assert.That(Value(sent[0], "Accept"), Is.EqualTo("application/custom"),
+                "a caller-supplied Accept must survive; the restoration only fills in a missing value");
+        }
+
+        private sealed class SetAcceptPolicy : HttpPipelineSynchronousPolicy
+        {
+            private readonly string _value;
+            public SetAcceptPolicy(string value) => _value = value;
+            public override void OnSendingRequest(HttpMessage message)
+                => message.Request.Headers.SetValue("Accept", _value);
         }
     }
 }

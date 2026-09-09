@@ -9,10 +9,6 @@ using System.ClientModel.Primitives;
 
 namespace Azure.Communication.Identity
 {
-    /// <summary>
-    /// Context class which will be filled in by the System.ClientModel.SourceGeneration.
-    /// For more information <see href='https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/System.ClientModel/src/docs/ModelReaderWriterContext.md' />
-    /// </summary>
     [ModelReaderWriterBuildable(typeof(CommunicationIdentity))]
     [ModelReaderWriterBuildable(typeof(CommunicationIdentityAccessToken))]
     [ModelReaderWriterBuildable(typeof(CommunicationIdentityAccessTokenRequest))]
@@ -22,7 +18,7 @@ namespace Azure.Communication.Identity
     [ModelReaderWriterBuildable(typeof(TeamsExtensionAssignmentResponse))]
     [ModelReaderWriterBuildable(typeof(TeamsExtensionExchangeTokenRequest))]
     [ModelReaderWriterBuildable(typeof(TeamsUserExchangeTokenRequest))]
-    public partial class AzureCommunicationIdentityContext : ModelReaderWriterContext
+    internal partial class AzureCommunicationIdentityContext : ModelReaderWriterContext
     {
     }
 }

@@ -207,7 +207,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                return RestClient.Delete(communicationUser.Id, cancellationToken);
+                return RestClient.Delete(communicationUser.Id, AcceptJson(cancellationToken));
             }
             catch (Exception ex)
             {
@@ -225,7 +225,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                return await RestClient.DeleteAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
+                return await RestClient.DeleteAsync(communicationUser.Id, AcceptJson(cancellationToken)).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -312,7 +312,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                return RestClient.RevokeAccessTokens(communicationUser.Id, cancellationToken);
+                return RestClient.RevokeAccessTokens(communicationUser.Id, AcceptJson(cancellationToken));
             }
             catch (Exception ex)
             {
@@ -330,7 +330,7 @@ namespace Azure.Communication.Identity
             scope.Start();
             try
             {
-                return await RestClient.RevokeAccessTokensAsync(communicationUser.Id, cancellationToken).ConfigureAwait(false);
+                return await RestClient.RevokeAccessTokensAsync(communicationUser.Id, AcceptJson(cancellationToken)).ConfigureAwait(false);
             }
             catch (Exception ex)
             {
@@ -376,6 +376,16 @@ namespace Azure.Communication.Identity
                 scope.Failed(ex);
                 throw;
             }
+        }
+
+        // The two no-content operations lose Accept: application/json under the DPG emitter.
+        // Restore it per-operation rather than with a pipeline-wide policy, so only the affected
+        // requests are touched.
+        private static RequestContext AcceptJson(CancellationToken cancellationToken)
+        {
+            var context = new RequestContext { CancellationToken = cancellationToken };
+            context.AddPolicy(AcceptJsonPolicy.Shared, HttpPipelinePosition.PerCall);
+            return context;
         }
 
         private static CommunicationIdentityCreateRequest BuildCreateRequest(IEnumerable<CommunicationTokenScope> scopes, int? expiresInMinutes)
