@@ -145,7 +145,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the Replicas. </summary>
-        public BicepList<ReplicaExecutionStatus> DetailedStatusReplicas
+        public BicepList<ContainerAppJobExecutionReplicaStatus> DetailedStatusReplicas
         {
             get
             {

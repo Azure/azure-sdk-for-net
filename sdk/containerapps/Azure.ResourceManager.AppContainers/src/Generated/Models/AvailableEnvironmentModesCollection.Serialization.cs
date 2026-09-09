@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (AvailableEnvironmentMode item in Value)
+            foreach (ContainerAppAvailableEnvironmentMode item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -141,17 +141,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            IList<AvailableEnvironmentMode> value = default;
+            IList<ContainerAppAvailableEnvironmentMode> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<AvailableEnvironmentMode> array = new List<AvailableEnvironmentMode>();
+                    List<ContainerAppAvailableEnvironmentMode> array = new List<ContainerAppAvailableEnvironmentMode>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(AvailableEnvironmentMode.DeserializeAvailableEnvironmentMode(item, options));
+                        array.Add(ContainerAppAvailableEnvironmentMode.DeserializeContainerAppAvailableEnvironmentMode(item, options));
                     }
                     value = array;
                     continue;

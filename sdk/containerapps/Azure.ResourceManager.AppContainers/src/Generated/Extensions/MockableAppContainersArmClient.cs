@@ -48,13 +48,13 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return new SandboxGroupResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="VnetConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="SandboxGroupVnetConnectionResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="VnetConnectionResource"/> object. </returns>
-        public virtual VnetConnectionResource GetVnetConnectionResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SandboxGroupVnetConnectionResource"/> object. </returns>
+        public virtual SandboxGroupVnetConnectionResource GetSandboxGroupVnetConnectionResource(ResourceIdentifier id)
         {
-            VnetConnectionResource.ValidateResourceId(id);
-            return new VnetConnectionResource(Client, id);
+            SandboxGroupVnetConnectionResource.ValidateResourceId(id);
+            return new SandboxGroupVnetConnectionResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ContainerAppSourceControlResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -93,13 +93,13 @@ namespace Azure.ResourceManager.AppContainers.Mocking
             return new ContainerAppRevisionResource(Client, id);
         }
 
-        /// <summary> Gets an object representing a <see cref="LabelHistoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <summary> Gets an object representing a <see cref="ContainerAppLabelHistoryResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
-        /// <returns> Returns a <see cref="LabelHistoryResource"/> object. </returns>
-        public virtual LabelHistoryResource GetLabelHistoryResource(ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppLabelHistoryResource"/> object. </returns>
+        public virtual ContainerAppLabelHistoryResource GetContainerAppLabelHistoryResource(ResourceIdentifier id)
         {
-            LabelHistoryResource.ValidateResourceId(id);
-            return new LabelHistoryResource(Client, id);
+            ContainerAppLabelHistoryResource.ValidateResourceId(id);
+            return new ContainerAppLabelHistoryResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="ContainerAppReplicaResource"/> along with the instance operations that can be performed on it but with no data. </summary>

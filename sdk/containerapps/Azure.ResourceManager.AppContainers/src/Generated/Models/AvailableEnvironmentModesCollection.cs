@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="AvailableEnvironmentModesCollection"/>. </summary>
         /// <param name="value"> The AvailableEnvironmentMode items on this page. </param>
-        internal AvailableEnvironmentModesCollection(IEnumerable<AvailableEnvironmentMode> value)
+        internal AvailableEnvironmentModesCollection(IEnumerable<ContainerAppAvailableEnvironmentMode> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="value"> The AvailableEnvironmentMode items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AvailableEnvironmentModesCollection(IList<AvailableEnvironmentMode> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AvailableEnvironmentModesCollection(IList<ContainerAppAvailableEnvironmentMode> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> The AvailableEnvironmentMode items on this page. </summary>
         [WirePath("value")]
-        public IList<AvailableEnvironmentMode> Value { get; }
+        public IList<ContainerAppAvailableEnvironmentMode> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

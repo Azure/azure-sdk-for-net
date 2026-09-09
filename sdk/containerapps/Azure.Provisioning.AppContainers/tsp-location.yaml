@@ -1,4 +1,4 @@
 directory: specification/app/resource-manager/Microsoft.App/ContainerApps
-commit: d3e7bba4076c6b353623c56ca774e6b07258c5ef
+commit: 7d24042c13fee222a6bb9d57e9d05d77ef4cde00
 repo: ArcturusZhang/azure-rest-api-specs
 emitterPackageJsonPath: "eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json"

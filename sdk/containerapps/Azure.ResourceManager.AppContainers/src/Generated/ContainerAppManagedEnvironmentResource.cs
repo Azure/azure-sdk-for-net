@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="content"> The migration eligibility check request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckMigrationEligibilityResult>> CheckMigrationEligibilityAsync(CheckMigrationEligibilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppManagedEnvironmentMigrationEligibilityResult>> CheckMigrationEligibilityAsync(ContainerAppManagedEnvironmentMigrationEligibilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -559,9 +559,9 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateCheckMigrationEligibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CheckMigrationEligibilityContent.ToRequestContent(content), context);
+                HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateCheckMigrationEligibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppManagedEnvironmentMigrationEligibilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CheckMigrationEligibilityResult> response = Response.FromValue(CheckMigrationEligibilityResult.FromResponse(result), result);
+                Response<ContainerAppManagedEnvironmentMigrationEligibilityResult> response = Response.FromValue(ContainerAppManagedEnvironmentMigrationEligibilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="content"> The migration eligibility check request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckMigrationEligibilityResult> CheckMigrationEligibility(CheckMigrationEligibilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppManagedEnvironmentMigrationEligibilityResult> CheckMigrationEligibility(ContainerAppManagedEnvironmentMigrationEligibilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -611,9 +611,9 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateCheckMigrationEligibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CheckMigrationEligibilityContent.ToRequestContent(content), context);
+                HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateCheckMigrationEligibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppManagedEnvironmentMigrationEligibilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CheckMigrationEligibilityResult> response = Response.FromValue(CheckMigrationEligibilityResult.FromResponse(result), result);
+                Response<ContainerAppManagedEnvironmentMigrationEligibilityResult> response = Response.FromValue(ContainerAppManagedEnvironmentMigrationEligibilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

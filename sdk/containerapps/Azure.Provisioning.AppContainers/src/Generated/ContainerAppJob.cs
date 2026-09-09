@@ -140,7 +140,7 @@ namespace Azure.Provisioning.AppContainers
         }
 
         /// <summary> Gets the RunningState. </summary>
-        public BicepValue<JobRunningState> RunningState
+        public BicepValue<ContainerAppJobRunningState> RunningState
         {
             get
             {
