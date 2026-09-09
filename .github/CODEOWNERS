@@ -531,7 +531,7 @@
 # ServiceOwners: @rhurey @xitzhang @yulin-li
 
 # PRLabel: %WebPubSub
-/sdk/webpubsub/    @JialinXin @KrzysztofCwalina @vicancy
+/sdk/webpubsub/    @JialinXin @vicancy
 
 # PRLabel: %WebPubSub
 /sdk/webpubsub/Microsoft.Azure.WebJobs.Extensions.WebPubSub/    @JialinXin @vicancy @Y-Sindo
