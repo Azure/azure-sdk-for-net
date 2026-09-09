@@ -19,7 +19,7 @@ namespace Azure.Provisioning.Sql
         private BicepValue<string> _databaseName;
         private BicepValue<DateTimeOffset> _databaseDeletedOn;
         private BicepValue<DateTimeOffset> _backupOn;
-        private BicepValue<DateTimeOffset> _backupExpireOn;
+        private BicepValue<DateTimeOffset> _backupExpiresOn;
         private BicepValue<SqlBackupStorageRedundancy> _backupStorageRedundancy;
         private BicepValue<SqlBackupStorageRedundancy> _requestedBackupStorageRedundancy;
         private BicepValue<bool> _isBackupImmutable;
@@ -83,13 +83,13 @@ namespace Azure.Provisioning.Sql
             }
         }
 
-        /// <summary> Gets the BackupExpireOn. </summary>
-        public BicepValue<DateTimeOffset> BackupExpireOn
+        /// <summary> Gets the BackupExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> BackupExpiresOn
         {
             get
             {
                 Initialize();
-                return _backupExpireOn;
+                return _backupExpiresOn;
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.Provisioning.Sql
             _databaseName = DefineProperty<string>(nameof(DatabaseName), new string[] { "databaseName" }, isOutput: true);
             _databaseDeletedOn = DefineProperty<DateTimeOffset>(nameof(DatabaseDeletedOn), new string[] { "databaseDeletionTime" }, isOutput: true, format: "O");
             _backupOn = DefineProperty<DateTimeOffset>(nameof(BackupOn), new string[] { "backupTime" }, isOutput: true, format: "O");
-            _backupExpireOn = DefineProperty<DateTimeOffset>(nameof(BackupExpireOn), new string[] { "backupExpirationTime" }, isOutput: true, format: "O");
+            _backupExpiresOn = DefineProperty<DateTimeOffset>(nameof(BackupExpiresOn), new string[] { "backupExpirationTime" }, isOutput: true, format: "O");
             _backupStorageRedundancy = DefineProperty<SqlBackupStorageRedundancy>(nameof(BackupStorageRedundancy), new string[] { "backupStorageRedundancy" }, isOutput: true);
             _requestedBackupStorageRedundancy = DefineProperty<SqlBackupStorageRedundancy>(nameof(RequestedBackupStorageRedundancy), new string[] { "requestedBackupStorageRedundancy" });
             _isBackupImmutable = DefineProperty<bool>(nameof(IsBackupImmutable), new string[] { "isBackupImmutable" });

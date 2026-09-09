@@ -20,7 +20,7 @@ namespace Azure.Provisioning.Sql
         private BicepValue<DateTimeOffset> _lastAliveOn;
         private BicepValue<SyncAgentState> _state;
         private BicepValue<bool> _isUpToDate;
-        private BicepValue<DateTimeOffset> _expireOn;
+        private BicepValue<DateTimeOffset> _expiresOn;
         private BicepValue<string> _version;
 
         /// <summary> Creates a new SyncAgentProperties. </summary>
@@ -83,13 +83,13 @@ namespace Azure.Provisioning.Sql
             }
         }
 
-        /// <summary> Gets the ExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ExpireOn
+        /// <summary> Gets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
             {
                 Initialize();
-                return _expireOn;
+                return _expiresOn;
             }
         }
 
@@ -112,7 +112,7 @@ namespace Azure.Provisioning.Sql
             _lastAliveOn = DefineProperty<DateTimeOffset>(nameof(LastAliveOn), new string[] { "lastAliveTime" }, isOutput: true, format: "O");
             _state = DefineProperty<SyncAgentState>(nameof(State), new string[] { "state" }, isOutput: true);
             _isUpToDate = DefineProperty<bool>(nameof(IsUpToDate), new string[] { "isUpToDate" }, isOutput: true);
-            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expiryTime" }, isOutput: true, format: "O");
+            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expiryTime" }, isOutput: true, format: "O");
             _version = DefineProperty<string>(nameof(Version), new string[] { "version" }, isOutput: true);
             DefineAdditionalProperties();
         }

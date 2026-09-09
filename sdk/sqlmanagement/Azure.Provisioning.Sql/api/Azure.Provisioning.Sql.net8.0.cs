@@ -842,7 +842,7 @@ namespace Azure.Provisioning.Sql
     public partial class LongTermRetentionBackup : Azure.Provisioning.Primitives.ProvisionableResource
     {
         internal LongTermRetentionBackup() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> BackupExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> BackupExpiresOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> BackupOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlBackupStorageAccessTier> BackupStorageAccessTier { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlBackupStorageRedundancy> BackupStorageRedundancy { get { throw null; } }
@@ -1490,7 +1490,7 @@ namespace Azure.Provisioning.Sql
     public partial class ManagedInstanceLongTermRetentionBackup : Azure.Provisioning.Primitives.ProvisionableResource
     {
         internal ManagedInstanceLongTermRetentionBackup() : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> BackupExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> BackupExpiresOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> BackupOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlBackupStorageAccessTier> BackupStorageAccessTier { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.Sql.SqlBackupStorageRedundancy> BackupStorageRedundancy { get { throw null; } }
@@ -4118,7 +4118,7 @@ namespace Azure.Provisioning.Sql
     public partial class SyncAgent : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public SyncAgent(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsUpToDate { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> LastAliveOn { get { throw null; } }

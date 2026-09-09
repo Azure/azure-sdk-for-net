@@ -163,8 +163,8 @@ namespace Azure.Provisioning.Sql
             }
         }
 
-        /// <summary> Gets the ExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ExpireOn
+        /// <summary> Gets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
             {
@@ -172,7 +172,7 @@ namespace Azure.Provisioning.Sql
                 {
                     Properties = new SyncAgentProperties();
                 }
-                return Properties.ExpireOn;
+                return Properties.ExpiresOn;
             }
         }
 

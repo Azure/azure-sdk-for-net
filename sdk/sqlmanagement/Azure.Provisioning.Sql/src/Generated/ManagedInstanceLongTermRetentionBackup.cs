@@ -118,12 +118,12 @@ namespace Azure.Provisioning.Sql
             }
         }
 
-        /// <summary> Gets the BackupExpireOn. </summary>
-        public BicepValue<DateTimeOffset> BackupExpireOn
+        /// <summary> Gets the BackupExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> BackupExpiresOn
         {
             get
             {
-                return Properties is null ? default : Properties.BackupExpireOn;
+                return Properties is null ? default : Properties.BackupExpiresOn;
             }
         }
 
