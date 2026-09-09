@@ -1,19 +1,14 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.1.0-beta.1 (2026-09-09)
 
 ### Features Added
 
-- Added support for configuring NVMe storage and instance-mix VM sizes through `DevOpsAzureSku`.
-- Added provisioning script settings to `DevOpsPoolVmImage`.
-- Added description settings to `DevOpsAzureOrganizationProfile`.
-- Added `NVMeDisk` support to `DevOpsEphemeralType`.
-
-### Breaking Changes
-
-### Bugs Fixed
+- Upgraded the API version to 2026-07-03-preview.
 
 ### Other Changes
+
+- Upgraded dependent `Azure.Core` to 1.61.0.
 
 ## 1.0.0 (2026-04-23)
 
