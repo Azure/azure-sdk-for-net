@@ -1,5 +1,10 @@
 # Release History
 
+## 12.28.0-beta.1 (Unreleased)
+
+### Bugs Fixed
+- Prevented carriage-return and line-feed injection in Blob Batch subrequest headers.
+
 ## 12.27.0-beta.1 (2026-07-22)
 
 ### Features Added
