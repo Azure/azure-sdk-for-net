@@ -1,6 +1,6 @@
 import:
   - ../../.vscode/cspell.json
 overrides:
-  - filename: '**/sdk/eventgrid/Azure.Provisioning.EventGrid/**/*'
+  - filename: '**/sdk/eventgrid/Azure.Provisioning.EventGrid/**/*.cs'
     words:
       - AZPROVISION

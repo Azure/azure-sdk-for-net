@@ -3,6 +3,7 @@
 
 #nullable disable
 
+using Azure.Core;
 using Azure.Provisioning;
 using Microsoft.TypeSpec.Generator.Customizations;
 
@@ -10,8 +11,6 @@ namespace Azure.Provisioning.EventGrid;
 
 public partial class PartnerEventSubscriptionDestination
 {
-    private BicepValue<string> _resourceId;
-
     /// <summary> The Azure Resource ID of the partner destination. </summary>
     // Changing the released BicepValue<string> property to BicepValue<ResourceIdentifier>
     // fails ApiCompat with CP0002. The C# alternate type is shared with the management
@@ -22,18 +21,18 @@ public partial class PartnerEventSubscriptionDestination
     {
         get
         {
-            Initialize();
-            return _resourceId;
+            return Properties.ResourceId;
         }
         set
         {
-            Initialize();
-            _resourceId.Assign(value);
+            if (value is null || ((IBicepValue)value).Kind != BicepValueKind.Literal)
+            {
+                ((IBicepValue)Properties.ResourceId).Assign(value);
+            }
+            else
+            {
+                Properties.ResourceId = new ResourceIdentifier(value.Value);
+            }
         }
-    }
-
-    partial void DefineAdditionalProperties()
-    {
-        _resourceId = DefineProperty<string>(nameof(ResourceId), ["properties", "resourceId"]);
     }
 }
