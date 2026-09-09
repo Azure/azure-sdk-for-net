@@ -48,7 +48,7 @@
     "@typespec/versioning": "0.85.0",
     "@azure-tools/typespec-azure-core": "0.71.0",
     "@azure-tools/typespec-azure-resource-manager": "0.71.0",
-    "@azure-tools/typespec-client-generator-core": "0.71.1",
+    "@azure-tools/typespec-client-generator-core": "0.71.2",
     "@vitest/coverage-v8": "^4.1.10",
     "@vitest/ui": "^4.1.10",
     "c8": "^10.1.2",
