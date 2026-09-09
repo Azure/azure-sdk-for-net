@@ -102,6 +102,7 @@ namespace Microsoft.Extensions.Azure
             var objectId = configuration["managedIdentityObjectId"];
             var clientSecret = configuration["clientSecret"];
             var certificate = configuration["clientCertificate"];
+            var certificateSubject = configuration["clientCertificateSubject"];
             var certificateStoreName = configuration["clientCertificateStoreName"];
             var certificateStoreLocation = configuration["clientCertificateStoreLocation"];
             var systemAccessToken = configuration["systemAccessToken"];
@@ -109,6 +110,11 @@ namespace Microsoft.Extensions.Azure
             var tokenFilePath = configuration["tokenFilePath"];
             var azureCloud = configuration["azureCloud"];
             var managedIdentityClientId = configuration["managedIdentityClientId"];
+
+            if (!string.IsNullOrWhiteSpace(certificate) && !string.IsNullOrWhiteSpace(certificateSubject))
+            {
+                throw new ArgumentException("'clientCertificate' and 'clientCertificateSubject' are mutually exclusive.");
+            }
 
             IEnumerable<string> additionallyAllowedTenantsList = null;
 
@@ -252,9 +258,19 @@ namespace Microsoft.Extensions.Azure
                 return new ClientSecretCredential(tenantId, clientId, clientSecret, options);
             }
 
+            bool findCertificateBySubject = !string.IsNullOrWhiteSpace(certificateSubject);
+            if (findCertificateBySubject &&
+                (string.IsNullOrWhiteSpace(tenantId) ||
+                 string.IsNullOrWhiteSpace(clientId) ||
+                 string.IsNullOrWhiteSpace(certificateStoreName) ||
+                 string.IsNullOrWhiteSpace(certificateStoreLocation)))
+            {
+                throw new ArgumentException("For a client certificate subject, 'tenantId', 'clientId', 'clientCertificateStoreName', and 'clientCertificateStoreLocation' must be specified via the configuration.");
+            }
+
             if (!string.IsNullOrWhiteSpace(tenantId) &&
                 !string.IsNullOrWhiteSpace(clientId) &&
-                !string.IsNullOrWhiteSpace(certificate))
+                (!string.IsNullOrWhiteSpace(certificate) || findCertificateBySubject))
             {
                 StoreLocation storeLocation = StoreLocation.CurrentUser;
 
@@ -270,14 +286,20 @@ namespace Microsoft.Extensions.Azure
 
                 using var store = new X509Store(certificateStoreName, storeLocation);
                 store.Open(OpenFlags.ReadOnly);
-                X509Certificate2Collection certs = store.Certificates.Find(X509FindType.FindByThumbprint, certificate, false);
+                X509FindType findType = findCertificateBySubject ? X509FindType.FindBySubjectName : X509FindType.FindByThumbprint;
+                string findValue = findCertificateBySubject ? certificateSubject : certificate;
+                X509Certificate2Collection certs = store.Certificates.Find(findType, findValue, false);
 
                 if (certs.Count == 0)
                 {
-                    throw new InvalidOperationException($"Unable to find a certificate with thumbprint '{certificate}'");
+                    string certificateIdentifier = findCertificateBySubject ? "subject name" : "thumbprint";
+                    throw new InvalidOperationException($"Unable to find a certificate with {certificateIdentifier} '{findValue}'");
                 }
 
-                var options = new ClientCertificateCredentialOptions();
+                var options = new ClientCertificateCredentialOptions
+                {
+                    SendCertificateChain = findCertificateBySubject
+                };
 
                 if (additionallyAllowedTenantsList != null)
                 {

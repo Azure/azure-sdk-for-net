@@ -219,6 +219,69 @@ namespace Azure.Core.Extensions.Tests
         }
 
         [Test]
+        public void CreatesCertificateCredentialsBySubject()
+        {
+            var storeLocation = StoreLocation.CurrentUser;
+            var storeName = StoreName.My;
+            using var localCert = new X509Store(storeName, storeLocation);
+            localCert.Open(OpenFlags.ReadOnly);
+            X509Certificate2 certificate = localCert.Certificates
+                .OfType<X509Certificate2>()
+                .First(cert => !string.IsNullOrWhiteSpace(cert.GetNameInfo(X509NameType.SimpleName, false)));
+            string subjectName = certificate.GetNameInfo(X509NameType.SimpleName, false);
+
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("clientId", "ConfigurationClientId"),
+                new KeyValuePair<string, string>("clientCertificateSubject", subjectName),
+                new KeyValuePair<string, string>("clientCertificateStoreLocation", storeLocation.ToString()),
+                new KeyValuePair<string, string>("clientCertificateStoreName", storeName.ToString()),
+                new KeyValuePair<string, string>("tenantId", "ConfigurationTenantId"),
+                new KeyValuePair<string, string>("additionallyAllowedTenants", "tenantId1; tenantId2")
+            );
+
+            var credential = (ClientCertificateCredential)ClientFactory.CreateCredential(configuration);
+
+            Assert.That(GetNonPublicPropertyValue(typeof(ClientCertificateCredential), credential, "ClientId"), Is.EqualTo("ConfigurationClientId"));
+            Assert.That(GetNonPublicPropertyValue(typeof(ClientCertificateCredential), credential, "TenantId"), Is.EqualTo("ConfigurationTenantId"));
+            Assert.That(GetNonPublicFieldValueBySuffix(typeof(ClientCertificateCredential), credential, "dditionallyAllowedTenantIds"), Is.EqualTo(new[] { "tenantId1", "tenantId2" }));
+
+            object client = GetNonPublicPropertyValue(typeof(ClientCertificateCredential), credential, "Client");
+            Assert.That(GetNonPublicFieldValueBySuffix(client.GetType(), client, "includeX5CClaimHeader"), Is.True);
+        }
+
+        [Test]
+        public void CertificateAndCertificateSubjectAreMutuallyExclusive()
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("clientCertificate", "thumbprint"),
+                new KeyValuePair<string, string>("clientCertificateSubject", "subject")
+            );
+
+            Assert.That(
+                () => ClientFactory.CreateCredential(configuration),
+                Throws.ArgumentException.With.Message.Contains("mutually exclusive"));
+        }
+
+        [TestCase(null, "client", "My", "CurrentUser")]
+        [TestCase("tenant", null, "My", "CurrentUser")]
+        [TestCase("tenant", "client", null, "CurrentUser")]
+        [TestCase("tenant", "client", "My", null)]
+        public void CertificateSubjectRequiresAllConfiguration(string tenantId, string clientId, string storeName, string storeLocation)
+        {
+            IConfiguration configuration = GetConfiguration(
+                new KeyValuePair<string, string>("tenantId", tenantId),
+                new KeyValuePair<string, string>("clientId", clientId),
+                new KeyValuePair<string, string>("clientCertificateSubject", "subject"),
+                new KeyValuePair<string, string>("clientCertificateStoreName", storeName),
+                new KeyValuePair<string, string>("clientCertificateStoreLocation", storeLocation)
+            );
+
+            Assert.That(
+                () => ClientFactory.CreateCredential(configuration),
+                Throws.ArgumentException.With.Message.Contains("'tenantId', 'clientId', 'clientCertificateStoreName', and 'clientCertificateStoreLocation'"));
+        }
+
+        [Test]
         public void CreatesClientSecretCredentials()
         {
             IConfiguration configuration = GetConfiguration(
