@@ -522,7 +522,6 @@
 
 # AzureSdkOwners: @jorgerangel-msft
 # ServiceLabel: %Tables
-# ServiceOwners: @jorgerangel-msft @jsquire
 
 # PRLabel: %Voice Live
 /sdk/voicelive/Azure.AI.VoiceLive/    @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang
