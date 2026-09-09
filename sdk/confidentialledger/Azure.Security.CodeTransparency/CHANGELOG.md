@@ -1,6 +1,6 @@
 # Release History
 
-## 1.0.0-beta.12 (Unreleased)
+## 1.0.0-beta.13 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,21 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.0.0-beta.12 (2026-07-31)
+
+### Bugs Fixed
+
+- Fixed asynchronous registration and receipt retrieval against a still-pending transaction. When a
+  write is routed to a backup node the service replies with a redirect whose `Location` (for example
+  `/entries/{entryId}`) omits the `api-version`. `CodeTransparencyRedirectPolicy` now carries the
+  originating request's `api-version` onto followed `303`/`307`/`308` redirect targets, so the
+  subsequent read stays on the versioned API instead of falling back to the service's unversioned
+  (legacy) behavior. On the versioned API a read of a not-yet-committed entry is answered with a
+  `302 Found` whose `Location` points back at the same entry URL; the followed read now treats that
+  `302` as retriable, and the client's default retry settings were raised (more, exponentially
+  backed-off retries starting at 200 ms) so the pipeline polls until the committed receipt (`200`).
+  All retry and delay values remain overridable through `CodeTransparencyClientOptions.Retry`.
 
 ## 1.0.0-beta.11 (2026-07-15)
 

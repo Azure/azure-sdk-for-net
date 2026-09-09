@@ -88,6 +88,21 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(VmSize))
+            {
+                writer.WritePropertyName("vmSize"u8);
+                writer.WriteStringValue(VmSize);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Zone))
+            {
+                writer.WritePropertyName("zone"u8);
+                writer.WriteStringValue(Zone);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Priority))
+            {
+                writer.WritePropertyName("priority"u8);
+                writer.WriteStringValue(Priority);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -136,6 +151,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
             SystemData systemData = default;
             ComputeFleetVmOperationStatus operationStatus = default;
             ComputeFleetApiError error = default;
+            string vmSize = default;
+            string zone = default;
+            string priority = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -185,6 +203,21 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                     error = ComputeFleetApiError.DeserializeComputeFleetApiError(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("vmSize"u8))
+                {
+                    vmSize = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("zone"u8))
+                {
+                    zone = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("priority"u8))
+                {
+                    priority = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -197,6 +230,9 @@ namespace Azure.ResourceManager.ComputeFleet.Models
                 systemData,
                 operationStatus,
                 error,
+                vmSize,
+                zone,
+                priority,
                 additionalBinaryDataProperties);
         }
     }

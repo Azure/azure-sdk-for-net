@@ -2,19 +2,10 @@
   <!--
     NoWarn Validation — Block new NoWarn entries in project files.
 
-    Two lists govern this:
-
-    1. eng/NoWarnSkipValidation.txt — temporary backlog. Projects listed here are excluded
-       from validation entirely. Existing <NoWarn> entries in these projects have NOT been
-       reviewed; the goal is to drive this list to empty.
-
-    2. eng/analyzerallowlist/<ProjectName>.txt — reviewed approvals. Each `nowarn:CODE` line
-       in a per-project file is an SDK-team-approved exception with a justification comment.
-
-    Per-project allow lists are read by AnalyzerAllowList.targets. Remove items from the skip
-    list one project at a time, in separate PRs, by either fixing the root cause, migrating
-    to inline #pragma / [SuppressMessage], or recording a justified approval in the allow
-    list.
+    eng/analyzerallowlist/<ProjectName>.txt holds the reviewed approvals. Each `nowarn:CODE`
+    line in a per-project file is an SDK-team-approved exception with a justification comment,
+    and is read by AnalyzerAllowList.targets. Anything else in a project's effective
+    $(NoWarn) is an error.
 
     See: https://github.com/Azure/azure-sdk-for-net/issues/55312
 
@@ -55,44 +46,8 @@
     by the ReadAnalyzerAllowList target in AnalyzerAllowList.targets, which populates
     _ProjectAllowedNoWarn before this target runs.
 
-    The temporary skip list lives at eng/NoWarnSkipValidation.txt and is read by the
-    ReadNoWarnSkipList target below.
-
     See eng/analyzerallowlist/README.md for documentation on the file format.
   -->
-
-  <PropertyGroup>
-    <_NoWarnSkipListFile Condition="'$(_NoWarnSkipListFile)' == ''">$(RepoEngPath)\NoWarnSkipValidation.txt</_NoWarnSkipListFile>
-  </PropertyGroup>
-
-  <!--
-    Read the skip-validation list. If the current project is listed, set _SkipNoWarnValidation
-    so the validator early-exits its enforcement step.
-  -->
-  <Target
-    Name="ReadNoWarnSkipList"
-    Condition="Exists('$(_NoWarnSkipListFile)')">
-
-    <ReadLinesFromFile File="$(_NoWarnSkipListFile)">
-      <Output TaskParameter="Lines" ItemName="_SkipListLine" />
-    </ReadLinesFromFile>
-
-    <!-- Filter out comments and blank lines -->
-    <ItemGroup>
-      <_SkipListLine Remove="@(_SkipListLine)"
-        Condition="'%(Identity)' == '' or $([System.String]::new('%(Identity)').TrimStart().StartsWith('#'))" />
-    </ItemGroup>
-
-    <!-- Match against this project's name -->
-    <ItemGroup>
-      <_MatchingSkipEntry Include="@(_SkipListLine)"
-        Condition="'$([System.String]::new(%(Identity)).Trim())' == '$(MSBuildProjectName)'" />
-    </ItemGroup>
-
-    <PropertyGroup>
-      <_SkipNoWarnValidation Condition="'@(_MatchingSkipEntry)' != ''">true</_SkipNoWarnValidation>
-    </PropertyGroup>
-  </Target>
 
   <!--
     ===================================================================
@@ -102,7 +57,7 @@
   <Target
     Name="ValidateNoWarn"
     BeforeTargets="CoreCompile"
-    DependsOnTargets="ReadAnalyzerAllowList;ReadNoWarnSkipList"
+    DependsOnTargets="ReadAnalyzerAllowList"
     Condition="'$(IsShippingClientLibrary)' == 'true' and '$(DesignTimeBuild)' != 'true'">
 
     <!--
@@ -147,13 +102,12 @@
       Text="NoWarnAudit: $(MSBuildProjectName)|@(_NoWarnCode, ';')" />
 
     <!--
-      Enforcement mode (default): error if unapproved codes remain — unless the project is on
-      the temporary skip list. The inline task scans the csproj for the first <NoWarn>
-      element so the IDE navigates there on double-click. If the NoWarn lives in an imported
-      props file, it falls back to csproj line 1.
+      Enforcement mode (default): error if unapproved codes remain. The inline task scans the
+      csproj for the first <NoWarn> element so the IDE navigates there on double-click. If the
+      NoWarn lives in an imported props file, it falls back to csproj line 1.
     -->
     <ReportNoWarnError
-      Condition="'$(NoWarnValidationMode)' != 'record' and '@(_NoWarnCode)' != '' and '$(_SkipNoWarnValidation)' != 'true'"
+      Condition="'$(NoWarnValidationMode)' != 'record' and '@(_NoWarnCode)' != ''"
       ProjectFile="$(MSBuildProjectFullPath)"
       ProjectName="$(MSBuildProjectName)"
       UnapprovedCodes="@(_NoWarnCode, ', ')" />
@@ -186,8 +140,8 @@
             for (int i = 0; i < lines.Length; i++)
             {
               // Match the opening element `<NoWarn` (case-insensitive) so we don't
-              // hit unrelated property names like `_NoWarnSkipListFile` that happen
-              // to contain the substring "NoWarn".
+              // hit unrelated property names that happen to contain the substring
+              // "NoWarn".
               int col = lines[i].IndexOf("<NoWarn", System.StringComparison.OrdinalIgnoreCase);
               if (col >= 0)
               {

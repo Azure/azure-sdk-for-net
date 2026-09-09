@@ -31,11 +31,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Backup is VMAppContainer
         /// </param>
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="sourceLocation"> Source location of the container. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="virtualMachineId"> Fully qualified ARM url of the virtual machine represented by this Azure IaaS VM container. </param>
         /// <param name="virtualMachineVersion"> Specifies whether the container represents a Classic or an Azure Resource Manager VM. </param>
         /// <param name="resourceGroup"> Resource group name of Recovery Services Vault. </param>
-        internal IaasComputeVmContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier virtualMachineId, string virtualMachineVersion, string resourceGroup) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, additionalBinaryDataProperties, virtualMachineId, virtualMachineVersion, resourceGroup)
+        internal IaasComputeVmContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, AzureLocation? sourceLocation, IDictionary<string, BinaryData> additionalBinaryDataProperties, ResourceIdentifier virtualMachineId, string virtualMachineVersion, string resourceGroup) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, sourceLocation, additionalBinaryDataProperties, virtualMachineId, virtualMachineVersion, resourceGroup)
         {
         }
     }

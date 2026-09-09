@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.HybridCompute
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetNetworkProfileRequest(string subscriptionId, string resourceGroupName, string machineName, RequestContext context)
+        internal HttpMessage CreateGetNetworkProfileRequest(Guid subscriptionId, string resourceGroupName, string machineName, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.HybridCompute/machines/", false);

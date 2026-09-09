@@ -16,13 +16,13 @@ namespace Azure.Storage.Blobs.Models
         }
 
         /// <summary> Initializes a new instance of <see cref="BlobServiceStatistics"/>. </summary>
-        /// <param name="geoReplication"> Geo-Replication information for the Secondary Storage Service. </param>
+        /// <param name="geoReplication"> The geo-replication stats. </param>
         internal BlobServiceStatistics(BlobGeoReplication geoReplication)
         {
             GeoReplication = geoReplication;
         }
 
-        /// <summary> Geo-Replication information for the Secondary Storage Service. </summary>
+        /// <summary> The geo-replication stats. </summary>
         public BlobGeoReplication GeoReplication { get; }
     }
 }

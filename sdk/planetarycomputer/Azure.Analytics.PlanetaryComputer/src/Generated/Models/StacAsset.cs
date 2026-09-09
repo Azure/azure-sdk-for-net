@@ -40,15 +40,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="mission"> Mission associated with the data. </param>
         /// <param name="providers"> Organizations or individuals who provide the data. </param>
         /// <param name="gsd"> Ground sample distance in meters. </param>
-        /// <param name="created"> Creation timestamp of the data. </param>
-        /// <param name="updated"> Last update timestamp of the data. </param>
+        /// <param name="createdOn"> Creation timestamp of the data. </param>
+        /// <param name="updatedOn"> Last update timestamp of the data. </param>
         /// <param name="title"> Human-readable title for the asset. </param>
         /// <param name="description"> Detailed description of the asset. </param>
         /// <param name="href"> URL to the asset file. </param>
-        /// <param name="type"> Media type of the asset. </param>
+        /// <param name="kind"> Media type of the asset. </param>
         /// <param name="roles"> Roles of the asset within the item. </param>
         /// <param name="additionalProperties"></param>
-        internal StacAsset(string platform, IList<string> instruments, string constellation, string mission, IList<StacProvider> providers, float? gsd, DateTimeOffset? created, DateTimeOffset? updated, string title, string description, string href, string @type, IList<string> roles, IDictionary<string, BinaryData> additionalProperties)
+        internal StacAsset(string platform, IList<string> instruments, string constellation, string mission, IList<StacProvider> providers, float? gsd, DateTimeOffset? createdOn, DateTimeOffset? updatedOn, string title, string description, string href, string kind, IList<string> roles, IDictionary<string, BinaryData> additionalProperties)
         {
             Platform = platform;
             Instruments = instruments;
@@ -56,12 +56,12 @@ namespace Azure.Analytics.PlanetaryComputer
             Mission = mission;
             Providers = providers;
             Gsd = gsd;
-            Created = created;
-            Updated = updated;
+            CreatedOn = createdOn;
+            UpdatedOn = updatedOn;
             Title = title;
             Description = description;
             Href = href;
-            Type = @type;
+            Kind = kind;
             Roles = roles;
             _additionalBinaryDataProperties = additionalProperties;
         }
@@ -85,10 +85,10 @@ namespace Azure.Analytics.PlanetaryComputer
         public float? Gsd { get; set; }
 
         /// <summary> Creation timestamp of the data. </summary>
-        public DateTimeOffset? Created { get; set; }
+        public DateTimeOffset? CreatedOn { get; set; }
 
         /// <summary> Last update timestamp of the data. </summary>
-        public DateTimeOffset? Updated { get; set; }
+        public DateTimeOffset? UpdatedOn { get; set; }
 
         /// <summary> Human-readable title for the asset. </summary>
         public string Title { get; set; }
@@ -100,7 +100,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public string Href { get; set; }
 
         /// <summary> Media type of the asset. </summary>
-        public string Type { get; set; }
+        public string Kind { get; set; }
 
         /// <summary> Roles of the asset within the item. </summary>
         public IList<string> Roles { get; }

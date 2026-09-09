@@ -90,6 +90,11 @@ namespace Azure.AI.Projects.Agents
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(PublishApprovalStatus))
+            {
+                writer.WritePropertyName("publish_approval_status"u8);
+                writer.WriteStringValue(PublishApprovalStatus.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -135,6 +140,7 @@ namespace Azure.AI.Projects.Agents
             VersionSelector versionSelector = default;
             ProtocolConfiguration protocolConfiguration = default;
             IList<AgentEndpointAuthorizationScheme> authorizationSchemes = default;
+            PublishApprovalStatus? publishApprovalStatus = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -170,12 +176,21 @@ namespace Azure.AI.Projects.Agents
                     authorizationSchemes = array;
                     continue;
                 }
+                if (prop.NameEquals("publish_approval_status"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    publishApprovalStatus = new PublishApprovalStatus(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new AgentEndpointConfiguration(versionSelector, protocolConfiguration, authorizationSchemes ?? new ChangeTrackingList<AgentEndpointAuthorizationScheme>(), additionalBinaryDataProperties);
+            return new AgentEndpointConfiguration(versionSelector, protocolConfiguration, authorizationSchemes ?? new ChangeTrackingList<AgentEndpointAuthorizationScheme>(), publishApprovalStatus, additionalBinaryDataProperties);
         }
     }
 }

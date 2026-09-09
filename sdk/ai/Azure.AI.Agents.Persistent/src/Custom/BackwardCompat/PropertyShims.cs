@@ -12,6 +12,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Microsoft.TypeSpec.Generator.Customizations;
 
+// This file intentionally groups the small backward-compatibility partial declarations for many
+// types; splitting them into one file per type would obscure that they are a single cohesive shim.
+#pragma warning disable SA1402 // File may only contain a single type
+
 namespace Azure.AI.Agents.Persistent
 {
     // ── Property getter shims ─────────────────────────────────────────────────
@@ -25,8 +29,7 @@ namespace Azure.AI.Agents.Persistent
     [CodeGenSuppress("Type")]
     public partial class AzureFunctionBinding
     {
-        // Backward-compat: returns AzureFunctionBindingType instead of string.
-        // Uses auto-property with internal setter so the generated internal ctor can assign it.
+        /// <summary> Gets the type of the Azure Function binding. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public AzureFunctionBindingType Type { get; internal set; } = AzureFunctionBindingType.StorageQueue;
     }
@@ -34,7 +37,7 @@ namespace Azure.AI.Agents.Persistent
     [CodeGenSuppress("Type")]
     public partial class FileSearchToolCallContent
     {
-        // Backward-compat: returns FileSearchToolCallContentType instead of string.
+        /// <summary> Gets the type of the file search tool call content. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public FileSearchToolCallContentType Type { get; internal set; } = FileSearchToolCallContentType.Text;
     }
@@ -42,7 +45,7 @@ namespace Azure.AI.Agents.Persistent
     [CodeGenSuppress("Object")]
     public partial class MessageDeltaChunk
     {
-        // Backward-compat: returns MessageDeltaChunkObject instead of string.
+        /// <summary> Gets the object type of the message delta chunk. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public MessageDeltaChunkObject Object { get; internal set; } = MessageDeltaChunkObject.ThreadMessageDelta;
     }
@@ -50,7 +53,7 @@ namespace Azure.AI.Agents.Persistent
     [CodeGenSuppress("Object")]
     public partial class PersistentAgentsVectorStore
     {
-        // Backward-compat: returns PersistentAgentsVectorStoreObject instead of string.
+        /// <summary> Gets the object type of the vector store. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public PersistentAgentsVectorStoreObject Object { get; internal set; } = PersistentAgentsVectorStoreObject.VectorStore;
     }
@@ -58,7 +61,7 @@ namespace Azure.AI.Agents.Persistent
     [CodeGenSuppress("Type")]
     public partial class ResponseFormatJsonSchemaType
     {
-        // Backward-compat: returns ResponseFormatJsonSchemaTypeType instead of string.
+        /// <summary> Gets the response format type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public ResponseFormatJsonSchemaTypeType Type { get; internal set; } = ResponseFormatJsonSchemaTypeType.JsonSchema;
     }
@@ -66,7 +69,7 @@ namespace Azure.AI.Agents.Persistent
     [CodeGenSuppress("Object")]
     public partial class RunStepDeltaChunk
     {
-        // Backward-compat: returns RunStepDeltaChunkObject instead of string.
+        /// <summary> Gets the object type of the run step delta chunk. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public RunStepDeltaChunkObject Object { get; internal set; } = RunStepDeltaChunkObject.ThreadRunStepDelta;
     }
@@ -74,7 +77,7 @@ namespace Azure.AI.Agents.Persistent
     [CodeGenSuppress("Object")]
     public partial class VectorStoreFileBatch
     {
-        // Backward-compat: returns VectorStoreFileBatchObject instead of string.
+        /// <summary> Gets the object type of the vector store file batch. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public VectorStoreFileBatchObject Object { get; internal set; } = VectorStoreFileBatchObject.VectorStoreFilesBatch;
     }
@@ -82,7 +85,7 @@ namespace Azure.AI.Agents.Persistent
     [CodeGenSuppress("Object")]
     public partial class VectorStoreFile
     {
-        // Backward-compat: returns VectorStoreFileObject instead of string.
+        /// <summary> Gets the object type of the vector store file. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public VectorStoreFileObject Object { get; internal set; } = VectorStoreFileObject.VectorStoreFile;
     }

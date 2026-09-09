@@ -9,6 +9,7 @@ using System.ClientModel.Primitives;
 using Azure;
 using Azure.ResourceManager.AppContainers.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
@@ -396,6 +397,7 @@ namespace Azure.ResourceManager.AppContainers
     [ModelReaderWriterBuildable(typeof(SpringCloudConfigComponent))]
     [ModelReaderWriterBuildable(typeof(SpringCloudEurekaComponent))]
     [ModelReaderWriterBuildable(typeof(SpringCloudGatewayComponent))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TcpConnectionPool))]
     [ModelReaderWriterBuildable(typeof(TcpRetryPolicy))]

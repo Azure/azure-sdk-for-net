@@ -7,12 +7,12 @@
 
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> The PageRange. </summary>
     internal readonly partial struct PageRange
     {
-        /// <summary> Gets the start. </summary>
+        /// <summary> The start of the byte range. </summary>
         public long Start { get; }
-        /// <summary> Gets the end. </summary>
+
+        /// <summary> The end of the byte range. </summary>
         public long End { get; }
     }
 }

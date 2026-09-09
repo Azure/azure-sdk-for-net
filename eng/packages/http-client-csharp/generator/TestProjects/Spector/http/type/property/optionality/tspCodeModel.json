@@ -6,6 +6,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "StringLiteralPropertyProperty",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "",
       "valueType": {
         "$id": "2",
@@ -46,6 +47,7 @@
       "$id": "5",
       "kind": "enum",
       "name": "IntLiteralPropertyProperty",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "",
       "valueType": {
         "$id": "6",
@@ -86,6 +88,7 @@
       "$id": "9",
       "kind": "enum",
       "name": "FloatLiteralPropertyProperty",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "",
       "valueType": {
         "$id": "10",
@@ -126,6 +129,7 @@
       "$id": "13",
       "kind": "enum",
       "name": "UnionStringLiteralPropertyProperty",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Type.Property.Optional.UnionStringLiteralProperty.property.anonymous",
       "valueType": {
         "$id": "14",
@@ -175,6 +179,7 @@
       "$id": "17",
       "kind": "enum",
       "name": "UnionIntLiteralPropertyProperty",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Type.Property.Optional.UnionIntLiteralProperty.property.anonymous",
       "valueType": {
         "$id": "18",
@@ -224,6 +229,7 @@
       "$id": "21",
       "kind": "enum",
       "name": "UnionFloatLiteralPropertyProperty",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Type.Property.Optional.UnionFloatLiteralProperty.property.anonymous",
       "valueType": {
         "$id": "22",
@@ -1382,6 +1388,7 @@
       "$id": "155",
       "kind": "model",
       "name": "StringProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.StringProperty",
       "usage": "Input,Output,Json",
@@ -1398,6 +1405,7 @@
           "$id": "156",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1427,6 +1435,7 @@
       "$id": "158",
       "kind": "model",
       "name": "BytesProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.BytesProperty",
       "usage": "Input,Output,Json",
@@ -1443,6 +1452,7 @@
           "$id": "159",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1473,6 +1483,7 @@
       "$id": "161",
       "kind": "model",
       "name": "DatetimeProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.DatetimeProperty",
       "usage": "Input,Output,Json",
@@ -1489,6 +1500,7 @@
           "$id": "162",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1526,6 +1538,7 @@
       "$id": "165",
       "kind": "model",
       "name": "DurationProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.DurationProperty",
       "usage": "Input,Output,Json",
@@ -1542,6 +1555,7 @@
           "$id": "166",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1579,6 +1593,7 @@
       "$id": "169",
       "kind": "model",
       "name": "PlainDateProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.PlainDateProperty",
       "usage": "Input,Output,Json",
@@ -1595,6 +1610,7 @@
           "$id": "170",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1624,6 +1640,7 @@
       "$id": "172",
       "kind": "model",
       "name": "PlainTimeProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.PlainTimeProperty",
       "usage": "Input,Output,Json",
@@ -1640,6 +1657,7 @@
           "$id": "173",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1669,6 +1687,7 @@
       "$id": "175",
       "kind": "model",
       "name": "CollectionsByteProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsByteProperty",
       "usage": "Input,Output,Json",
@@ -1685,6 +1704,7 @@
           "$id": "176",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1722,6 +1742,7 @@
       "$id": "179",
       "kind": "model",
       "name": "CollectionsModelProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.CollectionsModelProperty",
       "usage": "Input,Output,Json",
@@ -1738,6 +1759,7 @@
           "$id": "180",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1770,6 +1792,7 @@
       "$id": "182",
       "kind": "model",
       "name": "StringLiteralProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.StringLiteralProperty",
       "usage": "Input,Output,Json",
@@ -1786,6 +1809,7 @@
           "$id": "183",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1811,6 +1835,7 @@
       "$id": "184",
       "kind": "model",
       "name": "IntLiteralProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.IntLiteralProperty",
       "usage": "Input,Output,Json",
@@ -1827,6 +1852,7 @@
           "$id": "185",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1852,6 +1878,7 @@
       "$id": "186",
       "kind": "model",
       "name": "FloatLiteralProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.FloatLiteralProperty",
       "usage": "Input,Output,Json",
@@ -1868,6 +1895,7 @@
           "$id": "187",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1893,6 +1921,7 @@
       "$id": "188",
       "kind": "model",
       "name": "BooleanLiteralProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.BooleanLiteralProperty",
       "usage": "Input,Output,Json",
@@ -1909,6 +1938,7 @@
           "$id": "189",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1934,6 +1964,7 @@
       "$id": "190",
       "kind": "model",
       "name": "UnionStringLiteralProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.UnionStringLiteralProperty",
       "usage": "Input,Output,Json",
@@ -1950,6 +1981,7 @@
           "$id": "191",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -1975,6 +2007,7 @@
       "$id": "192",
       "kind": "model",
       "name": "UnionIntLiteralProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.UnionIntLiteralProperty",
       "usage": "Input,Output,Json",
@@ -1991,6 +2024,7 @@
           "$id": "193",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -2016,6 +2050,7 @@
       "$id": "194",
       "kind": "model",
       "name": "UnionFloatLiteralProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.UnionFloatLiteralProperty",
       "usage": "Input,Output,Json",
@@ -2032,6 +2067,7 @@
           "$id": "195",
           "kind": "property",
           "name": "property",
+          "apiVersions": [],
           "serializedName": "property",
           "doc": "Property",
           "type": {
@@ -2057,6 +2093,7 @@
       "$id": "196",
       "kind": "model",
       "name": "RequiredAndOptionalProperty",
+      "apiVersions": [],
       "namespace": "Type.Property.Optional",
       "crossLanguageDefinitionId": "Type.Property.Optional.RequiredAndOptionalProperty",
       "usage": "Input,Output,Json",
@@ -2073,6 +2110,7 @@
           "$id": "197",
           "kind": "property",
           "name": "optionalProperty",
+          "apiVersions": [],
           "serializedName": "optionalProperty",
           "doc": "optional string property",
           "type": {
@@ -2100,6 +2138,7 @@
           "$id": "199",
           "kind": "property",
           "name": "requiredProperty",
+          "apiVersions": [],
           "serializedName": "requiredProperty",
           "doc": "required int property",
           "type": {

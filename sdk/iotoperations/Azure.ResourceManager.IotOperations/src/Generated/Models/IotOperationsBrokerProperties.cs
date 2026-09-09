@@ -27,21 +27,30 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <param name="diagnostics"> Spec defines the desired identities of Broker diagnostics settings. </param>
         /// <param name="diskBackedMessageBuffer"> Settings of Disk Backed Message Buffer. </param>
         /// <param name="generateResourceLimits"> This setting controls whether Kubernetes CPU resource limits are requested. Increasing the number of replicas or workers proportionally increases the amount of CPU resources requested. If this setting is enabled and there are insufficient CPU resources, an error will be emitted. </param>
+        /// <param name="highPriorityMessagesBackpressureHandling">
+        ///   Handling of high-priority messages in the event that regular-priority messages are being backpressured.
+        ///   When set to "Accept", the broker continues to accept high-priority messages even while regular-priority messages are rejected due to backpressure.
+        ///   When set to "Reject", backpressure also affects high-priority messages.
+        ///   Defaults to "Accept".
+        /// </param>
         /// <param name="memoryProfile"> Memory profile of Broker. </param>
         /// <param name="persistence"> The persistence settings of the Broker. </param>
         /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="status"> The status for the broker. </param>
         /// <param name="healthState"> The health state of the resource. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal IotOperationsBrokerProperties(BrokerAdvancedSettings advanced, BrokerCardinality cardinality, BrokerDiagnostics diagnostics, DiskBackedMessageBuffer diskBackedMessageBuffer, GenerateResourceLimits generateResourceLimits, BrokerMemoryProfile? memoryProfile, BrokerPersistence persistence, IotOperationsProvisioningState? provisioningState, ResourceHealthState? healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal IotOperationsBrokerProperties(BrokerAdvancedSettings advanced, BrokerCardinality cardinality, BrokerDiagnostics diagnostics, DiskBackedMessageBuffer diskBackedMessageBuffer, GenerateResourceLimits generateResourceLimits, HighPriorityMessagesBackpressureHandling? highPriorityMessagesBackpressureHandling, BrokerMemoryProfile? memoryProfile, BrokerPersistence persistence, IotOperationsProvisioningState? provisioningState, BrokerStatus status, ResourceHealthState? healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Advanced = advanced;
             Cardinality = cardinality;
             Diagnostics = diagnostics;
             DiskBackedMessageBuffer = diskBackedMessageBuffer;
             GenerateResourceLimits = generateResourceLimits;
+            HighPriorityMessagesBackpressureHandling = highPriorityMessagesBackpressureHandling;
             MemoryProfile = memoryProfile;
             Persistence = persistence;
             ProvisioningState = provisioningState;
+            Status = status;
             HealthState = healthState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
@@ -61,6 +70,14 @@ namespace Azure.ResourceManager.IotOperations.Models
         /// <summary> This setting controls whether Kubernetes CPU resource limits are requested. Increasing the number of replicas or workers proportionally increases the amount of CPU resources requested. If this setting is enabled and there are insufficient CPU resources, an error will be emitted. </summary>
         internal GenerateResourceLimits GenerateResourceLimits { get; set; }
 
+        /// <summary>
+        ///   Handling of high-priority messages in the event that regular-priority messages are being backpressured.
+        ///   When set to "Accept", the broker continues to accept high-priority messages even while regular-priority messages are rejected due to backpressure.
+        ///   When set to "Reject", backpressure also affects high-priority messages.
+        ///   Defaults to "Accept".
+        /// </summary>
+        public HighPriorityMessagesBackpressureHandling? HighPriorityMessagesBackpressureHandling { get; set; }
+
         /// <summary> Memory profile of Broker. </summary>
         public BrokerMemoryProfile? MemoryProfile { get; set; }
 
@@ -69,6 +86,9 @@ namespace Azure.ResourceManager.IotOperations.Models
 
         /// <summary> The status of the last operation. </summary>
         public IotOperationsProvisioningState? ProvisioningState { get; }
+
+        /// <summary> The status for the broker. </summary>
+        internal BrokerStatus Status { get; }
 
         /// <summary> The health state of the resource. </summary>
         public ResourceHealthState? HealthState { get; }
@@ -87,6 +107,15 @@ namespace Azure.ResourceManager.IotOperations.Models
                     GenerateResourceLimits = new GenerateResourceLimits();
                 }
                 GenerateResourceLimits.Cpu = value;
+            }
+        }
+
+        /// <summary> The health state of the Broker. </summary>
+        public IotOperationsResourceHealthStatus StatusHealthState
+        {
+            get
+            {
+                return Status is null ? default : Status.HealthState;
             }
         }
     }

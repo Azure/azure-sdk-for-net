@@ -8,7 +8,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
-    /// <summary> Describes an available Compute SKU Location Information. </summary>
     public partial class ContainerServiceVmSkuLocationInfo
     {
         /// <summary> Location of the SKU. </summary>

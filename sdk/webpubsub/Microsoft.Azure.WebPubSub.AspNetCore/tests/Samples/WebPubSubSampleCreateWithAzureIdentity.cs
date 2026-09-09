@@ -16,7 +16,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
 {
     public class WebPubSubSampleCreateWithAzureIdentity
     {
-#region Snippet:WebPubSubDependencyInjectionWithAzureIdentity
+        #region Snippet:WebPubSubDependencyInjectionWithAzureIdentity
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddWebPubSub(o =>
@@ -24,7 +24,7 @@ namespace Microsoft.Azure.WebPubSub.AspNetCore.Tests.Samples
                 o.ServiceEndpoint = new WebPubSubServiceEndpoint(new Uri("<endpoint"), new DefaultAzureCredential());
             }).AddWebPubSubServiceClient<SampleHub>();
         }
-#endregion
+        #endregion
 
         #region Snippet:WebPubSubMapHubCustom
         public void Configure(IApplicationBuilder app)

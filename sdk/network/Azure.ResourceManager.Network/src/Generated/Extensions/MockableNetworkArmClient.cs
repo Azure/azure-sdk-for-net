@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Mocking
 
         private ClientDiagnostics VipSwapClientDiagnostics => _vipSwapClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Network.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VipSwap VipSwapRestClient => _vipSwapRestClient ??= new VipSwap(VipSwapClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-07-01");
+        private VipSwap VipSwapRestClient => _vipSwapRestClient ??= new VipSwap(VipSwapClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2025-09-01");
 
         /// <summary> Gets an object representing a <see cref="ApplicationGatewayResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
@@ -201,6 +201,15 @@ namespace Azure.ResourceManager.Network.Mocking
             return new ExpressRoutePortAuthorizationResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="ExpressRouteLagResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ExpressRouteLagResource"/> object. </returns>
+        public virtual ExpressRouteLagResource GetExpressRouteLagResource(ResourceIdentifier id)
+        {
+            ExpressRouteLagResource.ValidateResourceId(id);
+            return new ExpressRouteLagResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="FirewallPolicyResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FirewallPolicyResource"/> object. </returns>
@@ -217,6 +226,15 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             FirewallPolicyRuleCollectionGroupResource.ValidateResourceId(id);
             return new FirewallPolicyRuleCollectionGroupResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="FirewallPolicyKubeSelectorGroupResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FirewallPolicyKubeSelectorGroupResource"/> object. </returns>
+        public virtual FirewallPolicyKubeSelectorGroupResource GetFirewallPolicyKubeSelectorGroupResource(ResourceIdentifier id)
+        {
+            FirewallPolicyKubeSelectorGroupResource.ValidateResourceId(id);
+            return new FirewallPolicyKubeSelectorGroupResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="PolicySignaturesOverridesForIdpsResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -570,6 +588,15 @@ namespace Azure.ResourceManager.Network.Mocking
             return new NetworkWatcherResource(Client, id);
         }
 
+        /// <summary> Gets an object representing a <see cref="ConnectionAnalyzerResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ConnectionAnalyzerResource"/> object. </returns>
+        public virtual ConnectionAnalyzerResource GetConnectionAnalyzerResource(ResourceIdentifier id)
+        {
+            ConnectionAnalyzerResource.ValidateResourceId(id);
+            return new ConnectionAnalyzerResource(Client, id);
+        }
+
         /// <summary> Gets an object representing a <see cref="FlowLogResource"/> along with the instance operations that can be performed on it but with no data. </summary>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <returns> Returns a <see cref="FlowLogResource"/> object. </returns>
@@ -901,6 +928,24 @@ namespace Azure.ResourceManager.Network.Mocking
         {
             InterconnectGroupSubgroupResource.ValidateResourceId(id);
             return new InterconnectGroupSubgroupResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="FirstPartyServiceTagResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="FirstPartyServiceTagResource"/> object. </returns>
+        public virtual FirstPartyServiceTagResource GetFirstPartyServiceTagResource(ResourceIdentifier id)
+        {
+            FirstPartyServiceTagResource.ValidateResourceId(id);
+            return new FirstPartyServiceTagResource(Client, id);
+        }
+
+        /// <summary> Gets an object representing a <see cref="AddressPrefixSetResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="AddressPrefixSetResource"/> object. </returns>
+        public virtual AddressPrefixSetResource GetAddressPrefixSetResource(ResourceIdentifier id)
+        {
+            AddressPrefixSetResource.ValidateResourceId(id);
+            return new AddressPrefixSetResource(Client, id);
         }
 
         /// <summary> Gets an object representing a <see cref="VirtualMachineScaleSetNetworkInterfaceIPConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
@@ -1302,7 +1347,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1350,7 +1395,7 @@ namespace Azure.ResourceManager.Network.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-07-01. </description>
+        /// <description> 2025-09-01. </description>
         /// </item>
         /// </list>
         /// </summary>

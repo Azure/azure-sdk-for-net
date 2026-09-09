@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.HybridCompute
     internal partial class LicenseProfilesGetAllCollectionResultOfT : Pageable<HybridComputeLicenseProfileData>
     {
         private readonly LicenseProfiles _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _resourceGroupName;
         private readonly string _machineName;
         private readonly RequestContext _context;
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridCompute
         /// <param name="machineName"> The name of the hybrid machine. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public LicenseProfilesGetAllCollectionResultOfT(LicenseProfiles client, string subscriptionId, string resourceGroupName, string machineName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public LicenseProfilesGetAllCollectionResultOfT(LicenseProfiles client, Guid subscriptionId, string resourceGroupName, string machineName, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

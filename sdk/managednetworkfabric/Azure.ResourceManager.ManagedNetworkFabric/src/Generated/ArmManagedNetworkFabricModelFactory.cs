@@ -76,6 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Defines the match configuration that are supported to filter the traffic. </summary>
         /// <param name="matchConfigurationName"> The name of the match configuration. </param>
         /// <param name="sequenceNumber"> Sequence Number of the match configuration. </param>
         /// <param name="ipAddressType"> Type of IP Address. IPv4 or IPv6. </param>
@@ -133,6 +134,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 icmpTypes is null ? default : new IcmpConfigurationProperties((icmpTypes ?? new ChangeTrackingList<string>()).ToList(), default));
         }
 
+        /// <summary> Defines the port condition that needs to be matched. </summary>
         /// <param name="portType"> Port type that needs to be matched. </param>
         /// <param name="layer4Protocol"> Layer4 protocol type that needs to be matched. </param>
         /// <param name="ports"> List of the Ports that need to be matched. </param>
@@ -154,6 +156,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 (flags ?? new ChangeTrackingList<string>()).ToList());
         }
 
+        /// <summary> Port condition that needs to be matched. </summary>
         /// <param name="portType"> Port type that needs to be matched. </param>
         /// <param name="layer4Protocol"> Layer4 protocol type that needs to be matched. </param>
         /// <param name="ports"> List of the Ports that need to be matched. </param>
@@ -167,6 +170,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricPortCondition(portType, layer4Protocol, (ports ?? new ChangeTrackingList<string>()).ToList(), (portGroupNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Defines the common match conditions of the ACL and Network Tap Rule. </summary>
         /// <param name="protocolTypes"> List of the protocols that need to be matched. </param>
         /// <param name="vlanMatchCondition"> Vlan match condition that needs to be matched. </param>
         /// <param name="ipCondition"> IP condition that needs to be matched. </param>
@@ -178,6 +182,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new CommonMatchConditions((protocolTypes ?? new ChangeTrackingList<string>()).ToList(), vlanMatchCondition, ipCondition, default);
         }
 
+        /// <summary> The vlan match conditions that need to be matched. </summary>
         /// <param name="vlans"> List of vlans that need to be matched. Inputs can be single vlan or the range of vlans. </param>
         /// <param name="innerVlans"> List of inner vlans that need to be matched.Inputs can be single vlan or the range of vlans. </param>
         /// <param name="vlanGroupNames"> List of vlan group names that need to be matched. </param>
@@ -191,6 +196,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new VlanMatchCondition((vlans ?? new ChangeTrackingList<string>()).ToList(), (innerVlans ?? new ChangeTrackingList<string>()).ToList(), (vlanGroupNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Action that need to performed. </summary>
         /// <param name="aclActionType"> Type of actions that can be performed. </param>
         /// <param name="counterName"> Name of the counter block to get match count information. </param>
         /// <param name="remarkComment"> Remark comment. </param>
@@ -201,6 +207,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new AccessControlListAction(aclActionType, counterName, remarkComment, policeRateConfiguration, default);
         }
 
+        /// <summary> Police rate configuration properties. </summary>
         /// <param name="bitRate"> Rate limit in bits per second. </param>
         /// <param name="burstSize"> Burst size in packets. </param>
         /// <returns> A new <see cref="Models.PoliceRateConfigurationProperties"/> instance for mocking. </returns>
@@ -209,6 +216,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new PoliceRateConfigurationProperties(bitRate, burstSize, default);
         }
 
+        /// <summary> Bit rate in bits per second. </summary>
         /// <param name="rate"> Bitrate. </param>
         /// <param name="unit"> Bitrate unit. </param>
         /// <returns> A new <see cref="Models.NetworkFabricBitRate"/> instance for mocking. </returns>
@@ -217,6 +225,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricBitRate(rate, unit, default);
         }
 
+        /// <summary> Burst size in packets. </summary>
         /// <param name="size"> Burst size. </param>
         /// <param name="unit"> Burst size unit. </param>
         /// <returns> A new <see cref="Models.NetworkFabricBurstSize"/> instance for mocking. </returns>
@@ -225,6 +234,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricBurstSize(size, unit, default);
         }
 
+        /// <summary> Dynamic match configuration object. </summary>
         /// <param name="ipGroups"> List of IP Groups. </param>
         /// <param name="vlanGroups"> List of vlan groups. </param>
         /// <param name="portGroups"> List of the port groups. </param>
@@ -238,6 +248,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new CommonDynamicMatchConfiguration((ipGroups ?? new ChangeTrackingList<MatchConfigurationIPGroupProperties>()).ToList(), (vlanGroups ?? new ChangeTrackingList<VlanGroupProperties>()).ToList(), (portGroups ?? new ChangeTrackingList<PortGroupProperties>()).ToList(), default);
         }
 
+        /// <summary> IP Group properties. </summary>
         /// <param name="name"> IP Group name. </param>
         /// <param name="ipAddressType"> IP Address type. </param>
         /// <param name="ipPrefixes"> List of IP Prefixes. </param>
@@ -249,6 +260,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new MatchConfigurationIPGroupProperties(name, ipAddressType, (ipPrefixes ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Vlan group properties. </summary>
         /// <param name="name"> Vlan group name. </param>
         /// <param name="vlans"> List of vlans. </param>
         /// <returns> A new <see cref="Models.VlanGroupProperties"/> instance for mocking. </returns>
@@ -259,6 +271,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new VlanGroupProperties(name, (vlans ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Port Group properties. </summary>
         /// <param name="name"> The name of the port group. </param>
         /// <param name="ports"> List of the ports that need to be matched. </param>
         /// <returns> A new <see cref="Models.PortGroupProperties"/> instance for mocking. </returns>
@@ -269,6 +282,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new PortGroupProperties(name, (ports ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Access Control List (ACL) configurations properties. </summary>
         /// <param name="ipAddressType"> IP Address Type. IPv4 or IPv6. </param>
         /// <param name="matchConfigurations"> Access Control List (ACL) match configurations. </param>
         /// <returns> A new <see cref="Models.ControlPlaneAclProperties"/> instance for mocking. </returns>
@@ -279,6 +293,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ControlPlaneAclProperties(ipAddressType, (matchConfigurations ?? new ChangeTrackingList<ControlPlaneAclMatchConfigurationProperties>()).ToList(), default);
         }
 
+        /// <summary> Control Plane Access Control List (ACL) match configurations properties. </summary>
         /// <param name="matchConfigurationName"> The name of the match configuration. </param>
         /// <param name="sequenceNumber"> Sequence Number of the match configuration. </param>
         /// <param name="matchCondition"> Match conditions. </param>
@@ -310,6 +325,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Control Plane Access Control List (ACL) IP condition properties. </summary>
         /// <param name="sourceIPPrefix"> List of the source IP addresses that need to be matched. </param>
         /// <param name="destinationIPPrefix"> List of the destination IP addresses that need to be matched. </param>
         /// <returns> A new <see cref="Models.ControlPlanAclIPMatchCondition"/> instance for mocking. </returns>
@@ -318,6 +334,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ControlPlanAclIPMatchCondition(sourceIPPrefix, destinationIPPrefix, default);
         }
 
+        /// <summary> TTL [Time To Live] match conditions properties. </summary>
         /// <param name="timeToLiveInHops"> TTL [Time To Live] values that need to be matched. </param>
         /// <param name="timeToLiveMatchType"> TTL [Time To Live] match type. Example: eq | neq | gt | lt | range. </param>
         /// <returns> A new <see cref="Models.ControlPlaneAclTimeToLiveMatchCondition"/> instance for mocking. </returns>
@@ -326,6 +343,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ControlPlaneAclTimeToLiveMatchCondition(timeToLiveInHops, timeToLiveMatchType, default);
         }
 
+        /// <summary> Control Plane Access Control List (ACL) Port Match conditions properties. </summary>
         /// <param name="sourcePorts"> List of the ports that need to be matched. </param>
         /// <param name="destinationPorts"> List of the destination ports that need to be matched. </param>
         /// <returns> A new <see cref="Models.ControlPlaneAclPortMatchCondition"/> instance for mocking. </returns>
@@ -334,6 +352,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ControlPlaneAclPortMatchCondition(sourcePorts, destinationPorts, default);
         }
 
+        /// <summary> Control Plane Access Control List (ACL) Port Match conditions properties. </summary>
         /// <param name="ports"> List of the ports that need to be matched. Possible values: 1234, 1234-1235, 1234,1235,1236. </param>
         /// <param name="portMatchType"> Port match type. Example: eq | neq | gt | lt | range. </param>
         /// <returns> A new <see cref="Models.ControlPlaneAclPortCondition"/> instance for mocking. </returns>
@@ -344,6 +363,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ControlPlaneAclPortCondition((ports ?? new ChangeTrackingList<string>()).ToList(), portMatchType, default);
         }
 
+        /// <summary> Control Plane Access Control List (ACL) Actions. </summary>
         /// <param name="actionType"> Type of actions that can be performed. </param>
         /// <param name="remarkComment"> Remark comment. </param>
         /// <returns> A new <see cref="Models.ControlPlaneAclAction"/> instance for mocking. </returns>
@@ -382,6 +402,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default));
         }
 
+        /// <summary> Defines the match configuration that are supported to filter the traffic. </summary>
         /// <param name="matchConfigurationName"> The name of the match configuration. </param>
         /// <param name="sequenceNumber"> Sequence Number of the match configuration. </param>
         /// <param name="ipAddressType"> Type of IP Address. IPv4 or IPv6. </param>
@@ -439,6 +460,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 icmpTypes is null ? default : new IcmpConfigurationPatchProperties((icmpTypes ?? new ChangeTrackingList<string>()).ToList(), default));
         }
 
+        /// <summary> Defines the port condition that needs to be matched. </summary>
         /// <param name="portType"> Port type that needs to be matched. </param>
         /// <param name="layer4Protocol"> Layer4 protocol type that needs to be matched. </param>
         /// <param name="ports"> List of the Ports that need to be matched. </param>
@@ -460,6 +482,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 (flags ?? new ChangeTrackingList<string>()).ToList());
         }
 
+        /// <summary> Port condition that needs to be matched. </summary>
         /// <param name="portType"> Port type that needs to be matched. </param>
         /// <param name="layer4Protocol"> Layer4 protocol type that needs to be matched. </param>
         /// <param name="ports"> List of the Ports that need to be matched. </param>
@@ -473,6 +496,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricPortConditionPatch(portType, layer4Protocol, (ports ?? new ChangeTrackingList<string>()).ToList(), (portGroupNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Defines the common match conditions of the ACL and Network Tap Rule. </summary>
         /// <param name="protocolTypes"> List of the protocols that need to be matched. </param>
         /// <param name="vlanMatchCondition"> Vlan match condition that needs to be matched. </param>
         /// <param name="ipCondition"> IP condition that needs to be matched. </param>
@@ -484,6 +508,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new CommonMatchConditionsPatch((protocolTypes ?? new ChangeTrackingList<string>()).ToList(), vlanMatchCondition, ipCondition, default);
         }
 
+        /// <summary> The vlan match conditions that need to be matched. </summary>
         /// <param name="vlans"> List of vlans that need to be matched. Inputs can be single vlan or the range of vlans. </param>
         /// <param name="innerVlans"> List of inner vlans that need to be matched.Inputs can be single vlan or the range of vlans. </param>
         /// <param name="vlanGroupNames"> List of vlan group names that need to be matched. </param>
@@ -497,6 +522,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new VlanMatchConditionPatch((vlans ?? new ChangeTrackingList<string>()).ToList(), (innerVlans ?? new ChangeTrackingList<string>()).ToList(), (vlanGroupNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Defines the condition that can be filtered using the selected IPs. </summary>
         /// <param name="type"> IP Address type that needs to be matched. </param>
         /// <param name="prefixType"> IP Prefix Type that needs to be matched. </param>
         /// <param name="ipPrefixValues"> The list of IP Prefixes that need to be matched. </param>
@@ -510,6 +536,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new IPMatchConditionPatch(@type, prefixType, (ipPrefixValues ?? new ChangeTrackingList<string>()).ToList(), (ipGroupNames ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Action that need to be performed. </summary>
         /// <param name="aclActionType"> Type of actions that can be performed. </param>
         /// <param name="counterName"> Name of the counter block to get match count information. </param>
         /// <param name="remarkComment"> Remark comment. </param>
@@ -520,6 +547,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new AccessControlListActionPatch(aclActionType, counterName, remarkComment, policeRateConfiguration, default);
         }
 
+        /// <summary> Dynamic match configuration object. </summary>
         /// <param name="ipGroups"> List of IP Groups. </param>
         /// <param name="vlanGroups"> List of vlan groups. </param>
         /// <param name="portGroups"> List of the port groups. </param>
@@ -533,6 +561,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new CommonDynamicMatchConfigurationPatch((ipGroups ?? new ChangeTrackingList<IPGroupPatchProperties>()).ToList(), (vlanGroups ?? new ChangeTrackingList<VlanGroupPatchProperties>()).ToList(), (portGroups ?? new ChangeTrackingList<PortGroupPatchProperties>()).ToList(), default);
         }
 
+        /// <summary> IP Group properties. </summary>
         /// <param name="name"> IP Group name. </param>
         /// <param name="ipAddressType"> IP Address type. </param>
         /// <param name="ipPrefixes"> List of IP Prefixes. </param>
@@ -544,6 +573,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new IPGroupPatchProperties(name, ipAddressType, (ipPrefixes ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Vlan group properties. </summary>
         /// <param name="name"> Vlan group name. </param>
         /// <param name="vlans"> List of vlans. </param>
         /// <returns> A new <see cref="Models.VlanGroupPatchProperties"/> instance for mocking. </returns>
@@ -554,6 +584,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new VlanGroupPatchProperties(name, (vlans ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Port Group Properties. </summary>
         /// <param name="name"> The name of the port group. </param>
         /// <param name="ports"> List of the ports that need to be matched. </param>
         /// <returns> A new <see cref="Models.PortGroupPatchProperties"/> instance for mocking. </returns>
@@ -564,6 +595,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new PortGroupPatchProperties(name, (ports ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Access Control List (ACL) configurations patch properties. </summary>
         /// <param name="ipAddressType"> IP Address Type. IPv4 or IPv6. </param>
         /// <param name="matchConfigurations"> Access Control List (ACL) match configurations. </param>
         /// <returns> A new <see cref="Models.ControlPlaneAclPatchProperties"/> instance for mocking. </returns>
@@ -574,6 +606,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ControlPlaneAclPatchProperties(ipAddressType, (matchConfigurations ?? new ChangeTrackingList<ControlPlaneAclMatchConfigurationPatchProperties>()).ToList(), default);
         }
 
+        /// <summary> Control Plane Access Control List (ACL) match configurations properties. </summary>
         /// <param name="matchConfigurationName"> The name of the match configuration. </param>
         /// <param name="sequenceNumber"> Sequence Number of the match configuration. </param>
         /// <param name="matchCondition"> Match conditions. </param>
@@ -605,6 +638,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Control Plane Access Control List (ACL) IP condition patch properties. </summary>
         /// <param name="sourceIPPrefix"> List of the source IP addresses that need to be matched. </param>
         /// <param name="destinationIPPrefix"> List of the destination IP addresses that need to be matched. </param>
         /// <returns> A new <see cref="Models.ControlPlaneAclIPMatchConditionPatch"/> instance for mocking. </returns>
@@ -613,6 +647,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ControlPlaneAclIPMatchConditionPatch(sourceIPPrefix, destinationIPPrefix, default);
         }
 
+        /// <summary> TTL [Time To Live] match conditions patch properties. </summary>
         /// <param name="timeToLiveInHops"> TTL [Time To Live] values that need to be matched. </param>
         /// <param name="timeToLiveMatchType"> TTL [Time To Live] match type. Example: eq | neq | gt | lt | range. </param>
         /// <returns> A new <see cref="Models.ControlPlaneAclTimeToLiveMatchConditionPatch"/> instance for mocking. </returns>
@@ -621,6 +656,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ControlPlaneAclTimeToLiveMatchConditionPatch(timeToLiveInHops, timeToLiveMatchType, default);
         }
 
+        /// <summary> Control Plane Access Control List (ACL) Port Match conditions properties. </summary>
         /// <param name="sourcePorts"> List of the ports that need to be matched. </param>
         /// <param name="destinationPorts"> List of the destination ports that need to be matched. </param>
         /// <returns> A new <see cref="Models.ControlPlaneAclPortMatchConditionPatch"/> instance for mocking. </returns>
@@ -629,6 +665,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ControlPlaneAclPortMatchConditionPatch(sourcePorts, destinationPorts, default);
         }
 
+        /// <summary> Control Plane Access Control List (ACL) Actions. </summary>
         /// <param name="actionType"> Type of actions that can be performed. </param>
         /// <param name="remarkComment"> Remark comment. </param>
         /// <returns> A new <see cref="Models.ControlPlaneAclActionPatch"/> instance for mocking. </returns>
@@ -637,6 +674,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ControlPlaneAclActionPatch(actionType, remarkComment, default);
         }
 
+        /// <summary> Global Access Control List actions patch properties. </summary>
         /// <param name="enableCount"> Configuration to enable or disable ACL action count. </param>
         /// <returns> A new <see cref="Models.GlobalAccessControlListActionPatchProperties"/> instance for mocking. </returns>
         public static GlobalAccessControlListActionPatchProperties GlobalAccessControlListActionPatchProperties(NetworkFabricBooleanValue? enableCount = default)
@@ -644,6 +682,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new GlobalAccessControlListActionPatchProperties(enableCount, default);
         }
 
+        /// <summary> Network Rack patch resource definition. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.NetworkRackPatch"/> instance for mocking. </returns>
         public static NetworkRackPatch NetworkRackPatch(IDictionary<string, string> tags = default)
@@ -653,6 +692,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkRackPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Update administrative state on list of resources. </summary>
         /// <param name="resourceIds"> Network Fabrics or Network Rack resource Id. </param>
         /// <param name="state"> Administrative state. </param>
         /// <returns> A new <see cref="Models.UpdateAdministrativeStateContent"/> instance for mocking. </returns>
@@ -663,6 +703,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new UpdateAdministrativeStateContent((resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default, state);
         }
 
+        /// <summary> Update administrative state on list of resources. </summary>
         /// <param name="resourceIds"> Network Fabrics or Network Rack resource Id. </param>
         /// <returns> A new <see cref="Models.UpdateAdministrativeStateOnResources"/> instance for mocking. </returns>
         public static UpdateAdministrativeStateOnResources UpdateAdministrativeStateOnResources(IEnumerable<ResourceIdentifier> resourceIds = default)
@@ -672,6 +713,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new UpdateAdministrativeStateOnResources((resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
+        /// <summary> Update Administrative State Response. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -701,6 +743,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Update Administrative State Response Properties. </summary>
         /// <param name="successfulResources"> List of ARM Resource IDs for which the given action applied successfully. </param>
         /// <param name="failedResources"> List of ARM Resource IDs for which the given action failed to apply. </param>
         /// <returns> A new <see cref="Models.UpdateAdministrativeStateResponseProperties"/> instance for mocking. </returns>
@@ -712,6 +755,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new UpdateAdministrativeStateResponseProperties((successfulResources ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), (failedResources ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
+        /// <summary> Common response for the state updates. </summary>
         /// <param name="error"> The error object. </param>
         /// <param name="configurationState"> Gets the configuration state. </param>
         /// <returns> A new <see cref="Models.StateUpdateCommonPostActionResult"/> instance for mocking. </returns>
@@ -720,6 +764,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new StateUpdateCommonPostActionResult(error, default, configurationState);
         }
 
+        /// <summary> The error message. </summary>
         /// <param name="error"> The error object. </param>
         /// <returns> A new <see cref="Models.NetworkFabricErrorResult"/> instance for mocking. </returns>
         public static NetworkFabricErrorResult NetworkFabricErrorResult(ResponseError error = default)
@@ -727,6 +772,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricErrorResult(error, default);
         }
 
+        /// <summary> The response of the action validate configuration. </summary>
         /// <param name="error"> The error object. </param>
         /// <param name="configurationState"> Gets the configuration state. </param>
         /// <param name="uri"> URL for the details of the response. </param>
@@ -747,7 +793,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="internetGatewayIds"> List of Internet Gateway resource Id. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ruleProperties"/> is null. </exception>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData"/> instance for mocking. </returns>
         public static NetworkFabricInternetGatewayRuleData NetworkFabricInternetGatewayRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, InternetGatewayRules ruleProperties = default, NetworkFabricProvisioningState? provisioningState = default, IEnumerable<string> internetGatewayIds = default, string lastOperationDetails = default)
         {
@@ -770,25 +815,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="ruleProperties"> Rules for the InternetGateways. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="internetGatewayIds"> List of Internet Gateway resource Id. </param>
-        /// <returns> A new <see cref="Models.InternetGatewayRuleProperties"/> instance for mocking. </returns>
-        public static InternetGatewayRuleProperties InternetGatewayRuleProperties(string annotation = default, InternetGatewayRules ruleProperties = default, string lastOperationDetails = default, NetworkFabricProvisioningState? provisioningState = default, IEnumerable<string> internetGatewayIds = default)
-        {
-            internetGatewayIds ??= new ChangeTrackingList<string>();
-
-            return new InternetGatewayRuleProperties(
-                annotation,
-                default,
-                ruleProperties,
-                lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
-                provisioningState,
-                (internetGatewayIds ?? new ChangeTrackingList<string>()).ToList());
-        }
-
+        /// <summary> Rules for the InternetGateways. </summary>
         /// <param name="action"> Specify action. </param>
         /// <param name="addressList"> List of Addresses to be allowed or denied. </param>
         /// <param name="condition"> Specify rule condition. </param>
@@ -813,6 +840,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Header name and source addresses associated with the header. </summary>
         /// <param name="headerName"> Name of the header. </param>
         /// <param name="addressList"> List of source remote IP to be allowed or denied. </param>
         /// <returns> A new <see cref="Models.NetworkFabricHeaderAddress"/> instance for mocking. </returns>
@@ -823,6 +851,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricHeaderAddress(headerName, (addressList ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Switch configuration entries require a description to discern between configuration group. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <returns> A new <see cref="Models.AnnotationResourceProperties"/> instance for mocking. </returns>
         public static AnnotationResourceProperties AnnotationResourceProperties(string annotation = default)
@@ -830,6 +859,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new AnnotationResourceProperties(annotation, default);
         }
 
+        /// <summary> The Internet Gateway Rules patch resource definition. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.NetworkFabricInternetGatewayRulePatchContent"/> instance for mocking. </returns>
         public static NetworkFabricInternetGatewayRulePatchContent NetworkFabricInternetGatewayRulePatchContent(IDictionary<string, string> tags = default)
@@ -854,7 +884,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="networkFabricControllerId"> ARM Resource ID of the Network Fabric Controller. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricControllerId"/> is null. </exception>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayData"/> instance for mocking. </returns>
         public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier internetGatewayRuleId = default, string ipV4Address = default, int? port = default, InternetGatewayType? @type = default, InternetGatewayType? internetGatewayType = default, ResourceIdentifier networkFabricControllerId = default, NetworkFabricProvisioningState? provisioningState = default, string lastOperationDetails = default)
         {
@@ -904,7 +933,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipCommunityRules"/> is null. </exception>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricIPCommunityData"/> instance for mocking. </returns>
         public static NetworkFabricIPCommunityData NetworkFabricIPCommunityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier networkFabricId = default, IEnumerable<IPCommunityRule> ipCommunityRules = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default)
         {
@@ -917,7 +945,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                ipCommunityRules is null && lastOperationDetails is null ? default : new IpCommunityProperties(
+                ipCommunityRules is null && lastOperationDetails is null ? default : new IPCommunityProperties(
                     default,
                     default,
                     (ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>()).ToList(),
@@ -929,6 +957,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> IP Community patchable properties. </summary>
         /// <param name="action"> Action to be taken on the configuration. Example: Permit | Deny. </param>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. Prefix lists are evaluated starting with the lowest sequence number and continue down the list until a match is made. Once a match is made, the permit or deny statement is applied to that network and the rest of the list is ignored. </param>
         /// <param name="wellKnownCommunities"> Supported well known Community List. </param>
@@ -949,7 +978,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricIPCommunityPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, ipCommunityRules is null ? default : new IpCommunityPatchableProperties((ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>()).ToList(), default));
+            return new NetworkFabricIPCommunityPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, ipCommunityRules is null ? default : new IPCommunityPatchableProperties((ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>()).ToList(), default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -965,7 +994,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipExtendedCommunityRules"/> is null. </exception>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData"/> instance for mocking. </returns>
         public static NetworkFabricIPExtendedCommunityData NetworkFabricIPExtendedCommunityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, IEnumerable<IPExtendedCommunityRule> ipExtendedCommunityRules = default, ResourceIdentifier networkFabricId = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default)
         {
@@ -978,7 +1006,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                ipExtendedCommunityRules is null && lastOperationDetails is null ? default : new IpExtendedCommunityProperties(
+                ipExtendedCommunityRules is null && lastOperationDetails is null ? default : new IPExtendedCommunityProperties(
                     default,
                     (ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>()).ToList(),
                     default,
@@ -990,6 +1018,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> List of IP Extended Community Rules. </summary>
         /// <param name="action"> Action to be taken on the configuration. Example: Permit | Deny. </param>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. Prefix lists are evaluated starting with the lowest sequence number and continue down the list until a match is made. Once a match is made, the permit or deny statement is applied to that network and the rest of the list is ignored. </param>
         /// <param name="routeTargets"> Route Target List.The expected formats are ASN(plain):NN &gt;&gt; example 4294967294:50, ASN.ASN:NN &gt;&gt; example 65533.65333:40, IP-address:NN &gt;&gt; example 10.10.10.10:65535. The possible values of ASN,NN are in range of 0-65535, ASN(plain) is in range of 0-4294967295. </param>
@@ -1009,7 +1038,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricIPExtendedCommunityPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, annotation is null && ipExtendedCommunityRules is null ? default : new IpExtendedCommunityPatchProperties(annotation, (ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>()).ToList(), default));
+            return new NetworkFabricIPExtendedCommunityPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, annotation is null && ipExtendedCommunityRules is null ? default : new IPExtendedCommunityPatchProperties(annotation, (ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>()).ToList(), default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1025,7 +1054,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixRules"/> is null. </exception>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricIPPrefixData"/> instance for mocking. </returns>
         public static NetworkFabricIPPrefixData NetworkFabricIPPrefixData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier networkFabricId = default, IEnumerable<IPPrefixRule> ipPrefixRules = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default)
         {
@@ -1038,7 +1066,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                ipPrefixRules is null && lastOperationDetails is null ? default : new IpPrefixProperties(
+                ipPrefixRules is null && lastOperationDetails is null ? default : new IPPrefixProperties(
                     default,
                     default,
                     (ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>()).ToList(),
@@ -1050,6 +1078,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> IP Prefix Rule properties. </summary>
         /// <param name="action"> Action to be taken on the configuration. Example: Permit | Deny. </param>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. Prefix lists are evaluated starting with the lowest sequence number and continue down the list until a match is made. Once a match is made, the permit or deny statement is applied to that network and the rest of the list is ignored. </param>
         /// <param name="networkPrefix"> Network Prefix specifying IPv4/IPv6 packets to be permitted or denied. Example: 1.1.1.0/24 | 3FFE:FFFF:0:CD30::/126. </param>
@@ -1075,7 +1104,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricIPPrefixPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, annotation is null && ipPrefixRules is null ? default : new IpPrefixPatchProperties(annotation, (ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>()).ToList(), default));
+            return new NetworkFabricIPPrefixPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, annotation is null && ipPrefixRules is null ? default : new IPPrefixPatchProperties(annotation, (ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>()).ToList(), default));
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1095,7 +1124,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricL2IsolationDomainData"/> instance for mocking. </returns>
         public static NetworkFabricL2IsolationDomainData NetworkFabricL2IsolationDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier networkFabricId = default, int vlanId = default, int? mtu = default, NetworkFabricExtendedVlan? extendedVlan = default, ResourceIdentifier networkToNetworkInterconnectId = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
         {
@@ -1124,33 +1152,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
-        /// <param name="vlanId"> Vlan Identifier of the Network Fabric. Example: 501. </param>
-        /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
-        /// <param name="extendedVlan"> Extended VLAN status, default value is Disabled. </param>
-        /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the networkToNetworkInterconnectId of the L2 ISD resource. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <returns> A new <see cref="Models.L2IsolationDomainProperties"/> instance for mocking. </returns>
-        public static L2IsolationDomainProperties L2IsolationDomainProperties(string annotation = default, ResourceIdentifier networkFabricId = default, int vlanId = default, int? mtu = default, NetworkFabricExtendedVlan? extendedVlan = default, ResourceIdentifier networkToNetworkInterconnectId = default, string lastOperationDetails = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default)
-        {
-            return new L2IsolationDomainProperties(
-                annotation,
-                default,
-                networkFabricId,
-                vlanId,
-                mtu,
-                extendedVlan,
-                networkToNetworkInterconnectId,
-                lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
-                configurationState,
-                provisioningState,
-                administrativeState);
-        }
-
         /// <param name="tags"> Resource tags. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
@@ -1165,16 +1166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricL2IsolationDomainPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, annotation is null && mtu is null && extendedVlan is null && networkToNetworkInterconnectId is null ? default : new L2IsolationDomainPatchProperties(annotation, default, mtu, extendedVlan, networkToNetworkInterconnectId), identity);
         }
 
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
-        /// <param name="extendedVlan"> Extended VLAN status. </param>
-        /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the networkToNetworkInterconnectId of the L2 ISD resource. </param>
-        /// <returns> A new <see cref="Models.L2IsolationDomainPatchProperties"/> instance for mocking. </returns>
-        public static L2IsolationDomainPatchProperties L2IsolationDomainPatchProperties(string annotation = default, int? mtu = default, NetworkFabricExtendedVlan? extendedVlan = default, ResourceIdentifier networkToNetworkInterconnectId = default)
-        {
-            return new L2IsolationDomainPatchProperties(annotation, default, mtu, extendedVlan, networkToNetworkInterconnectId);
-        }
-
+        /// <summary> The managed service identities assigned to this resource. </summary>
         /// <param name="identityType"> The type of managed identity assigned to this resource. </param>
         /// <param name="userAssignedIdentities"> The identities assigned to this resource by the user. </param>
         /// <returns> A new <see cref="Models.NetworkFabricManagedServiceIdentityPatch"/> instance for mocking. </returns>
@@ -1207,7 +1199,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="exportPolicies"> Export Policy for the BGP Monitoring Protocol (BMP) Configuration. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricL3IsolationDomainData"/> instance for mocking. </returns>
         public static NetworkFabricL3IsolationDomainData NetworkFabricL3IsolationDomainData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, RedistributeConnectedSubnet? redistributeConnectedSubnets = default, RedistributeStaticRoute? redistributeStaticRoutes = default, AggregateRouteConfiguration aggregateRouteConfiguration = default, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy = default, ResourceIdentifier networkFabricId = default, RoutePrefixLimitProperties v4RoutePrefixLimit = default, RoutePrefixLimitProperties v6RoutePrefixLimit = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, L3ExportRoutePolicy staticRouteExportRoutePolicy = default, IEnumerable<string> uniqueRds = default, string lastOperationDetails = default, IEnumerable<BmpExportPolicy> exportPolicies = default, ManagedServiceIdentity identity = default)
         {
@@ -1241,17 +1232,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <param name="iPv4Routes"> List of IPv4 Route prefixes. </param>
-        /// <param name="iPv6Routes"> List of Ipv6Routes prefixes. </param>
+        /// <summary> List of IPv4 and IPv6 aggregate routes. </summary>
+        /// <param name="ipv4Routes"> List of IPv4 Route prefixes. </param>
+        /// <param name="ipv6Routes"> List of Ipv6Routes prefixes. </param>
         /// <returns> A new <see cref="Models.AggregateRouteConfiguration"/> instance for mocking. </returns>
-        public static AggregateRouteConfiguration AggregateRouteConfiguration(IEnumerable<AggregateRoute> iPv4Routes = default, IEnumerable<AggregateRoute> iPv6Routes = default)
+        public static AggregateRouteConfiguration AggregateRouteConfiguration(IEnumerable<AggregateRoute> ipv4Routes = default, IEnumerable<AggregateRoute> ipv6Routes = default)
         {
-            iPv4Routes ??= new ChangeTrackingList<AggregateRoute>();
-            iPv6Routes ??= new ChangeTrackingList<AggregateRoute>();
+            ipv4Routes ??= new ChangeTrackingList<AggregateRoute>();
+            ipv6Routes ??= new ChangeTrackingList<AggregateRoute>();
 
-            return new AggregateRouteConfiguration((iPv4Routes ?? new ChangeTrackingList<AggregateRoute>()).ToList(), (iPv6Routes ?? new ChangeTrackingList<AggregateRoute>()).ToList(), default);
+            return new AggregateRouteConfiguration((ipv4Routes ?? new ChangeTrackingList<AggregateRoute>()).ToList(), (ipv6Routes ?? new ChangeTrackingList<AggregateRoute>()).ToList(), default);
         }
 
+        /// <summary> aggregateIpv4Route model. </summary>
         /// <param name="prefix"> IPv4 Prefix of the aggregate Ipv4Route. </param>
         /// <returns> A new <see cref="Models.AggregateRoute"/> instance for mocking. </returns>
         public static AggregateRoute AggregateRoute(string prefix = default)
@@ -1259,6 +1252,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new AggregateRoute(prefix, default);
         }
 
+        /// <summary> Connected Subnet Route Policy properties. </summary>
         /// <param name="exportRoutePolicy"> Array of ARM Resource ID of the RoutePolicies. </param>
         /// <returns> A new <see cref="Models.ConnectedSubnetRoutePolicy"/> instance for mocking. </returns>
         public static ConnectedSubnetRoutePolicy ConnectedSubnetRoutePolicy(L3ExportRoutePolicy exportRoutePolicy = default)
@@ -1266,6 +1260,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ConnectedSubnetRoutePolicy(exportRoutePolicy, default);
         }
 
+        /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
         /// <param name="exportIPv4RoutePolicyId"> ARM Resource ID of the RoutePolicy. </param>
         /// <param name="exportIPv6RoutePolicyId"> ARM Resource ID of the RoutePolicy. </param>
         /// <returns> A new <see cref="Models.L3ExportRoutePolicy"/> instance for mocking. </returns>
@@ -1274,6 +1269,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new L3ExportRoutePolicy(exportIPv4RoutePolicyId, exportIPv6RoutePolicyId, default);
         }
 
+        /// <summary> Layer3 Route prefix limit configuration. </summary>
         /// <param name="hardLimit"> Hard limit for the routes. </param>
         /// <param name="threshold"> Threshold for the routes. </param>
         /// <returns> A new <see cref="Models.RoutePrefixLimitProperties"/> instance for mocking. </returns>
@@ -1311,17 +1307,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default), identity);
         }
 
-        /// <param name="iPv4Routes"> List of IPv4 Route prefixes. </param>
-        /// <param name="iPv6Routes"> List of Ipv6Routes prefixes. </param>
+        /// <summary> List of IPv4 and IPv6 aggregate routes. </summary>
+        /// <param name="ipv4Routes"> List of IPv4 Route prefixes. </param>
+        /// <param name="ipv6Routes"> List of Ipv6Routes prefixes. </param>
         /// <returns> A new <see cref="Models.AggregateRoutePatchConfiguration"/> instance for mocking. </returns>
-        public static AggregateRoutePatchConfiguration AggregateRoutePatchConfiguration(IEnumerable<AggregateRoute> iPv4Routes = default, IEnumerable<AggregateRoute> iPv6Routes = default)
+        public static AggregateRoutePatchConfiguration AggregateRoutePatchConfiguration(IEnumerable<AggregateRoute> ipv4Routes = default, IEnumerable<AggregateRoute> ipv6Routes = default)
         {
-            iPv4Routes ??= new ChangeTrackingList<AggregateRoute>();
-            iPv6Routes ??= new ChangeTrackingList<AggregateRoute>();
+            ipv4Routes ??= new ChangeTrackingList<AggregateRoute>();
+            ipv6Routes ??= new ChangeTrackingList<AggregateRoute>();
 
-            return new AggregateRoutePatchConfiguration((iPv4Routes ?? new ChangeTrackingList<AggregateRoute>()).ToList(), (iPv6Routes ?? new ChangeTrackingList<AggregateRoute>()).ToList(), default);
+            return new AggregateRoutePatchConfiguration((ipv4Routes ?? new ChangeTrackingList<AggregateRoute>()).ToList(), (ipv6Routes ?? new ChangeTrackingList<AggregateRoute>()).ToList(), default);
         }
 
+        /// <summary> Array of ARM Resource ID of the RoutePolicies. </summary>
         /// <param name="exportIPv4RoutePolicyId"> ARM Resource ID of the RoutePolicy. </param>
         /// <param name="exportIPv6RoutePolicyId"> ARM Resource ID of the RoutePolicy. </param>
         /// <returns> A new <see cref="Models.L3ExportRoutePolicyPatch"/> instance for mocking. </returns>
@@ -1330,6 +1328,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new L3ExportRoutePolicyPatch(exportIPv4RoutePolicyId, exportIPv6RoutePolicyId, default);
         }
 
+        /// <summary> VRP Limit patch configuration. </summary>
         /// <param name="hardLimit"> Hard limit for the routes. </param>
         /// <param name="threshold"> Threshold for the routes. </param>
         /// <returns> A new <see cref="Models.RoutePrefixLimitPatchProperties"/> instance for mocking. </returns>
@@ -1384,8 +1383,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     default,
                     default,
                     default,
-                    new NativeIpv4PrefixLimitProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default),
-                    new NativeIpv6PrefixLimitProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default),
+                    new NativeIPv4PrefixLimitProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default),
+                    new NativeIPv6PrefixLimitProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default),
                     new LastOperationProperties(lastOperationDetails, default),
                     networkFabricId,
                     default,
@@ -1395,6 +1394,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Connected Subnet properties. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="prefix"> Prefix of the Connected Subnet. </param>
         /// <returns> A new <see cref="Models.ConnectedSubnet"/> instance for mocking. </returns>
@@ -1403,6 +1403,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ConnectedSubnet(annotation, default, prefix);
         }
 
+        /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
         /// <param name="importIPv4RoutePolicyId"> ARM resource ID of RoutePolicy. </param>
         /// <param name="importIPv6RoutePolicyId"> ARM resource ID of RoutePolicy. </param>
         /// <returns> A new <see cref="Models.ImportRoutePolicy"/> instance for mocking. </returns>
@@ -1411,6 +1412,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ImportRoutePolicy(importIPv4RoutePolicyId, importIPv6RoutePolicyId, default);
         }
 
+        /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
         /// <param name="exportIPv4RoutePolicyId"> ARM resource ID of RoutePolicy. </param>
         /// <param name="exportIPv6RoutePolicyId"> ARM resource ID of RoutePolicy. </param>
         /// <returns> A new <see cref="Models.ExportRoutePolicy"/> instance for mocking. </returns>
@@ -1419,6 +1421,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ExportRoutePolicy(exportIPv4RoutePolicyId, exportIPv6RoutePolicyId, default);
         }
 
+        /// <summary> BGP configuration properties. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
@@ -1459,6 +1462,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 v6OverV4BgpSession);
         }
 
+        /// <summary> BFD configuration properties. </summary>
         /// <param name="administrativeState"> Administrative state of the BfdConfiguration. Example: Enabled | Disabled. </param>
         /// <param name="intervalInMilliSeconds"> Interval in milliseconds. Example: 300. </param>
         /// <param name="multiplier"> Multiplier for the Bfd Configuration. Example: 5. </param>
@@ -1468,6 +1472,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new BfdConfiguration(administrativeState, intervalInMilliSeconds, multiplier, default);
         }
 
+        /// <summary> Neighbor Address properties. </summary>
         /// <param name="address"> IP Address. </param>
         /// <param name="bfdAdministrativeState"> BFD Administrative State for each Neighbor Address. Example: Enabled | Disabled. </param>
         /// <param name="bgpAdministrativeState"> BGP Administrative State for each Neighbor Address. Example: Enabled | Disabled. </param>
@@ -1489,19 +1494,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new InternalNetworkBmpProperties((neighborIPExclusions ?? new ChangeTrackingList<string>()).ToList(), bmpConfigurationState, exportPolicies is null ? default : new BmpExportPolicyProperties((exportPolicies ?? new ChangeTrackingList<BmpExportPolicy>()).ToList(), default), default);
         }
 
+        /// <summary> Static Route Configuration properties. </summary>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
-        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
-        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
+        /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
         /// <param name="extension"> Extension. Example: NoExtension | NPB. </param>
         /// <returns> A new <see cref="Models.StaticRouteConfiguration"/> instance for mocking. </returns>
-        public static StaticRouteConfiguration StaticRouteConfiguration(BfdConfiguration bfdConfiguration = default, IEnumerable<StaticRouteProperties> iPv4Routes = default, IEnumerable<StaticRouteProperties> iPv6Routes = default, StaticRouteConfigurationExtension? extension = default)
+        public static StaticRouteConfiguration StaticRouteConfiguration(BfdConfiguration bfdConfiguration = default, IEnumerable<StaticRouteProperties> ipv4Routes = default, IEnumerable<StaticRouteProperties> ipv6Routes = default, StaticRouteConfigurationExtension? extension = default)
         {
-            iPv4Routes ??= new ChangeTrackingList<StaticRouteProperties>();
-            iPv6Routes ??= new ChangeTrackingList<StaticRouteProperties>();
+            ipv4Routes ??= new ChangeTrackingList<StaticRouteProperties>();
+            ipv6Routes ??= new ChangeTrackingList<StaticRouteProperties>();
 
-            return new StaticRouteConfiguration(bfdConfiguration, (iPv4Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), (iPv6Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), extension, default);
+            return new StaticRouteConfiguration(bfdConfiguration, (ipv4Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), (ipv6Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), extension, default);
         }
 
+        /// <summary> Route Properties. </summary>
         /// <param name="prefix"> Prefix of the route. </param>
         /// <param name="nextHop"> List of next hop addresses. </param>
         /// <returns> A new <see cref="Models.StaticRouteProperties"/> instance for mocking. </returns>
@@ -1512,6 +1519,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new StaticRouteProperties(prefix, (nextHop ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Prefix Limit properties. </summary>
         /// <param name="maximumRoutes"> Maximum routes allowed. </param>
         /// <param name="threshold"> Limit at which route prefixes a warning is generate. </param>
         /// <param name="idleTimeExpiry"> Idle Time Expiry in seconds, default is 60. </param>
@@ -1549,11 +1557,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 isMonitoringEnabled,
                 bgpSettings,
                 staticRouteSettings,
-                new NativeIpv4PrefixLimitPatchProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default),
-                new NativeIpv6PrefixLimitPatchProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default),
+                new NativeIPv4PrefixLimitPatchProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default),
+                new NativeIPv6PrefixLimitPatchProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default),
                 default), default);
         }
 
+        /// <summary> Connected Subnet properties. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="prefix"> Prefix of the Connected Subnet. </param>
         /// <returns> A new <see cref="Models.NetworkFabricConnectedSubnetPatch"/> instance for mocking. </returns>
@@ -1562,6 +1571,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricConnectedSubnetPatch(annotation, default, prefix);
         }
 
+        /// <summary> BGP configuration properties. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
@@ -1602,6 +1612,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 v6OverV4BgpSession);
         }
 
+        /// <summary> BFD configuration properties. </summary>
         /// <param name="administrativeState"> Administrative state of the BfdConfiguration. Example: Enabled | Disabled. </param>
         /// <param name="intervalInMilliSeconds"> Interval in milliseconds. Example: 300. </param>
         /// <param name="multiplier"> Multiplier for the Bfd Configuration. Example: 5. </param>
@@ -1611,6 +1622,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new BfdPatchConfiguration(administrativeState, intervalInMilliSeconds, multiplier, default);
         }
 
+        /// <summary> Neighbor Address properties. </summary>
         /// <param name="address"> IP Address. </param>
         /// <param name="bfdAdministrativeState"> BFD Administrative State for each Neighbor Address. Example: Enabled | Disabled. </param>
         /// <param name="bgpAdministrativeState"> BGP Administrative State for each Neighbor Address. Example: Enabled | Disabled. </param>
@@ -1621,6 +1633,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NeighborAddressPatch(address, bfdAdministrativeState, bgpAdministrativeState, configurationState, default);
         }
 
+        /// <summary> Internal Network BMP Configuration. </summary>
         /// <param name="neighborIPExclusions"> Neighbor IP Address exclusions for BMP. </param>
         /// <param name="bmpConfigurationState"> BMP Monitoring configuration state. </param>
         /// <returns> A new <see cref="Models.InternalNetworkBmpPatchProperties"/> instance for mocking. </returns>
@@ -1631,18 +1644,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new InternalNetworkBmpPatchProperties((neighborIPExclusions ?? new ChangeTrackingList<string>()).ToList(), bmpConfigurationState, default);
         }
 
+        /// <summary> Static Route Configuration properties. </summary>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
-        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
-        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
+        /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
         /// <returns> A new <see cref="Models.StaticRoutePatchConfiguration"/> instance for mocking. </returns>
-        public static StaticRoutePatchConfiguration StaticRoutePatchConfiguration(BfdPatchConfiguration bfdConfiguration = default, IEnumerable<StaticRoutePatchProperties> iPv4Routes = default, IEnumerable<StaticRoutePatchProperties> iPv6Routes = default)
+        public static StaticRoutePatchConfiguration StaticRoutePatchConfiguration(BfdPatchConfiguration bfdConfiguration = default, IEnumerable<StaticRoutePatchProperties> ipv4Routes = default, IEnumerable<StaticRoutePatchProperties> ipv6Routes = default)
         {
-            iPv4Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
-            iPv6Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
+            ipv4Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
+            ipv6Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
 
-            return new StaticRoutePatchConfiguration(bfdConfiguration, (iPv4Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>()).ToList(), (iPv6Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>()).ToList(), default);
+            return new StaticRoutePatchConfiguration(bfdConfiguration, (ipv4Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>()).ToList(), (ipv6Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>()).ToList(), default);
         }
 
+        /// <summary> Route Properties. </summary>
         /// <param name="prefix"> Prefix of the route. </param>
         /// <param name="nextHop"> List of next hop addresses. </param>
         /// <returns> A new <see cref="Models.StaticRoutePatchProperties"/> instance for mocking. </returns>
@@ -1653,6 +1668,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new StaticRoutePatchProperties(prefix, (nextHop ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Prefix Limit Patch properties. </summary>
         /// <param name="maximumRoutes"> Maximum routes allowed. </param>
         /// <param name="threshold"> Limit at which route prefixes a warning is generate. </param>
         /// <param name="idleTimeExpiry"> Idle time expiry in seconds. </param>
@@ -1662,6 +1678,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new PrefixLimitPatchProperties(maximumRoutes, threshold, idleTimeExpiry, default);
         }
 
+        /// <summary> Internal Network Administrative State Request. </summary>
         /// <param name="neighborAddress"> NeighborAddress - Input should be either All or Specific Ipv4 Address or Specific Ipv6 Address. </param>
         /// <param name="administrativeState"> BGP Administrative state. </param>
         /// <returns> A new <see cref="Models.InternalNetworkUpdateBgpAdministrativeStateContent"/> instance for mocking. </returns>
@@ -1699,6 +1716,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Neighbor Address BGP Administrative Status. </summary>
         /// <param name="neighborAddress"> NeighborAddress - Input should be either All or Specific Ipv4 Address or Specific Ipv6 Address. </param>
         /// <param name="administrativeState"> BGP Administrative state. </param>
         /// <param name="error"> Error message. </param>
@@ -1708,6 +1726,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NeighborAddressBgpAdministrativeStatus(neighborAddress, administrativeState, error, default);
         }
 
+        /// <summary> Internal Network BFD Administrative State request. </summary>
         /// <param name="routeType"> Route Type that helps to know which bfd we are updating. </param>
         /// <param name="neighborAddress"> NeighborAddress - Input should be either All or Specific Ipv4 Address or Specific Ipv6 Address. </param>
         /// <param name="administrativeState"> BFD Administrative state. </param>
@@ -1746,6 +1765,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Neighbor Address Bidirectional Forwarding Detection (BFD) Administrative Status. </summary>
         /// <param name="neighborAddress"> NeighborAddress - Input should be either All or Specific Ipv4 Address or Specific Ipv6 Address. </param>
         /// <param name="administrativeState"> BFD Administrative state. </param>
         /// <param name="error"> Error message. </param>
@@ -1798,6 +1818,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Option B configuration. </summary>
         /// <param name="importRouteTargets"> RouteTargets to be applied. This is used for the backward compatibility. </param>
         /// <param name="exportRouteTargets"> RouteTargets to be applied. This is used for the backward compatibility. </param>
         /// <param name="routeTargets"> RouteTargets to be applied. </param>
@@ -1810,6 +1831,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new L3OptionBProperties((importRouteTargets ?? new ChangeTrackingList<string>()).ToList(), (exportRouteTargets ?? new ChangeTrackingList<string>()).ToList(), routeTargets, default);
         }
 
+        /// <summary> Route Target Configuration. </summary>
         /// <param name="importIPv4RouteTargets"> Route Targets to be applied for incoming routes into CE. </param>
         /// <param name="importIPv6RouteTargets"> Route Targets to be applied for incoming routes from CE. </param>
         /// <param name="exportIPv4RouteTargets"> Route Targets to be applied for outgoing routes into CE. </param>
@@ -1860,10 +1882,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 egressAclId,
                 v4OverV6BgpSession,
                 v6OverV4BgpSession,
-                nativeIPv4PrefixLimits is null ? default : new NativeIpv4PrefixLimitProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default),
-                nativeIPv6PrefixLimits is null ? default : new NativeIpv6PrefixLimitProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default));
+                nativeIPv4PrefixLimits is null ? default : new NativeIPv4PrefixLimitProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default),
+                nativeIPv6PrefixLimits is null ? default : new NativeIPv6PrefixLimitProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitProperties>()).ToList(), default));
         }
 
+        /// <summary> Layer 3 primary and secondary IP Address prefixes. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
@@ -1874,16 +1897,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new Layer3IPPrefixProperties(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, default);
         }
 
+        /// <summary> Static Route Configuration properties for ExternalNetwork. </summary>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
-        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
-        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
+        /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
         /// <returns> A new <see cref="Models.ExternalNetworkStaticRouteConfiguration"/> instance for mocking. </returns>
-        public static ExternalNetworkStaticRouteConfiguration ExternalNetworkStaticRouteConfiguration(BfdConfiguration bfdConfiguration = default, IEnumerable<StaticRouteProperties> iPv4Routes = default, IEnumerable<StaticRouteProperties> iPv6Routes = default)
+        public static ExternalNetworkStaticRouteConfiguration ExternalNetworkStaticRouteConfiguration(BfdConfiguration bfdConfiguration = default, IEnumerable<StaticRouteProperties> ipv4Routes = default, IEnumerable<StaticRouteProperties> ipv6Routes = default)
         {
-            iPv4Routes ??= new ChangeTrackingList<StaticRouteProperties>();
-            iPv6Routes ??= new ChangeTrackingList<StaticRouteProperties>();
+            ipv4Routes ??= new ChangeTrackingList<StaticRouteProperties>();
+            ipv6Routes ??= new ChangeTrackingList<StaticRouteProperties>();
 
-            return new ExternalNetworkStaticRouteConfiguration(bfdConfiguration, (iPv4Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), (iPv6Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), default);
+            return new ExternalNetworkStaticRouteConfiguration(bfdConfiguration, (ipv4Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), (ipv6Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), default);
         }
 
         /// <param name="annotation"> Switch configuration description. </param>
@@ -1909,6 +1933,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default), default);
         }
 
+        /// <summary> Import Route Policy either IPv4 or IPv6. </summary>
         /// <param name="importIPv4RoutePolicyId"> ARM resource ID of RoutePolicy. </param>
         /// <param name="importIPv6RoutePolicyId"> ARM resource ID of RoutePolicy. </param>
         /// <returns> A new <see cref="Models.ImportRoutePolicyPatch"/> instance for mocking. </returns>
@@ -1917,6 +1942,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ImportRoutePolicyPatch(importIPv4RoutePolicyId, importIPv6RoutePolicyId, default);
         }
 
+        /// <summary> Export Route Policy either IPv4 or IPv6. </summary>
         /// <param name="exportIPv4RoutePolicyId"> ARM resource ID of RoutePolicy. </param>
         /// <param name="exportIPv6RoutePolicyId"> ARM resource ID of RoutePolicy. </param>
         /// <returns> A new <see cref="Models.ExportRoutePolicyPatch"/> instance for mocking. </returns>
@@ -1925,6 +1951,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ExportRoutePolicyPatch(exportIPv4RoutePolicyId, exportIPv6RoutePolicyId, default);
         }
 
+        /// <summary> Option B configuration. </summary>
         /// <param name="importRouteTargets"> RouteTargets to be applied. This is used for the backward compatibility. </param>
         /// <param name="exportRouteTargets"> RouteTargets to be applied. This is used for the backward compatibility. </param>
         /// <param name="routeTargets"> RouteTargets to be applied. </param>
@@ -1937,6 +1964,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new L3OptionBPatchProperties((importRouteTargets ?? new ChangeTrackingList<string>()).ToList(), (exportRouteTargets ?? new ChangeTrackingList<string>()).ToList(), routeTargets, default);
         }
 
+        /// <summary> Route Target Configuration. </summary>
         /// <param name="importIPv4RouteTargets"> Route Targets to be applied for incoming routes into CE. </param>
         /// <param name="importIPv6RouteTargets"> Route Targets to be applied for incoming routes from CE. </param>
         /// <param name="exportIPv4RouteTargets"> Route Targets to be applied for outgoing routes into CE. </param>
@@ -1987,22 +2015,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 bmpConfigurationState is null ? default : new ExternalNetworkBmpPatchProperties(bmpConfigurationState, default),
                 v4OverV6BgpSession,
                 v6OverV4BgpSession,
-                nativeIPv4PrefixLimits is null ? default : new NativeIpv4PrefixLimitPatchProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default),
-                nativeIPv6PrefixLimits is null ? default : new NativeIpv6PrefixLimitPatchProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default));
+                nativeIPv4PrefixLimits is null ? default : new NativeIPv4PrefixLimitPatchProperties((nativeIPv4PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default),
+                nativeIPv6PrefixLimits is null ? default : new NativeIPv6PrefixLimitPatchProperties((nativeIPv6PrefixLimits ?? new ChangeTrackingList<PrefixLimitPatchProperties>()).ToList(), default));
         }
 
+        /// <summary> Static Route Configuration properties for External Network. </summary>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
-        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
-        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
+        /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
         /// <returns> A new <see cref="Models.ExternalNetworkStaticRoutePatchConfiguration"/> instance for mocking. </returns>
-        public static ExternalNetworkStaticRoutePatchConfiguration ExternalNetworkStaticRoutePatchConfiguration(BfdPatchConfiguration bfdConfiguration = default, IEnumerable<StaticRoutePatchProperties> iPv4Routes = default, IEnumerable<StaticRoutePatchProperties> iPv6Routes = default)
+        public static ExternalNetworkStaticRoutePatchConfiguration ExternalNetworkStaticRoutePatchConfiguration(BfdPatchConfiguration bfdConfiguration = default, IEnumerable<StaticRoutePatchProperties> ipv4Routes = default, IEnumerable<StaticRoutePatchProperties> ipv6Routes = default)
         {
-            iPv4Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
-            iPv6Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
+            ipv4Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
+            ipv6Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
 
-            return new ExternalNetworkStaticRoutePatchConfiguration(bfdConfiguration, (iPv4Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>()).ToList(), (iPv6Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>()).ToList(), default);
+            return new ExternalNetworkStaticRoutePatchConfiguration(bfdConfiguration, (ipv4Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>()).ToList(), (ipv6Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>()).ToList(), default);
         }
 
+        /// <summary> External Network Update Administrative State request. </summary>
         /// <param name="routeType"> Route Type that helps to know which bfd we are updating. </param>
         /// <param name="administrativeState"> Administrative state. </param>
         /// <returns> A new <see cref="Models.ExternalNetworkUpdateBfdAdministrativeStateContent"/> instance for mocking. </returns>
@@ -2011,6 +2041,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ExternalNetworkUpdateBfdAdministrativeStateContent(routeType, administrativeState, default);
         }
 
+        /// <summary> External Network Update Administrative State response. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -2040,6 +2071,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Response properties for External Network BFD Administrative State. </summary>
         /// <param name="routeType"> Route Type that helps to know which bfd we are updating. </param>
         /// <param name="administrativeState"> Administrative state. </param>
         /// <returns> A new <see cref="Models.ExternalNetworkUpdateBfdAdministrativeStateResponseProperties"/> instance for mocking. </returns>
@@ -2063,7 +2095,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="destination"/> is null. </exception>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricNeighborGroupData"/> instance for mocking. </returns>
         public static NetworkFabricNeighborGroupData NetworkFabricNeighborGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, NeighborGroupDestination destination = default, IEnumerable<ResourceIdentifier> networkTapIds = default, IEnumerable<ResourceIdentifier> networkTapRuleIds = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricConfigurationState? configurationState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
         {
@@ -2090,15 +2121,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <param name="iPv4Addresses"> Array of IPv4 Addresses. </param>
-        /// <param name="iPv6Addresses"> Array of IPv6 Addresses. </param>
+        /// <summary> An array of destination IPv4 Addresses or IPv6 Addresses. </summary>
+        /// <param name="ipv4Addresses"> Array of IPv4 Addresses. </param>
+        /// <param name="ipv6Addresses"> Array of IPv6 Addresses. </param>
         /// <returns> A new <see cref="Models.NeighborGroupDestination"/> instance for mocking. </returns>
-        public static NeighborGroupDestination NeighborGroupDestination(IEnumerable<IPAddress> iPv4Addresses = default, IEnumerable<string> iPv6Addresses = default)
+        public static NeighborGroupDestination NeighborGroupDestination(IEnumerable<IPAddress> ipv4Addresses = default, IEnumerable<string> ipv6Addresses = default)
         {
-            iPv4Addresses ??= new ChangeTrackingList<IPAddress>();
-            iPv6Addresses ??= new ChangeTrackingList<string>();
+            ipv4Addresses ??= new ChangeTrackingList<IPAddress>();
+            ipv6Addresses ??= new ChangeTrackingList<string>();
 
-            return new NeighborGroupDestination((iPv4Addresses ?? new ChangeTrackingList<IPAddress>()).ToList(), (iPv6Addresses ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new NeighborGroupDestination((ipv4Addresses ?? new ChangeTrackingList<IPAddress>()).ToList(), (ipv6Addresses ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="tags"> Resource tags. </param>
@@ -2113,17 +2145,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricNeighborGroupPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, annotation is null && destinationSettings is null ? default : new NeighborGroupPatchProperties(annotation, destinationSettings, default), identity);
         }
 
-        /// <param name="iPv4Addresses"> Array of IPv4 Addresses. </param>
-        /// <param name="iPv6Addresses"> Array of IPv6 Addresses. </param>
+        /// <summary> An array of destination IPv4 Addresses or IPv6 Addresses. </summary>
+        /// <param name="ipv4Addresses"> Array of IPv4 Addresses. </param>
+        /// <param name="ipv6Addresses"> Array of IPv6 Addresses. </param>
         /// <returns> A new <see cref="Models.NeighborGroupDestinationPatch"/> instance for mocking. </returns>
-        public static NeighborGroupDestinationPatch NeighborGroupDestinationPatch(IEnumerable<IPAddress> iPv4Addresses = default, IEnumerable<string> iPv6Addresses = default)
+        public static NeighborGroupDestinationPatch NeighborGroupDestinationPatch(IEnumerable<IPAddress> ipv4Addresses = default, IEnumerable<string> ipv6Addresses = default)
         {
-            iPv4Addresses ??= new ChangeTrackingList<IPAddress>();
-            iPv6Addresses ??= new ChangeTrackingList<string>();
+            ipv4Addresses ??= new ChangeTrackingList<IPAddress>();
+            ipv6Addresses ??= new ChangeTrackingList<string>();
 
-            return new NeighborGroupDestinationPatch((iPv4Addresses ?? new ChangeTrackingList<IPAddress>()).ToList(), (iPv6Addresses ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new NeighborGroupDestinationPatch((ipv4Addresses ?? new ChangeTrackingList<IPAddress>()).ToList(), (ipv6Addresses ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Response for Neighbor Group Resync operation. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -2161,7 +2195,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="supportedRoleTypes"> Available roles for the network device. </param>
         /// <param name="interfaces"> List of network device interfaces. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="model"/> is null. </exception>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceSkuData"/> instance for mocking. </returns>
         public static NetworkDeviceSkuData NetworkDeviceSkuData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string model = default, string manufacturer = default, IEnumerable<SupportedVersionProperties> supportedVersions = default, IEnumerable<NetworkDeviceRoleName> supportedRoleTypes = default, IEnumerable<NetworkDeviceInterfaceProperties> interfaces = default, NetworkFabricProvisioningState? provisioningState = default)
         {
@@ -2174,6 +2207,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Supported version details of the network device. </summary>
         /// <param name="version"> Operating system and firmware combined versions. </param>
         /// <param name="vendorOSVersion"> Operating system version. </param>
         /// <param name="vendorFirmwareVersion"> Firmware version. </param>
@@ -2184,6 +2218,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new SupportedVersionProperties(version, vendorOSVersion, vendorFirmwareVersion, isDefault, default);
         }
 
+        /// <summary> Network device interface properties. </summary>
         /// <param name="identifier"> Interface identifier. Example: HundredGigE0/0. </param>
         /// <param name="interfaceType"> Interface type. </param>
         /// <param name="supportedConnectorTypes"> List of supported connector types. </param>
@@ -2195,6 +2230,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkDeviceInterfaceProperties(identifier, interfaceType, (supportedConnectorTypes ?? new ChangeTrackingList<SupportedConnectorProperties>()).ToList(), default);
         }
 
+        /// <summary> Supported connector properties. </summary>
         /// <param name="connectorType"> Type of connector used. Example: Optical. </param>
         /// <param name="maxSpeedInMbps"> Maximum speed of the connector in Mbps. </param>
         /// <returns> A new <see cref="Models.SupportedConnectorProperties"/> instance for mocking. </returns>
@@ -2228,7 +2264,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="serialNumber"/> is null. </exception>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceData"/> instance for mocking. </returns>
         public static NetworkDeviceData NetworkDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, string hostName = default, string serialNumber = default, NetworkFabricIdentitySelector identitySelector = default, string version = default, string networkDeviceSku = default, NetworkDeviceRole? networkDeviceRole = default, ResourceIdentifier networkRackId = default, IPAddress managementIPv4Address = default, string managementIPv6Address = default, string rwDeviceConfig = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, IEnumerable<NetworkFabricSecretRotationStatus> secretRotationStatus = default, IEnumerable<NetworkFabricCertificateRotationStatus> certificateRotationStatus = default, ResourceIdentifier networkFabricId = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
         {
@@ -2265,6 +2300,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> IdentitySelector represents the selection of a managed identity for use. </summary>
         /// <param name="identityType"> The type of managed identity that is being selected. </param>
         /// <param name="userAssignedIdentityResourceId"> The user assigned managed identity resource ID to use. Mutually exclusive with a system assigned identity type. </param>
         /// <returns> A new <see cref="Models.NetworkFabricIdentitySelector"/> instance for mocking. </returns>
@@ -2273,6 +2309,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricIdentitySelector(identityType, userAssignedIdentityResourceId, default);
         }
 
+        /// <summary> Status of a secret rotation for a device (Network Device or Terminal Server). </summary>
         /// <param name="lastRotationOn"> The date and time when the secret was last changed. </param>
         /// <param name="synchronizationStatus"> Whether the device has been configured with the latest version of the secret. </param>
         /// <param name="secretArchiveReference"> Reference to the currently configured version of the secret in a key vault. </param>
@@ -2283,6 +2320,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricSecretRotationStatus(lastRotationOn, synchronizationStatus, secretArchiveReference, secretType, default);
         }
 
+        /// <summary> A reference to a version of a secret in a key vault. </summary>
         /// <param name="keyVaultUri"> A Uniform Resource Identifier (URI) for the secret in the key vault. </param>
         /// <param name="keyVaultId"> The resource ID of the key vault containing the secret. </param>
         /// <param name="secretName"> The name of the secret in the key vault. </param>
@@ -2293,6 +2331,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricSecretArchiveReference(keyVaultUri, keyVaultId, secretName, secretVersion, default);
         }
 
+        /// <summary> Status of a certificate rotation for a device (Network Device or Terminal Server). </summary>
         /// <param name="expireOn"> Time at which the certificate will expire, for certificates with a limited validity period. </param>
         /// <param name="lastRotationOn"> The date and time when the certificate was last changed. </param>
         /// <param name="synchronizationStatus"> Whether the device has been configured with the latest version of the certificate. </param>
@@ -2310,6 +2349,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> A reference to a version of a certificate in a key vault. </summary>
         /// <param name="keyVaultUri"> A Uniform Resource Identifier (URI) for the certificate in the key vault. </param>
         /// <param name="keyVaultId"> The resource ID of the key vault containing the certificate. </param>
         /// <param name="certificateName"> The name of the certificate in the key vault. </param>
@@ -2334,6 +2374,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkDevicePatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, annotation is null && hostName is null && serialNumber is null && identitySelector is null ? default : new NetworkDevicePatchParametersProperties(annotation, hostName, serialNumber, identitySelector, default), identity);
         }
 
+        /// <summary> IdentitySelector represents the selection of a managed identity for use. </summary>
         /// <param name="identityType"> The type of managed identity that is being selected. </param>
         /// <param name="userAssignedIdentityResourceId"> The user assigned managed identity resource ID to use. Mutually exclusive with a system assigned identity type. </param>
         /// <returns> A new <see cref="Models.NetworkFabricIdentitySelectorPatch"/> instance for mocking. </returns>
@@ -2342,6 +2383,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricIdentitySelectorPatch(identityType, userAssignedIdentityResourceId, default);
         }
 
+        /// <summary> Reboot properties. </summary>
         /// <param name="rebootType"> Type of reboot to be performed. Example: GracefulRebootWithZTP. </param>
         /// <returns> A new <see cref="Models.NetworkDeviceRebootContent"/> instance for mocking. </returns>
         public static NetworkDeviceRebootContent NetworkDeviceRebootContent(NetworkDeviceRebootType? rebootType = default)
@@ -2349,6 +2391,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkDeviceRebootContent(rebootType, default);
         }
 
+        /// <summary> The current status of an refresh configuration async operation. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -2376,6 +2419,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Update the administrative state on list of resources. </summary>
         /// <param name="resourceIds"> Network Fabrics or Network Rack resource Id. </param>
         /// <param name="state"> Administrative state. </param>
         /// <returns> A new <see cref="Models.UpdateDeviceAdministrativeStateContent"/> instance for mocking. </returns>
@@ -2386,6 +2430,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new UpdateDeviceAdministrativeStateContent((resourceIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default, state);
         }
 
+        /// <summary> Network Device Administrative State Update Response. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -2413,6 +2458,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> NetworkDevice Upgrade Request Properties. </summary>
         /// <param name="version"> Version to which the device needs to be upgraded. </param>
         /// <param name="rwDeviceConfigUri"> URL to the file containing Read-write configuration to be applied on the device during upgrade. </param>
         /// <returns> A new <see cref="Models.NetworkDeviceUpgradeContent"/> instance for mocking. </returns>
@@ -2421,6 +2467,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkDeviceUpgradeContent(version, rwDeviceConfigUri, default);
         }
 
+        /// <summary> Network Device Upgrade Response. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -2448,6 +2495,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Provide the RO command. </summary>
         /// <param name="command"> Specify the command. </param>
         /// <returns> A new <see cref="Models.NetworkFabricDeviceReadOnlyCommand"/> instance for mocking. </returns>
         public static NetworkFabricDeviceReadOnlyCommand NetworkFabricDeviceReadOnlyCommand(string command = default)
@@ -2455,6 +2503,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricDeviceReadOnlyCommand(command, default);
         }
 
+        /// <summary> The current status of an async operation. </summary>
         /// <param name="error"> The error object. </param>
         /// <param name="endOn"> The end time of the operation. </param>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
@@ -2478,6 +2527,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 status);
         }
 
+        /// <summary> Common response for device Ro Commands. </summary>
         /// <param name="configurationState"> Gets the configuration state. </param>
         /// <param name="outputUri"> Predefined link containing Device RO Command output. </param>
         /// <param name="deviceConfigurationPreview"> Device RO command Response limited to 4000 characters. </param>
@@ -2487,6 +2537,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new CommonPostActionResponseForDeviceROCommands(configurationState, outputUri, deviceConfigurationPreview, default);
         }
 
+        /// <summary> Provide the Rw command. </summary>
         /// <param name="command"> Specify the command. </param>
         /// <param name="commandUri"> Specify the commands file URL. </param>
         /// <returns> A new <see cref="Models.NetworkFabricDeviceReadWriteCommand"/> instance for mocking. </returns>
@@ -2495,6 +2546,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricDeviceReadWriteCommand(command, commandUri, default);
         }
 
+        /// <summary> Response body for a RunRwCommand request on a Network Device. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -2524,6 +2576,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Network Device Resource defines the properties of the resource. </summary>
         /// <param name="configurationState"> Gets the configuration state. </param>
         /// <param name="outputUri"> Predefined link containing Device Rw Command output. </param>
         /// <returns> A new <see cref="Models.NetworkDeviceRwCommandResponseProperties"/> instance for mocking. </returns>
@@ -2532,6 +2585,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkDeviceRwCommandResponseProperties(configurationState, outputUri, default);
         }
 
+        /// <summary> Response body for a ResyncPasswords request on a Network Device. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -2559,6 +2613,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Response body for a ResyncCertificates request on a Network Fabric. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -2594,8 +2649,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="physicalIdentifier"> Physical Identifier of the network interface. </param>
         /// <param name="connectedTo"> The ARM resource id of the interface or compute server its connected to. </param>
         /// <param name="interfaceType"> The Interface Type. Example: Management/Data. </param>
-        /// <param name="iPv4Address"> IPv4Address of the interface. </param>
-        /// <param name="iPv6Address"> IPv6Address of the interface. </param>
+        /// <param name="ipv4Address"> IPv4Address of the interface. </param>
+        /// <param name="ipv6Address"> IPv6Address of the interface. </param>
         /// <param name="description"> Description of the interface. </param>
         /// <param name="additionalDescription"> Additional description of the interface. </param>
         /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
@@ -2605,7 +2660,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkDeviceInterfaceData"/> instance for mocking. </returns>
-        public static NetworkDeviceInterfaceData NetworkDeviceInterfaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string annotation = default, string physicalIdentifier = default, string connectedTo = default, NetworkDeviceInterfaceType? interfaceType = default, IPAddress iPv4Address = default, string iPv6Address = default, string description = default, string additionalDescription = default, ResourceIdentifier networkFabricId = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, NetworkFabricConfigurationState? configurationState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
+        public static NetworkDeviceInterfaceData NetworkDeviceInterfaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string annotation = default, string physicalIdentifier = default, string connectedTo = default, NetworkDeviceInterfaceType? interfaceType = default, IPAddress ipv4Address = default, string ipv6Address = default, string description = default, string additionalDescription = default, ResourceIdentifier networkFabricId = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, NetworkFabricConfigurationState? configurationState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
         {
             return new NetworkDeviceInterfaceData(
                 id,
@@ -2632,39 +2687,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="physicalIdentifier"> Physical Identifier of the network interface. </param>
-        /// <param name="connectedTo"> The ARM resource id of the interface or compute server its connected to. </param>
-        /// <param name="interfaceType"> The Interface Type. Example: Management/Data. </param>
-        /// <param name="iPv4Address"> IPv4Address of the interface. </param>
-        /// <param name="iPv6Address"> IPv6Address of the interface. </param>
-        /// <param name="description"> Description of the interface. </param>
-        /// <param name="additionalDescription"> Additional description of the interface. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <returns> A new <see cref="Models.NetworkInterfaceProperties"/> instance for mocking. </returns>
-        public static NetworkInterfaceProperties NetworkInterfaceProperties(string annotation = default, string physicalIdentifier = default, string connectedTo = default, NetworkDeviceInterfaceType? interfaceType = default, IPAddress iPv4Address = default, string iPv6Address = default, string description = default, string additionalDescription = default, string lastOperationDetails = default, ResourceIdentifier networkFabricId = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, NetworkFabricConfigurationState? configurationState = default)
-        {
-            return new NetworkInterfaceProperties(
-                annotation,
-                default,
-                physicalIdentifier,
-                connectedTo,
-                interfaceType,
-                iPv4Address,
-                iPv6Address,
-                description,
-                additionalDescription,
-                lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
-                networkFabricId,
-                provisioningState,
-                administrativeState,
-                configurationState);
-        }
-
-        /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="additionalDescription"> Additional description of the interface. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.NetworkDeviceInterfacePatch"/> instance for mocking. </returns>
@@ -2673,14 +2695,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkDeviceInterfacePatch(annotation is null && additionalDescription is null ? default : new NetworkInterfacePatchProperties(annotation, default, additionalDescription), identity, default);
         }
 
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="additionalDescription"> Additional description of the interface. </param>
-        /// <returns> A new <see cref="Models.NetworkInterfacePatchProperties"/> instance for mocking. </returns>
-        public static NetworkInterfacePatchProperties NetworkInterfacePatchProperties(string annotation = default, string additionalDescription = default)
-        {
-            return new NetworkInterfacePatchProperties(annotation, default, additionalDescription);
-        }
-
+        /// <summary> The ExpressRoute circuit ID and the Auth Key are required for you to successfully deploy NFC service. </summary>
         /// <param name="expressRouteCircuitId"> The express route circuit Azure resource ID, must be of type Microsoft.Network/expressRouteCircuits/circuitName. The ExpressRoute Circuit is a mandatory attribute. </param>
         /// <param name="expressRouteAuthorizationKey"> Authorization key for the circuit, must be of type Microsoft.Network/expressRouteCircuits/authorizations. The Auth Key is a mandatory attribute. </param>
         /// <returns> A new <see cref="Models.ExpressRouteConnectionInformation"/> instance for mocking. </returns>
@@ -2689,6 +2704,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ExpressRouteConnectionInformation(expressRouteCircuitId, expressRouteAuthorizationKey, default);
         }
 
+        /// <summary> Network Fabric Controller services. </summary>
         /// <param name="ipv4AddressSpaces"> The IPv4 Address space is optional, if the value is not defined at the time of NFC creation, then the default value 10.0.0.0/19 is considered. The IPV4 address subnet is an optional attribute. </param>
         /// <param name="ipv6AddressSpaces"> The IPv6 is not supported right now. </param>
         /// <returns> A new <see cref="Models.NetworkFabricControllerServices"/> instance for mocking. </returns>
@@ -2700,6 +2716,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricControllerServices((ipv4AddressSpaces ?? new ChangeTrackingList<string>()).ToList(), (ipv6AddressSpaces ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Managed Resource Group configuration properties. </summary>
         /// <param name="name"> The NFC service will be hosted in a Managed resource group. </param>
         /// <param name="location"> Managed resource group location. </param>
         /// <returns> A new <see cref="Models.ManagedResourceGroupConfiguration"/> instance for mocking. </returns>
@@ -2757,8 +2774,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="networkFabricControllerId"> Azure resource ID for the NetworkFabricController the NetworkFabric belongs. </param>
         /// <param name="rackCount"> Number of compute racks associated to Network Fabric. </param>
         /// <param name="serverCountPerRack"> Number of servers.Possible values are from 1-16. </param>
-        /// <param name="iPv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
-        /// <param name="iPv6Prefix"> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </param>
+        /// <param name="ipv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
+        /// <param name="ipv6Prefix"> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </param>
         /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
         /// <param name="terminalServerSettings"> Network and credentials configuration currently applied to terminal server. </param>
         /// <param name="managementNetworkConfiguration"> Configuration to be used to setup the management network. </param>
@@ -2780,9 +2797,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="qosConfigurationState"> QoS configuration state. Default is Disabled. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricSku"/>, <paramref name="networkFabricControllerId"/>, <paramref name="iPv4Prefix"/>, <paramref name="terminalServerSettings"/> or <paramref name="managementNetworkConfiguration"/> is null. </exception>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricData"/> instance for mocking. </returns>
-        public static NetworkFabricData NetworkFabricData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, string networkFabricSku = default, string fabricVersion = default, IEnumerable<string> routerIds = default, StorageAccountConfiguration storageAccountConfiguration = default, IEnumerable<NetworkFabricLock> fabricLocks = default, ResourceIdentifier networkFabricControllerId = default, int? rackCount = default, int serverCountPerRack = default, string iPv4Prefix = default, string iPv6Prefix = default, long fabricAsn = default, NetworkFabricTerminalServerConfiguration terminalServerSettings = default, ManagementNetworkConfigurationProperties managementNetworkConfiguration = default, IEnumerable<string> racks = default, IEnumerable<string> l2IsolationDomains = default, IEnumerable<string> l3IsolationDomains = default, int? hardwareAlertThreshold = default, IEnumerable<ResourceIdentifier> controlPlaneAcls = default, IEnumerable<NetworkFabricFeatureFlag> featureFlags = default, IEnumerable<ResourceIdentifier> trustedIPPrefixes = default, UniqueRouteDistinguisherProperties uniqueRdConfiguration = default, int? storageArrayCount = default, IEnumerable<string> activeCommitBatches = default, AuthorizedTransceiverProperties authorizedTransceiver = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, long? secretRotationSummaryActivePasswordSetCount = default, string lastOperationDetails = default, NetworkFabricQosConfigurationState? qosConfigurationState = default, ManagedServiceIdentity identity = default)
+        public static NetworkFabricData NetworkFabricData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, string networkFabricSku = default, string fabricVersion = default, IEnumerable<string> routerIds = default, StorageAccountConfiguration storageAccountConfiguration = default, IEnumerable<NetworkFabricLock> fabricLocks = default, ResourceIdentifier networkFabricControllerId = default, int? rackCount = default, int serverCountPerRack = default, string ipv4Prefix = default, string ipv6Prefix = default, long fabricAsn = default, NetworkFabricTerminalServerConfiguration terminalServerSettings = default, ManagementNetworkConfigurationProperties managementNetworkConfiguration = default, IEnumerable<string> racks = default, IEnumerable<string> l2IsolationDomains = default, IEnumerable<string> l3IsolationDomains = default, int? hardwareAlertThreshold = default, IEnumerable<ResourceIdentifier> controlPlaneAcls = default, IEnumerable<NetworkFabricFeatureFlag> featureFlags = default, IEnumerable<ResourceIdentifier> trustedIPPrefixes = default, UniqueRouteDistinguisherProperties uniqueRdConfiguration = default, int? storageArrayCount = default, IEnumerable<string> activeCommitBatches = default, AuthorizedTransceiverProperties authorizedTransceiver = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, long? secretRotationSummaryActivePasswordSetCount = default, string lastOperationDetails = default, NetworkFabricQosConfigurationState? qosConfigurationState = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2839,8 +2855,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="networkFabricControllerId"> Azure resource ID for the NetworkFabricController the NetworkFabric belongs. </param>
         /// <param name="rackCount"> Number of compute racks associated to Network Fabric. </param>
         /// <param name="serverCountPerRack"> Number of servers.Possible values are from 1-16. </param>
-        /// <param name="iPv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
-        /// <param name="iPv6Prefix"> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </param>
+        /// <param name="ipv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
+        /// <param name="ipv6Prefix"> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </param>
         /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
         /// <param name="terminalServerSettings"> Network and credentials configuration currently applied to terminal server. </param>
         /// <param name="managementNetworkConfiguration"> Configuration to be used to setup the management network. </param>
@@ -2862,7 +2878,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="qosConfigurationState"> QoS configuration state. Default is Disabled. </param>
         /// <returns> A new <see cref="Models.NetworkFabricProperties"/> instance for mocking. </returns>
-        public static NetworkFabricProperties NetworkFabricProperties(string annotation = default, string networkFabricSku = default, string fabricVersion = default, IEnumerable<string> routerIds = default, StorageAccountConfiguration storageAccountConfiguration = default, IEnumerable<NetworkFabricLock> fabricLocks = default, ResourceIdentifier networkFabricControllerId = default, int? rackCount = default, int serverCountPerRack = default, string iPv4Prefix = default, string iPv6Prefix = default, long fabricAsn = default, NetworkFabricTerminalServerConfiguration terminalServerSettings = default, ManagementNetworkConfigurationProperties managementNetworkConfiguration = default, IEnumerable<string> racks = default, IEnumerable<string> l2IsolationDomains = default, IEnumerable<string> l3IsolationDomains = default, int? hardwareAlertThreshold = default, IEnumerable<ResourceIdentifier> controlPlaneAcls = default, IEnumerable<NetworkFabricFeatureFlag> featureFlags = default, IEnumerable<ResourceIdentifier> trustedIPPrefixes = default, UniqueRouteDistinguisherProperties uniqueRdConfiguration = default, int? storageArrayCount = default, IEnumerable<string> activeCommitBatches = default, long? secretRotationSummaryActivePasswordSetCount = default, string lastOperationDetails = default, AuthorizedTransceiverProperties authorizedTransceiver = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, NetworkFabricQosConfigurationState? qosConfigurationState = default)
+        public static NetworkFabricProperties NetworkFabricProperties(string annotation = default, string networkFabricSku = default, string fabricVersion = default, IEnumerable<string> routerIds = default, StorageAccountConfiguration storageAccountConfiguration = default, IEnumerable<NetworkFabricLock> fabricLocks = default, ResourceIdentifier networkFabricControllerId = default, int? rackCount = default, int serverCountPerRack = default, string ipv4Prefix = default, string ipv6Prefix = default, long fabricAsn = default, NetworkFabricTerminalServerConfiguration terminalServerSettings = default, ManagementNetworkConfigurationProperties managementNetworkConfiguration = default, IEnumerable<string> racks = default, IEnumerable<string> l2IsolationDomains = default, IEnumerable<string> l3IsolationDomains = default, int? hardwareAlertThreshold = default, IEnumerable<ResourceIdentifier> controlPlaneAcls = default, IEnumerable<NetworkFabricFeatureFlag> featureFlags = default, IEnumerable<ResourceIdentifier> trustedIPPrefixes = default, UniqueRouteDistinguisherProperties uniqueRdConfiguration = default, int? storageArrayCount = default, IEnumerable<string> activeCommitBatches = default, long? secretRotationSummaryActivePasswordSetCount = default, string lastOperationDetails = default, AuthorizedTransceiverProperties authorizedTransceiver = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, NetworkFabricQosConfigurationState? qosConfigurationState = default)
         {
             routerIds ??= new ChangeTrackingList<string>();
             fabricLocks ??= new ChangeTrackingList<NetworkFabricLock>();
@@ -2885,8 +2901,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 networkFabricControllerId,
                 rackCount,
                 serverCountPerRack,
-                iPv4Prefix,
-                iPv6Prefix,
+                ipv4Prefix,
+                ipv6Prefix,
                 fabricAsn,
                 terminalServerSettings,
                 managementNetworkConfiguration,
@@ -2909,6 +2925,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 qosConfigurationState is null ? default : new QosProperties(qosConfigurationState, default));
         }
 
+        /// <summary> Storage account configuration. </summary>
         /// <param name="storageAccountId"> Network Fabric storage account resource identifier. </param>
         /// <param name="storageAccountIdentity"> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </param>
         /// <returns> A new <see cref="Models.StorageAccountConfiguration"/> instance for mocking. </returns>
@@ -2917,6 +2934,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new StorageAccountConfiguration(storageAccountId, storageAccountIdentity, default);
         }
 
+        /// <summary> Network Fabric Lock Configuration. </summary>
         /// <param name="lockState"> NetworkFabric Lock State. </param>
         /// <param name="lockType"> NetworkFabric Lock Type. </param>
         /// <returns> A new <see cref="Models.NetworkFabricLock"/> instance for mocking. </returns>
@@ -2925,6 +2943,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricLock(lockState, lockType, default);
         }
 
+        /// <summary> Network and credentials configuration currently applied to terminal server. </summary>
         /// <param name="username"> Username for the terminal server connection. </param>
         /// <param name="password"> Password for the terminal server connection. </param>
         /// <param name="serialNumber"> Serial Number of Terminal server. </param>
@@ -2952,6 +2971,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Configuration to be used to setup the management network. </summary>
         /// <param name="infrastructureVpnConfiguration"> VPN Configuration properties. </param>
         /// <param name="workloadVpnConfiguration"> VPN Configuration properties. </param>
         /// <returns> A new <see cref="Models.ManagementNetworkConfigurationProperties"/> instance for mocking. </returns>
@@ -2960,6 +2980,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ManagementNetworkConfigurationProperties(infrastructureVpnConfiguration, workloadVpnConfiguration, default);
         }
 
+        /// <summary> Network and credential configuration currently applied on terminal server. </summary>
         /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the Network To Network Interconnect. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="peeringOption"> Peering option list. </param>
@@ -2977,6 +2998,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Option B configuration to be used for Management VPN. </summary>
         /// <param name="importRouteTargets"> Route Targets to be applied for incoming routes into CE. This is for backward compatibility. </param>
         /// <param name="exportRouteTargets"> Route Targets to be applied for outgoing routes from CE. This is for backward compatibility. </param>
         /// <param name="routeTargets"> Route Targets to be applied. </param>
@@ -2989,6 +3011,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new OptionBProperties((importRouteTargets ?? new ChangeTrackingList<string>()).ToList(), (exportRouteTargets ?? new ChangeTrackingList<string>()).ToList(), routeTargets, default);
         }
 
+        /// <summary> option A properties. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
@@ -3012,6 +3035,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 bfdConfiguration);
         }
 
+        /// <summary> Feature flag properties. </summary>
         /// <param name="featureFlagName"> Feature flag name. </param>
         /// <param name="featureFlagValue"> Feature flag value. </param>
         /// <returns> A new <see cref="Models.NetworkFabricFeatureFlag"/> instance for mocking. </returns>
@@ -3020,6 +3044,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricFeatureFlag(featureFlagName, featureFlagValue, default);
         }
 
+        /// <summary> Unique Route Distinguisher properties. </summary>
         /// <param name="uniqueRdConfigurationState"> Unique Route Distinguisher configuration state. Default is Enabled. </param>
         /// <param name="uniqueRds"> List of Unique Route Distinguisher addresses. </param>
         /// <param name="nniDerivedUniqueRdConfigurationState"> NNI derived unique Route Distinguisher state. Default is Disabled. </param>
@@ -3031,6 +3056,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new UniqueRouteDistinguisherProperties(uniqueRdConfigurationState, (uniqueRds ?? new ChangeTrackingList<string>()).ToList(), nniDerivedUniqueRdConfigurationState, default);
         }
 
+        /// <summary> Authorized Transceiver Properties. </summary>
         /// <param name="vendor"> Vendor of the transceiver. </param>
         /// <param name="key"> Key that must be configured on the fabric. </param>
         /// <returns> A new <see cref="Models.AuthorizedTransceiverProperties"/> instance for mocking. </returns>
@@ -3043,8 +3069,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="rackCount"> Number of compute racks associated to Network Fabric. </param>
         /// <param name="serverCountPerRack"> Number of servers.Possible values are from 1-16. </param>
-        /// <param name="iPv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
-        /// <param name="iPv6Prefix"> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </param>
+        /// <param name="ipv4Prefix"> IPv4Prefix for Management Network. Example: 10.1.0.0/19. </param>
+        /// <param name="ipv6Prefix"> IPv6Prefix for Management Network. Example: 3FFE:FFFF:0:CD40::/59. </param>
         /// <param name="fabricAsn"> ASN of CE devices for CE/PE connectivity. </param>
         /// <param name="terminalServerSettings"> Network and credentials configuration already applied to terminal server. </param>
         /// <param name="managementNetworkConfiguration"> Configuration to be used to setup the management network. </param>
@@ -3058,16 +3084,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="qosConfigurationState"> QoS configuration state. Default is Disabled. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.NetworkFabricPatchContent"/> instance for mocking. </returns>
-        public static NetworkFabricPatchContent NetworkFabricPatchContent(IDictionary<string, string> tags = default, string annotation = default, int? rackCount = default, int? serverCountPerRack = default, string iPv4Prefix = default, string iPv6Prefix = default, long? fabricAsn = default, NetworkFabricTerminalServerPatchConfiguration terminalServerSettings = default, ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration = default, StorageAccountPatchConfiguration storageAccountConfiguration = default, int? hardwareAlertThreshold = default, IEnumerable<ResourceIdentifier> controlPlaneAcls = default, IEnumerable<ResourceIdentifier> trustedIPPrefixes = default, UniqueRouteDistinguisherPatchProperties uniqueRdConfiguration = default, IEnumerable<NetworkFabricFeatureFlag> featureFlags = default, AuthorizedTransceiverPatchProperties authorizedTransceiver = default, NetworkFabricQosConfigurationState? qosConfigurationState = default, NetworkFabricManagedServiceIdentityPatch identity = default)
+        public static NetworkFabricPatchContent NetworkFabricPatchContent(IDictionary<string, string> tags = default, string annotation = default, int? rackCount = default, int? serverCountPerRack = default, string ipv4Prefix = default, string ipv6Prefix = default, long? fabricAsn = default, NetworkFabricTerminalServerPatchConfiguration terminalServerSettings = default, ManagementNetworkConfigurationPatchableProperties managementNetworkConfiguration = default, StorageAccountPatchConfiguration storageAccountConfiguration = default, int? hardwareAlertThreshold = default, IEnumerable<ResourceIdentifier> controlPlaneAcls = default, IEnumerable<ResourceIdentifier> trustedIPPrefixes = default, UniqueRouteDistinguisherPatchProperties uniqueRdConfiguration = default, IEnumerable<NetworkFabricFeatureFlag> featureFlags = default, AuthorizedTransceiverPatchProperties authorizedTransceiver = default, NetworkFabricQosConfigurationState? qosConfigurationState = default, NetworkFabricManagedServiceIdentityPatch identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new NetworkFabricPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, annotation is null && rackCount is null && serverCountPerRack is null && iPv4Prefix is null && iPv6Prefix is null && fabricAsn is null && terminalServerSettings is null && managementNetworkConfiguration is null && storageAccountConfiguration is null && hardwareAlertThreshold is null && controlPlaneAcls is null && trustedIPPrefixes is null && uniqueRdConfiguration is null && qosConfigurationState is null && featureFlags is null && authorizedTransceiver is null ? default : new NetworkFabricPatchProperties(
+            return new NetworkFabricPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, annotation is null && rackCount is null && serverCountPerRack is null && ipv4Prefix is null && ipv6Prefix is null && fabricAsn is null && terminalServerSettings is null && managementNetworkConfiguration is null && storageAccountConfiguration is null && hardwareAlertThreshold is null && controlPlaneAcls is null && trustedIPPrefixes is null && uniqueRdConfiguration is null && qosConfigurationState is null && featureFlags is null && authorizedTransceiver is null ? default : new NetworkFabricPatchProperties(
                 annotation,
                 rackCount,
                 serverCountPerRack,
-                iPv4Prefix,
-                iPv6Prefix,
+                ipv4Prefix,
+                ipv6Prefix,
                 fabricAsn,
                 terminalServerSettings,
                 managementNetworkConfiguration,
@@ -3082,6 +3108,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default), identity);
         }
 
+        /// <summary> Network and credentials configuration already applied to terminal server. </summary>
         /// <param name="username"> Username for the terminal server connection. </param>
         /// <param name="password"> Password for the terminal server connection. </param>
         /// <param name="serialNumber"> Serial Number of Terminal server. </param>
@@ -3103,6 +3130,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Configuration to be used to setup the management network. </summary>
         /// <param name="infrastructureVpnConfiguration"> VPN Configuration properties. </param>
         /// <param name="workloadVpnConfiguration"> VPN Configuration properties. </param>
         /// <returns> A new <see cref="Models.ManagementNetworkConfigurationPatchableProperties"/> instance for mocking. </returns>
@@ -3111,6 +3139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ManagementNetworkConfigurationPatchableProperties(infrastructureVpnConfiguration, workloadVpnConfiguration, default);
         }
 
+        /// <summary> Network and credential configuration currently applied on terminal server. </summary>
         /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the Network To Network Interconnect. </param>
         /// <param name="peeringOption"> Peering option list. </param>
         /// <param name="optionBProperties"> option B properties. </param>
@@ -3121,6 +3150,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new VpnConfigurationPatchableProperties(networkToNetworkInterconnectId, peeringOption, optionBProperties, optionASettings, default);
         }
 
+        /// <summary> Peering optionA properties. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
@@ -3144,6 +3174,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 bfdConfiguration);
         }
 
+        /// <summary> Layer 3 primary and secondary IP Address prefixes. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
@@ -3154,6 +3185,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new Layer3IPPrefixPatchProperties(primaryIPv4Prefix, primaryIPv6Prefix, secondaryIPv4Prefix, secondaryIPv6Prefix, default);
         }
 
+        /// <summary> Storage account configuration. </summary>
         /// <param name="storageAccountId"> Network Fabric storage account resource identifier. </param>
         /// <param name="storageAccountIdentity"> The selection of the managed identity to use with this storage account. The identity type must be either system assigned or user assigned. </param>
         /// <returns> A new <see cref="Models.StorageAccountPatchConfiguration"/> instance for mocking. </returns>
@@ -3162,6 +3194,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new StorageAccountPatchConfiguration(storageAccountId, storageAccountIdentity, default);
         }
 
+        /// <summary> Unique Route Distinguisher configuration properties. </summary>
         /// <param name="uniqueRdConfigurationState"> Unique Route Distinguisher configuration state. Default is Enabled. </param>
         /// <param name="nniDerivedUniqueRdConfigurationState"> NNI derived unique Route Distinguisher state. Default is Disabled. </param>
         /// <returns> A new <see cref="Models.UniqueRouteDistinguisherPatchProperties"/> instance for mocking. </returns>
@@ -3170,6 +3203,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new UniqueRouteDistinguisherPatchProperties(uniqueRdConfigurationState, nniDerivedUniqueRdConfigurationState, default);
         }
 
+        /// <summary> Authorized Transceiver Patch Properties. </summary>
         /// <param name="vendor"> Vendor of the transceiver. </param>
         /// <param name="key"> Key that must be configured on the fabric. </param>
         /// <returns> A new <see cref="Models.AuthorizedTransceiverPatchProperties"/> instance for mocking. </returns>
@@ -3178,6 +3212,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new AuthorizedTransceiverPatchProperties(vendor, key, default);
         }
 
+        /// <summary> Model used for Upgrade Network Fabric Properties. </summary>
         /// <param name="version"> Specify the version. </param>
         /// <param name="action"> Action to be performed while upgrading the fabric. </param>
         /// <returns> A new <see cref="Models.UpgradeNetworkFabricProperties"/> instance for mocking. </returns>
@@ -3186,6 +3221,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new UpgradeNetworkFabricProperties(version, default, action);
         }
 
+        /// <summary> Update version properties. </summary>
         /// <param name="version"> Specify the version. </param>
         /// <returns> A new <see cref="Models.NetworkFabricUpdateVersionContent"/> instance for mocking. </returns>
         public static NetworkFabricUpdateVersionContent NetworkFabricUpdateVersionContent(string version = default)
@@ -3193,6 +3229,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricUpdateVersionContent(version, default);
         }
 
+        /// <summary> Validation configuration properties. </summary>
         /// <param name="validateAction"> Validate action that to be performed. </param>
         /// <returns> A new <see cref="Models.ValidateConfigurationContent"/> instance for mocking. </returns>
         public static ValidateConfigurationContent ValidateConfigurationContent(NetworkFabricValidateAction? validateAction = default)
@@ -3229,6 +3266,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Commit Configuration Request. </summary>
         /// <param name="commitStage"> Commit stage Action to be performed. </param>
         /// <param name="commitPolicy"> Commit configuration Policy. Supported policy is StageCEConfiguration, which indicates to prepare the configuration for the CE device type. </param>
         /// <param name="devices"> List of ARM resource IDs of devices to be included in the commit operation. Either CE1 or CE2 is allowed. </param>
@@ -3240,6 +3278,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new CommitConfigurationContent(commitStage, commitPolicy, (devices ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Commit Configuration Response. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -3267,6 +3306,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Commit Batch Status Request. </summary>
         /// <param name="commitBatchId"> Commit Batch Identifier. If not provided, the latest commit batch status will be returned. </param>
         /// <returns> A new <see cref="Models.CommitBatchStatusContent"/> instance for mocking. </returns>
         public static CommitBatchStatusContent CommitBatchStatusContent(string commitBatchId = default)
@@ -3274,6 +3314,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new CommitBatchStatusContent(commitBatchId, default);
         }
 
+        /// <summary> Commit Batch Status Response. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -3312,6 +3353,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new CommitBatchStatusResponseProperties(commitBatchId, commitBatchState, commitBatchDetailsFailedDevices is null ? default : new CommitBatchDetails((commitBatchDetailsFailedDevices ?? new ChangeTrackingList<string>()).ToList(), default), default);
         }
 
+        /// <summary> Discard Commit Batch Request. </summary>
         /// <param name="commitBatchId"> Commit Batch Identifier. If not provided, the latest commit batch status will be returned. </param>
         /// <returns> A new <see cref="Models.DiscardCommitBatchContent"/> instance for mocking. </returns>
         public static DiscardCommitBatchContent DiscardCommitBatchContent(string commitBatchId = default)
@@ -3348,6 +3390,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Network Fabric Lock Request. </summary>
         /// <param name="lockType"> Type of lock to be applied. </param>
         /// <param name="action"> Action to be performed on the lock. </param>
         /// <returns> A new <see cref="Models.NetworkFabricLockContent"/> instance for mocking. </returns>
@@ -3414,6 +3457,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Response body for a RotatePasswords request on a Network Fabric. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -3441,6 +3485,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Response body for a ResyncPasswords request on a Network Fabric. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -3468,6 +3513,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Response body for a RotateCertificates request on a Network Fabric. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -3546,6 +3592,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Common properties for Layer2 Configuration. </summary>
         /// <param name="mtu"> MTU of the packets between PE &amp; CE. </param>
         /// <param name="interfaces"> List of network device interfaces resource IDs. </param>
         /// <returns> A new <see cref="Models.Layer2Configuration"/> instance for mocking. </returns>
@@ -3586,6 +3633,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 (prefixLimits ?? new ChangeTrackingList<OptionBLayer3PrefixLimitProperties>()).ToList());
         }
 
+        /// <summary> OptionB Layer3 prefix limit properties. </summary>
         /// <param name="maximumRoutes"> Maximum number of routes allowed. </param>
         /// <returns> A new <see cref="Models.OptionBLayer3PrefixLimitProperties"/> instance for mocking. </returns>
         public static OptionBLayer3PrefixLimitProperties OptionBLayer3PrefixLimitProperties(int? maximumRoutes = default)
@@ -3593,30 +3641,33 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new OptionBLayer3PrefixLimitProperties(maximumRoutes, default);
         }
 
+        /// <summary> NPB Static Route Configuration properties. </summary>
         /// <param name="bfdConfiguration"> BFD Configuration properties. </param>
-        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
-        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
+        /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
         /// <returns> A new <see cref="Models.NpbStaticRouteConfiguration"/> instance for mocking. </returns>
-        public static NpbStaticRouteConfiguration NpbStaticRouteConfiguration(BfdConfiguration bfdConfiguration = default, IEnumerable<StaticRouteProperties> iPv4Routes = default, IEnumerable<StaticRouteProperties> iPv6Routes = default)
+        public static NpbStaticRouteConfiguration NpbStaticRouteConfiguration(BfdConfiguration bfdConfiguration = default, IEnumerable<StaticRouteProperties> ipv4Routes = default, IEnumerable<StaticRouteProperties> ipv6Routes = default)
         {
-            iPv4Routes ??= new ChangeTrackingList<StaticRouteProperties>();
-            iPv6Routes ??= new ChangeTrackingList<StaticRouteProperties>();
+            ipv4Routes ??= new ChangeTrackingList<StaticRouteProperties>();
+            ipv6Routes ??= new ChangeTrackingList<StaticRouteProperties>();
 
-            return new NpbStaticRouteConfiguration(bfdConfiguration, (iPv4Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), (iPv6Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), default);
+            return new NpbStaticRouteConfiguration(bfdConfiguration, (ipv4Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), (ipv6Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), default);
         }
 
+        /// <summary> Static Route Configuration properties for NNI. </summary>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
-        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
-        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
+        /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
         /// <returns> A new <see cref="Models.NniStaticRouteConfiguration"/> instance for mocking. </returns>
-        public static NniStaticRouteConfiguration NniStaticRouteConfiguration(BfdConfiguration bfdConfiguration = default, IEnumerable<StaticRouteProperties> iPv4Routes = default, IEnumerable<StaticRouteProperties> iPv6Routes = default)
+        public static NniStaticRouteConfiguration NniStaticRouteConfiguration(BfdConfiguration bfdConfiguration = default, IEnumerable<StaticRouteProperties> ipv4Routes = default, IEnumerable<StaticRouteProperties> ipv6Routes = default)
         {
-            iPv4Routes ??= new ChangeTrackingList<StaticRouteProperties>();
-            iPv6Routes ??= new ChangeTrackingList<StaticRouteProperties>();
+            ipv4Routes ??= new ChangeTrackingList<StaticRouteProperties>();
+            ipv6Routes ??= new ChangeTrackingList<StaticRouteProperties>();
 
-            return new NniStaticRouteConfiguration(bfdConfiguration, (iPv4Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), (iPv6Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), default);
+            return new NniStaticRouteConfiguration(bfdConfiguration, (ipv4Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), (ipv6Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), default);
         }
 
+        /// <summary> Import Route Policy Configuration. </summary>
         /// <param name="importIPv4RoutePolicyId"> Import IPv4 Route Policy Id. </param>
         /// <param name="importIPv6RoutePolicyId"> Import IPv6 Route Policy Id. </param>
         /// <returns> A new <see cref="Models.ImportRoutePolicyInformation"/> instance for mocking. </returns>
@@ -3625,6 +3676,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ImportRoutePolicyInformation(importIPv4RoutePolicyId, importIPv6RoutePolicyId, default);
         }
 
+        /// <summary> Export Route Policy Configuration. </summary>
         /// <param name="exportIPv4RoutePolicyId"> Export IPv4 Route Policy Id. </param>
         /// <param name="exportIPv6RoutePolicyId"> Export IPv6 Route Policy Id. </param>
         /// <returns> A new <see cref="Models.ExportRoutePolicyInformation"/> instance for mocking. </returns>
@@ -3633,15 +3685,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ExportRoutePolicyInformation(exportIPv4RoutePolicyId, exportIPv6RoutePolicyId, default);
         }
 
-        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
-        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
+        /// <summary> Conditional Default Route Configuration properties. </summary>
+        /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
         /// <returns> A new <see cref="Models.ConditionalDefaultRouteProperties"/> instance for mocking. </returns>
-        public static ConditionalDefaultRouteProperties ConditionalDefaultRouteProperties(IEnumerable<StaticRouteProperties> iPv4Routes = default, IEnumerable<StaticRouteProperties> iPv6Routes = default)
+        public static ConditionalDefaultRouteProperties ConditionalDefaultRouteProperties(IEnumerable<StaticRouteProperties> ipv4Routes = default, IEnumerable<StaticRouteProperties> ipv6Routes = default)
         {
-            iPv4Routes ??= new ChangeTrackingList<StaticRouteProperties>();
-            iPv6Routes ??= new ChangeTrackingList<StaticRouteProperties>();
+            ipv4Routes ??= new ChangeTrackingList<StaticRouteProperties>();
+            ipv6Routes ??= new ChangeTrackingList<StaticRouteProperties>();
 
-            return new ConditionalDefaultRouteProperties((iPv4Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), (iPv6Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), default);
+            return new ConditionalDefaultRouteProperties((ipv4Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), (ipv6Routes ?? new ChangeTrackingList<StaticRouteProperties>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3679,6 +3732,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Common properties for Layer2 Configuration. </summary>
         /// <param name="mtu"> MTU of the packets between PE &amp; CE. </param>
         /// <param name="interfaces"> List of network device interfaces resource IDs. </param>
         /// <returns> A new <see cref="Models.Layer2ConfigurationPatch"/> instance for mocking. </returns>
@@ -3719,6 +3773,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 (prefixLimits ?? new ChangeTrackingList<OptionBLayer3PrefixLimitPatchProperties>()).ToList());
         }
 
+        /// <summary> OptionB Layer3 prefix limit patch properties. </summary>
         /// <param name="maximumRoutes"> Maximum number of routes allowed. </param>
         /// <returns> A new <see cref="Models.OptionBLayer3PrefixLimitPatchProperties"/> instance for mocking. </returns>
         public static OptionBLayer3PrefixLimitPatchProperties OptionBLayer3PrefixLimitPatchProperties(int? maximumRoutes = default)
@@ -3726,30 +3781,33 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new OptionBLayer3PrefixLimitPatchProperties(maximumRoutes, default);
         }
 
+        /// <summary> NPB Static Route Configuration properties. </summary>
         /// <param name="bfdConfiguration"> BFD Configuration properties. </param>
-        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
-        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
+        /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
         /// <returns> A new <see cref="Models.NpbStaticRouteConfigurationPatch"/> instance for mocking. </returns>
-        public static NpbStaticRouteConfigurationPatch NpbStaticRouteConfigurationPatch(BfdPatchConfiguration bfdConfiguration = default, IEnumerable<StaticRoutePatchProperties> iPv4Routes = default, IEnumerable<StaticRoutePatchProperties> iPv6Routes = default)
+        public static NpbStaticRouteConfigurationPatch NpbStaticRouteConfigurationPatch(BfdPatchConfiguration bfdConfiguration = default, IEnumerable<StaticRoutePatchProperties> ipv4Routes = default, IEnumerable<StaticRoutePatchProperties> ipv6Routes = default)
         {
-            iPv4Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
-            iPv6Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
+            ipv4Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
+            ipv6Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
 
-            return new NpbStaticRouteConfigurationPatch(bfdConfiguration, (iPv4Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>()).ToList(), (iPv6Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>()).ToList(), default);
+            return new NpbStaticRouteConfigurationPatch(bfdConfiguration, (ipv4Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>()).ToList(), (ipv6Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>()).ToList(), default);
         }
 
+        /// <summary> Static Route Configuration properties for NNI. </summary>
         /// <param name="bfdConfiguration"> Bidirectional Forwarding Detection (BFD) configuration properties. </param>
-        /// <param name="iPv4Routes"> List of IPv4 Routes. </param>
-        /// <param name="iPv6Routes"> List of IPv6 Routes. </param>
+        /// <param name="ipv4Routes"> List of IPv4 Routes. </param>
+        /// <param name="ipv6Routes"> List of IPv6 Routes. </param>
         /// <returns> A new <see cref="Models.NniStaticRoutePatchConfiguration"/> instance for mocking. </returns>
-        public static NniStaticRoutePatchConfiguration NniStaticRoutePatchConfiguration(BfdPatchConfiguration bfdConfiguration = default, IEnumerable<StaticRoutePatchProperties> iPv4Routes = default, IEnumerable<StaticRoutePatchProperties> iPv6Routes = default)
+        public static NniStaticRoutePatchConfiguration NniStaticRoutePatchConfiguration(BfdPatchConfiguration bfdConfiguration = default, IEnumerable<StaticRoutePatchProperties> ipv4Routes = default, IEnumerable<StaticRoutePatchProperties> ipv6Routes = default)
         {
-            iPv4Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
-            iPv6Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
+            ipv4Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
+            ipv6Routes ??= new ChangeTrackingList<StaticRoutePatchProperties>();
 
-            return new NniStaticRoutePatchConfiguration(bfdConfiguration, (iPv4Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>()).ToList(), (iPv6Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>()).ToList(), default);
+            return new NniStaticRoutePatchConfiguration(bfdConfiguration, (ipv4Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>()).ToList(), (ipv6Routes ?? new ChangeTrackingList<StaticRoutePatchProperties>()).ToList(), default);
         }
 
+        /// <summary> Import Route Policy Configuration. </summary>
         /// <param name="importIPv4RoutePolicyId"> Import IPv4 Route Policy Id. </param>
         /// <param name="importIPv6RoutePolicyId"> Import IPv6 Route Policy Id. </param>
         /// <returns> A new <see cref="Models.ImportRoutePolicyInformationPatch"/> instance for mocking. </returns>
@@ -3758,6 +3816,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ImportRoutePolicyInformationPatch(importIPv4RoutePolicyId, importIPv6RoutePolicyId, default);
         }
 
+        /// <summary> Export Route Policy Configuration. </summary>
         /// <param name="exportIPv4RoutePolicyId"> Export IPv4 Route Policy Id. </param>
         /// <param name="exportIPv6RoutePolicyId"> Export IPv6 Route Policy Id. </param>
         /// <returns> A new <see cref="Models.ExportRoutePolicyInformationPatch"/> instance for mocking. </returns>
@@ -3766,6 +3825,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ExportRoutePolicyInformationPatch(exportIPv4RoutePolicyId, exportIPv6RoutePolicyId, default);
         }
 
+        /// <summary> NNI Bidirectional Forwarding Detection (BFD) Administrative State request. </summary>
         /// <param name="routeType"> Route Type. Choose either Static or OptionA. </param>
         /// <param name="administrativeState"> State. Select either enable or disable. </param>
         /// <returns> A new <see cref="Models.NniUpdateBfdAdministrativeStateContent"/> instance for mocking. </returns>
@@ -3774,6 +3834,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NniUpdateBfdAdministrativeStateContent(routeType, administrativeState, default);
         }
 
+        /// <summary> NNI Bidirectional Forwarding Detection (BFD) Administrative State response. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -3803,6 +3864,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> NNI Bidirectional Forwarding Detection (BFD) Update Administrative State response. </summary>
         /// <param name="routeType"> Route Type. Choose either Static or OptionA. </param>
         /// <param name="administrativeState"> State. Select either enable or disable. </param>
         /// <returns> A new <see cref="Models.NniUpdateBfdAdministrativeStateResponseProperties"/> instance for mocking. </returns>
@@ -3826,7 +3888,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkPacketBrokerData"/> instance for mocking. </returns>
         public static NetworkPacketBrokerData NetworkPacketBrokerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ResourceIdentifier networkFabricId = default, IEnumerable<ResourceIdentifier> networkDeviceIds = default, IEnumerable<ResourceIdentifier> sourceInterfaceIds = default, IEnumerable<ResourceIdentifier> networkTapIds = default, IEnumerable<ResourceIdentifier> neighborGroupIds = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricConfigurationState? configurationState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
         {
@@ -3853,6 +3914,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> The NetworkPacketBroker patch resource definition. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.NetworkPacketBrokerPatchContent"/> instance for mocking. </returns>
@@ -3876,7 +3938,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkFabricId"/> is null. </exception>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkRackData"/> instance for mocking. </returns>
         public static NetworkRackData NetworkRackData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, NetworkRackType? networkRackType = default, ResourceIdentifier networkFabricId = default, IEnumerable<ResourceIdentifier> networkDevices = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricConfigurationState? configurationState = default, string lastOperationDetails = default)
         {
@@ -3899,29 +3960,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     default,
                     default),
                 default);
-        }
-
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="networkRackType"> Network Rack SKU name. </param>
-        /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
-        /// <param name="networkDevices"> List of network device ARM resource IDs. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <returns> A new <see cref="Models.NetworkRackProperties"/> instance for mocking. </returns>
-        public static NetworkRackProperties NetworkRackProperties(string annotation = default, NetworkRackType? networkRackType = default, ResourceIdentifier networkFabricId = default, IEnumerable<ResourceIdentifier> networkDevices = default, string lastOperationDetails = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricConfigurationState? configurationState = default)
-        {
-            networkDevices ??= new ChangeTrackingList<ResourceIdentifier>();
-
-            return new NetworkRackProperties(
-                annotation,
-                default,
-                networkRackType,
-                networkFabricId,
-                (networkDevices ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
-                provisioningState,
-                configurationState);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3981,6 +4019,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Defines the match configuration that are supported to filter the traffic. </summary>
         /// <param name="matchConfigurationName"> The name of the match configuration. </param>
         /// <param name="sequenceNumber"> Sequence Number of the match configuration.. </param>
         /// <param name="ipAddressType"> Type of IP Address. IPv4 or IPv6. </param>
@@ -4001,6 +4040,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Defines the match condition that is supported to filter the traffic. </summary>
         /// <param name="protocolTypes"> List of the protocols that need to be matched. </param>
         /// <param name="vlanMatchCondition"> Vlan match condition that needs to be matched. </param>
         /// <param name="ipCondition"> IP condition that needs to be matched. </param>
@@ -4020,6 +4060,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 portCondition);
         }
 
+        /// <summary> Action that need to performed. </summary>
         /// <param name="tapRuleActionType"> Type of actions that can be performed. </param>
         /// <param name="truncate"> Truncate. 0 indicates do not truncate. </param>
         /// <param name="isTimestampEnabled"> The parameter to enable or disable the timestamp. </param>
@@ -4037,6 +4078,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Global network tap rule actions properties. </summary>
         /// <param name="enableCount"> Configuration to enable network tap rule counter. </param>
         /// <param name="truncate"> Truncate. 0 indicates do not truncate. </param>
         /// <returns> A new <see cref="Models.GlobalNetworkTapRuleActionProperties"/> instance for mocking. </returns>
@@ -4070,6 +4112,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default), identity);
         }
 
+        /// <summary> Defines the match configuration that are supported to filter the traffic. </summary>
         /// <param name="matchConfigurationName"> The name of the match configuration. </param>
         /// <param name="sequenceNumber"> Sequence Number of the match configuration.. </param>
         /// <param name="ipAddressType"> Type of IP Address. IPv4 or IPv6. </param>
@@ -4090,6 +4133,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Defines the match condition that is supported to filter the traffic. </summary>
         /// <param name="protocolTypes"> List of the protocols that need to be matched. </param>
         /// <param name="vlanMatchCondition"> Vlan match condition that needs to be matched. </param>
         /// <param name="ipCondition"> IP condition that needs to be matched. </param>
@@ -4109,6 +4153,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 portCondition);
         }
 
+        /// <summary> Action that need to performed. </summary>
         /// <param name="tapRuleActionType"> Type of actions that can be performed. </param>
         /// <param name="truncate"> Truncate. 0 indicates do not truncate. </param>
         /// <param name="isTimestampEnabled"> The parameter to enable or disable the timestamp. </param>
@@ -4126,6 +4171,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Global network tap rule actions patch properties. </summary>
         /// <param name="enableCount"> Configuration to enable network tap rule counter. </param>
         /// <param name="truncate"> Truncate. 0 indicates do not truncate. </param>
         /// <returns> A new <see cref="Models.GlobalNetworkTapRuleActionPatchProperties"/> instance for mocking. </returns>
@@ -4134,6 +4180,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new GlobalNetworkTapRuleActionPatchProperties(enableCount, truncate, default);
         }
 
+        /// <summary> Response for Network Tap Rule resync operation. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -4178,7 +4225,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="administrativeState"> Administrative state of the resource. Example -Enabled/Disabled. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="networkPacketBrokerId"/> or <paramref name="destinationSettings"/> is null. </exception>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkTapData"/> instance for mocking. </returns>
         public static NetworkTapData NetworkTapData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier networkPacketBrokerId = default, ResourceIdentifier sourceTapRuleId = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, IEnumerable<NetworkTapDestinationProperties> destinationSettings = default, NetworkTapPollingType? pollingType = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default, ManagedServiceIdentity identity = default)
         {
@@ -4207,36 +4253,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="networkPacketBrokerId"> ARM resource ID of the Network Packet Broker. </param>
-        /// <param name="sourceTapRuleId"> Source Tap Rule Id. ARM Resource ID of the Network Tap Rule. </param>
-        /// <param name="networkFabricIds"> Associated Network Fabric Resource IDs. </param>
-        /// <param name="destinationSettings"> List of destinations to send the filter traffic. </param>
-        /// <param name="pollingType"> Polling type. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <param name="configurationState"> Gets the configurations state of the resource. </param>
-        /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of Network Tap provisioning. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. Example -Enabled/Disabled. </param>
-        /// <returns> A new <see cref="Models.NetworkTapProperties"/> instance for mocking. </returns>
-        public static NetworkTapProperties NetworkTapProperties(string annotation = default, ResourceIdentifier networkPacketBrokerId = default, ResourceIdentifier sourceTapRuleId = default, IEnumerable<ResourceIdentifier> networkFabricIds = default, IEnumerable<NetworkTapDestinationProperties> destinationSettings = default, NetworkTapPollingType? pollingType = default, string lastOperationDetails = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default)
-        {
-            networkFabricIds ??= new ChangeTrackingList<ResourceIdentifier>();
-            destinationSettings ??= new ChangeTrackingList<NetworkTapDestinationProperties>();
-
-            return new NetworkTapProperties(
-                annotation,
-                default,
-                networkPacketBrokerId,
-                sourceTapRuleId,
-                (networkFabricIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(),
-                (destinationSettings ?? new ChangeTrackingList<NetworkTapDestinationProperties>()).ToList(),
-                pollingType,
-                lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
-                configurationState,
-                provisioningState,
-                administrativeState);
-        }
-
+        /// <summary> The network tap destination properties. </summary>
         /// <param name="name"> Destination name. </param>
         /// <param name="destinationType"> Type of destination. Input can be IsolationDomain or Direct. </param>
         /// <param name="destinationId"> The destination Id. ARM Resource ID of either NNI or Internal Networks. </param>
@@ -4254,6 +4271,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Isolation Domain Properties. </summary>
         /// <param name="encapsulation"> Type of encapsulation. </param>
         /// <param name="neighborGroupIds"> List of Neighbor Group IDs. </param>
         /// <returns> A new <see cref="Models.IsolationDomainProperties"/> instance for mocking. </returns>
@@ -4277,17 +4295,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkTapPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, annotation is null && pollingType is null && destinationSettings is null ? default : new NetworkTapPatchProperties(annotation, default, pollingType, (destinationSettings ?? new ChangeTrackingList<NetworkTapDestinationPatchProperties>()).ToList()), identity);
         }
 
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="pollingType"> Polling type. </param>
-        /// <param name="destinationSettings"> List of destination properties to send the filter traffic. </param>
-        /// <returns> A new <see cref="Models.NetworkTapPatchProperties"/> instance for mocking. </returns>
-        public static NetworkTapPatchProperties NetworkTapPatchProperties(string annotation = default, NetworkTapPollingType? pollingType = default, IEnumerable<NetworkTapDestinationPatchProperties> destinationSettings = default)
-        {
-            destinationSettings ??= new ChangeTrackingList<NetworkTapDestinationPatchProperties>();
-
-            return new NetworkTapPatchProperties(annotation, default, pollingType, (destinationSettings ?? new ChangeTrackingList<NetworkTapDestinationPatchProperties>()).ToList());
-        }
-
+        /// <summary> The network tap destination properties. </summary>
         /// <param name="name"> Destination name. </param>
         /// <param name="destinationType"> Type of destination. Input can be IsolationDomain or Direct. </param>
         /// <param name="destinationId"> The destination Id. ARM Resource ID of either NNI or Internal Networks. </param>
@@ -4305,6 +4313,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Isolation Domain Properties. </summary>
         /// <param name="encapsulation"> Type of encapsulation. </param>
         /// <param name="neighborGroupIds"> List of Neighbor Group IDs. </param>
         /// <returns> A new <see cref="Models.IsolationDomainPatchProperties"/> instance for mocking. </returns>
@@ -4315,6 +4324,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new IsolationDomainPatchProperties(encapsulation, (neighborGroupIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
+        /// <summary> Response for NetworkTap Resync operation. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -4357,7 +4367,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
         /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="statements"/> or <paramref name="networkFabricId"/> is null. </exception>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricRoutePolicyData"/> instance for mocking. </returns>
         public static NetworkFabricRoutePolicyData NetworkFabricRoutePolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, CommunityActionType? defaultAction = default, IEnumerable<RoutePolicyStatementProperties> statements = default, ResourceIdentifier networkFabricId = default, AddressFamilyType? addressFamilyType = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, string lastOperationDetails = default)
         {
@@ -4384,6 +4393,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Route Policy Statement properties. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. </param>
         /// <param name="condition"> Route policy condition properties. </param>
@@ -4394,6 +4404,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new RoutePolicyStatementProperties(annotation, default, sequenceNumber, condition, action);
         }
 
+        /// <summary> Route policy statement condition properties. </summary>
         /// <param name="ipCommunityIds"> List of IP Community resource IDs. </param>
         /// <param name="ipExtendedCommunityIds"> List of IP Extended Community resource IDs. </param>
         /// <param name="routePolicyConditionType"> Type of the condition used. </param>
@@ -4407,6 +4418,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new StatementConditionProperties((ipCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default, (ipExtendedCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), routePolicyConditionType, ipPrefixId);
         }
 
+        /// <summary> IP Community ID list properties. </summary>
         /// <param name="ipCommunityIds"> List of IP Community resource IDs. </param>
         /// <returns> A new <see cref="Models.IPCommunityIdList"/> instance for mocking. </returns>
         public static IPCommunityIdList IPCommunityIdList(IEnumerable<ResourceIdentifier> ipCommunityIds = default)
@@ -4416,6 +4428,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new IPCommunityIdList((ipCommunityIds ?? new ChangeTrackingList<ResourceIdentifier>()).ToList(), default);
         }
 
+        /// <summary> Route policy action properties. </summary>
         /// <param name="localPreference"> Local Preference of the route policy. </param>
         /// <param name="actionType"> Action type. Example: Permit | Deny | Continue. </param>
         /// <param name="ipCommunityProperties"> IP Community Properties. </param>
@@ -4469,6 +4482,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkFabricRoutePolicyPatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, defaultAction is null && statementSettings is null ? default : new RoutePolicyPatchableProperties(defaultAction, (statementSettings ?? new ChangeTrackingList<RoutePolicyStatementPatchProperties>()).ToList(), default));
         }
 
+        /// <summary> Route Policy Statement properties. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="sequenceNumber"> Sequence to insert to/delete from existing route. </param>
         /// <param name="condition"> Route policy condition properties. </param>
@@ -4479,6 +4493,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new RoutePolicyStatementPatchProperties(annotation, default, sequenceNumber, condition, action);
         }
 
+        /// <summary> Route policy statement condition properties. </summary>
         /// <param name="ipCommunityIds"> List of IP Community resource IDs. </param>
         /// <param name="ipExtendedCommunityIds"> List of IP Extended Community resource IDs. </param>
         /// <param name="type"> Type of the condition used. </param>
@@ -4492,6 +4507,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new StatementConditionPatchProperties((ipCommunityIds ?? new ChangeTrackingList<string>()).ToList(), (ipExtendedCommunityIds ?? new ChangeTrackingList<string>()).ToList(), @type, ipPrefixId, default);
         }
 
+        /// <summary> Route policy action properties. </summary>
         /// <param name="localPreference"> Local Preference of the route policy. </param>
         /// <param name="actionType"> Action type. Example: Permit | Deny | Continue. </param>
         /// <param name="ipCommunityProperties"> IP Community Properties. </param>
@@ -4555,25 +4571,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="bmpConfiguration"> BMP Configurations for the Network Fabric. </param>
-        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="provisioningState"> Provides you the latest status of the NetworkMonitor resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <returns> A new <see cref="Models.NetworkMonitorProperties"/> instance for mocking. </returns>
-        public static NetworkMonitorProperties NetworkMonitorProperties(string annotation = default, BmpConfigurationProperties bmpConfiguration = default, string lastOperationDetails = default, NetworkFabricConfigurationState? configurationState = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default)
-        {
-            return new NetworkMonitorProperties(
-                annotation,
-                default,
-                bmpConfiguration,
-                lastOperationDetails is null ? default : new LastOperationProperties(lastOperationDetails, default),
-                configurationState,
-                provisioningState,
-                administrativeState);
-        }
-
         /// <param name="stationConfigurationState"> Enabling a station. Either True/False. </param>
         /// <param name="scopeResourceId"> Scope resource ARM Identifier. </param>
         /// <param name="stationName"> Name of the station. </param>
@@ -4608,6 +4605,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Station Connection Properties. </summary>
         /// <param name="keepaliveIdleTime"> Connection keepalive idle time in seconds. </param>
         /// <param name="probeInterval"> Probe interval in seconds, default value is 60. </param>
         /// <param name="probeCount"> Probe count, default value is 10. </param>
@@ -4661,6 +4659,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Station Connection PATCH Properties. </summary>
         /// <param name="keepaliveIdleTime"> Connection keepalive idle time in seconds. </param>
         /// <param name="probeInterval"> Probe interval in seconds, default value is 60. </param>
         /// <param name="probeCount"> Probe count, default value is 10. </param>
@@ -4670,6 +4669,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new StationConnectionPatchProperties(keepaliveIdleTime, probeInterval, probeCount, default);
         }
 
+        /// <summary> Base tracked resource type for PATCH updates. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ManagedNetworkFabricResourcePatch"/> instance for mocking. </returns>
         public static ManagedNetworkFabricResourcePatch ManagedNetworkFabricResourcePatch(IDictionary<string, string> tags = default)
@@ -4679,6 +4679,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new ManagedNetworkFabricResourcePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Common response for device updates. </summary>
         /// <param name="error"> The error object. </param>
         /// <param name="configurationState"> Gets the configuration state. </param>
         /// <param name="successfulDevices"> List of ARM Resource IDs for which the given action applied successfully. </param>
@@ -4758,6 +4759,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkBootstrapDevicePatchContent(tags ?? new ChangeTrackingDictionary<string, string>(), default, annotation is null && hostName is null && serialNumber is null ? default : new NetworkBootstrapDevicePatchProperties(annotation, hostName, serialNumber, default), identity);
         }
 
+        /// <summary> Network Bootstrap Device reboot Response. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -4785,6 +4787,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> The current status of an refresh configuration async operation. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -4812,6 +4815,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Network Bootstrap Device upgrade Response. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -4839,6 +4843,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Network Bootstrap Device Administrative State Update Response. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -4866,6 +4871,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
+        /// <summary> Response body for a ResyncPasswords request on a Network Bootstrap Device. </summary>
         /// <param name="id"> Fully qualified ID for the async operation. </param>
         /// <param name="name"> Name of the async operation. </param>
         /// <param name="status"> Operation status. </param>
@@ -4935,37 +4941,6 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         }
 
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="administrativeState"> Administrative state of the resource. </param>
-        /// <param name="configurationState"> Configuration state of the resource. </param>
-        /// <param name="physicalIdentifier"> Physical identifier of the device. </param>
-        /// <param name="connectedTo"> Connected to information of the device. </param>
-        /// <param name="interfaceType"> Type of the interface. </param>
-        /// <param name="description"> Description of the interface. </param>
-        /// <param name="additionalDescription"> Additional description of the interface. </param>
-        /// <param name="iPv4Address"> IPv4Address of the interface. </param>
-        /// <param name="iPv6Address"> IPv6Address of the interface. </param>
-        /// <param name="serialNumber"> Serial number of the interface. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
-        /// <returns> A new <see cref="Models.NetworkBootstrapInterfaceProperties"/> instance for mocking. </returns>
-        public static NetworkBootstrapInterfaceProperties NetworkBootstrapInterfaceProperties(string annotation = default, NetworkFabricProvisioningState? provisioningState = default, NetworkFabricAdministrativeState? administrativeState = default, NetworkFabricConfigurationState? configurationState = default, string physicalIdentifier = default, string connectedTo = default, NetworkDeviceInterfaceType? interfaceType = default, string description = default, string additionalDescription = default, string iPv4Address = default, string iPv6Address = default, string serialNumber = default)
-        {
-            return new NetworkBootstrapInterfaceProperties(
-                annotation,
-                default,
-                provisioningState,
-                administrativeState,
-                configurationState,
-                physicalIdentifier,
-                connectedTo,
-                interfaceType,
-                description,
-                additionalDescription,
-                iPv4Address,
-                iPv6Address,
-                serialNumber);
-        }
-
-        /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="serialNumber"> Serial number of the interface. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
         /// <param name="additionalDescription"> Additional description of the interface. </param>
         /// <returns> A new <see cref="Models.NetworkBootstrapInterfacePatch"/> instance for mocking. </returns>
@@ -4974,29 +4949,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NetworkBootstrapInterfacePatch(annotation is null && serialNumber is null && additionalDescription is null ? default : new NetworkBootstrapInterfacePatchProperties(annotation, default, serialNumber, additionalDescription), default);
         }
 
+        /// <summary> The Internet Gateway resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="annotation"> Switch configuration description. </param>
-        /// <param name="serialNumber"> Serial number of the interface. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
-        /// <param name="additionalDescription"> Additional description of the interface. </param>
-        /// <returns> A new <see cref="Models.NetworkBootstrapInterfacePatchProperties"/> instance for mocking. </returns>
-        public static NetworkBootstrapInterfacePatchProperties NetworkBootstrapInterfacePatchProperties(string annotation = default, string serialNumber = default, string additionalDescription = default)
-        {
-            return new NetworkBootstrapInterfacePatchProperties(annotation, default, serialNumber, additionalDescription);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ArmManagedNetworkFabricModelFactory.NetworkFabricInternetGatewayData(ResourceIdentifier,string,ResourceType,SystemData,IDictionary{string,string},AzureLocation,string,ResourceIdentifier,IPAddress,int?,InternetGatewayType,ResourceIdentifier,NetworkFabricProvisioningState?)"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="tags"></param>
-        /// <param name="location"></param>
-        /// <param name="annotation"></param>
-        /// <param name="internetGatewayRuleId"></param>
+        /// <param name="internetGatewayRuleId"> ARM Resource ID of the Internet Gateway Rule. </param>
         /// <param name="ipv4Address"></param>
-        /// <param name="port"></param>
-        /// <param name="typePropertiesType"></param>
-        /// <param name="networkFabricControllerId"></param>
-        /// <param name="provisioningState"></param>
+        /// <param name="port"> Port number of Internet Gateway. </param>
+        /// <param name="typePropertiesType"> Gateway Type of the resource. </param>
+        /// <param name="networkFabricControllerId"> ARM Resource ID of the Network Fabric Controller. </param>
+        /// <param name="provisioningState"> Provisioning state of resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, IPAddress ipv4Address, int? port, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId, NetworkFabricProvisioningState? provisioningState)
         {
@@ -5021,96 +4988,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArmManagedNetworkFabricModelFactory.NetworkFabricInternetGatewayData(ResourceIdentifier,string,ResourceType,SystemData,IDictionary{string,string},AzureLocation,string,ResourceIdentifier,IPAddress,int?,InternetGatewayType,ResourceIdentifier,NetworkFabricProvisioningState?)"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="tags"></param>
-        /// <param name="location"></param>
-        /// <param name="annotation"></param>
-        /// <param name="internetGatewayRuleId"></param>
-        /// <param name="iPv4Address"></param>
-        /// <param name="port"></param>
-        /// <param name="typePropertiesType"></param>
-        /// <param name="internetGatewayType"></param>
-        /// <param name="networkFabricControllerId"></param>
-        /// <param name="lastOperationDetails"></param>
-        /// <param name="provisioningState"></param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier internetGatewayRuleId = default, IPAddress iPv4Address = default, int? port = default, InternetGatewayType typePropertiesType = default, InternetGatewayType? internetGatewayType = default, ResourceIdentifier networkFabricControllerId = default, string lastOperationDetails = default, NetworkFabricProvisioningState? provisioningState = default)
-        {
-            return new NetworkFabricInternetGatewayData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                annotation is null && internetGatewayRuleId is null && port is null && internetGatewayType is null && internetGatewayType is null && networkFabricControllerId is null && lastOperationDetails is null && provisioningState is null ? default : new InternetGatewayProperties(
-                    annotation,
-                    internetGatewayRuleId,
-                    default,
-                    port,
-                    internetGatewayType,
-                    internetGatewayType,
-                    networkFabricControllerId,
-                    new LastOperationProperties(lastOperationDetails, default),
-                    provisioningState,
-                    default),
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ArmManagedNetworkFabricModelFactory.NetworkFabricInternetGatewayData(ResourceIdentifier,string,ResourceType,SystemData,IDictionary{string,string},AzureLocation,string,ResourceIdentifier,IPAddress,int?,InternetGatewayType,ResourceIdentifier,NetworkFabricProvisioningState?)"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="tags"></param>
-        /// <param name="location"></param>
-        /// <param name="annotation"></param>
-        /// <param name="internetGatewayRuleId"></param>
-        /// <param name="ipV4Address"></param>
-        /// <param name="port"></param>
-        /// <param name="typePropertiesType"></param>
-        /// <param name="networkFabricControllerId"></param>
-        /// <param name="provisioningState"></param>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, string ipV4Address, int? port, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId, NetworkFabricProvisioningState? provisioningState)
-        {
-            return new NetworkFabricInternetGatewayData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                annotation is null && internetGatewayRuleId is null && ipV4Address is null && port is null && networkFabricControllerId is null && provisioningState is null ? default : new InternetGatewayProperties(
-                    annotation,
-                    internetGatewayRuleId,
-                    ipV4Address,
-                    port,
-                    typePropertiesType,
-                    default,
-                    networkFabricControllerId,
-                    default,
-                    provisioningState,
-                    default),
-                default);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="Models.ExternalNetworkPatchOptionAProperties"/>. </summary>
-        /// <param name="primaryIPv4Prefix"></param>
-        /// <param name="primaryIPv6Prefix"></param>
-        /// <param name="secondaryIPv4Prefix"></param>
-        /// <param name="secondaryIPv6Prefix"></param>
-        /// <param name="mtu"></param>
-        /// <param name="vlanId"></param>
-        /// <param name="fabricAsn"></param>
-        /// <param name="peerAsn"></param>
-        /// <param name="bfdConfiguration"></param>
-        /// <param name="ingressAclId"></param>
-        /// <param name="egressAclId"></param>
+        /// <summary> option A properties object. </summary>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="mtu"> MTU to use for option A peering. </param>
+        /// <param name="vlanId"> Vlan identifier. Example : 501. </param>
+        /// <param name="fabricAsn"> Fabric ASN number. Example 65001. </param>
+        /// <param name="peerAsn"> Peer ASN number.Example : 28. </param>
+        /// <param name="bfdConfiguration"> BFD configuration properties. </param>
+        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <returns> A new <see cref="Models.ExternalNetworkPatchOptionAProperties"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ExternalNetworkPatchOptionAProperties ExternalNetworkPatchOptionAProperties(string primaryIPv4Prefix, string primaryIPv6Prefix, string secondaryIPv4Prefix, string secondaryIPv6Prefix, int? mtu, int? vlanId, long? fabricAsn, long? peerAsn, BfdConfiguration bfdConfiguration, ResourceIdentifier ingressAclId, ResourceIdentifier egressAclId)
         {
@@ -5134,18 +5024,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectPatch"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
+        /// <summary> The Network To Network Interconnect resource patch definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="layer2Configuration"></param>
         /// <param name="optionBLayer3Configuration"></param>
         /// <param name="npbStaticRouteConfiguration"></param>
         /// <param name="importRoutePolicy"></param>
         /// <param name="exportRoutePolicy"></param>
-        /// <param name="egressAclId"></param>
-        /// <param name="ingressAclId"></param>
+        /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
+        /// <returns> A new <see cref="Models.NetworkToNetworkInterconnectPatch"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkToNetworkInterconnectPatch NetworkToNetworkInterconnectPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, Layer2Configuration layer2Configuration, OptionBLayer3Configuration optionBLayer3Configuration, NpbStaticRouteConfiguration npbStaticRouteConfiguration, ImportRoutePolicyInformation importRoutePolicy, ExportRoutePolicyInformation exportRoutePolicy, ResourceIdentifier egressAclId, ResourceIdentifier ingressAclId)
         {
@@ -5168,27 +5059,28 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArmManagedNetworkFabricModelFactory.NetworkFabricControllerData(ResourceIdentifier,string,ResourceType,SystemData,IDictionary{string,string},AzureLocation,string,IEnumerable{Models.ExpressRouteConnectionInformation},IEnumerable{Models.ExpressRouteConnectionInformation},Models.NetworkFabricControllerServices,Models.NetworkFabricControllerServices,Models.ManagedResourceGroupConfiguration,IEnumerable{ResourceIdentifier},bool?,IsWorkloadManagementNetworkEnabled?,IEnumerable{ResourceIdentifier},string,string,NetworkFabricControllerSKU?,NetworkFabricProvisioningState?)"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="tags"></param>
-        /// <param name="location"></param>
-        /// <param name="annotation"></param>
-        /// <param name="infrastructureExpressRouteConnections"></param>
-        /// <param name="workloadExpressRouteConnections"></param>
-        /// <param name="infrastructureServices"></param>
-        /// <param name="workloadServices"></param>
-        /// <param name="managedResourceGroupConfiguration"></param>
-        /// <param name="networkFabricIds"></param>
+        /// <summary> The Network Fabric Controller resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="infrastructureExpressRouteConnections"> As part of an update, the Infrastructure ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Infrastructure services. (This is a Mandatory attribute). </param>
+        /// <param name="workloadExpressRouteConnections"> As part of an update, the workload ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Workload services. (This is a Mandatory attribute). </param>
+        /// <param name="infrastructureServices"> InfrastructureServices IP ranges. </param>
+        /// <param name="workloadServices"> WorkloadServices IP ranges. </param>
+        /// <param name="managedResourceGroupConfiguration"> Managed Resource Group configuration properties. </param>
+        /// <param name="networkFabricIds"> The NF-ID will be an input parameter used by the NF to link and get associated with the parent NFC Service. </param>
         /// <param name="isWorkloadManagementNetwork"></param>
-        /// <param name="isWorkloadManagementNetworkEnabled"></param>
-        /// <param name="tenantInternetGatewayIds"></param>
-        /// <param name="ipv4AddressSpace"></param>
-        /// <param name="ipv6AddressSpace"></param>
-        /// <param name="nfcSku"></param>
-        /// <param name="provisioningState"></param>
+        /// <param name="isWorkloadManagementNetworkEnabled"> A workload management network is required for all the tenant (workload) traffic. This traffic is only dedicated for Tenant workloads which are required to access internet or any other MSFT/Public endpoints. </param>
+        /// <param name="tenantInternetGatewayIds"> List of tenant InternetGateway resource IDs. </param>
+        /// <param name="ipv4AddressSpace"> IPv4 Network Fabric Controller Address Space. </param>
+        /// <param name="ipv6AddressSpace"> IPv6 Network Fabric Controller Address Space. </param>
+        /// <param name="nfcSku"> Network Fabric Controller SKU. </param>
+        /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricControllerData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkFabricControllerData NetworkFabricControllerData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IEnumerable<ExpressRouteConnectionInformation> infrastructureExpressRouteConnections, IEnumerable<ExpressRouteConnectionInformation> workloadExpressRouteConnections, NetworkFabricControllerServices infrastructureServices, NetworkFabricControllerServices workloadServices, ManagedResourceGroupConfiguration managedResourceGroupConfiguration, IEnumerable<ResourceIdentifier> networkFabricIds, bool? isWorkloadManagementNetwork, IsWorkloadManagementNetworkEnabled? isWorkloadManagementNetworkEnabled, IEnumerable<ResourceIdentifier> tenantInternetGatewayIds, string ipv4AddressSpace, string ipv6AddressSpace, NetworkFabricControllerSKU? nfcSku, NetworkFabricProvisioningState? provisioningState)
         {
@@ -5219,23 +5111,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArmManagedNetworkFabricModelFactory.NetworkFabricExternalNetworkData(ResourceIdentifier,string,ResourceType,SystemData,string,ResourceIdentifier,ResourceIdentifier,Models.ImportRoutePolicy,Models.ExportRoutePolicy,ResourceIdentifier,PeeringOption,Models.L3OptionBProperties,Models.ExternalNetworkOptionAProperties,NetworkFabricConfigurationState?,NetworkFabricProvisioningState?,NetworkFabricAdministrativeState?)"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="annotation"></param>
+        /// <summary> Defines the External Network resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="importRoutePolicyId"></param>
         /// <param name="exportRoutePolicyId"></param>
-        /// <param name="importRoutePolicy"></param>
-        /// <param name="exportRoutePolicy"></param>
-        /// <param name="networkToNetworkInterconnectId"></param>
-        /// <param name="peeringOption"></param>
-        /// <param name="optionBProperties"></param>
-        /// <param name="optionAProperties"></param>
-        /// <param name="configurationState"></param>
-        /// <param name="provisioningState"></param>
-        /// <param name="administrativeState"></param>
+        /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
+        /// <param name="exportRoutePolicy"> Export Route Policy either IPv4 or IPv6. </param>
+        /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the networkToNetworkInterconnectId of the ExternalNetwork resource. </param>
+        /// <param name="peeringOption"> Peering option list. </param>
+        /// <param name="optionBProperties"> option B properties object. </param>
+        /// <param name="optionAProperties"> option A properties object. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricExternalNetworkData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkFabricExternalNetworkData NetworkFabricExternalNetworkData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, ResourceIdentifier importRoutePolicyId, ResourceIdentifier exportRoutePolicyId, ImportRoutePolicy importRoutePolicy, ExportRoutePolicy exportRoutePolicy, ResourceIdentifier networkToNetworkInterconnectId, PeeringOption peeringOption, L3OptionBProperties optionBProperties, ExternalNetworkOptionAProperties optionAProperties, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
         {
@@ -5262,22 +5155,23 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArmManagedNetworkFabricModelFactory.NetworkFabricL3IsolationDomainData(ResourceIdentifier,string,ResourceType,SystemData,IDictionary{string,string},AzureLocation,string,RedistributeConnectedSubnet?,RedistributeStaticRoute?,Models.AggregateRouteConfiguration,Models.ConnectedSubnetRoutePolicy,ResourceIdentifier,NetworkFabricConfigurationState?,NetworkFabricProvisioningState?,NetworkFabricAdministrativeState?)"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="tags"></param>
-        /// <param name="location"></param>
-        /// <param name="annotation"></param>
-        /// <param name="redistributeConnectedSubnets"></param>
-        /// <param name="redistributeStaticRoutes"></param>
-        /// <param name="aggregateRouteConfiguration"></param>
-        /// <param name="connectedSubnetRoutePolicy"></param>
-        /// <param name="networkFabricId"></param>
-        /// <param name="configurationState"></param>
-        /// <param name="provisioningState"></param>
-        /// <param name="administrativeState"></param>
+        /// <summary> The L3 Isolation Domain resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: "True" | "False". </param>
+        /// <param name="redistributeStaticRoutes"> Advertise Static Routes. Ex: "True" | "False". </param>
+        /// <param name="aggregateRouteConfiguration"> Aggregate route configurations. </param>
+        /// <param name="connectedSubnetRoutePolicy"> Connected Subnet RoutePolicy. </param>
+        /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricL3IsolationDomainData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkFabricL3IsolationDomainData NetworkFabricL3IsolationDomainData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, RedistributeConnectedSubnet? redistributeConnectedSubnets, RedistributeStaticRoute? redistributeStaticRoutes, AggregateRouteConfiguration aggregateRouteConfiguration, ConnectedSubnetRoutePolicy connectedSubnetRoutePolicy, ResourceIdentifier networkFabricId, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
         {
@@ -5309,24 +5203,25 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ArmManagedNetworkFabricModelFactory.NetworkTapRuleData(ResourceIdentifier,string,ResourceType,SystemData,IDictionary{string,string},AzureLocation,string,NetworkFabricConfigurationType?,Uri,IEnumerable{Models.NetworkTapRuleMatchConfiguration},IEnumerable{Models.CommonDynamicMatchConfiguration},ResourceIdentifier,PollingIntervalInSecond?,DateTimeOffset?,NetworkFabricConfigurationState?,NetworkFabricProvisioningState?,NetworkFabricAdministrativeState?)"/>. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="tags"></param>
-        /// <param name="location"></param>
-        /// <param name="annotation"></param>
-        /// <param name="configurationType"></param>
-        /// <param name="tapRulesUri"></param>
-        /// <param name="matchConfigurations"></param>
-        /// <param name="dynamicMatchConfigurations"></param>
-        /// <param name="networkTapId"></param>
+        /// <summary> The NetworkTapRule resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="configurationType"> Input method to configure Network Tap Rule. </param>
+        /// <param name="tapRulesUri"> Network Tap Rules file URL. </param>
+        /// <param name="matchConfigurations"> List of match configurations. </param>
+        /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
+        /// <param name="networkTapId"> The ARM resource Id of the NetworkTap. </param>
         /// <param name="pollingIntervalInSeconds"></param>
-        /// <param name="lastSyncedOn"></param>
-        /// <param name="configurationState"></param>
-        /// <param name="provisioningState"></param>
-        /// <param name="administrativeState"></param>
+        /// <param name="lastSyncedOn"> The last sync timestamp. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkTapRuleData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkTapRuleData NetworkTapRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, NetworkFabricConfigurationType? configurationType, Uri tapRulesUri, IEnumerable<NetworkTapRuleMatchConfiguration> matchConfigurations, IEnumerable<CommonDynamicMatchConfiguration> dynamicMatchConfigurations, ResourceIdentifier networkTapId, PollingIntervalInSecond? pollingIntervalInSeconds, DateTimeOffset? lastSyncedOn, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
         {
@@ -5359,13 +5254,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricAccessControlListData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The Access Control List resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="configurationType"> Input method to configure Access Control List. </param>
         /// <param name="aclsUri"> Access Control List file URL. </param>
@@ -5375,8 +5270,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="lastSyncedOn"> The last synced timestamp. </param>
         /// <param name="aclType"> Access Control List (ACL) Type. </param>
         /// <param name="deviceRole"> Device Role. </param>
-        /// <param name="globalAccessControlListActionsEnableCount"> Global Access Control List (ACL) actions. </param>
-        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="globalAccessControlListActionsEnableCount"> Configuration to enable or disable ACL action count. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="networkFabricIds"> Associated Network Fabric Resource IDs. </param>
         /// <param name="controlPlaneAclConfiguration"> Access Control List (ACL) configurations. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
@@ -5414,18 +5309,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The Internet Gateway Rule resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="ruleProperties"> Rules for the InternetGateways. </param>
-        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="internetGatewayIds"> List of Internet Gateway resource Id. </param>
+        /// <param name="internetGatewayIds"></param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayRuleData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkFabricInternetGatewayRuleData NetworkFabricInternetGatewayRuleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, InternetGatewayRules ruleProperties = default, string lastOperationDetails = default, NetworkFabricProvisioningState? provisioningState = default, IEnumerable<ResourceIdentifier> internetGatewayIds = default)
@@ -5447,21 +5342,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The Internet Gateway resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="internetGatewayRuleId"> ARM Resource ID of the Internet Gateway Rule. </param>
         /// <param name="ipV4Address"> IPv4 Address of Internet Gateway. </param>
         /// <param name="port"> Port number of Internet Gateway. </param>
-        /// <param name="typePropertiesType"> Gateway Type of the resource. </param>
+        /// <param name="typePropertiesType"></param>
         /// <param name="internetGatewayType"> Gateway Type of the resource. </param>
         /// <param name="networkFabricControllerId"> ARM Resource ID of the Network Fabric Controller. </param>
-        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> Provisioning state of resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -5488,17 +5383,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPCommunityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The IP Community resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
         /// <param name="ipCommunityRules"> List of IP Community Rules. </param>
-        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
@@ -5513,7 +5408,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation is null && networkFabricId is null && ipCommunityRules is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IpCommunityProperties(
+                annotation is null && networkFabricId is null && ipCommunityRules is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IPCommunityProperties(
                     annotation,
                     networkFabricId,
                     (ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>()).ToList(),
@@ -5525,17 +5420,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The IP Extended Community resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
         /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
-        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
@@ -5550,7 +5445,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation is null && ipExtendedCommunityRules is null && networkFabricId is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IpExtendedCommunityProperties(
+                annotation is null && ipExtendedCommunityRules is null && networkFabricId is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IPExtendedCommunityProperties(
                     annotation,
                     (ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>()).ToList(),
                     networkFabricId,
@@ -5562,17 +5457,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPPrefixData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The IP Prefix resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
         /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
-        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
@@ -5587,7 +5482,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation is null && networkFabricId is null && ipPrefixRules is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IpPrefixProperties(
+                annotation is null && networkFabricId is null && ipPrefixRules is null && lastOperationDetails is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IPPrefixProperties(
                     annotation,
                     networkFabricId,
                     (ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>()).ToList(),
@@ -5599,13 +5494,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricL2IsolationDomainData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The L2 Isolation Domain resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
@@ -5613,7 +5508,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="mtu"> Maximum transmission unit. Default value is 1500. </param>
         /// <param name="extendedVlan"> Extended VLAN status, default value is Disabled. </param>
         /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the networkToNetworkInterconnectId of the L2 ISD resource. </param>
-        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
@@ -5644,13 +5539,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricL3IsolationDomainData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The L3 Isolation Domain resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="redistributeConnectedSubnets"> Advertise Connected Subnets. Ex: "True" | "False". </param>
@@ -5658,12 +5553,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="aggregateRouteConfiguration"> Aggregate route configurations. </param>
         /// <param name="connectedSubnetRoutePolicy"> Connected Subnet RoutePolicy. </param>
         /// <param name="networkFabricId"> ARM Resource ID of the Network Fabric. </param>
-        /// <param name="staticRouteExportRoutePolicy"> Static Route - route policy. </param>
-        /// <param name="uniqueRds"> Unique Route Distinguisher configuration. </param>
+        /// <param name="staticRouteExportRoutePolicy"> Array of ARM Resource ID of the RoutePolicies. </param>
+        /// <param name="uniqueRds"> List of Unique Route Distinguisher addresses. </param>
         /// <param name="v4RoutePrefixLimit"> IPv4 VRF Limit configuration. </param>
         /// <param name="v6RoutePrefixLimit"> IPv6 VRF Limit configuration. </param>
-        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
-        /// <param name="exportPolicies"> BMP Export Policy configuration. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
+        /// <param name="exportPolicies"> Export Policy for the BGP Monitoring Protocol (BMP) Configuration. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
@@ -5699,20 +5594,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricNeighborGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Defines the Neighbor Group. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="destination"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
         /// <param name="networkTapIds"> List of NetworkTap IDs where neighbor group is associated. </param>
         /// <param name="networkTapRuleIds"> List of Network Tap Rule IDs where neighbor group is associated. </param>
         /// <param name="networkFabricIds"> Associated Network Fabric Resource IDs. </param>
-        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> The provisioning state of the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricNeighborGroupData"/> instance for mocking. </returns>
@@ -5740,13 +5635,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkBootstrapDeviceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The Network Bootstrap Device resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="hostName"> The host name of the device. </param>
@@ -5793,13 +5688,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkDeviceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The Network Device resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="hostName"> The host name of the device. </param>
@@ -5812,7 +5707,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="managementIPv4Address"> Management IPv4 Address. </param>
         /// <param name="managementIPv6Address"> Management IPv6 Address. </param>
         /// <param name="rwDeviceConfig"> User configured read-write configuration applied on the network devices. </param>
-        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
@@ -5854,13 +5749,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricControllerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The Network Fabric Controller resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="infrastructureExpressRouteConnections"> As part of an update, the Infrastructure ExpressRoute CircuitID should be provided to create and Provision a NFC. This Express route is dedicated for Infrastructure services. (This is a Mandatory attribute). </param>
@@ -5874,7 +5769,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ipv4AddressSpace"> IPv4 Network Fabric Controller Address Space. </param>
         /// <param name="ipv6AddressSpace"> IPv6 Network Fabric Controller Address Space. </param>
         /// <param name="nfcSku"> Network Fabric Controller SKU. </param>
-        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> Provides you the latest status of the NFC service, whether it is Accepted, updating, Succeeded or Failed. During this process, the states keep changing based on the status of NFC provisioning. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricControllerData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -5907,16 +5802,16 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkMonitorData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The NetworkMonitor resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="bmpConfiguration"> BMP Configurations for the Network Fabric. </param>
-        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provides you the latest status of the NetworkMonitor resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
@@ -5942,20 +5837,20 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkPacketBrokerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The NetworkPacketBroker resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
         /// <param name="networkDeviceIds"> List of ARM resource IDs of Network Devices [NPB]. </param>
         /// <param name="sourceInterfaceIds"> List of network interfaces across NPB devices that are used to mirror source traffic. </param>
         /// <param name="networkTapIds"> List of network Tap IDs configured on NPB. </param>
         /// <param name="neighborGroupIds"> List of neighbor group IDs configured on NPB. </param>
-        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkPacketBrokerData"/> instance for mocking. </returns>
@@ -5983,18 +5878,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkRackData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The Network Rack resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="networkRackType"> Network Rack SKU name. </param>
         /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
         /// <param name="networkDevices"> List of network device ARM resource IDs. </param>
-        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <returns> A new <see cref="ManagedNetworkFabric.NetworkRackData"/> instance for mocking. </returns>
@@ -6020,13 +5915,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkTapRuleData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The NetworkTapRule resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="configurationType"> Input method to configure Network Tap Rule. </param>
@@ -6036,10 +5931,10 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="dynamicMatchConfigurations"> List of dynamic match configurations. </param>
         /// <param name="networkTapId"> The ARM resource Id of the NetworkTap. </param>
         /// <param name="networkTapIds"> The ARM resource Id of the NetworkTap Rules. </param>
-        /// <param name="pollingIntervalInSeconds"> Polling interval in seconds. </param>
+        /// <param name="pollingIntervalInSeconds"></param>
         /// <param name="lastSyncedOn"> The last sync timestamp. </param>
         /// <param name="globalNetworkTapRuleActions"> Global network tap rule actions. </param>
-        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="networkFabricIds"> Associated Network Fabric Resource IDs. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -6077,19 +5972,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricRoutePolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The RoutePolicy resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
         /// <param name="statements"> Route Policy statements. </param>
         /// <param name="networkFabricId"> Arm Resource ID of Network Fabric. </param>
         /// <param name="addressFamilyType"> AddressFamilyType. This parameter decides whether the given ipv4 or ipv6 route policy. </param>
-        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
@@ -6118,11 +6013,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricExternalNetworkData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Defines the External Network resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="networkToNetworkInterconnectId"> ARM Resource ID of the networkToNetworkInterconnectId of the ExternalNetwork resource. </param>
         /// <param name="importRoutePolicy"> Import Route Policy either IPv4 or IPv6. </param>
@@ -6131,7 +6026,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="optionBProperties"> option B properties object. </param>
         /// <param name="optionAProperties"> option A properties object. </param>
         /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
-        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
@@ -6163,11 +6058,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkDeviceInterfaceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Defines the NetworkInterface resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="physicalIdentifier"> Physical Identifier of the network interface. </param>
@@ -6177,7 +6072,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="ipv6Address"> IPv6Address of the interface. </param>
         /// <param name="description"> Description of the interface. </param>
         /// <param name="additionalDescription"> Additional description of the interface. </param>
-        /// <param name="lastOperationDetails"> Details of the last operation performed on the resource. </param>
+        /// <param name="lastOperationDetails"> Details status of the last operation performed on the resource. </param>
         /// <param name="networkFabricId"> Associated Network Fabric Resource ID. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <param name="administrativeState"> Administrative state of the resource. </param>
@@ -6210,17 +6105,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NetworkToNetworkInterconnectPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="layer2Configuration"> Common properties for Layer2Configuration. </param>
-        /// <param name="optionBLayer3Configuration"> Common properties for Layer3Configuration. </param>
-        /// <param name="npbStaticRouteConfiguration"> NPB Static Route Configuration properties. </param>
+        /// <summary> The Network To Network Interconnect resource patch definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="layer2Configuration"></param>
+        /// <param name="optionBLayer3Configuration"></param>
+        /// <param name="npbStaticRouteConfiguration"></param>
         /// <param name="staticRouteConfiguration"> Static Route Configuration. </param>
-        /// <param name="importRoutePolicy"> Import Route Policy information. </param>
-        /// <param name="exportRoutePolicy"> Export Route Policy information. </param>
+        /// <param name="importRoutePolicy"></param>
+        /// <param name="exportRoutePolicy"></param>
         /// <param name="egressAclId"> Egress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="ingressAclId"> Ingress Acl. ARM resource ID of Access Control Lists. </param>
         /// <param name="microBfdState"> Micro BFD enabled/disabled state. </param>
@@ -6247,13 +6142,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPCommunityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The IP Community resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="ipCommunityRules"> List of IP Community Rules. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
@@ -6270,7 +6165,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation is null && ipCommunityRules is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IpCommunityProperties(
+                annotation is null && ipCommunityRules is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IPCommunityProperties(
                     annotation,
                     default,
                     (ipCommunityRules ?? new ChangeTrackingList<IPCommunityRule>()).ToList(),
@@ -6282,13 +6177,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPExtendedCommunityData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The IP Extended Community resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="ipExtendedCommunityRules"> List of IP Extended Community Rules. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
@@ -6305,7 +6200,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation is null && ipExtendedCommunityRules is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IpExtendedCommunityProperties(
+                annotation is null && ipExtendedCommunityRules is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IPExtendedCommunityProperties(
                     annotation,
                     (ipExtendedCommunityRules ?? new ChangeTrackingList<IPExtendedCommunityRule>()).ToList(),
                     default,
@@ -6317,13 +6212,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricIPPrefixData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The IP Prefix resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="ipPrefixRules"> The list of IP Prefix Rules. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
@@ -6340,7 +6235,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                annotation is null && ipPrefixRules is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IpPrefixProperties(
+                annotation is null && ipPrefixRules is null && configurationState is null && provisioningState is null && administrativeState is null ? default : new IPPrefixProperties(
                     annotation,
                     default,
                     (ipPrefixRules ?? new ChangeTrackingList<IPPrefixRule>()).ToList(),
@@ -6352,7 +6247,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.BgpConfiguration"/>. </summary>
+        /// <summary> BGP configuration properties. </summary>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="bfdConfiguration"> BFD configuration properties. </param>
         /// <param name="defaultRouteOriginate"> Originate a defaultRoute. Ex: "True" | "False". </param>
@@ -6386,7 +6281,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.NeighborAddress"/>. </summary>
+        /// <summary> Neighbor Address properties. </summary>
         /// <param name="address"> IP Address. </param>
         /// <param name="configurationState"> Configuration state of the resource. </param>
         /// <returns> A new <see cref="Models.NeighborAddress"/> instance for mocking. </returns>
@@ -6396,7 +6291,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             return new NeighborAddress(address, default, default, configurationState, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ExternalNetworkOptionAProperties"/>. </summary>
+        /// <summary> option A properties object. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
@@ -6432,13 +6327,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricNeighborGroupData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> Defines the Neighbor Group. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="destination"> An array of destination IPv4 Addresses or IPv6 Addresses. </param>
         /// <param name="networkTapIds"> List of NetworkTap IDs where neighbor group is associated. </param>
@@ -6469,13 +6364,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkDeviceData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The Network Device resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="hostName"> The host name of the device. </param>
         /// <param name="serialNumber"> Serial number of the device. Format of serial Number - Make;Model;HardwareRevisionId;SerialNumber. </param>
@@ -6523,7 +6418,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.OptionBLayer3Configuration"/>. </summary>
+        /// <summary> OptionB Layer3 Configuration properties. </summary>
         /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
         /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
         /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
@@ -6549,13 +6444,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkPacketBrokerData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The NetworkPacketBroker resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="networkFabricId"> ARM resource ID of the Network Fabric. </param>
         /// <param name="networkDeviceIds"> List of ARM resource IDs of Network Devices [NPB]. </param>
         /// <param name="sourceInterfaceIds"> List of network interfaces across NPB devices that are used to mirror source traffic. </param>
@@ -6587,13 +6482,13 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricRoutePolicyData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <summary> The RoutePolicy resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="annotation"> Switch configuration description. </param>
         /// <param name="defaultAction"> Default action that needs to be applied when no condition is matched. Example: Permit | Deny. </param>
         /// <param name="statements"> Route Policy statements. </param>
@@ -6627,21 +6522,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 default);
         }
 
-        /// <summary> This constructor is added for the backward compatibility. </summary>
-        /// <param name="id"></param>
-        /// <param name="name"></param>
-        /// <param name="resourceType"></param>
-        /// <param name="systemData"></param>
-        /// <param name="tags"></param>
-        /// <param name="location"></param>
-        /// <param name="annotation"></param>
-        /// <param name="statements"></param>
-        /// <param name="networkFabricId"></param>
-        /// <param name="addressFamilyType"></param>
-        /// <param name="configurationState"></param>
-        /// <param name="provisioningState"></param>
-        /// <param name="administrativeState"></param>
-        /// <returns></returns>
+        /// <summary> The RoutePolicy resource definition. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="annotation"> Switch configuration description. </param>
+        /// <param name="statements"> Route Policy statements. </param>
+        /// <param name="networkFabricId"> Arm Resource ID of Network Fabric. </param>
+        /// <param name="addressFamilyType"> AddressFamilyType. This parameter decides whether the given ipv4 or ipv6 route policy. </param>
+        /// <param name="configurationState"> Configuration state of the resource. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <param name="administrativeState"> Administrative state of the resource. </param>
+        /// <returns> A new <see cref="ManagedNetworkFabric.NetworkFabricRoutePolicyData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static NetworkFabricRoutePolicyData NetworkFabricRoutePolicyData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, IEnumerable<RoutePolicyStatementProperties> statements, ResourceIdentifier networkFabricId, AddressFamilyType? addressFamilyType, NetworkFabricConfigurationState? configurationState, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
         {

@@ -93,10 +93,10 @@ namespace Azure.Analytics.PlanetaryComputer
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WriteStringValue(Kind.Value.ToString());
             }
             writer.WritePropertyName("href"u8);
             writer.WriteStringValue(Href);
@@ -203,7 +203,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             string rel = default;
             string title = default;
-            StacLinkType? @type = default;
+            StacLinkKind? kind = default;
             string href = default;
             string hreflang = default;
             int? length = default;
@@ -230,7 +230,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    @type = new StacLinkType(prop.Value.GetString());
+                    kind = new StacLinkKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("href"u8))
@@ -320,7 +320,7 @@ namespace Azure.Analytics.PlanetaryComputer
             return new StacLink(
                 rel,
                 title,
-                @type,
+                kind,
                 href,
                 hreflang,
                 length,

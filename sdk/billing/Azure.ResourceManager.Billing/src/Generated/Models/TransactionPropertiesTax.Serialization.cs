@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The tax amount applied to the transaction. </summary>
-    public partial class TransactionPropertiesTax : BillingAmount, IJsonModel<TransactionPropertiesTax>
+    internal partial class TransactionPropertiesTax : BillingAmount, IJsonModel<TransactionPropertiesTax>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

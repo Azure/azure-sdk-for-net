@@ -1,0 +1,13 @@
+# Azure.Provisioning approved analyzer suppressions.
+# See eng/analyzerallowlist/README.md for the file format and review policy.
+
+# These four names are the core vocabulary of the provisioning object model and all shipped
+# in the GA 1.0.0 public API, so renaming them would be breaking. 'Infrastructure' and
+# 'Provisionable' are the root abstractions authors derive from, and 'Subscription' and
+# 'Tenant' name the Azure scopes they deploy into; the qualifying namespaces
+# (Azure.Provisioning, .Primitives, .Resources) already distinguish them from same-named
+# types elsewhere.
+nowarn:AZC0012 T:Azure.Provisioning.Infrastructure
+nowarn:AZC0012 T:Azure.Provisioning.Primitives.Provisionable
+nowarn:AZC0012 T:Azure.Provisioning.Resources.Subscription
+nowarn:AZC0012 T:Azure.Provisioning.Resources.Tenant

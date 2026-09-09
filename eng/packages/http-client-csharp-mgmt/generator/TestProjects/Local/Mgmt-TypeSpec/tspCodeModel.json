@@ -8770,7 +8770,7 @@
                 "discriminator": false,
                 "flatten": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.PrivateEndpointConnectionProperties.privateEndpoint",
+                "crossLanguageDefinitionId": "Azure.ResourceManager.Models.SubResource",
                 "serializationOptions": {
                   "json": {
                     "name": "privateEndpoint"
@@ -9446,6 +9446,10 @@
           "arguments": {}
         },
         {
+          "name": "TypeSpec.HttpClient.CSharp.@dynamicModel",
+          "arguments": {}
+        },
+        {
           "name": "Azure.ClientGenerator.Core.@clientOption",
           "arguments": {
             "name": "resource-rbac-roles",
@@ -9541,7 +9545,7 @@
                 "discriminator": false,
                 "flatten": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "MgmtTypeSpec.FooProperties.something",
+                "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ManagedServiceIdentity",
                 "serializationOptions": {
                   "json": {
                     "name": "something"
@@ -9985,7 +9989,7 @@
                 "discriminator": false,
                 "flatten": false,
                 "decorators": [],
-                "crossLanguageDefinitionId": "MgmtTypeSpec.FooProperties.writableSubResourceProp",
+                "crossLanguageDefinitionId": "Azure.ResourceManager.Models.WritableSubResource",
                 "serializationOptions": {
                   "json": {
                     "name": "writableSubResourceProp"
@@ -10211,6 +10215,7 @@
           "kind": "property",
           "name": "extendedLocation",
           "serializedName": "extendedLocation",
+          "doc": "The extended location of the resource.",
           "type": {
             "$id": "932",
             "kind": "model",
@@ -13645,6 +13650,7 @@
           "kind": "property",
           "name": "extendedLocation",
           "serializedName": "extendedLocation",
+          "doc": "The extended location of the resource.",
           "type": {
             "$ref": "932"
           },
@@ -14015,7 +14021,7 @@
           "discriminator": false,
           "flatten": false,
           "decorators": [],
-          "crossLanguageDefinitionId": "MgmtTypeSpec.ZooAddressListListResult.value",
+          "crossLanguageDefinitionId": "TypeSpec.Array",
           "serializationOptions": {
             "json": {
               "name": "value"
@@ -17397,6 +17403,7 @@
           "kind": "property",
           "name": "extendedLocation",
           "serializedName": "extendedLocation",
+          "doc": "The extended location of the resource.",
           "type": {
             "$id": "1343",
             "kind": "model",
@@ -22133,10 +22140,20 @@
             "namespace": "Azure.Generator.MgmtTypeSpec.Tests",
             "crossLanguageDefinitionId": "MgmtTypeSpec.MultiFlattenProperties",
             "usage": "Input,Output,Json,LroInitial,LroFinalEnvelope",
-            "doc": "Properties model with a safe-flattened sub-model and a customized property.",
+            "doc": "Properties model with a safe-flattened sub-model and a customized property.\nAlso marked with",
             "decorators": [
               {
                 "name": "Azure.ResourceManager.@armProviderNamespace",
+                "arguments": {}
+              },
+              {
+                "name": "Azure.ClientGenerator.Core.@useSystemTextJsonConverter",
+                "arguments": {
+                  "scope": "csharp"
+                }
+              },
+              {
+                "name": "TypeSpec.HttpClient.CSharp.@dynamicModel",
                 "arguments": {}
               }
             ],
@@ -33595,13 +33612,13 @@
                 "2024-04-01",
                 "2024-05-01"
               ],
-              "doc": "A long-running resource action.",
+              "doc": "",
               "operation": {
                 "$id": "2465",
                 "name": "fooAction",
                 "isExactName": false,
                 "resourceName": "Foos",
-                "doc": "A long-running resource action.",
+                "doc": "",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -34513,13 +34530,13 @@
                 "2024-04-01",
                 "2024-05-01"
               ],
-              "doc": "A long-running resource action.",
+              "doc": "",
               "operation": {
                 "$id": "2511",
                 "name": "splitDependencies",
                 "isExactName": false,
                 "resourceName": "Foos",
-                "doc": "A long-running resource action.",
+                "doc": "",
                 "accessibility": "public",
                 "parameters": [
                   {
@@ -51052,11 +51069,13 @@
                 "2024-04-01",
                 "2024-05-01"
               ],
+              "doc": "",
               "operation": {
                 "$id": "3340",
                 "name": "checkNameAvailability",
                 "isExactName": false,
                 "resourceName": "CheckNameAvailabilityOperationGroup",
+                "doc": "",
                 "accessibility": "public",
                 "parameters": [
                   {

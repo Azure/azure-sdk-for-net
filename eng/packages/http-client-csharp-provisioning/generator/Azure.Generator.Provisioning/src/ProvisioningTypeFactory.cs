@@ -12,7 +12,6 @@ using Microsoft.TypeSpec.Generator.Input.Extensions;
 using Microsoft.TypeSpec.Generator.Primitives;
 using Microsoft.TypeSpec.Generator.Providers;
 using System;
-using System.Linq;
 
 namespace Azure.Generator.Provisioning
 {
@@ -132,6 +131,14 @@ namespace Azure.Generator.Provisioning
                 return canonical!;
             }
 
+            // The base generator can rediscover models through references such as derived-model
+            // hierarchies after the emitter has pruned them from the reachable model set. Do not
+            // create providers for those models because provisioning settable metadata is emitted
+            // only for reachable models. Keep this after resource lookup because resource providers
+            // are pre-created from projection metadata and must be returned through that canonical path.
+            if (!ProvisioningGenerator.Instance.InputLibrary.IsModelReachable(model))
+                return null;
+
             // Derived discriminated resource types → ProvisioningResourceProvider (derived path)
             if (model.DiscriminatorValue != null && IsBaseChainResource(model))
             {
@@ -193,12 +200,39 @@ namespace Azure.Generator.Provisioning
                 if (bicepType == null) return null;
 
                 return ProvisioningPropertyProvider.Create(
-                    resolvedName, bicepType,
+                    inputModelProperty, resolvedName, bicepType,
                     info.IsOutput, info.IsSettable, info.IsRequired, info.BicepPath, info.DefaultValue,
+                    BicepTypeHelpers.GetLiteralFormat(baseProperty?.SerializationFormat),
+                    baseProperty?.WireInfo, info.IsDiscriminator,
                     enclosingType);
             }
 
             return baseProperty;
+        }
+
+        internal static bool IsInheritedDiscriminatorProperty(
+            InputModelType model,
+            InputModelProperty property)
+        {
+            if (model.DiscriminatorValue == null)
+            {
+                return false;
+            }
+
+            var serializedName = property.SerializedName ?? property.Name;
+            for (var baseModel = model.BaseModel; baseModel != null; baseModel = baseModel.BaseModel)
+            {
+                if (baseModel.DiscriminatorProperty is { } discriminator
+                    && string.Equals(
+                        discriminator.SerializedName ?? discriminator.Name,
+                        serializedName,
+                        StringComparison.Ordinal))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

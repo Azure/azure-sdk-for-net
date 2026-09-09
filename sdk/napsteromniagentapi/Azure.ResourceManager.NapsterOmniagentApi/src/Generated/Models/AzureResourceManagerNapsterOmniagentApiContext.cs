@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.NapsterOmniagentApi.Models;
 
@@ -29,7 +28,6 @@ namespace Azure.ResourceManager.NapsterOmniagentApi
     [ModelReaderWriterBuildable(typeof(NapsterSingleSignOnProperties))]
     [ModelReaderWriterBuildable(typeof(NapsterUserDetails))]
     [ModelReaderWriterBuildable(typeof(OrganizationResourceListResult))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SaaSInfo))]
     [ModelReaderWriterBuildable(typeof(SaaSResourceDetailsData))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

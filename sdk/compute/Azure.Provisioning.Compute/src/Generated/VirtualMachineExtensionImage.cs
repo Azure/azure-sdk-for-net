@@ -99,7 +99,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.OperatingSystem;
+                return Properties is null ? default : Properties.OperatingSystem;
             }
         }
 
@@ -108,7 +108,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.ComputeRole;
+                return Properties is null ? default : Properties.ComputeRole;
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.HandlerSchema;
+                return Properties is null ? default : Properties.HandlerSchema;
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.VirtualMachineScaleSetEnabled;
+                return Properties is null ? default : Properties.VirtualMachineScaleSetEnabled;
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.Provisioning.Compute
         {
             get
             {
-                return Properties.SupportsMultipleExtensions;
+                return Properties is null ? default : Properties.SupportsMultipleExtensions;
             }
         }
 

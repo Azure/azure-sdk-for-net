@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Credit amount for immediate payment. </summary>
-    public partial class AvailableBalancePropertiesAmount : BillingAmount, IJsonModel<AvailableBalancePropertiesAmount>
+    internal partial class AvailableBalancePropertiesAmount : BillingAmount, IJsonModel<AvailableBalancePropertiesAmount>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

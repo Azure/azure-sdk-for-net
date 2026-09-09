@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.ProviderHub;
@@ -19,6 +18,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmProviderHubModelFactory
     {
+        /// <summary> The ResourceProviderAuthorization. </summary>
         /// <param name="applicationId"> The application id. </param>
         /// <param name="roleDefinitionId"> The role definition id. </param>
         /// <param name="managedByRoleDefinitionId"> The managed by role definition id. </param>
@@ -40,6 +40,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> Managed by authorization. </summary>
         /// <param name="additionalAuthorizations"></param>
         /// <param name="managedByResourceRoleDefinitionId"> The managed by resource role definition ID for the application. </param>
         /// <param name="doesAllowManagedByInheritance"> Indicates whether the managed by resource role definition ID should be inherited. </param>
@@ -51,6 +52,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceProviderManagedByAuthorization((additionalAuthorizations ?? new ChangeTrackingList<ProviderAdditionalAuthorization>()).ToList(), managedByResourceRoleDefinitionId, doesAllowManagedByInheritance, default);
         }
 
+        /// <summary> The ProviderAdditionalAuthorization. </summary>
         /// <param name="applicationId"></param>
         /// <param name="roleDefinitionId"></param>
         /// <returns> A new <see cref="Models.ProviderAdditionalAuthorization"/> instance for mocking. </returns>
@@ -59,6 +61,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ProviderAdditionalAuthorization(applicationId, roleDefinitionId, default);
         }
 
+        /// <summary> The ThirdPartyExtension. </summary>
         /// <param name="name"> Name of third party extension. </param>
         /// <returns> A new <see cref="Models.ThirdPartyExtension"/> instance for mocking. </returns>
         public static ThirdPartyExtension ThirdPartyExtension(string name = default)
@@ -66,6 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ThirdPartyExtension(name, default);
         }
 
+        /// <summary> Resource provider service. </summary>
         /// <param name="serviceName"> The service name. </param>
         /// <param name="status"> The status. </param>
         /// <returns> A new <see cref="Models.ResourceProviderService"/> instance for mocking. </returns>
@@ -74,6 +78,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceProviderService(serviceName, status, default);
         }
 
+        /// <summary> The ProviderFeaturesRule. </summary>
         /// <param name="requiredFeaturesPolicy"> The required feature policy. </param>
         /// <returns> A new <see cref="Models.ProviderFeaturesRule"/> instance for mocking. </returns>
         public static ProviderFeaturesRule ProviderFeaturesRule(FeaturesPolicy requiredFeaturesPolicy = default)
@@ -81,6 +86,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ProviderFeaturesRule(requiredFeaturesPolicy, default);
         }
 
+        /// <summary> The ProviderRequestHeaderOptions. </summary>
         /// <param name="optInHeaders"> The opt in headers. </param>
         /// <param name="optOutHeaders"> The opt out headers. </param>
         /// <returns> A new <see cref="Models.ProviderRequestHeaderOptions"/> instance for mocking. </returns>
@@ -174,6 +180,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The AllowedUnauthorizedActionsExtension. </summary>
         /// <param name="action"> The action. </param>
         /// <param name="intent"> The intent. </param>
         /// <returns> A new <see cref="Models.AllowedUnauthorizedActionsExtension"/> instance for mocking. </returns>
@@ -182,6 +189,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new AllowedUnauthorizedActionsExtension(action, intent, default);
         }
 
+        /// <summary> The AuthorizationActionMapping. </summary>
         /// <param name="original"> The original action name. </param>
         /// <param name="desired"> The desired action name. </param>
         /// <returns> A new <see cref="Models.AuthorizationActionMapping"/> instance for mocking. </returns>
@@ -190,6 +198,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new AuthorizationActionMapping(original, desired, default);
         }
 
+        /// <summary> The LinkedAccessCheck. </summary>
         /// <param name="actionName"> The action name. </param>
         /// <param name="linkedProperty"> The linked property. </param>
         /// <param name="linkedAction"> The linked action. </param>
@@ -207,6 +216,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The LoggingRule. </summary>
         /// <param name="action"> The action. </param>
         /// <param name="direction"> The direction. </param>
         /// <param name="detailLevel"> The detail level. </param>
@@ -217,6 +227,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new LoggingRule(action, direction, detailLevel, hiddenPropertyPaths, default);
         }
 
+        /// <summary> The LoggingHiddenPropertyPaths. </summary>
         /// <param name="hiddenPathsOnRequest"> The hidden paths on request. </param>
         /// <param name="hiddenPathsOnResponse"> The hidden paths on response. </param>
         /// <returns> A new <see cref="Models.LoggingHiddenPropertyPaths"/> instance for mocking. </returns>
@@ -228,6 +239,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new LoggingHiddenPropertyPaths((hiddenPathsOnRequest ?? new ChangeTrackingList<string>()).ToList(), (hiddenPathsOnResponse ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The ThrottlingRule. </summary>
         /// <param name="action"> The action. </param>
         /// <param name="metrics"> The metrics. </param>
         /// <param name="requiredFeatures"> The required features. </param>
@@ -242,6 +254,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ThrottlingRule(action, (metrics ?? new ChangeTrackingList<ThrottlingMetric>()).ToList(), (requiredFeatures ?? new ChangeTrackingList<string>()).ToList(), (applicationId ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The ThrottlingMetric. </summary>
         /// <param name="metricType"> The throttling metric type. </param>
         /// <param name="limit"> The limit. </param>
         /// <param name="interval"> The interval. </param>
@@ -280,6 +293,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The ProviderSubscriptionStateRule. </summary>
         /// <param name="state"> The subscription state. </param>
         /// <param name="allowedActions"> The allowed actions. </param>
         /// <returns> A new <see cref="Models.ProviderSubscriptionStateRule"/> instance for mocking. </returns>
@@ -290,6 +304,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ProviderSubscriptionStateRule(state, (allowedActions ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The ServiceTreeInfo. </summary>
         /// <param name="serviceId"> The service id. </param>
         /// <param name="componentId"> The component id. </param>
         /// <param name="readiness"> The readiness. </param>
@@ -299,6 +314,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ServiceTreeInfo(serviceId, componentId, readiness, default);
         }
 
+        /// <summary> The TemplateDeploymentPolicy. </summary>
         /// <param name="capabilities"> The capabilities. </param>
         /// <param name="preflightOptions"> The preflight options. </param>
         /// <param name="preflightNotifications"> The preflight notifications. </param>
@@ -308,6 +324,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new TemplateDeploymentPolicy(capabilities, preflightOptions, preflightNotifications, default);
         }
 
+        /// <summary> The ProviderHubExtendedLocationOptions. </summary>
         /// <param name="locationType"> The type. </param>
         /// <param name="supportedLocationPolicy"></param>
         /// <returns> A new <see cref="Models.ProviderHubExtendedLocationOptions"/> instance for mocking. </returns>
@@ -316,6 +333,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ProviderHubExtendedLocationOptions(locationType, supportedLocationPolicy, default);
         }
 
+        /// <summary> The LinkedOperationRule. </summary>
         /// <param name="linkedOperation"> The linked operation. </param>
         /// <param name="linkedAction"> The linked action. </param>
         /// <param name="dependsOnTypes"> Depends on types. </param>
@@ -327,6 +345,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new LinkedOperationRule(linkedOperation, linkedAction, (dependsOnTypes ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The ProviderQuotaRule. </summary>
         /// <param name="quotaPolicy"> The quota policy. </param>
         /// <param name="locationRules"> The location rules. </param>
         /// <param name="requiredFeatures"> The required features. </param>
@@ -339,6 +358,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ProviderQuotaRule(quotaPolicy, (locationRules ?? new ChangeTrackingList<ProviderLocationQuotaRule>()).ToList(), (requiredFeatures ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The ProviderLocationQuotaRule. </summary>
         /// <param name="policy"> The policy. </param>
         /// <param name="quotaId"> The quota id. </param>
         /// <param name="location"> The location. </param>
@@ -348,6 +368,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ProviderLocationQuotaRule(policy, quotaId, location, default);
         }
 
+        /// <summary> The ProviderNotification. </summary>
         /// <param name="notificationType"> The notification type. </param>
         /// <param name="skipNotifications"> Whether notifications should be skipped. </param>
         /// <returns> A new <see cref="Models.ProviderNotification"/> instance for mocking. </returns>
@@ -356,6 +377,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ProviderNotification(notificationType, skipNotifications, default);
         }
 
+        /// <summary> The LinkedNotificationRule. </summary>
         /// <param name="actions"> The actions. </param>
         /// <param name="actionsOnFailedOperation"> The actions on failed operation. </param>
         /// <param name="fastPathActions"> The fast path actions. </param>
@@ -378,6 +400,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The AsyncOperationPollingRules. </summary>
         /// <param name="authorizationActions"> The authorization actions. </param>
         /// <param name="additionalOptions"> The additional options. </param>
         /// <returns> A new <see cref="Models.AsyncOperationPollingRules"/> instance for mocking. </returns>
@@ -433,6 +456,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The ResourceAccessRole. </summary>
         /// <param name="allowedGroupClaims"> The allowed group claims. </param>
         /// <param name="actions"> The actions. </param>
         /// <returns> A new <see cref="Models.ResourceAccessRole"/> instance for mocking. </returns>
@@ -444,6 +468,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceAccessRole((allowedGroupClaims ?? new ChangeTrackingList<string>()).ToList(), (actions ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Metadata for expedited rollout. </summary>
         /// <param name="isEnabled"> Expedited rollout enabled?. </param>
         /// <param name="expeditedRolloutIntent"> Expedited rollout intent. </param>
         /// <returns> A new <see cref="Models.ExpeditedRolloutMetadata"/> instance for mocking. </returns>
@@ -452,6 +477,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ExpeditedRolloutMetadata(isEnabled, expeditedRolloutIntent, default);
         }
 
+        /// <summary> The ResourceProviderCapabilities. </summary>
         /// <param name="quotaId"> The quota id. </param>
         /// <param name="effect"> The effect. </param>
         /// <param name="requiredFeatures"> The required features. </param>
@@ -463,6 +489,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceProviderCapabilities(quotaId, effect, (requiredFeatures ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The ReRegisterSubscriptionMetadata. </summary>
         /// <param name="isEnabled"> Whether it's enabled or not. </param>
         /// <param name="concurrencyLimit"> The concurrency limit. </param>
         /// <returns> A new <see cref="Models.ReRegisterSubscriptionMetadata"/> instance for mocking. </returns>
@@ -471,6 +498,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ReRegisterSubscriptionMetadata(isEnabled, concurrencyLimit, default);
         }
 
+        /// <summary> The FanoutLinkedNotificationRule. </summary>
         /// <param name="tokenAuthConfiguration"> The token auth configuration. </param>
         /// <param name="actions"> The actions. </param>
         /// <param name="endpoints"> The endpoints. </param>
@@ -484,6 +512,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new FanoutLinkedNotificationRule(tokenAuthConfiguration, (actions ?? new ChangeTrackingList<string>()).ToList(), (endpoints ?? new ChangeTrackingList<ResourceProviderEndpoint>()).ToList(), dstsConfiguration, default);
         }
 
+        /// <summary> The TokenAuthConfiguration. </summary>
         /// <param name="authenticationScheme"> The authentication scheme. </param>
         /// <param name="signedRequestScope"> The signed request scope. </param>
         /// <param name="disableCertificateAuthenticationFallback"> Whether certification authentication fallback is disabled. </param>
@@ -493,6 +522,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new TokenAuthConfiguration(authenticationScheme, signedRequestScope, disableCertificateAuthenticationFallback, default);
         }
 
+        /// <summary> The ProviderDstsConfiguration. </summary>
         /// <param name="serviceName"> The service name. </param>
         /// <param name="serviceDnsName"> This is a URI property. </param>
         /// <returns> A new <see cref="Models.ProviderDstsConfiguration"/> instance for mocking. </returns>
@@ -501,6 +531,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ProviderDstsConfiguration(serviceName, serviceDnsName, default);
         }
 
+        /// <summary> The CheckinManifestContent. </summary>
         /// <param name="environment"> The environment supplied to the checkin manifest operation. </param>
         /// <param name="baselineArmManifestLocation"> The baseline ARM manifest location supplied to the checkin manifest operation. </param>
         /// <returns> A new <see cref="Models.CheckinManifestContent"/> instance for mocking. </returns>
@@ -509,6 +540,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new CheckinManifestContent(environment, baselineArmManifestLocation, default);
         }
 
+        /// <summary> The CheckinManifestInfo. </summary>
         /// <param name="isCheckedIn"> Whether the manifest is checked in. </param>
         /// <param name="statusMessage"> The status message. </param>
         /// <param name="pullRequest"> The pull request. </param>
@@ -519,6 +551,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new CheckinManifestInfo(isCheckedIn, statusMessage, pullRequest, commitId, default);
         }
 
+        /// <summary> Properties of an Operation. </summary>
         /// <param name="name"> Name of the operation. </param>
         /// <param name="isDataAction"> Indicates whether the operation applies to data-plane. </param>
         /// <param name="origin"> The origin. </param>
@@ -538,6 +571,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The OperationsDisplayDefinition. </summary>
         /// <param name="provider"> The provider. </param>
         /// <param name="resource"> The resource. </param>
         /// <param name="operation"> The operation. </param>
@@ -565,6 +599,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The LocalizedOperationDefinition. </summary>
         /// <param name="name"> Name of the operation. </param>
         /// <param name="isDataAction"> Indicates whether the operation applies to data-plane. </param>
         /// <param name="origin"> The origin. </param>
@@ -582,6 +617,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The LocalizedOperationDisplayDefinition. </summary>
         /// <param name="default"> Display information of the operation. </param>
         /// <param name="en"> Display information of the operation for en locale. </param>
         /// <param name="cs"> Display information of the operation for cs locale. </param>
@@ -625,6 +661,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -642,6 +679,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The CustomRolloutProperties. </summary>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="specification"> The specification. </param>
         /// <param name="status"> The status. </param>
@@ -675,6 +713,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The auto provisioning configuration. </summary>
         /// <param name="isStorageEnabled"></param>
         /// <param name="isResourceGraphEnabled"></param>
         /// <returns> A new <see cref="Models.CustomRolloutAutoProvisionConfig"/> instance for mocking. </returns>
@@ -683,6 +722,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new CustomRolloutAutoProvisionConfig(isStorageEnabled, isResourceGraphEnabled, default);
         }
 
+        /// <summary> The TrafficRegions. </summary>
         /// <param name="regions"></param>
         /// <returns> A new <see cref="Models.TrafficRegions"/> instance for mocking. </returns>
         public static TrafficRegions TrafficRegions(IEnumerable<AzureLocation> regions = default)
@@ -692,6 +732,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new TrafficRegions((regions ?? new ChangeTrackingList<AzureLocation>()).ToList(), default);
         }
 
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -711,6 +752,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The ThirdPartyProviderAuthorization. </summary>
         /// <param name="authorizations"> The authorizations. </param>
         /// <param name="managedByTenantId"> The managed by tenant id. </param>
         /// <returns> A new <see cref="Models.ThirdPartyProviderAuthorization"/> instance for mocking. </returns>
@@ -721,6 +763,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ThirdPartyProviderAuthorization((authorizations ?? new ChangeTrackingList<LightHouseAuthorization>()).ToList(), managedByTenantId, default);
         }
 
+        /// <summary> The LightHouseAuthorization. </summary>
         /// <param name="principalId"> The principal id. </param>
         /// <param name="roleDefinitionId"> The role definition id. </param>
         /// <returns> A new <see cref="Models.LightHouseAuthorization"/> instance for mocking. </returns>
@@ -729,6 +772,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new LightHouseAuthorization(principalId, roleDefinitionId, default);
         }
 
+        /// <summary> The SubscriptionLifecycleNotificationSpecifications. </summary>
         /// <param name="subscriptionStateOverrideActions"> The subscription state override actions. </param>
         /// <param name="softDeleteTtl"> The soft delete TTL. </param>
         /// <returns> A new <see cref="Models.SubscriptionLifecycleNotificationSpecifications"/> instance for mocking. </returns>
@@ -739,6 +783,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new SubscriptionLifecycleNotificationSpecifications((subscriptionStateOverrideActions ?? new ChangeTrackingList<SubscriptionStateOverrideAction>()).ToList(), softDeleteTtl, default);
         }
 
+        /// <summary> The SubscriptionStateOverrideAction. </summary>
         /// <param name="state"> The state. </param>
         /// <param name="action"> The action. </param>
         /// <returns> A new <see cref="Models.SubscriptionStateOverrideAction"/> instance for mocking. </returns>
@@ -747,6 +792,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new SubscriptionStateOverrideAction(state, action, default);
         }
 
+        /// <summary> The TemplateDeploymentOptions. </summary>
         /// <param name="isPreflightSupported"> Whether preflight is supported. </param>
         /// <param name="preflightOptions"> The preflight options. </param>
         /// <returns> A new <see cref="Models.TemplateDeploymentOptions"/> instance for mocking. </returns>
@@ -757,6 +803,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new TemplateDeploymentOptions(isPreflightSupported, (preflightOptions ?? new ChangeTrackingList<PreflightOption>()).ToList(), default);
         }
 
+        /// <summary> The ResourceHydrationAccount. </summary>
         /// <param name="maxChildResourceConsistencyJobLimit"> The max child resource consistency job limit. </param>
         /// <param name="encryptedKey"> The encrypted key. </param>
         /// <param name="accountName"> The account name. </param>
@@ -767,6 +814,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceHydrationAccount(maxChildResourceConsistencyJobLimit, encryptedKey, accountName, subscriptionId, default);
         }
 
+        /// <summary> The SubscriberSetting. </summary>
         /// <param name="filterRules"> The filter rules. </param>
         /// <returns> A new <see cref="Models.SubscriberSetting"/> instance for mocking. </returns>
         public static SubscriberSetting SubscriberSetting(IEnumerable<ProviderFilterRule> filterRules = default)
@@ -776,6 +824,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new SubscriberSetting((filterRules ?? new ChangeTrackingList<ProviderFilterRule>()).ToList(), default);
         }
 
+        /// <summary> The ProviderFilterRule. </summary>
         /// <param name="filterQuery"> The filter query. </param>
         /// <param name="endpointInformation"> The endpoint information. </param>
         /// <returns> A new <see cref="Models.ProviderFilterRule"/> instance for mocking. </returns>
@@ -786,6 +835,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ProviderFilterRule(filterQuery, (endpointInformation ?? new ChangeTrackingList<ProviderEndpointInformation>()).ToList(), default);
         }
 
+        /// <summary> The ProviderEndpointInformation. </summary>
         /// <param name="endpoint"> The endpoint. </param>
         /// <param name="endpointType"> The endpoint type. </param>
         /// <param name="schemaVersion"> The schema version. </param>
@@ -795,6 +845,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ProviderEndpointInformation(endpoint, endpointType, schemaVersion, default);
         }
 
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1042,6 +1093,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The ResourceTypeExtension. </summary>
         /// <param name="endpointUri"> The endpoint uri. </param>
         /// <param name="extensionCategories"> The extension categories. </param>
         /// <param name="timeout"> The timeout. </param>
@@ -1053,6 +1105,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceTypeExtension(endpointUri, (extensionCategories ?? new ChangeTrackingList<ResourceTypeExtensionCategory>()).ToList(), timeout, default);
         }
 
+        /// <summary> The ExtensionOptions. </summary>
         /// <param name="request"> The request. </param>
         /// <param name="response"> The response. </param>
         /// <returns> A new <see cref="Models.ExtensionOptions"/> instance for mocking. </returns>
@@ -1064,6 +1117,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ExtensionOptions((request ?? new ChangeTrackingList<ExtensionOptionType>()).ToList(), (response ?? new ChangeTrackingList<ExtensionOptionType>()).ToList(), default);
         }
 
+        /// <summary> The SwaggerSpecification. </summary>
         /// <param name="apiVersions"> The api versions. </param>
         /// <param name="swaggerSpecFolderUri"> The swagger spec folder uri. </param>
         /// <returns> A new <see cref="Models.SwaggerSpecification"/> instance for mocking. </returns>
@@ -1074,6 +1128,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new SwaggerSpecification((apiVersions ?? new ChangeTrackingList<string>()).ToList(), swaggerSpecFolderUri, default);
         }
 
+        /// <summary> The IdentityManagementProperties. </summary>
         /// <param name="managementType"> The type. </param>
         /// <param name="applicationId"> The application id. </param>
         /// <param name="applicationIds"> The application ids. </param>
@@ -1087,6 +1142,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new IdentityManagementProperties(managementType, applicationId, (applicationIds ?? new ChangeTrackingList<string>()).ToList(), (delegationAppIds ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The CheckNameAvailabilitySpecifications. </summary>
         /// <param name="isDefaultValidationEnabled"> Whether default validation is enabled. </param>
         /// <param name="resourceTypesWithCustomValidation"> The resource types with custom validation. </param>
         /// <returns> A new <see cref="Models.CheckNameAvailabilitySpecifications"/> instance for mocking. </returns>
@@ -1097,6 +1153,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new CheckNameAvailabilitySpecifications(isDefaultValidationEnabled, (resourceTypesWithCustomValidation ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> The ResourceMovePolicy. </summary>
         /// <param name="isValidationRequired"> Whether validation is required. </param>
         /// <param name="isCrossResourceGroupMoveEnabled"> Whether cross resource group move is enabled. </param>
         /// <param name="isCrossSubscriptionMoveEnabled"> Whether cross subscription move is enabled. </param>
@@ -1106,6 +1163,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceMovePolicy(isValidationRequired, isCrossResourceGroupMoveEnabled, isCrossSubscriptionMoveEnabled, default);
         }
 
+        /// <summary> The ResourceConcurrencyControlOption. </summary>
         /// <param name="policy"> The policy. </param>
         /// <returns> A new <see cref="Models.ResourceConcurrencyControlOption"/> instance for mocking. </returns>
         public static ResourceConcurrencyControlOption ResourceConcurrencyControlOption(ResourceConcurrencyPolicy? policy = default)
@@ -1113,6 +1171,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceConcurrencyControlOption(policy, default);
         }
 
+        /// <summary> The ResourceGraphConfiguration. </summary>
         /// <param name="isEnabled"> Whether it's enabled. </param>
         /// <param name="apiVersion"> The api version. </param>
         /// <returns> A new <see cref="Models.ResourceGraphConfiguration"/> instance for mocking. </returns>
@@ -1121,6 +1180,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceGraphConfiguration(isEnabled, apiVersion, default);
         }
 
+        /// <summary> The ResourceTypeOnBehalfOfToken. </summary>
         /// <param name="actionName"> The action name. </param>
         /// <param name="lifeTime"> This is a TimeSpan property. </param>
         /// <returns> A new <see cref="Models.ResourceTypeOnBehalfOfToken"/> instance for mocking. </returns>
@@ -1129,6 +1189,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceTypeOnBehalfOfToken(actionName, lifeTime, default);
         }
 
+        /// <summary> The AsyncTimeoutRule. </summary>
         /// <param name="actionName"></param>
         /// <param name="timeout"> This is a TimeSpan property. </param>
         /// <returns> A new <see cref="Models.AsyncTimeoutRule"/> instance for mocking. </returns>
@@ -1137,6 +1198,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new AsyncTimeoutRule(actionName, timeout, default);
         }
 
+        /// <summary> The ResourceTypeRegistrationApiProfile. </summary>
         /// <param name="profileVersion"> Profile version. </param>
         /// <param name="apiVersion"> Api version. </param>
         /// <returns> A new <see cref="Models.ResourceTypeRegistrationApiProfile"/> instance for mocking. </returns>
@@ -1145,6 +1207,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceTypeRegistrationApiProfile(profileVersion, apiVersion, default);
         }
 
+        /// <summary> The legacy policy. </summary>
         /// <param name="disallowedLegacyOperations"></param>
         /// <param name="disallowedConditions"></param>
         /// <returns> A new <see cref="Models.ResourceTypeRegistrationLegacyPolicy"/> instance for mocking. </returns>
@@ -1156,6 +1219,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceTypeRegistrationLegacyPolicy((disallowedLegacyOperations ?? new ChangeTrackingList<ProviderLegacyOperation>()).ToList(), (disallowedConditions ?? new ChangeTrackingList<LegacyDisallowedCondition>()).ToList(), default);
         }
 
+        /// <summary> The LegacyDisallowedCondition. </summary>
         /// <param name="disallowedLegacyOperations"> The disallowed legacy operations. </param>
         /// <param name="feature"> Feature string. </param>
         /// <returns> A new <see cref="Models.LegacyDisallowedCondition"/> instance for mocking. </returns>
@@ -1166,6 +1230,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new LegacyDisallowedCondition((disallowedLegacyOperations ?? new ChangeTrackingList<ProviderLegacyOperation>()).ToList(), feature, default);
         }
 
+        /// <summary> Capacity rule. </summary>
         /// <param name="capacityPolicy"> Capacity policy. </param>
         /// <param name="skuAlias"> Sku alias. </param>
         /// <returns> A new <see cref="Models.ResourceTypeRegistrationCapacityRule"/> instance for mocking. </returns>
@@ -1174,6 +1239,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceTypeRegistrationCapacityRule(capacityPolicy, skuAlias, default);
         }
 
+        /// <summary> The AllowedResourceName. </summary>
         /// <param name="name"> Resource name. </param>
         /// <param name="getActionVerb"> Get action verb. </param>
         /// <returns> A new <see cref="Models.AllowedResourceName"/> instance for mocking. </returns>
@@ -1182,6 +1248,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new AllowedResourceName(name, getActionVerb, default);
         }
 
+        /// <summary> Resource cache options. </summary>
         /// <param name="isResourceCacheEnabled"> Enable resource cache. </param>
         /// <param name="resourceCacheExpirationTimespan"> Resource cache expiration timespan. This is a TimeSpan property. </param>
         /// <returns> A new <see cref="Models.ResourceTypeRegistrationResourceCache"/> instance for mocking. </returns>
@@ -1201,6 +1268,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceTypeRegistrationResourceManagementOptions(batchProvisioningSupportSupportedOperations is null ? default : new BatchProvisioningSupport(batchProvisioningSupportSupportedOperations, default), (deleteDependencies ?? new ChangeTrackingList<ResourceTypeRegistrationDeleteDependency>()).ToList(), nestedProvisioningSupportMinimumApiVersion is null ? default : new NestedProvisioningSupport(nestedProvisioningSupportMinimumApiVersion, default), default);
         }
 
+        /// <summary> The ResourceTypeRegistrationDeleteDependency. </summary>
         /// <param name="requiredFeatures"> Required features. </param>
         /// <param name="linkedProperty"> Linked property. </param>
         /// <param name="linkedType"> Linked type. </param>
@@ -1212,6 +1280,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceTypeRegistrationDeleteDependency((requiredFeatures ?? new ChangeTrackingList<string>()).ToList(), linkedProperty, linkedType, default);
         }
 
+        /// <summary> The CustomRolloutStatus. </summary>
         /// <param name="completedRegions"> The completed regions. </param>
         /// <param name="failedOrSkippedRegions"> The failed or skipped regions. </param>
         /// <param name="manifestCheckinStatus"> The manifest checkin status. </param>
@@ -1224,6 +1293,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new CustomRolloutStatus((completedRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(), failedOrSkippedRegions ?? new ChangeTrackingDictionary<string, ExtendedErrorInfo>(), manifestCheckinStatus, default);
         }
 
+        /// <summary> Error information. </summary>
         /// <param name="code"> The error code. </param>
         /// <param name="target"> The target of the error. </param>
         /// <param name="message"> The error message. </param>
@@ -1244,6 +1314,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> Error information. </summary>
         /// <param name="typedErrorInfoType"> The type of the error. </param>
         /// <param name="info"> The error information. </param>
         /// <returns> A new <see cref="Models.TypedErrorInfo"/> instance for mocking. </returns>
@@ -1252,6 +1323,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new TypedErrorInfo(typedErrorInfoType, info, default);
         }
 
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1269,6 +1341,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The DefaultRolloutProperties. </summary>
         /// <param name="provisioningState"> The provisioned state of the resource. </param>
         /// <param name="specification"> The default rollout specification. </param>
         /// <param name="status"> The default rollout status. </param>
@@ -1307,6 +1380,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The CanaryTrafficRegionRolloutConfiguration. </summary>
         /// <param name="skipRegions"> The skip regions. </param>
         /// <param name="regions"> The regions. </param>
         /// <returns> A new <see cref="Models.CanaryTrafficRegionRolloutConfiguration"/> instance for mocking. </returns>
@@ -1318,6 +1392,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new CanaryTrafficRegionRolloutConfiguration((skipRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(), (regions ?? new ChangeTrackingList<AzureLocation>()).ToList(), default);
         }
 
+        /// <summary> The TrafficRegionRolloutConfiguration. </summary>
         /// <param name="regions"></param>
         /// <param name="waitDuration"> The wait duration. </param>
         /// <returns> A new <see cref="Models.TrafficRegionRolloutConfiguration"/> instance for mocking. </returns>
@@ -1328,6 +1403,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new TrafficRegionRolloutConfiguration((regions ?? new ChangeTrackingList<AzureLocation>()).ToList(), default, waitDuration);
         }
 
+        /// <summary> The auto provisioning config. </summary>
         /// <param name="isStorageEnabled"> Whether auto provisioning for storage is enabled. </param>
         /// <param name="isResourceGraphEnabled"> Whether auto provisioning for resource graph is enabled. </param>
         /// <returns> A new <see cref="Models.DefaultRolloutAutoProvisionConfig"/> instance for mocking. </returns>
@@ -1336,6 +1412,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new DefaultRolloutAutoProvisionConfig(isStorageEnabled, isResourceGraphEnabled, default);
         }
 
+        /// <summary> The DefaultRolloutStatus. </summary>
         /// <param name="completedRegions"> The completed regions. </param>
         /// <param name="failedOrSkippedRegions"> The failed or skipped regions. </param>
         /// <param name="nextTrafficRegion"> The next traffic region. </param>
@@ -1358,6 +1435,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 manifestCheckinStatus);
         }
 
+        /// <summary> The RolloutStatusBase. </summary>
         /// <param name="completedRegions"> The completed regions. </param>
         /// <param name="failedOrSkippedRegions"> The failed or skipped regions. </param>
         /// <returns> A new <see cref="Models.RolloutStatusBase"/> instance for mocking. </returns>
@@ -1369,6 +1447,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new RolloutStatusBase((completedRegions ?? new ChangeTrackingList<AzureLocation>()).ToList(), failedOrSkippedRegions ?? new ChangeTrackingDictionary<string, ExtendedErrorInfo>(), default);
         }
 
+        /// <summary> The ProviderFrontloadPayload. </summary>
         /// <param name="properties"> Properties of the frontload payload. </param>
         /// <returns> A new <see cref="Models.ProviderFrontloadPayload"/> instance for mocking. </returns>
         public static ProviderFrontloadPayload ProviderFrontloadPayload(ProviderFrontloadPayloadProperties properties = default)
@@ -1409,6 +1488,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The ManifestLevelPropertyBag. </summary>
         /// <param name="resourceHydrationAccounts"> The resource hydration accounts. </param>
         /// <returns> A new <see cref="Models.ManifestLevelPropertyBag"/> instance for mocking. </returns>
         public static ManifestLevelPropertyBag ManifestLevelPropertyBag(IEnumerable<ResourceHydrationAccount> resourceHydrationAccounts = default)
@@ -1454,6 +1534,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1471,6 +1552,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The NotificationRegistrationProperties. </summary>
         /// <param name="notificationMode"> The notification mode. </param>
         /// <param name="messageScope"> The message scope. </param>
         /// <param name="includedEvents"> The included events. </param>
@@ -1491,6 +1573,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The NotificationEndpoint. </summary>
         /// <param name="notificationDestination"> The notification destination. </param>
         /// <param name="locations"> The locations. </param>
         /// <returns> A new <see cref="Models.NotificationEndpoint"/> instance for mocking. </returns>
@@ -1501,6 +1584,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new NotificationEndpoint(notificationDestination, (locations ?? new ChangeTrackingList<AzureLocation>()).ToList(), default);
         }
 
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1518,6 +1602,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The ResourceTypeSkuProperties. </summary>
         /// <param name="skuSettings"> The sku settings. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
         /// <returns> A new <see cref="Models.ResourceTypeSkuProperties"/> instance for mocking. </returns>
@@ -1528,6 +1613,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceTypeSkuProperties((skuSettings ?? new ChangeTrackingList<ResourceTypeSkuSetting>()).ToList(), provisioningState, default);
         }
 
+        /// <summary> The ResourceTypeSkuSetting. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="tier"> The tier. </param>
         /// <param name="size"> The size. </param>
@@ -1566,6 +1652,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The ResourceTypeSkuLocationInfo. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="zones"> The zones. </param>
         /// <param name="zoneDetails"> The zone details. </param>
@@ -1587,6 +1674,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The ResourceTypeSkuZoneDetail. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="capabilities"> The capabilities. </param>
         /// <returns> A new <see cref="Models.ResourceTypeSkuZoneDetail"/> instance for mocking. </returns>
@@ -1598,6 +1686,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceTypeSkuZoneDetail((name ?? new ChangeTrackingList<string>()).ToList(), (capabilities ?? new ChangeTrackingList<ResourceSkuCapability>()).ToList(), default);
         }
 
+        /// <summary> The ResourceSkuCapability. </summary>
         /// <param name="name"> The name. </param>
         /// <param name="value"> The value. </param>
         /// <returns> A new <see cref="Models.ResourceSkuCapability"/> instance for mocking. </returns>
@@ -1606,6 +1695,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceSkuCapability(name, value, default);
         }
 
+        /// <summary> The ResourceTypeSkuCapacity. </summary>
         /// <param name="minimum"> The minimum. </param>
         /// <param name="maximum"> The maximum. </param>
         /// <param name="default"> The default. </param>
@@ -1616,6 +1706,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceTypeSkuCapacity(minimum, maximum, @default, scaleType, default);
         }
 
+        /// <summary> The ResourceTypeSkuCost. </summary>
         /// <param name="meterId"> The meter id. </param>
         /// <param name="quantity"> The quantity. </param>
         /// <param name="extendedUnit"> The extended unit. </param>
@@ -1625,6 +1716,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceTypeSkuCost(meterId, quantity, extendedUnit, default);
         }
 
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1642,6 +1734,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The ProviderAuthorizedApplicationProperties. </summary>
         /// <param name="providerAuthorization"></param>
         /// <param name="dataAuthorizations"> The authorizations that determine the level of data access permissions on the specified resource types. </param>
         /// <param name="provisioningState"> The provisioning state. </param>
@@ -1653,6 +1746,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ProviderAuthorizedApplicationProperties(providerAuthorization, (dataAuthorizations ?? new ChangeTrackingList<ApplicationDataAuthorization>()).ToList(), provisioningState, default);
         }
 
+        /// <summary> The ApplicationProviderAuthorization. </summary>
         /// <param name="roleDefinitionId"> The role definition ID for the application. </param>
         /// <param name="managedByRoleDefinitionId"> The managed by role definition ID for the application. </param>
         /// <returns> A new <see cref="Models.ApplicationProviderAuthorization"/> instance for mocking. </returns>
@@ -1661,6 +1755,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ApplicationProviderAuthorization(roleDefinitionId, managedByRoleDefinitionId, default);
         }
 
+        /// <summary> The ApplicationDataAuthorization. </summary>
         /// <param name="role"> The ownership role the application has on the resource types. The service owner role gives the application owner permissions. The limited owner role gives elevated permissions but does not allow all the permissions of a service owner, such as read/write on internal metadata. </param>
         /// <param name="resourceTypes"> The resource types from the defined resource types in the provider namespace that the application can access. If no resource types are specified and the role is service owner, the default is * which is all resource types. </param>
         /// <returns> A new <see cref="Models.ApplicationDataAuthorization"/> instance for mocking. </returns>
@@ -1694,6 +1789,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
+        /// <summary> The ResourceManagementAction. </summary>
         /// <param name="resources"> resource management action content. </param>
         /// <returns> A new <see cref="Models.ResourceManagementAction"/> instance for mocking. </returns>
         public static ResourceManagementAction ResourceManagementAction(IEnumerable<ResourceManagementEntity> resources = default)
@@ -1703,6 +1799,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceManagementAction((resources ?? new ChangeTrackingList<ResourceManagementEntity>()).ToList(), default);
         }
 
+        /// <summary> The ResourceManagementEntity. </summary>
         /// <param name="resourceId"> The resource id. </param>
         /// <param name="homeTenantId"> The home tenant id. </param>
         /// <param name="location"> The location. </param>
@@ -1713,9 +1810,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new ResourceManagementEntity(resourceId, homeTenantId, location, status, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.LinkedOperationRule"/>. </summary>
-        /// <param name="linkedOperation"></param>
-        /// <param name="linkedAction"></param>
+        /// <summary> The LinkedOperationRule. </summary>
+        /// <param name="linkedOperation"> The linked operation. </param>
+        /// <param name="linkedAction"> The linked action. </param>
         /// <returns> A new <see cref="Models.LinkedOperationRule"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static LinkedOperationRule LinkedOperationRule(LinkedOperation linkedOperation = default, LinkedAction linkedAction = default)
@@ -1723,31 +1820,31 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new LinkedOperationRule(linkedOperation, linkedAction, default, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProviderResourceType"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="routingType"></param>
-        /// <param name="resourceValidation"></param>
-        /// <param name="allowedUnauthorizedActions"></param>
-        /// <param name="authorizationActionMappings"></param>
-        /// <param name="linkedAccessChecks"></param>
-        /// <param name="defaultApiVersion"></param>
-        /// <param name="loggingRules"></param>
-        /// <param name="throttlingRules"></param>
-        /// <param name="endpoints"></param>
-        /// <param name="marketplaceType"></param>
-        /// <param name="managementType"></param>
-        /// <param name="metadata"> Anything. </param>
-        /// <param name="requiredFeatures"></param>
-        /// <param name="requiredFeaturesPolicy"></param>
-        /// <param name="subscriptionStateRules"></param>
-        /// <param name="serviceTreeInfos"></param>
-        /// <param name="optInHeaders"></param>
-        /// <param name="skuLink"></param>
-        /// <param name="disallowedActionVerbs"></param>
-        /// <param name="templateDeploymentPolicy"></param>
-        /// <param name="extendedLocations"></param>
-        /// <param name="linkedOperationRules"></param>
-        /// <param name="resourceDeletionPolicy"></param>
+        /// <summary> The ProviderResourceType. </summary>
+        /// <param name="name"> The resource type name. </param>
+        /// <param name="routingType"> The resource routing type. </param>
+        /// <param name="resourceValidation"> The resource validation. </param>
+        /// <param name="allowedUnauthorizedActions"> The allowed unauthorized actions. </param>
+        /// <param name="authorizationActionMappings"> The authorization action mappings. </param>
+        /// <param name="linkedAccessChecks"> The linked access checks. </param>
+        /// <param name="defaultApiVersion"> The default api version. </param>
+        /// <param name="loggingRules"> The logging rules. </param>
+        /// <param name="throttlingRules"> The throttling rules. </param>
+        /// <param name="endpoints"> The endpoints. </param>
+        /// <param name="marketplaceType"> The marketplace type. </param>
+        /// <param name="managementType"> The type. </param>
+        /// <param name="metadata"> The metadata. </param>
+        /// <param name="requiredFeatures"> The required features. </param>
+        /// <param name="requiredFeaturesPolicy"> The required feature policy. </param>
+        /// <param name="subscriptionStateRules"> The subscription state rules. </param>
+        /// <param name="serviceTreeInfos"> The service tree infos. </param>
+        /// <param name="optInHeaders"> The opt in headers. </param>
+        /// <param name="skuLink"> The sku link. </param>
+        /// <param name="disallowedActionVerbs"> The disallowed action verbs. </param>
+        /// <param name="templateDeploymentPolicy"> The template deployment policy. </param>
+        /// <param name="extendedLocations"> The extended locations. </param>
+        /// <param name="linkedOperationRules"> The linked operation rules. </param>
+        /// <param name="resourceDeletionPolicy"> The resource deletion policy. </param>
         /// <returns> A new <see cref="Models.ProviderResourceType"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ProviderResourceType ProviderResourceType(string name = default, ResourceRoutingType? routingType = default, ResourceValidation? resourceValidation = default, IEnumerable<string> allowedUnauthorizedActions = default, IEnumerable<AuthorizationActionMapping> authorizationActionMappings = default, IEnumerable<LinkedAccessCheck> linkedAccessChecks = default, string defaultApiVersion = default, IEnumerable<LoggingRule> loggingRules = default, IEnumerable<ThrottlingRule> throttlingRules = default, IEnumerable<ResourceProviderEndpoint> endpoints = default, MarketplaceType? marketplaceType = default, IdentityManagementType? managementType = default, BinaryData metadata = default, IEnumerable<string> requiredFeatures = default, FeaturesPolicy? requiredFeaturesPolicy = default, IEnumerable<ProviderSubscriptionStateRule> subscriptionStateRules = default, IEnumerable<ServiceTreeInfo> serviceTreeInfos = default, OptInHeaderType? optInHeaders = default, string skuLink = default, IEnumerable<string> disallowedActionVerbs = default, TemplateDeploymentPolicy templateDeploymentPolicy = default, IEnumerable<ProviderHubExtendedLocationOptions> extendedLocations = default, IEnumerable<LinkedOperationRule> linkedOperationRules = default, ManifestResourceDeletionPolicy? resourceDeletionPolicy = default)
@@ -1787,14 +1884,14 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ResourceProviderEndpoint"/>. </summary>
-        /// <param name="isEnabled"></param>
-        /// <param name="apiVersions"></param>
-        /// <param name="endpointUri"></param>
-        /// <param name="locations"></param>
-        /// <param name="requiredFeatures"></param>
-        /// <param name="requiredFeaturesPolicy"></param>
-        /// <param name="timeout"></param>
+        /// <summary> The ResourceProviderEndpoint. </summary>
+        /// <param name="isEnabled"> Whether the endpoint is enabled. </param>
+        /// <param name="apiVersions"> The api versions. </param>
+        /// <param name="endpointUri"> The endpoint uri. </param>
+        /// <param name="locations"> The locations. </param>
+        /// <param name="requiredFeatures"> The required features. </param>
+        /// <param name="requiredFeaturesPolicy"> The required feature policy. </param>
+        /// <param name="timeout"> The timeout. </param>
         /// <returns> A new <see cref="Models.ResourceProviderEndpoint"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ResourceProviderEndpoint ResourceProviderEndpoint(bool? isEnabled = default, IEnumerable<string> apiVersions = default, Uri endpointUri = default, IEnumerable<AzureLocation> locations = default, IEnumerable<string> requiredFeatures = default, FeaturesPolicy? requiredFeaturesPolicy = default, TimeSpan? timeout = default)
@@ -1812,9 +1909,9 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TemplateDeploymentPolicy"/>. </summary>
-        /// <param name="capabilities"></param>
-        /// <param name="preflightOptions"></param>
+        /// <summary> The TemplateDeploymentPolicy. </summary>
+        /// <param name="capabilities"> The capabilities. </param>
+        /// <param name="preflightOptions"> The preflight options. </param>
         /// <returns> A new <see cref="Models.TemplateDeploymentPolicy"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static TemplateDeploymentPolicy TemplateDeploymentPolicy(TemplateDeploymentCapability capabilities = default, TemplateDeploymentPreflightOption preflightOptions = default)
@@ -1822,11 +1919,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             return new TemplateDeploymentPolicy(capabilities, preflightOptions, default, default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProviderHub.ProviderRegistrationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"></param>
         /// <returns> A new <see cref="ProviderHub.ProviderRegistrationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
@@ -1842,11 +1939,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ProviderHub.ResourceTypeRegistrationData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Concrete proxy resource types can be created by aliasing this type using a specific property type. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"></param>
         /// <returns> A new <see cref="ProviderHub.ResourceTypeRegistrationData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]

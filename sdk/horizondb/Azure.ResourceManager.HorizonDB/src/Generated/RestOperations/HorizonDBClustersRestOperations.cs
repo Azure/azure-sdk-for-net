@@ -228,5 +228,77 @@ namespace Azure.ResourceManager.HorizonDB
             request.Headers.SetValue("Accept", "application/json");
             return message;
         }
+
+        internal HttpMessage CreateStartRequest(Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HorizonDb/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/start", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateStopRequest(Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HorizonDb/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/stop", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateRestartRequest(Guid subscriptionId, string resourceGroupName, string clusterName, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId.ToString(), true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/providers/Microsoft.HorizonDb/clusters/", false);
+            uri.AppendPath(clusterName, true);
+            uri.AppendPath("/restart", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Post;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
     }
 }

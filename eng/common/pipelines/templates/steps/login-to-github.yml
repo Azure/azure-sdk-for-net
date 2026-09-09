@@ -8,6 +8,9 @@ parameters:
 - name: VariableNamePrefix
   type: string 
   default: GH_TOKEN
+- name: AlwaysUseOwnerSuffix
+  type: boolean
+  default: false
 - name: ExportAsOutputVariable
   type: boolean 
   default: false
@@ -25,4 +28,5 @@ steps:
     arguments: >
       -InstallationTokenOwners '${{ join(''',''', parameters.TokenOwners) }}'
       -VariableNamePrefix '${{ parameters.VariableNamePrefix }}'
+      -AlwaysUseOwnerSuffix:$${{ parameters.AlwaysUseOwnerSuffix }}
       -ExportAsOutputVariable:$${{ parameters.ExportAsOutputVariable }}

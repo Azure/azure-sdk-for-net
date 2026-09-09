@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Logs data type. </summary>
-    public partial class AwsS3DataConnectorDataTypesLogs : DataConnectorDataTypeCommon, IJsonModel<AwsS3DataConnectorDataTypesLogs>
+    internal partial class AwsS3DataConnectorDataTypesLogs : DataConnectorDataTypeCommon, IJsonModel<AwsS3DataConnectorDataTypesLogs>
     {
         /// <summary> Initializes a new instance of <see cref="AwsS3DataConnectorDataTypesLogs"/> for deserialization. </summary>
         internal AwsS3DataConnectorDataTypesLogs()

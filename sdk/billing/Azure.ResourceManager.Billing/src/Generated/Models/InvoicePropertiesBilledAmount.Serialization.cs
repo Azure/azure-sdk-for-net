@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The total charges for the invoice billing period. </summary>
-    public partial class InvoicePropertiesBilledAmount : BillingAmount, IJsonModel<InvoicePropertiesBilledAmount>
+    internal partial class InvoicePropertiesBilledAmount : BillingAmount, IJsonModel<InvoicePropertiesBilledAmount>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -1,6 +1,27 @@
 # Release History
 
-## 1.2.0 (2026-07-17)
+## 1.3.0-beta.2 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.3.0-beta.1 (2026-09-01)
+
+### Features Added
+
+- Updated the default API version to `2026-07-01-preview`.
+- Added the string-valued `ServiceBusCorrelationFilter.Properties` property.
+
+### Breaking Changes
+
+- Correlation filter application-property values now serialize as JSON strings. The previous `ApplicationProperties` property remains available as a hidden obsolete compatibility shim and converts non-string values to invariant strings.
+
+## 1.2.0 (2026-07-28)
 
 ### Features Added
 

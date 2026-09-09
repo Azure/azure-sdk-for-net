@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.DomainServices.Models;
 using Azure.ResourceManager.Models;
 
@@ -39,7 +38,6 @@ namespace Azure.ResourceManager.DomainServices
     [ModelReaderWriterBuildable(typeof(OuContainerProperties))]
     [ModelReaderWriterBuildable(typeof(OuContainerResource))]
     [ModelReaderWriterBuildable(typeof(ResourceForestSettings))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerDomainServicesContext : ModelReaderWriterContext
     {

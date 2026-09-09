@@ -15,7 +15,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Rebill details for an invoice. </summary>
-    public partial class InvoicePropertiesRebillDetails : RebillDetails, IJsonModel<InvoicePropertiesRebillDetails>
+    internal partial class InvoicePropertiesRebillDetails : RebillDetails, IJsonModel<InvoicePropertiesRebillDetails>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

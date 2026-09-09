@@ -8,12 +8,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ApplicationInsights
@@ -21,55 +22,53 @@ namespace Azure.ResourceManager.ApplicationInsights
     /// <summary>
     /// A class representing a collection of <see cref="ApplicationInsightsWebTestResource"/> and their operations.
     /// Each <see cref="ApplicationInsightsWebTestResource"/> in the collection will belong to the same instance of <see cref="ResourceGroupResource"/>.
-    /// To get an <see cref="ApplicationInsightsWebTestCollection"/> instance call the GetApplicationInsightsWebTests method from an instance of <see cref="ResourceGroupResource"/>.
+    /// To get a <see cref="ApplicationInsightsWebTestCollection"/> instance call the GetApplicationInsightsWebTests method from an instance of <see cref="ResourceGroupResource"/>.
     /// </summary>
     public partial class ApplicationInsightsWebTestCollection : ArmCollection, IEnumerable<ApplicationInsightsWebTestResource>, IAsyncEnumerable<ApplicationInsightsWebTestResource>
     {
-        private readonly ClientDiagnostics _applicationInsightsWebTestWebTestsClientDiagnostics;
-        private readonly WebTestsRestOperations _applicationInsightsWebTestWebTestsRestClient;
+        private readonly ClientDiagnostics _webTestsClientDiagnostics;
+        private readonly WebTests _webTestsRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationInsightsWebTestCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ApplicationInsightsWebTestCollection for mocking. </summary>
         protected ApplicationInsightsWebTestCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationInsightsWebTestCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsWebTestCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApplicationInsightsWebTestCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _applicationInsightsWebTestWebTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ApplicationInsightsWebTestResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApplicationInsightsWebTestResource.ResourceType, out string applicationInsightsWebTestWebTestsApiVersion);
-            _applicationInsightsWebTestWebTestsRestClient = new WebTestsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsWebTestWebTestsApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ApplicationInsightsWebTestResource.ResourceType, out string applicationInsightsWebTestApiVersion);
+            _webTestsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ApplicationInsightsWebTestResource.ResourceType.Namespace, Diagnostics);
+            _webTestsRestClient = new WebTests(_webTestsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsWebTestApiVersion ?? "2022-06-15");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ResourceGroupResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ResourceGroupResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Creates or updates an Application Insights web test definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebTests_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebTests_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-06-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -77,23 +76,31 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="webTestName"> The name of the Application Insights WebTest resource. </param>
         /// <param name="data"> Properties that need to be specified to create or update an Application Insights web test definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<ArmOperation<ApplicationInsightsWebTestResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string webTestName, ApplicationInsightsWebTestData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webTestName, nameof(webTestName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _applicationInsightsWebTestWebTestsClientDiagnostics.CreateScope("ApplicationInsightsWebTestCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _webTestsClientDiagnostics.CreateScope("ApplicationInsightsWebTestCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = await _applicationInsightsWebTestWebTestsRestClient.CreateOrUpdateAsync(Id.SubscriptionId, Id.ResourceGroupName, webTestName, data, cancellationToken).ConfigureAwait(false);
-                var uri = _applicationInsightsWebTestWebTestsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, webTestName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApplicationInsightsArmOperation<ApplicationInsightsWebTestResource>(Response.FromValue(new ApplicationInsightsWebTestResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, ApplicationInsightsWebTestData.ToRequestContent(data), context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApplicationInsightsWebTestData> response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApplicationInsightsArmOperation<ApplicationInsightsWebTestResource> operation = new ApplicationInsightsArmOperation<ApplicationInsightsWebTestResource>(Response.FromValue(new ApplicationInsightsWebTestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -107,20 +114,16 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Creates or updates an Application Insights web test definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebTests_CreateOrUpdate</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebTests_CreateOrUpdate. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-06-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -128,23 +131,31 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <param name="webTestName"> The name of the Application Insights WebTest resource. </param>
         /// <param name="data"> Properties that need to be specified to create or update an Application Insights web test definition. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> or <paramref name="data"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual ArmOperation<ApplicationInsightsWebTestResource> CreateOrUpdate(WaitUntil waitUntil, string webTestName, ApplicationInsightsWebTestData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webTestName, nameof(webTestName));
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _applicationInsightsWebTestWebTestsClientDiagnostics.CreateScope("ApplicationInsightsWebTestCollection.CreateOrUpdate");
+            using DiagnosticScope scope = _webTestsClientDiagnostics.CreateScope("ApplicationInsightsWebTestCollection.CreateOrUpdate");
             scope.Start();
             try
             {
-                var response = _applicationInsightsWebTestWebTestsRestClient.CreateOrUpdate(Id.SubscriptionId, Id.ResourceGroupName, webTestName, data, cancellationToken);
-                var uri = _applicationInsightsWebTestWebTestsRestClient.CreateCreateOrUpdateRequestUri(Id.SubscriptionId, Id.ResourceGroupName, webTestName, data);
-                var rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
-                var operation = new ApplicationInsightsArmOperation<ApplicationInsightsWebTestResource>(Response.FromValue(new ApplicationInsightsWebTestResource(Client, response), response.GetRawResponse()), rehydrationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webTestsRestClient.CreateCreateOrUpdateRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, ApplicationInsightsWebTestData.ToRequestContent(data), context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApplicationInsightsWebTestData> response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
+                RequestUriBuilder uri = message.Request.Uri;
+                RehydrationToken rehydrationToken = NextLinkOperationImplementation.GetRehydrationToken(RequestMethod.Put, uri.ToUri(), uri.ToString(), "None", null, OperationFinalStateVia.OriginalUri.ToString());
+                ApplicationInsightsArmOperation<ApplicationInsightsWebTestResource> operation = new ApplicationInsightsArmOperation<ApplicationInsightsWebTestResource>(Response.FromValue(new ApplicationInsightsWebTestResource(Client, response.Value), response.GetRawResponse()), rehydrationToken);
                 if (waitUntil == WaitUntil.Completed)
+                {
                     operation.WaitForCompletion(cancellationToken);
+                }
                 return operation;
             }
             catch (Exception e)
@@ -158,38 +169,42 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Get a specific Application Insights web test definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebTests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebTests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-06-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="webTestName"> The name of the Application Insights WebTest resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ApplicationInsightsWebTestResource>> GetAsync(string webTestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webTestName, nameof(webTestName));
 
-            using var scope = _applicationInsightsWebTestWebTestsClientDiagnostics.CreateScope("ApplicationInsightsWebTestCollection.Get");
+            using DiagnosticScope scope = _webTestsClientDiagnostics.CreateScope("ApplicationInsightsWebTestCollection.Get");
             scope.Start();
             try
             {
-                var response = await _applicationInsightsWebTestWebTestsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, webTestName, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApplicationInsightsWebTestData> response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationInsightsWebTestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -203,38 +218,42 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Get a specific Application Insights web test definition.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebTests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebTests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-06-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="webTestName"> The name of the Application Insights WebTest resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ApplicationInsightsWebTestResource> Get(string webTestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webTestName, nameof(webTestName));
 
-            using var scope = _applicationInsightsWebTestWebTestsClientDiagnostics.CreateScope("ApplicationInsightsWebTestCollection.Get");
+            using DiagnosticScope scope = _webTestsClientDiagnostics.CreateScope("ApplicationInsightsWebTestCollection.Get");
             scope.Start();
             try
             {
-                var response = _applicationInsightsWebTestWebTestsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, webTestName, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApplicationInsightsWebTestData> response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationInsightsWebTestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,50 +267,44 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Get all Application Insights web tests defined for the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebTests_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebTests_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-06-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationInsightsWebTestResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationInsightsWebTestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationInsightsWebTestResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationInsightsWebTestWebTestsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationInsightsWebTestWebTestsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationInsightsWebTestResource(Client, ApplicationInsightsWebTestData.DeserializeApplicationInsightsWebTestData(e)), _applicationInsightsWebTestWebTestsClientDiagnostics, Pipeline, "ApplicationInsightsWebTestCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new WebTestsGetByResourceGroupAsyncCollectionResultOfT(_webTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationInsightsWebTestCollection.GetAll"), data => new ApplicationInsightsWebTestResource(Client, data));
         }
 
         /// <summary>
         /// Get all Application Insights web tests defined for the specified resource group.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebTests_ListByResourceGroup</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebTests_ListByResourceGroup. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-06-15. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -299,45 +312,61 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="ApplicationInsightsWebTestResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationInsightsWebTestResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationInsightsWebTestWebTestsRestClient.CreateListByResourceGroupRequest(Id.SubscriptionId, Id.ResourceGroupName);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationInsightsWebTestWebTestsRestClient.CreateListByResourceGroupNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationInsightsWebTestResource(Client, ApplicationInsightsWebTestData.DeserializeApplicationInsightsWebTestData(e)), _applicationInsightsWebTestWebTestsClientDiagnostics, Pipeline, "ApplicationInsightsWebTestCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApplicationInsightsWebTestData, ApplicationInsightsWebTestResource>(new WebTestsGetByResourceGroupCollectionResultOfT(_webTestsRestClient, Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, context, "ApplicationInsightsWebTestCollection.GetAll"), data => new ApplicationInsightsWebTestResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebTests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebTests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-06-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="webTestName"> The name of the Application Insights WebTest resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string webTestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webTestName, nameof(webTestName));
 
-            using var scope = _applicationInsightsWebTestWebTestsClientDiagnostics.CreateScope("ApplicationInsightsWebTestCollection.Exists");
+            using DiagnosticScope scope = _webTestsClientDiagnostics.CreateScope("ApplicationInsightsWebTestCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _applicationInsightsWebTestWebTestsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, webTestName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApplicationInsightsWebTestData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationInsightsWebTestData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -351,36 +380,50 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebTests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebTests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-06-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="webTestName"> The name of the Application Insights WebTest resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string webTestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webTestName, nameof(webTestName));
 
-            using var scope = _applicationInsightsWebTestWebTestsClientDiagnostics.CreateScope("ApplicationInsightsWebTestCollection.Exists");
+            using DiagnosticScope scope = _webTestsClientDiagnostics.CreateScope("ApplicationInsightsWebTestCollection.Exists");
             scope.Start();
             try
             {
-                var response = _applicationInsightsWebTestWebTestsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, webTestName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApplicationInsightsWebTestData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationInsightsWebTestData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -394,38 +437,54 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebTests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebTests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-06-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="webTestName"> The name of the Application Insights WebTest resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ApplicationInsightsWebTestResource>> GetIfExistsAsync(string webTestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webTestName, nameof(webTestName));
 
-            using var scope = _applicationInsightsWebTestWebTestsClientDiagnostics.CreateScope("ApplicationInsightsWebTestCollection.GetIfExists");
+            using DiagnosticScope scope = _webTestsClientDiagnostics.CreateScope("ApplicationInsightsWebTestCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _applicationInsightsWebTestWebTestsRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, webTestName, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApplicationInsightsWebTestData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationInsightsWebTestData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApplicationInsightsWebTestResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationInsightsWebTestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -439,38 +498,54 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/webtests/{webTestName}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>WebTests_Get</description>
+        /// <term> Operation Id. </term>
+        /// <description> WebTests_Get. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2022-06-15</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWebTestResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2022-06-15. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="webTestName"> The name of the Application Insights WebTest resource. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="webTestName"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="webTestName"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ApplicationInsightsWebTestResource> GetIfExists(string webTestName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(webTestName, nameof(webTestName));
 
-            using var scope = _applicationInsightsWebTestWebTestsClientDiagnostics.CreateScope("ApplicationInsightsWebTestCollection.GetIfExists");
+            using DiagnosticScope scope = _webTestsClientDiagnostics.CreateScope("ApplicationInsightsWebTestCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _applicationInsightsWebTestWebTestsRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, webTestName, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _webTestsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, webTestName, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApplicationInsightsWebTestData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationInsightsWebTestData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationInsightsWebTestData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApplicationInsightsWebTestResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationInsightsWebTestResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -490,6 +565,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ApplicationInsightsWebTestResource> IAsyncEnumerable<ApplicationInsightsWebTestResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

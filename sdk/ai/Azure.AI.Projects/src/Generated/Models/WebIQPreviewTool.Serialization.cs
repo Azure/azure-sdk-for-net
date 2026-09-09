@@ -83,11 +83,6 @@ namespace Azure.AI.Projects
                 writer.WritePropertyName("server_label"u8);
                 writer.WriteStringValue(ServerLabel);
             }
-            if (Optional.IsDefined(ServerUrl))
-            {
-                writer.WritePropertyName("server_url"u8);
-                writer.WriteStringValue(ServerUrl.AbsoluteUri);
-            }
             if (Optional.IsDefined(RequireApproval))
             {
                 writer.WritePropertyName("require_approval"u8);
@@ -131,7 +126,6 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string projectConnectionId = default;
             string serverLabel = default;
-            Uri serverUrl = default;
             BinaryData requireApproval = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,15 +144,6 @@ namespace Azure.AI.Projects
                     serverLabel = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("server_url"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    serverUrl = string.IsNullOrEmpty(prop.Value.GetString()) ? null : new Uri(prop.Value.GetString(), UriKind.RelativeOrAbsolute);
-                    continue;
-                }
                 if (prop.NameEquals("require_approval"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -174,13 +159,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new WebIQPreviewTool(
-                @type,
-                additionalBinaryDataProperties,
-                projectConnectionId,
-                serverLabel,
-                serverUrl,
-                requireApproval);
+            return new WebIQPreviewTool(@type, additionalBinaryDataProperties, projectConnectionId, serverLabel, requireApproval);
         }
     }
 }

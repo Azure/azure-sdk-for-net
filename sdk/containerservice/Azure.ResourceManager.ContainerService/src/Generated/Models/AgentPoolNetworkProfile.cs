@@ -34,14 +34,16 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <param name="allowedHostPorts"> The port ranges that are allowed to access. The specified ranges are allowed to overlap. </param>
         /// <param name="applicationSecurityGroups"> The IDs of the application security groups which agent pool will associate when created. </param>
         /// <param name="secondaryNetworkInterfaces"> Secondary network interface configurations for each VM in the agent pool. Each entry is a template: one physical NIC per entry is provisioned on every VM instance. These interfaces are created at agent pool creation time and are immutable. The length of the list must be less than the NIC capacity minus 1 for the VM size of the agent pool (AKS manages the primary NIC). For example, a Standard_D8a_v4 VM supports up to 4 NICs, so the maximum number of secondary interfaces allowed is 3. For mixed-SKU VM pools the effective capacity is the minimum across all SKUs: count(secondaryNetworkInterfaces) + 1 &lt;= min(maxNICs). For more information, see https://aka.ms/aks/multi-nic. </param>
+        /// <param name="dranet"> DRANET settings of an agent pool. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentPoolNetworkProfile(IList<ContainerServiceIPTag> nodePublicIPTags, IList<ResourceIdentifier> nodePublicIPPrefixIDs, IList<AgentPoolNetworkPortRange> allowedHostPorts, IList<ResourceIdentifier> applicationSecurityGroups, IList<AgentPoolNetworkInterface> secondaryNetworkInterfaces, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentPoolNetworkProfile(IList<ContainerServiceIPTag> nodePublicIPTags, IList<ResourceIdentifier> nodePublicIPPrefixIDs, IList<AgentPoolNetworkPortRange> allowedHostPorts, IList<ResourceIdentifier> applicationSecurityGroups, IList<AgentPoolNetworkInterface> secondaryNetworkInterfaces, DRANETProfile dranet, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             NodePublicIPTags = nodePublicIPTags;
             NodePublicIPPrefixIDs = nodePublicIPPrefixIDs;
             AllowedHostPorts = allowedHostPorts;
             ApplicationSecurityGroups = applicationSecurityGroups;
             SecondaryNetworkInterfaces = secondaryNetworkInterfaces;
+            Dranet = dranet;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -64,5 +66,27 @@ namespace Azure.ResourceManager.ContainerService.Models
         /// <summary> Secondary network interface configurations for each VM in the agent pool. Each entry is a template: one physical NIC per entry is provisioned on every VM instance. These interfaces are created at agent pool creation time and are immutable. The length of the list must be less than the NIC capacity minus 1 for the VM size of the agent pool (AKS manages the primary NIC). For example, a Standard_D8a_v4 VM supports up to 4 NICs, so the maximum number of secondary interfaces allowed is 3. For mixed-SKU VM pools the effective capacity is the minimum across all SKUs: count(secondaryNetworkInterfaces) + 1 &lt;= min(maxNICs). For more information, see https://aka.ms/aks/multi-nic. </summary>
         [WirePath("secondaryNetworkInterfaces")]
         public IList<AgentPoolNetworkInterface> SecondaryNetworkInterfaces { get; }
+
+        /// <summary> DRANET settings of an agent pool. </summary>
+        [WirePath("dranet")]
+        internal DRANETProfile Dranet { get; set; }
+
+        /// <summary> The DRANET mode for the agent pool. </summary>
+        [WirePath("dranet.mode")]
+        public DranetMode? DranetMode
+        {
+            get
+            {
+                return Dranet is null ? default : Dranet.Mode;
+            }
+            set
+            {
+                if (Dranet is null)
+                {
+                    Dranet = new DRANETProfile();
+                }
+                Dranet.Mode = value;
+            }
+        }
     }
 }

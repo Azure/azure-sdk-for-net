@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabricManagedClusters
 {
     /// <summary>
     /// Describes how the service is partitioned.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="UniformInt64RangePartitionScheme"/>, <see cref="SingletonPartitionScheme"/>, and <see cref="NamedPartitionScheme"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="UniformInt64RangePartitionScheme"/>, <see cref="SingletonPartitionScheme"/>, and <see cref="NamedPartitionScheme"/>.
     /// </summary>
     public partial class ManagedServicePartitionScheme : ProvisionableConstruct
     {
+        private BicepValue<PartitionScheme> _partitionScheme;
+
         /// <summary> Creates a new ManagedServicePartitionScheme. </summary>
         public ManagedServicePartitionScheme()
         {
+        }
+
+        /// <summary> Gets the PartitionScheme. </summary>
+        internal BicepValue<PartitionScheme> PartitionScheme
+        {
+            get
+            {
+                Initialize();
+                return _partitionScheme;
+            }
         }
 
         /// <summary> Define all the provisionable properties for ManagedServicePartitionScheme. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _partitionScheme = DefineProperty<PartitionScheme>(nameof(PartitionScheme), new string[] { "partitionScheme" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

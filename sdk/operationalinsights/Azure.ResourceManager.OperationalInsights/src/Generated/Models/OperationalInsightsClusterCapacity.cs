@@ -11,12 +11,12 @@ namespace Azure.ResourceManager.OperationalInsights.Models
     public enum OperationalInsightsClusterCapacity
     {
         /// <summary> FiveHundred. </summary>
-        FiveHundred,
+        FiveHundred = 0,
         /// <summary> TenHundred. </summary>
-        TenHundred,
+        TenHundred = 1,
         /// <summary> TwoThousand. </summary>
-        TwoThousand,
+        TwoThousand = 2,
         /// <summary> FiveThousand. </summary>
-        FiveThousand
+        FiveThousand = 3
     }
 }

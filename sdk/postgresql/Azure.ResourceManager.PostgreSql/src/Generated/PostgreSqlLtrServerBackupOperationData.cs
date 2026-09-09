@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             get
             {
-                return Properties is null ? default : Properties.StartOn;
+                return Properties is null ? default : Properties.StartsOn;
             }
             set
             {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                     {
                         Properties = new LtrBackupOperationResponseProperties();
                     }
-                    Properties.StartOn = value.Value;
+                    Properties.StartsOn = value.Value;
                 }
             }
         }
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
         {
             get
             {
-                return Properties is null ? default : Properties.EndOn;
+                return Properties is null ? default : Properties.EndsOn;
             }
             set
             {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 {
                     Properties = new LtrBackupOperationResponseProperties();
                 }
-                Properties.EndOn = value;
+                Properties.EndsOn = value;
             }
         }
 

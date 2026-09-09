@@ -1,4 +1,4 @@
-# Sample on getting the responses from Agent with skills in Azure.AI.Extensions.OpenAI.
+# Sample on getting responses from an Agent with skills in Azure.AI.Extensions.OpenAI
 
 **Note:** This feature is in preview; to use it, please disable the `AAIP001` warning.
 
@@ -9,160 +9,101 @@
 ## Hosted Code Agent Deployment prerequisites
 
 The skills in toolboxes are only supported in Hosted Agents. `Azure.AI.Projects` can be used only to create a `ProjectsAgentVersion` object; however, the hosted object represents the running container, which exposes the OpenAI-compatible API.
-1. Create a folder, containing agent code and dependencies. In our example, it should be located in the `Assets/AgentsCodeToolbox` folder next to the sample itself (this folder is not provided).
-2. Create the file `main.py` containing the logic for hosted Agent.
+1. Create a folder containing agent code and dependencies. In our example, it should be located in the `Assets/AgentsCodeToolbox` folder next to the sample itself (this folder is not provided).
+2. Create a project and add dependencies.
 
-```python
-import asyncio
-import os
-from collections.abc import AsyncGenerator
+```bash
+dotnet new console --name ToolboxSkillAgent --output ToolboxSkillAgent
+dotnet add package Azure.AI.Projects --prerelease
+dotnet add package Microsoft.Agents.AI.Foundry --prerelease
+dotnet add package Microsoft.Agents.AI.Foundry.Hosting --prerelease
+dotnet add package Microsoft.Agents.AI.Mcp --prerelease
+```
 
-import httpx
-from agent_framework import Agent, AgentSession, MCPStreamableHTTPTool
-from agent_framework.foundry import FoundryChatClient
-from agent_framework_foundry_hosting import ResponsesHostServer
-from azure.ai.agentserver.invocations import InvocationAgentServerHost
-from azure.ai.agentserver.core import get_request_context
-from azure.identity import DefaultAzureCredential
-from starlette.requests import Request
-from starlette.responses import JSONResponse, Response, StreamingResponse
+2. Populate the code in Program.cs
 
-DEFAULT_TOOLBOX_SCOPE = "https://ai.azure.com/.default"
+```C#
+using Azure.AI.Projects;
+using Azure.Core;
+using Azure.Identity;
+using Microsoft.Agents.AI;
+using Microsoft.Agents.AI.Foundry.Hosting;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.AI;
+using ModelContextProtocol.Client;
+using System.Net.Http.Headers;
 
-SYSTEM_PROMPT = """You are a shipping cost calculator. When asked to compute \
-shipping cost, use this formula: cost (USD) = 5 + 2 * weight_kg \
-for domestic destinations, and cost (USD) = 15 + 4 * weight_kg \
-for international destinations. Always state the formula you used."""
-
-# Read in the environment variables
-TOOLBOX_NAME = os.environ["TOOLBOX_NAME"]
-FOUNDRY_PROJECT_ENDPOINT = os.environ["FOUNDRY_PROJECT_ENDPOINT"]
-FOUNDRY_MODEL_NAME = os.environ["FOUNDRY_MODEL_NAME"]
-AGENT_NAME = os.environ["AGENT_NAME"]
-####
-
-
-class _ToolboxAuth(httpx.Auth):
-    def __init__(self, credential: DefaultAzureCredential, scope: str, agent_name: str) -> None:
-        self._credential = credential
-        self._scope = scope
-        self._agent_name = agent_name
-
-    def auth_flow(self, request: httpx.Request):
-        token = self._credential.get_token(self._scope).token
-        request.headers["Authorization"] = f"Bearer {token}"
-        for key, value in get_request_context().platform_headers().items():
-            request.headers[key] = value
-        if self._agent_name:
-            request.headers["x-aml-agent-name"] = self._agent_name
-        yield request
-
-
-class ReminderFoundryToolbox(MCPStreamableHTTPTool):
-    def __init__(
-        self,
-        credential: DefaultAzureCredential,
-        *,
-        timeout: float = 120.0,
-    ) -> None:
-        endpoint = f"{FOUNDRY_PROJECT_ENDPOINT.rstrip('/')}/toolboxes/{TOOLBOX_NAME}/mcp?api-version=v1"
-        http_client = httpx.AsyncClient(
-            auth=_ToolboxAuth(credential, DEFAULT_TOOLBOX_SCOPE, AGENT_NAME),
-            headers={
-                "x-aml-agent-name": AGENT_NAME,
-                "Foundry-Features": "Toolboxes=V1Preview"
+// Read in the environment variables
+string TOOLBOX_NAME = System.Environment.GetEnvironmentVariable(nameof(TOOLBOX_NAME)) ?? throw new InvalidOperationException($"Missing environment variable {nameof(TOOLBOX_NAME)}");
+string FOUNDRY_PROJECT_ENDPOINT = System.Environment.GetEnvironmentVariable(nameof(FOUNDRY_PROJECT_ENDPOINT)) ?? throw new InvalidOperationException($"Missing environment variable {nameof(FOUNDRY_PROJECT_ENDPOINT)}");
+string FOUNDRY_MODEL_NAME = System.Environment.GetEnvironmentVariable(nameof(FOUNDRY_MODEL_NAME)) ?? throw new InvalidOperationException($"Missing environment variable {nameof(FOUNDRY_MODEL_NAME)}");
+string AGENT_NAME = System.Environment.GetEnvironmentVariable(nameof(AGENT_NAME)) ?? throw new InvalidOperationException($"Missing environment variable {nameof(AGENT_NAME)}");
+//
+DefaultAzureCredential credential = new();
+using var httpClient = new HttpClient(new BearerTokenHandler(credential, "https://ai.azure.com/.default") { CheckCertificateRevocationList = true });
+await using var mcpClient = await McpClient.CreateAsync(
+    new HttpClientTransport(
+        new HttpClientTransportOptions
+        {
+            Endpoint = new Uri($"{FOUNDRY_PROJECT_ENDPOINT.TrimEnd('/')}/toolboxes/{TOOLBOX_NAME}/mcp?api-version=v1"),
+            Name = TOOLBOX_NAME,
+            TransportMode = HttpTransportMode.StreamableHttp,
+            AdditionalHeaders = new Dictionary<string, string>
+            {
+                ["Foundry-Features"] = "Toolboxes=V1Preview",
             },
-            timeout=timeout,
-        )
-        super().__init__(
-            name=TOOLBOX_NAME,
-            url=endpoint,
-            http_client=http_client,
-            load_prompts=False,
-            load_tools=True,
-        )
-
-    async def close(self) -> None:
-        try:
-            await super().close()
-        finally:
-            client = self._httpx_client
-            if client is not None:
-                self._httpx_client = None
-                await client.aclose()
-
-
-class MultiProtocolHost(ResponsesHostServer, InvocationAgentServerHost):
-    def __init__(self, agent: Agent, **kwargs) -> None:
-        super().__init__(agent, **kwargs)
-        self._invocation_sessions: dict[str, AgentSession] = {}
-        self.invoke_handler(self._handle_invoke)
-
-    async def _handle_invoke(self, request: Request) -> Response:
-        data = await request.json()
-        session_id: str = request.state.session_id
-        stream = data.get("stream", False)
-        user_message = data.get("message") or data.get("input")
-        if user_message is None:
-            error = "Missing 'message' in request"
-            if stream:
-                return StreamingResponse(content=error, status_code=400)
-            return Response(content=error, status_code=400)
-
-        await self._ensure_agent_ready()
-        session = self._invocation_sessions.setdefault(
-            session_id,
-            AgentSession(session_id=session_id),
-        )
-
-        if stream:
-
-            async def stream_response() -> AsyncGenerator[str]:
-                async for update in self._agent.run(user_message, session=session, stream=True):
-                    if update.text:
-                        yield update.text
-
-            return StreamingResponse(
-                stream_response(),
-                media_type="text/event-stream",
-                headers={"Cache-Control": "no-cache", "Connection": "keep-alive"},
-            )
-
-        response = await self._agent.run([user_message], session=session, stream=False)
-        return JSONResponse({"response": response.text, "session_id": session_id})
+        },
+        httpClient));
+AgentSkillsProvider skillProvider = new AgentSkillsProviderBuilder()
+    .UseMcpSkills(mcpClient)
+    .Build();
+AIAgent agent = new AIProjectClient(endpoint: new(FOUNDRY_PROJECT_ENDPOINT), credential)
+    .AsAIAgent(new ChatClientAgentOptions()
+    {
+        ChatOptions = new ChatOptions()
+        {
+            ModelId = FOUNDRY_MODEL_NAME,
+            Instructions = "You are a helpful assistant.",
+        },
+        AIContextProviders = [
+            skillProvider
+        ],
+        Name = AGENT_NAME,
+        Description = "Agent with Skill in the Toolbox."
+    });
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+builder.Services.AddFoundryResponses(agent);
+var app = builder.Build();
+app.MapFoundryResponses();
+app.Run();
 
 
-async def main() -> None:
-    credential = DefaultAzureCredential()
-    toolbox = ReminderFoundryToolbox(credential)
-    client = FoundryChatClient(
-        project_endpoint=FOUNDRY_PROJECT_ENDPOINT,
-        model=FOUNDRY_MODEL_NAME,
-        credential=credential,
-    )
-    agent = Agent(
-        client=client,
-        instructions=SYSTEM_PROMPT,
-        tools=toolbox,
-        default_options={"store": False},
-    )
-    server = MultiProtocolHost(agent)
-    await server.run_async()
+// ---------------------------------------------------------------------------
+// HttpClientHandler: attaches a fresh Foundry bearer token to every request
+// ---------------------------------------------------------------------------
+internal sealed class BearerTokenHandler(TokenCredential credential, string scope) : HttpClientHandler
+{
+    private readonly TokenRequestContext _tokenContext = new([scope]);
 
-
-if __name__ == "__main__":
-    asyncio.run(main())
+    protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+    {
+        AccessToken token = await credential.GetTokenAsync(this._tokenContext, cancellationToken).ConfigureAwait(false);
+        request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token.Token);
+        return await base.SendAsync(request, cancellationToken).ConfigureAwait(false);
+    }
+}
 ```
 
-3. Create the `requirements.txt` in the `Assets/AgentsCodeToolbox` folder with the next contents.
+3. Compile the application.
 
-```
-agent-framework-foundry
-agent-framework-foundry-hosting>=1.0.0a260630
-azure-identity>=1.25.0
+```bash
+dotnet publish
 ```
 
-# Run the sample.
+This will create the publish output in the `bin\Release\net%version%\publish\` folder, where `%version%` is the .NET version used to build the application.
+4. Copy the contents of `publish` folder to `Assets/AgentsCodeToolbox`.
+
+# Run the sample
 
 1. Read the environment variables, which will be used in the next steps.
 
@@ -174,7 +115,7 @@ AgentToolboxes toolboxClient = projectClient.AgentAdministrationClient.GetAgentT
 ProjectAgentSkills skillsClient = projectClient.AgentAdministrationClient.GetAgentSkills();
 ```
 
-2. Create a skill, add it to the toolbox and create MCP server tool, using the toolbox.
+2. Create a skill, add it to the toolbox, and create an MCP server tool using the toolbox.
 
 Synchronous sample:
 ```C# Snippet:Sample_CreateToolbox_ToolBoxSkill_Sync
@@ -228,7 +169,7 @@ ToolboxVersion toolBox = await toolboxClient.CreateVersionAsync(
 Console.WriteLine($"Created toolbox {toolBox.Name}, v. {toolBox.Version}.");
 ```
 
-3. In this example we will use files which should be in the `Assets/AgentsCodeToolbox` folder next to the sample source code. To get the file location we will use the `GetDirectory` method.
+3. In this example, we will use files that should be in the `Assets/AgentsCodeToolbox` folder next to the sample source code. To get the file location, we will use the `GetDirectory` method.
 
 ```C# Snippet:Sample_GetPath_ToolBoxSkill
 protected static string GetDirectory(string path, [CallerFilePath] string pth = "")
@@ -238,7 +179,8 @@ protected static string GetDirectory(string path, [CallerFilePath] string pth = 
 }
 ```
 
-4. For brevity we will create the method, returning the `AgentVersionFromCodeMetadata` object. It contains all environment variables needed to access toolbox from the Hosted Agent.
+4. For brevity, we will create a method that returns the `AgentVersionFromCodeMetadata` object. It contains all environment variables needed to access the toolbox from the Hosted Agent.
+**Note:** In this example we are uploading the project. It is also possible to place source codes and a C# project file to the `Assets/AgentsCodeToolbox` folder. In this case we will need to set `dependencyResolution: CodeDependencyResolution.RemoteBuild`.
 
 ```C# Snippet:Sample_CodeAgentMetadata_ToolBoxSkill
 private static AgentVersionFromCodeMetadata GetAgentMetadata(string middlewareAgentName, string toolboxName, string foundryProjectEndpoint, string modelDeploymentName)
@@ -250,15 +192,16 @@ private static AgentVersionFromCodeMetadata GetAgentMetadata(string middlewareAg
     {
         Versions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "2.0.0") },
         CodeConfiguration = new(
-            runtime: "python_3_14",
-            entryPoint: ["python", "main.py"],
-            dependencyResolution: CodeDependencyResolution.RemoteBuild
+            runtime: "dotnet_10",
+            entryPoint: ["dotnet", "ToolboxSkillAgent.dll"],
+            dependencyResolution: CodeDependencyResolution.Bundled
         ),
         EnvironmentVariables = {
             { "AGENT_NAME", middlewareAgentName},
             { "TOOLBOX_NAME", toolboxName},
             { "FOUNDRY_PROJECT_ENDPOINT", foundryProjectEndpoint},
             { "FOUNDRY_MODEL_NAME", modelDeploymentName },
+            { "ASPNETCORE_URLS", "http://+:8088"},
         }
     };
     AgentVersionFromCodeMetadata metadata = new(agentDefinition);
@@ -290,6 +233,8 @@ if (agentVersion.Status != AgentVersionStatus.Active)
 {
     throw new InvalidOperationException($"The Agent deployment failed, status: {agentVersion.Status}");
 }
+Console.WriteLine($"Created Agent {agentVersion.Name}, v. {agentVersion.Version}.");
+Console.WriteLine($"The Agent's identity ID is {agentVersion.InstanceIdentity.ClientId}. Please use it to set \"Foundry User\" permission if needed.");
 ```
 
 Asynchronous sample:
@@ -313,36 +258,112 @@ if (agentVersion.Status != AgentVersionStatus.Active)
 {
     throw new InvalidOperationException($"The Agent deployment failed, status: {agentVersion.Status}");
 }
+Console.WriteLine($"Created Agent {agentVersion.Name}, v. {agentVersion.Version}.");
+Console.WriteLine($"The Agent's identity ID is {agentVersion.InstanceIdentity.ClientId}. Please use it to set \"Foundry User\" permission if needed.");
 ```
 
-6. Get the response from Agent.
+6. Get the response from the Agent. The toolbox works as an MCP server. In our server-side Python example, we did not set up automatic approval, so we need to approve the MCP call in our code.
+**Note:** To access the toolbox with the skill, the Agent needs to have the "Foundry User" permission with regard to the account (one level above the project). Please set this permission if the Agent cannot access Skill.
 
 Synchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgent_ToolBoxSkill_Sync
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
-ResponseResult latestResponse = responseClient.CreateResponse("Compute the shipping cost for a 3 kg package shipped domestically.");
+
+CreateResponseOptions nextResponseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem("Compute the shipping cost for a 3 kg package shipped domestically.") }
+};
+ResponseResult latestResponse = null;
+while (nextResponseOptions is not null)
+{
+    latestResponse = responseClient.CreateResponse(nextResponseOptions);
+    nextResponseOptions = null;
+
+    foreach (ResponseItem responseItem in latestResponse.OutputItems)
+    {
+        if (responseItem is McpToolCallApprovalRequestItem mcpToolCall)
+        {
+            nextResponseOptions = new CreateResponseOptions()
+            {
+                PreviousResponseId = latestResponse.Id,
+            };
+            if (string.Equals(mcpToolCall.ServerLabel, "agent_framework"))
+            {
+                Console.WriteLine($"Approving {mcpToolCall.ServerLabel}...");
+                // Automatically approve the MCP request to allow the agent to proceed
+                // In production, you might want to implement more sophisticated approval logic
+                nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
+            }
+            else
+            {
+                Console.WriteLine($"Rejecting unknown call {mcpToolCall.ServerLabel}...");
+                nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: false));
+            }
+        }
+        else if (responseItem is FunctionCallResponseItem functionCallResponse)
+        {
+            Console.WriteLine($"Calling function {functionCallResponse.FunctionName} with arguments {functionCallResponse.FunctionArguments}");
+        }
+    }
+}
 Console.WriteLine(latestResponse.GetOutputText());
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgent_ToolBoxSkill_Async
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
-ResponseResult latestResponse = await responseClient.CreateResponseAsync("Compute the shipping cost for a 3 kg package shipped domestically.");
+CreateResponseOptions nextResponseOptions = new()
+{
+    InputItems = { ResponseItem.CreateUserMessageItem("Compute the shipping cost for a 3 kg package shipped domestically.") }
+};
+ResponseResult latestResponse = null;
+while (nextResponseOptions is not null)
+{
+    latestResponse = await responseClient.CreateResponseAsync(nextResponseOptions);
+    nextResponseOptions = null;
+
+    foreach (ResponseItem responseItem in latestResponse.OutputItems)
+    {
+        if (responseItem is McpToolCallApprovalRequestItem mcpToolCall)
+        {
+            nextResponseOptions = new CreateResponseOptions()
+            {
+                PreviousResponseId = latestResponse.Id,
+            };
+            if (string.Equals(mcpToolCall.ServerLabel, "agent_framework"))
+            {
+                Console.WriteLine($"Approving {mcpToolCall.ServerLabel}...");
+                // Automatically approve the MCP request to allow the agent to proceed
+                // In production, you might want to implement more sophisticated approval logic
+                nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: true));
+            }
+            else
+            {
+                Console.WriteLine($"Rejecting unknown call {mcpToolCall.ServerLabel}...");
+                nextResponseOptions.InputItems.Add(ResponseItem.CreateMcpApprovalResponseItem(approvalRequestId: mcpToolCall.Id, approved: false));
+            }
+        }
+        else if (responseItem is FunctionCallResponseItem functionCallResponse)
+        {
+            Console.WriteLine($"Calling function {functionCallResponse.FunctionName} with arguments {functionCallResponse.FunctionArguments}");
+        }
+    }
+}
 Console.WriteLine(latestResponse.GetOutputText());
 ```
 
-7. Delete the Agent, skill and a Toolbox we have created.
+7. Delete the Skill and the Toolbox we have created. We do not remove the Agent, to allow setting permissions and re-running the sample.
 
 Synchronous sample:
 ```C# Snippet:DeleteToolBoxSkill_ToolBoxSkill_Sync
-projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
+// projectClient.AgentAdministrationClient.DeleteAgent(agentVersion.Name, force: true);
 toolboxClient.Delete(name: toolBox.Name);
 skillsClient.DeleteSkill(name: skill.Name);
 ```
 
 Asynchronous sample:
 ```C# Snippet:DeleteToolBoxSkill_ToolBoxSkill_Async
-await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
+// await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentVersion.Name, force: true);
 await toolboxClient.DeleteAsync(name: toolBox.Name);
 await skillsClient.DeleteSkillAsync(name: skill.Name);
 ```

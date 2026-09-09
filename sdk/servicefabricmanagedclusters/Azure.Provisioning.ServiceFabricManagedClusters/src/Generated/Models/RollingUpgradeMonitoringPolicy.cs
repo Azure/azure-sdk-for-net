@@ -121,11 +121,11 @@ namespace Azure.Provisioning.ServiceFabricManagedClusters
         {
             base.DefineProvisionableProperties();
             _failureAction = DefineProperty<PolicyViolationCompensationAction>(nameof(FailureAction), new string[] { "failureAction" }, isRequired: true);
-            _healthCheckWaitDuration = DefineProperty<TimeSpan>(nameof(HealthCheckWaitDuration), new string[] { "healthCheckWaitDuration" }, isRequired: true);
-            _healthCheckStableDuration = DefineProperty<TimeSpan>(nameof(HealthCheckStableDuration), new string[] { "healthCheckStableDuration" }, isRequired: true);
-            _healthCheckRetryTimeout = DefineProperty<TimeSpan>(nameof(HealthCheckRetryTimeout), new string[] { "healthCheckRetryTimeout" }, isRequired: true);
-            _upgradeTimeout = DefineProperty<TimeSpan>(nameof(UpgradeTimeout), new string[] { "upgradeTimeout" }, isRequired: true);
-            _upgradeDomainTimeout = DefineProperty<TimeSpan>(nameof(UpgradeDomainTimeout), new string[] { "upgradeDomainTimeout" }, isRequired: true);
+            _healthCheckWaitDuration = DefineProperty<TimeSpan>(nameof(HealthCheckWaitDuration), new string[] { "healthCheckWaitDuration" }, isRequired: true, format: "c");
+            _healthCheckStableDuration = DefineProperty<TimeSpan>(nameof(HealthCheckStableDuration), new string[] { "healthCheckStableDuration" }, isRequired: true, format: "c");
+            _healthCheckRetryTimeout = DefineProperty<TimeSpan>(nameof(HealthCheckRetryTimeout), new string[] { "healthCheckRetryTimeout" }, isRequired: true, format: "c");
+            _upgradeTimeout = DefineProperty<TimeSpan>(nameof(UpgradeTimeout), new string[] { "upgradeTimeout" }, isRequired: true, format: "c");
+            _upgradeDomainTimeout = DefineProperty<TimeSpan>(nameof(UpgradeDomainTimeout), new string[] { "upgradeDomainTimeout" }, isRequired: true, format: "c");
             DefineAdditionalProperties();
         }
 

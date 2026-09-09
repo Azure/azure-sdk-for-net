@@ -205,5 +205,14 @@ namespace Azure.ResourceManager.ContainerService.Mocking
             ManagedClusterMeshMembershipResource.ValidateResourceId(id);
             return new ManagedClusterMeshMembershipResource(Client, id);
         }
+
+        /// <summary> Gets an object representing a <see cref="ContainerServiceAlertConfigurationResource"/> along with the instance operations that can be performed on it but with no data. </summary>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <returns> Returns a <see cref="ContainerServiceAlertConfigurationResource"/> object. </returns>
+        public virtual ContainerServiceAlertConfigurationResource GetContainerServiceAlertConfigurationResource(ResourceIdentifier id)
+        {
+            ContainerServiceAlertConfigurationResource.ValidateResourceId(id);
+            return new ContainerServiceAlertConfigurationResource(Client, id);
+        }
     }
 }

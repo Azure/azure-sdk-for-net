@@ -12,7 +12,7 @@ using Azure.Core;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The details of a refund request. </summary>
-    public partial class InvoicePropertiesRefundDetails : RefundDetailsSummary
+    internal partial class InvoicePropertiesRefundDetails : RefundDetailsSummary
     {
         /// <summary> Initializes a new instance of <see cref="InvoicePropertiesRefundDetails"/>. </summary>
         public InvoicePropertiesRefundDetails()

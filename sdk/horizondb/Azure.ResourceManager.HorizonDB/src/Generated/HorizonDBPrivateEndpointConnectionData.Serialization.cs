@@ -60,6 +60,16 @@ namespace Azure.ResourceManager.HorizonDB
         /// <param name="options"> The client options for reading and writing models. </param>
         string IPersistableModel<HorizonDBPrivateEndpointConnectionData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <param name="horizonDBPrivateEndpointConnectionData"> The <see cref="HorizonDBPrivateEndpointConnectionData"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(HorizonDBPrivateEndpointConnectionData horizonDBPrivateEndpointConnectionData)
+        {
+            if (horizonDBPrivateEndpointConnectionData == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(horizonDBPrivateEndpointConnectionData, ModelSerializationExtensions.WireOptions);
+        }
+
         /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="HorizonDBPrivateEndpointConnectionData"/> from. </param>
         internal static HorizonDBPrivateEndpointConnectionData FromResponse(Response response)
         {

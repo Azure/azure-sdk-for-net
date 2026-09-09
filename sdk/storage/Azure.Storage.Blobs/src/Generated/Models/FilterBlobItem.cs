@@ -5,33 +5,26 @@
 
 #nullable disable
 
-using System;
-using Azure.Storage.Common;
-
 namespace Azure.Storage.Blobs.Models
 {
-    /// <summary> Blob info from a Filter Blobs API call. </summary>
+    /// <summary> The filtered blob item. </summary>
     internal partial class FilterBlobItem
     {
         /// <summary> Initializes a new instance of <see cref="FilterBlobItem"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="containerName"></param>
-        /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="containerName"/> is null. </exception>
+        /// <param name="name"> The name of the blob. </param>
+        /// <param name="containerName"> The name of the container. </param>
         internal FilterBlobItem(string name, string containerName)
         {
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(containerName, nameof(containerName));
-
             Name = name;
             ContainerName = containerName;
         }
 
         /// <summary> Initializes a new instance of <see cref="FilterBlobItem"/>. </summary>
-        /// <param name="name"></param>
-        /// <param name="containerName"></param>
-        /// <param name="tags"> Blob tags. </param>
-        /// <param name="versionId"></param>
-        /// <param name="isCurrentVersion"></param>
+        /// <param name="name"> The name of the blob. </param>
+        /// <param name="containerName"> The name of the container. </param>
+        /// <param name="tags"> The tags of the blob. </param>
+        /// <param name="versionId"> The version ID of the blob. </param>
+        /// <param name="isCurrentVersion"> Whether it is the current version of the blob. </param>
         internal FilterBlobItem(string name, string containerName, BlobTags tags, string versionId, bool? isCurrentVersion)
         {
             Name = name;
@@ -41,15 +34,19 @@ namespace Azure.Storage.Blobs.Models
             IsCurrentVersion = isCurrentVersion;
         }
 
-        /// <summary> Gets the name. </summary>
+        /// <summary> The name of the blob. </summary>
         public string Name { get; }
-        /// <summary> Gets the container name. </summary>
+
+        /// <summary> The name of the container. </summary>
         public string ContainerName { get; }
-        /// <summary> Blob tags. </summary>
+
+        /// <summary> The tags of the blob. </summary>
         public BlobTags Tags { get; }
-        /// <summary> Gets the version id. </summary>
+
+        /// <summary> The version ID of the blob. </summary>
         public string VersionId { get; }
-        /// <summary> Gets the is current version. </summary>
+
+        /// <summary> Whether it is the current version of the blob. </summary>
         public bool? IsCurrentVersion { get; }
     }
 }

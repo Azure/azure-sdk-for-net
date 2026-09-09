@@ -88,6 +88,16 @@ namespace Azure.AI.ContentUnderstanding
             writer.WriteNumberValue(StartPageNumber);
             writer.WritePropertyName("endPageNumber"u8);
             writer.WriteNumberValue(EndPageNumber);
+            if (Optional.IsDefined(Confidence))
+            {
+                writer.WritePropertyName("confidence"u8);
+                writer.WriteNumberValue(Confidence.Value);
+            }
+            if (Optional.IsDefined(Source))
+            {
+                writer.WritePropertyName("source"u8);
+                writer.WriteStringValue(Source);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -135,6 +145,8 @@ namespace Azure.AI.ContentUnderstanding
             ContentSpan span = default;
             int startPageNumber = default;
             int endPageNumber = default;
+            float? confidence = default;
+            string source = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -163,6 +175,20 @@ namespace Azure.AI.ContentUnderstanding
                     endPageNumber = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("confidence"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    confidence = prop.Value.GetSingle();
+                    continue;
+                }
+                if (prop.NameEquals("source"u8))
+                {
+                    source = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -174,6 +200,8 @@ namespace Azure.AI.ContentUnderstanding
                 span,
                 startPageNumber,
                 endPageNumber,
+                confidence,
+                source,
                 additionalBinaryDataProperties);
         }
     }

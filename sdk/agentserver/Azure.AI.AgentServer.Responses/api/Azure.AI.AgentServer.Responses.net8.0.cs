@@ -33,12 +33,6 @@ namespace Azure.AI.AgentServer.Responses
         public static bool TryDecodeBytes(string? dataUrl, out byte[] bytes) { throw null; }
         public static bool TryDecodeBytes(System.Uri? uri, out byte[] bytes) { throw null; }
     }
-    public partial interface IAsyncObserver<in T>
-    {
-        System.Threading.Tasks.ValueTask OnCompletedAsync();
-        System.Threading.Tasks.ValueTask OnErrorAsync(System.Exception error);
-        System.Threading.Tasks.ValueTask OnNextAsync(T value);
-    }
     public partial class InMemoryProviderOptions
     {
         public InMemoryProviderOptions() { }
@@ -200,13 +194,20 @@ namespace Azure.AI.AgentServer.Responses
     public partial class ResponseContext
     {
         public ResponseContext(string responseId) { }
+        public virtual bool ClientCancelled { get { throw null; } }
         public virtual System.Collections.Generic.IReadOnlyDictionary<string, string> ClientHeaders { get { throw null; } }
         public virtual string ConversationChainId { get { throw null; } }
+        public virtual bool IsRecovery { get { throw null; } }
         public bool IsShutdownRequested { get { throw null; } set { } }
+        public virtual bool IsSteeredTurn { get { throw null; } }
+        public virtual int PendingInputCount { get { throw null; } }
+        public virtual Azure.AI.AgentServer.Responses.Models.ResponseObject? PersistedResponse { get { throw null; } }
         public virtual Azure.AI.AgentServer.Core.PlatformContext PlatformContext { get { throw null; } }
         public virtual System.Collections.Generic.IReadOnlyDictionary<string, Microsoft.Extensions.Primitives.StringValues> QueryParameters { get { throw null; } }
         public virtual System.BinaryData? RawBody { get { throw null; } }
         public string ResponseId { get { throw null; } }
+        public virtual System.Threading.CancellationToken Shutdown { get { throw null; } }
+        public virtual System.Threading.Tasks.Task ExitForRecoveryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Azure.AI.AgentServer.Responses.Models.OutputItem>> GetHistoryAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<System.Collections.Generic.IReadOnlyList<Azure.AI.AgentServer.Responses.Models.Item>> GetInputItemsAsync(bool resolveReferences = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<string> GetInputTextAsync(bool resolveReferences = true, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -245,6 +246,8 @@ namespace Azure.AI.AgentServer.Responses
     {
         protected ResponseEventStream() { }
         public ResponseEventStream(Azure.AI.AgentServer.Responses.ResponseContext context, Azure.AI.AgentServer.Responses.Models.CreateResponse request) { }
+        public ResponseEventStream(Azure.AI.AgentServer.Responses.ResponseContext context, Azure.AI.AgentServer.Responses.Models.ResponseObject persistedResponse) { }
+        public virtual System.Collections.Generic.IDictionary<string, string> InternalMetadata { get { throw null; } }
         public Azure.AI.AgentServer.Responses.Models.ResponseObject Response { get { throw null; } }
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemApplyPatchToolCall> AddOutputItemApplyPatchCall() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.OutputItemApplyPatchToolCallOutput> AddOutputItemApplyPatchCallOutput() { throw null; }
@@ -270,6 +273,7 @@ namespace Azure.AI.AgentServer.Responses
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<Azure.AI.AgentServer.Responses.Models.StructuredOutputsOutputItem> AddOutputItemStructuredOutputs() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemWebSearchCallBuilder AddOutputItemWebSearchCall() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.OutputItemBuilder<T> AddOutputItem<T>(string itemId) where T : Azure.AI.AgentServer.Responses.Models.OutputItem { throw null; }
+        public Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent Checkpoint() { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseCompletedEvent EmitCompleted(Azure.AI.AgentServer.Responses.Models.ResponseUsage? usage = null) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseCreatedEvent EmitCreated(Azure.AI.AgentServer.Responses.Models.ResponseStatus status = Azure.AI.AgentServer.Responses.Models.ResponseStatus.InProgress) { throw null; }
         public virtual Azure.AI.AgentServer.Responses.Models.ResponseFailedEvent EmitFailed(Azure.AI.AgentServer.Responses.Models.ResponseErrorCode code, string message = "An internal server error occurred.", Azure.AI.AgentServer.Responses.Models.ResponseUsage? usage = null) { throw null; }
@@ -350,17 +354,13 @@ namespace Azure.AI.AgentServer.Responses
         public ResponsesServerOptions() { }
         public int DefaultFetchHistoryCount { get { throw null; } set { } }
         public string? DefaultModel { get { throw null; } set { } }
+        public bool ResilientBackground { get { throw null; } set { } }
+        public System.Func<Azure.AI.AgentServer.Responses.Models.CreateResponse, Azure.AI.AgentServer.Responses.ResponseContext, Azure.AI.AgentServer.Responses.Models.ResponseObject>? ResponseAcceptor { get { throw null; } set { } }
+        public bool SteerableConversations { get { throw null; } set { } }
     }
     public static partial class ResponsesServerServiceCollectionExtensions
     {
         public static Microsoft.Extensions.DependencyInjection.IServiceCollection AddResponsesServer(this Microsoft.Extensions.DependencyInjection.IServiceCollection services, System.Action<Azure.AI.AgentServer.Responses.ResponsesServerOptions>? configure = null) { throw null; }
-    }
-    public abstract partial class ResponsesStreamProvider
-    {
-        protected ResponsesStreamProvider() { }
-        public abstract System.Threading.Tasks.Task<Azure.AI.AgentServer.Responses.IAsyncObserver<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent>> CreateEventPublisherAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
-        public virtual System.Threading.Tasks.Task DeleteEventStreamAsync(string responseId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        public abstract System.Threading.Tasks.Task<System.IAsyncDisposable> SubscribeToEventsAsync(string responseId, Azure.AI.AgentServer.Responses.IAsyncObserver<Azure.AI.AgentServer.Responses.Models.ResponseStreamEvent> observer, long? cursor = default(long?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken));
     }
     public partial class TextContentBuilder
     {

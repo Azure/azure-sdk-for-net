@@ -15,7 +15,7 @@ using Azure.ResourceManager.ContainerRegistry.Tasks.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Tasks
 {
-    internal partial class TaskRunsGetAllAsyncCollectionResultOfT : AsyncPageable<TaskRunData>
+    internal partial class TaskRunsGetAllAsyncCollectionResultOfT : AsyncPageable<ContainerRegistryTaskRunData>
     {
         private readonly TaskRuns _client;
         private readonly Guid _subscriptionId;
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of TaskRunsGetAllAsyncCollectionResultOfT as an enumerable collection. </returns>
-        public override async IAsyncEnumerable<Page<TaskRunData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override async IAsyncEnumerable<Page<ContainerRegistryTaskRunData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Tasks
                 TaskRunListResult result = TaskRunListResult.FromResponse(response);
                 string nextPageString = result.NextLink;
                 nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
-                yield return Page<TaskRunData>.FromValues((IReadOnlyList<TaskRunData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<ContainerRegistryTaskRunData>.FromValues((IReadOnlyList<ContainerRegistryTaskRunData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

@@ -23,11 +23,13 @@ namespace Azure.AI.Projects
         /// <param name="imageUrl"></param>
         /// <param name="fileId"></param>
         /// <param name="detail"> The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </param>
-        internal InputContentInputImageContent(InputContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri imageUrl, string fileId, ImageDetail detail) : base(@type, additionalBinaryDataProperties)
+        /// <param name="promptCacheBreakpoint"></param>
+        internal InputContentInputImageContent(InputContentType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, Uri imageUrl, string fileId, ImageDetail detail, PromptCacheBreakpointConfig promptCacheBreakpoint) : base(@type, additionalBinaryDataProperties)
         {
             ImageUrl = imageUrl;
             FileId = fileId;
             Detail = detail;
+            PromptCacheBreakpoint = promptCacheBreakpoint;
         }
 
         /// <summary> Gets or sets the ImageUrl. </summary>
@@ -38,5 +40,8 @@ namespace Azure.AI.Projects
 
         /// <summary> The detail level of the image to be sent to the model. One of `high`, `low`, `auto`, or `original`. Defaults to `auto`. </summary>
         public ImageDetail Detail { get; }
+
+        /// <summary> Gets or sets the PromptCacheBreakpoint. </summary>
+        public PromptCacheBreakpointConfig PromptCacheBreakpoint { get; set; }
     }
 }

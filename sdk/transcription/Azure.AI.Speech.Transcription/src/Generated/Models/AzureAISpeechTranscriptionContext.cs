@@ -19,6 +19,7 @@ namespace Azure.AI.Speech.Transcription
     [ModelReaderWriterBuildable(typeof(PhraseListProperties))]
     [ModelReaderWriterBuildable(typeof(TranscribedPhrase))]
     [ModelReaderWriterBuildable(typeof(TranscribedWord))]
+    [ModelReaderWriterBuildable(typeof(TranscriptionContent))]
     [ModelReaderWriterBuildable(typeof(TranscriptionDiarizationOptions))]
     [ModelReaderWriterBuildable(typeof(TranscriptionOptions))]
     [ModelReaderWriterBuildable(typeof(TranscriptionResult))]

@@ -114,7 +114,7 @@ namespace Azure.Provisioning.Communication
             _firstName = DefineProperty<string>(nameof(FirstName), new string[] { "firstName" });
             _lastName = DefineProperty<string>(nameof(LastName), new string[] { "lastName" });
             _notes = DefineProperty<string>(nameof(Notes), new string[] { "notes" });
-            _lastModified = DefineProperty<DateTimeOffset>(nameof(LastModified), new string[] { "lastModified" }, isOutput: true);
+            _lastModified = DefineProperty<DateTimeOffset>(nameof(LastModified), new string[] { "lastModified" }, isOutput: true, format: "O");
             _dataLocation = DefineProperty<string>(nameof(DataLocation), new string[] { "dataLocation" }, isOutput: true);
             DefineAdditionalProperties();
         }

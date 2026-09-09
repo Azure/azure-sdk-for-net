@@ -59,7 +59,7 @@ namespace Azure.Security.KeyVault.Secrets
                 List<BinaryData> items = new List<BinaryData>();
                 foreach (var item in result.Value)
                 {
-                    items.Add(ModelReaderWriter.Write(item, ModelSerializationExtensions.WireOptions, AzureSecurityKeyVaultSecretsContext.Default));
+                    items.Add(ModelReaderWriter.Write(item, ModelReaderWriterOptions.Json, AzureSecurityKeyVaultSecretsContext.Default));
                 }
                 yield return Page<BinaryData>.FromValues(items, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)

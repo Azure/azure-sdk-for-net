@@ -298,6 +298,9 @@ namespace Azure.Generator.Management.Providers
 
         protected override string BuildRelativeFilePath() => Path.Combine("src", "Generated", $"{Name}.cs");
 
+        protected override IReadOnlyList<CSharpType> BuildBodyDependencyTypes()
+            => ManagementMethodProvider.GetBodyDependencyTypes(Methods);
+
         protected override CSharpType? BuildBaseType() => typeof(ArmCollection);
 
         protected override CSharpType[] BuildImplements() =>
@@ -443,6 +446,19 @@ namespace Azure.Generator.Management.Providers
             return false;
         }
 
+        protected override IReadOnlyList<MethodProvider> BuildMethodsForBackCompatibility(IEnumerable<MethodProvider> originalMethods)
+        {
+            if (LastContractView?.Methods == null || LastContractView.Methods.Count == 0)
+            {
+                return [.. originalMethods];
+            }
+
+            var originalMethodList = originalMethods as IReadOnlyList<MethodProvider> ?? [.. originalMethods];
+            var backCompatMethods = base.BuildMethodsForBackCompatibility(originalMethodList);
+
+            return BackCompatHelper.DecorateBackwardCompatibilityMethods(backCompatMethods, originalMethodList);
+        }
+
         protected override MethodProvider[] BuildMethods()
         {
             var methods = new List<MethodProvider>();
@@ -551,7 +567,7 @@ namespace Azure.Generator.Management.Providers
             var restClientInfo = _clientInfos[_create.InputClient];
             foreach (var isAsync in new List<bool> { true, false })
             {
-                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_create.InputMethod.Operation, isAsync);
+                var convenienceMethod = restClientInfo.RestClientProvider.GetConvenienceMethodByOperation(_create.InputMethod.Operation, isAsync, this);
                 var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Create, isAsync, true);
                 result.Add(new ResourceOperationMethodProvider(this, BuildParameterMapping(new RequestPathPattern(_create.InputMethod.Operation.Path)), restClientInfo, _create.InputMethod, ResourceOperationKind.Create, isAsync, methodName: methodName, forceLro: true));
             }
@@ -582,7 +598,7 @@ namespace Azure.Generator.Management.Providers
                 return new ArrayResponseOperationMethodProvider(this, parameterMappings, clientInfo, method, isAsync, methodName, explicitResourceClient);
             }
 
-        return new ResourceOperationMethodProvider(this, parameterMappings, clientInfo, method, operationKind, isAsync, methodName, explicitResourceClient: explicitResourceClient);
+            return new ResourceOperationMethodProvider(this, parameterMappings, clientInfo, method, operationKind, isAsync, methodName, explicitResourceClient: explicitResourceClient);
         }
 
         private MethodProvider? BuildGetMethod(bool isAsync)
@@ -594,7 +610,7 @@ namespace Azure.Generator.Management.Providers
 
             var restClientInfo = _clientInfos[_get.InputClient];
             var methodName = ResourceHelpers.GetOperationMethodName(ResourceOperationKind.Read, isAsync, true);
-                return new ResourceOperationMethodProvider(this, BuildParameterMapping(new RequestPathPattern(_get.InputMethod.Operation.Path)), restClientInfo, _get.InputMethod, ResourceOperationKind.Read, isAsync, methodName);
+            return new ResourceOperationMethodProvider(this, BuildParameterMapping(new RequestPathPattern(_get.InputMethod.Operation.Path)), restClientInfo, _get.InputMethod, ResourceOperationKind.Read, isAsync, methodName);
         }
 
         private List<MethodProvider> BuildGetMethods()

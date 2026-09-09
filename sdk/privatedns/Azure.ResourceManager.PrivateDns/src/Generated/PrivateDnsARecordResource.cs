@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.PrivateDns
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="privateZoneName"> The privateZoneName. </param>
-        /// <param name="relativeRecordSetName"> The relativeRecordSetName. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateZoneName, string relativeRecordSetName)
+        /// <param name="aRecordName"> The relativeRecordSetName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string privateZoneName, string aRecordName)
         {
-            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/A/{relativeRecordSetName}";
+            string resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/privateDnsZones/{privateZoneName}/A/{aRecordName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -208,13 +208,13 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parameters"> Parameters supplied to the Update operation. </param>
+        /// <param name="data"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual async Task<Response<PrivateDnsARecordResource>> UpdateAsync(PrivateDnsARecordData parameters, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual async Task<Response<PrivateDnsARecordResource>> UpdateAsync(PrivateDnsARecordData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("PrivateDnsARecordResource.Update");
             scope.Start();
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "A", Id.Name, PrivateDnsARecordData.ToRequestContent(parameters), ifMatch, context);
+                HttpMessage message = _recordSetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "A", Id.Name, PrivateDnsARecordData.ToRequestContent(data), ifMatch, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<PrivateDnsARecordData> response = Response.FromValue(PrivateDnsARecordData.FromResponse(result), result);
                 if (response.Value == null)
@@ -261,13 +261,13 @@ namespace Azure.ResourceManager.PrivateDns
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="parameters"> Parameters supplied to the Update operation. </param>
+        /// <param name="data"> Parameters supplied to the Update operation. </param>
         /// <param name="ifMatch"> The ETag of the record set. Omit this value to always overwrite the current record set. Specify the last-seen ETag value to prevent accidentally overwriting concurrent changes. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
-        public virtual Response<PrivateDnsARecordResource> Update(PrivateDnsARecordData parameters, ETag? ifMatch = default, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
+        public virtual Response<PrivateDnsARecordResource> Update(PrivateDnsARecordData data, ETag? ifMatch = default, CancellationToken cancellationToken = default)
         {
-            Argument.AssertNotNull(parameters, nameof(parameters));
+            Argument.AssertNotNull(data, nameof(data));
 
             using DiagnosticScope scope = _recordSetsClientDiagnostics.CreateScope("PrivateDnsARecordResource.Update");
             scope.Start();
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.PrivateDns
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _recordSetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "A", Id.Name, PrivateDnsARecordData.ToRequestContent(parameters), ifMatch, context);
+                HttpMessage message = _recordSetsRestClient.CreateUpdateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, "A", Id.Name, PrivateDnsARecordData.ToRequestContent(data), ifMatch, context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<PrivateDnsARecordData> response = Response.FromValue(PrivateDnsARecordData.FromResponse(result), result);
                 if (response.Value == null)

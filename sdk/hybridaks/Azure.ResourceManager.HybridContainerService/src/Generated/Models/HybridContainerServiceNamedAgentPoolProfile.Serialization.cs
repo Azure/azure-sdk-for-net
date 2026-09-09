@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class HybridContainerServiceNamedAgentPoolProfile : IUtf8JsonSerializable, IJsonModel<HybridContainerServiceNamedAgentPoolProfile>
+    /// <summary> Profile of the default agent pool along with a name parameter. </summary>
+    public partial class HybridContainerServiceNamedAgentPoolProfile : HybridContainerServiceAgentPoolProfile, IJsonModel<HybridContainerServiceNamedAgentPoolProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridContainerServiceNamedAgentPoolProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override HybridContainerServiceAgentPoolProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHybridContainerServiceNamedAgentPoolProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridContainerServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridContainerServiceNamedAgentPoolProfile IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => (HybridContainerServiceNamedAgentPoolProfile)PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HybridContainerServiceNamedAgentPoolProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support writing '{format}' format.");
             }
-
             base.JsonModelWriteCore(writer, options);
             if (Optional.IsDefined(Count))
             {
@@ -50,6 +90,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
+            if (Optional.IsDefined(GpuCountPerNode))
+            {
+                writer.WritePropertyName("gpuCountPerNode"u8);
+                writer.WriteNumberValue(GpuCountPerNode.Value);
+            }
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -57,199 +102,196 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
         }
 
-        HybridContainerServiceNamedAgentPoolProfile IJsonModel<HybridContainerServiceNamedAgentPoolProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridContainerServiceNamedAgentPoolProfile IJsonModel<HybridContainerServiceNamedAgentPoolProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => (HybridContainerServiceNamedAgentPoolProfile)JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected override HybridContainerServiceAgentPoolProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHybridContainerServiceNamedAgentPoolProfile(document.RootElement, options);
         }
 
-        internal static HybridContainerServiceNamedAgentPoolProfile DeserializeHybridContainerServiceNamedAgentPoolProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HybridContainerServiceNamedAgentPoolProfile DeserializeHybridContainerServiceNamedAgentPoolProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            int? count = default;
-            string vmSize = default;
-            string kubernetesVersion = default;
-            string name = default;
             HybridContainerServiceOSType? osType = default;
-            HybridContainerServiceOSSku? ossku = default;
+            HybridContainerServiceOSSku? osSku = default;
             IDictionary<string, string> nodeLabels = default;
             IList<string> nodeTaints = default;
             int? maxCount = default;
             int? minCount = default;
             bool? enableAutoScaling = default;
             int? maxPods = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            int? count = default;
+            string vmSize = default;
+            string kubernetesVersion = default;
+            int? gpuCountPerNode = default;
+            string name = default;
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("count"u8))
+                if (prop.NameEquals("OSType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    count = property.Value.GetInt32();
+                    osType = new HybridContainerServiceOSType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("vmSize"u8))
+                if (prop.NameEquals("OSSku"u8))
                 {
-                    vmSize = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("kubernetesVersion"u8))
-                {
-                    kubernetesVersion = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("name"u8))
-                {
-                    name = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("osType"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osType = new HybridContainerServiceOSType(property.Value.GetString());
+                    osSku = new HybridContainerServiceOSSku(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("osSKU"u8))
+                if (prop.NameEquals("nodeLabels"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    ossku = new HybridContainerServiceOSSku(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("nodeLabels"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     nodeLabels = dictionary;
                     continue;
                 }
-                if (property.NameEquals("nodeTaints"u8))
+                if (prop.NameEquals("nodeTaints"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     nodeTaints = array;
                     continue;
                 }
-                if (property.NameEquals("maxCount"u8))
+                if (prop.NameEquals("maxCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxCount = property.Value.GetInt32();
+                    maxCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minCount"u8))
+                if (prop.NameEquals("minCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minCount = property.Value.GetInt32();
+                    minCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("enableAutoScaling"u8))
+                if (prop.NameEquals("enableAutoScaling"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableAutoScaling = property.Value.GetBoolean();
+                    enableAutoScaling = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("maxPods"u8))
+                if (prop.NameEquals("maxPods"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxPods = property.Value.GetInt32();
+                    maxPods = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("count"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    count = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("vmSize"u8))
+                {
+                    vmSize = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("kubernetesVersion"u8))
+                {
+                    kubernetesVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("gpuCountPerNode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    gpuCountPerNode = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("name"u8))
+                {
+                    name = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HybridContainerServiceNamedAgentPoolProfile(
                 osType,
-                ossku,
+                osSku,
                 nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
                 nodeTaints ?? new ChangeTrackingList<string>(),
                 maxCount,
                 minCount,
                 enableAutoScaling,
                 maxPods,
-                serializedAdditionalRawData,
+                additionalBinaryDataProperties,
                 count,
                 vmSize,
                 kubernetesVersion,
+                gpuCountPerNode,
                 name);
         }
-
-        BinaryData IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridContainerServiceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HybridContainerServiceNamedAgentPoolProfile IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHybridContainerServiceNamedAgentPoolProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceNamedAgentPoolProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HybridContainerServiceNamedAgentPoolProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

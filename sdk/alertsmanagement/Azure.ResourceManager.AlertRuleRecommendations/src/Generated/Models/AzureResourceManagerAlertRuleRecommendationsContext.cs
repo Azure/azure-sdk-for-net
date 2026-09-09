@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
-using Azure;
 using Azure.ResourceManager.AlertRuleRecommendations.Models;
 using Azure.ResourceManager.Models;
 
@@ -20,7 +19,6 @@ namespace Azure.ResourceManager.AlertRuleRecommendations
     [ModelReaderWriterBuildable(typeof(AlertRuleRecommendationArmTemplate))]
     [ModelReaderWriterBuildable(typeof(AlertRuleRecommendationProperties))]
     [ModelReaderWriterBuildable(typeof(AlertRuleRecommendationsListResponse))]
-    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     public partial class AzureResourceManagerAlertRuleRecommendationsContext : ModelReaderWriterContext
     {

@@ -1,7 +1,0 @@
-# Memory Stores is an experimental feature.
-# The classes, related to Memory store were introduced 2.0.0 formally resulting in data contract error.
-TypesMustExist : Type 'Azure.AI.Extensions.OpenAI.MemoryToolSearchItem' does not exist in the implementation but it does exist in the contract.
-TypesMustExist : Type 'Azure.AI.Extensions.OpenAI.MemorySearchToolCallResponseItem' does not exist in the implementation but it does exist in the contract.
-TypesMustExist : Type 'Azure.AI.Extensions.OpenAI.MemorySearchToolCallStatus' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public Azure.AI.Extensions.OpenAI.MemoryToolSearchItem Azure.AI.Extensions.OpenAI.ExtensionsOpenAIModelFactory.MemoryToolSearchItem(Azure.AI.Extensions.OpenAI.MemoryOutputItem)' does not exist in the implementation but it does exist in the contract.
-MembersMustExist : Member 'public Azure.AI.Extensions.OpenAI.MemorySearchToolCallResponseItem Azure.AI.Extensions.OpenAI.ExtensionsOpenAIModelFactory.MemorySearchToolCallResponseItem(System.String, Azure.AI.Extensions.OpenAI.AgentReference, System.String, Azure.AI.Extensions.OpenAI.MemorySearchToolCallStatus, System.Collections.Generic.IEnumerable<Azure.AI.Extensions.OpenAI.MemoryToolSearchItem>)' does not exist in the implementation but it does exist in the contract.

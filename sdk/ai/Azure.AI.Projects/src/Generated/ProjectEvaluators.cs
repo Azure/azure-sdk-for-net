@@ -5,7 +5,6 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
-using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.AI.Projects;
@@ -116,7 +115,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual CollectionResult<EvaluatorVersion> GetVersions(string name, ListVersionsRequestType? @type = default, int? limit = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -132,7 +130,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual AsyncCollectionResult<EvaluatorVersion> GetVersionsAsync(string name, ListVersionsRequestType? @type = default, int? limit = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -201,7 +198,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual CollectionResult<EvaluatorVersion> GetLatestVersions(ListVersionsRequestType? @type = default, int? limit = default, CancellationToken cancellationToken = default)
         {
             return new ProjectEvaluatorsGetLatestVersionsCollectionResultOfT(this, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
@@ -212,7 +208,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="limit"> A limit on the number of objects to be returned. Limit can range between 1 and 100, and the default is 20. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual AsyncCollectionResult<EvaluatorVersion> GetLatestVersionsAsync(ListVersionsRequestType? @type = default, int? limit = default, CancellationToken cancellationToken = default)
         {
             return new ProjectEvaluatorsGetLatestVersionsAsyncCollectionResultOfT(this, @type?.ToString(), limit, cancellationToken.ToRequestOptions());
@@ -293,7 +288,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<EvaluatorVersion> GetVersion(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -310,7 +304,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="version"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> or <paramref name="version"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<EvaluatorVersion>> GetVersionAsync(string name, string version, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -493,7 +486,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="evaluatorVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual ClientResult<EvaluatorVersion> CreateVersion(string name, EvaluatorVersion evaluatorVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -510,7 +502,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="evaluatorVersion"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         public virtual async Task<ClientResult<EvaluatorVersion>> CreateVersionAsync(string name, EvaluatorVersion evaluatorVersion, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -749,7 +740,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         internal virtual ClientResult<DatasetCredential> GetCredential(string name, string version, EvaluationCredentialContent credentialRequest, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = GetCredential(name, version, credentialRequest, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions());
@@ -763,7 +753,6 @@ namespace Azure.AI.Projects.Evaluation
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        [Experimental("AAIP001")]
         internal virtual async Task<ClientResult<DatasetCredential>> GetCredentialAsync(string name, string version, EvaluationCredentialContent credentialRequest, FoundryFeaturesOptInKeys? foundryFeatures = default, CancellationToken cancellationToken = default)
         {
             ClientResult result = await GetCredentialAsync(name, version, credentialRequest, foundryFeatures?.ToSerialString(), cancellationToken.ToRequestOptions()).ConfigureAwait(false);

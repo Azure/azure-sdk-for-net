@@ -16,7 +16,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="WebSearchActionSearchSources"/>. </summary>
         /// <param name="url"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="url"/> is null. </exception>
-        public WebSearchActionSearchSources(string url)
+        public WebSearchActionSearchSources(Uri url)
         {
             Argument.AssertNotNull(url, nameof(url));
 
@@ -27,7 +27,7 @@ namespace Azure.AI.Projects
         /// <param name="type"></param>
         /// <param name="url"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal WebSearchActionSearchSources(string @type, string url, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal WebSearchActionSearchSources(string @type, Uri url, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             Url = url;
@@ -38,6 +38,6 @@ namespace Azure.AI.Projects
         internal string Type { get; } = "url";
 
         /// <summary> Gets the Url. </summary>
-        public string Url { get; }
+        public Uri Url { get; }
     }
 }

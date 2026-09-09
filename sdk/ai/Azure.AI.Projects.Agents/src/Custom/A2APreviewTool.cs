@@ -27,13 +27,4 @@ public partial class A2APreviewTool
     /// If not provided, defaults to  `/.well-known/agent-card.json`
     /// </summary>
     internal string AgentCardPath { get; set; }
-
-    /// <summary>
-    /// Initializes a new instance of <see cref="A2APreviewTool"/>.
-    /// </summary>
-    /// <param name="baseUri"></param>
-    public A2APreviewTool(Uri baseUri) : this()
-    {
-        BaseUri = baseUri;
-    }
 }

@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Network.Models
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string name = default;
             string @type = default;
-            VirtualNetworkApplianceIpConfigurationProperties properties = default;
+            VirtualNetworkApplianceIPConfigurationProperties properties = default;
             ETag? eTag = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    properties = VirtualNetworkApplianceIpConfigurationProperties.DeserializeVirtualNetworkApplianceIpConfigurationProperties(prop.Value, options);
+                    properties = VirtualNetworkApplianceIPConfigurationProperties.DeserializeVirtualNetworkApplianceIPConfigurationProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("etag"u8))

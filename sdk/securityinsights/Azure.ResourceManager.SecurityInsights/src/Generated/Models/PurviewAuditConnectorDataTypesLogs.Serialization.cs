@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Logs data type. </summary>
-    public partial class PurviewAuditConnectorDataTypesLogs : DataConnectorDataTypeCommon, IJsonModel<PurviewAuditConnectorDataTypesLogs>
+    internal partial class PurviewAuditConnectorDataTypesLogs : DataConnectorDataTypeCommon, IJsonModel<PurviewAuditConnectorDataTypesLogs>
     {
         /// <summary> Initializes a new instance of <see cref="PurviewAuditConnectorDataTypesLogs"/> for deserialization. </summary>
         internal PurviewAuditConnectorDataTypesLogs()

@@ -1,5 +1,35 @@
 # Release History
 
+## 1.19.0-beta.3 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.19.0-beta.2 (2026-08-27)
+
+### Features Added
+
+- Upgraded api-version to `2026-06-15-preview`. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/main/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
+- Added `SecureLdapType` support to `LdapConfiguration` and `LdapConfigurationPatch`.
+
+### Breaking Changes
+
+- Changed the `ArmNetAppModelFactory.LdapConfiguration` and `ArmNetAppModelFactory.LdapConfigurationPatch` factory methods to accept `SecureLdapType` instead of `bool` for the LDAP security setting.
+
+## 1.19.0-beta.1 (2026-08-12)
+
+### Features Added
+
+- Upgraded api-version to `2026-05-15-preview`. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/main/specification/netapp/resource-manager/Microsoft.NetApp/NetApp/readme.md.
+- Added LDAP bind password refresh support to `NetAppAccountResource`.
+- Expanded `LdapConfiguration` and `LdapConfigurationPatch` with bind authentication, Key Vault-backed bind password, DNS server, distinguished name, and LDAP port settings.
+- Added user-assigned managed identity support to certificate and credential Key Vault configurations for Bucket resources.
+
 ## 1.18.0 (2026-07-15)
 
 ### Features Added

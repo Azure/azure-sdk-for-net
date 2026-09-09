@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/Azure.Provisioning.DomainRegistration.csproj" />
+  <Project Path="tests/Azure.Provisioning.DomainRegistration.Tests.csproj" />
+</Solution>

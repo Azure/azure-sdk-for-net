@@ -8,6 +8,7 @@
       "$id": "1",
       "kind": "enum",
       "name": "OperationState",
+      "apiVersions": [],
       "crossLanguageDefinitionId": "Azure.Core.Foundations.OperationState",
       "valueType": {
         "$id": "2",
@@ -105,6 +106,9 @@
       "$id": "8",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.Versions",
       "valueType": {
         "$id": "9",
@@ -214,6 +218,9 @@
       "$id": "19",
       "kind": "model",
       "name": "GenerationOptions",
+      "apiVersions": [
+        "2022-12-01-preview"
+      ],
       "namespace": "_Specs_.Azure.Core.Lro.Rpc",
       "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.GenerationOptions",
       "usage": "Input,Json",
@@ -230,6 +237,9 @@
           "$id": "20",
           "kind": "property",
           "name": "prompt",
+          "apiVersions": [
+            "2022-12-01-preview"
+          ],
           "serializedName": "prompt",
           "doc": "Prompt.",
           "type": {
@@ -259,6 +269,7 @@
       "$id": "22",
       "kind": "model",
       "name": "ResourceOperationStatusGenerationResponseGenerationResultError",
+      "apiVersions": [],
       "namespace": "Azure.Core",
       "crossLanguageDefinitionId": "Azure.Core.ResourceOperationStatus",
       "usage": "Json,LroInitial",
@@ -275,6 +286,7 @@
           "$id": "23",
           "kind": "property",
           "name": "id",
+          "apiVersions": [],
           "serializedName": "id",
           "doc": "The unique ID of the operation.",
           "type": {
@@ -302,6 +314,7 @@
           "$id": "25",
           "kind": "property",
           "name": "status",
+          "apiVersions": [],
           "serializedName": "status",
           "doc": "The status of the operation",
           "type": {
@@ -325,12 +338,14 @@
           "$id": "26",
           "kind": "property",
           "name": "error",
+          "apiVersions": [],
           "serializedName": "error",
           "doc": "Error object that describes the error when status is \"Failed\".",
           "type": {
             "$id": "27",
             "kind": "model",
             "name": "Error",
+            "apiVersions": [],
             "namespace": "Azure.Core.Foundations",
             "crossLanguageDefinitionId": "Azure.Core.Foundations.Error",
             "usage": "Json,Exception,LroInitial,LroPolling,LroFinalEnvelope",
@@ -347,6 +362,7 @@
                 "$id": "28",
                 "kind": "property",
                 "name": "code",
+                "apiVersions": [],
                 "serializedName": "code",
                 "doc": "One of a server-defined set of error codes.",
                 "type": {
@@ -374,6 +390,7 @@
                 "$id": "30",
                 "kind": "property",
                 "name": "message",
+                "apiVersions": [],
                 "serializedName": "message",
                 "doc": "A human-readable representation of the error.",
                 "type": {
@@ -401,6 +418,7 @@
                 "$id": "32",
                 "kind": "property",
                 "name": "target",
+                "apiVersions": [],
                 "serializedName": "target",
                 "doc": "The target of the error.",
                 "type": {
@@ -428,6 +446,7 @@
                 "$id": "34",
                 "kind": "property",
                 "name": "details",
+                "apiVersions": [],
                 "serializedName": "details",
                 "doc": "An array of details about specific errors that led to this reported error.",
                 "type": {
@@ -458,12 +477,14 @@
                 "$id": "36",
                 "kind": "property",
                 "name": "innererror",
+                "apiVersions": [],
                 "serializedName": "innererror",
                 "doc": "An object containing more specific information than the current object about the error.",
                 "type": {
                   "$id": "37",
                   "kind": "model",
                   "name": "InnerError",
+                  "apiVersions": [],
                   "namespace": "Azure.Core.Foundations",
                   "crossLanguageDefinitionId": "Azure.Core.Foundations.InnerError",
                   "usage": "Json,Exception,LroInitial,LroPolling,LroFinalEnvelope",
@@ -480,6 +501,7 @@
                       "$id": "38",
                       "kind": "property",
                       "name": "code",
+                      "apiVersions": [],
                       "serializedName": "code",
                       "doc": "One of a server-defined set of error codes.",
                       "type": {
@@ -507,6 +529,7 @@
                       "$id": "40",
                       "kind": "property",
                       "name": "innererror",
+                      "apiVersions": [],
                       "serializedName": "innererror",
                       "doc": "Inner error.",
                       "type": {
@@ -562,12 +585,16 @@
           "$id": "41",
           "kind": "property",
           "name": "result",
+          "apiVersions": [],
           "serializedName": "result",
           "doc": "The result of the operation.",
           "type": {
             "$id": "42",
             "kind": "model",
             "name": "GenerationResult",
+            "apiVersions": [
+              "2022-12-01-preview"
+            ],
             "namespace": "_Specs_.Azure.Core.Lro.Rpc",
             "crossLanguageDefinitionId": "_Specs_.Azure.Core.Lro.Rpc.GenerationResult",
             "usage": "Output,Json,LroInitial,LroPolling,LroFinalEnvelope",
@@ -584,6 +611,9 @@
                 "$id": "43",
                 "kind": "property",
                 "name": "data",
+                "apiVersions": [
+                  "2022-12-01-preview"
+                ],
                 "serializedName": "data",
                 "doc": "The data.",
                 "type": {
@@ -638,6 +668,7 @@
       "$id": "45",
       "kind": "model",
       "name": "ErrorResponse",
+      "apiVersions": [],
       "namespace": "Azure.Core.Foundations",
       "crossLanguageDefinitionId": "Azure.Core.Foundations.ErrorResponse",
       "usage": "Json,Exception",
@@ -654,6 +685,7 @@
           "$id": "46",
           "kind": "property",
           "name": "error",
+          "apiVersions": [],
           "serializedName": "error",
           "doc": "The error object.",
           "type": {
@@ -677,6 +709,7 @@
           "$id": "47",
           "kind": "property",
           "name": "errorCode",
+          "apiVersions": [],
           "serializedName": "errorCode",
           "doc": "String error code indicating what went wrong.",
           "type": {
@@ -706,6 +739,7 @@
       "$id": "49",
       "kind": "model",
       "name": "OperationStatusGenerationResultError",
+      "apiVersions": [],
       "namespace": "Azure.Core.Foundations",
       "crossLanguageDefinitionId": "Azure.Core.Foundations.OperationStatus",
       "usage": "LroPolling,LroFinalEnvelope",
@@ -722,6 +756,7 @@
           "$id": "50",
           "kind": "property",
           "name": "id",
+          "apiVersions": [],
           "serializedName": "id",
           "doc": "The unique ID of the operation.",
           "type": {
@@ -749,6 +784,7 @@
           "$id": "52",
           "kind": "property",
           "name": "status",
+          "apiVersions": [],
           "serializedName": "status",
           "doc": "The status of the operation",
           "type": {
@@ -772,6 +808,7 @@
           "$id": "53",
           "kind": "property",
           "name": "error",
+          "apiVersions": [],
           "serializedName": "error",
           "doc": "Error object that describes the error when status is \"Failed\".",
           "type": {
@@ -795,6 +832,7 @@
           "$id": "54",
           "kind": "property",
           "name": "result",
+          "apiVersions": [],
           "serializedName": "result",
           "doc": "The result of the operation.",
           "type": {

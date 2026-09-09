@@ -127,6 +127,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 writer.WritePropertyName("licenseProfile"u8);
                 writer.WriteObjectValue(LicenseProfile, options);
             }
+            if (options.Format != "W" && Optional.IsDefined(StatusReason))
+            {
+                writer.WritePropertyName("statusReason"u8);
+                writer.WriteStringValue(StatusReason.Value.ToString());
+            }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -340,6 +345,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             AgentUpgrade agentUpgrade = default;
             HybridComputeOSProfile osProfile = default;
             LicenseProfileMachineInstanceView licenseProfile = default;
+            MachineStatusReason? statusReason = default;
             string provisioningState = default;
             HybridComputeStatusType? status = default;
             DateTimeOffset? lastStatusChange = default;
@@ -458,6 +464,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         continue;
                     }
                     licenseProfile = LicenseProfileMachineInstanceView.DeserializeLicenseProfileMachineInstanceView(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("statusReason"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    statusReason = new MachineStatusReason(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("provisioningState"u8))
@@ -688,6 +703,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 agentUpgrade,
                 osProfile,
                 licenseProfile,
+                statusReason,
                 provisioningState,
                 status,
                 lastStatusChange,

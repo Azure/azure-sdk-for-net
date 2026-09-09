@@ -51,6 +51,7 @@ namespace Azure.Security.CodeTransparency
         {
             Argument.AssertNotNull(endpoint, nameof(endpoint));
             options ??= new CodeTransparencyClientOptions();
+            ApplyRetryDefaults(options);
             string name = endpoint.Host.Split('.')[0];
             CodeTransparencyCertificateClient certificateClient = options.CreateCertificateClient();
             HttpPipelineTransportOptions transportOptions = CreateTlsCertAndTrustVerifier(name, certificateClient);
@@ -78,6 +79,33 @@ namespace Azure.Security.CodeTransparency
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> is null. </exception>
         public CodeTransparencyClient(Uri endpoint, CodeTransparencyClientOptions options = default) : this(endpoint, null, options)
         {
+        }
+
+        // Azure.Core RetryOptions defaults, treated as "unconfigured" so an explicit caller override wins.
+        private const int FrameworkDefaultMaxRetries = 3;
+        private static readonly TimeSpan s_frameworkDefaultRetryDelay = TimeSpan.FromSeconds(0.8);
+
+        // Higher Code Transparency retry defaults. Registering an entry can stay pending for a while, and a
+        // redirected read of a not-yet-committed entry is answered with a retriable 503, so allow more,
+        // shorter-spaced (exponential) retries. Still fully overridable via CodeTransparencyClientOptions.Retry.
+        private const int DefaultMaxRetries = 10;
+        private static readonly TimeSpan s_defaultRetryDelay = TimeSpan.FromMilliseconds(200);
+
+        /// <summary>
+        /// Raises the retry defaults for pending-registration handling, without overriding values the
+        /// caller has explicitly configured on <c>CodeTransparencyClientOptions.Retry</c>.
+        /// </summary>
+        private static void ApplyRetryDefaults(CodeTransparencyClientOptions options)
+        {
+            if (options.Retry.MaxRetries == FrameworkDefaultMaxRetries)
+            {
+                options.Retry.MaxRetries = DefaultMaxRetries;
+            }
+
+            if (options.Retry.Delay == s_frameworkDefaultRetryDelay)
+            {
+                options.Retry.Delay = s_defaultRetryDelay;
+            }
         }
 
         private static List<(string IssuerHost, byte[] ReceiptBytes)> GetReceiptsFromTransparentStatementStatic(byte[] transparentStatementCoseSign1Bytes)
@@ -203,7 +231,7 @@ namespace Azure.Security.CodeTransparency
             scope.Start();
             try
             {
-                Response<BinaryData> response = CreateEntry(body, waitForCommit: true, cancellationToken);
+                NullableResponse<BinaryData> response = CreateEntry(body, waitForCommit: true, cancellationToken);
                 return CreateCompletedEntryOperation(response.GetRawResponse());
             }
             catch (Exception e)
@@ -226,7 +254,7 @@ namespace Azure.Security.CodeTransparency
             scope.Start();
             try
             {
-                Response<BinaryData> response = await CreateEntryAsync(body, waitForCommit: true, cancellationToken).ConfigureAwait(false);
+                NullableResponse<BinaryData> response = await CreateEntryAsync(body, waitForCommit: true, cancellationToken).ConfigureAwait(false);
                 return CreateCompletedEntryOperation(response.GetRawResponse());
             }
             catch (Exception e)
@@ -616,10 +644,10 @@ namespace Azure.Security.CodeTransparency
         public virtual async Task<Response> CreateEntryAsync(RequestContent content, bool? waitForCommit = default, RequestContext context = null) => await CreateEntryV09Async(content, waitForCommit, context).ConfigureAwait(false);
 
         /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
-        public virtual Response<BinaryData> CreateEntry(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => CreateEntryV09(body, waitForCommit, cancellationToken);
+        public virtual NullableResponse<BinaryData> CreateEntry(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => CreateEntryV09(body, waitForCommit, cancellationToken);
 
         /// <summary> Post an entry to be registered on the CodeTransparency instance. </summary>
-        public virtual async Task<Response<BinaryData>> CreateEntryAsync(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => await CreateEntryV09Async(body, waitForCommit, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<NullableResponse<BinaryData>> CreateEntryAsync(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default) => await CreateEntryV09Async(body, waitForCommit, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Get receipt. </summary>
         public virtual Response GetEntry(string entryId, RequestContext context) => GetEntryV09(entryId, context);
@@ -628,10 +656,10 @@ namespace Azure.Security.CodeTransparency
         public virtual async Task<Response> GetEntryAsync(string entryId, RequestContext context) => await GetEntryV09Async(entryId, context).ConfigureAwait(false);
 
         /// <summary> Get receipt. </summary>
-        public virtual Response<BinaryData> GetEntry(string entryId, CancellationToken cancellationToken = default) => GetEntryV09(entryId, cancellationToken);
+        public virtual NullableResponse<BinaryData> GetEntry(string entryId, CancellationToken cancellationToken = default) => GetEntryV09(entryId, cancellationToken);
 
         /// <summary> Get receipt. </summary>
-        public virtual async Task<Response<BinaryData>> GetEntryAsync(string entryId, CancellationToken cancellationToken = default) => await GetEntryV09Async(entryId, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<NullableResponse<BinaryData>> GetEntryAsync(string entryId, CancellationToken cancellationToken = default) => await GetEntryV09Async(entryId, cancellationToken).ConfigureAwait(false);
 
         /// <summary> Get the transparent statement. </summary>
         public virtual Response GetEntryStatement(string entryId, RequestContext context) => GetEntryStatementV09(entryId, context);
@@ -655,11 +683,11 @@ namespace Azure.Security.CodeTransparency
 
         /// <summary> Get operation status. </summary>
         [Obsolete("GetOperation is deprecated as it was removed from the recent IETF SCITT draft.")]
-        public virtual Response<BinaryData> GetOperation(string operationId, CancellationToken cancellationToken = default) => GetOperationV09(operationId, cancellationToken);
+        public virtual NullableResponse<BinaryData> GetOperation(string operationId, CancellationToken cancellationToken = default) => GetOperationV09(operationId, cancellationToken);
 
         /// <summary> Get operation status. </summary>
         [Obsolete("GetOperationAsync is deprecated as it was removed from the recent IETF SCITT draft.")]
-        public virtual async Task<Response<BinaryData>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default) => await GetOperationV09Async(operationId, cancellationToken).ConfigureAwait(false);
+        public virtual async Task<NullableResponse<BinaryData>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default) => await GetOperationV09Async(operationId, cancellationToken).ConfigureAwait(false);
 
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });

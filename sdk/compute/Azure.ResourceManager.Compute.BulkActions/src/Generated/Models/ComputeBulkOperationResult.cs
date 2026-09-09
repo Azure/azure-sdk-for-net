@@ -27,13 +27,15 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <param name="errorCode"> Resource level error code if it exists. </param>
         /// <param name="errorDetails"> Resource level error details if they exist. </param>
         /// <param name="operation"> Details of the operation performed on a resource. </param>
+        /// <param name="virtualMachineInfo"> Information about the virtual machine. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ComputeBulkOperationResult(ResourceIdentifier resourceId, string errorCode, string errorDetails, ComputeBulkOperationDetails operation, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ComputeBulkOperationResult(ResourceIdentifier resourceId, string errorCode, string errorDetails, ComputeBulkOperationDetails operation, VirtualMachineInfo virtualMachineInfo, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ResourceId = resourceId;
             ErrorCode = errorCode;
             ErrorDetails = errorDetails;
             Operation = operation;
+            VirtualMachineInfo = virtualMachineInfo;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,5 +50,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
         /// <summary> Details of the operation performed on a resource. </summary>
         public ComputeBulkOperationDetails Operation { get; }
+
+        /// <summary> Information about the virtual machine. </summary>
+        public VirtualMachineInfo VirtualMachineInfo { get; }
     }
 }

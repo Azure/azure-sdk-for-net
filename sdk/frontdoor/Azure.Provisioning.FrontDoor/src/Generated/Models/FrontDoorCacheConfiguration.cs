@@ -91,7 +91,7 @@ namespace Azure.Provisioning.FrontDoor
             _queryParameterStripDirective = DefineProperty<FrontDoorQuery>(nameof(QueryParameterStripDirective), new string[] { "queryParameterStripDirective" });
             _queryParameters = DefineProperty<string>(nameof(QueryParameters), new string[] { "queryParameters" });
             _dynamicCompression = DefineProperty<DynamicCompressionEnabled>(nameof(DynamicCompression), new string[] { "dynamicCompression" });
-            _cacheDuration = DefineProperty<TimeSpan>(nameof(CacheDuration), new string[] { "cacheDuration" });
+            _cacheDuration = DefineProperty<TimeSpan>(nameof(CacheDuration), new string[] { "cacheDuration" }, format: "P");
             DefineAdditionalProperties();
         }
 

@@ -7,6 +7,7 @@
 
 using System;
 using System.ComponentModel;
+using Azure.ResourceManager.MigrationDiscoverySap;
 
 namespace Azure.ResourceManager.MigrationDiscoverySap.Models
 {
@@ -14,59 +15,92 @@ namespace Azure.ResourceManager.MigrationDiscoverySap.Models
     public readonly partial struct SapDiscoveryDatabaseType : IEquatable<SapDiscoveryDatabaseType>
     {
         private readonly string _value;
+        /// <summary> The type of Database- Adabas. </summary>
+        private const string AdabasValue = "Adabas";
+        /// <summary> The type of Database- Oracle. </summary>
+        private const string OracleValue = "Oracle";
+        /// <summary> The type of Database- SAPMaxDB. </summary>
+        private const string SapMaxDBValue = "SAPMaxDB";
+        /// <summary> The type of Database- Db2. </summary>
+        private const string DB2Value = "Db2";
+        /// <summary> The type of Database- SAPASE. </summary>
+        private const string SapAseValue = "SAPASE";
+        /// <summary> The type of Database- SQLServer. </summary>
+        private const string SQLServerValue = "SQLServer";
+        /// <summary> The type of Database- Informix. </summary>
+        private const string InformixValue = "Informix";
+        /// <summary> The type of Database- SAPDB. </summary>
+        private const string SapDBValue = "SAPDB";
+        /// <summary> The type of Database- HANA. </summary>
+        private const string HanaValue = "HANA";
 
         /// <summary> Initializes a new instance of <see cref="SapDiscoveryDatabaseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
         public SapDiscoveryDatabaseType(string value)
         {
-            _value = value ?? throw new ArgumentNullException(nameof(value));
-        }
+            Argument.AssertNotNull(value, nameof(value));
 
-        private const string AdabasValue = "Adabas";
-        private const string OracleValue = "Oracle";
-        private const string SapMaxDBValue = "SAPMaxDB";
-        private const string DB2Value = "Db2";
-        private const string SapAseValue = "SAPASE";
-        private const string SQLServerValue = "SQLServer";
-        private const string InformixValue = "Informix";
-        private const string SapDBValue = "SAPDB";
-        private const string HanaValue = "HANA";
+            _value = value;
+        }
 
         /// <summary> The type of Database- Adabas. </summary>
         public static SapDiscoveryDatabaseType Adabas { get; } = new SapDiscoveryDatabaseType(AdabasValue);
+
         /// <summary> The type of Database- Oracle. </summary>
         public static SapDiscoveryDatabaseType Oracle { get; } = new SapDiscoveryDatabaseType(OracleValue);
+
         /// <summary> The type of Database- SAPMaxDB. </summary>
         public static SapDiscoveryDatabaseType SapMaxDB { get; } = new SapDiscoveryDatabaseType(SapMaxDBValue);
+
         /// <summary> The type of Database- Db2. </summary>
         public static SapDiscoveryDatabaseType DB2 { get; } = new SapDiscoveryDatabaseType(DB2Value);
+
         /// <summary> The type of Database- SAPASE. </summary>
         public static SapDiscoveryDatabaseType SapAse { get; } = new SapDiscoveryDatabaseType(SapAseValue);
+
         /// <summary> The type of Database- SQLServer. </summary>
         public static SapDiscoveryDatabaseType SQLServer { get; } = new SapDiscoveryDatabaseType(SQLServerValue);
+
         /// <summary> The type of Database- Informix. </summary>
         public static SapDiscoveryDatabaseType Informix { get; } = new SapDiscoveryDatabaseType(InformixValue);
+
         /// <summary> The type of Database- SAPDB. </summary>
         public static SapDiscoveryDatabaseType SapDB { get; } = new SapDiscoveryDatabaseType(SapDBValue);
+
         /// <summary> The type of Database- HANA. </summary>
         public static SapDiscoveryDatabaseType Hana { get; } = new SapDiscoveryDatabaseType(HanaValue);
+
         /// <summary> Determines if two <see cref="SapDiscoveryDatabaseType"/> values are the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator ==(SapDiscoveryDatabaseType left, SapDiscoveryDatabaseType right) => left.Equals(right);
+
         /// <summary> Determines if two <see cref="SapDiscoveryDatabaseType"/> values are not the same. </summary>
+        /// <param name="left"> The left value to compare. </param>
+        /// <param name="right"> The right value to compare. </param>
         public static bool operator !=(SapDiscoveryDatabaseType left, SapDiscoveryDatabaseType right) => !left.Equals(right);
-        /// <summary> Converts a <see cref="string"/> to a <see cref="SapDiscoveryDatabaseType"/>. </summary>
+
+        /// <summary> Converts a string to a <see cref="SapDiscoveryDatabaseType"/>. </summary>
+        /// <param name="value"> The value. </param>
         public static implicit operator SapDiscoveryDatabaseType(string value) => new SapDiscoveryDatabaseType(value);
 
-        /// <inheritdoc />
+        /// <summary> Converts a string to a <see cref="SapDiscoveryDatabaseType"/>. </summary>
+        /// <param name="value"> The value. </param>
+        public static implicit operator SapDiscoveryDatabaseType?(string value) => value == null ? null : new SapDiscoveryDatabaseType(value);
+
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override bool Equals(object obj) => obj is SapDiscoveryDatabaseType other && Equals(other);
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public bool Equals(SapDiscoveryDatabaseType other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
-        /// <inheritdoc />
+        /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public override int GetHashCode() => _value != null ? StringComparer.InvariantCultureIgnoreCase.GetHashCode(_value) : 0;
-        /// <inheritdoc />
+
+        /// <inheritdoc/>
         public override string ToString() => _value;
     }
 }

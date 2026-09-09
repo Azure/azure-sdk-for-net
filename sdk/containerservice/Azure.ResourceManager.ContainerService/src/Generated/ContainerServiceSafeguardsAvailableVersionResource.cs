@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.ContainerService
         {
             TryGetApiVersion(ResourceType, out string containerServiceSafeguardsAvailableVersionApiVersion);
             _safeguardsAvailableVersionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ContainerService", ResourceType.Namespace, Diagnostics);
-            _safeguardsAvailableVersionsRestClient = new SafeguardsAvailableVersions(_safeguardsAvailableVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceSafeguardsAvailableVersionApiVersion ?? "2026-04-02-preview");
+            _safeguardsAvailableVersionsRestClient = new SafeguardsAvailableVersions(_safeguardsAvailableVersionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, containerServiceSafeguardsAvailableVersionApiVersion ?? "2026-06-02-preview");
             ValidateResourceId(id);
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerService
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-04-02-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

@@ -14,6 +14,8 @@ namespace Azure.AI.Projects
         /// <summary> Completed. </summary>
         Completed,
         /// <summary> Failed. </summary>
-        Failed
+        Failed,
+        /// <summary> Incomplete. </summary>
+        Incomplete
     }
 }

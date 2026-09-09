@@ -10,7 +10,7 @@ namespace Azure.AI.Projects
 {
     /// <summary>
     /// The FunctionShellToolParamEnvironment.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FunctionShellToolParamEnvironmentLocalEnvironmentParam"/>, <see cref="FunctionShellToolParamEnvironmentContainerReferenceParam"/>, and <see cref="ContainerAutoParam"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ContainerAutoParam"/>, <see cref="FunctionShellToolParamEnvironmentContainerReferenceParam"/>, and <see cref="FunctionShellToolParamEnvironmentLocalEnvironmentParam"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownFunctionShellToolParamEnvironment))]
     internal abstract partial class FunctionShellToolParamEnvironment : IJsonModel<FunctionShellToolParamEnvironment>
@@ -126,12 +126,12 @@ namespace Azure.AI.Projects
             {
                 switch (discriminator.GetString())
                 {
-                    case "local":
-                        return FunctionShellToolParamEnvironmentLocalEnvironmentParam.DeserializeFunctionShellToolParamEnvironmentLocalEnvironmentParam(element, options);
-                    case "container_reference":
-                        return FunctionShellToolParamEnvironmentContainerReferenceParam.DeserializeFunctionShellToolParamEnvironmentContainerReferenceParam(element, options);
                     case "container_auto":
                         return ContainerAutoParam.DeserializeContainerAutoParam(element, options);
+                    case "container_reference":
+                        return FunctionShellToolParamEnvironmentContainerReferenceParam.DeserializeFunctionShellToolParamEnvironmentContainerReferenceParam(element, options);
+                    case "local":
+                        return FunctionShellToolParamEnvironmentLocalEnvironmentParam.DeserializeFunctionShellToolParamEnvironmentLocalEnvironmentParam(element, options);
                 }
             }
             return UnknownFunctionShellToolParamEnvironment.DeserializeUnknownFunctionShellToolParamEnvironment(element, options);

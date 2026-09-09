@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Billing address. </summary>
-    public partial class BillingProfilePropertiesBillTo : BillingAddressDetails, IJsonModel<BillingProfilePropertiesBillTo>
+    internal partial class BillingProfilePropertiesBillTo : BillingAddressDetails, IJsonModel<BillingProfilePropertiesBillTo>
     {
         /// <summary> Initializes a new instance of <see cref="BillingProfilePropertiesBillTo"/> for deserialization. </summary>
         internal BillingProfilePropertiesBillTo()

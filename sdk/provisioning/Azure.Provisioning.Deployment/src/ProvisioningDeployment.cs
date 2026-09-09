@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Azure.Core;
 using Azure.Provisioning.Primitives;
-using Azure.ResourceManager.Resources;
+using Azure.ResourceManager.Resources.Deployments;
 
 // This needs to go, but we should discuss whether to directly translate or
 // we should just simplify it here and let you drop down to ARM if you need more.
-using ArmProvisioningState = Azure.ResourceManager.Resources.Models.ResourcesProvisioningState;
+using ArmProvisioningState = Azure.ResourceManager.Resources.Deployments.Models.ResourcesProvisioningState;
 
 namespace Azure.Provisioning;
 

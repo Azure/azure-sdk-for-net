@@ -765,7 +765,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
     public partial class FhirServiceAccessPolicyEntry : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry>
     {
         public FhirServiceAccessPolicyEntry(string objectId) { }
-        public FhirServiceAccessPolicyEntry(string objectId, System.Collections.Generic.IDictionary<string, System.BinaryData> additionalBinaryDataProperties) { }
+        public FhirServiceAccessPolicyEntry(string objectId, System.Collections.Generic.IDictionary<string, System.BinaryData> serializedAdditionalRawData) { }
         public string ObjectId { get { throw null; } set { } }
         Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.HealthcareApis.Models.FhirServiceAccessPolicyEntry>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }

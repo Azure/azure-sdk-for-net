@@ -6,8 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Azure;
 using Azure.Core;
@@ -304,7 +306,7 @@ namespace Azure.Search.Documents.Models
                 threshold,
                 filterOverride,
                 perDocumentVectorLimit,
-                VectorQueryKind.ImageUrl,
+                VectorQueryKind.ImageUri,
                 additionalBinaryDataProperties: null,
                 url);
         }
@@ -702,7 +704,10 @@ namespace Azure.Search.Documents.Models
             return new TextWeights(weights, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Base type for functions that can modify document scores during ranking. </summary>
+        /// <summary>
+        /// Base type for functions that can modify document scores during ranking.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Indexes.Models.DistanceScoringFunction"/>, <see cref="Indexes.Models.FreshnessScoringFunction"/>, <see cref="Indexes.Models.MagnitudeScoringFunction"/>, and <see cref="Indexes.Models.TagScoringFunction"/>.
+        /// </summary>
         /// <param name="fieldName"> The name of the field used as input to the scoring function. </param>
         /// <param name="boost"> A multiplier for the raw score. Must be a positive number not equal to 1.0. </param>
         /// <param name="interpolation"> A value indicating how boosting will be interpolated across document scores; defaults to "Linear". </param>
@@ -1372,7 +1377,10 @@ namespace Azure.Search.Documents.Models
             return new PatternReplaceCharFilter("#Microsoft.Azure.Search.PatternReplaceCharFilter", name, additionalBinaryDataProperties: null, pattern, replacement);
         }
 
-        /// <summary> Base type for normalizers. </summary>
+        /// <summary>
+        /// Base type for normalizers.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Indexes.Models.CustomNormalizer"/>.
+        /// </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the char filter. It must only contain letters, digits, spaces, dashes or underscores, can only start and end with alphanumeric characters, and is limited to 128 characters. </param>
         /// <returns> A new <see cref="Indexes.Models.LexicalNormalizer"/> instance for mocking. </returns>
@@ -1826,14 +1834,17 @@ namespace Azure.Search.Documents.Models
         /// <param name="eTag"> The ETag of the knowledge base. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. </param>
         /// <param name="description"> The description of the knowledge base. </param>
+        /// <param name="tags"> User-defined key-value pairs for categorizing the knowledge base and attributing its usage and costs. </param>
         /// <param name="retrievalInstructions"> Instructions considered by the knowledge base when developing query plan. </param>
         /// <param name="answerInstructions"> Instructions considered by the knowledge base when generating answers. </param>
         /// <param name="corsOptions"> Options to control Cross-Origin Resource Sharing (CORS) for the knowledge base. </param>
+        /// <param name="retrieveDefaults"> Persisted request-wide retrieve defaults for this knowledge base. These values apply to retrieve requests that omit the corresponding fields; request-time values take precedence when present. </param>
         /// <returns> A new <see cref="Indexes.Models.KnowledgeBase"/> instance for mocking. </returns>
-        public static KnowledgeBase KnowledgeBase(string name = default, IEnumerable<KnowledgeSourceReference> knowledgeSources = default, IEnumerable<KnowledgeBaseModel> models = default, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default, KnowledgeRetrievalOutputMode? outputMode = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, string description = default, string retrievalInstructions = default, string answerInstructions = default, CorsOptions corsOptions = default)
+        public static KnowledgeBase KnowledgeBase(string name = default, IEnumerable<KnowledgeSourceReference> knowledgeSources = default, IEnumerable<KnowledgeBaseModel> models = default, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default, KnowledgeRetrievalOutputMode? outputMode = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, string description = default, IDictionary<string, string> tags = default, string retrievalInstructions = default, string answerInstructions = default, CorsOptions corsOptions = default, KnowledgeBaseRetrieveDefaults retrieveDefaults = default)
         {
             knowledgeSources ??= new ChangeTrackingList<KnowledgeSourceReference>();
             models ??= new ChangeTrackingList<KnowledgeBaseModel>();
+            tags ??= new ChangeTrackingDictionary<string, string>();
 
             return new KnowledgeBase(
                 name,
@@ -1844,9 +1855,11 @@ namespace Azure.Search.Documents.Models
                 eTag,
                 encryptionKey,
                 description,
+                tags,
                 retrievalInstructions,
                 answerInstructions,
                 corsOptions,
+                retrieveDefaults,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1881,7 +1894,7 @@ namespace Azure.Search.Documents.Models
 
         /// <summary>
         /// Base type for reasoning effort.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeRetrievalMinimalReasoningEffort"/>, <see cref="KnowledgeBases.Models.KnowledgeRetrievalLowReasoningEffort"/>, and <see cref="KnowledgeBases.Models.KnowledgeRetrievalMediumReasoningEffort"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="KnowledgeBases.Models.KnowledgeRetrievalMinimalReasoningEffort"/>, <see cref="KnowledgeBases.Models.KnowledgeRetrievalLowReasoningEffort"/>, <see cref="KnowledgeBases.Models.KnowledgeRetrievalMediumReasoningEffort"/>, and <see cref="KnowledgeBases.Models.KnowledgeRetrievalAutoReasoningEffort"/>.
         /// </summary>
         /// <param name="kind"> The kind of reasoning effort. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeRetrievalReasoningEffort"/> instance for mocking. </returns>
@@ -1911,6 +1924,23 @@ namespace Azure.Search.Documents.Models
             return new KnowledgeRetrievalMediumReasoningEffort(KnowledgeRetrievalReasoningEffortKind.Medium, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Automatically select the reasoning effort during retrieval. The service seeds every request at the cheapest tier and escalates only as far as needed, up to the service's maximum available tier. </summary>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeRetrievalAutoReasoningEffort"/> instance for mocking. </returns>
+        public static KnowledgeRetrievalAutoReasoningEffort KnowledgeRetrievalAutoReasoningEffort()
+        {
+            return new KnowledgeRetrievalAutoReasoningEffort(KnowledgeRetrievalReasoningEffortKind.Auto, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Persisted request-wide defaults for knowledge base retrieve requests. Each value provides the default for the matching retrieve-request field; service defaults apply when unset, and request-time values take precedence when present. </summary>
+        /// <param name="maxRuntimeInSeconds"> The default maximum runtime in seconds for a retrieve request. </param>
+        /// <param name="maxOutputDocuments"> The default maximum number of documents in the retrieve output. </param>
+        /// <param name="maxOutputSizeInTokens"> The default maximum size, in tokens, of the content in the retrieve output. </param>
+        /// <returns> A new <see cref="Indexes.Models.KnowledgeBaseRetrieveDefaults"/> instance for mocking. </returns>
+        public static KnowledgeBaseRetrieveDefaults KnowledgeBaseRetrieveDefaults(int? maxRuntimeInSeconds = default, int? maxOutputDocuments = default, int? maxOutputSizeInTokens = default)
+        {
+            return new KnowledgeBaseRetrieveDefaults(maxRuntimeInSeconds, maxOutputDocuments, maxOutputSizeInTokens, additionalBinaryDataProperties: null);
+        }
+
         /// <summary>
         /// Represents a knowledge source definition.
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Indexes.Models.SearchIndexKnowledgeSource"/>, <see cref="Indexes.Models.AzureBlobKnowledgeSource"/>, <see cref="Indexes.Models.IndexedSharePointKnowledgeSource"/>, <see cref="Indexes.Models.IndexedOneLakeKnowledgeSource"/>, <see cref="Indexes.Models.IndexedSqlKnowledgeSource"/>, <see cref="Indexes.Models.FileKnowledgeSource"/>, <see cref="Indexes.Models.WebKnowledgeSource"/>, <see cref="Indexes.Models.RemoteSharePointKnowledgeSource"/>, <see cref="Indexes.Models.WorkIQKnowledgeSource"/>, <see cref="Indexes.Models.McpServerKnowledgeSource"/>, <see cref="Indexes.Models.FabricDataAgentKnowledgeSource"/>, and <see cref="Indexes.Models.FabricOntologyKnowledgeSource"/>.
@@ -1918,15 +1948,17 @@ namespace Azure.Search.Documents.Models
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
+        /// <param name="resultsProcessing"> Controls whether results from this knowledge source are reranked before they are included in the final result set. Defaults to 'rerank' when not specified. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <returns> A new <see cref="Indexes.Models.KnowledgeSource"/> instance for mocking. </returns>
-        public static KnowledgeSource KnowledgeSource(string name = default, string description = default, string kind = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default)
+        public static KnowledgeSource KnowledgeSource(string name = default, string description = default, string kind = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default)
         {
             return new UnknownKnowledgeSource(
                 name,
                 description,
                 new KnowledgeSourceKind(kind),
+                resultsProcessing,
                 eTag,
                 encryptionKey,
                 additionalBinaryDataProperties: null);
@@ -1935,16 +1967,18 @@ namespace Azure.Search.Documents.Models
         /// <summary> Knowledge Source targeting a search index. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
+        /// <param name="resultsProcessing"> Controls whether results from this knowledge source are reranked before they are included in the final result set. Defaults to 'rerank' when not specified. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="searchIndexParameters"> The parameters for the knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexKnowledgeSource"/> instance for mocking. </returns>
-        public static SearchIndexKnowledgeSource SearchIndexKnowledgeSource(string name = default, string description = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, SearchIndexKnowledgeSourceParameters searchIndexParameters = default)
+        public static SearchIndexKnowledgeSource SearchIndexKnowledgeSource(string name = default, string description = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, SearchIndexKnowledgeSourceParameters searchIndexParameters = default)
         {
             return new SearchIndexKnowledgeSource(
                 name,
                 description,
                 KnowledgeSourceKind.SearchIndex,
+                resultsProcessing,
                 eTag,
                 encryptionKey,
                 additionalBinaryDataProperties: null,
@@ -1957,8 +1991,9 @@ namespace Azure.Search.Documents.Models
         /// <param name="searchFields"> Used to restrict which fields to search on the search index. </param>
         /// <param name="semanticConfigurationName"> Used to specify a different semantic configuration on the target search index other than the default one. </param>
         /// <param name="baseFilter"> A default filter condition applied to the index at retrieval time (e.g., 'State eq VA'). Can be overridden at query time via knowledge source runtime parameters. </param>
+        /// <param name="queryHints"> Default hints that guide query planning toward useful filters and boosts for this search index knowledge source. Request-time query hints replace these defaults as a complete object. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchIndexKnowledgeSourceParameters"/> instance for mocking. </returns>
-        public static SearchIndexKnowledgeSourceParameters SearchIndexKnowledgeSourceParameters(string searchIndexName = default, IEnumerable<SearchIndexFieldReference> sourceDataFields = default, IEnumerable<SearchIndexFieldReference> searchFields = default, string semanticConfigurationName = default, string baseFilter = default)
+        public static SearchIndexKnowledgeSourceParameters SearchIndexKnowledgeSourceParameters(string searchIndexName = default, IEnumerable<SearchIndexFieldReference> sourceDataFields = default, IEnumerable<SearchIndexFieldReference> searchFields = default, string semanticConfigurationName = default, string baseFilter = default, SearchIndexKnowledgeSourceQueryHints queryHints = default)
         {
             sourceDataFields ??= new ChangeTrackingList<SearchIndexFieldReference>();
             searchFields ??= new ChangeTrackingList<SearchIndexFieldReference>();
@@ -1969,6 +2004,7 @@ namespace Azure.Search.Documents.Models
                 searchFields.ToList(),
                 semanticConfigurationName,
                 baseFilter,
+                queryHints,
                 additionalBinaryDataProperties: null);
         }
 
@@ -1980,19 +2016,88 @@ namespace Azure.Search.Documents.Models
             return new SearchIndexFieldReference(name, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Hints that guide query planning toward useful filters and boosts for a search index knowledge source. </summary>
+        /// <param name="filters"> Filter hints that identify fields and representative values the query planner can use when constructing filters. </param>
+        /// <param name="boosts"> Boost hints that identify conditions the query planner can use to influence document ranking. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexKnowledgeSourceQueryHints"/> instance for mocking. </returns>
+        public static SearchIndexKnowledgeSourceQueryHints SearchIndexKnowledgeSourceQueryHints(IEnumerable<SearchIndexKnowledgeSourceFilterHint> filters = default, IEnumerable<SearchIndexKnowledgeSourceBoost> boosts = default)
+        {
+            filters ??= new ChangeTrackingList<SearchIndexKnowledgeSourceFilterHint>();
+            boosts ??= new ChangeTrackingList<SearchIndexKnowledgeSourceBoost>();
+
+            return new SearchIndexKnowledgeSourceQueryHints(filters.ToList(), boosts.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A hint that identifies a field and representative values the query planner can use when constructing a filter. </summary>
+        /// <param name="field"> The name of the filterable search index field. </param>
+        /// <param name="fieldValues"> Representative values for the field. </param>
+        /// <param name="filterInstructions"> Natural-language instructions that explain when and how to filter on the field. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexKnowledgeSourceFilterHint"/> instance for mocking. </returns>
+        public static SearchIndexKnowledgeSourceFilterHint SearchIndexKnowledgeSourceFilterHint(string @field = default, IEnumerable<string> fieldValues = default, string filterInstructions = default)
+        {
+            fieldValues ??= new ChangeTrackingList<string>();
+
+            return new SearchIndexKnowledgeSourceFilterHint(@field, fieldValues.ToList(), filterInstructions, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
+        /// A hint that identifies a condition the query planner can use to influence document ranking.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Indexes.Models.SearchIndexKnowledgeSourceFieldValueBoost"/> and <see cref="Indexes.Models.SearchIndexKnowledgeSourceMultiWordExpressionBoost"/>.
+        /// </summary>
+        /// <param name="kind"> The kind of boost hint. </param>
+        /// <param name="boostInstructions"> Natural-language instructions that explain when and how to apply the boost. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexKnowledgeSourceBoost"/> instance for mocking. </returns>
+        public static SearchIndexKnowledgeSourceBoost SearchIndexKnowledgeSourceBoost(string kind = default, string boostInstructions = default)
+        {
+            return new UnknownSearchIndexKnowledgeSourceBoost(new SearchIndexKnowledgeSourceBoostKind(kind), boostInstructions, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A hint that boosts documents based on a field value. </summary>
+        /// <param name="boostInstructions"> Natural-language instructions that explain when and how to apply the boost. </param>
+        /// <param name="field"> The name of the search index field. </param>
+        /// <param name="fieldValues"> Representative values for the field. </param>
+        /// <param name="boost"> A multiplier for the document score. Must be a positive number not equal to 1.0. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexKnowledgeSourceFieldValueBoost"/> instance for mocking. </returns>
+        public static SearchIndexKnowledgeSourceFieldValueBoost SearchIndexKnowledgeSourceFieldValueBoost(string boostInstructions = default, string @field = default, IEnumerable<string> fieldValues = default, double boost = default)
+        {
+            fieldValues ??= new ChangeTrackingList<string>();
+
+            return new SearchIndexKnowledgeSourceFieldValueBoost(
+                SearchIndexKnowledgeSourceBoostKind.FieldValue,
+                boostInstructions,
+                additionalBinaryDataProperties: null,
+                @field,
+                fieldValues.ToList(),
+                boost);
+        }
+
+        /// <summary> A hint that boosts documents based on a multi-word expression. </summary>
+        /// <param name="boostInstructions"> Natural-language instructions that explain when and how to apply the boost. </param>
+        /// <param name="fieldValues"> Representative values for the boost. </param>
+        /// <param name="boost"> A multiplier for the document score. Must be a positive number not equal to 1.0. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexKnowledgeSourceMultiWordExpressionBoost"/> instance for mocking. </returns>
+        public static SearchIndexKnowledgeSourceMultiWordExpressionBoost SearchIndexKnowledgeSourceMultiWordExpressionBoost(string boostInstructions = default, IEnumerable<string> fieldValues = default, double boost = default)
+        {
+            fieldValues ??= new ChangeTrackingList<string>();
+
+            return new SearchIndexKnowledgeSourceMultiWordExpressionBoost(SearchIndexKnowledgeSourceBoostKind.MultiWordExpression, boostInstructions, additionalBinaryDataProperties: null, fieldValues.ToList(), boost);
+        }
+
         /// <summary> Configuration for Azure Blob Storage knowledge source. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
+        /// <param name="resultsProcessing"> Controls whether results from this knowledge source are reranked before they are included in the final result set. Defaults to 'rerank' when not specified. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="azureBlobParameters"> The type of the knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.AzureBlobKnowledgeSource"/> instance for mocking. </returns>
-        public static AzureBlobKnowledgeSource AzureBlobKnowledgeSource(string name = default, string description = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, AzureBlobKnowledgeSourceParameters azureBlobParameters = default)
+        public static AzureBlobKnowledgeSource AzureBlobKnowledgeSource(string name = default, string description = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, AzureBlobKnowledgeSourceParameters azureBlobParameters = default)
         {
             return new AzureBlobKnowledgeSource(
                 name,
                 description,
                 KnowledgeSourceKind.AzureBlob,
+                resultsProcessing,
                 eTag,
                 encryptionKey,
                 additionalBinaryDataProperties: null,
@@ -2005,9 +2110,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="folderPath"> Optional folder path within the container. </param>
         /// <param name="isADLSGen2"> Set to true if connecting to an ADLS Gen2 storage account. Default is false. </param>
         /// <param name="ingestionParameters"> Consolidates all general ingestion settings. </param>
+        /// <param name="queryHints"> Default hints that guide query planning toward useful filters and boosts for this index-backed knowledge source. Request-time query hints replace these defaults as a complete object. </param>
         /// <param name="createdResources"> Resources created by the knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.AzureBlobKnowledgeSourceParameters"/> instance for mocking. </returns>
-        public static AzureBlobKnowledgeSourceParameters AzureBlobKnowledgeSourceParameters(string connectionString = default, string containerName = default, string folderPath = default, bool? isADLSGen2 = default, KnowledgeSourceIngestionParameters ingestionParameters = default, CreatedResources createdResources = default)
+        public static AzureBlobKnowledgeSourceParameters AzureBlobKnowledgeSourceParameters(string connectionString = default, string containerName = default, string folderPath = default, bool? isADLSGen2 = default, KnowledgeSourceIngestionParameters ingestionParameters = default, SearchIndexKnowledgeSourceQueryHints queryHints = default, CreatedResources createdResources = default)
         {
             return new AzureBlobKnowledgeSourceParameters(
                 connectionString,
@@ -2015,6 +2121,7 @@ namespace Azure.Search.Documents.Models
                 folderPath,
                 isADLSGen2,
                 ingestionParameters,
+                queryHints,
                 createdResources,
                 additionalBinaryDataProperties: null);
         }
@@ -2030,8 +2137,9 @@ namespace Azure.Search.Documents.Models
         /// <param name="aiServices"> Optional AI Services configuration for content processing. </param>
         /// <param name="assetStore"> Optional asset store configuration for storing extracted assets such as images. </param>
         /// <param name="freshnessPolicy"> Optional freshness policy for biasing retrieval toward newer documents. </param>
+        /// <param name="networkAccessMode"> Optional network access mode for ingestion. Set to 'private' to run ingestion in a private execution environment that can reach data sources and dependencies over a private network. Default is 'public'. This is a create-time setting and cannot be changed after the knowledge source is created. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeSourceIngestionParameters"/> instance for mocking. </returns>
-        public static KnowledgeSourceIngestionParameters KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity = default, KnowledgeSourceVectorizer embeddingModel = default, KnowledgeBaseModel chatCompletionModel = default, bool? disableImageVerbalization = default, IndexingSchedule ingestionSchedule = default, IEnumerable<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions = default, KnowledgeSourceContentExtractionMode? contentExtractionMode = default, AIServices aiServices = default, AssetStore assetStore = default, FreshnessPolicy freshnessPolicy = default)
+        public static KnowledgeSourceIngestionParameters KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity = default, KnowledgeSourceVectorizer embeddingModel = default, KnowledgeBaseModel chatCompletionModel = default, bool? disableImageVerbalization = default, IndexingSchedule ingestionSchedule = default, IEnumerable<KnowledgeSourceIngestionPermissionOption> ingestionPermissionOptions = default, KnowledgeSourceContentExtractionMode? contentExtractionMode = default, AIServices aiServices = default, AssetStore assetStore = default, FreshnessPolicy freshnessPolicy = default, KnowledgeSourceNetworkAccessMode? networkAccessMode = default)
         {
             ingestionPermissionOptions ??= new ChangeTrackingList<KnowledgeSourceIngestionPermissionOption>();
 
@@ -2046,6 +2154,7 @@ namespace Azure.Search.Documents.Models
                 aiServices,
                 assetStore,
                 freshnessPolicy,
+                networkAccessMode,
                 additionalBinaryDataProperties: null);
         }
 
@@ -2116,16 +2225,18 @@ namespace Azure.Search.Documents.Models
         /// <summary> Configuration for SharePoint knowledge source. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
+        /// <param name="resultsProcessing"> Controls whether results from this knowledge source are reranked before they are included in the final result set. Defaults to 'rerank' when not specified. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="indexedSharePointParameters"> The parameters for the knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.IndexedSharePointKnowledgeSource"/> instance for mocking. </returns>
-        public static IndexedSharePointKnowledgeSource IndexedSharePointKnowledgeSource(string name = default, string description = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, IndexedSharePointKnowledgeSourceParameters indexedSharePointParameters = default)
+        public static IndexedSharePointKnowledgeSource IndexedSharePointKnowledgeSource(string name = default, string description = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, IndexedSharePointKnowledgeSourceParameters indexedSharePointParameters = default)
         {
             return new IndexedSharePointKnowledgeSource(
                 name,
                 description,
                 KnowledgeSourceKind.IndexedSharePoint,
+                resultsProcessing,
                 eTag,
                 encryptionKey,
                 additionalBinaryDataProperties: null,
@@ -2137,15 +2248,17 @@ namespace Azure.Search.Documents.Models
         /// <param name="containerName"> Specifies which SharePoint libraries to access. </param>
         /// <param name="query"> Optional query to filter SharePoint content. </param>
         /// <param name="ingestionParameters"> Consolidates all general ingestion settings. </param>
+        /// <param name="queryHints"> Default hints that guide query planning toward useful filters and boosts for this index-backed knowledge source. Request-time query hints replace these defaults as a complete object. </param>
         /// <param name="createdResources"> Resources created by the knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.IndexedSharePointKnowledgeSourceParameters"/> instance for mocking. </returns>
-        public static IndexedSharePointKnowledgeSourceParameters IndexedSharePointKnowledgeSourceParameters(string connectionString = default, IndexedSharePointContainerName containerName = default, string query = default, KnowledgeSourceIngestionParameters ingestionParameters = default, CreatedResources createdResources = default)
+        public static IndexedSharePointKnowledgeSourceParameters IndexedSharePointKnowledgeSourceParameters(string connectionString = default, IndexedSharePointContainerName containerName = default, string query = default, KnowledgeSourceIngestionParameters ingestionParameters = default, SearchIndexKnowledgeSourceQueryHints queryHints = default, CreatedResources createdResources = default)
         {
             return new IndexedSharePointKnowledgeSourceParameters(
                 connectionString,
                 containerName,
                 query,
                 ingestionParameters,
+                queryHints,
                 createdResources,
                 additionalBinaryDataProperties: null);
         }
@@ -2153,16 +2266,18 @@ namespace Azure.Search.Documents.Models
         /// <summary> Configuration for OneLake knowledge source. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
+        /// <param name="resultsProcessing"> Controls whether results from this knowledge source are reranked before they are included in the final result set. Defaults to 'rerank' when not specified. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="indexedOneLakeParameters"> The parameters for the knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.IndexedOneLakeKnowledgeSource"/> instance for mocking. </returns>
-        public static IndexedOneLakeKnowledgeSource IndexedOneLakeKnowledgeSource(string name = default, string description = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, IndexedOneLakeKnowledgeSourceParameters indexedOneLakeParameters = default)
+        public static IndexedOneLakeKnowledgeSource IndexedOneLakeKnowledgeSource(string name = default, string description = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, IndexedOneLakeKnowledgeSourceParameters indexedOneLakeParameters = default)
         {
             return new IndexedOneLakeKnowledgeSource(
                 name,
                 description,
                 KnowledgeSourceKind.IndexedOneLake,
+                resultsProcessing,
                 eTag,
                 encryptionKey,
                 additionalBinaryDataProperties: null,
@@ -2174,15 +2289,17 @@ namespace Azure.Search.Documents.Models
         /// <param name="lakehouseId"> Specifies which OneLake lakehouse to access. </param>
         /// <param name="targetPath"> Optional OneLakehouse folder or shortcut to filter OneLake content. </param>
         /// <param name="ingestionParameters"> Consolidates all general ingestion settings. </param>
+        /// <param name="queryHints"> Default hints that guide query planning toward useful filters and boosts for this index-backed knowledge source. Request-time query hints replace these defaults as a complete object. </param>
         /// <param name="createdResources"> Resources created by the knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.IndexedOneLakeKnowledgeSourceParameters"/> instance for mocking. </returns>
-        public static IndexedOneLakeKnowledgeSourceParameters IndexedOneLakeKnowledgeSourceParameters(string fabricWorkspaceId = default, string lakehouseId = default, string targetPath = default, KnowledgeSourceIngestionParameters ingestionParameters = default, CreatedResources createdResources = default)
+        public static IndexedOneLakeKnowledgeSourceParameters IndexedOneLakeKnowledgeSourceParameters(string fabricWorkspaceId = default, string lakehouseId = default, string targetPath = default, KnowledgeSourceIngestionParameters ingestionParameters = default, SearchIndexKnowledgeSourceQueryHints queryHints = default, CreatedResources createdResources = default)
         {
             return new IndexedOneLakeKnowledgeSourceParameters(
                 fabricWorkspaceId,
                 lakehouseId,
                 targetPath,
                 ingestionParameters,
+                queryHints,
                 createdResources,
                 additionalBinaryDataProperties: null);
         }
@@ -2190,16 +2307,18 @@ namespace Azure.Search.Documents.Models
         /// <summary> Configuration for indexed SQL knowledge source. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
+        /// <param name="resultsProcessing"> Controls whether results from this knowledge source are reranked before they are included in the final result set. Defaults to 'rerank' when not specified. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="indexedSqlParameters"> The parameters for the SQL knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.IndexedSqlKnowledgeSource"/> instance for mocking. </returns>
-        public static IndexedSqlKnowledgeSource IndexedSqlKnowledgeSource(string name = default, string description = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, IndexedSqlKnowledgeSourceParameters indexedSqlParameters = default)
+        public static IndexedSqlKnowledgeSource IndexedSqlKnowledgeSource(string name = default, string description = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, IndexedSqlKnowledgeSourceParameters indexedSqlParameters = default)
         {
             return new IndexedSqlKnowledgeSource(
                 name,
                 description,
                 KnowledgeSourceKind.IndexedSql,
+                resultsProcessing,
                 eTag,
                 encryptionKey,
                 additionalBinaryDataProperties: null,
@@ -2213,9 +2332,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="contentColumns"> Optional column mappings for content fields. If omitted, all columns are auto-discovered. </param>
         /// <param name="embeddingColumns"> Optional column mappings for embedding vector fields. If omitted, no vector fields are created. </param>
         /// <param name="ingestionParameters"> Consolidates all general ingestion settings including embedding model, schedule, and identity. </param>
+        /// <param name="queryHints"> Default hints that guide query planning toward useful filters and boosts for this index-backed knowledge source. Request-time query hints replace these defaults as a complete object. </param>
         /// <param name="createdResources"> Resources created by the knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.IndexedSqlKnowledgeSourceParameters"/> instance for mocking. </returns>
-        public static IndexedSqlKnowledgeSourceParameters IndexedSqlKnowledgeSourceParameters(string connectionString = default, string tableOrView = default, string highWaterMarkColumnName = default, IEnumerable<ContentColumnMapping> contentColumns = default, IEnumerable<EmbeddingColumnMapping> embeddingColumns = default, KnowledgeSourceIngestionParameters ingestionParameters = default, CreatedResources createdResources = default)
+        public static IndexedSqlKnowledgeSourceParameters IndexedSqlKnowledgeSourceParameters(string connectionString = default, string tableOrView = default, string highWaterMarkColumnName = default, IEnumerable<ContentColumnMapping> contentColumns = default, IEnumerable<EmbeddingColumnMapping> embeddingColumns = default, KnowledgeSourceIngestionParameters ingestionParameters = default, SearchIndexKnowledgeSourceQueryHints queryHints = default, CreatedResources createdResources = default)
         {
             contentColumns ??= new ChangeTrackingList<ContentColumnMapping>();
             embeddingColumns ??= new ChangeTrackingList<EmbeddingColumnMapping>();
@@ -2227,6 +2347,7 @@ namespace Azure.Search.Documents.Models
                 contentColumns.ToList(),
                 embeddingColumns.ToList(),
                 ingestionParameters,
+                queryHints,
                 createdResources,
                 additionalBinaryDataProperties: null);
         }
@@ -2253,44 +2374,51 @@ namespace Azure.Search.Documents.Models
         /// <summary> Configuration for File knowledge source that supports direct file upload and indexing. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
+        /// <param name="resultsProcessing"> Controls whether results from this knowledge source are reranked before they are included in the final result set. Defaults to 'rerank' when not specified. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="fileParameters"> The parameters for the File knowledge source. </param>
+        /// <param name="corsOptions"> Options to control Cross-Origin Resource Sharing (CORS) for the File knowledge source's file endpoints (upload, list, update, delete). </param>
         /// <returns> A new <see cref="Indexes.Models.FileKnowledgeSource"/> instance for mocking. </returns>
-        public static FileKnowledgeSource FileKnowledgeSource(string name = default, string description = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, FileKnowledgeSourceParameters fileParameters = default)
+        public static FileKnowledgeSource FileKnowledgeSource(string name = default, string description = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, FileKnowledgeSourceParameters fileParameters = default, CorsOptions corsOptions = default)
         {
             return new FileKnowledgeSource(
                 name,
                 description,
                 KnowledgeSourceKind.File,
+                resultsProcessing,
                 eTag,
                 encryptionKey,
                 additionalBinaryDataProperties: null,
-                fileParameters);
+                fileParameters,
+                corsOptions);
         }
 
         /// <summary> Parameters for File knowledge source. </summary>
-        /// <param name="ingestionParameters"> Consolidates all general ingestion settings. Only 'minimal' content extraction mode and embeddingModel are supported for file knowledge sources. </param>
+        /// <param name="ingestionParameters"> Consolidates all general ingestion settings for the File knowledge source, including the content extraction mode and an optional embeddingModel. </param>
+        /// <param name="queryHints"> Default hints that guide query planning toward useful filters and boosts for this index-backed knowledge source. Request-time query hints replace these defaults as a complete object. </param>
         /// <param name="createdResources"> Resources created by the file knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.FileKnowledgeSourceParameters"/> instance for mocking. </returns>
-        public static FileKnowledgeSourceParameters FileKnowledgeSourceParameters(KnowledgeSourceIngestionParameters ingestionParameters = default, CreatedResources createdResources = default)
+        public static FileKnowledgeSourceParameters FileKnowledgeSourceParameters(KnowledgeSourceIngestionParameters ingestionParameters = default, SearchIndexKnowledgeSourceQueryHints queryHints = default, CreatedResources createdResources = default)
         {
-            return new FileKnowledgeSourceParameters(ingestionParameters, createdResources, additionalBinaryDataProperties: null);
+            return new FileKnowledgeSourceParameters(ingestionParameters, queryHints, createdResources, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Knowledge Source targeting web results. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
+        /// <param name="resultsProcessing"> Controls whether results from this knowledge source are reranked before they are included in the final result set. Defaults to 'rerank' when not specified. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="webParameters"> The parameters for the web knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.WebKnowledgeSource"/> instance for mocking. </returns>
-        public static WebKnowledgeSource WebKnowledgeSource(string name = default, string description = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, WebKnowledgeSourceParameters webParameters = default)
+        public static WebKnowledgeSource WebKnowledgeSource(string name = default, string description = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, WebKnowledgeSourceParameters webParameters = default)
         {
             return new WebKnowledgeSource(
                 name,
                 description,
                 KnowledgeSourceKind.Web,
+                resultsProcessing,
                 eTag,
                 encryptionKey,
                 additionalBinaryDataProperties: null,
@@ -2339,16 +2467,18 @@ namespace Azure.Search.Documents.Models
         /// <summary> Configuration for remote SharePoint knowledge source. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
+        /// <param name="resultsProcessing"> Controls whether results from this knowledge source are reranked before they are included in the final result set. Defaults to 'rerank' when not specified. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="remoteSharePointParameters"> The parameters for the remote SharePoint knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.RemoteSharePointKnowledgeSource"/> instance for mocking. </returns>
-        public static RemoteSharePointKnowledgeSource RemoteSharePointKnowledgeSource(string name = default, string description = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, RemoteSharePointKnowledgeSourceParameters remoteSharePointParameters = default)
+        public static RemoteSharePointKnowledgeSource RemoteSharePointKnowledgeSource(string name = default, string description = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, RemoteSharePointKnowledgeSourceParameters remoteSharePointParameters = default)
         {
             return new RemoteSharePointKnowledgeSource(
                 name,
                 description,
                 KnowledgeSourceKind.RemoteSharePoint,
+                resultsProcessing,
                 eTag,
                 encryptionKey,
                 additionalBinaryDataProperties: null,
@@ -2370,33 +2500,57 @@ namespace Azure.Search.Documents.Models
         /// <summary> Configuration for WorkIQ knowledge source. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
+        /// <param name="resultsProcessing"> Controls whether results from this knowledge source are reranked before they are included in the final result set. Defaults to 'rerank' when not specified. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="workIQParameters"> The parameters for the WorkIQ knowledge source, including the customer-owned Entra app configuration used for on-behalf-of authentication. </param>
         /// <returns> A new <see cref="Indexes.Models.WorkIQKnowledgeSource"/> instance for mocking. </returns>
-        public static WorkIQKnowledgeSource WorkIQKnowledgeSource(string name = default, string description = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default)
+        public static WorkIQKnowledgeSource WorkIQKnowledgeSource(string name = default, string description = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, WorkIQKnowledgeSourceParameters workIQParameters = default)
         {
             return new WorkIQKnowledgeSource(
                 name,
                 description,
                 KnowledgeSourceKind.WorkIQ,
+                resultsProcessing,
                 eTag,
                 encryptionKey,
-                additionalBinaryDataProperties: null);
+                additionalBinaryDataProperties: null,
+                workIQParameters);
+        }
+
+        /// <summary> Parameters for a WorkIQ knowledge source. </summary>
+        /// <param name="entraAppAuthentication"> The customer-owned Microsoft Entra app registration configuration used for on-behalf-of authentication to the Work IQ API. The customer registers a tenant-owned Entra app, grants it the WorkIQAgent.Ask delegated permission, and configures a federated credential so Azure AI Search can authenticate as that app without a stored client secret. </param>
+        /// <returns> A new <see cref="Indexes.Models.WorkIQKnowledgeSourceParameters"/> instance for mocking. </returns>
+        public static WorkIQKnowledgeSourceParameters WorkIQKnowledgeSourceParameters(EntraAppAuthentication entraAppAuthentication = default)
+        {
+            return new WorkIQKnowledgeSourceParameters(entraAppAuthentication, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Configuration for a customer-owned Microsoft Entra app registration used for federated credential-based on-behalf-of authentication. </summary>
+        /// <param name="applicationId"> The application (client) ID of the customer-owned Entra app registration. </param>
+        /// <param name="federatedCredentialId"> The federated credential ID configured on the app registration, enabling the search service to authenticate as the app without a stored client secret. </param>
+        /// <param name="tenantId"> The tenant ID of the app registration. Required when the app registration is in a different tenant than the search service. If omitted, the search service's tenant is used. </param>
+        /// <returns> A new <see cref="Indexes.Models.EntraAppAuthentication"/> instance for mocking. </returns>
+        public static EntraAppAuthentication EntraAppAuthentication(Guid applicationId = default, Guid federatedCredentialId = default, Guid? tenantId = default)
+        {
+            return new EntraAppAuthentication(applicationId, federatedCredentialId, tenantId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Configuration for a knowledge source backed by an MCP (Model Context Protocol) server. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
+        /// <param name="resultsProcessing"> Controls whether results from this knowledge source are reranked before they are included in the final result set. Defaults to 'rerank' when not specified. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="mcpServerParameters"> The parameters for the MCP server knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.McpServerKnowledgeSource"/> instance for mocking. </returns>
-        public static McpServerKnowledgeSource McpServerKnowledgeSource(string name = default, string description = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, McpServerKnowledgeSourceParameters mcpServerParameters = default)
+        public static McpServerKnowledgeSource McpServerKnowledgeSource(string name = default, string description = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, McpServerKnowledgeSourceParameters mcpServerParameters = default)
         {
             return new McpServerKnowledgeSource(
                 name,
                 description,
                 KnowledgeSourceKind.McpServer,
+                resultsProcessing,
                 eTag,
                 encryptionKey,
                 additionalBinaryDataProperties: null,
@@ -2471,12 +2625,12 @@ namespace Azure.Search.Documents.Models
         /// <summary> Represents a single tool within an MCP server knowledge source. </summary>
         /// <param name="name"> The name of the MCP tool to invoke. </param>
         /// <param name="outputParsing"> Optional configuration for parsing the tool's output. </param>
-        /// <param name="inclusionMode"> Controls how the parsed results from this tool are integrated into the final result set. Defaults to 'reranked' when not specified. </param>
+        /// <param name="resultsProcessing"> Controls whether the parsed results from this tool are reranked. Defaults to 'rerank' when not specified. </param>
         /// <param name="maxOutputTokens"> Optional post-parsing token cap for this tool's output. Must be greater than 0 when specified. </param>
         /// <returns> A new <see cref="Indexes.Models.McpServerTool"/> instance for mocking. </returns>
-        public static McpServerTool McpServerTool(string name = default, McpServerOutputParsing outputParsing = default, McpServerToolInclusionMode? inclusionMode = default, int? maxOutputTokens = default)
+        public static McpServerTool McpServerTool(string name = default, McpServerOutputParsing outputParsing = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, int? maxOutputTokens = default)
         {
-            return new McpServerTool(name, outputParsing, inclusionMode, maxOutputTokens, additionalBinaryDataProperties: null);
+            return new McpServerTool(name, outputParsing, resultsProcessing, maxOutputTokens, additionalBinaryDataProperties: null);
         }
 
         /// <summary>
@@ -2550,16 +2704,18 @@ namespace Azure.Search.Documents.Models
         /// <summary> Configuration for Fabric Data Agent knowledge source. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
+        /// <param name="resultsProcessing"> Controls whether results from this knowledge source are reranked before they are included in the final result set. Defaults to 'rerank' when not specified. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="fabricDataAgentParameters"> The parameters for the Fabric Data Agent knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.FabricDataAgentKnowledgeSource"/> instance for mocking. </returns>
-        public static FabricDataAgentKnowledgeSource FabricDataAgentKnowledgeSource(string name = default, string description = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, FabricDataAgentKnowledgeSourceParameters fabricDataAgentParameters = default)
+        public static FabricDataAgentKnowledgeSource FabricDataAgentKnowledgeSource(string name = default, string description = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, FabricDataAgentKnowledgeSourceParameters fabricDataAgentParameters = default)
         {
             return new FabricDataAgentKnowledgeSource(
                 name,
                 description,
                 KnowledgeSourceKind.FabricDataAgent,
+                resultsProcessing,
                 eTag,
                 encryptionKey,
                 additionalBinaryDataProperties: null,
@@ -2578,16 +2734,18 @@ namespace Azure.Search.Documents.Models
         /// <summary> Configuration for Fabric Ontology knowledge source. </summary>
         /// <param name="name"> The name of the knowledge source. </param>
         /// <param name="description"> Optional user-defined description. </param>
+        /// <param name="resultsProcessing"> Controls whether results from this knowledge source are reranked before they are included in the final result set. Defaults to 'rerank' when not specified. </param>
         /// <param name="eTag"> The ETag of the knowledge source. </param>
         /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
         /// <param name="fabricOntologyParameters"> The parameters for the Fabric Ontology knowledge source. </param>
         /// <returns> A new <see cref="Indexes.Models.FabricOntologyKnowledgeSource"/> instance for mocking. </returns>
-        public static FabricOntologyKnowledgeSource FabricOntologyKnowledgeSource(string name = default, string description = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, FabricOntologyKnowledgeSourceParameters fabricOntologyParameters = default)
+        public static FabricOntologyKnowledgeSource FabricOntologyKnowledgeSource(string name = default, string description = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, ETag? eTag = default, SearchResourceEncryptionKey encryptionKey = default, FabricOntologyKnowledgeSourceParameters fabricOntologyParameters = default)
         {
             return new FabricOntologyKnowledgeSource(
                 name,
                 description,
                 KnowledgeSourceKind.FabricOntology,
+                resultsProcessing,
                 eTag,
                 encryptionKey,
                 additionalBinaryDataProperties: null,
@@ -2695,20 +2853,61 @@ namespace Azure.Search.Documents.Models
         /// <param name="fileId"> The unique identifier for the file. </param>
         /// <param name="fileName"> The original file name. </param>
         /// <param name="fileSizeBytes"> The file size in bytes. </param>
-        /// <param name="createdAt"> The timestamp when the file was created. </param>
-        /// <param name="lastUpdatedAt"> The timestamp when the file was last updated. </param>
+        /// <param name="createdOn"> The timestamp when the file was created. </param>
+        /// <param name="lastUpdatedOn"> The timestamp when the file was last updated. </param>
         /// <param name="errorMessage"> The error message if file processing failed, null otherwise. </param>
+        /// <param name="prefix"> The prefix (directory-like path) derived from the full file name. </param>
+        /// <param name="metadata"> Custom key/value metadata stored with the file. Returned but not searchable or filterable. </param>
+        /// <param name="parsingMode"> The parsing mode applied to the file (auto-detected from the file). </param>
+        /// <param name="extractionMode"> The extraction mode applied to the file. </param>
         /// <returns> A new <see cref="Indexes.Models.KnowledgeSourceFile"/> instance for mocking. </returns>
-        public static KnowledgeSourceFile KnowledgeSourceFile(string fileId = default, string fileName = default, long? fileSizeBytes = default, DateTimeOffset? createdAt = default, DateTimeOffset? lastUpdatedAt = default, string errorMessage = default)
+        public static KnowledgeSourceFile KnowledgeSourceFile(string fileId = default, string fileName = default, long? fileSizeBytes = default, DateTimeOffset? createdOn = default, DateTimeOffset? lastUpdatedOn = default, string errorMessage = default, string prefix = default, IReadOnlyDictionary<string, string> metadata = default, BlobIndexerParsingMode? parsingMode = default, FileKnowledgeSourceExtractionMode? extractionMode = default)
         {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
             return new KnowledgeSourceFile(
                 fileId,
                 fileName,
                 fileSizeBytes,
-                createdAt,
-                lastUpdatedAt,
+                createdOn,
+                lastUpdatedOn,
                 errorMessage,
+                prefix,
+                metadata,
+                parsingMode,
+                extractionMode,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Multipart request for uploading a file to a File knowledge source. </summary>
+        /// <param name="metadata"> The JSON metadata describing the file. </param>
+        /// <param name="content"> The raw file content. </param>
+        /// <returns> A new <see cref="Indexes.Models.UploadKnowledgeSourceFileMultipartRequest"/> instance for mocking. </returns>
+        [Experimental("SCME0004")]
+        public static UploadKnowledgeSourceFileMultipartRequest UploadKnowledgeSourceFileMultipartRequest(FileUploadMetadata metadata = default, FileBinaryContent content = default)
+        {
+            return new UploadKnowledgeSourceFileMultipartRequest(metadata, content);
+        }
+
+        /// <summary> The JSON 'metadata' part of a multipart/form-data file upload: the full file name/path and custom key/value metadata. The parsing mode and extraction mode are both chosen by the service and are not supplied by the caller. </summary>
+        /// <param name="fileName"> The full relative file name/path to store the file under (prefixes are derived from it). </param>
+        /// <param name="metadata"> Custom key/value metadata to store with the file. </param>
+        /// <returns> A new <see cref="Indexes.Models.FileUploadMetadata"/> instance for mocking. </returns>
+        public static FileUploadMetadata FileUploadMetadata(string fileName = default, IDictionary<string, string> metadata = default)
+        {
+            metadata ??= new ChangeTrackingDictionary<string, string>();
+
+            return new FileUploadMetadata(fileName, metadata, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Multipart request for updating a file in a File knowledge source. </summary>
+        /// <param name="metadata"> The JSON metadata describing the file. </param>
+        /// <param name="content"> The raw file content. </param>
+        /// <returns> A new <see cref="Indexes.Models.UpdateKnowledgeSourceFileRequest"/> instance for mocking. </returns>
+        [Experimental("SCME0004")]
+        public static UpdateKnowledgeSourceFileRequest UpdateKnowledgeSourceFileRequest(FileUploadMetadata metadata = default, FileBinaryContent content = default)
+        {
+            return new UpdateKnowledgeSourceFileRequest(metadata, content);
         }
 
         /// <summary> Response from a get service statistics request. If successful, it includes service level counters and limits. </summary>
@@ -2758,8 +2957,9 @@ namespace Azure.Search.Documents.Models
         /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
         /// <param name="maxStoragePerIndexInBytes"> The maximum amount of storage in bytes allowed per index. </param>
         /// <param name="maxCumulativeIndexerRuntimeSeconds"> The maximum cumulative indexer runtime in seconds allowed for the service. </param>
+        /// <param name="maxVectorIndexSizePerIndexInBytes"> The maximum vector index size (vector memory quota) allowed per index in bytes. </param>
         /// <returns> A new <see cref="Indexes.Models.SearchServiceLimits"/> instance for mocking. </returns>
-        public static SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex = default, int? maxFieldNestingDepthPerIndex = default, int? maxComplexCollectionFieldsPerIndex = default, int? maxComplexObjectsInCollectionsPerDocument = default, long? maxStoragePerIndexInBytes = default, long? maxCumulativeIndexerRuntimeSeconds = default)
+        public static SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex = default, int? maxFieldNestingDepthPerIndex = default, int? maxComplexCollectionFieldsPerIndex = default, int? maxComplexObjectsInCollectionsPerDocument = default, long? maxStoragePerIndexInBytes = default, long? maxCumulativeIndexerRuntimeSeconds = default, long? maxVectorIndexSizePerIndexInBytes = default)
         {
             return new SearchServiceLimits(
                 maxFieldsPerIndex,
@@ -2768,18 +2968,19 @@ namespace Azure.Search.Documents.Models
                 maxComplexObjectsInCollectionsPerDocument,
                 maxStoragePerIndexInBytes,
                 maxCumulativeIndexerRuntimeSeconds,
+                maxVectorIndexSizePerIndexInBytes,
                 additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents service-level indexer runtime counters. </summary>
         /// <param name="usedSeconds"> Cumulative runtime of all indexers in the service from the beginningTime to endingTime, in seconds. </param>
         /// <param name="remainingSeconds"> Cumulative runtime remaining for all indexers in the service from the beginningTime to endingTime, in seconds. </param>
-        /// <param name="beginningTime"> Beginning UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
-        /// <param name="endingTime"> End UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
+        /// <param name="beginningOn"> Beginning UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
+        /// <param name="endingOn"> End UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
         /// <returns> A new <see cref="Indexes.Models.ServiceIndexersRuntime"/> instance for mocking. </returns>
-        public static ServiceIndexersRuntime ServiceIndexersRuntime(long usedSeconds = default, long? remainingSeconds = default, DateTimeOffset beginningTime = default, DateTimeOffset endingTime = default)
+        public static ServiceIndexersRuntime ServiceIndexersRuntime(long usedSeconds = default, long? remainingSeconds = default, DateTimeOffset beginningOn = default, DateTimeOffset endingOn = default)
         {
-            return new ServiceIndexersRuntime(usedSeconds, remainingSeconds, beginningTime, endingTime, additionalBinaryDataProperties: null);
+            return new ServiceIndexersRuntime(usedSeconds, remainingSeconds, beginningOn, endingOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Statistics for a given index. Statistics are collected periodically and are not guaranteed to always be up-to-date. </summary>
@@ -3009,12 +3210,12 @@ namespace Azure.Search.Documents.Models
         /// <summary> Represents the indexer's cumulative runtime consumption in the service. </summary>
         /// <param name="usedSeconds"> Cumulative runtime of the indexer from the beginningTime to endingTime, in seconds. </param>
         /// <param name="remainingSeconds"> Cumulative runtime remaining for all indexers in the service from the beginningTime to endingTime, in seconds. </param>
-        /// <param name="beginningTime"> Beginning UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
-        /// <param name="endingTime"> End UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
+        /// <param name="beginningOn"> Beginning UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
+        /// <param name="endingOn"> End UTC time of the 24-hour period considered for indexer runtime usage (inclusive). </param>
         /// <returns> A new <see cref="Indexes.Models.IndexerRuntime"/> instance for mocking. </returns>
-        public static IndexerRuntime IndexerRuntime(long usedSeconds = default, long? remainingSeconds = default, DateTimeOffset beginningTime = default, DateTimeOffset endingTime = default)
+        public static IndexerRuntime IndexerRuntime(long usedSeconds = default, long? remainingSeconds = default, DateTimeOffset beginningOn = default, DateTimeOffset endingOn = default)
         {
-            return new IndexerRuntime(usedSeconds, remainingSeconds, beginningTime, endingTime, additionalBinaryDataProperties: null);
+            return new IndexerRuntime(usedSeconds, remainingSeconds, beginningOn, endingOn, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the result of an individual indexer execution. </summary>
@@ -3107,7 +3308,10 @@ namespace Azure.Search.Documents.Models
                 additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Base type for skills. </summary>
+        /// <summary>
+        /// Base type for skills.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Indexes.Models.ConditionalSkill"/>, <see cref="Indexes.Models.KeyPhraseExtractionSkill"/>, <see cref="Indexes.Models.OcrSkill"/>, <see cref="Indexes.Models.ImageAnalysisSkill"/>, <see cref="Indexes.Models.LanguageDetectionSkill"/>, <see cref="Indexes.Models.ShaperSkill"/>, <see cref="Indexes.Models.MergeSkill"/>, <see cref="Indexes.Models.SentimentSkill"/>, <see cref="Indexes.Models.EntityLinkingSkill"/>, <see cref="Indexes.Models.EntityRecognitionSkill"/>, <see cref="Indexes.Models.PiiDetectionSkill"/>, <see cref="Indexes.Models.SplitSkill"/>, <see cref="Indexes.Models.CustomEntityLookupSkill"/>, <see cref="Indexes.Models.TextTranslationSkill"/>, <see cref="Indexes.Models.DocumentExtractionSkill"/>, <see cref="Indexes.Models.DocumentIntelligenceLayoutSkill"/>, <see cref="Indexes.Models.WebApiSkill"/>, <see cref="Indexes.Models.AzureMachineLearningSkill"/>, <see cref="Indexes.Models.AzureOpenAIEmbeddingSkill"/>, <see cref="Indexes.Models.VisionVectorizeSkill"/>, <see cref="Indexes.Models.ContentUnderstandingSkill"/>, and <see cref="Indexes.Models.ChatCompletionSkill"/>.
+        /// </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="name"> The name of the skill which uniquely identifies it within the skillset. A skill with no name defined will be given a default name of its 1-based index in the skills array, prefixed with the character '#'. </param>
         /// <param name="description"> The description of the skill which describes the inputs, outputs, and usage of the skill. </param>
@@ -4281,21 +4485,25 @@ namespace Azure.Search.Documents.Models
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
         /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
+        /// <param name="neverQuerySource"> Indicates that this knowledge source should be excluded from the request's candidate set and never queried at retrieval time. The exclusion is request-local and does not modify knowledge base membership. Cannot be combined with alwaysQuerySource on the same knowledge source. </param>
         /// <param name="failOnError"> Indicates that the entire retrieval request should fail if retrieval from this knowledge source encounters an error. Defaults to false. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
+        /// <param name="resultsProcessing"> Overrides the knowledge source's stored resultsProcessing for this retrieve call only. When omitted, the stored knowledge source value applies. </param>
         /// <param name="maxOutputDocuments"> Limits the maximum number of documents returned from this knowledge source. </param>
         /// <param name="kind"> The type of the knowledge source. </param>
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeSourceParams"/> instance for mocking. </returns>
-        public static KnowledgeSourceParams KnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, int? maxOutputDocuments = default, string kind = default, bool? enableImageServing = default)
+        public static KnowledgeSourceParams KnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? neverQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, int? maxOutputDocuments = default, string kind = default, bool? enableImageServing = default)
         {
             return new UnknownKnowledgeSourceParams(
                 knowledgeSourceName,
                 includeReferences,
                 includeReferenceSourceData,
                 alwaysQuerySource,
+                neverQuerySource,
                 failOnError,
                 rerankerThreshold,
+                resultsProcessing,
                 maxOutputDocuments,
                 new KnowledgeSourceKind(kind),
                 enableImageServing,
@@ -4307,26 +4515,32 @@ namespace Azure.Search.Documents.Models
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
         /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
+        /// <param name="neverQuerySource"> Indicates that this knowledge source should be excluded from the request's candidate set and never queried at retrieval time. The exclusion is request-local and does not modify knowledge base membership. Cannot be combined with alwaysQuerySource on the same knowledge source. </param>
         /// <param name="failOnError"> Indicates that the entire retrieval request should fail if retrieval from this knowledge source encounters an error. Defaults to false. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
+        /// <param name="resultsProcessing"> Overrides the knowledge source's stored resultsProcessing for this retrieve call only. When omitted, the stored knowledge source value applies. </param>
         /// <param name="maxOutputDocuments"> Limits the maximum number of documents returned from this knowledge source. </param>
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
         /// <param name="filterAddOn"> A filter condition applied to the index (e.g., 'State eq VA'). </param>
+        /// <param name="queryHintOverrides"> Hints that guide query planning toward useful filters and boosts. If specified, this object replaces the complete set of query hints configured on the knowledge source. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.SearchIndexKnowledgeSourceParams"/> instance for mocking. </returns>
-        public static SearchIndexKnowledgeSourceParams SearchIndexKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, int? maxOutputDocuments = default, bool? enableImageServing = default, string filterAddOn = default)
+        public static SearchIndexKnowledgeSourceParams SearchIndexKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? neverQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, int? maxOutputDocuments = default, bool? enableImageServing = default, string filterAddOn = default, SearchIndexKnowledgeSourceQueryHints queryHintOverrides = default)
         {
             return new SearchIndexKnowledgeSourceParams(
                 knowledgeSourceName,
                 includeReferences,
                 includeReferenceSourceData,
                 alwaysQuerySource,
+                neverQuerySource,
                 failOnError,
                 rerankerThreshold,
+                resultsProcessing,
                 maxOutputDocuments,
                 KnowledgeSourceKind.SearchIndex,
                 enableImageServing,
                 additionalBinaryDataProperties: null,
-                filterAddOn);
+                filterAddOn,
+                queryHintOverrides);
         }
 
         /// <summary> Specifies runtime parameters for a azure blob knowledge source. </summary>
@@ -4334,24 +4548,30 @@ namespace Azure.Search.Documents.Models
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
         /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
+        /// <param name="neverQuerySource"> Indicates that this knowledge source should be excluded from the request's candidate set and never queried at retrieval time. The exclusion is request-local and does not modify knowledge base membership. Cannot be combined with alwaysQuerySource on the same knowledge source. </param>
         /// <param name="failOnError"> Indicates that the entire retrieval request should fail if retrieval from this knowledge source encounters an error. Defaults to false. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
+        /// <param name="resultsProcessing"> Overrides the knowledge source's stored resultsProcessing for this retrieve call only. When omitted, the stored knowledge source value applies. </param>
         /// <param name="maxOutputDocuments"> Limits the maximum number of documents returned from this knowledge source. </param>
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
+        /// <param name="queryHintOverrides"> Hints that guide query planning toward useful filters and boosts. If specified, this object replaces the complete set of query hints configured on the knowledge source. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.AzureBlobKnowledgeSourceParams"/> instance for mocking. </returns>
-        public static AzureBlobKnowledgeSourceParams AzureBlobKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, int? maxOutputDocuments = default, bool? enableImageServing = default)
+        public static AzureBlobKnowledgeSourceParams AzureBlobKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? neverQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, int? maxOutputDocuments = default, bool? enableImageServing = default, SearchIndexKnowledgeSourceQueryHints queryHintOverrides = default)
         {
             return new AzureBlobKnowledgeSourceParams(
                 knowledgeSourceName,
                 includeReferences,
                 includeReferenceSourceData,
                 alwaysQuerySource,
+                neverQuerySource,
                 failOnError,
                 rerankerThreshold,
+                resultsProcessing,
                 maxOutputDocuments,
                 KnowledgeSourceKind.AzureBlob,
                 enableImageServing,
-                additionalBinaryDataProperties: null);
+                additionalBinaryDataProperties: null,
+                queryHintOverrides);
         }
 
         /// <summary> Specifies runtime parameters for a indexed SharePoint knowledge source. </summary>
@@ -4359,24 +4579,30 @@ namespace Azure.Search.Documents.Models
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
         /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
+        /// <param name="neverQuerySource"> Indicates that this knowledge source should be excluded from the request's candidate set and never queried at retrieval time. The exclusion is request-local and does not modify knowledge base membership. Cannot be combined with alwaysQuerySource on the same knowledge source. </param>
         /// <param name="failOnError"> Indicates that the entire retrieval request should fail if retrieval from this knowledge source encounters an error. Defaults to false. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
+        /// <param name="resultsProcessing"> Overrides the knowledge source's stored resultsProcessing for this retrieve call only. When omitted, the stored knowledge source value applies. </param>
         /// <param name="maxOutputDocuments"> Limits the maximum number of documents returned from this knowledge source. </param>
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
+        /// <param name="queryHintOverrides"> Hints that guide query planning toward useful filters and boosts. If specified, this object replaces the complete set of query hints configured on the knowledge source. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.IndexedSharePointKnowledgeSourceParams"/> instance for mocking. </returns>
-        public static IndexedSharePointKnowledgeSourceParams IndexedSharePointKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, int? maxOutputDocuments = default, bool? enableImageServing = default)
+        public static IndexedSharePointKnowledgeSourceParams IndexedSharePointKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? neverQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, int? maxOutputDocuments = default, bool? enableImageServing = default, SearchIndexKnowledgeSourceQueryHints queryHintOverrides = default)
         {
             return new IndexedSharePointKnowledgeSourceParams(
                 knowledgeSourceName,
                 includeReferences,
                 includeReferenceSourceData,
                 alwaysQuerySource,
+                neverQuerySource,
                 failOnError,
                 rerankerThreshold,
+                resultsProcessing,
                 maxOutputDocuments,
                 KnowledgeSourceKind.IndexedSharePoint,
                 enableImageServing,
-                additionalBinaryDataProperties: null);
+                additionalBinaryDataProperties: null,
+                queryHintOverrides);
         }
 
         /// <summary> Specifies runtime parameters for a indexed OneLake knowledge source. </summary>
@@ -4384,24 +4610,30 @@ namespace Azure.Search.Documents.Models
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
         /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
+        /// <param name="neverQuerySource"> Indicates that this knowledge source should be excluded from the request's candidate set and never queried at retrieval time. The exclusion is request-local and does not modify knowledge base membership. Cannot be combined with alwaysQuerySource on the same knowledge source. </param>
         /// <param name="failOnError"> Indicates that the entire retrieval request should fail if retrieval from this knowledge source encounters an error. Defaults to false. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
+        /// <param name="resultsProcessing"> Overrides the knowledge source's stored resultsProcessing for this retrieve call only. When omitted, the stored knowledge source value applies. </param>
         /// <param name="maxOutputDocuments"> Limits the maximum number of documents returned from this knowledge source. </param>
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
+        /// <param name="queryHintOverrides"> Hints that guide query planning toward useful filters and boosts. If specified, this object replaces the complete set of query hints configured on the knowledge source. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.IndexedOneLakeKnowledgeSourceParams"/> instance for mocking. </returns>
-        public static IndexedOneLakeKnowledgeSourceParams IndexedOneLakeKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, int? maxOutputDocuments = default, bool? enableImageServing = default)
+        public static IndexedOneLakeKnowledgeSourceParams IndexedOneLakeKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? neverQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, int? maxOutputDocuments = default, bool? enableImageServing = default, SearchIndexKnowledgeSourceQueryHints queryHintOverrides = default)
         {
             return new IndexedOneLakeKnowledgeSourceParams(
                 knowledgeSourceName,
                 includeReferences,
                 includeReferenceSourceData,
                 alwaysQuerySource,
+                neverQuerySource,
                 failOnError,
                 rerankerThreshold,
+                resultsProcessing,
                 maxOutputDocuments,
                 KnowledgeSourceKind.IndexedOneLake,
                 enableImageServing,
-                additionalBinaryDataProperties: null);
+                additionalBinaryDataProperties: null,
+                queryHintOverrides);
         }
 
         /// <summary> Specifies runtime parameters for a web knowledge source. </summary>
@@ -4409,8 +4641,10 @@ namespace Azure.Search.Documents.Models
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
         /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
+        /// <param name="neverQuerySource"> Indicates that this knowledge source should be excluded from the request's candidate set and never queried at retrieval time. The exclusion is request-local and does not modify knowledge base membership. Cannot be combined with alwaysQuerySource on the same knowledge source. </param>
         /// <param name="failOnError"> Indicates that the entire retrieval request should fail if retrieval from this knowledge source encounters an error. Defaults to false. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
+        /// <param name="resultsProcessing"> Overrides the knowledge source's stored resultsProcessing for this retrieve call only. When omitted, the stored knowledge source value applies. </param>
         /// <param name="maxOutputDocuments"> Limits the maximum number of documents returned from this knowledge source. </param>
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
         /// <param name="language"> The language of the web results. </param>
@@ -4418,15 +4652,17 @@ namespace Azure.Search.Documents.Models
         /// <param name="count"> The number of web results to return. </param>
         /// <param name="freshness"> The freshness of web results. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.WebKnowledgeSourceParams"/> instance for mocking. </returns>
-        public static WebKnowledgeSourceParams WebKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, int? maxOutputDocuments = default, bool? enableImageServing = default, string language = default, string market = default, int? count = default, string freshness = default)
+        public static WebKnowledgeSourceParams WebKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? neverQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, int? maxOutputDocuments = default, bool? enableImageServing = default, string language = default, string market = default, int? count = default, string freshness = default)
         {
             return new WebKnowledgeSourceParams(
                 knowledgeSourceName,
                 includeReferences,
                 includeReferenceSourceData,
                 alwaysQuerySource,
+                neverQuerySource,
                 failOnError,
                 rerankerThreshold,
+                resultsProcessing,
                 maxOutputDocuments,
                 KnowledgeSourceKind.Web,
                 enableImageServing,
@@ -4442,21 +4678,25 @@ namespace Azure.Search.Documents.Models
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
         /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
+        /// <param name="neverQuerySource"> Indicates that this knowledge source should be excluded from the request's candidate set and never queried at retrieval time. The exclusion is request-local and does not modify knowledge base membership. Cannot be combined with alwaysQuerySource on the same knowledge source. </param>
         /// <param name="failOnError"> Indicates that the entire retrieval request should fail if retrieval from this knowledge source encounters an error. Defaults to false. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
+        /// <param name="resultsProcessing"> Overrides the knowledge source's stored resultsProcessing for this retrieve call only. When omitted, the stored knowledge source value applies. </param>
         /// <param name="maxOutputDocuments"> Limits the maximum number of documents returned from this knowledge source. </param>
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
         /// <param name="filterExpressionAddOn"> A filter condition applied to the SharePoint data source. It must be specified in the Keyword Query Language syntax. It will be combined as a conjunction with the filter expression specified in the knowledge source definition. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.RemoteSharePointKnowledgeSourceParams"/> instance for mocking. </returns>
-        public static RemoteSharePointKnowledgeSourceParams RemoteSharePointKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, int? maxOutputDocuments = default, bool? enableImageServing = default, string filterExpressionAddOn = default)
+        public static RemoteSharePointKnowledgeSourceParams RemoteSharePointKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? neverQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, int? maxOutputDocuments = default, bool? enableImageServing = default, string filterExpressionAddOn = default)
         {
             return new RemoteSharePointKnowledgeSourceParams(
                 knowledgeSourceName,
                 includeReferences,
                 includeReferenceSourceData,
                 alwaysQuerySource,
+                neverQuerySource,
                 failOnError,
                 rerankerThreshold,
+                resultsProcessing,
                 maxOutputDocuments,
                 KnowledgeSourceKind.RemoteSharePoint,
                 enableImageServing,
@@ -4469,20 +4709,24 @@ namespace Azure.Search.Documents.Models
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
         /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
+        /// <param name="neverQuerySource"> Indicates that this knowledge source should be excluded from the request's candidate set and never queried at retrieval time. The exclusion is request-local and does not modify knowledge base membership. Cannot be combined with alwaysQuerySource on the same knowledge source. </param>
         /// <param name="failOnError"> Indicates that the entire retrieval request should fail if retrieval from this knowledge source encounters an error. Defaults to false. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
+        /// <param name="resultsProcessing"> Overrides the knowledge source's stored resultsProcessing for this retrieve call only. When omitted, the stored knowledge source value applies. </param>
         /// <param name="maxOutputDocuments"> Limits the maximum number of documents returned from this knowledge source. </param>
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.WorkIQKnowledgeSourceParams"/> instance for mocking. </returns>
-        public static WorkIQKnowledgeSourceParams WorkIQKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, int? maxOutputDocuments = default, bool? enableImageServing = default)
+        public static WorkIQKnowledgeSourceParams WorkIQKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? neverQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, int? maxOutputDocuments = default, bool? enableImageServing = default)
         {
             return new WorkIQKnowledgeSourceParams(
                 knowledgeSourceName,
                 includeReferences,
                 includeReferenceSourceData,
                 alwaysQuerySource,
+                neverQuerySource,
                 failOnError,
                 rerankerThreshold,
+                resultsProcessing,
                 maxOutputDocuments,
                 KnowledgeSourceKind.WorkIQ,
                 enableImageServing,
@@ -4494,20 +4738,24 @@ namespace Azure.Search.Documents.Models
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
         /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
+        /// <param name="neverQuerySource"> Indicates that this knowledge source should be excluded from the request's candidate set and never queried at retrieval time. The exclusion is request-local and does not modify knowledge base membership. Cannot be combined with alwaysQuerySource on the same knowledge source. </param>
         /// <param name="failOnError"> Indicates that the entire retrieval request should fail if retrieval from this knowledge source encounters an error. Defaults to false. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
+        /// <param name="resultsProcessing"> Overrides the knowledge source's stored resultsProcessing for this retrieve call only. When omitted, the stored knowledge source value applies. </param>
         /// <param name="maxOutputDocuments"> Limits the maximum number of documents returned from this knowledge source. </param>
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.FabricDataAgentKnowledgeSourceParams"/> instance for mocking. </returns>
-        public static FabricDataAgentKnowledgeSourceParams FabricDataAgentKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, int? maxOutputDocuments = default, bool? enableImageServing = default)
+        public static FabricDataAgentKnowledgeSourceParams FabricDataAgentKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? neverQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, int? maxOutputDocuments = default, bool? enableImageServing = default)
         {
             return new FabricDataAgentKnowledgeSourceParams(
                 knowledgeSourceName,
                 includeReferences,
                 includeReferenceSourceData,
                 alwaysQuerySource,
+                neverQuerySource,
                 failOnError,
                 rerankerThreshold,
+                resultsProcessing,
                 maxOutputDocuments,
                 KnowledgeSourceKind.FabricDataAgent,
                 enableImageServing,
@@ -4519,20 +4767,24 @@ namespace Azure.Search.Documents.Models
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
         /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
+        /// <param name="neverQuerySource"> Indicates that this knowledge source should be excluded from the request's candidate set and never queried at retrieval time. The exclusion is request-local and does not modify knowledge base membership. Cannot be combined with alwaysQuerySource on the same knowledge source. </param>
         /// <param name="failOnError"> Indicates that the entire retrieval request should fail if retrieval from this knowledge source encounters an error. Defaults to false. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
+        /// <param name="resultsProcessing"> Overrides the knowledge source's stored resultsProcessing for this retrieve call only. When omitted, the stored knowledge source value applies. </param>
         /// <param name="maxOutputDocuments"> Limits the maximum number of documents returned from this knowledge source. </param>
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.FabricOntologyKnowledgeSourceParams"/> instance for mocking. </returns>
-        public static FabricOntologyKnowledgeSourceParams FabricOntologyKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, int? maxOutputDocuments = default, bool? enableImageServing = default)
+        public static FabricOntologyKnowledgeSourceParams FabricOntologyKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? neverQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, int? maxOutputDocuments = default, bool? enableImageServing = default)
         {
             return new FabricOntologyKnowledgeSourceParams(
                 knowledgeSourceName,
                 includeReferences,
                 includeReferenceSourceData,
                 alwaysQuerySource,
+                neverQuerySource,
                 failOnError,
                 rerankerThreshold,
+                resultsProcessing,
                 maxOutputDocuments,
                 KnowledgeSourceKind.FabricOntology,
                 enableImageServing,
@@ -4544,20 +4796,24 @@ namespace Azure.Search.Documents.Models
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
         /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
+        /// <param name="neverQuerySource"> Indicates that this knowledge source should be excluded from the request's candidate set and never queried at retrieval time. The exclusion is request-local and does not modify knowledge base membership. Cannot be combined with alwaysQuerySource on the same knowledge source. </param>
         /// <param name="failOnError"> Indicates that the entire retrieval request should fail if retrieval from this knowledge source encounters an error. Defaults to false. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
+        /// <param name="resultsProcessing"> Overrides the knowledge source's stored resultsProcessing for this retrieve call only. When omitted, the stored knowledge source value applies. </param>
         /// <param name="maxOutputDocuments"> Limits the maximum number of documents returned from this knowledge source. </param>
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.McpServerKnowledgeSourceParams"/> instance for mocking. </returns>
-        public static McpServerKnowledgeSourceParams McpServerKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, int? maxOutputDocuments = default, bool? enableImageServing = default)
+        public static McpServerKnowledgeSourceParams McpServerKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? neverQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, int? maxOutputDocuments = default, bool? enableImageServing = default)
         {
             return new McpServerKnowledgeSourceParams(
                 knowledgeSourceName,
                 includeReferences,
                 includeReferenceSourceData,
                 alwaysQuerySource,
+                neverQuerySource,
                 failOnError,
                 rerankerThreshold,
+                resultsProcessing,
                 maxOutputDocuments,
                 KnowledgeSourceKind.McpServer,
                 enableImageServing,
@@ -4569,24 +4825,30 @@ namespace Azure.Search.Documents.Models
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
         /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
+        /// <param name="neverQuerySource"> Indicates that this knowledge source should be excluded from the request's candidate set and never queried at retrieval time. The exclusion is request-local and does not modify knowledge base membership. Cannot be combined with alwaysQuerySource on the same knowledge source. </param>
         /// <param name="failOnError"> Indicates that the entire retrieval request should fail if retrieval from this knowledge source encounters an error. Defaults to false. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
+        /// <param name="resultsProcessing"> Overrides the knowledge source's stored resultsProcessing for this retrieve call only. When omitted, the stored knowledge source value applies. </param>
         /// <param name="maxOutputDocuments"> Limits the maximum number of documents returned from this knowledge source. </param>
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
+        /// <param name="queryHintOverrides"> Hints that guide query planning toward useful filters and boosts. If specified, this object replaces the complete set of query hints configured on the knowledge source. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.FileKnowledgeSourceParams"/> instance for mocking. </returns>
-        public static FileKnowledgeSourceParams FileKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, int? maxOutputDocuments = default, bool? enableImageServing = default)
+        public static FileKnowledgeSourceParams FileKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? neverQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, int? maxOutputDocuments = default, bool? enableImageServing = default, SearchIndexKnowledgeSourceQueryHints queryHintOverrides = default)
         {
             return new FileKnowledgeSourceParams(
                 knowledgeSourceName,
                 includeReferences,
                 includeReferenceSourceData,
                 alwaysQuerySource,
+                neverQuerySource,
                 failOnError,
                 rerankerThreshold,
+                resultsProcessing,
                 maxOutputDocuments,
                 KnowledgeSourceKind.File,
                 enableImageServing,
-                additionalBinaryDataProperties: null);
+                additionalBinaryDataProperties: null,
+                queryHintOverrides);
         }
 
         /// <summary> Specifies runtime parameters for an indexed SQL knowledge source. </summary>
@@ -4594,24 +4856,30 @@ namespace Azure.Search.Documents.Models
         /// <param name="includeReferences"> Indicates whether references should be included for data retrieved from this source. </param>
         /// <param name="includeReferenceSourceData"> Indicates whether references should include the structured data obtained during retrieval in their payload. </param>
         /// <param name="alwaysQuerySource"> Indicates that this knowledge source should bypass source selection and always be queried at retrieval time. </param>
+        /// <param name="neverQuerySource"> Indicates that this knowledge source should be excluded from the request's candidate set and never queried at retrieval time. The exclusion is request-local and does not modify knowledge base membership. Cannot be combined with alwaysQuerySource on the same knowledge source. </param>
         /// <param name="failOnError"> Indicates that the entire retrieval request should fail if retrieval from this knowledge source encounters an error. Defaults to false. </param>
         /// <param name="rerankerThreshold"> The reranker threshold all retrieved documents must meet to be included in the response. </param>
+        /// <param name="resultsProcessing"> Overrides the knowledge source's stored resultsProcessing for this retrieve call only. When omitted, the stored knowledge source value applies. </param>
         /// <param name="maxOutputDocuments"> Limits the maximum number of documents returned from this knowledge source. </param>
         /// <param name="enableImageServing"> Indicates whether image serving should be enabled for this knowledge source at retrieval time. When true, images extracted during ingestion are delivered to downstream models. </param>
+        /// <param name="queryHintOverrides"> Hints that guide query planning toward useful filters and boosts. If specified, this object replaces the complete set of query hints configured on the knowledge source. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.IndexedSqlKnowledgeSourceParams"/> instance for mocking. </returns>
-        public static IndexedSqlKnowledgeSourceParams IndexedSqlKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, int? maxOutputDocuments = default, bool? enableImageServing = default)
+        public static IndexedSqlKnowledgeSourceParams IndexedSqlKnowledgeSourceParams(string knowledgeSourceName = default, bool? includeReferences = default, bool? includeReferenceSourceData = default, bool? alwaysQuerySource = default, bool? neverQuerySource = default, bool? failOnError = default, float? rerankerThreshold = default, KnowledgeSourceResultsProcessing? resultsProcessing = default, int? maxOutputDocuments = default, bool? enableImageServing = default, SearchIndexKnowledgeSourceQueryHints queryHintOverrides = default)
         {
             return new IndexedSqlKnowledgeSourceParams(
                 knowledgeSourceName,
                 includeReferences,
                 includeReferenceSourceData,
                 alwaysQuerySource,
+                neverQuerySource,
                 failOnError,
                 rerankerThreshold,
+                resultsProcessing,
                 maxOutputDocuments,
                 KnowledgeSourceKind.IndexedSql,
                 enableImageServing,
-                additionalBinaryDataProperties: null);
+                additionalBinaryDataProperties: null,
+                queryHintOverrides);
         }
 
         /// <summary> The output contract for the retrieval response. </summary>
@@ -4635,15 +4903,19 @@ namespace Azure.Search.Documents.Models
         /// </summary>
         /// <param name="id"> The ID of the activity record. </param>
         /// <param name="type"> The type of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseActivityRecord KnowledgeBaseActivityRecord(int id = default, string @type = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default)
+        public static KnowledgeBaseActivityRecord KnowledgeBaseActivityRecord(int id = default, string @type = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default)
         {
             return new UnknownKnowledgeBaseActivityRecord(
                 id,
                 new KnowledgeBaseActivityRecordType(@type),
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
@@ -4684,29 +4956,35 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Represents a search index retrieval activity record. </summary>
         /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="searchIndexArguments"> The search index arguments for the retrieval activity. </param>
+        /// <param name="queryHintProcessing"> Details about the expressions generated from query hints for this activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseSearchIndexActivityRecord KnowledgeBaseSearchIndexActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseSearchIndexActivityArguments searchIndexArguments = default)
+        public static KnowledgeBaseSearchIndexActivityRecord KnowledgeBaseSearchIndexActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseSearchIndexActivityArguments searchIndexArguments = default, KnowledgeBaseQueryHintProcessing queryHintProcessing = default)
         {
             return new KnowledgeBaseSearchIndexActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.SearchIndex,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
-                searchIndexArguments);
+                searchIndexArguments,
+                queryHintProcessing);
         }
 
         /// <summary> Statistics about image serving during a retrieval activity. </summary>
@@ -4714,10 +4992,29 @@ namespace Azure.Search.Documents.Models
         /// <param name="imagesSentToModel"> The number of images sent to the downstream model. </param>
         /// <param name="totalImageSizeBytes"> The total size in bytes of images sent to the model. </param>
         /// <param name="verbalizationUsed"> Indicates whether image verbalization was used instead of direct image serving. </param>
+        /// <param name="servedImages"> The set of images the model selected to be served to the downstream model for this retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.ImageServingStatistics"/> instance for mocking. </returns>
-        public static ImageServingStatistics ImageServingStatistics(int? imagesRetrieved = default, int? imagesSentToModel = default, long? totalImageSizeBytes = default, bool? verbalizationUsed = default)
+        public static ImageServingStatistics ImageServingStatistics(int? imagesRetrieved = default, int? imagesSentToModel = default, long? totalImageSizeBytes = default, bool? verbalizationUsed = default, IEnumerable<ServedImage> servedImages = default)
         {
-            return new ImageServingStatistics(imagesRetrieved, imagesSentToModel, totalImageSizeBytes, verbalizationUsed, additionalBinaryDataProperties: null);
+            servedImages ??= new ChangeTrackingList<ServedImage>();
+
+            return new ImageServingStatistics(
+                imagesRetrieved,
+                imagesSentToModel,
+                totalImageSizeBytes,
+                verbalizationUsed,
+                servedImages.ToList(),
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Describes a single image that the model selected to be served during a retrieval activity. </summary>
+        /// <param name="imageId"> The image label extracted from the source document by Content Understanding enrichment. Corresponds to the figure numbering in the original document. </param>
+        /// <param name="imagePath"> The relative path to the image within the asset store. </param>
+        /// <param name="sizeBytes"> The size in bytes of this image as sent to the model. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.ServedImage"/> instance for mocking. </returns>
+        public static ServedImage ServedImage(string imageId = default, string imagePath = default, long sizeBytes = default)
+        {
+            return new ServedImage(imageId, imagePath, sizeBytes, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents the arguments the search index retrieval activity was run with. </summary>
@@ -4726,8 +5023,9 @@ namespace Azure.Search.Documents.Models
         /// <param name="sourceDataFields"> What fields were selected for search. </param>
         /// <param name="searchFields"> What fields were searched against. </param>
         /// <param name="semanticConfigurationName"> What semantic configuration was used from the search index. </param>
+        /// <param name="queryType"> The query syntax used to execute the search. Query hints can cause semantic queries to use full query syntax. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexActivityArguments"/> instance for mocking. </returns>
-        public static KnowledgeBaseSearchIndexActivityArguments KnowledgeBaseSearchIndexActivityArguments(string search = default, string filter = default, IEnumerable<SearchIndexFieldReference> sourceDataFields = default, IEnumerable<SearchIndexFieldReference> searchFields = default, string semanticConfigurationName = default)
+        public static KnowledgeBaseSearchIndexActivityArguments KnowledgeBaseSearchIndexActivityArguments(string search = default, string filter = default, IEnumerable<SearchIndexFieldReference> sourceDataFields = default, IEnumerable<SearchIndexFieldReference> searchFields = default, string semanticConfigurationName = default, SearchQueryType? queryType = default)
         {
             sourceDataFields ??= new ChangeTrackingList<SearchIndexFieldReference>();
             searchFields ??= new ChangeTrackingList<SearchIndexFieldReference>();
@@ -4738,34 +5036,50 @@ namespace Azure.Search.Documents.Models
                 sourceDataFields.ToList(),
                 searchFields.ToList(),
                 semanticConfigurationName,
+                queryType,
                 additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Details about the expressions generated from query hints for a retrieval activity. </summary>
+        /// <param name="generatedBoost"> The search clause generated from boost hints for this activity. </param>
+        /// <param name="generatedFilter"> The filter expression generated from filter hints for this activity. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseQueryHintProcessing"/> instance for mocking. </returns>
+        public static KnowledgeBaseQueryHintProcessing KnowledgeBaseQueryHintProcessing(string generatedBoost = default, string generatedFilter = default)
+        {
+            return new KnowledgeBaseQueryHintProcessing(generatedBoost, generatedFilter, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents a azure blob retrieval activity record. </summary>
         /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="azureBlobArguments"> The azure blob arguments for the retrieval activity. </param>
+        /// <param name="queryHintProcessing"> Details about the expressions generated from query hints for this activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseAzureBlobActivityRecord KnowledgeBaseAzureBlobActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseAzureBlobActivityArguments azureBlobArguments = default)
+        public static KnowledgeBaseAzureBlobActivityRecord KnowledgeBaseAzureBlobActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseAzureBlobActivityArguments azureBlobArguments = default, KnowledgeBaseQueryHintProcessing queryHintProcessing = default)
         {
             return new KnowledgeBaseAzureBlobActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.AzureBlob,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
-                azureBlobArguments);
+                azureBlobArguments,
+                queryHintProcessing);
         }
 
         /// <summary> Represents the arguments the azure blob retrieval activity was run with. </summary>
@@ -4778,29 +5092,35 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Represents a indexed SharePoint retrieval activity record. </summary>
         /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="indexedSharePointArguments"> The indexed SharePoint arguments for the retrieval activity. </param>
+        /// <param name="queryHintProcessing"> Details about the expressions generated from query hints for this activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSharePointActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseIndexedSharePointActivityRecord KnowledgeBaseIndexedSharePointActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseIndexedSharePointActivityArguments indexedSharePointArguments = default)
+        public static KnowledgeBaseIndexedSharePointActivityRecord KnowledgeBaseIndexedSharePointActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseIndexedSharePointActivityArguments indexedSharePointArguments = default, KnowledgeBaseQueryHintProcessing queryHintProcessing = default)
         {
             return new KnowledgeBaseIndexedSharePointActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.IndexedSharePoint,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
-                indexedSharePointArguments);
+                indexedSharePointArguments,
+                queryHintProcessing);
         }
 
         /// <summary> Represents the arguments the indexed SharePoint retrieval activity was run with. </summary>
@@ -4813,29 +5133,35 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Represents a indexed OneLake retrieval activity record. </summary>
         /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="indexedOneLakeArguments"> The indexed OneLake arguments for the retrieval activity. </param>
+        /// <param name="queryHintProcessing"> Details about the expressions generated from query hints for this activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseIndexedOneLakeActivityRecord KnowledgeBaseIndexedOneLakeActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseIndexedOneLakeActivityArguments indexedOneLakeArguments = default)
+        public static KnowledgeBaseIndexedOneLakeActivityRecord KnowledgeBaseIndexedOneLakeActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseIndexedOneLakeActivityArguments indexedOneLakeArguments = default, KnowledgeBaseQueryHintProcessing queryHintProcessing = default)
         {
             return new KnowledgeBaseIndexedOneLakeActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.IndexedOneLake,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
-                indexedOneLakeArguments);
+                indexedOneLakeArguments,
+                queryHintProcessing);
         }
 
         /// <summary> Represents the arguments the indexed OneLake retrieval activity was run with. </summary>
@@ -4848,26 +5174,30 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Represents a web retrieval activity record. </summary>
         /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="webArguments"> The web arguments for the retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseWebActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseWebActivityRecord KnowledgeBaseWebActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseWebActivityArguments webArguments = default)
+        public static KnowledgeBaseWebActivityRecord KnowledgeBaseWebActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseWebActivityArguments webArguments = default)
         {
             return new KnowledgeBaseWebActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.Web,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 webArguments);
@@ -4893,26 +5223,30 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Represents a remote SharePoint retrieval activity record. </summary>
         /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="remoteSharePointArguments"> The remote SharePoint arguments for the retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseRemoteSharePointActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseRemoteSharePointActivityRecord KnowledgeBaseRemoteSharePointActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseRemoteSharePointActivityArguments remoteSharePointArguments = default)
+        public static KnowledgeBaseRemoteSharePointActivityRecord KnowledgeBaseRemoteSharePointActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseRemoteSharePointActivityArguments remoteSharePointArguments = default)
         {
             return new KnowledgeBaseRemoteSharePointActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.RemoteSharePoint,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 remoteSharePointArguments);
@@ -4929,26 +5263,30 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Represents a WorkIQ retrieval activity record. </summary>
         /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="workIQArguments"> The WorkIQ arguments for the retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseWorkIQActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseWorkIQActivityRecord KnowledgeBaseWorkIQActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseWorkIQActivityArguments workIQArguments = default)
+        public static KnowledgeBaseWorkIQActivityRecord KnowledgeBaseWorkIQActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseWorkIQActivityArguments workIQArguments = default)
         {
             return new KnowledgeBaseWorkIQActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.WorkIQ,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 workIQArguments);
@@ -4964,26 +5302,30 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Represents a Fabric Data Agent retrieval activity record. </summary>
         /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="fabricDataAgentArguments"> The Fabric Data Agent arguments for the retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseFabricDataAgentActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseFabricDataAgentActivityRecord KnowledgeBaseFabricDataAgentActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseFabricDataAgentActivityArguments fabricDataAgentArguments = default)
+        public static KnowledgeBaseFabricDataAgentActivityRecord KnowledgeBaseFabricDataAgentActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseFabricDataAgentActivityArguments fabricDataAgentArguments = default)
         {
             return new KnowledgeBaseFabricDataAgentActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.FabricDataAgent,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 fabricDataAgentArguments);
@@ -4999,26 +5341,30 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Represents a Fabric Ontology retrieval activity record. </summary>
         /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="fabricOntologyArguments"> The Fabric Ontology arguments for the retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseFabricOntologyActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseFabricOntologyActivityRecord KnowledgeBaseFabricOntologyActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseFabricOntologyActivityArguments fabricOntologyArguments = default)
+        public static KnowledgeBaseFabricOntologyActivityRecord KnowledgeBaseFabricOntologyActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseFabricOntologyActivityArguments fabricOntologyArguments = default)
         {
             return new KnowledgeBaseFabricOntologyActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.FabricOntology,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 fabricOntologyArguments);
@@ -5034,26 +5380,30 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Represents an MCP server retrieval activity record. </summary>
         /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="mcpServerArguments"> The MCP server arguments for the retrieval activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseMcpServerActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseMcpServerActivityRecord KnowledgeBaseMcpServerActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseMcpServerActivityArguments mcpServerArguments = default)
+        public static KnowledgeBaseMcpServerActivityRecord KnowledgeBaseMcpServerActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseMcpServerActivityArguments mcpServerArguments = default)
         {
             return new KnowledgeBaseMcpServerActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.McpServer,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
                 mcpServerArguments);
@@ -5072,29 +5422,35 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Represents a File retrieval activity record. </summary>
         /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="fileArguments"> The File arguments for the retrieval activity. </param>
+        /// <param name="queryHintProcessing"> Details about the expressions generated from query hints for this activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseFileActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseFileActivityRecord KnowledgeBaseFileActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseFileActivityArguments fileArguments = default)
+        public static KnowledgeBaseFileActivityRecord KnowledgeBaseFileActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseFileActivityArguments fileArguments = default, KnowledgeBaseQueryHintProcessing queryHintProcessing = default)
         {
             return new KnowledgeBaseFileActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.File,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
-                fileArguments);
+                fileArguments,
+                queryHintProcessing);
         }
 
         /// <summary> Represents the arguments the File retrieval activity was run with. </summary>
@@ -5107,29 +5463,35 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Represents an indexed SQL retrieval activity record. </summary>
         /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="knowledgeSourceName"> The knowledge source for the retrieval activity. </param>
-        /// <param name="queryTime"> The query time for this retrieval activity. </param>
+        /// <param name="queryOn"> The query time for this retrieval activity. </param>
         /// <param name="count"> The count of documents retrieved that were sufficiently relevant to pass the reranker threshold. </param>
         /// <param name="imageServing"> Statistics about image serving for this retrieval activity. </param>
         /// <param name="indexedSqlArguments"> The indexed SQL arguments for the retrieval activity. </param>
+        /// <param name="queryHintProcessing"> Details about the expressions generated from query hints for this activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSqlActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseIndexedSqlActivityRecord KnowledgeBaseIndexedSqlActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryTime = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseIndexedSqlActivityArguments indexedSqlArguments = default)
+        public static KnowledgeBaseIndexedSqlActivityRecord KnowledgeBaseIndexedSqlActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, string knowledgeSourceName = default, DateTimeOffset? queryOn = default, int? count = default, ImageServingStatistics imageServing = default, KnowledgeBaseIndexedSqlActivityArguments indexedSqlArguments = default, KnowledgeBaseQueryHintProcessing queryHintProcessing = default)
         {
             return new KnowledgeBaseIndexedSqlActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.IndexedSql,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
                 additionalBinaryDataProperties: null,
                 knowledgeSourceName,
-                queryTime,
+                queryOn,
                 count,
                 imageServing,
-                indexedSqlArguments);
+                indexedSqlArguments,
+                queryHintProcessing);
         }
 
         /// <summary> Represents the arguments the indexed SQL retrieval activity was run with. </summary>
@@ -5142,92 +5504,119 @@ namespace Azure.Search.Documents.Models
 
         /// <summary> Represents an LLM query planning activity record. </summary>
         /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="inputTokens"> The number of input tokens for the LLM query planning activity. </param>
         /// <param name="outputTokens"> The number of output tokens for the LLM query planning activity. </param>
-        /// <param name="modelName"> The name of the model used for the LLM query planning activity. </param>
+        /// <param name="model"> The model used for the LLM query planning activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseModelQueryPlanningActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseModelQueryPlanningActivityRecord KnowledgeBaseModelQueryPlanningActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, int? inputTokens = default, int? outputTokens = default, string modelName = default)
+        public static KnowledgeBaseModelQueryPlanningActivityRecord KnowledgeBaseModelQueryPlanningActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, int? inputTokens = default, int? outputTokens = default, KnowledgeBaseActivityRecordModel model = default)
         {
             return new KnowledgeBaseModelQueryPlanningActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.ModelQueryPlanning,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
                 additionalBinaryDataProperties: null,
                 inputTokens,
                 outputTokens,
-                modelName);
+                model);
+        }
+
+        /// <summary> Represents the model used for a knowledge base LLM activity, including its model name and deployment identifier. </summary>
+        /// <param name="modelName"> The name of the model used for the activity. </param>
+        /// <param name="deploymentId"> The deployment identifier of the model used for the activity. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseActivityRecordModel"/> instance for mocking. </returns>
+        public static KnowledgeBaseActivityRecordModel KnowledgeBaseActivityRecordModel(string modelName = default, string deploymentId = default)
+        {
+            return new KnowledgeBaseActivityRecordModel(modelName, deploymentId, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Represents an LLM answer synthesis activity record. </summary>
         /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="inputTokens"> The number of input tokens for the LLM answer synthesis activity. </param>
         /// <param name="outputTokens"> The number of output tokens for the LLM answer synthesis activity. </param>
-        /// <param name="modelName"> The name of the model used for the LLM answer synthesis activity. </param>
+        /// <param name="model"> The model used for the LLM answer synthesis activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseModelAnswerSynthesisActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseModelAnswerSynthesisActivityRecord KnowledgeBaseModelAnswerSynthesisActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, int? inputTokens = default, int? outputTokens = default, string modelName = default)
+        public static KnowledgeBaseModelAnswerSynthesisActivityRecord KnowledgeBaseModelAnswerSynthesisActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, int? inputTokens = default, int? outputTokens = default, KnowledgeBaseActivityRecordModel model = default)
         {
             return new KnowledgeBaseModelAnswerSynthesisActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.ModelAnswerSynthesis,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
                 additionalBinaryDataProperties: null,
                 inputTokens,
                 outputTokens,
-                modelName);
+                model);
         }
 
         /// <summary> Represents an LLM web summarization activity record. </summary>
         /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="inputTokensCount"> The number of input tokens for the LLM web summarization activity. </param>
         /// <param name="outputTokensCount"> The number of output tokens for the LLM web summarization activity. </param>
-        /// <param name="modelName"> The name of the model used for the LLM web summarization activity. </param>
+        /// <param name="model"> The model used for the LLM web summarization activity. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseModelWebSummarizationActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseModelWebSummarizationActivityRecord KnowledgeBaseModelWebSummarizationActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, int? inputTokensCount = default, int? outputTokensCount = default, string modelName = default)
+        public static KnowledgeBaseModelWebSummarizationActivityRecord KnowledgeBaseModelWebSummarizationActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, int? inputTokensCount = default, int? outputTokensCount = default, KnowledgeBaseActivityRecordModel model = default)
         {
             return new KnowledgeBaseModelWebSummarizationActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.ModelWebSummarization,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
                 additionalBinaryDataProperties: null,
                 inputTokensCount,
                 outputTokensCount,
-                modelName);
+                model);
         }
 
         /// <summary> Represents an agentic reasoning activity record. </summary>
         /// <param name="id"> The ID of the activity record. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="completedOn"> The time at which the activity completed. </param>
         /// <param name="elapsedMs"> The elapsed time in milliseconds for the retrieval activity. </param>
         /// <param name="error"> The error detail explaining why the operation failed. This property is only included when the activity does not succeed. </param>
         /// <param name="warning"> A warning message surfacing potential configuration issues observed during the activity, such as documents dropped due to score thresholding, token limit truncation, or timeout conditions. </param>
         /// <param name="reasoningTokens"> The number of input tokens for agentic reasoning. </param>
         /// <param name="retrievalReasoningEffort"> The retrieval reasoning effort configuration. </param>
+        /// <param name="logicalReasoningEffort"> The logical reasoning effort requested by the customer. This is distinct from `retrievalReasoningEffort`, which reports the reasoning effort used for billing. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAgenticReasoningActivityRecord"/> instance for mocking. </returns>
-        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, int? reasoningTokens = default, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default)
+        public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id = default, DateTimeOffset? startedOn = default, DateTimeOffset? completedOn = default, int? elapsedMs = default, KnowledgeBaseErrorDetail error = default, string warning = default, int? reasoningTokens = default, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort = default, KnowledgeRetrievalReasoningEffort logicalReasoningEffort = default)
         {
             return new KnowledgeBaseAgenticReasoningActivityRecord(
                 id,
                 KnowledgeBaseActivityRecordType.AgenticReasoning,
+                startedOn,
+                completedOn,
                 elapsedMs,
                 error,
                 warning,
                 additionalBinaryDataProperties: null,
                 reasoningTokens,
-                retrievalReasoningEffort);
+                retrievalReasoningEffort,
+                logicalReasoningEffort);
         }
 
         /// <summary>
@@ -5260,8 +5649,9 @@ namespace Azure.Search.Documents.Models
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="docKey"> The document key for the reference. </param>
         /// <param name="searchSensitivityLabelInfo"> The sensitivity label information for the reference. </param>
+        /// <param name="citationUrl"> A Search-owned URL that points at the backing document for this reference, usable as a citation target. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseSearchIndexReference"/> instance for mocking. </returns>
-        public static KnowledgeBaseSearchIndexReference KnowledgeBaseSearchIndexReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, string docKey = default, PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default)
+        public static KnowledgeBaseSearchIndexReference KnowledgeBaseSearchIndexReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, string docKey = default, PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default, Uri citationUrl = default)
         {
             sourceData ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -5273,7 +5663,8 @@ namespace Azure.Search.Documents.Models
                 rerankerScore,
                 additionalBinaryDataProperties: null,
                 docKey,
-                searchSensitivityLabelInfo);
+                searchSensitivityLabelInfo,
+                citationUrl);
         }
 
         /// <summary> Information about the sensitivity label applied to a document. </summary>
@@ -5303,8 +5694,9 @@ namespace Azure.Search.Documents.Models
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="blobUrl"> The blob URL for the reference. </param>
         /// <param name="searchSensitivityLabelInfo"> The sensitivity label information for the reference. </param>
+        /// <param name="citationUrl"> A Search-owned URL that points at the backing document for this reference, usable as a citation target. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAzureBlobReference"/> instance for mocking. </returns>
-        public static KnowledgeBaseAzureBlobReference KnowledgeBaseAzureBlobReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, Uri blobUrl = default, PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default)
+        public static KnowledgeBaseAzureBlobReference KnowledgeBaseAzureBlobReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, Uri blobUrl = default, PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default, Uri citationUrl = default)
         {
             sourceData ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -5316,7 +5708,8 @@ namespace Azure.Search.Documents.Models
                 rerankerScore,
                 additionalBinaryDataProperties: null,
                 blobUrl,
-                searchSensitivityLabelInfo);
+                searchSensitivityLabelInfo,
+                citationUrl);
         }
 
         /// <summary> Represents an indexed SharePoint document reference. </summary>
@@ -5326,8 +5719,9 @@ namespace Azure.Search.Documents.Models
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="docUrl"> The document URL for the reference. </param>
         /// <param name="searchSensitivityLabelInfo"> The sensitivity label information for the reference. </param>
+        /// <param name="citationUrl"> A Search-owned URL that points at the backing document for this reference, usable as a citation target. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSharePointReference"/> instance for mocking. </returns>
-        public static KnowledgeBaseIndexedSharePointReference KnowledgeBaseIndexedSharePointReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, string docUrl = default, PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default)
+        public static KnowledgeBaseIndexedSharePointReference KnowledgeBaseIndexedSharePointReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, string docUrl = default, PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default, Uri citationUrl = default)
         {
             sourceData ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -5339,7 +5733,8 @@ namespace Azure.Search.Documents.Models
                 rerankerScore,
                 additionalBinaryDataProperties: null,
                 docUrl,
-                searchSensitivityLabelInfo);
+                searchSensitivityLabelInfo,
+                citationUrl);
         }
 
         /// <summary> Represents an indexed OneLake document reference. </summary>
@@ -5349,8 +5744,9 @@ namespace Azure.Search.Documents.Models
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="docUrl"> The document URL for the reference. </param>
         /// <param name="searchSensitivityLabelInfo"> The sensitivity label information for the reference. </param>
+        /// <param name="citationUrl"> A Search-owned URL that points at the backing document for this reference, usable as a citation target. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedOneLakeReference"/> instance for mocking. </returns>
-        public static KnowledgeBaseIndexedOneLakeReference KnowledgeBaseIndexedOneLakeReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, Uri docUrl = default, PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default)
+        public static KnowledgeBaseIndexedOneLakeReference KnowledgeBaseIndexedOneLakeReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, Uri docUrl = default, PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default, Uri citationUrl = default)
         {
             sourceData ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -5362,7 +5758,8 @@ namespace Azure.Search.Documents.Models
                 rerankerScore,
                 additionalBinaryDataProperties: null,
                 docUrl,
-                searchSensitivityLabelInfo);
+                searchSensitivityLabelInfo,
+                citationUrl);
         }
 
         /// <summary> Represents a web document reference. </summary>
@@ -5416,12 +5813,11 @@ namespace Azure.Search.Documents.Models
         /// <param name="activitySource"> The source activity ID for the reference. </param>
         /// <param name="sourceData"> The source data for the reference. </param>
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
-        /// <param name="attributions"> The attributions for the reference. </param>
+        /// <param name="searchSensitivityLabelInfo"> The sensitivity label information for the reference. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseWorkIQReference"/> instance for mocking. </returns>
-        public static KnowledgeBaseWorkIQReference KnowledgeBaseWorkIQReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, IEnumerable<WorkIQAttribution> attributions = default)
+        public static KnowledgeBaseWorkIQReference KnowledgeBaseWorkIQReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, PurviewSensitivityLabelInfo searchSensitivityLabelInfo = default)
         {
             sourceData ??= new ChangeTrackingDictionary<string, BinaryData>();
-            attributions ??= new ChangeTrackingList<WorkIQAttribution>();
 
             return new KnowledgeBaseWorkIQReference(
                 KnowledgeBaseReferenceType.WorkIQ,
@@ -5430,15 +5826,7 @@ namespace Azure.Search.Documents.Models
                 sourceData,
                 rerankerScore,
                 additionalBinaryDataProperties: null,
-                attributions.ToList());
-        }
-
-        /// <summary> Attribution information for a WorkIQ reference. </summary>
-        /// <param name="seeMoreWebUrl"> The URL for the attribution. </param>
-        /// <returns> A new <see cref="KnowledgeBases.Models.WorkIQAttribution"/> instance for mocking. </returns>
-        public static WorkIQAttribution WorkIQAttribution(Uri seeMoreWebUrl = default)
-        {
-            return new WorkIQAttribution(seeMoreWebUrl, additionalBinaryDataProperties: null);
+                searchSensitivityLabelInfo);
         }
 
         /// <summary> Represents a Fabric Data Agent document reference. </summary>
@@ -5516,8 +5904,9 @@ namespace Azure.Search.Documents.Models
         /// <param name="sourceData"> The source data for the reference. </param>
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="docName"> The document name for the reference. </param>
+        /// <param name="citationUrl"> A Search-owned URL that points at the backing document for this reference, usable as a citation target. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseFileReference"/> instance for mocking. </returns>
-        public static KnowledgeBaseFileReference KnowledgeBaseFileReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, string docName = default)
+        public static KnowledgeBaseFileReference KnowledgeBaseFileReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, string docName = default, Uri citationUrl = default)
         {
             sourceData ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -5528,7 +5917,8 @@ namespace Azure.Search.Documents.Models
                 sourceData,
                 rerankerScore,
                 additionalBinaryDataProperties: null,
-                docName);
+                docName,
+                citationUrl);
         }
 
         /// <summary> Represents an Azure SQL document reference. </summary>
@@ -5537,8 +5927,9 @@ namespace Azure.Search.Documents.Models
         /// <param name="sourceData"> The source data for the reference. </param>
         /// <param name="rerankerScore"> The reranker score for the document reference. </param>
         /// <param name="docUrl"> The document URL for the reference. </param>
+        /// <param name="citationUrl"> A Search-owned URL that points at the backing document for this reference, usable as a citation target. </param>
         /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseIndexedSqlReference"/> instance for mocking. </returns>
-        public static KnowledgeBaseIndexedSqlReference KnowledgeBaseIndexedSqlReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, string docUrl = default)
+        public static KnowledgeBaseIndexedSqlReference KnowledgeBaseIndexedSqlReference(string id = default, int activitySource = default, IDictionary<string, BinaryData> sourceData = default, float? rerankerScore = default, string docUrl = default, Uri citationUrl = default)
         {
             sourceData ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -5549,7 +5940,59 @@ namespace Azure.Search.Documents.Models
                 sourceData,
                 rerankerScore,
                 additionalBinaryDataProperties: null,
-                docUrl);
+                docUrl,
+                citationUrl);
+        }
+
+        /// <summary> Emitted once retrieval preflight validation completes, before any activity begins. </summary>
+        /// <param name="requestId"> A service-generated identifier that correlates all events in this retrieval stream. </param>
+        /// <param name="knowledgeBaseName"> The name of the knowledge base being queried. </param>
+        /// <param name="outputMode"> The effective output mode for this retrieval. </param>
+        /// <param name="reasoningEffort"> The effective reasoning effort for this retrieval. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseRetrievalStartedEvent"/> instance for mocking. </returns>
+        public static KnowledgeBaseRetrievalStartedEvent KnowledgeBaseRetrievalStartedEvent(string requestId = default, string knowledgeBaseName = default, KnowledgeRetrievalOutputMode outputMode = default, KnowledgeRetrievalReasoningEffort reasoningEffort = default)
+        {
+            return new KnowledgeBaseRetrievalStartedEvent(requestId, knowledgeBaseName, outputMode, reasoningEffort, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Emitted immediately before an individual retrieval activity begins executing. </summary>
+        /// <param name="id"> The ID of the activity record, matching the `id` on the corresponding `activity.completed` event. </param>
+        /// <param name="type"> The type of the activity that has started. </param>
+        /// <param name="startedOn"> The time at which the activity started. </param>
+        /// <param name="knowledgeSourceName"> The knowledge source used by the activity, when the activity targets a knowledge source. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseActivityStartedEvent"/> instance for mocking. </returns>
+        public static KnowledgeBaseActivityStartedEvent KnowledgeBaseActivityStartedEvent(int id = default, KnowledgeBaseActivityRecordType @type = default, DateTimeOffset startedOn = default, string knowledgeSourceName = default)
+        {
+            return new KnowledgeBaseActivityStartedEvent(id, @type, startedOn, knowledgeSourceName, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Emitted when a fully validated and post-processed synthesized answer is available. </summary>
+        /// <param name="messageIndex"> The zero-based index of the completed message in the final response array. </param>
+        /// <param name="message"> The completed answer message. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseAnswerCompletedEvent"/> instance for mocking. </returns>
+        public static KnowledgeBaseAnswerCompletedEvent KnowledgeBaseAnswerCompletedEvent(int messageIndex = default, KnowledgeBaseMessage message = default)
+        {
+            return new KnowledgeBaseAnswerCompletedEvent(messageIndex, message, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Emitted in place of `response.completed` if retrieval fails after the stream starts. </summary>
+        /// <param name="error"> The error detail explaining why the retrieval stream failed. </param>
+        /// <param name="activity"> Activity records that completed before the retrieval failed. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseStreamErrorEvent"/> instance for mocking. </returns>
+        public static KnowledgeBaseStreamErrorEvent KnowledgeBaseStreamErrorEvent(KnowledgeBaseErrorDetail error = default, IEnumerable<KnowledgeBaseActivityRecord> activity = default)
+        {
+            activity ??= new ChangeTrackingList<KnowledgeBaseActivityRecord>();
+
+            return new KnowledgeBaseStreamErrorEvent(error, activity.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> Emitted after retrieval completes successfully. </summary>
+        /// <param name="statusCode"> The semantic HTTP status of the completed retrieval. </param>
+        /// <param name="response"> The authoritative completed retrieval response. </param>
+        /// <returns> A new <see cref="KnowledgeBases.Models.KnowledgeBaseResponseCompletedEvent"/> instance for mocking. </returns>
+        public static KnowledgeBaseResponseCompletedEvent KnowledgeBaseResponseCompletedEvent(KnowledgeBaseRetrievalStatusCode statusCode = default, KnowledgeBaseRetrievalResponse response = default)
+        {
+            return new KnowledgeBaseResponseCompletedEvent(statusCode, response, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Parameters for filtering, sorting, faceting, paging, and other search query behaviors. </summary>
@@ -5751,7 +6194,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KnowledgeBase KnowledgeBase(string name, IEnumerable<KnowledgeSourceReference> knowledgeSources, IEnumerable<KnowledgeBaseModel> models, ETag? eTag, SearchResourceEncryptionKey encryptionKey, string description)
         {
-            return KnowledgeBase(name: name, knowledgeSources: knowledgeSources, models: models, retrievalReasoningEffort: default, outputMode: default, eTag: eTag, encryptionKey: encryptionKey, description: description, retrievalInstructions: default, answerInstructions: default, corsOptions: default);
+            return KnowledgeBase(name: name, knowledgeSources: knowledgeSources, models: models, retrievalReasoningEffort: default, outputMode: default, eTag: eTag, encryptionKey: encryptionKey, description: description, tags: default, retrievalInstructions: default, answerInstructions: default, corsOptions: default, retrieveDefaults: default);
         }
 
         /// <summary> Reference to a knowledge source. </summary>
@@ -5763,6 +6206,19 @@ namespace Azure.Search.Documents.Models
             return KnowledgeSourceReference(name: name, enableImageServing: default, enableFreshness: default);
         }
 
+        /// <summary> Knowledge Source targeting a search index. </summary>
+        /// <param name="name"> The name of the knowledge source. </param>
+        /// <param name="description"> Optional user-defined description. </param>
+        /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="searchIndexParameters"> The parameters for the knowledge source. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchIndexKnowledgeSource"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchIndexKnowledgeSource SearchIndexKnowledgeSource(string name, string description, ETag? eTag, SearchResourceEncryptionKey encryptionKey, SearchIndexKnowledgeSourceParameters searchIndexParameters)
+        {
+            return SearchIndexKnowledgeSource(name: name, description: description, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey, searchIndexParameters: searchIndexParameters);
+        }
+
         /// <summary> Parameters for search index knowledge source. </summary>
         /// <param name="searchIndexName"> The name of the Search index. </param>
         /// <param name="sourceDataFields"> Used to request additional fields for referenced source data. </param>
@@ -5772,7 +6228,34 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchIndexKnowledgeSourceParameters SearchIndexKnowledgeSourceParameters(string searchIndexName, IEnumerable<SearchIndexFieldReference> sourceDataFields, IEnumerable<SearchIndexFieldReference> searchFields, string semanticConfigurationName)
         {
-            return SearchIndexKnowledgeSourceParameters(searchIndexName: searchIndexName, sourceDataFields: sourceDataFields, searchFields: searchFields, semanticConfigurationName: semanticConfigurationName, baseFilter: default);
+            return SearchIndexKnowledgeSourceParameters(searchIndexName: searchIndexName, sourceDataFields: sourceDataFields, searchFields: searchFields, semanticConfigurationName: semanticConfigurationName, baseFilter: default, queryHints: default);
+        }
+
+        /// <summary> Configuration for Azure Blob Storage knowledge source. </summary>
+        /// <param name="name"> The name of the knowledge source. </param>
+        /// <param name="description"> Optional user-defined description. </param>
+        /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="azureBlobParameters"> The type of the knowledge source. </param>
+        /// <returns> A new <see cref="Indexes.Models.AzureBlobKnowledgeSource"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AzureBlobKnowledgeSource AzureBlobKnowledgeSource(string name, string description, ETag? eTag, SearchResourceEncryptionKey encryptionKey, AzureBlobKnowledgeSourceParameters azureBlobParameters)
+        {
+            return AzureBlobKnowledgeSource(name: name, description: description, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey, azureBlobParameters: azureBlobParameters);
+        }
+
+        /// <summary> Parameters for Azure Blob Storage knowledge source. </summary>
+        /// <param name="connectionString"> Key-based connection string or the ResourceId format if using a managed identity. </param>
+        /// <param name="containerName"> The name of the blob storage container. </param>
+        /// <param name="folderPath"> Optional folder path within the container. </param>
+        /// <param name="isADLSGen2"> Set to true if connecting to an ADLS Gen2 storage account. Default is false. </param>
+        /// <param name="ingestionParameters"> Consolidates all general ingestion settings. </param>
+        /// <param name="createdResources"> Resources created by the knowledge source. </param>
+        /// <returns> A new <see cref="Indexes.Models.AzureBlobKnowledgeSourceParameters"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static AzureBlobKnowledgeSourceParameters AzureBlobKnowledgeSourceParameters(string connectionString, string containerName, string folderPath, bool? isADLSGen2, KnowledgeSourceIngestionParameters ingestionParameters, CreatedResources createdResources)
+        {
+            return AzureBlobKnowledgeSourceParameters(connectionString: connectionString, containerName: containerName, folderPath: folderPath, isADLSGen2: isADLSGen2, ingestionParameters: ingestionParameters, queryHints: default, createdResources: createdResources);
         }
 
         /// <summary> Consolidates all general ingestion settings for knowledge sources. </summary>
@@ -5787,7 +6270,46 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KnowledgeSourceIngestionParameters KnowledgeSourceIngestionParameters(SearchIndexerDataIdentity identity, KnowledgeSourceVectorizer embeddingModel, KnowledgeBaseModel chatCompletionModel, bool? disableImageVerbalization, IndexingSchedule ingestionSchedule, KnowledgeSourceContentExtractionMode? contentExtractionMode, AIServices aiServices)
         {
-            return KnowledgeSourceIngestionParameters(identity: identity, embeddingModel: embeddingModel, chatCompletionModel: chatCompletionModel, disableImageVerbalization: disableImageVerbalization, ingestionSchedule: ingestionSchedule, ingestionPermissionOptions: default, contentExtractionMode: contentExtractionMode, aiServices: aiServices, assetStore: default, freshnessPolicy: default);
+            return KnowledgeSourceIngestionParameters(identity: identity, embeddingModel: embeddingModel, chatCompletionModel: chatCompletionModel, disableImageVerbalization: disableImageVerbalization, ingestionSchedule: ingestionSchedule, ingestionPermissionOptions: default, contentExtractionMode: contentExtractionMode, aiServices: aiServices, assetStore: default, freshnessPolicy: default, networkAccessMode: default);
+        }
+
+        /// <summary> Configuration for OneLake knowledge source. </summary>
+        /// <param name="name"> The name of the knowledge source. </param>
+        /// <param name="description"> Optional user-defined description. </param>
+        /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="indexedOneLakeParameters"> The parameters for the knowledge source. </param>
+        /// <returns> A new <see cref="Indexes.Models.IndexedOneLakeKnowledgeSource"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IndexedOneLakeKnowledgeSource IndexedOneLakeKnowledgeSource(string name, string description, ETag? eTag, SearchResourceEncryptionKey encryptionKey, IndexedOneLakeKnowledgeSourceParameters indexedOneLakeParameters)
+        {
+            return IndexedOneLakeKnowledgeSource(name: name, description: description, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey, indexedOneLakeParameters: indexedOneLakeParameters);
+        }
+
+        /// <summary> Parameters for OneLake knowledge source. </summary>
+        /// <param name="fabricWorkspaceId"> OneLake workspace ID. </param>
+        /// <param name="lakehouseId"> Specifies which OneLake lakehouse to access. </param>
+        /// <param name="targetPath"> Optional OneLakehouse folder or shortcut to filter OneLake content. </param>
+        /// <param name="ingestionParameters"> Consolidates all general ingestion settings. </param>
+        /// <param name="createdResources"> Resources created by the knowledge source. </param>
+        /// <returns> A new <see cref="Indexes.Models.IndexedOneLakeKnowledgeSourceParameters"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static IndexedOneLakeKnowledgeSourceParameters IndexedOneLakeKnowledgeSourceParameters(string fabricWorkspaceId, string lakehouseId, string targetPath, KnowledgeSourceIngestionParameters ingestionParameters, CreatedResources createdResources)
+        {
+            return IndexedOneLakeKnowledgeSourceParameters(fabricWorkspaceId: fabricWorkspaceId, lakehouseId: lakehouseId, targetPath: targetPath, ingestionParameters: ingestionParameters, queryHints: default, createdResources: createdResources);
+        }
+
+        /// <summary> Knowledge Source targeting web results. </summary>
+        /// <param name="name"> The name of the knowledge source. </param>
+        /// <param name="description"> Optional user-defined description. </param>
+        /// <param name="eTag"> The ETag of the knowledge source. </param>
+        /// <param name="encryptionKey"> A description of an encryption key that you create in Azure Key Vault. This key is used to provide an additional level of encryption-at-rest for your knowledge source definition when you want full assurance that no one, not even Microsoft, can decrypt them. Once you have encrypted your knowledge source definition, it will always remain encrypted. The search service will ignore attempts to set this property to null. You can change this property as needed if you want to rotate your encryption key; Your knowledge source definition will be unaffected. Encryption with customer-managed keys is not available for free search services, and is only available for paid services created on or after January 1, 2019. </param>
+        /// <param name="webParameters"> The parameters for the web knowledge source. </param>
+        /// <returns> A new <see cref="Indexes.Models.WebKnowledgeSource"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static WebKnowledgeSource WebKnowledgeSource(string name, string description, ETag? eTag, SearchResourceEncryptionKey encryptionKey, WebKnowledgeSourceParameters webParameters)
+        {
+            return WebKnowledgeSource(name: name, description: description, resultsProcessing: default, eTag: eTag, encryptionKey: encryptionKey, webParameters: webParameters);
         }
 
         /// <summary> Parameters for web knowledge source. </summary>
@@ -5814,6 +6336,20 @@ namespace Azure.Search.Documents.Models
         public static SearchServiceCounters SearchServiceCounters(SearchResourceCounter aliasCounter, SearchResourceCounter documentCounter, SearchResourceCounter indexCounter, SearchResourceCounter indexerCounter, SearchResourceCounter dataSourceCounter, SearchResourceCounter storageSizeCounter, SearchResourceCounter synonymMapCounter, SearchResourceCounter skillsetCounter, SearchResourceCounter vectorIndexSizeCounter)
         {
             return SearchServiceCounters(aliasCounter: aliasCounter, documentCounter: documentCounter, indexCounter: indexCounter, indexerCounter: indexerCounter, dataSourceCounter: dataSourceCounter, storageSizeCounter: storageSizeCounter, synonymMapCounter: synonymMapCounter, skillsetCounter: skillsetCounter, vectorIndexSizeCounter: vectorIndexSizeCounter, knowledgeBaseCounter: default, knowledgeSourceCounter: default);
+        }
+
+        /// <summary> Represents various service level limits. </summary>
+        /// <param name="maxFieldsPerIndex"> The maximum allowed fields per index. </param>
+        /// <param name="maxFieldNestingDepthPerIndex"> The maximum depth which you can nest sub-fields in an index, including the top-level complex field. For example, a/b/c has a nesting depth of 3. </param>
+        /// <param name="maxComplexCollectionFieldsPerIndex"> The maximum number of fields of type Collection(Edm.ComplexType) allowed in an index. </param>
+        /// <param name="maxComplexObjectsInCollectionsPerDocument"> The maximum number of objects in complex collections allowed per document. </param>
+        /// <param name="maxStoragePerIndexInBytes"> The maximum amount of storage in bytes allowed per index. </param>
+        /// <param name="maxCumulativeIndexerRuntimeSeconds"> The maximum cumulative indexer runtime in seconds allowed for the service. </param>
+        /// <returns> A new <see cref="Indexes.Models.SearchServiceLimits"/> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static SearchServiceLimits SearchServiceLimits(int? maxFieldsPerIndex, int? maxFieldNestingDepthPerIndex, int? maxComplexCollectionFieldsPerIndex, int? maxComplexObjectsInCollectionsPerDocument, long? maxStoragePerIndexInBytes, long? maxCumulativeIndexerRuntimeSeconds)
+        {
+            return SearchServiceLimits(maxFieldsPerIndex: maxFieldsPerIndex, maxFieldNestingDepthPerIndex: maxFieldNestingDepthPerIndex, maxComplexCollectionFieldsPerIndex: maxComplexCollectionFieldsPerIndex, maxComplexObjectsInCollectionsPerDocument: maxComplexObjectsInCollectionsPerDocument, maxStoragePerIndexInBytes: maxStoragePerIndexInBytes, maxCumulativeIndexerRuntimeSeconds: maxCumulativeIndexerRuntimeSeconds, maxVectorIndexSizePerIndexInBytes: default);
         }
 
         /// <summary> Represents an indexer. </summary>
@@ -5899,7 +6435,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static SearchIndexKnowledgeSourceParams SearchIndexKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, float? rerankerThreshold, string filterAddOn)
         {
-            return SearchIndexKnowledgeSourceParams(knowledgeSourceName: knowledgeSourceName, includeReferences: includeReferences, includeReferenceSourceData: includeReferenceSourceData, alwaysQuerySource: default, failOnError: default, rerankerThreshold: rerankerThreshold, maxOutputDocuments: default, enableImageServing: default, filterAddOn: filterAddOn);
+            return SearchIndexKnowledgeSourceParams(knowledgeSourceName: knowledgeSourceName, includeReferences: includeReferences, includeReferenceSourceData: includeReferenceSourceData, alwaysQuerySource: default, neverQuerySource: default, failOnError: default, rerankerThreshold: rerankerThreshold, resultsProcessing: default, maxOutputDocuments: default, enableImageServing: default, filterAddOn: filterAddOn, queryHintOverrides: default);
         }
 
         /// <summary> Specifies runtime parameters for a azure blob knowledge source. </summary>
@@ -5911,7 +6447,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static AzureBlobKnowledgeSourceParams AzureBlobKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, float? rerankerThreshold)
         {
-            return AzureBlobKnowledgeSourceParams(knowledgeSourceName: knowledgeSourceName, includeReferences: includeReferences, includeReferenceSourceData: includeReferenceSourceData, alwaysQuerySource: default, failOnError: default, rerankerThreshold: rerankerThreshold, maxOutputDocuments: default, enableImageServing: default);
+            return AzureBlobKnowledgeSourceParams(knowledgeSourceName: knowledgeSourceName, includeReferences: includeReferences, includeReferenceSourceData: includeReferenceSourceData, alwaysQuerySource: default, neverQuerySource: default, failOnError: default, rerankerThreshold: rerankerThreshold, resultsProcessing: default, maxOutputDocuments: default, enableImageServing: default, queryHintOverrides: default);
         }
 
         /// <summary> Specifies runtime parameters for a indexed OneLake knowledge source. </summary>
@@ -5923,7 +6459,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static IndexedOneLakeKnowledgeSourceParams IndexedOneLakeKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, float? rerankerThreshold)
         {
-            return IndexedOneLakeKnowledgeSourceParams(knowledgeSourceName: knowledgeSourceName, includeReferences: includeReferences, includeReferenceSourceData: includeReferenceSourceData, alwaysQuerySource: default, failOnError: default, rerankerThreshold: rerankerThreshold, maxOutputDocuments: default, enableImageServing: default);
+            return IndexedOneLakeKnowledgeSourceParams(knowledgeSourceName: knowledgeSourceName, includeReferences: includeReferences, includeReferenceSourceData: includeReferenceSourceData, alwaysQuerySource: default, neverQuerySource: default, failOnError: default, rerankerThreshold: rerankerThreshold, resultsProcessing: default, maxOutputDocuments: default, enableImageServing: default, queryHintOverrides: default);
         }
 
         /// <summary> Specifies runtime parameters for a web knowledge source. </summary>
@@ -5939,7 +6475,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static WebKnowledgeSourceParams WebKnowledgeSourceParams(string knowledgeSourceName, bool? includeReferences, bool? includeReferenceSourceData, float? rerankerThreshold, string language, string market, int? count, string freshness)
         {
-            return WebKnowledgeSourceParams(knowledgeSourceName: knowledgeSourceName, includeReferences: includeReferences, includeReferenceSourceData: includeReferenceSourceData, alwaysQuerySource: default, failOnError: default, rerankerThreshold: rerankerThreshold, maxOutputDocuments: default, enableImageServing: default, language: language, market: market, count: count, freshness: freshness);
+            return WebKnowledgeSourceParams(knowledgeSourceName: knowledgeSourceName, includeReferences: includeReferences, includeReferenceSourceData: includeReferenceSourceData, alwaysQuerySource: default, neverQuerySource: default, failOnError: default, rerankerThreshold: rerankerThreshold, resultsProcessing: default, maxOutputDocuments: default, enableImageServing: default, language: language, market: market, count: count, freshness: freshness);
         }
 
         /// <summary> The output contract for the retrieval response. </summary>
@@ -5963,7 +6499,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KnowledgeBaseModelWebSummarizationActivityRecord KnowledgeBaseModelWebSummarizationActivityRecord(int id, int? elapsedMs, KnowledgeBaseErrorDetail error, int? inputTokensCount, int? outputTokensCount)
         {
-            return KnowledgeBaseModelWebSummarizationActivityRecord(id: id, elapsedMs: elapsedMs, error: error, warning: default, inputTokensCount: inputTokensCount, outputTokensCount: outputTokensCount, modelName: default);
+            return KnowledgeBaseModelWebSummarizationActivityRecord(id: id, startedOn: default, completedOn: default, elapsedMs: elapsedMs, error: error, warning: default, inputTokensCount: inputTokensCount, outputTokensCount: outputTokensCount, model: default);
         }
 
         /// <summary> Represents an agentic reasoning activity record. </summary>
@@ -5976,7 +6512,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KnowledgeBaseAgenticReasoningActivityRecord KnowledgeBaseAgenticReasoningActivityRecord(int id, int? elapsedMs, KnowledgeBaseErrorDetail error, int? reasoningTokens, KnowledgeRetrievalReasoningEffort retrievalReasoningEffort)
         {
-            return KnowledgeBaseAgenticReasoningActivityRecord(id: id, elapsedMs: elapsedMs, error: error, warning: default, reasoningTokens: reasoningTokens, retrievalReasoningEffort: retrievalReasoningEffort);
+            return KnowledgeBaseAgenticReasoningActivityRecord(id: id, startedOn: default, completedOn: default, elapsedMs: elapsedMs, error: error, warning: default, reasoningTokens: reasoningTokens, retrievalReasoningEffort: retrievalReasoningEffort, logicalReasoningEffort: default);
         }
 
         /// <summary> Represents an Azure Search document reference. </summary>
@@ -5989,7 +6525,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KnowledgeBaseSearchIndexReference KnowledgeBaseSearchIndexReference(string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, string docKey)
         {
-            return KnowledgeBaseSearchIndexReference(id: id, activitySource: activitySource, sourceData: sourceData, rerankerScore: rerankerScore, docKey: docKey, searchSensitivityLabelInfo: default);
+            return KnowledgeBaseSearchIndexReference(id: id, activitySource: activitySource, sourceData: sourceData, rerankerScore: rerankerScore, docKey: docKey, searchSensitivityLabelInfo: default, citationUrl: default);
         }
 
         /// <summary> Represents an Azure Blob Storage document reference. </summary>
@@ -6002,7 +6538,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KnowledgeBaseAzureBlobReference KnowledgeBaseAzureBlobReference(string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, Uri blobUrl)
         {
-            return KnowledgeBaseAzureBlobReference(id: id, activitySource: activitySource, sourceData: sourceData, rerankerScore: rerankerScore, blobUrl: blobUrl, searchSensitivityLabelInfo: default);
+            return KnowledgeBaseAzureBlobReference(id: id, activitySource: activitySource, sourceData: sourceData, rerankerScore: rerankerScore, blobUrl: blobUrl, searchSensitivityLabelInfo: default, citationUrl: default);
         }
 
         /// <summary> Represents an indexed OneLake document reference. </summary>
@@ -6015,7 +6551,7 @@ namespace Azure.Search.Documents.Models
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static KnowledgeBaseIndexedOneLakeReference KnowledgeBaseIndexedOneLakeReference(string id, int activitySource, IDictionary<string, BinaryData> sourceData, float? rerankerScore, Uri docUrl)
         {
-            return KnowledgeBaseIndexedOneLakeReference(id: id, activitySource: activitySource, sourceData: sourceData, rerankerScore: rerankerScore, docUrl: docUrl, searchSensitivityLabelInfo: default);
+            return KnowledgeBaseIndexedOneLakeReference(id: id, activitySource: activitySource, sourceData: sourceData, rerankerScore: rerankerScore, docUrl: docUrl, searchSensitivityLabelInfo: default, citationUrl: default);
         }
 
         /// <summary> Initializes a new instance of <see cref="SearchModelFactory.SearchIndexer(string,string,string,string,string,Indexes.Models.IndexingSchedule,Indexes.Models.IndexingParameters,IList{Indexes.Models.FieldMapping},IList{Indexes.Models.FieldMapping},bool?,string,SearchResourceEncryptionKey,IDictionary{string,BinaryData})"/>. </summary>

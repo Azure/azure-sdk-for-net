@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Logs data type. </summary>
-    public partial class Office365ProjectConnectorDataTypesLogs : DataConnectorDataTypeCommon, IJsonModel<Office365ProjectConnectorDataTypesLogs>
+    internal partial class Office365ProjectConnectorDataTypesLogs : DataConnectorDataTypeCommon, IJsonModel<Office365ProjectConnectorDataTypesLogs>
     {
         /// <summary> Initializes a new instance of <see cref="Office365ProjectConnectorDataTypesLogs"/> for deserialization. </summary>
         internal Office365ProjectConnectorDataTypesLogs()

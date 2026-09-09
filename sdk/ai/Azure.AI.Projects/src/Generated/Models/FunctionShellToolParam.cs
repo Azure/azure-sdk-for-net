@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -13,6 +14,7 @@ namespace Azure.AI.Projects
         /// <summary> Initializes a new instance of <see cref="FunctionShellToolParam"/>. </summary>
         public FunctionShellToolParam() : base(ToolType.Shell)
         {
+            AllowedCallers = new ChangeTrackingList<InternalCallableToolAllowedCaller>();
             ToolConfigs = new ChangeTrackingDictionary<string, ToolConfig>();
         }
 
@@ -20,12 +22,14 @@ namespace Azure.AI.Projects
         /// <param name="type"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="environment"></param>
+        /// <param name="allowedCallers"></param>
         /// <param name="name"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="description"> Deprecated. This property is deprecated and will be removed in a future version. </param>
         /// <param name="toolConfigs"> Deprecated. This property is deprecated and will be removed in a future version. </param>
-        internal FunctionShellToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, FunctionShellToolParamEnvironment environment, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
+        internal FunctionShellToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, FunctionShellToolParamEnvironment environment, IList<InternalCallableToolAllowedCaller> allowedCallers, string name, string description, IDictionary<string, ToolConfig> toolConfigs) : base(@type, additionalBinaryDataProperties)
         {
             Environment = environment;
+            AllowedCallers = allowedCallers;
             Name = name;
             Description = description;
             ToolConfigs = toolConfigs;
@@ -33,6 +37,9 @@ namespace Azure.AI.Projects
 
         /// <summary> Gets or sets the Environment. </summary>
         public FunctionShellToolParamEnvironment Environment { get; set; }
+
+        /// <summary> Gets or sets the AllowedCallers. </summary>
+        public IList<InternalCallableToolAllowedCaller> AllowedCallers { get; set; }
 
         /// <summary> Deprecated. This property is deprecated and will be removed in a future version. </summary>
         public string Name { get; set; }

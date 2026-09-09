@@ -8,16 +8,67 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
 using Azure.Core;
+using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
-    public partial class ApplicationInsightsAnnotation : IUtf8JsonSerializable, IJsonModel<ApplicationInsightsAnnotation>
+    /// <summary> Annotation associated with an application insights resource. </summary>
+    public partial class ApplicationInsightsAnnotation : IJsonModel<ApplicationInsightsAnnotation>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ApplicationInsightsAnnotation>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplicationInsightsAnnotation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeApplicationInsightsAnnotation(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationInsightsAnnotation)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApplicationInsightsContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(ApplicationInsightsAnnotation)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<ApplicationInsightsAnnotation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationInsightsAnnotation IPersistableModel<ApplicationInsightsAnnotation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<ApplicationInsightsAnnotation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="applicationInsightsAnnotation"> The <see cref="ApplicationInsightsAnnotation"/> to serialize into <see cref="RequestContent"/>. </param>
+        internal static RequestContent ToRequestContent(ApplicationInsightsAnnotation applicationInsightsAnnotation)
+        {
+            if (applicationInsightsAnnotation == null)
+            {
+                return null;
+            }
+            return RequestContent.Create(applicationInsightsAnnotation, ModelSerializationExtensions.WireOptions);
+        }
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<ApplicationInsightsAnnotation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -29,12 +80,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsAnnotation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationInsightsAnnotation)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(AnnotationName))
             {
                 writer.WritePropertyName("AnnotationName"u8);
@@ -65,15 +115,15 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WritePropertyName("RelatedAnnotation"u8);
                 writer.WriteStringValue(RelatedAnnotation);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -82,263 +132,87 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             }
         }
 
-        ApplicationInsightsAnnotation IJsonModel<ApplicationInsightsAnnotation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        ApplicationInsightsAnnotation IJsonModel<ApplicationInsightsAnnotation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual ApplicationInsightsAnnotation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsAnnotation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsAnnotation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(ApplicationInsightsAnnotation)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeApplicationInsightsAnnotation(document.RootElement, options);
         }
 
-        internal static ApplicationInsightsAnnotation DeserializeApplicationInsightsAnnotation(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static ApplicationInsightsAnnotation DeserializeApplicationInsightsAnnotation(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string annotationName = default;
             string category = default;
-            DateTimeOffset? eventTime = default;
+            DateTimeOffset? eventOccurredOn = default;
             string id = default;
             string properties = default;
             string relatedAnnotation = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("AnnotationName"u8))
+                if (prop.NameEquals("AnnotationName"u8))
                 {
-                    annotationName = property.Value.GetString();
+                    annotationName = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Category"u8))
+                if (prop.NameEquals("Category"u8))
                 {
-                    category = property.Value.GetString();
+                    category = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("EventTime"u8))
+                if (prop.NameEquals("EventTime"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    eventTime = property.Value.GetDateTimeOffset("O");
+                    eventOccurredOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
-                if (property.NameEquals("Id"u8))
+                if (prop.NameEquals("Id"u8))
                 {
-                    id = property.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("Properties"u8))
+                if (prop.NameEquals("Properties"u8))
                 {
-                    properties = property.Value.GetString();
+                    properties = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("RelatedAnnotation"u8))
+                if (prop.NameEquals("RelatedAnnotation"u8))
                 {
-                    relatedAnnotation = property.Value.GetString();
+                    relatedAnnotation = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new ApplicationInsightsAnnotation(
                 annotationName,
                 category,
-                eventTime,
+                eventOccurredOn,
                 id,
                 properties,
                 relatedAnnotation,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
-        {
-            StringBuilder builder = new StringBuilder();
-            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
-            IDictionary<string, string> propertyOverrides = null;
-            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
-            bool hasPropertyOverride = false;
-            string propertyOverride = null;
-
-            builder.AppendLine("{");
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AnnotationName), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  AnnotationName: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(AnnotationName))
-                {
-                    builder.Append("  AnnotationName: ");
-                    if (AnnotationName.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AnnotationName}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AnnotationName}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Category), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  Category: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Category))
-                {
-                    builder.Append("  Category: ");
-                    if (Category.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Category}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Category}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EventOccurredOn), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  EventTime: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(EventOccurredOn))
-                {
-                    builder.Append("  EventTime: ");
-                    var formattedDateTimeString = TypeFormatters.ToString(EventOccurredOn.Value, "o");
-                    builder.AppendLine($"'{formattedDateTimeString}'");
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  Id: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Id))
-                {
-                    builder.Append("  Id: ");
-                    if (Id.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Id}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Id}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  Properties: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(Properties))
-                {
-                    builder.Append("  Properties: ");
-                    if (Properties.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{Properties}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{Properties}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RelatedAnnotation), out propertyOverride);
-            if (hasPropertyOverride)
-            {
-                builder.Append("  RelatedAnnotation: ");
-                builder.AppendLine(propertyOverride);
-            }
-            else
-            {
-                if (Optional.IsDefined(RelatedAnnotation))
-                {
-                    builder.Append("  RelatedAnnotation: ");
-                    if (RelatedAnnotation.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{RelatedAnnotation}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{RelatedAnnotation}'");
-                    }
-                }
-            }
-
-            builder.AppendLine("}");
-            return BinaryData.FromString(builder.ToString());
-        }
-
-        BinaryData IPersistableModel<ApplicationInsightsAnnotation>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsAnnotation>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerApplicationInsightsContext.Default);
-                case "bicep":
-                    return SerializeBicep(options);
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsAnnotation)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        ApplicationInsightsAnnotation IPersistableModel<ApplicationInsightsAnnotation>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ApplicationInsightsAnnotation>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeApplicationInsightsAnnotation(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(ApplicationInsightsAnnotation)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<ApplicationInsightsAnnotation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

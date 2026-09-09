@@ -37,9 +37,9 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
         {
             Versions = { new ProtocolVersionRecord(ProjectsAgentProtocol.Responses, "1.0.0") },
             CodeConfiguration = new(
-                runtime: "python_3_14",
-                entryPoint: ["python", "main.py"],
-                dependencyResolution: CodeDependencyResolution.RemoteBuild
+                runtime: "dotnet_10",
+                entryPoint: ["dotnet", "EchoAgent.dll"],
+                dependencyResolution: CodeDependencyResolution.Bundled
             ),
         };
         AgentVersionFromCodeMetadata metadata = new(agentDefinition);
@@ -95,7 +95,7 @@ public class Sample_CodeAgent : ProjectsOpenAITestBase
         catch (ClientResultException e)
         {
             MatchCollection session = Regex.Matches(e.Message, "'[^']+'");
-            if (e.Status == 424 && e.Message.IndexOf("session_not_ready", StringComparison.OrdinalIgnoreCase) !=-1 && session.Count > 0)
+            if (e.Status == 424 && e.Message.IndexOf("session_not_ready", StringComparison.OrdinalIgnoreCase) != -1 && session.Count > 0)
             {
                 SessionLogEvent logEvent = await projectClient.AgentAdministrationClient.GetSessionLogStreamAsync(agentName: agentVersion.Name, agentVersion: agentVersion.Version, sessionId: session[0].Value.Trim('\''));
                 Console.WriteLine(logEvent.Data);

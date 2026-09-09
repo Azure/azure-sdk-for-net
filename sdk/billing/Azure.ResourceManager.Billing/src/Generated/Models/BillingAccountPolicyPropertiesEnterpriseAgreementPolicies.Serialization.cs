@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> The policies for Enterprise Agreement enrollments. </summary>
-    public partial class BillingAccountPolicyPropertiesEnterpriseAgreementPolicies : EnterpriseAgreementPolicies, IJsonModel<BillingAccountPolicyPropertiesEnterpriseAgreementPolicies>
+    internal partial class BillingAccountPolicyPropertiesEnterpriseAgreementPolicies : EnterpriseAgreementPolicies, IJsonModel<BillingAccountPolicyPropertiesEnterpriseAgreementPolicies>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

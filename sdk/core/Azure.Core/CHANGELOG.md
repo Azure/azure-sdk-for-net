@@ -1,6 +1,6 @@
 # Release History
 
-## 1.61.0-beta.1 (Unreleased)
+## 1.63.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -8,10 +8,35 @@
 
 ### Bugs Fixed
 
+### Other Changes
+
+## 1.62.0 (2026-08-20)
+
+### Features Added
+
+- Added experimental (`SCME0002`) `AzureCredentialResolver.Default` public static property so standalone callers can share the process-wide credential cache used by DI-resolved paths.
+- `AzureCredentialResolver` now resolves every `ChainedTokenCredential` `Sources[]` entry through the active resolver chain, so any registered `CredentialResolver` (built-in, broker, or third-party) can claim or override an entry. Entries are constructed as chained, so transient failures surface as `CredentialUnavailableException` and the chain falls through.
+
+### Breaking Changes
+
+- `AzureCredentialResolver` now resolves a top-level single source (e.g. `CredentialSource: AzureCliCredential`) to the concrete credential type (`AzureCliCredential`) rather than a `DefaultAzureCredential` wrapper. Construction is unchanged (it uses the same `DefaultAzureCredentialFactory` helpers) — only the returned type differs; callers using `CredentialSettings.TokenProvider` as a `TokenCredential` are unaffected.
+- `AzureCredentialResolver` no longer claims top-level `BrokerCredential` sections (canonical name or `broker` alias); they now require `BrokerCredentialResolver` from `Azure.Identity.Broker` 1.7.0+ (e.g. via `AddBrokerCredentialResolver()`). `BrokerCredential` entries nested inside a `ChainedTokenCredential` continue to resolve. Note: if `BrokerCredentialResolver` from `Azure.Identity.Broker` 1.7.0 is registered ahead of `AzureCredentialResolver`, a nested `BrokerCredential` entry is currently built as non-chained, so it may surface `AuthenticationFailedException` and abort the chain instead of falling through to the next entry. Without a broker resolver registered, the built-in chain path builds the broker entry as chained (correct fall-through). A future `Azure.Identity.Broker` release will make its resolver honor chained semantics for nested entries.
+
+## 1.61.0 (2026-08-04)
+
+### Features Added
+
+- Added `AzureAuthorityHosts.AzureBleuCloud` (`https://login.sovcloud-identity.fr/`), the Microsoft Entra authority host for Bleu Cloud, the national partner cloud for France. Interactive credentials' `Authenticate` methods now also resolve the default Azure Resource Manager scope for Bleu Cloud.
+
+### Bugs Fixed
+
+- Fixed an issue where response content logging could emit more bytes than were actually read when a non-buffered (streaming) response was read into a buffer larger than the response body. Previously, when the read began at offset 0, the entire caller-supplied buffer was logged — including the bytes past the response payload, which for a pooled buffer contain unrelated in-process content — and the configured `LoggedContentSizeLimit` was not applied. The logging policy now logs only the bytes that were read. ([#61399](https://github.com/Azure/azure-sdk-for-net/issues/61399))
 - Fixed an issue where `RequestFailedException` could throw a secondary `ArgumentNullException` while formatting a failed response that had a text content-type header but an empty body, masking the actual service failure. The exception now preserves the original HTTP status, reason phrase, and headers, and no longer formats empty response content.
 - Fixed `AzureCliCredential` to not pass both `--tenant` and `--subscription` flags to the Azure CLI, as the CLI rejects this combination. When a tenant is requested (for example, via challenge-based authentication) it now takes precedence and `--subscription` is omitted; `--subscription` is used only when no tenant is requested. ([#58949](https://github.com/Azure/azure-sdk-for-net/issues/58949))
 
 ### Other Changes
+
+- Added `azure-deprecating` to the default list of allowed (non-redacted) headers in `DiagnosticsOptions` to support [deprecating behavior notification](https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#deprecating-behavior-notification).
 
 ## 1.60.0 (2026-06-30)
 

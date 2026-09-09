@@ -23,6 +23,7 @@ public class RequiredActionUpdate : RunUpdate
     /// <inheritdoc cref="RequiredFunctionToolCall.Arguments"/>
     public string FunctionArguments => AsFunctionCall?.Arguments;
 
+    /// <summary> Gets the identifier of the tool call that requires action. </summary>
     public string ToolCallId => AsFunctionCall?.Id;
 
     private RequiredFunctionToolCall AsFunctionCall => _requiredAction as RequiredFunctionToolCall;

@@ -84,10 +84,10 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WritePropertyName("outputParsing"u8);
                 writer.WriteObjectValue(OutputParsing, options);
             }
-            if (Optional.IsDefined(InclusionMode))
+            if (Optional.IsDefined(ResultsProcessing))
             {
-                writer.WritePropertyName("inclusionMode"u8);
-                writer.WriteStringValue(InclusionMode.Value.ToString());
+                writer.WritePropertyName("resultsProcessing"u8);
+                writer.WriteStringValue(ResultsProcessing.Value.ToString());
             }
             if (Optional.IsDefined(MaxOutputTokens))
             {
@@ -138,7 +138,7 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             string name = default;
             McpServerOutputParsing outputParsing = default;
-            McpServerToolInclusionMode? inclusionMode = default;
+            KnowledgeSourceResultsProcessing? resultsProcessing = default;
             int? maxOutputTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -157,13 +157,13 @@ namespace Azure.Search.Documents.Indexes.Models
                     outputParsing = McpServerOutputParsing.DeserializeMcpServerOutputParsing(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("inclusionMode"u8))
+                if (prop.NameEquals("resultsProcessing"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    inclusionMode = new McpServerToolInclusionMode(prop.Value.GetString());
+                    resultsProcessing = new KnowledgeSourceResultsProcessing(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("maxOutputTokens"u8))
@@ -180,7 +180,7 @@ namespace Azure.Search.Documents.Indexes.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new McpServerTool(name, outputParsing, inclusionMode, maxOutputTokens, additionalBinaryDataProperties);
+            return new McpServerTool(name, outputParsing, resultsProcessing, maxOutputTokens, additionalBinaryDataProperties);
         }
     }
 }

@@ -143,10 +143,10 @@ namespace Azure.Provisioning.Compute
             _hostId = DefineProperty<string>(nameof(HostId), new string[] { "hostId" }, isOutput: true);
             _virtualMachineResources = DefineListProperty<ComputeSubResourceData>(nameof(VirtualMachineResources), new string[] { "virtualMachines" }, isOutput: true);
             _licenseType = DefineProperty<DedicatedHostLicenseType>(nameof(LicenseType), new string[] { "licenseType" });
-            _provisioningOn = DefineProperty<DateTimeOffset>(nameof(ProvisioningOn), new string[] { "provisioningTime" }, isOutput: true);
+            _provisioningOn = DefineProperty<DateTimeOffset>(nameof(ProvisioningOn), new string[] { "provisioningTime" }, isOutput: true, format: "O");
             _provisioningState = DefineProperty<string>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _instanceView = DefineModelProperty<DedicatedHostInstanceView>(nameof(InstanceView), new string[] { "instanceView" }, isOutput: true);
-            _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true);
+            _timeCreated = DefineProperty<DateTimeOffset>(nameof(TimeCreated), new string[] { "timeCreated" }, isOutput: true, format: "O");
             DefineAdditionalProperties();
         }
 

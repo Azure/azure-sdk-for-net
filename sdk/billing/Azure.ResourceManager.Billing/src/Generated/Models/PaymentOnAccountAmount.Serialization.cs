@@ -14,7 +14,7 @@ using Azure.ResourceManager.Billing;
 namespace Azure.ResourceManager.Billing.Models
 {
     /// <summary> Payment on Account amount. </summary>
-    public partial class PaymentOnAccountAmount : BillingAmount, IJsonModel<PaymentOnAccountAmount>
+    internal partial class PaymentOnAccountAmount : BillingAmount, IJsonModel<PaymentOnAccountAmount>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>

@@ -112,6 +112,7 @@ namespace Azure.SdkAnalyzers
 
             // System.ClientModel (unbranded/SCM) return types.
             if (IsOrInheritsFrom(unwrapped, "ClientResult", SystemClientModelNamespace) ||
+                IsOrInheritsFrom(unwrapped, "AsyncStreamingClientResult", SystemClientModelNamespace) ||
                 IsOrInheritsFrom(returnType, "CollectionResult", SystemClientModelNamespace) ||
                 IsOrInheritsFrom(returnType, "AsyncCollectionResult", SystemClientModelNamespace))
             {

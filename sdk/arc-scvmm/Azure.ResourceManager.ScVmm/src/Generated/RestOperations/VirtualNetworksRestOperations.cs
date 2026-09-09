@@ -6,728 +6,231 @@
 #nullable disable
 
 using System;
-using System.Text.Json;
-using System.Threading;
-using System.Threading.Tasks;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager.ScVmm.Models;
 
 namespace Azure.ResourceManager.ScVmm
 {
-    internal partial class VirtualNetworksRestOperations
+    internal partial class VirtualNetworks
     {
-        private readonly TelemetryDetails _userAgent;
-        private readonly HttpPipeline _pipeline;
         private readonly Uri _endpoint;
         private readonly string _apiVersion;
+        private readonly TelemetryDetails _userAgent;
 
-        /// <summary> Initializes a new instance of VirtualNetworksRestOperations. </summary>
+        /// <summary> Initializes a new instance of VirtualNetworks for mocking. </summary>
+        protected VirtualNetworks()
+        {
+        }
+
+        /// <summary> Initializes a new instance of VirtualNetworks. </summary>
+        /// <param name="clientDiagnostics"> The ClientDiagnostics is used to provide tracing support for the client library. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="applicationId"> The application id to use for user agent. </param>
-        /// <param name="endpoint"> server parameter. </param>
-        /// <param name="apiVersion"> Api Version. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="pipeline"/> or <paramref name="apiVersion"/> is null. </exception>
-        public VirtualNetworksRestOperations(HttpPipeline pipeline, string applicationId, Uri endpoint = null, string apiVersion = default)
+        /// <param name="endpoint"> Service endpoint. </param>
+        /// <param name="apiVersion"></param>
+        internal VirtualNetworks(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string applicationId, Uri endpoint, string apiVersion)
         {
-            _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
-            _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-10-07";
-            _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
+            ClientDiagnostics = clientDiagnostics;
+            _endpoint = endpoint;
+            Pipeline = pipeline;
+            _apiVersion = apiVersion;
+            _userAgent = new TelemetryDetails(typeof(VirtualNetworks).Assembly, applicationId);
         }
 
-        internal RequestUriBuilder CreateGetRequestUri(string subscriptionId, string resourceGroupName, string virtualNetworkName)
+        /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
+        public virtual HttpPipeline Pipeline { get; }
+
+        /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
+        internal ClientDiagnostics ClientDiagnostics { get; }
+
+        internal HttpMessage CreateGetRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkName, RequestContext context)
         {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ScVmm/virtualNetworks/", false);
             uri.AppendPath(virtualNetworkName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateGetRequest(string subscriptionId, string resourceGroupName, string virtualNetworkName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ScVmm/virtualNetworks/", false);
-            uri.AppendPath(virtualNetworkName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
+            request.Method = RequestMethod.Get;
             _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> Implements VirtualNetwork GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<ScVmmVirtualNetworkData>> GetAsync(string subscriptionId, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateCreateOrUpdateRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, virtualNetworkName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScVmmVirtualNetworkData value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ScVmmVirtualNetworkData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Implements VirtualNetwork GET method. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<ScVmmVirtualNetworkData> Get(string subscriptionId, string resourceGroupName, string virtualNetworkName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-
-            using var message = CreateGetRequest(subscriptionId, resourceGroupName, virtualNetworkName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        ScVmmVirtualNetworkData value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = ScVmmVirtualNetworkData.DeserializeScVmmVirtualNetworkData(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                case 404:
-                    return Response.FromValue((ScVmmVirtualNetworkData)null, message.Response);
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateCreateOrUpdateRequestUri(string subscriptionId, string resourceGroupName, string virtualNetworkName, ScVmmVirtualNetworkData data)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ScVmm/virtualNetworks/", false);
             uri.AppendPath(virtualNetworkName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateCreateOrUpdateRequest(string subscriptionId, string resourceGroupName, string virtualNetworkName, ScVmmVirtualNetworkData data)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Put;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ScVmm/virtualNetworks/", false);
-            uri.AppendPath(virtualNetworkName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data, ModelSerializationExtensions.WireOptions);
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
             request.Content = content;
-            _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Onboards the ScVmm virtual network as an Azure virtual network resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
-        /// <param name="data"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string virtualNetworkName, ScVmmVirtualNetworkData data, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateUpdateRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkName, RequestContent content, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, virtualNetworkName, data);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Onboards the ScVmm virtual network as an Azure virtual network resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
-        /// <param name="data"> Request payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="data"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string virtualNetworkName, ScVmmVirtualNetworkData data, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-            Argument.AssertNotNull(data, nameof(data));
-
-            using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, virtualNetworkName, data);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 201:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateDeleteRequestUri(string subscriptionId, string resourceGroupName, string virtualNetworkName, ScVmmForceDeletion? force)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ScVmm/virtualNetworks/", false);
             uri.AppendPath(virtualNetworkName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (force != null)
+            if (_apiVersion != null)
             {
-                uri.AppendQuery("force", force.Value.ToString(), true);
+                uri.AppendQuery("api-version", _apiVersion, true);
             }
-            return uri;
-        }
-
-        internal HttpMessage CreateDeleteRequest(string subscriptionId, string resourceGroupName, string virtualNetworkName, ScVmmForceDeletion? force)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Delete;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ScVmm/virtualNetworks/", false);
-            uri.AppendPath(virtualNetworkName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            if (force != null)
-            {
-                uri.AppendQuery("force", force.Value.ToString(), true);
-            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> Deregisters the ScVmm virtual network from Azure. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
-        /// <param name="force"> Forces the resource to be deleted from azure. The corresponding CR would be attempted to be deleted too. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string virtualNetworkName, ScVmmForceDeletion? force = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, virtualNetworkName, force);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Deregisters the ScVmm virtual network from Azure. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
-        /// <param name="force"> Forces the resource to be deleted from azure. The corresponding CR would be attempted to be deleted too. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Delete(string subscriptionId, string resourceGroupName, string virtualNetworkName, ScVmmForceDeletion? force = null, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-
-            using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, virtualNetworkName, force);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 202:
-                case 204:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateUpdateRequestUri(string subscriptionId, string resourceGroupName, string virtualNetworkName, ScVmmResourcePatch patch)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/providers/Microsoft.ScVmm/virtualNetworks/", false);
-            uri.AppendPath(virtualNetworkName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateUpdateRequest(string subscriptionId, string resourceGroupName, string virtualNetworkName, ScVmmResourcePatch patch)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Patch;
-            var uri = new RawRequestUriBuilder();
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
+            return message;
+        }
+
+        internal HttpMessage CreateDeleteRequest(Guid subscriptionId, string resourceGroupName, string virtualNetworkName, string force, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ScVmm/virtualNetworks/", false);
             uri.AppendPath(virtualNetworkName, true);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (force != null)
+            {
+                uri.AppendQuery("force", force, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch, ModelSerializationExtensions.WireOptions);
-            request.Content = content;
+            request.Method = RequestMethod.Delete;
             _userAgent.Apply(message);
             return message;
         }
 
-        /// <summary> Updates the VirtualNetworks resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
-        /// <param name="patch"> VirtualNetworks patch payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string virtualNetworkName, ScVmmResourcePatch patch, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateGetByResourceGroupRequest(Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, virtualNetworkName, patch);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> Updates the VirtualNetworks resource. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="virtualNetworkName"> Name of the VirtualNetwork. </param>
-        /// <param name="patch"> VirtualNetworks patch payload. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="virtualNetworkName"/> or <paramref name="patch"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="virtualNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response Update(string subscriptionId, string resourceGroupName, string virtualNetworkName, ScVmmResourcePatch patch, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-            Argument.AssertNotNullOrEmpty(virtualNetworkName, nameof(virtualNetworkName));
-            Argument.AssertNotNull(patch, nameof(patch));
-
-            using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, virtualNetworkName, patch);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                case 202:
-                    return message.Response;
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListByResourceGroupRequestUri(string subscriptionId, string resourceGroupName)
-        {
-            var uri = new RawRequestUriBuilder();
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/resourceGroups/", false);
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/providers/Microsoft.ScVmm/virtualNetworks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
         }
 
-        internal HttpMessage CreateListByResourceGroupRequest(string subscriptionId, string resourceGroupName)
+        internal HttpMessage CreateNextGetByResourceGroupRequest(Uri nextPage, Guid subscriptionId, string resourceGroupName, RequestContext context)
         {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
+            {
+                uri.Reset(nextPage);
+            }
+            else
+            {
+                uri.Reset(new Uri(_endpoint, nextPage));
+            }
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
+            _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetBySubscriptionRequest(Guid subscriptionId, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.ScVmm/virtualNetworks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
             request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List of VirtualNetworks in a resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualNetworkListResult>> ListByResourceGroupAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        VirtualNetworkListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List of VirtualNetworks in a resource group. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualNetworkListResult> ListByResourceGroup(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            using var message = CreateListByResourceGroupRequest(subscriptionId, resourceGroupName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        VirtualNetworkListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListBySubscriptionRequestUri(string subscriptionId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ScVmm/virtualNetworks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            return uri;
-        }
-
-        internal HttpMessage CreateListBySubscriptionRequest(string subscriptionId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/providers/Microsoft.ScVmm/virtualNetworks", false);
-            uri.AppendQuery("api-version", _apiVersion, true);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        /// <summary> List of VirtualNetworks in a subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualNetworkListResult>> ListBySubscriptionAsync(string subscriptionId, CancellationToken cancellationToken = default)
+        internal HttpMessage CreateNextGetBySubscriptionRequest(Uri nextPage, Guid subscriptionId, RequestContext context)
         {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionRequest(subscriptionId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            if (nextPage.IsAbsoluteUri)
             {
-                case 200:
-                    {
-                        VirtualNetworkListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(nextPage);
             }
-        }
-
-        /// <summary> List of VirtualNetworks in a subscription. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualNetworkListResult> ListBySubscription(string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionRequest(subscriptionId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
+            else
             {
-                case 200:
-                    {
-                        VirtualNetworkListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
+                uri.Reset(new Uri(_endpoint, nextPage));
             }
-        }
-
-        internal RequestUriBuilder CreateListByResourceGroupNextPageRequestUri(string nextLink, string subscriptionId, string resourceGroupName)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListByResourceGroupNextPageRequest(string nextLink, string subscriptionId, string resourceGroupName)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
+            if (_apiVersion != null)
+            {
+                uri.UpdateQuery("api-version", _apiVersion);
+            }
+            HttpMessage message = Pipeline.CreateMessage();
+            Request request = message.Request;
+            request.Uri = uri;
             request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
             _userAgent.Apply(message);
+            request.Headers.SetValue("Accept", "application/json");
             return message;
-        }
-
-        /// <summary> List of VirtualNetworks in a resource group. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualNetworkListResult>> ListByResourceGroupNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        VirtualNetworkListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List of VirtualNetworks in a resource group. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualNetworkListResult> ListByResourceGroupNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
-
-            using var message = CreateListByResourceGroupNextPageRequest(nextLink, subscriptionId, resourceGroupName);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        VirtualNetworkListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        internal RequestUriBuilder CreateListBySubscriptionNextPageRequestUri(string nextLink, string subscriptionId)
-        {
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            return uri;
-        }
-
-        internal HttpMessage CreateListBySubscriptionNextPageRequest(string nextLink, string subscriptionId)
-        {
-            var message = _pipeline.CreateMessage();
-            var request = message.Request;
-            request.Method = RequestMethod.Get;
-            var uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendRawNextLink(nextLink, false);
-            request.Uri = uri;
-            request.Headers.Add("Accept", "application/json");
-            _userAgent.Apply(message);
-            return message;
-        }
-
-        /// <summary> List of VirtualNetworks in a subscription. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<VirtualNetworkListResult>> ListBySubscriptionNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
-            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        VirtualNetworkListResult value = default;
-                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions, cancellationToken).ConfigureAwait(false);
-                        value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
-        }
-
-        /// <summary> List of VirtualNetworks in a subscription. </summary>
-        /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="subscriptionId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<VirtualNetworkListResult> ListBySubscriptionNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNull(nextLink, nameof(nextLink));
-            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
-
-            using var message = CreateListBySubscriptionNextPageRequest(nextLink, subscriptionId);
-            _pipeline.Send(message, cancellationToken);
-            switch (message.Response.Status)
-            {
-                case 200:
-                    {
-                        VirtualNetworkListResult value = default;
-                        using var document = JsonDocument.Parse(message.Response.ContentStream, ModelSerializationExtensions.JsonDocumentOptions);
-                        value = VirtualNetworkListResult.DeserializeVirtualNetworkListResult(document.RootElement);
-                        return Response.FromValue(value, message.Response);
-                    }
-                default:
-                    throw new RequestFailedException(message.Response);
-            }
         }
     }
 }

@@ -14,7 +14,7 @@ using Azure.ResourceManager.SecurityInsights;
 namespace Azure.ResourceManager.SecurityInsights.Models
 {
     /// <summary> Alerts data type for Microsoft Threat Protection Platforms data connector. </summary>
-    public partial class MtpDataConnectorDataTypesAlerts : DataConnectorDataTypeCommon, IJsonModel<MtpDataConnectorDataTypesAlerts>
+    internal partial class MtpDataConnectorDataTypesAlerts : DataConnectorDataTypeCommon, IJsonModel<MtpDataConnectorDataTypesAlerts>
     {
         /// <summary> Initializes a new instance of <see cref="MtpDataConnectorDataTypesAlerts"/> for deserialization. </summary>
         internal MtpDataConnectorDataTypesAlerts()

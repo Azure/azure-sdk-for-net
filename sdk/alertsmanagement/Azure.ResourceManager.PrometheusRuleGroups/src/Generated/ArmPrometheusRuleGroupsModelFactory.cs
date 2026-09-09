@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrometheusRuleGroups;
@@ -30,7 +29,6 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
         /// <param name="scopes"> Target Azure Monitor workspaces resource ids. This api-version is currently limited to creating with one scope. This may change in future. </param>
         /// <param name="interval"> The interval in which to run the Prometheus rule group represented in ISO 8601 duration format. Should be between 1 and 15 minutes. </param>
         /// <param name="rules"> Defines the rules in the Prometheus rule group. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="scopes"/> or <paramref name="rules"/> is null. </exception>
         /// <returns> A new <see cref="PrometheusRuleGroups.PrometheusRuleGroupData"/> instance for mocking. </returns>
         public static PrometheusRuleGroupData PrometheusRuleGroupData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, bool? isEnabled = default, string clusterName = default, IEnumerable<ResourceIdentifier> scopes = default, TimeSpan? interval = default, IEnumerable<PrometheusRule> rules = default)
         {
@@ -54,6 +52,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                 default);
         }
 
+        /// <summary> An Azure Prometheus alerting or recording rule. </summary>
         /// <param name="record"> Recorded metrics name. </param>
         /// <param name="alert"> Alert rule name. </param>
         /// <param name="isEnabled"> Enable/disable rule. </param>
@@ -85,6 +84,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
                 default);
         }
 
+        /// <summary> An alert action. Only relevant for alerts. </summary>
         /// <param name="actionGroupId"> The resource id of the action group to use. </param>
         /// <param name="actionProperties"> The properties of an action group object. </param>
         /// <returns> A new <see cref="Models.PrometheusRuleGroupAction"/> instance for mocking. </returns>
@@ -95,6 +95,7 @@ namespace Azure.ResourceManager.PrometheusRuleGroups.Models
             return new PrometheusRuleGroupAction(actionGroupId, actionProperties ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Specifies the Prometheus alert rule configuration. </summary>
         /// <param name="isAutoResolved"> Enable alert auto-resolution. </param>
         /// <param name="timeToResolve"> Alert auto-resolution timeout. </param>
         /// <returns> A new <see cref="Models.PrometheusRuleResolveConfiguration"/> instance for mocking. </returns>
