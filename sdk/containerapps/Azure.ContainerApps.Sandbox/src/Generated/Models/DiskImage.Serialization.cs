@@ -231,13 +231,5 @@ namespace Azure.ContainerApps.Sandbox
                 sizeInMb,
                 additionalBinaryDataProperties);
         }
-
-        /// <summary> Converts a response to a DiskImage using the LRO result path. </summary>
-        /// <param name="response"> The response from the service. </param>
-        internal static DiskImage FromLroResponse(Response response)
-        {
-            using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeDiskImage(document.RootElement.GetProperty("diskImage"), ModelSerializationExtensions.WireOptions);
-        }
     }
 }

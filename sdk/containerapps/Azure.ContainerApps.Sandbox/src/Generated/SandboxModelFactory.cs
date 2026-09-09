@@ -1554,26 +1554,6 @@ namespace Azure.ContainerApps.Sandbox
             return new DiskImageStatus(state, errorMessage, createdOn, updatedOn, additionalBinaryDataProperties: null);
         }
 
-        /// <summary> Disk-image operation response body. </summary>
-        /// <param name="operationId"> operationId value. </param>
-        /// <param name="status"> status value. </param>
-        /// <param name="errorMessage"> errorMessage value. </param>
-        /// <param name="diskImage"> diskImage value. </param>
-        /// <param name="createdOn"> createdAt value. </param>
-        /// <param name="updatedOn"> updatedAt value. </param>
-        /// <returns> A new <see cref="ContainerApps.Sandbox.DiskImageOperationResponse"/> instance for mocking. </returns>
-        public static DiskImageOperationResponse DiskImageOperationResponse(string operationId = default, AsyncOperationStatus status = default, string errorMessage = default, DiskImage diskImage = default, DateTimeOffset createdOn = default, DateTimeOffset updatedOn = default)
-        {
-            return new DiskImageOperationResponse(
-                operationId,
-                status,
-                errorMessage,
-                diskImage,
-                createdOn,
-                updatedOn,
-                additionalBinaryDataProperties: null);
-        }
-
         /// <summary> PublicDiskImage wire model. </summary>
         /// <param name="name"> name value. </param>
         /// <param name="status"> status value. </param>

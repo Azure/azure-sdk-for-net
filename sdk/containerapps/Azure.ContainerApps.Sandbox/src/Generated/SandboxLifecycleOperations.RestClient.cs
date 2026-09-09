@@ -14,11 +14,8 @@ namespace Azure.ContainerApps.Sandbox
     public partial class SandboxLifecycleOperations
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
-        private static ResponseClassifier _pipelineMessageClassifier202;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
-
-        private static ResponseClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 ??= new StatusCodeClassifier(stackalloc ushort[] { 202 });
 
         internal HttpMessage CreateGetSandboxesCountRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, RequestContext context)
         {
@@ -250,31 +247,6 @@ namespace Azure.ContainerApps.Sandbox
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
             HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
-            Request request = message.Request;
-            request.Uri = uri;
-            request.Method = RequestMethod.Post;
-            request.Headers.SetValue("Accept", "application/json");
-            return message;
-        }
-
-        internal HttpMessage CreatePostSandboxStopAsyncRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, RequestContext context)
-        {
-            RawRequestUriBuilder uri = new RawRequestUriBuilder();
-            uri.Reset(_endpoint);
-            uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
-            uri.AppendPath("/resourceGroups/", false);
-            uri.AppendPath(resourceGroupName, true);
-            uri.AppendPath("/sandboxGroups/", false);
-            uri.AppendPath(sandboxGroupName, true);
-            uri.AppendPath("/sandboxes/", false);
-            uri.AppendPath(id, true);
-            uri.AppendPath("/stop/async", false);
-            if (_apiVersion != null)
-            {
-                uri.AppendQuery("api-version", _apiVersion, true);
-            }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Post;

@@ -15,13 +15,13 @@ namespace Azure.ContainerApps.Sandbox
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
         private static ResponseClassifier _pipelineMessageClassifier201;
-        private static ResponseClassifier _pipelineMessageClassifier202204;
+        private static ResponseClassifier _pipelineMessageClassifier204;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
         private static ResponseClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= new StatusCodeClassifier(stackalloc ushort[] { 201 });
 
-        private static ResponseClassifier PipelineMessageClassifier202204 => _pipelineMessageClassifier202204 ??= new StatusCodeClassifier(stackalloc ushort[] { 202, 204 });
+        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
         internal HttpMessage CreateDeleteContentPackageRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, RequestContext context)
         {
@@ -39,7 +39,7 @@ namespace Azure.ContainerApps.Sandbox
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202204);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;

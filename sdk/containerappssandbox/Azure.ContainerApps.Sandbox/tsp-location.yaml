@@ -1,6 +1,0 @@
-directory: specification/app/data-plane/ContainerApps
-commit: a3b8fe116a74f8c7bc85ef3390f38b4a4da3f9fc
-repo: Azure/azure-rest-api-specs
-additionalDirectories: 
-
-emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-emitter-package.json

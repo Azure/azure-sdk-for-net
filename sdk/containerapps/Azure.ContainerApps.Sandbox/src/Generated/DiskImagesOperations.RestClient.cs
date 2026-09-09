@@ -11,16 +11,16 @@ using Azure.Core;
 namespace Azure.ContainerApps.Sandbox
 {
     /// <summary></summary>
-    public partial class SnapshotsOperations
+    public partial class DiskImagesOperations
     {
         private static ResponseClassifier _pipelineMessageClassifier200;
-        private static ResponseClassifier _pipelineMessageClassifier202204;
+        private static ResponseClassifier _pipelineMessageClassifier204;
 
         private static ResponseClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
 
-        private static ResponseClassifier PipelineMessageClassifier202204 => _pipelineMessageClassifier202204 ??= new StatusCodeClassifier(stackalloc ushort[] { 202, 204 });
+        private static ResponseClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= new StatusCodeClassifier(stackalloc ushort[] { 204 });
 
-        internal HttpMessage CreateDeleteSnapshotRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, RequestContext context)
+        internal HttpMessage CreateDeleteDiskImageRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -30,20 +30,20 @@ namespace Azure.ContainerApps.Sandbox
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
             uri.AppendPath(sandboxGroupName, true);
-            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath("/diskimages/", false);
             uri.AppendPath(id, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
             }
-            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier202204);
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier204);
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Delete;
             return message;
         }
 
-        internal HttpMessage CreateGetSnapshotsRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, int? page, int? pageSize, string labels, RequestContext context)
+        internal HttpMessage CreateGetDiskImagesRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, int? page, int? pageSize, string labels, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -53,7 +53,7 @@ namespace Azure.ContainerApps.Sandbox
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
             uri.AppendPath(sandboxGroupName, true);
-            uri.AppendPath("/snapshots", false);
+            uri.AppendPath("/diskimages", false);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -78,7 +78,7 @@ namespace Azure.ContainerApps.Sandbox
             return message;
         }
 
-        internal HttpMessage CreateGetSnapshotsCountRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, RequestContext context)
+        internal HttpMessage CreateGetDiskImagesPublicRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, int? page, int? pageSize, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -88,7 +88,39 @@ namespace Azure.ContainerApps.Sandbox
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
             uri.AppendPath(sandboxGroupName, true);
-            uri.AppendPath("/snapshots/count", false);
+            uri.AppendPath("/diskimages/public", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            if (page != null)
+            {
+                uri.AppendQuery("page", TypeFormatters.ConvertToString(page), true);
+            }
+            if (pageSize != null)
+            {
+                uri.AppendQuery("pageSize", TypeFormatters.ConvertToString(pageSize), true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Get;
+            request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreateGetDiskImagePublicRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string name, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/sandboxGroups/", false);
+            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath("/diskimages/public/", false);
+            uri.AppendPath(name, true);
             if (_apiVersion != null)
             {
                 uri.AppendQuery("api-version", _apiVersion, true);
@@ -97,11 +129,11 @@ namespace Azure.ContainerApps.Sandbox
             Request request = message.Request;
             request.Uri = uri;
             request.Method = RequestMethod.Get;
-            request.Headers.SetValue("Accept", "text/plain");
+            request.Headers.SetValue("Accept", "application/json");
             return message;
         }
 
-        internal HttpMessage CreateGetSnapshotRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, RequestContext context)
+        internal HttpMessage CreateGetDiskImageRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
@@ -111,7 +143,7 @@ namespace Azure.ContainerApps.Sandbox
             uri.AppendPath(resourceGroupName, true);
             uri.AppendPath("/sandboxGroups/", false);
             uri.AppendPath(sandboxGroupName, true);
-            uri.AppendPath("/snapshots/", false);
+            uri.AppendPath("/diskimages/", false);
             uri.AppendPath(id, true);
             if (_apiVersion != null)
             {
@@ -122,6 +154,31 @@ namespace Azure.ContainerApps.Sandbox
             request.Uri = uri;
             request.Method = RequestMethod.Get;
             request.Headers.SetValue("Accept", "application/json");
+            return message;
+        }
+
+        internal HttpMessage CreatePutDiskImageRequest(string subscriptionId, string resourceGroupName, string sandboxGroupName, RequestContent content, RequestContext context)
+        {
+            RawRequestUriBuilder uri = new RawRequestUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/subscriptions/", false);
+            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath("/resourceGroups/", false);
+            uri.AppendPath(resourceGroupName, true);
+            uri.AppendPath("/sandboxGroups/", false);
+            uri.AppendPath(sandboxGroupName, true);
+            uri.AppendPath("/diskimages", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            HttpMessage message = Pipeline.CreateMessage(context, PipelineMessageClassifier200);
+            Request request = message.Request;
+            request.Uri = uri;
+            request.Method = RequestMethod.Put;
+            request.Headers.SetValue("Content-Type", "application/json");
+            request.Headers.SetValue("Accept", "application/json");
+            request.Content = content;
             return message;
         }
     }

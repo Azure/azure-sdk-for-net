@@ -58,7 +58,6 @@ namespace Azure.ContainerApps.Sandbox
     [ModelReaderWriterBuildable(typeof(DirListingResponse))]
     [ModelReaderWriterBuildable(typeof(DiskImage))]
     [ModelReaderWriterBuildable(typeof(DiskImageImage))]
-    [ModelReaderWriterBuildable(typeof(DiskImageOperationResponse))]
     [ModelReaderWriterBuildable(typeof(DiskImageStatus))]
     [ModelReaderWriterBuildable(typeof(DiskStatsEntry))]
     [ModelReaderWriterBuildable(typeof(DownloadContentPackageToSandboxContent))]
