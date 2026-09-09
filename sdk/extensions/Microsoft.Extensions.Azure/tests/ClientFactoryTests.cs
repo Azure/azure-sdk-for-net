@@ -259,7 +259,7 @@ namespace Azure.Core.Extensions.Tests
 
             Assert.That(
                 () => ClientFactory.CreateCredential(configuration),
-                Throws.ArgumentException.With.Message.Contains("mutually exclusive"));
+                Throws.ArgumentException.With.Message.EqualTo("For Client Certificates, only one of 'clientCertificate' or 'clientCertificateSubject' can be specified."));
         }
 
         [Test]

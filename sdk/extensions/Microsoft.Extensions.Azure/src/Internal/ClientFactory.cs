@@ -257,7 +257,7 @@ namespace Microsoft.Extensions.Azure
             bool findCertificateBySubject = !string.IsNullOrWhiteSpace(certificateSubject);
             if (findCertificateByThumbprint && findCertificateBySubject)
             {
-                throw new ArgumentException("'clientCertificate' and 'clientCertificateSubject' are mutually exclusive.");
+                throw new ArgumentException("For Client Certificates, only one of 'clientCertificate' or 'clientCertificateSubject' can be specified.");
             }
 
             if (!string.IsNullOrWhiteSpace(tenantId) &&
