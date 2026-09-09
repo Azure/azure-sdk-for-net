@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Enable AOT compatibility validation for Azure Monitor OpenTelemetry Exporter
+  ([#62850](https://github.com/Azure/azure-sdk-for-net/pull/62850))
+
 ### Breaking Changes
 
 ### Bugs Fixed
