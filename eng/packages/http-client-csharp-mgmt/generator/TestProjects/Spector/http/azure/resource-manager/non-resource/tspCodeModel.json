@@ -8,6 +8,9 @@
       "$id": "1",
       "kind": "enum",
       "name": "Versions",
+      "apiVersions": [
+        "2023-12-01-preview"
+      ],
       "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.Versions",
       "valueType": {
         "$id": "2",
@@ -100,6 +103,9 @@
       "$id": "10",
       "kind": "model",
       "name": "NonResource",
+      "apiVersions": [
+        "2023-12-01-preview"
+      ],
       "namespace": "Azure.ResourceManager.NonResource",
       "crossLanguageDefinitionId": "Azure.ResourceManager.NonResource.NonResource",
       "usage": "Input,Output,Json",
@@ -121,6 +127,9 @@
           "$id": "11",
           "kind": "property",
           "name": "id",
+          "apiVersions": [
+            "2023-12-01-preview"
+          ],
           "serializedName": "id",
           "doc": "An id.",
           "type": {
@@ -148,6 +157,9 @@
           "$id": "13",
           "kind": "property",
           "name": "name",
+          "apiVersions": [
+            "2023-12-01-preview"
+          ],
           "serializedName": "name",
           "doc": "A name.",
           "type": {
@@ -175,6 +187,9 @@
           "$id": "15",
           "kind": "property",
           "name": "type",
+          "apiVersions": [
+            "2023-12-01-preview"
+          ],
           "serializedName": "type",
           "doc": "A type.",
           "type": {
@@ -204,6 +219,12 @@
       "$id": "17",
       "kind": "model",
       "name": "ErrorResponse",
+      "apiVersions": [
+        "v3",
+        "v4",
+        "v5",
+        "v6"
+      ],
       "namespace": "Azure.ResourceManager.CommonTypes",
       "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorResponse",
       "usage": "Json,Exception",
@@ -221,12 +242,24 @@
           "$id": "18",
           "kind": "property",
           "name": "error",
+          "apiVersions": [
+            "v3",
+            "v4",
+            "v5",
+            "v6"
+          ],
           "serializedName": "error",
           "doc": "The error object.",
           "type": {
             "$id": "19",
             "kind": "model",
             "name": "ErrorDetail",
+            "apiVersions": [
+              "v3",
+              "v4",
+              "v5",
+              "v6"
+            ],
             "namespace": "Azure.ResourceManager.CommonTypes",
             "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorDetail",
             "usage": "Json,Exception",
@@ -243,6 +276,12 @@
                 "$id": "20",
                 "kind": "property",
                 "name": "code",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "code",
                 "doc": "The error code.",
                 "type": {
@@ -270,6 +309,12 @@
                 "$id": "22",
                 "kind": "property",
                 "name": "message",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "message",
                 "doc": "The error message.",
                 "type": {
@@ -297,6 +342,12 @@
                 "$id": "24",
                 "kind": "property",
                 "name": "target",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "target",
                 "doc": "The error target.",
                 "type": {
@@ -324,6 +375,12 @@
                 "$id": "26",
                 "kind": "property",
                 "name": "details",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "details",
                 "doc": "The error details.",
                 "type": {
@@ -354,6 +411,12 @@
                 "$id": "28",
                 "kind": "property",
                 "name": "additionalInfo",
+                "apiVersions": [
+                  "v3",
+                  "v4",
+                  "v5",
+                  "v6"
+                ],
                 "serializedName": "additionalInfo",
                 "doc": "The error additional info.",
                 "type": {
@@ -364,6 +427,12 @@
                     "$id": "30",
                     "kind": "model",
                     "name": "ErrorAdditionalInfo",
+                    "apiVersions": [
+                      "v3",
+                      "v4",
+                      "v5",
+                      "v6"
+                    ],
                     "namespace": "Azure.ResourceManager.CommonTypes",
                     "crossLanguageDefinitionId": "Azure.ResourceManager.CommonTypes.ErrorAdditionalInfo",
                     "usage": "Json,Exception",
@@ -380,6 +449,12 @@
                         "$id": "31",
                         "kind": "property",
                         "name": "type",
+                        "apiVersions": [
+                          "v3",
+                          "v4",
+                          "v5",
+                          "v6"
+                        ],
                         "serializedName": "type",
                         "doc": "The additional info type.",
                         "type": {
@@ -407,6 +482,12 @@
                         "$id": "33",
                         "kind": "property",
                         "name": "info",
+                        "apiVersions": [
+                          "v3",
+                          "v4",
+                          "v5",
+                          "v6"
+                        ],
                         "serializedName": "info",
                         "doc": "The additional info.",
                         "type": {
