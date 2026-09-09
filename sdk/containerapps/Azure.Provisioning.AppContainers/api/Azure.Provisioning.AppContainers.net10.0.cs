@@ -1956,7 +1956,7 @@ namespace Azure.Provisioning.AppContainers
         public Azure.Provisioning.BicepValue<string> BlobContainerUri { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ClientId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<bool> IsEnabled { get { throw null; } set { } }
-        public Azure.Provisioning.BicepValue<string> ManagedIdentityResourceId { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> ManagedIdentityResourceId { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<double> TokenRefreshExtensionHours { get { throw null; } set { } }
         protected override void DefineProvisionableProperties() { }
     }

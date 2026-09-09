@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="location"> The Azure region in which the environment mode is available. </param>
         /// <param name="properties"> The environment mode details. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerAppAvailableEnvironmentMode(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string location, ContainerAppAvailableEnvironmentModeProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
+        internal ContainerAppAvailableEnvironmentMode(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, AzureLocation? location, ContainerAppAvailableEnvironmentModeProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData)
         {
             Location = location;
             Properties = properties;
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> The Azure region in which the environment mode is available. </summary>
         [WirePath("location")]
-        public string Location { get; }
+        public AzureLocation? Location { get; }
 
         /// <summary> The environment mode details. </summary>
         [WirePath("properties")]

@@ -1937,7 +1937,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="clientId"> The Client ID of a User-Assigned Managed Identity. Should not be used along with managedIdentityResourceId. </param>
         /// <param name="managedIdentityResourceId"> The Resource ID of a User-Assigned Managed Identity. Should not be used along with clientId. </param>
         /// <returns> A new <see cref="Models.ContainerAppTokenStore"/> instance for mocking. </returns>
-        public static ContainerAppTokenStore ContainerAppTokenStore(bool? isEnabled = default, double? tokenRefreshExtensionHours = default, string azureBlobStorageSasUrlSettingName = default, string blobContainerUri = default, string clientId = default, string managedIdentityResourceId = default)
+        public static ContainerAppTokenStore ContainerAppTokenStore(bool? isEnabled = default, double? tokenRefreshExtensionHours = default, string azureBlobStorageSasUrlSettingName = default, string blobContainerUri = default, string clientId = default, ResourceIdentifier managedIdentityResourceId = default)
         {
             return new ContainerAppTokenStore(isEnabled, tokenRefreshExtensionHours, azureBlobStorageSasUrlSettingName is null && blobContainerUri is null && clientId is null && managedIdentityResourceId is null ? default : new BlobStorageTokenStore(azureBlobStorageSasUrlSettingName, blobContainerUri, clientId, managedIdentityResourceId, default), default);
         }
@@ -3365,7 +3365,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="location"> The Azure region in which the environment mode is available. </param>
         /// <param name="properties"> The environment mode details. </param>
         /// <returns> A new <see cref="Models.ContainerAppAvailableEnvironmentMode"/> instance for mocking. </returns>
-        public static ContainerAppAvailableEnvironmentMode ContainerAppAvailableEnvironmentMode(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string location = default, ContainerAppAvailableEnvironmentModeProperties properties = default)
+        public static ContainerAppAvailableEnvironmentMode ContainerAppAvailableEnvironmentMode(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, ContainerAppAvailableEnvironmentModeProperties properties = default)
         {
             return new ContainerAppAvailableEnvironmentMode(
                 id,
