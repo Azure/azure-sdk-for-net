@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
@@ -14,20 +15,18 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.AppConfiguration
 {
-    /// <summary> The replica resource. </summary>
-    public partial class AppConfigurationReplica : ProvisionableResource
+    /// <summary> Deleted configuration store information with extended details. </summary>
+    public partial class DeletedAppConfigurationStore : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private ReplicaProperties _properties;
-        private BicepValue<AzureLocation> _location;
-        private ResourceReference<AppConfigurationStore> _parent;
+        private DeletedConfigurationStoreProperties _properties;
 
-        /// <summary> Creates a new AppConfigurationReplica. </summary>
+        /// <summary> Creates a new DeletedAppConfigurationStore. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public AppConfigurationReplica(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.AppConfiguration/configurationStores/replicas", resourceVersion ?? "2025-08-01-preview")
+        internal DeletedAppConfigurationStore(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.AppConfiguration/locations/deletedConfigurationStores", resourceVersion ?? "2025-08-01-preview")
         {
         }
 
@@ -66,107 +65,98 @@ namespace Azure.Provisioning.AppConfiguration
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        internal ReplicaProperties Properties
+        /// <summary> Gets the Properties. </summary>
+        internal DeletedConfigurationStoreProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
             }
-            set
+        }
+
+        /// <summary> Gets the ConfigurationStoreId. </summary>
+        public BicepValue<ResourceIdentifier> ConfigurationStoreId
+        {
+            get
             {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
+                return Properties is null ? default : Properties.ConfigurationStoreId;
             }
         }
 
-        /// <summary> Gets or sets the Location. </summary>
+        /// <summary> Gets the Location. </summary>
         public BicepValue<AzureLocation> Location
         {
             get
             {
-                Initialize();
-                return _location;
-            }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
+                return Properties is null ? default : Properties.Location;
             }
         }
 
-        /// <summary> Gets or sets the Parent. </summary>
-        public AppConfigurationStore Parent
+        /// <summary> Gets the DeletedOn. </summary>
+        public BicepValue<DateTimeOffset> DeletedOn
         {
             get
             {
-                Initialize();
-                return _parent.Value;
-            }
-            set
-            {
-                Initialize();
-                _parent.Value = value;
+                return Properties is null ? default : Properties.DeletedOn;
             }
         }
 
-        /// <summary> Gets the Endpoint. </summary>
-        public BicepValue<string> Endpoint
+        /// <summary> Gets the ScheduledPurgeOn. </summary>
+        public BicepValue<DateTimeOffset> ScheduledPurgeOn
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new ReplicaProperties();
-                }
-                return Properties.Endpoint;
+                return Properties is null ? default : Properties.ScheduledPurgeOn;
             }
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<AppConfigurationReplicaProvisioningState> ProvisioningState
+        /// <summary> Gets the Tags. </summary>
+        public BicepDictionary<string> Tags
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new ReplicaProperties();
-                }
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.Tags;
             }
         }
 
-        /// <summary> Define all the provisionable properties for AppConfigurationReplica. </summary>
+        /// <summary> Gets the IsPurgeProtectionEnabled. </summary>
+        public BicepValue<bool> IsPurgeProtectionEnabled
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsPurgeProtectionEnabled;
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for DeletedAppConfigurationStore. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<ReplicaProperties>(nameof(Properties), new string[] { "properties" });
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
-            _parent = DefineResource<AppConfigurationStore>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _properties = DefineModelProperty<DeletedConfigurationStoreProperties>(nameof(Properties), new string[] { "properties" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing AppConfigurationReplica. </summary>
+        /// <summary> Creates a reference to an existing DeletedAppConfigurationStore. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static AppConfigurationReplica FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static DeletedAppConfigurationStore FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            AppConfigurationReplica result = new AppConfigurationReplica(bicepIdentifier, resourceVersion);
+            DeletedAppConfigurationStore result = new DeletedAppConfigurationStore(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for AppConfigurationReplica that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for DeletedAppConfigurationStore that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>
         /// <returns> Naming requirements. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 50, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers);
+        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(5, 50, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen | ResourceNameCharacters.Underscore);
 
         /// <summary></summary>
         public static partial class ResourceVersions

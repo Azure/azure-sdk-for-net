@@ -1,0 +1,4 @@
+directory: specification/appconfiguration/resource-manager/Microsoft.AppConfiguration/AppConfiguration
+commit: 17cfb8288439b1e6611a4f86f9120b7856a9c449
+repo: ArcturusZhang/azure-rest-api-specs
+emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json

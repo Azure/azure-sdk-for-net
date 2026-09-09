@@ -5,7 +5,6 @@
 
 #nullable disable
 
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Azure.Provisioning;
@@ -14,20 +13,19 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.AppConfiguration
 {
-    /// <summary> The replica resource. </summary>
-    public partial class AppConfigurationReplica : ProvisionableResource
+    /// <summary> A resource that supports private link capabilities. </summary>
+    public partial class AppConfigurationPrivateLinkResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private ReplicaProperties _properties;
-        private BicepValue<AzureLocation> _location;
+        private AppConfigurationPrivateLinkResourceProperties _properties;
         private ResourceReference<AppConfigurationStore> _parent;
 
-        /// <summary> Creates a new AppConfigurationReplica. </summary>
+        /// <summary> Creates a new AppConfigurationPrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public AppConfigurationReplica(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.AppConfiguration/configurationStores/replicas", resourceVersion ?? "2025-08-01-preview")
+        internal AppConfigurationPrivateLinkResource(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.AppConfiguration/configurationStores/privateLinkResources", resourceVersion ?? "2025-08-01-preview")
         {
         }
 
@@ -66,33 +64,13 @@ namespace Azure.Provisioning.AppConfiguration
             }
         }
 
-        /// <summary> Gets or sets the Properties. </summary>
-        internal ReplicaProperties Properties
+        /// <summary> Gets the Properties. </summary>
+        internal AppConfigurationPrivateLinkResourceProperties Properties
         {
             get
             {
                 Initialize();
                 return _properties;
-            }
-            set
-            {
-                Initialize();
-                AssignOrReplace(ref _properties, value);
-            }
-        }
-
-        /// <summary> Gets or sets the Location. </summary>
-        public BicepValue<AzureLocation> Location
-        {
-            get
-            {
-                Initialize();
-                return _location;
-            }
-            set
-            {
-                Initialize();
-                _location.Assign(value);
             }
         }
 
@@ -111,62 +89,57 @@ namespace Azure.Provisioning.AppConfiguration
             }
         }
 
-        /// <summary> Gets the Endpoint. </summary>
-        public BicepValue<string> Endpoint
+        /// <summary> Gets the GroupId. </summary>
+        public BicepValue<string> GroupId
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new ReplicaProperties();
-                }
-                return Properties.Endpoint;
+                return Properties is null ? default : Properties.GroupId;
             }
         }
 
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<AppConfigurationReplicaProvisioningState> ProvisioningState
+        /// <summary> Gets the RequiredMembers. </summary>
+        public BicepList<string> RequiredMembers
         {
             get
             {
-                if (Properties is null)
-                {
-                    Properties = new ReplicaProperties();
-                }
-                return Properties.ProvisioningState;
+                return Properties is null ? default : Properties.RequiredMembers;
             }
         }
 
-        /// <summary> Define all the provisionable properties for AppConfigurationReplica. </summary>
+        /// <summary> Gets the RequiredZoneNames. </summary>
+        public BicepList<string> RequiredZoneNames
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequiredZoneNames;
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for AppConfigurationPrivateLinkResource. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<ReplicaProperties>(nameof(Properties), new string[] { "properties" });
-            _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
+            _properties = DefineModelProperty<AppConfigurationPrivateLinkResourceProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<AppConfigurationStore>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing AppConfigurationReplica. </summary>
+        /// <summary> Creates a reference to an existing AppConfigurationPrivateLinkResource. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static AppConfigurationReplica FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static AppConfigurationPrivateLinkResource FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            AppConfigurationReplica result = new AppConfigurationReplica(bicepIdentifier, resourceVersion);
+            AppConfigurationPrivateLinkResource result = new AppConfigurationPrivateLinkResource(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for AppConfigurationReplica that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for AppConfigurationPrivateLinkResource that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
-
-        /// <summary> Get the requirements for naming this resource. </summary>
-        /// <returns> Naming requirements. </returns>
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public override ResourceNameRequirements GetResourceNameRequirements() => new ResourceNameRequirements(1, 50, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.UppercaseLetters | ResourceNameCharacters.Numbers);
 
         /// <summary></summary>
         public static partial class ResourceVersions
