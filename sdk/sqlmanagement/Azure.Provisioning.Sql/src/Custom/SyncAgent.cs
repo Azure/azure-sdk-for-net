@@ -1,10 +1,20 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
+using System;
+using System.ComponentModel;
+
 namespace Azure.Provisioning.Sql;
 
 public partial class SyncAgent
 {
+    /// <summary> Gets the ExpiresOn. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is deprecated and will be removed in a future version. Please use ExpiresOn instead.")]
+    public BicepValue<DateTimeOffset> ExpireOn => ExpiresOn;
+
     // Preserve API versions shipped by the reflection-based generator that are not emitted
     // by the TypeSpec-based generator when targeting only the current stable API version.
     public static partial class ResourceVersions

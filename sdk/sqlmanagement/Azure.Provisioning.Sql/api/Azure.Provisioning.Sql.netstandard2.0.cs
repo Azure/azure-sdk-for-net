@@ -4118,6 +4118,8 @@ namespace Azure.Provisioning.Sql
     public partial class SyncAgent : Azure.Provisioning.Primitives.ProvisionableResource
     {
         public SyncAgent(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
+        [System.ObsoleteAttribute("This property is deprecated and will be removed in a future version. Please use ExpiresOn instead.")]
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<bool> IsUpToDate { get { throw null; } }

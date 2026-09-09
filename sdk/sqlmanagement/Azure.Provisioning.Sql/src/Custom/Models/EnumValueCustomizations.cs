@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable disable
+
 using Microsoft.TypeSpec.Generator.Customizations;
 
 // Preserve enum ordinals from Azure.Provisioning.Sql 1.1.0. TypeSpec generation
