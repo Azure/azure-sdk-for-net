@@ -22,6 +22,7 @@ updates:
       - dependency-name: "@types/node"
       # Updated by a separate generator upgrade process
       - dependency-name: "@azure-typespec/http-client-csharp"
+      - dependency-name: "@azure-typespec/http-client-csharp-mgmt"
       - dependency-name: "@typespec/http-client-csharp"
     groups:
       typespec:
@@ -56,6 +57,7 @@ updates:
       - dependency-name: "@types/node"
       # Updated by a separate generator upgrade process
       - dependency-name: "@azure-typespec/http-client-csharp"
+      - dependency-name: "@azure-typespec/http-client-csharp-mgmt"
       - dependency-name: "@typespec/http-client-csharp"
     groups:
       typespec:
@@ -90,6 +92,7 @@ updates:
       - dependency-name: "@types/node"
       # Updated by a separate generator upgrade process
       - dependency-name: "@azure-typespec/http-client-csharp"
+      - dependency-name: "@azure-typespec/http-client-csharp-mgmt"
       - dependency-name: "@typespec/http-client-csharp"
     groups:
       typespec:
@@ -124,6 +127,7 @@ updates:
       - dependency-name: "@types/node"
       # Updated by a separate generator upgrade process
       - dependency-name: "@azure-typespec/http-client-csharp"
+      - dependency-name: "@azure-typespec/http-client-csharp-mgmt"
       - dependency-name: "@typespec/http-client-csharp"
     groups:
       typespec:
