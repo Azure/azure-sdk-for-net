@@ -3,6 +3,7 @@
 
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -28,10 +29,13 @@ The three cases below separate those costs:
   NoRedirectLearned  - the cache is empty. One volatile read, then straight through. This is what
                        the overwhelming majority of callers pay, because most ingestion endpoints
                        never issue a redirect.
-  RedirectLearned    - a redirect for this origin is cached. Pays the key materialization and the
-                       lock on every request.
-  RedirectLearnedOtherOrigin - a redirect is cached, but for a different origin. Worst case for the
-                       common path: full key cost and lock, and the lookup misses.
+  RedirectLearned    - a redirect for this origin is cached, so the request pays the key
+                       materialization, the lock, the trust check against the cached target, and the
+                       rewrite.
+  RedirectLearnedOtherOrigin - a redirect is cached, but for a different origin. Pays the key
+                       materialization and the lock, then misses and does no trust check. The gap
+                       between these two rows is therefore what the trust check and rewrite cost,
+                       and the gap from the baseline is what the key and lock cost.
 
 BuildRequestUri isolates the per-request builder allocation on its own.
 
@@ -43,18 +47,24 @@ Intel Xeon Platinum 8370C CPU 2.80GHz (Max: 2.79GHz), 1 CPU, 16 logical and 8 ph
 
 Job=MediumRun  IterationCount=15  LaunchCount=2  WarmupCount=10
 
-| Method                     | Mean      | Error     | StdDev     | Ratio | Gen0   | Allocated | Alloc Ratio |
-|--------------------------- |----------:|----------:|-----------:|------:|-------:|----------:|------------:|
-| NoRedirectLearned          | 465.50 ns | 44.309 ns |  66.320 ns |  1.02 | 0.0381 |     968 B |        1.00 |
-| RedirectLearned            | 925.80 ns | 69.305 ns | 101.586 ns |  2.02 | 0.0477 |    1216 B |        1.26 |
-| RedirectLearnedOtherOrigin | 615.15 ns | 30.883 ns |  45.268 ns |  1.34 | 0.0439 |    1112 B |        1.15 |
-| BuildRequestUri            |  55.98 ns |  2.447 ns |   3.587 ns |  0.12 | 0.0067 |     168 B |        0.17 |
+| Method                     | Mean        | Error      | StdDev     | Ratio | Gen0   | Allocated | Alloc Ratio |
+|--------------------------- |------------:|-----------:|-----------:|------:|-------:|----------:|------------:|
+| NoRedirectLearned          |   586.05 ns |  37.084 ns |  55.506 ns |  1.01 | 0.0467 |    1192 B |        1.00 |
+| RedirectLearned            | 1,145.17 ns | 114.137 ns | 170.835 ns |  1.97 | 0.0572 |    1440 B |        1.21 |
+| RedirectLearnedOtherOrigin |   759.45 ns |  77.354 ns | 115.780 ns |  1.31 | 0.0525 |    1336 B |        1.12 |
+| BuildRequestUri            |    64.72 ns |   5.728 ns |   8.395 ns |  0.11 | 0.0067 |     168 B |        0.14 |
 
 Reading these numbers: the transport is a no-op, so the whole of a real request is missing. An
-ingestion POST costs milliseconds. The 460 ns and 248 B that a learned redirect adds is therefore
-around 0.05% of a request that takes 1 ms, and the per-request builder that every caller pays
-regardless is 56 ns. Both are too small to be worth optimizing, which is the useful result: the
+ingestion POST costs milliseconds. The 559 ns and 248 B that a learned redirect adds is therefore
+around 0.06% of a request that takes 1 ms, and the per-request builder that every caller pays
+regardless is 65 ns. Both are too small to be worth optimizing, which is the useful result: the
 correctness fixes did not cost the single-tenant path anything that matters.
+
+Where that 559 ns goes is not where it first appears. RedirectLearnedOtherOrigin pays the key
+materialization and the lock in full and lands only 173 ns above the baseline, so the remaining
+386 ns belongs to IsTrustedIngestionRedirect and the rewrite, not to the lock. The trust check
+lower-cases two IdnHost values, which is also most of the 248 B. Anyone optimizing this should start
+there and not at the cache.
 
 One optimization was tried and rejected. The cache-hit path calls request.Uri.ToUri() twice, which
 looks like two Uri allocations. Hoisting it into a local left the allocated bytes byte-for-byte
@@ -121,19 +131,34 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
 
         /// <summary>
         /// Drives one real 307 through the policy so the cache holds an entry for <paramref name="origin"/>,
-        /// rather than reaching into the cache directly.
+        /// rather than reaching into the cache directly. Whether the entry is written depends on
+        /// production trust and header-parsing rules, and when it is not the policy simply carries on,
+        /// so the result is verified instead of assumed: an unwarmed pipeline would silently turn two
+        /// of the rows below into duplicates of the baseline.
         /// </summary>
         private static void WarmRedirectCache(HttpPipeline pipeline, RedirectOnceTransport transport, string origin)
         {
-            transport.RedirectNextRequest = true;
+            transport.ArmRedirect();
 
-            using var message = pipeline.CreateMessage();
-            message.Request.Method = RequestMethod.Post;
-            message.Request.Uri.Reset(new Uri(origin));
+            using (var message = pipeline.CreateMessage())
+            {
+                message.Request.Method = RequestMethod.Post;
+                message.Request.Uri.Reset(new Uri(origin));
 
-            pipeline.Send(message, CancellationToken.None);
+                pipeline.Send(message, CancellationToken.None);
+            }
 
-            transport.RedirectNextRequest = false;
+            using var probe = pipeline.CreateMessage();
+            probe.Request.Method = RequestMethod.Post;
+            probe.Request.Uri.Reset(new Uri(origin));
+
+            pipeline.Send(probe, CancellationToken.None);
+
+            if (probe.Request.Uri.ToUri().AbsoluteUri != RedirectTarget)
+            {
+                throw new InvalidOperationException(
+                    $"Redirect cache was not warmed for {origin}: the probe was sent to {probe.Request.Uri} instead of {RedirectTarget}.");
+            }
         }
 
         private static HttpPipeline BuildPipeline(out RedirectOnceTransport transport)
@@ -144,17 +169,19 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         }
 
         /// <summary>
-        /// Answers 307 once when asked to, and 200 otherwise, so no socket is involved.
+        /// Answers 307 once when armed, and 200 otherwise, so no socket is involved.
         /// </summary>
         private sealed class RedirectOnceTransport : HttpPipelineTransport
         {
-            internal bool RedirectNextRequest;
+            private int _redirectsRemaining;
+
+            internal void ArmRedirect() => _redirectsRemaining = 1;
 
             public override Request CreateRequest() => new MockRequest();
 
             public override void Process(HttpMessage message) => message.Response = BuildResponse();
 
-            public override System.Threading.Tasks.ValueTask ProcessAsync(HttpMessage message)
+            public override ValueTask ProcessAsync(HttpMessage message)
             {
                 message.Response = BuildResponse();
 
@@ -163,16 +190,20 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
 
             private MockResponse BuildResponse()
             {
-                if (!RedirectNextRequest)
+                if (_redirectsRemaining == 0)
                 {
-                    return new MockResponse(200);
+                    // Carries the cache directive because the policy reads it from the response that
+                    // completes the redirect, not from the 307 itself.
+                    var ok = new MockResponse(200);
+                    ok.AddHeader(new HttpHeader("Cache-Control", "max-age=3600"));
+
+                    return ok;
                 }
 
-                RedirectNextRequest = false;
+                _redirectsRemaining--;
 
                 var response = new MockResponse(307);
                 response.AddHeader(new HttpHeader("Location", RedirectTarget));
-                response.AddHeader(new HttpHeader("Cache-Control", "max-age=3600"));
 
                 return response;
             }

@@ -17,21 +17,31 @@ using OpenTelemetry;
 Measures the routed conversion against the single-tenant one, and how the routed path scales with
 the number of distinct ingestion endpoints in a batch.
 
-Two things are being separated:
+There is no single honest way to compare the two conversions, because the routing attributes are
+custom dimensions to one path and consumed input to the other. Both baselines are therefore measured:
 
-  SingleTenant / MultiTenant at EndpointCount=1 answers what routing costs per Activity when there
-  is nothing to group. The routed path skips the resource envelope and the schema counter, and adds
-  routing tag recognition, route validation and endpoint normalization.
+  SingleTenant_NoRoutingTags   - single-tenant on a batch carrying no routing attributes. This is
+                                 how single-tenant actually runs, and is the number to quote for the
+                                 existing product.
+  SingleTenant_WithRoutingTags - single-tenant on the same batch the routed path is given. The two
+                                 extra attributes fall through to unmapped tags and are serialized as
+                                 custom dimensions, work the routed path does not do.
+  MultiTenant                  - the routed conversion on that same batch.
 
-  MultiTenant across EndpointCount 1, 3 and 25 answers whether the grouping strategy holds up.
-  EndpointRouteBatch.GetOrAdd does an ordinal linear scan over the groups opened so far, which is
-  documented as beating a hash at the handful of regions a process is expected to talk to. At 25
-  endpoints a 512-Activity batch performs up to ~12,800 string comparisons, so this is where that
-  assumption is tested rather than assumed.
+MultiTenant against SingleTenant_WithRoutingTags is an upper bound on what routing costs, not an
+isolated measurement of it: any gap includes two custom dimensions per Activity that only the
+baseline pays. The gap between the two baselines is what those two dimensions cost on their own.
 
-SingleTenant is the baseline. It does not vary with EndpointCount - the routing tags are simply
-carried as ordinary custom dimensions - so its rows should be flat, and a non-flat result means the
-measurement is picking up noise rather than signal.
+GroupOnly isolates EndpointRouteBatch.GetOrAdd, whose ordinal linear scan over the groups opened so
+far is documented as beating a hash at the handful of regions a process is expected to talk to. The
+endpoint strings are built once in setup and indexed rather than formatted in the loop: formatting
+512 strings per iteration costs more than the thing being measured and puts its own garbage in the
+allocation column. Indexing also reproduces production, where TenantRouting.NormalizeEndpoint
+memoizes and hands GetOrAdd the same instance every time, so the ordinal comparison short-circuits
+on reference equality.
+
+Both SingleTenant rows are independent of EndpointCount, so their spread across the three parameter
+values is this harness's noise floor. Read nothing from a difference smaller than that spread.
 
 BenchmarkDotNet v0.15.8, Windows 11 (10.0.26200.9106/25H2/2025Update/HudsonValley2) (Hyper-V)
 Intel Xeon Platinum 8370C CPU 2.80GHz (Max: 2.79GHz), 1 CPU, 16 logical and 8 physical cores
@@ -41,42 +51,46 @@ Intel Xeon Platinum 8370C CPU 2.80GHz (Max: 2.79GHz), 1 CPU, 16 logical and 8 ph
 
 Job=MediumRun  IterationCount=15  LaunchCount=2  WarmupCount=10   BatchSize=512
 
-| Method       | EndpointCount | Mean      | Error      | StdDev     | Ratio | Allocated | Alloc Ratio |
-|------------- |-------------- |----------:|-----------:|-----------:|------:|----------:|------------:|
-| SingleTenant | 1             | 864.32 us | 122.343 us | 175.461 us |  1.04 | 748.25 KB |        1.00 |
-| MultiTenant  | 1             | 643.26 us |  14.872 us |  22.260 us |  0.77 |    740 KB |        0.99 |
-| GroupOnly    | 1             |  37.10 us |   1.887 us |   2.707 us |  0.04 |     72 KB |        0.10 |
-| SingleTenant | 3             | 739.64 us |  25.741 us |  37.730 us |  1.00 | 748.25 KB |        1.00 |
-| MultiTenant  | 3             | 654.11 us |  17.335 us |  24.861 us |  0.89 |    740 KB |        0.99 |
-| GroupOnly    | 3             |  36.87 us |   0.844 us |   1.211 us |  0.05 |     72 KB |        0.10 |
-| SingleTenant | 25            | 704.66 us |  18.792 us |  28.126 us |  1.00 | 748.25 KB |        1.00 |
-| MultiTenant  | 25            | 760.19 us |  69.319 us | 101.607 us |  1.08 |    740 KB |        0.99 |
-| GroupOnly    | 25            |  56.13 us |   2.303 us |   3.303 us |  0.08 |  74.36 KB |        0.10 |
+| Method                       | EndpointCount | Mean         | Error        | Ratio | Allocated |
+|----------------------------- |-------------- |-------------:|-------------:|------:|----------:|
+| SingleTenant_NoRoutingTags   | 1             | 643,799.5 ns | 34,496.91 ns | 1.006 |  766208 B |
+| SingleTenant_WithRoutingTags | 1             | 726,850.7 ns | 35,138.94 ns | 1.136 |  766208 B |
+| MultiTenant                  | 1             | 765,342.8 ns | 97,410.61 ns | 1.196 |  757760 B |
+| GroupOnly                    | 1             |     998.2 ns |     34.32 ns | 0.002 |       0 B |
+| SingleTenant_NoRoutingTags   | 3             | 658,007.1 ns | 68,808.27 ns | 1.020 |  766208 B |
+| SingleTenant_WithRoutingTags | 3             | 703,885.8 ns | 31,395.07 ns | 1.092 |  766208 B |
+| MultiTenant                  | 3             | 686,400.9 ns | 40,725.12 ns | 1.064 |  757760 B |
+| GroupOnly                    | 3             |   2,522.1 ns |    111.31 ns | 0.004 |       0 B |
+| SingleTenant_NoRoutingTags   | 25            | 588,613.8 ns | 13,589.76 ns | 1.000 |  766208 B |
+| SingleTenant_WithRoutingTags | 25            | 690,046.4 ns | 18,759.69 ns | 1.170 |  766208 B |
+| MultiTenant                  | 25            | 818,049.2 ns | 60,325.65 ns | 1.390 |  757760 B |
+| GroupOnly                    | 25            |  16,216.6 ns |    733.30 ns | 0.030 |       0 B |
 
 Reading these numbers:
 
-The baseline is not flat - 864, 740, 705 us for identical work - so anything below roughly 20% at
-this scale is noise. The 864 us row is the first benchmark executed and carries an error of 175 us.
-Treat the SingleTenant against MultiTenant comparison as directional only.
+The noise floor is about 12%: SingleTenant_NoRoutingTags does identical work in all three rows and
+came out 644, 658 and 589 us. Nothing below that is a result.
 
-Routing does not cost more per Activity. If anything it is slightly cheaper at one to three
-endpoints, which is explainable rather than surprising: the routed path skips the resource metric
-envelope and the schema type counter that the single-tenant path emits. Allocations differ by about
-1%, which is the same story.
+Grouping is linear in the endpoint count and allocates nothing. 998 ns, 2.5 us and 16.2 us for 512
+lookups is roughly 2, 5 and 32 ns per lookup against 1, 3 and 25 open groups, which is the ordinal
+scan doing exactly what a scan does. The zero in the allocation column is the useful part: it is
+direct evidence that the group and list pooling holds, with no garbage per export. In absolute terms
+16.2 us against 818 us of conversion is about 2% of a routed export at 25 endpoints, and a linear
+extrapolation to the 64-partition cap gives roughly 40 us, or 5%. The scan is not worth replacing;
+a hash would add an allocation to the one-to-three endpoint case that every deployment pays.
 
-Grouping is where the endpoint count actually shows. GroupOnly is flat from 1 to 3 endpoints and
-then rises by roughly half at 25, with tight error bars, which is the ordinal linear scan in
-EndpointRouteBatch.GetOrAdd behaving exactly as its comment predicts. Allocation stays flat
-(72 to 74 KB), so the pooling holds.
+Routing is not cheaper than single-tenant. The two extra custom dimensions cost the baseline 7 to
+17% (SingleTenant_WithRoutingTags against SingleTenant_NoRoutingTags), and once that bias is
+accounted for MultiTenant is within noise of its like-for-like partner at 1 and 3 endpoints and
+about 19% slower at 25, where grouping and route validation have grown. Against the realistic
+single-tenant workload, which carries no routing attributes at all, the routed path costs 4 to 39%
+more depending on endpoint count.
 
-Even so, grouping at 25 endpoints is about 56 us against roughly 700 us of conversion, so under a
-tenth of the export. Replacing the scan with a dictionary would recover a fraction of that while
-adding an allocation to the one-to-three endpoint case that every deployment pays, so the current
-design is the right trade at the supported scale. The partition cap is 64; the scan cost grows
-linearly, so 64 endpoints would be around 2.5 times the 25-endpoint figure, and that is the point
-at which this is worth revisiting.
+The one stable non-time result is allocation: MultiTenant allocates 757,760 B against 766,208 B,
+about 1% less, identically in all three parameter rows. That is the routed path consuming the two
+routing attributes instead of serializing them as custom dimensions, and it is consistent enough
+across rows to be believed where the timings are not.
 */
-
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
 {
     [MemoryDiagnoser]
@@ -91,8 +105,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
             serviceVersion: "1.0.0",
             monitorBaseData: null);
 
-        private Batch<Activity> _batch;
+        private Batch<Activity> _routedBatch;
+        private Batch<Activity> _plainBatch;
         private EndpointRouteBatch _routeBatch = null!;
+        private string[] _endpoints = null!;
 
         [Params(1, 3, 25)]
         public int EndpointCount { get; set; }
@@ -114,21 +130,23 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         [GlobalSetup]
         public void Setup()
         {
+            _endpoints = new string[EndpointCount];
+
+            for (int i = 0; i < EndpointCount; i++)
+            {
+                _endpoints[i] = string.Format(CultureInfo.InvariantCulture, "https://region{0}.in.applicationinsights.azure.com/", i);
+            }
+
             _routeBatch = new EndpointRouteBatch();
-            _batch = CreateBatch(BatchSize, EndpointCount);
+            _routedBatch = CreateBatch(BatchSize, withRoutingTags: true);
+            _plainBatch = CreateBatch(BatchSize, withRoutingTags: false);
         }
 
         [Benchmark(Baseline = true)]
-        public int SingleTenant()
-        {
-            var (telemetryItems, _) = TraceHelper.OtelToAzureMonitorTrace(
-                _batch,
-                s_resource,
-                InstrumentationKey,
-                sampleRate: 100F);
+        public int SingleTenant_NoRoutingTags() => ConvertSingleTenant(_plainBatch);
 
-            return telemetryItems.Count;
-        }
+        [Benchmark]
+        public int SingleTenant_WithRoutingTags() => ConvertSingleTenant(_routedBatch);
 
         [Benchmark]
         public int MultiTenant()
@@ -136,7 +154,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
             _routeBatch.Reset();
 
             TraceHelper.OtelToAzureMonitorTraceMultiTenant(
-                _batch,
+                _routedBatch,
                 s_resource,
                 sampleRate: 100F,
                 _routeBatch);
@@ -144,10 +162,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
             return _routeBatch.Count;
         }
 
-        /// <summary>
-        /// Grouping on its own, with no conversion, so the linear scan is not hidden behind the
-        /// per-Activity conversion cost.
-        /// </summary>
         [Benchmark]
         public int GroupOnly()
         {
@@ -155,16 +169,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
 
             for (int i = 0; i < BatchSize; i++)
             {
-                _routeBatch.GetOrAdd(EndpointFor(i % EndpointCount));
+                _routeBatch.GetOrAdd(_endpoints[i % EndpointCount]);
             }
 
             return _routeBatch.Count;
         }
 
-        private static string EndpointFor(int index)
-            => string.Format(CultureInfo.InvariantCulture, "https://region{0}.in.applicationinsights.azure.com/", index);
+        private static int ConvertSingleTenant(Batch<Activity> batch)
+        {
+            var (telemetryItems, _) = TraceHelper.OtelToAzureMonitorTrace(
+                batch,
+                s_resource,
+                InstrumentationKey,
+                sampleRate: 100F);
 
-        private static Batch<Activity> CreateBatch(int size, int endpointCount)
+            return telemetryItems.Count;
+        }
+
+        private Batch<Activity> CreateBatch(int size, bool withRoutingTags)
         {
             var activitySource = new ActivitySource(nameof(MultiTenantExportBenchmarks));
             var activities = new Activity[size];
@@ -181,12 +203,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
                     [SemanticConventions.AttributeHttpRoute] = "api/{id}",
                     [SemanticConventions.AttributeHttpResponseStatusCode] = 200,
                     ["custom.tenant"] = "contoso",
-
-                    // The routing contract. On the single-tenant path these are not recognized and
-                    // simply become custom dimensions, which is what makes the baseline comparable.
-                    [SemanticConventions.AttributeMicrosoftInstrumentationKey] = InstrumentationKey,
-                    [SemanticConventions.AttributeMicrosoftIngestionEndpoint] = EndpointFor(i % endpointCount),
                 };
+
+                if (withRoutingTags)
+                {
+                    tags[SemanticConventions.AttributeMicrosoftInstrumentationKey] = InstrumentationKey;
+                    tags[SemanticConventions.AttributeMicrosoftIngestionEndpoint] = _endpoints[i % EndpointCount];
+                }
 
                 var startTimestamp = DateTime.UtcNow;
 
