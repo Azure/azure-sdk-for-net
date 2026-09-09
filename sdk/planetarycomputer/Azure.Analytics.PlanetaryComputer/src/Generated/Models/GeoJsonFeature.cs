@@ -21,7 +21,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="geometry"> Geometry object defining the feature's shape. </param>
         /// <param name="type"> GeoJSON type identifier for Feature. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="geometry"/> is null. </exception>
-        public GeoJsonFeature(GeoJsonGeometry geometry, FeatureType @type)
+        public GeoJsonFeature(GeoJsonGeometry geometry, FeatureKind @type)
         {
             Argument.AssertNotNull(geometry, nameof(geometry));
 
@@ -35,7 +35,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="type"> GeoJSON type identifier for Feature. </param>
         /// <param name="properties"> Feature properties. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GeoJsonFeature(GeoJsonGeometry geometry, FeatureType @type, IDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GeoJsonFeature(GeoJsonGeometry geometry, FeatureKind @type, IDictionary<string, BinaryData> properties, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Geometry = geometry;
             Type = @type;
@@ -47,7 +47,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public GeoJsonGeometry Geometry { get; }
 
         /// <summary> GeoJSON type identifier for Feature. </summary>
-        public FeatureType Type { get; }
+        public FeatureKind Type { get; }
 
         /// <summary>
         /// Feature properties

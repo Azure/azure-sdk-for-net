@@ -5,6 +5,7 @@ using System;
 
 namespace Azure.AI.Agents.Persistent;
 
+/// <summary> Represents a streaming update to a text annotation within a message content part. </summary>
 public class TextAnnotationUpdate
 {
     /// <summary>

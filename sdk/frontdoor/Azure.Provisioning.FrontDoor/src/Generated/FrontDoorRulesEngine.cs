@@ -82,19 +82,6 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets the ResourceState. </summary>
-        public BicepValue<FrontDoorResourceState> ResourceState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new RulesEngineProperties();
-                }
-                return Properties.ResourceState;
-            }
-        }
-
         /// <summary> Gets or sets the Rules. </summary>
         public BicepList<RulesEngineRule> Rules
         {
@@ -112,6 +99,19 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
+        /// <summary> Gets the ResourceState. </summary>
+        public BicepValue<FrontDoorResourceState> ResourceState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new RulesEngineProperties();
+                }
+                return Properties.ResourceState;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for FrontDoorRulesEngine. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -119,7 +119,7 @@ namespace Azure.Provisioning.FrontDoor
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _properties = DefineModelProperty<RulesEngineProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<FrontDoorResource>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<FrontDoorResource>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

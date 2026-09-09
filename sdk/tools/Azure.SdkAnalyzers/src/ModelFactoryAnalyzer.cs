@@ -79,7 +79,10 @@ namespace Azure.SdkAnalyzers
                     continue;
                 }
 
-                if (!modelFactoryMethods.Contains(outputModel))
+                // An open generic factory method is recorded by its original definition, which a
+                // constructed output model only matches after the same normalization.
+                if (!modelFactoryMethods.Contains(outputModel) &&
+                    !modelFactoryMethods.Contains(outputModel.OriginalDefinition))
                 {
                     // Find a location to report the diagnostic - use the first location of the type
                     var location = outputModel.Locations.FirstOrDefault();
@@ -141,6 +144,16 @@ namespace Azure.SdkAnalyzers
                 {
                     // Add the return type of the factory method
                     modelFactoryMethods.Add(method.ReturnType);
+
+                    // A generic factory method's return type is constructed from the method's own
+                    // type parameters (Foo<TMethod>), a different symbol than the output model's
+                    // construction (Foo<Bar>); both normalize to the same original definition.
+                    // Non-generic methods keep only their exact (possibly closed) return type so a
+                    // factory for Foo<string> still fails to satisfy Foo<int>.
+                    if (method.IsGenericMethod)
+                    {
+                        modelFactoryMethods.Add(method.ReturnType.OriginalDefinition);
+                    }
                 }
             }
         }

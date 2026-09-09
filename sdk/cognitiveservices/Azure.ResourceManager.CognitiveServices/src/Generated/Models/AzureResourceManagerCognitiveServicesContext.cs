@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.CognitiveServices.Models;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -112,6 +113,7 @@ namespace Azure.ResourceManager.CognitiveServices
     [ModelReaderWriterBuildable(typeof(CognitiveServicesPrivateLinkResourceListResult))]
     [ModelReaderWriterBuildable(typeof(CognitiveServicesPrivateLinkResourceProperties))]
     [ModelReaderWriterBuildable(typeof(CognitiveServicesPrivateLinkServiceConnectionState))]
+    [ModelReaderWriterBuildable(typeof(CognitiveServicesProjectCapabilityHostResource))]
     [ModelReaderWriterBuildable(typeof(CognitiveServicesProjectConnectionResource))]
     [ModelReaderWriterBuildable(typeof(CognitiveServicesProjectData))]
     [ModelReaderWriterBuildable(typeof(CognitiveServicesProjectProperties))]
@@ -233,6 +235,7 @@ namespace Azure.ResourceManager.CognitiveServices
     [ModelReaderWriterBuildable(typeof(RaiTopicResult))]
     [ModelReaderWriterBuildable(typeof(RegenerateServiceAccountKeyContent))]
     [ModelReaderWriterBuildable(typeof(ResourceSkuListResult))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SASAuthTypeConnectionProperties))]
     [ModelReaderWriterBuildable(typeof(ServiceAccountApiKeys))]
     [ModelReaderWriterBuildable(typeof(ServiceAccountApiProperties))]
@@ -249,6 +252,7 @@ namespace Azure.ResourceManager.CognitiveServices
     [ModelReaderWriterBuildable(typeof(ServiceTagOutboundRule))]
     [ModelReaderWriterBuildable(typeof(ServiceTagOutboundRuleDestination))]
     [ModelReaderWriterBuildable(typeof(SkuAvailabilityListResult))]
+    [ModelReaderWriterBuildable(typeof(SubResource))]
     [ModelReaderWriterBuildable(typeof(SubscriptionRaiPolicyResource))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(UnknownCognitiveServicesAgentDeploymentProperties))]

@@ -58,7 +58,8 @@ namespace Azure.ResourceManager.SecurityInsights
                     yield break;
                 }
                 IncidentTaskList result = IncidentTaskList.FromResponse(response);
-                nextPage = result.NextLink;
+                string nextPageString = result.NextLink;
+                nextPage = string.IsNullOrEmpty(nextPageString) ? null : new Uri(nextPageString, UriKind.RelativeOrAbsolute);
                 yield return Page<SecurityInsightsIncidentTaskData>.FromValues((IReadOnlyList<SecurityInsightsIncidentTaskData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {

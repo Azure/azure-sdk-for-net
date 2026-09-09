@@ -3,8 +3,15 @@
 
 namespace Azure.Provisioning.Expressions;
 
+/// <summary>
+/// Represents a Bicep array expression.
+/// </summary>
+/// <param name="values">The array element expressions.</param>
 public class ArrayExpression(params BicepExpression[] values) : BicepExpression
 {
+    /// <summary>
+    /// Gets the array element expressions.
+    /// </summary>
     public BicepExpression[] Values { get; } = values;
     internal override BicepWriter Write(BicepWriter writer)
     {

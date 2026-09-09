@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.ContainerService.Models
         private const string LocalUserValue = "LocalUser";
         /// <summary> SSH service will be turned off on the node. </summary>
         private const string DisabledValue = "Disabled";
+        /// <summary> SSH to node with EntraId integration. More information can be found under https://aka.ms/aks/ssh/aad. </summary>
+        private const string EntraIdValue = "EntraId";
 
         /// <summary> Initializes a new instance of <see cref="AgentPoolSshAccess"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,6 +37,9 @@ namespace Azure.ResourceManager.ContainerService.Models
 
         /// <summary> SSH service will be turned off on the node. </summary>
         public static AgentPoolSshAccess Disabled { get; } = new AgentPoolSshAccess(DisabledValue);
+
+        /// <summary> SSH to node with EntraId integration. More information can be found under https://aka.ms/aks/ssh/aad. </summary>
+        public static AgentPoolSshAccess EntraId { get; } = new AgentPoolSshAccess(EntraIdValue);
 
         /// <summary> Determines if two <see cref="AgentPoolSshAccess"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

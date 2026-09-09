@@ -62,7 +62,10 @@ public class BicepList<T> :
         }
     }
 
-    // Move literal elements when assigning values to a list
+    /// <summary>
+    /// Assigns a source list to this instance, copying its literal or expression state.
+    /// </summary>
+    /// <param name="source">The source list to assign from.</param>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public void Assign(BicepList<T> source) => Assign((BicepValue)source);
     internal override void Assign(IBicepValue source)
@@ -142,8 +145,10 @@ public class BicepList<T> :
 
     private BicepValueReference? GetItemSelf(int index) =>
         _self is not null
-            ? new BicepListValueReference(_self.Construct, $"{_self.PropertyName}[{index}]", _self.BicepPath?.ToArray(), index)
+            ? new BicepListValueReference(_self.Construct, GetItemPropertyName(index), _self.BicepPath?.ToArray(), index)
             : null;
+
+    private string GetItemPropertyName(int index) => $"{_self!.PropertyName}[{index}]";
 
     private void SetSelfForItem(BicepValue<T> item, int index)
     {
@@ -151,11 +156,28 @@ public class BicepList<T> :
         item.SetSelf(itemSelf);
     }
 
+    private void ReindexSelfForItem(BicepValue<T> item, int index)
+    {
+        if (((IBicepValue)item).Self is BicepListValueReference self)
+        {
+            self.Index = index;
+            if (_self is not null)
+            {
+                self.PropertyName = GetItemPropertyName(index);
+            }
+        }
+        else
+        {
+            SetSelfForItem(item, index);
+        }
+    }
+
     private void RemoveSelfForItem(BicepValue<T> item)
     {
         item.SetSelf(null);
     }
 
+    /// <inheritdoc />
     public void Insert(int index, BicepValue<T> item)
     {
         if (_kind == BicepValueKind.Expression || _isOutput)
@@ -172,14 +194,11 @@ public class BicepList<T> :
         // update the _self for the inserted item and all items after it
         for (int i = index; i < _values.Count; i++)
         {
-            var self = ((IBicepValue)_values[i]).Self as BicepListValueReference;
-            if (self is not null)
-            {
-                self.Index = i;
-            }
+            ReindexSelfForItem(_values[i], i);
         }
     }
 
+    /// <inheritdoc />
     public void Add(BicepValue<T> item)
     {
         if (_kind == BicepValueKind.Expression || _isOutput)
@@ -197,6 +216,7 @@ public class BicepList<T> :
         SetSelfForItem(addedItem, _values.Count - 1);
     }
 
+    /// <inheritdoc />
     public void RemoveAt(int index)
     {
         if (_kind == BicepValueKind.Expression || _isOutput)
@@ -214,14 +234,11 @@ public class BicepList<T> :
         // update the _self for all items after the removed item
         for (int i = index; i < _values.Count; i++)
         {
-            var self = ((IBicepValue)_values[i]).Self as BicepListValueReference;
-            if (self is not null)
-            {
-                self.Index = i;
-            }
+            ReindexSelfForItem(_values[i], i);
         }
     }
 
+    /// <inheritdoc />
     public void Clear()
     {
         if (_kind == BicepValueKind.Expression || _isOutput)
@@ -239,6 +256,7 @@ public class BicepList<T> :
         _values.Clear();
     }
 
+    /// <inheritdoc />
     public bool Remove(BicepValue<T> item)
     {
         if (_kind == BicepValueKind.Expression || _isOutput)
@@ -258,11 +276,17 @@ public class BicepList<T> :
         return false;
     }
 
+    /// <inheritdoc />
     public int Count => _values.Count;
+    /// <inheritdoc />
     public bool IsReadOnly => _values.IsReadOnly;
+    /// <inheritdoc />
     public int IndexOf(BicepValue<T> item) => _values.IndexOf(item);
+    /// <inheritdoc />
     public bool Contains(BicepValue<T> item) => _values.Contains(item);
+    /// <inheritdoc />
     public void CopyTo(BicepValue<T>[] array, int arrayIndex) => _values.CopyTo(array, arrayIndex);
+    /// <inheritdoc />
     public IEnumerator<BicepValue<T>> GetEnumerator() => _values.GetEnumerator();
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)_values).GetEnumerator();
 
@@ -282,8 +306,8 @@ public class BicepList<T> :
         new(expression) { _referenceFactory = referenceFactory };
     private Func<BicepExpression, T>? _referenceFactory = null;
 
-    private protected override BicepExpression CompileLiteralValue()
+    private protected override BicepExpression CompileLiteralValue(string? format)
     {
-        return BicepSyntax.Array(_values.Select(v => v.Compile()).ToArray());
+        return BicepSyntax.Array(_values.Select(v => v.Compile(format)).ToArray());
     }
 }

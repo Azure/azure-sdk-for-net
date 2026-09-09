@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Base definition for asset references.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningIdAssetReference"/>, <see cref="MachineLearningDataPathAssetReference"/>, and <see cref="MachineLearningOutputPathAssetReference"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningIdAssetReference"/>, <see cref="MachineLearningDataPathAssetReference"/>, and <see cref="MachineLearningOutputPathAssetReference"/>.
     /// </summary>
     public partial class MachineLearningAssetReferenceBase : ProvisionableConstruct
     {
+        private BicepValue<ReferenceType> _referenceType;
+
         /// <summary> Creates a new MachineLearningAssetReferenceBase. </summary>
         public MachineLearningAssetReferenceBase()
         {
+        }
+
+        /// <summary> [Required] Specifies the type of asset reference. </summary>
+        internal BicepValue<ReferenceType> ReferenceType
+        {
+            get
+            {
+                Initialize();
+                return _referenceType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for MachineLearningAssetReferenceBase. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _referenceType = DefineProperty<ReferenceType>(nameof(ReferenceType), new string[] { "referenceType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

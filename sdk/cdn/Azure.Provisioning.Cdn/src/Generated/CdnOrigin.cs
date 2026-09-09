@@ -93,62 +93,6 @@ namespace Azure.Provisioning.Cdn
             }
         }
 
-        /// <summary> Gets the ResourceState. </summary>
-        public BicepValue<OriginResourceState> ResourceState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new OriginProperties();
-                }
-                return Properties.ResourceState;
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<OriginProvisioningState> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new OriginProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets the PrivateEndpointStatus. </summary>
-        public BicepValue<PrivateEndpointStatus> PrivateEndpointStatus
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new OriginProperties();
-                }
-                return Properties.PrivateEndpointStatus;
-            }
-        }
-
-        /// <summary> Gets or sets the HostName. </summary>
-        public BicepValue<string> HostName
-        {
-            get
-            {
-                return Properties is null ? default : Properties.HostName;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new OriginProperties();
-                }
-                Properties.HostName = value;
-            }
-        }
-
         /// <summary> Gets or sets the HttpPort. </summary>
         public BicepValue<int> HttpPort
         {
@@ -319,6 +263,45 @@ namespace Azure.Provisioning.Cdn
             }
         }
 
+        /// <summary> Gets the ResourceState. </summary>
+        public BicepValue<OriginResourceState> ResourceState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginProperties();
+                }
+                return Properties.ResourceState;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<OriginProvisioningState> ProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginProperties();
+                }
+                return Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the PrivateEndpointStatus. </summary>
+        public BicepValue<PrivateEndpointStatus> PrivateEndpointStatus
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new OriginProperties();
+                }
+                return Properties.PrivateEndpointStatus;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for CdnOrigin. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -327,7 +310,7 @@ namespace Azure.Provisioning.Cdn
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
             _properties = DefineModelProperty<OriginProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<CdnEndpoint>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<CdnEndpoint>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

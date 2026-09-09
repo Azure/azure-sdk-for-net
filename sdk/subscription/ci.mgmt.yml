@@ -5,7 +5,10 @@ extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
     ServiceDirectory: subscription
+    BuildSnippets: false
     LimitForPullRequest: true
     Artifacts:
     - name: Azure.ResourceManager.Subscription
       safeName: AzureResourceManagerSubscription
+    - name: Azure.Provisioning.Subscription
+      safeName: AzureProvisioningSubscription

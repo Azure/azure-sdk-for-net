@@ -24,18 +24,14 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="TilerStacSearchDefinition"/>. </summary>
         /// <param name="hash"> Unique hash identifier for the search query. </param>
         /// <param name="search"> Search. </param>
-        /// <param name="where"> SQL WHERE clause representing the search filters. </param>
-        /// <param name="orderBy"> SQL ORDER BY clause for sorting results. </param>
-        /// <param name="lastUsed"> Timestamp when the search was last accessed. </param>
+        /// <param name="lastUsedOn"> Timestamp when the search was last accessed. </param>
         /// <param name="useCount"> Number of times the search has been accessed. </param>
         /// <param name="metadata"> Additional metadata associated with the search. </param>
-        internal TilerStacSearchDefinition(string hash, IDictionary<string, BinaryData> search, string @where, string orderBy, DateTimeOffset lastUsed, int useCount, MosaicMetadata metadata)
+        internal TilerStacSearchDefinition(string hash, IDictionary<string, BinaryData> search, DateTimeOffset lastUsedOn, int useCount, MosaicMetadata metadata)
         {
             Hash = hash;
             Search = search;
-            Where = @where;
-            OrderBy = orderBy;
-            LastUsed = lastUsed;
+            LastUsedOn = lastUsedOn;
             UseCount = useCount;
             Metadata = metadata;
         }
@@ -43,19 +39,15 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <summary> Initializes a new instance of <see cref="TilerStacSearchDefinition"/>. </summary>
         /// <param name="hash"> Unique hash identifier for the search query. </param>
         /// <param name="search"> Search. </param>
-        /// <param name="where"> SQL WHERE clause representing the search filters. </param>
-        /// <param name="orderBy"> SQL ORDER BY clause for sorting results. </param>
-        /// <param name="lastUsed"> Timestamp when the search was last accessed. </param>
+        /// <param name="lastUsedOn"> Timestamp when the search was last accessed. </param>
         /// <param name="useCount"> Number of times the search has been accessed. </param>
         /// <param name="metadata"> Additional metadata associated with the search. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TilerStacSearchDefinition(string hash, IDictionary<string, BinaryData> search, string @where, string orderBy, DateTimeOffset lastUsed, int useCount, MosaicMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TilerStacSearchDefinition(string hash, IDictionary<string, BinaryData> search, DateTimeOffset lastUsedOn, int useCount, MosaicMetadata metadata, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Hash = hash;
             Search = search;
-            Where = @where;
-            OrderBy = orderBy;
-            LastUsed = lastUsed;
+            LastUsedOn = lastUsedOn;
             UseCount = useCount;
             Metadata = metadata;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
@@ -92,14 +84,8 @@ namespace Azure.Analytics.PlanetaryComputer
         /// </summary>
         public IDictionary<string, BinaryData> Search { get; }
 
-        /// <summary> SQL WHERE clause representing the search filters. </summary>
-        public string Where { get; }
-
-        /// <summary> SQL ORDER BY clause for sorting results. </summary>
-        public string OrderBy { get; }
-
         /// <summary> Timestamp when the search was last accessed. </summary>
-        public DateTimeOffset LastUsed { get; }
+        public DateTimeOffset LastUsedOn { get; }
 
         /// <summary> Number of times the search has been accessed. </summary>
         public int UseCount { get; }

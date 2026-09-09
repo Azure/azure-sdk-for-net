@@ -12,11 +12,12 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Command job definition.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/>, and <see cref="MachineLearningUriFolderJobInput"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningTableJobInput"/>, <see cref="MachineLearningCustomModelJobInput"/>, <see cref="MachineLearningFlowModelJobInput"/>, <see cref="MachineLearningLiteralJobInput"/>, <see cref="MachineLearningTritonModelJobInput"/>, <see cref="MachineLearningUriFileJobInput"/>, and <see cref="MachineLearningUriFolderJobInput"/>.
     /// </summary>
     public partial class MachineLearningJobInput : ProvisionableConstruct
     {
         private BicepValue<string> _description;
+        private BicepValue<JobInputType> _jobInputType;
 
         /// <summary> Creates a new MachineLearningJobInput. </summary>
         public MachineLearningJobInput()
@@ -38,11 +39,22 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
+        /// <summary> [Required] Specifies the type of job. </summary>
+        internal BicepValue<JobInputType> JobInputType
+        {
+            get
+            {
+                Initialize();
+                return _jobInputType;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for MachineLearningJobInput. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
+            _jobInputType = DefineProperty<JobInputType>(nameof(JobInputType), new string[] { "jobInputType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

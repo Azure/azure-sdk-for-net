@@ -2,41 +2,18 @@
 
 An Agent version draft may be useful for Agent testing, when it is not yet ready for release. In this example we will demonstrate the creation of draft Agent versions.
 
-To use Agent version drafts, we need to provide the `Foundry-Features` header in our REST requests. It can be done using `PipelinePolicy`.
-
-```C# Snippet:Sample_Agents_ExperimentalHeader
-internal class FeaturePolicy(string feature) : PipelinePolicy
-{
-    private const string _FEATURE_HEADER = "Foundry-Features";
-
-    public override void Process(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        ProcessNext(message, pipeline, currentIndex);
-    }
-
-    public override async ValueTask ProcessAsync(PipelineMessage message, IReadOnlyList<PipelinePolicy> pipeline, int currentIndex)
-    {
-        message.Request.Headers.Add(_FEATURE_HEADER, feature);
-        await ProcessNextAsync(message, pipeline, currentIndex);
-    }
-}
-```
-
-We also need to ignore the `AAIP001` warning.
+To use Agent version drafts, the `AAIP001` warning needs to be ignored.
 
 ```C#
 #pragma warning disable AAIP001
 ```
 
-1. First, we need to create the agent client and read the environment variables, which will be used in the next steps. We will also set the `DraftAgents=V1Preview` preview header.
+1. First, we need to create the agent client and read the environment variables, which will be used in the next steps.
 
 ```C# Snippet:Sample_CreateAgentClient_AgentsDraft
 var projectEndpoint = System.Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
 var modelDeploymentName = System.Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
-AgentAdministrationClientOptions options = new();
-options.AddPolicy(new FeaturePolicy("DraftAgents=V1Preview"), PipelinePosition.PerCall);
-AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
+AgentAdministrationClient agentsClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential());
 ```
 
 2. Use the client to create a versioned agent object.

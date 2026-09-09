@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -13,6 +14,7 @@ namespace Azure.AI.Projects.Agents
         /// <summary> Initializes a new instance of <see cref="CodeInterpreterToolboxTool"/>. </summary>
         public CodeInterpreterToolboxTool() : base(ToolboxToolType.CodeInterpreter)
         {
+            AllowedCallers = new ChangeTrackingList<CallableToolAllowedCaller>();
         }
 
         /// <summary> Initializes a new instance of <see cref="CodeInterpreterToolboxTool"/>. </summary>
@@ -25,15 +27,20 @@ namespace Azure.AI.Projects.Agents
         /// Unknown tool names are silently ignored at runtime.
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="allowedCallers"></param>
         /// <param name="internalContainer">
         /// The code interpreter container. Can be a container ID or an object that
         /// specifies uploaded file IDs to make available to your code, along with an
         /// optional `memory_limit` setting.
         /// If not provided, the service assumes auto.
         /// </param>
-        internal CodeInterpreterToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, BinaryData internalContainer) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
+        internal CodeInterpreterToolboxTool(ToolboxToolType @type, string name, string description, IDictionary<string, ToolConfig> toolConfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties, IList<CallableToolAllowedCaller> allowedCallers, BinaryData internalContainer) : base(@type, name, description, toolConfigs, additionalBinaryDataProperties)
         {
+            AllowedCallers = allowedCallers;
             InternalContainer = internalContainer;
         }
+
+        /// <summary> Gets or sets the AllowedCallers. </summary>
+        public IList<CallableToolAllowedCaller> AllowedCallers { get; set; }
     }
 }

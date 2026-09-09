@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Base definition for identity configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/>, and <see cref="MachineLearningUserIdentity"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AmlToken"/>, <see cref="MachineLearningManagedIdentity"/>, and <see cref="MachineLearningUserIdentity"/>.
     /// </summary>
     public partial class MachineLearningIdentityConfiguration : ProvisionableConstruct
     {
+        private BicepValue<IdentityConfigurationType> _identityType;
+
         /// <summary> Creates a new MachineLearningIdentityConfiguration. </summary>
         public MachineLearningIdentityConfiguration()
         {
+        }
+
+        /// <summary> [Required] Specifies the type of identity framework. </summary>
+        internal BicepValue<IdentityConfigurationType> IdentityType
+        {
+            get
+            {
+                Initialize();
+                return _identityType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for MachineLearningIdentityConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _identityType = DefineProperty<IdentityConfigurationType>(nameof(IdentityType), new string[] { "identityType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

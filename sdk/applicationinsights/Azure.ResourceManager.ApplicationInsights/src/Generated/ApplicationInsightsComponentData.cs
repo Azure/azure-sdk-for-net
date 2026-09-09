@@ -7,52 +7,21 @@
 
 using System;
 using System.Collections.Generic;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
-    /// <summary>
-    /// A class representing the ApplicationInsightsComponent data model.
-    /// An Application Insights component definition.
-    /// </summary>
+    /// <summary> An Application Insights component definition. </summary>
     public partial class ApplicationInsightsComponentData : TrackedResourceData
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentData"/>. </summary>
-        /// <param name="location"> The location. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of the following: web, ios, other, store, java, phone. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="kind"/> is null. </exception>
         public ApplicationInsightsComponentData(AzureLocation location, string kind) : base(location)
@@ -60,161 +29,406 @@ namespace Azure.ResourceManager.ApplicationInsights
             Argument.AssertNotNull(kind, nameof(kind));
 
             Kind = kind;
-            PrivateLinkScopedResources = new ChangeTrackingList<PrivateLinkScopedResourceReference>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
         /// <param name="kind"> The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of the following: web, ios, other, store, java, phone. </param>
-        /// <param name="etag"> Resource etag. </param>
-        /// <param name="applicationId"> The unique ID of your application. This field mirrors the 'Name' field and cannot be changed. </param>
-        /// <param name="appId"> Application Insights Unique ID for your Application. </param>
-        /// <param name="namePropertiesName"> Application name. </param>
-        /// <param name="applicationType"> Type of application being monitored. </param>
-        /// <param name="flowType"> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to 'Bluefield' when creating/updating a component via the REST API. </param>
-        /// <param name="requestSource"> Describes what tool created this Application Insights component. Customers using this API should set this to the default 'rest'. </param>
-        /// <param name="instrumentationKey"> Application Insights Instrumentation key. A read-only value that applications can use to identify the destination for all telemetry sent to Azure Application Insights. This value will be supplied upon construction of each new Application Insights component. </param>
-        /// <param name="createdOn"> Creation Date for the Application Insights component, in ISO 8601 format. </param>
-        /// <param name="tenantId"> Azure Tenant Id. </param>
-        /// <param name="hockeyAppId"> The unique application ID created when a new application is added to HockeyApp, used for communications with HockeyApp. </param>
-        /// <param name="hockeyAppToken"> Token used to authenticate communications with between Application Insights and HockeyApp. </param>
-        /// <param name="provisioningState"> Current state of this component: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </param>
-        /// <param name="samplingPercentage"> Percentage of the data produced by the application being monitored that is being sampled for Application Insights telemetry. </param>
-        /// <param name="connectionString"> Application Insights component connection string. </param>
-        /// <param name="retentionInDays"> Retention period in days. </param>
-        /// <param name="isDisableIPMasking"> Disable IP masking. </param>
-        /// <param name="isImmediatePurgeDataOn30Days"> Purge data immediately after 30 days. </param>
-        /// <param name="workspaceResourceId"> Resource Id of the log analytics workspace which the data will be ingested to. This property is required to create an application with this API version. Applications from older versions will not have this property. </param>
-        /// <param name="laMigrationOn"> The date which the component got migrated to LA, in ISO 8601 format. </param>
-        /// <param name="privateLinkScopedResources"> List of linked private link scope resources. </param>
-        /// <param name="publicNetworkAccessForIngestion"> The network access type for accessing Application Insights ingestion. </param>
-        /// <param name="publicNetworkAccessForQuery"> The network access type for accessing Application Insights query. </param>
-        /// <param name="ingestionMode"> Indicates the flow of the ingestion. </param>
-        /// <param name="isDisableLocalAuth"> Disable Non-AAD based Auth. </param>
-        /// <param name="isForceCustomerStorageForProfiler"> Force users to create their own storage account for profiler and debugger. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ApplicationInsightsComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ETag? etag, string applicationId, string appId, string namePropertiesName, ApplicationInsightsApplicationType? applicationType, ComponentFlowType? flowType, ComponentRequestSource? requestSource, string instrumentationKey, DateTimeOffset? createdOn, Guid? tenantId, string hockeyAppId, string hockeyAppToken, string provisioningState, double? samplingPercentage, string connectionString, int? retentionInDays, bool? isDisableIPMasking, bool? isImmediatePurgeDataOn30Days, ResourceIdentifier workspaceResourceId, DateTimeOffset? laMigrationOn, IReadOnlyList<PrivateLinkScopedResourceReference> privateLinkScopedResources, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForIngestion, ApplicationInsightsPublicNetworkAccessType? publicNetworkAccessForQuery, ComponentIngestionMode? ingestionMode, bool? isDisableLocalAuth, bool? isForceCustomerStorageForProfiler, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="eTag"> Resource etag. </param>
+        /// <param name="properties"> Properties that define an Application Insights component resource. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal ApplicationInsightsComponentData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string kind, ETag? eTag, ApplicationInsightsComponentProperties properties, IDictionary<string, BinaryData> additionalBinaryDataProperties) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
-            ETag = etag;
-            ApplicationId = applicationId;
-            AppId = appId;
-            NamePropertiesName = namePropertiesName;
-            ApplicationType = applicationType;
-            FlowType = flowType;
-            RequestSource = requestSource;
-            InstrumentationKey = instrumentationKey;
-            CreatedOn = createdOn;
-            TenantId = tenantId;
-            HockeyAppId = hockeyAppId;
-            HockeyAppToken = hockeyAppToken;
-            ProvisioningState = provisioningState;
-            SamplingPercentage = samplingPercentage;
-            ConnectionString = connectionString;
-            RetentionInDays = retentionInDays;
-            IsDisableIPMasking = isDisableIPMasking;
-            IsImmediatePurgeDataOn30Days = isImmediatePurgeDataOn30Days;
-            WorkspaceResourceId = workspaceResourceId;
-            LaMigrationOn = laMigrationOn;
-            PrivateLinkScopedResources = privateLinkScopedResources;
-            PublicNetworkAccessForIngestion = publicNetworkAccessForIngestion;
-            PublicNetworkAccessForQuery = publicNetworkAccessForQuery;
-            IngestionMode = ingestionMode;
-            IsDisableLocalAuth = isDisableLocalAuth;
-            IsForceCustomerStorageForProfiler = isForceCustomerStorageForProfiler;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
-        }
-
-        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsComponentData"/> for deserialization. </summary>
-        internal ApplicationInsightsComponentData()
-        {
+            ETag = eTag;
+            Properties = properties;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The kind of application that this component refers to, used to customize UI. This value is a freeform string, values should typically be one of the following: web, ios, other, store, java, phone. </summary>
         [WirePath("kind")]
         public string Kind { get; set; }
+
         /// <summary> Resource etag. </summary>
         [WirePath("etag")]
         public ETag? ETag { get; set; }
+
+        /// <summary> Properties that define an Application Insights component resource. </summary>
+        [WirePath("properties")]
+        internal ApplicationInsightsComponentProperties Properties { get; set; }
+
         /// <summary> The unique ID of your application. This field mirrors the 'Name' field and cannot be changed. </summary>
         [WirePath("properties.ApplicationId")]
-        public string ApplicationId { get; }
+        public string ApplicationId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApplicationId;
+            }
+        }
+
         /// <summary> Application Insights Unique ID for your Application. </summary>
         [WirePath("properties.AppId")]
-        public string AppId { get; }
+        public string AppId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AppId;
+            }
+        }
+
         /// <summary> Application name. </summary>
         [WirePath("properties.Name")]
-        public string NamePropertiesName { get; }
+        public string NamePropertiesName
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NamePropertiesName;
+            }
+        }
+
         /// <summary> Type of application being monitored. </summary>
         [WirePath("properties.Application_Type")]
-        public ApplicationInsightsApplicationType? ApplicationType { get; set; }
+        public ApplicationInsightsApplicationType? ApplicationType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ApplicationType;
+            }
+            set
+            {
+                if (value.HasValue)
+                {
+                    if (Properties is null)
+                    {
+                        Properties = new ApplicationInsightsComponentProperties();
+                    }
+                    Properties.ApplicationType = value.Value;
+                }
+            }
+        }
+
         /// <summary> Used by the Application Insights system to determine what kind of flow this component was created by. This is to be set to 'Bluefield' when creating/updating a component via the REST API. </summary>
         [WirePath("properties.Flow_Type")]
-        public ComponentFlowType? FlowType { get; set; }
+        public ComponentFlowType? FlowType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.FlowType;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationInsightsComponentProperties();
+                }
+                Properties.FlowType = value;
+            }
+        }
+
         /// <summary> Describes what tool created this Application Insights component. Customers using this API should set this to the default 'rest'. </summary>
         [WirePath("properties.Request_Source")]
-        public ComponentRequestSource? RequestSource { get; set; }
+        public ComponentRequestSource? RequestSource
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RequestSource;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationInsightsComponentProperties();
+                }
+                Properties.RequestSource = value;
+            }
+        }
+
         /// <summary> Application Insights Instrumentation key. A read-only value that applications can use to identify the destination for all telemetry sent to Azure Application Insights. This value will be supplied upon construction of each new Application Insights component. </summary>
         [WirePath("properties.InstrumentationKey")]
-        public string InstrumentationKey { get; }
+        public string InstrumentationKey
+        {
+            get
+            {
+                return Properties is null ? default : Properties.InstrumentationKey;
+            }
+        }
+
         /// <summary> Creation Date for the Application Insights component, in ISO 8601 format. </summary>
         [WirePath("properties.CreationDate")]
-        public DateTimeOffset? CreatedOn { get; }
+        public DateTimeOffset? CreatedOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CreatedOn;
+            }
+        }
+
         /// <summary> Azure Tenant Id. </summary>
         [WirePath("properties.TenantId")]
-        public Guid? TenantId { get; }
+        public Guid? TenantId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.TenantId;
+            }
+        }
+
         /// <summary> The unique application ID created when a new application is added to HockeyApp, used for communications with HockeyApp. </summary>
         [WirePath("properties.HockeyAppId")]
-        public string HockeyAppId { get; set; }
+        public string HockeyAppId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HockeyAppId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationInsightsComponentProperties();
+                }
+                Properties.HockeyAppId = value;
+            }
+        }
+
         /// <summary> Token used to authenticate communications with between Application Insights and HockeyApp. </summary>
         [WirePath("properties.HockeyAppToken")]
-        public string HockeyAppToken { get; }
+        public string HockeyAppToken
+        {
+            get
+            {
+                return Properties is null ? default : Properties.HockeyAppToken;
+            }
+        }
+
         /// <summary> Current state of this component: whether or not is has been provisioned within the resource group it is defined. Users cannot change this value but are able to read from it. Values will include Succeeded, Deploying, Canceled, and Failed. </summary>
         [WirePath("properties.provisioningState")]
-        public string ProvisioningState { get; }
+        public string ProvisioningState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ProvisioningState;
+            }
+        }
+
         /// <summary> Percentage of the data produced by the application being monitored that is being sampled for Application Insights telemetry. </summary>
         [WirePath("properties.SamplingPercentage")]
-        public double? SamplingPercentage { get; set; }
+        public double? SamplingPercentage
+        {
+            get
+            {
+                return Properties is null ? default : Properties.SamplingPercentage;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationInsightsComponentProperties();
+                }
+                Properties.SamplingPercentage = value;
+            }
+        }
+
         /// <summary> Application Insights component connection string. </summary>
         [WirePath("properties.ConnectionString")]
-        public string ConnectionString { get; }
+        public string ConnectionString
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConnectionString;
+            }
+        }
+
         /// <summary> Retention period in days. </summary>
         [WirePath("properties.RetentionInDays")]
-        public int? RetentionInDays { get; set; }
+        public int? RetentionInDays
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RetentionInDays;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationInsightsComponentProperties();
+                }
+                Properties.RetentionInDays = value;
+            }
+        }
+
         /// <summary> Disable IP masking. </summary>
         [WirePath("properties.DisableIpMasking")]
-        public bool? IsDisableIPMasking { get; set; }
+        public bool? IsDisableIPMasking
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDisableIPMasking;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationInsightsComponentProperties();
+                }
+                Properties.IsDisableIPMasking = value;
+            }
+        }
+
         /// <summary> Purge data immediately after 30 days. </summary>
         [WirePath("properties.ImmediatePurgeDataOn30Days")]
-        public bool? IsImmediatePurgeDataOn30Days { get; set; }
+        public bool? IsImmediatePurgeDataOn30Days
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsImmediatePurgeDataOn30Days;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationInsightsComponentProperties();
+                }
+                Properties.IsImmediatePurgeDataOn30Days = value;
+            }
+        }
+
         /// <summary> Resource Id of the log analytics workspace which the data will be ingested to. This property is required to create an application with this API version. Applications from older versions will not have this property. </summary>
         [WirePath("properties.WorkspaceResourceId")]
-        public ResourceIdentifier WorkspaceResourceId { get; set; }
+        public ResourceIdentifier WorkspaceResourceId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.WorkspaceResourceId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationInsightsComponentProperties();
+                }
+                Properties.WorkspaceResourceId = value;
+            }
+        }
+
         /// <summary> The date which the component got migrated to LA, in ISO 8601 format. </summary>
         [WirePath("properties.LaMigrationDate")]
-        public DateTimeOffset? LaMigrationOn { get; }
+        public DateTimeOffset? LaMigrationOn
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LaMigrationOn;
+            }
+        }
+
         /// <summary> List of linked private link scope resources. </summary>
         [WirePath("properties.PrivateLinkScopedResources")]
-        public IReadOnlyList<PrivateLinkScopedResourceReference> PrivateLinkScopedResources { get; }
+        public IReadOnlyList<PrivateLinkScopedResourceReference> PrivateLinkScopedResources
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationInsightsComponentProperties();
+                }
+                return Properties.PrivateLinkScopedResources;
+            }
+        }
+
         /// <summary> The network access type for accessing Application Insights ingestion. </summary>
         [WirePath("properties.publicNetworkAccessForIngestion")]
-        public ApplicationInsightsPublicNetworkAccessType? PublicNetworkAccessForIngestion { get; set; }
+        public ApplicationInsightsPublicNetworkAccessType? PublicNetworkAccessForIngestion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccessForIngestion;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationInsightsComponentProperties();
+                }
+                Properties.PublicNetworkAccessForIngestion = value;
+            }
+        }
+
         /// <summary> The network access type for accessing Application Insights query. </summary>
         [WirePath("properties.publicNetworkAccessForQuery")]
-        public ApplicationInsightsPublicNetworkAccessType? PublicNetworkAccessForQuery { get; set; }
+        public ApplicationInsightsPublicNetworkAccessType? PublicNetworkAccessForQuery
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicNetworkAccessForQuery;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationInsightsComponentProperties();
+                }
+                Properties.PublicNetworkAccessForQuery = value;
+            }
+        }
+
         /// <summary> Indicates the flow of the ingestion. </summary>
         [WirePath("properties.IngestionMode")]
-        public ComponentIngestionMode? IngestionMode { get; set; }
+        public ComponentIngestionMode? IngestionMode
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IngestionMode;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationInsightsComponentProperties();
+                }
+                Properties.IngestionMode = value;
+            }
+        }
+
         /// <summary> Disable Non-AAD based Auth. </summary>
         [WirePath("properties.DisableLocalAuth")]
-        public bool? IsDisableLocalAuth { get; set; }
+        public bool? IsDisableLocalAuth
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsDisableLocalAuth;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationInsightsComponentProperties();
+                }
+                Properties.IsDisableLocalAuth = value;
+            }
+        }
+
         /// <summary> Force users to create their own storage account for profiler and debugger. </summary>
         [WirePath("properties.ForceCustomerStorageForProfiler")]
-        public bool? IsForceCustomerStorageForProfiler { get; set; }
+        public bool? IsForceCustomerStorageForProfiler
+        {
+            get
+            {
+                return Properties is null ? default : Properties.IsForceCustomerStorageForProfiler;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationInsightsComponentProperties();
+                }
+                Properties.IsForceCustomerStorageForProfiler = value;
+            }
+        }
     }
 }

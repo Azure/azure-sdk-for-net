@@ -96,15 +96,15 @@ namespace Azure.Security.KeyVault.Administration.Models
                 writer.WritePropertyName("error"u8);
                 writer.WriteObjectValue(Error, options);
             }
-            if (Optional.IsDefined(StartTime))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startTime"u8);
-                writer.WriteNumberValue(StartTime.Value, "U");
+                writer.WriteNumberValue(StartsOn.Value, "U");
             }
-            if (Optional.IsDefined(EndTime))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteNumberValue(EndTime.Value, "U");
+                writer.WriteNumberValue(EndsOn.Value, "U");
             }
             if (Optional.IsDefined(JobId))
             {
@@ -161,8 +161,8 @@ namespace Azure.Security.KeyVault.Administration.Models
             OperationStatus? status = default;
             string statusDetails = default;
             KeyVaultServiceError error = default;
-            DateTimeOffset? startTime = default;
-            DateTimeOffset? endTime = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             string jobId = default;
             string azureStorageBlobContainerUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -198,17 +198,17 @@ namespace Azure.Security.KeyVault.Administration.Models
                     {
                         continue;
                     }
-                    startTime = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    startsOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
-                        endTime = null;
+                        endsOn = null;
                         continue;
                     }
-                    endTime = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
+                    endsOn = DateTimeOffset.FromUnixTimeSeconds(prop.Value.GetInt64());
                     continue;
                 }
                 if (prop.NameEquals("jobId"u8))
@@ -230,8 +230,8 @@ namespace Azure.Security.KeyVault.Administration.Models
                 status,
                 statusDetails,
                 error,
-                startTime,
-                endTime,
+                startsOn,
+                endsOn,
                 jobId,
                 azureStorageBlobContainerUri,
                 additionalBinaryDataProperties);

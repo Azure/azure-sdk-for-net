@@ -138,7 +138,7 @@ namespace Azure.Communication.Messages
         /// <returns> A new <see cref="Messages.LinkContent"/> instance for mocking. </returns>
         public static LinkContent LinkContent(string title = default, Uri uri = default)
         {
-            return new LinkContent(MessageContentKind.Url, additionalBinaryDataProperties: null, title, uri);
+            return new LinkContent(MessageContentKind.Uri, additionalBinaryDataProperties: null, title, uri);
         }
 
         /// <summary> The action content of type ActionGroup. </summary>

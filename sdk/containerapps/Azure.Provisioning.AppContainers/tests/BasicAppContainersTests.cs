@@ -125,7 +125,7 @@ public class BasicAppContainersTests
             }
 
             resource env 'Microsoft.App/managedEnvironments@2024-03-01' = {
-              name: take('env${uniqueString(resourceGroup().id)}', 24)
+              name: take('env-${uniqueString(resourceGroup().id)}', 24)
               location: location
               properties: {
                 appLogsConfiguration: {
@@ -144,20 +144,19 @@ public class BasicAppContainersTests
               properties: {
                 configuration: {
                   ingress: {
+                    allowInsecure: false
                     external: true
                     targetPort: 80
                     traffic: [
                       {
-                        weight: 100
                         latestRevision: true
+                        weight: 100
                       }
                     ]
-                    allowInsecure: false
                   }
                 }
                 managedEnvironmentId: env.id
                 template: {
-                  revisionSuffix: 'firstrevision'
                   containers: [
                     {
                       image: containerImage
@@ -168,9 +167,10 @@ public class BasicAppContainersTests
                       }
                     }
                   ]
+                  revisionSuffix: 'firstrevision'
                   scale: {
-                    minReplicas: 1
                     maxReplicas: 3
+                    minReplicas: 1
                   }
                 }
               }

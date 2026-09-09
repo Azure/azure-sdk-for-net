@@ -15,7 +15,9 @@ namespace Azure.ResourceManager.Batch.Models
     public readonly partial struct BatchSeverity : IEquatable<BatchSeverity>
     {
         private readonly string _value;
+        /// <summary> The issue is a warning and does not prevent the configuration from being applied. </summary>
         private const string WarningValue = "Warning";
+        /// <summary> The issue is an error and prevents the configuration from being applied. </summary>
         private const string ErrorValue = "Error";
 
         /// <summary> Initializes a new instance of <see cref="BatchSeverity"/>. </summary>
@@ -28,10 +30,10 @@ namespace Azure.ResourceManager.Batch.Models
             _value = value;
         }
 
-        /// <summary> Gets the Warning. </summary>
+        /// <summary> The issue is a warning and does not prevent the configuration from being applied. </summary>
         public static BatchSeverity Warning { get; } = new BatchSeverity(WarningValue);
 
-        /// <summary> Gets the Error. </summary>
+        /// <summary> The issue is an error and prevents the configuration from being applied. </summary>
         public static BatchSeverity Error { get; } = new BatchSeverity(ErrorValue);
 
         /// <summary> Determines if two <see cref="BatchSeverity"/> values are the same. </summary>

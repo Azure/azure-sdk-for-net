@@ -12,12 +12,13 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Outbound Rule for the managed network of a machine learning workspace.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/>, and <see cref="ServiceTagOutboundRule"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="FqdnOutboundRule"/>, <see cref="PrivateEndpointOutboundRule"/>, and <see cref="ServiceTagOutboundRule"/>.
     /// </summary>
     public partial class MachineLearningOutboundRule : ProvisionableConstruct
     {
         private BicepValue<OutboundRuleCategory> _category;
         private BicepValue<OutboundRuleStatus> _status;
+        private BicepValue<RuleType> _type;
         private BicepValue<string> _errorInformation;
         private BicepList<string> _parentRuleNames;
 
@@ -56,6 +57,16 @@ namespace Azure.Provisioning.MachineLearning
             }
         }
 
+        /// <summary> Type of a managed network Outbound Rule of a machine learning workspace. </summary>
+        internal BicepValue<RuleType> Type
+        {
+            get
+            {
+                Initialize();
+                return _type;
+            }
+        }
+
         /// <summary> Gets the ErrorInformation. </summary>
         public BicepValue<string> ErrorInformation
         {
@@ -82,6 +93,7 @@ namespace Azure.Provisioning.MachineLearning
             base.DefineProvisionableProperties();
             _category = DefineProperty<OutboundRuleCategory>(nameof(Category), new string[] { "category" });
             _status = DefineProperty<OutboundRuleStatus>(nameof(Status), new string[] { "status" });
+            _type = DefineProperty<RuleType>(nameof(Type), new string[] { "type" }, isRequired: true);
             _errorInformation = DefineProperty<string>(nameof(ErrorInformation), new string[] { "errorInformation" }, isOutput: true);
             _parentRuleNames = DefineListProperty<string>(nameof(ParentRuleNames), new string[] { "parentRuleNames" }, isOutput: true);
             DefineAdditionalProperties();

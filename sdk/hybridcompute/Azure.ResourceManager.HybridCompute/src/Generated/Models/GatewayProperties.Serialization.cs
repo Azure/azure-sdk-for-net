@@ -110,6 +110,21 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(GatewayBypass))
+            {
+                writer.WritePropertyName("gatewayBypass"u8);
+                writer.WriteStartArray();
+                foreach (string item in GatewayBypass)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -157,6 +172,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             ArcGatewayType? gatewayType = default;
             string gatewayEndpoint = default;
             IList<string> allowedFeatures = default;
+            IList<string> gatewayBypass = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -213,6 +229,27 @@ namespace Azure.ResourceManager.HybridCompute.Models
                     allowedFeatures = array;
                     continue;
                 }
+                if (prop.NameEquals("gatewayBypass"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<string> array = new List<string>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
+                    }
+                    gatewayBypass = array;
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -224,6 +261,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 gatewayType,
                 gatewayEndpoint,
                 allowedFeatures ?? new ChangeTrackingList<string>(),
+                gatewayBypass ?? new ChangeTrackingList<string>(),
                 additionalBinaryDataProperties);
         }
     }

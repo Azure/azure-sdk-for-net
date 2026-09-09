@@ -71,34 +71,34 @@ public class BasicBatchTests
 
             resource account 'Microsoft.Batch/batchAccounts@2025-06-01' = {
               name: take('account${uniqueString(resourceGroup().id)}', 24)
+              location: location
               tags: {
                 environment: 'test'
               }
-              location: location
             }
 
             resource pool 'Microsoft.Batch/batchAccounts/pools@2025-06-01' = {
               name: take('pool-${uniqueString(resourceGroup().id)}', 64)
+              parent: account
               properties: {
                 displayName: 'MyPool'
-                vmSize: 'Standard_D2s_v3'
                 scaleSettings: {
                   fixedScale: {
                     targetDedicatedNodes: 1
                     targetLowPriorityNodes: 0
                   }
                 }
+                vmSize: 'Standard_D2s_v3'
               }
-              parent: account
             }
 
             resource app 'Microsoft.Batch/batchAccounts/applications@2025-06-01' = {
               name: take('app-${uniqueString(resourceGroup().id)}', 64)
-              properties: {
-                displayName: 'MyApp'
-                allowUpdates: true
-              }
               parent: account
+              properties: {
+                allowUpdates: true
+                displayName: 'MyApp'
+              }
             }
 
             output accountName string = account.name

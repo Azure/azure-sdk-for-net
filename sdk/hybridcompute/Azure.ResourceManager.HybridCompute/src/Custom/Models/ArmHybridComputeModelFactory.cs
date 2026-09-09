@@ -84,6 +84,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 agentUpgrade,
                 osProfile,
                 licenseProfile,
+                statusReason: null,
                 provisioningState,
                 status,
                 lastStatusChange,

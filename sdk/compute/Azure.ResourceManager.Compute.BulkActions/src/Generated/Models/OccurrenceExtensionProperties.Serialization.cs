@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
             ResourceIdentifier resourceId = default;
             IList<NotificationProperties> notificationSettings = default;
             DateTimeOffset scheduledOn = default;
-            ResourceProvisioningState? provisioningState = default;
+            OccurrenceResourceProvisioningState? provisioningState = default;
             ResponseError errorDetails = default;
             ResourceIdentifier scheduledActionId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
                     {
                         continue;
                     }
-                    provisioningState = new ResourceProvisioningState(prop.Value.GetString());
+                    provisioningState = new OccurrenceResourceProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("errorDetails"u8))

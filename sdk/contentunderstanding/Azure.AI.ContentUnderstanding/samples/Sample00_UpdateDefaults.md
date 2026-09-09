@@ -4,11 +4,12 @@ This sample demonstrates how to configure and retrieve default model deployment 
 
 ## About model deployment configuration
 
-Content Understanding prebuilt analyzers and custom analyzers require specific large language model deployments to function. Currently, Content Understanding uses OpenAI GPT models:
+Content Understanding prebuilt analyzers and custom analyzers require generative model deployments to function. The service periodically adds support for more models, including the latest gpt-5.x models such as gpt-5.2, gpt-5.4-mini, gpt-5.5, and others.
 
-- **gpt-4.1** - Used by most prebuilt analyzers (e.g., `prebuilt-invoice`, `prebuilt-receipt`, `prebuilt-idDocument`)
-- **gpt-4.1-mini** - Used by RAG analyzers (e.g., `prebuilt-documentSearch`, `prebuilt-imageSearch`, `prebuilt-audioSearch`, `prebuilt-videoSearch`)
-- **text-embedding-3-large** - Used for semantic search and embeddings
+- To see the current supported models and models being deprecated, see [Supported generative models][supported_generative_models].
+- To see models being retired, see the [Foundry model retirement schedule][model_retirement_schedule].
+
+In the following sample, we use **gpt-5.2** and **text-embedding-3-large** as an example.
 
 This configuration is **per Microsoft Foundry resource** and persists across sessions. You only need to configure it once per Microsoft Foundry resource (or when you change deployment names).
 
@@ -24,13 +25,13 @@ To get started you'll need:
 
 4. If you plan to use `DefaultAzureCredential` for authentication, you will need to log in to Azure first. Typically, you can do this by running `az login` (Azure CLI) or `azd login` (Azure Developer CLI) in your terminal.
 
-5. Deploy the following models in Microsoft Foundry:
-   - gpt-4.1
-   - gpt-4.1-mini
-   - text-embedding-3-large
+5. Deploy supported generative models in Microsoft Foundry. This sample uses:
+    - gpt-5.2
+    - text-embedding-3-large
 
+   For the current list of supported (and deprecated) models, see [Supported generative models][supported_generative_models].
 
-6. **Important**: Take note of the deployment names used for each model. The convention is to use the model names (e.g., "gpt-4.1", "gpt-4.1-mini", "text-embedding-3-large"), but you can change these during deployment. You'll use these deployment names in the "Configure model deployments" section below when configuring defaults.
+6. **Important**: Take note of the deployment names used for each model. The convention is to use the model names (e.g., "gpt-5.2", "text-embedding-3-large"), but you can change these during deployment. You'll use these deployment names in the "Configure model deployments" section below when configuring defaults.
 
 For detailed instructions on deploying models, see [Create model deployments in Microsoft Foundry portal][deploy_models_docs].
 
@@ -65,19 +66,21 @@ var client = new ContentUnderstandingClient(new Uri(endpoint), new AzureKeyCrede
 
 Before you can use prebuilt analyzers or custom analyzers, you need to map your deployed large language models to the models required by these analyzers. Use the endpoint from step 3 and the deployment names from step 6.
 
-The code below defines a dictionary that maps Large Language model names (used by prebuilt analyzers and custom analyzers) to the deployment names that you noted in step 6. The dictionary keys are the model names required by the analyzers, and the values are your actual deployment names.
+The code below defines a dictionary that maps model names and prebuilt analyzer aliases to the deployment names that you noted in step 6. The dictionary keys are the model names or aliases required by the analyzers, and the values are your actual deployment names.
 
-The models shown below (`gpt-4.1`, `gpt-4.1-mini`, and `text-embedding-3-large`) are the most commonly used models and can be used to run all samples in the SDK. However, each prebuilt analyzer can use different models, and you should consult the [prebuilt analyzers documentation][prebuilt-analyzers-docs] for specific model requirements. When creating your own custom analyzers, you can choose different models based on performance and cost considerations.
+The models shown below (`gpt-5.2` and `text-embedding-3-large`) are examples that can be used to run the samples in this SDK. Other supported gpt-5.x models may also work depending on current service support. Prebuilt analyzers reference aliases: most use `prebuilt-analyzer-completion`, `prebuilt-*Search` analyzers use `prebuilt-analyzer-completion-mini`, and analyzers requiring embeddings use `prebuilt-analyzer-embedding`. Map these aliases even when they point to the same deployments as the concrete model names. See [Supported generative models][supported_generative_models] and [model deployment guidance][model-deployment-docs] for current requirements.
 
-The `UpdateDefaultsAsync()` method will take the mapping in the dictionary and update your Microsoft Foundry resource to provide the default deployment for each specific model required by analyzers. Currently, Content Understanding uses OpenAI GPT models:
+The `UpdateDefaultsAsync()` method will take the mapping in the dictionary and update your Microsoft Foundry resource to provide the default deployment for each specific model required by analyzers.
 
 ```C# Snippet:ContentUnderstandingUpdateDefaults
 // Map your deployed models to the models required by prebuilt analyzers
 var modelDeployments = new Dictionary<string, string>
 {
-    ["gpt-4.1"] = "<your-gpt-4.1-deployment-name>",
-    ["gpt-4.1-mini"] = "<your-gpt-4.1-mini-deployment-name>",
-    ["text-embedding-3-large"] = "<your-text-embedding-3-large-deployment-name>"
+    ["gpt-5.2"] = "<your-gpt-5.2-deployment-name>",
+    ["text-embedding-3-large"] = "<your-text-embedding-3-large-deployment-name>",
+    ["prebuilt-analyzer-completion"] = "<your-gpt-5.2-deployment-name>",
+    ["prebuilt-analyzer-completion-mini"] = "<your-gpt-5.2-deployment-name>",
+    ["prebuilt-analyzer-embedding"] = "<your-text-embedding-3-large-deployment-name>"
 };
 
 var response = await client.UpdateDefaultsAsync(modelDeployments);
@@ -127,6 +130,8 @@ After configuring model deployments, you can use prebuilt analyzers. See:
 ## Learn more
 - [Content Understanding documentation][cu-docs]
 - [Model deployment configuration][model-deployment-docs]
+- [Supported generative models][supported_generative_models]
+- [Foundry model retirement schedule][model_retirement_schedule]
 
 [sample01]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample01_AnalyzeBinary.md
 [sample02]:  https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/contentunderstanding/Azure.AI.ContentUnderstanding/samples/Sample02_AnalyzeUrl.md
@@ -134,7 +139,9 @@ After configuring model deployments, you can use prebuilt analyzers. See:
 [cu_quickstart]: https://learn.microsoft.com/azure/ai-services/content-understanding/quickstart/use-rest-api?tabs=portal%2Cdocument
 [cu_region_support]: https://learn.microsoft.com/azure/ai-services/content-understanding/language-region-support
 [deploy_models_docs]: https://learn.microsoft.com/azure/ai-studio/how-to/deploy-models-openai
-[model-deployment-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/quickstart/use-rest-api?tabs=rest-api%2Cdocument
+[model-deployment-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/models-deployments
+[supported_generative_models]: https://learn.microsoft.com/azure/ai-services/content-understanding/service-limits#supported-generative-models
+[model_retirement_schedule]: https://learn.microsoft.com/azure/foundry/openai/concepts/model-retirement-schedule
 [prebuilt-analyzers-docs]: https://learn.microsoft.com/azure/ai-services/content-understanding/concepts/prebuilt-analyzers
 
 

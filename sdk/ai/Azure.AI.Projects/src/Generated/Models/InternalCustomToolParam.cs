@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using OpenAI;
 
 namespace Azure.AI.Projects
 {
@@ -14,6 +15,7 @@ namespace Azure.AI.Projects
         public InternalCustomToolParam(string name) : base(ToolType.Custom)
         {
             Name = name;
+            AllowedCallers = new ChangeTrackingList<InternalCallableToolAllowedCaller>();
         }
 
         /// <summary> Initializes a new instance of <see cref="InternalCustomToolParam"/>. </summary>
@@ -23,12 +25,14 @@ namespace Azure.AI.Projects
         /// <param name="description"> Optional description of the custom tool, used to provide more context. </param>
         /// <param name="format"> The input format for the custom tool. Default is unconstrained text. </param>
         /// <param name="deferLoading"> Whether this tool should be deferred and discovered via tool search. </param>
-        internal InternalCustomToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, InternalCustomToolParamFormat format, bool? deferLoading) : base(@type, additionalBinaryDataProperties)
+        /// <param name="allowedCallers"></param>
+        internal InternalCustomToolParam(ToolType @type, IDictionary<string, BinaryData> additionalBinaryDataProperties, string name, string description, InternalCustomToolParamFormat format, bool? deferLoading, IList<InternalCallableToolAllowedCaller> allowedCallers) : base(@type, additionalBinaryDataProperties)
         {
             Name = name;
             Description = description;
             Format = format;
             DeferLoading = deferLoading;
+            AllowedCallers = allowedCallers;
         }
 
         /// <summary> The name of the custom tool, used to identify it in tool calls. </summary>
@@ -42,5 +46,8 @@ namespace Azure.AI.Projects
 
         /// <summary> Whether this tool should be deferred and discovered via tool search. </summary>
         public bool? DeferLoading { get; set; }
+
+        /// <summary> Gets or sets the AllowedCallers. </summary>
+        public IList<InternalCallableToolAllowedCaller> AllowedCallers { get; set; }
     }
 }

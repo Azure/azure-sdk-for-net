@@ -21,6 +21,8 @@ namespace Azure.ResourceManager.CloudHealth.Models
         private const string PT5MValue = "PT5M";
         /// <summary> Ten Minutes. </summary>
         private const string PT10MValue = "PT10M";
+        /// <summary> Fifteen Minutes. </summary>
+        private const string PT15MValue = "PT15M";
         /// <summary> Thirty Minutes. </summary>
         private const string PT30MValue = "PT30M";
         /// <summary> One Hour. </summary>
@@ -46,6 +48,9 @@ namespace Azure.ResourceManager.CloudHealth.Models
 
         /// <summary> Ten Minutes. </summary>
         public static EntitySignalRefreshInterval PT10M { get; } = new EntitySignalRefreshInterval(PT10MValue);
+
+        /// <summary> Fifteen Minutes. </summary>
+        public static EntitySignalRefreshInterval PT15M { get; } = new EntitySignalRefreshInterval(PT15MValue);
 
         /// <summary> Thirty Minutes. </summary>
         public static EntitySignalRefreshInterval PT30M { get; } = new EntitySignalRefreshInterval(PT30MValue);

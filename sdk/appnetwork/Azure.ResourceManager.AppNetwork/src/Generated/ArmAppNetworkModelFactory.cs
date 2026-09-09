@@ -43,6 +43,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 default);
         }
 
+        /// <summary> The type used for update operations of the AppLink. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.AppLinkPatch"/> instance for mocking. </returns>
         public static AppLinkPatch AppLinkPatch(IDictionary<string, string> tags = default)
@@ -52,6 +53,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
             return new AppLinkPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> AppLink Member resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -81,7 +83,6 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="observabilityMetricsEndpoint"> Metrics endpoint URL. </param>
         /// <param name="connectivityProfile"> Connectivity profile. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="metadataResourceId"/> is null. </exception>
         /// <returns> A new <see cref="Models.AppLinkMemberProperties"/> instance for mocking. </returns>
         public static AppLinkMemberProperties AppLinkMemberProperties(AppLinkClusterType? clusterType = default, ResourceIdentifier metadataResourceId = default, AppLinkUpgradeProfile upgradeProfile = default, string observabilityMetricsEndpoint = default, AppLinkConnectivityProfile connectivityProfile = default, AppLinkProvisioningState? provisioningState = default)
         {
@@ -112,6 +113,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
             return new AppLinkConnectivityProfile(eastWestGatewayVisibility is null ? default : new EastWestGatewayProfile(eastWestGatewayVisibility.GetValueOrDefault(), default), privateConnectSubnetResourceId is null ? default : new PrivateConnectProfile(privateConnectSubnetResourceId, default), default);
         }
 
+        /// <summary> The type used for update operations of the AppLinkMember. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.AppLinkMemberPatch"/> instance for mocking. </returns>
@@ -131,6 +133,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
             return new AppLinkMemberUpdateProperties(upgradeProfile, observabilityMetricsEndpoint is null ? default : new ObservabilityProfile(new MetricsProfile(observabilityMetricsEndpoint, default), default), connectivityProfile, default);
         }
 
+        /// <summary> AppLinkMember upgrade history. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -148,18 +151,19 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 default);
         }
 
-        /// <param name="startOn"> Start timestamp. </param>
-        /// <param name="endOn"> End timestamp. </param>
+        /// <summary> AppLinkMember upgrade history properties. </summary>
+        /// <param name="startsOn"> Start timestamp. </param>
+        /// <param name="endsOn"> End timestamp. </param>
         /// <param name="initiatedBy"> Upgrade initiator. </param>
         /// <param name="fromVersion"> Version upgraded from. </param>
         /// <param name="toVersion"> Version upgraded to. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
         /// <returns> A new <see cref="Models.AppLinkUpgradeHistoryProperties"/> instance for mocking. </returns>
-        public static AppLinkUpgradeHistoryProperties AppLinkUpgradeHistoryProperties(DateTimeOffset startOn = default, DateTimeOffset? endOn = default, string initiatedBy = default, string fromVersion = default, string toVersion = default, AppLinkProvisioningState? provisioningState = default)
+        public static AppLinkUpgradeHistoryProperties AppLinkUpgradeHistoryProperties(DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, string initiatedBy = default, string fromVersion = default, string toVersion = default, AppLinkProvisioningState? provisioningState = default)
         {
             return new AppLinkUpgradeHistoryProperties(
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 initiatedBy,
                 fromVersion,
                 toVersion,
@@ -167,6 +171,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
                 default);
         }
 
+        /// <summary> AppLink available version resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -188,13 +193,13 @@ namespace Azure.ResourceManager.AppNetwork.Models
         /// <param name="fullyManagedVersionsReleaseChannels"> Release channels. </param>
         /// <param name="selfManagedVersionDetailVersions"> Istio versions. </param>
         /// <param name="provisioningState"> Provisioning state. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="fullyManagedVersionsReleaseChannels"/> or <paramref name="selfManagedVersionDetailVersions"/> is null. </exception>
         /// <returns> A new <see cref="Models.AppLinkAvailableVersionProperties"/> instance for mocking. </returns>
         public static AppLinkAvailableVersionProperties AppLinkAvailableVersionProperties(string kubernetesVersion = default, IEnumerable<AppLinkReleaseChannelInfo> fullyManagedVersionsReleaseChannels = default, IEnumerable<AppLinkVersionInfo> selfManagedVersionDetailVersions = default, AppLinkProvisioningState? provisioningState = default)
         {
             return new AppLinkAvailableVersionProperties(kubernetesVersion, fullyManagedVersionsReleaseChannels is null ? default : new FullyManagedVersions((fullyManagedVersionsReleaseChannels ?? new ChangeTrackingList<AppLinkReleaseChannelInfo>()).ToList(), default), selfManagedVersionDetailVersions is null ? default : new SelfManagedVersions((selfManagedVersionDetailVersions ?? new ChangeTrackingList<AppLinkVersionInfo>()).ToList(), default), provisioningState, default);
         }
 
+        /// <summary> Release channel information. </summary>
         /// <param name="releaseChannel"> Release channel. </param>
         /// <param name="version"> Istio version behind release channel. </param>
         /// <returns> A new <see cref="Models.AppLinkReleaseChannelInfo"/> instance for mocking. </returns>
@@ -203,6 +208,7 @@ namespace Azure.ResourceManager.AppNetwork.Models
             return new AppLinkReleaseChannelInfo(releaseChannel, version, default);
         }
 
+        /// <summary> Version information. </summary>
         /// <param name="version"> Istio version. </param>
         /// <param name="upgrades"> Available upgrades. </param>
         /// <returns> A new <see cref="Models.AppLinkVersionInfo"/> instance for mocking. </returns>

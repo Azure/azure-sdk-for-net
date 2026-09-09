@@ -107,7 +107,7 @@ namespace Azure.Messaging.EventGrid.Namespaces
             if (Optional.IsDefined(DataBase64))
             {
                 writer.WritePropertyName("data_base64"u8);
-                writer.WriteBase64StringValue(DataBase64.ToArray(), "D");
+                writer.WriteBase64StringValue(DataBase64, "D");
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);

@@ -324,10 +324,10 @@ namespace Azure.Security.CodeTransparency.Tests
                 options);
         }
 
-        private async Task<Response<BinaryData>> SubmitEntryAsync(CodeTransparencyClient client, BinaryData body, bool? waitForCommit) =>
+        private async Task<NullableResponse<BinaryData>> SubmitEntryAsync(CodeTransparencyClient client, BinaryData body, bool? waitForCommit) =>
             IsAsync ? await client.CreateEntryAsync(body, waitForCommit) : client.CreateEntry(body, waitForCommit);
 
-        private async Task<Response<BinaryData>> GetReceiptAsync(CodeTransparencyClient client, string entryId) =>
+        private async Task<NullableResponse<BinaryData>> GetReceiptAsync(CodeTransparencyClient client, string entryId) =>
             IsAsync ? await client.GetEntryAsync(entryId) : client.GetEntry(entryId);
 
         [TestCase(307)]
@@ -344,7 +344,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var transport = new MockTransport(redirect, committed);
             CodeTransparencyClient client = CreatePipelineClient(transport);
 
-            Response<BinaryData> response = await SubmitEntryAsync(
+            NullableResponse<BinaryData> response = await SubmitEntryAsync(
                 client,
                 BinaryData.FromString("statement"),
                 waitForCommit: true);
@@ -370,7 +370,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var transport = new MockTransport(redirect, committed);
             CodeTransparencyClient client = CreatePipelineClient(transport);
 
-            Response<BinaryData> response = await SubmitEntryAsync(
+            NullableResponse<BinaryData> response = await SubmitEntryAsync(
                 client,
                 BinaryData.FromString("statement"),
                 waitForCommit: true);
@@ -410,7 +410,7 @@ namespace Azure.Security.CodeTransparency.Tests
             });
             CodeTransparencyClient client = CreatePipelineClient(transport);
 
-            Response<BinaryData> response = await SubmitEntryAsync(
+            NullableResponse<BinaryData> response = await SubmitEntryAsync(
                 client,
                 BinaryData.FromString("statement"),
                 waitForCommit: true);
@@ -441,7 +441,7 @@ namespace Azure.Security.CodeTransparency.Tests
                 options.Retry.MaxDelay = TimeSpan.Zero;
             });
 
-            Response<BinaryData> response = await SubmitEntryAsync(
+            NullableResponse<BinaryData> response = await SubmitEntryAsync(
                 client,
                 BinaryData.FromString("statement"),
                 waitForCommit: true);
@@ -618,7 +618,7 @@ namespace Azure.Security.CodeTransparency.Tests
                 options.Retry.MaxDelay = TimeSpan.Zero;
             });
 
-            Response<BinaryData> response = await GetReceiptAsync(client, "4.44");
+            NullableResponse<BinaryData> response = await GetReceiptAsync(client, "4.44");
 
             Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2026-03-26", mockTransport.Requests[1].Uri.ToString());
             Assert.AreEqual(expected: 200, response.GetRawResponse().Status);
@@ -633,7 +633,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var mockTransport = new MockTransport(mockedResponse);
             CodeTransparencyClient client = CreatePipelineClient(mockTransport);
 
-            Response<BinaryData> response = await GetReceiptAsync(client, "4.44");
+            NullableResponse<BinaryData> response = await GetReceiptAsync(client, "4.44");
 
             Assert.AreEqual("https://foo.bar.com/entries/4.44?api-version=2026-03-26", mockTransport.Requests[0].Uri.ToString());
             Assert.AreEqual(200, response.GetRawResponse().Status);
@@ -650,7 +650,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var transport = new MockTransport(pending, new MockResponse(200));
             CodeTransparencyClient client = CreatePipelineClient(transport);
 
-            Response<BinaryData> response = await GetReceiptAsync(client, "4.44");
+            NullableResponse<BinaryData> response = await GetReceiptAsync(client, "4.44");
 
             Assert.AreEqual(302, response.GetRawResponse().Status);
             Assert.AreEqual(1, transport.Requests.Count);
@@ -687,7 +687,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var transport = new MockTransport(redirect, committed);
             CodeTransparencyClient client = CreatePipelineClient(transport);
 
-            Response<BinaryData> response = await GetReceiptAsync(client, "4.44");
+            NullableResponse<BinaryData> response = await GetReceiptAsync(client, "4.44");
 
             Assert.AreEqual(2, transport.Requests.Count);
             Assert.AreEqual("primary.foo.bar.com", transport.Requests[1].Uri.Host);
@@ -713,7 +713,7 @@ namespace Azure.Security.CodeTransparency.Tests
                 options.Retry.MaxDelay = TimeSpan.Zero;
             });
 
-            Response<BinaryData> response = await GetReceiptAsync(client, "4.44");
+            NullableResponse<BinaryData> response = await GetReceiptAsync(client, "4.44");
 
             Assert.AreEqual(3, transport.Requests.Count);
             Assert.AreEqual("primary.foo.bar.com", transport.Requests[1].Uri.Host);
@@ -735,7 +735,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var transport = new MockTransport(redirect, pending, new MockResponse(200));
             CodeTransparencyClient client = CreatePipelineClient(transport);
 
-            Response<BinaryData> response = await GetReceiptAsync(client, "4.44");
+            NullableResponse<BinaryData> response = await GetReceiptAsync(client, "4.44");
 
             Assert.AreEqual(302, response.GetRawResponse().Status);
             Assert.AreEqual(2, transport.Requests.Count);
@@ -788,7 +788,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             BinaryData body = BinaryData.FromString("Hello World!");
 
-            Response<BinaryData> response = IsAsync
+            NullableResponse<BinaryData> response = IsAsync
                 ? await client.CreateEntryAsync(body, waitForCommit: false)
                 : client.CreateEntry(body, waitForCommit: false);
 
@@ -826,7 +826,7 @@ namespace Azure.Security.CodeTransparency.Tests
             var client = new CodeTransparencyClient(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             BinaryData body = BinaryData.FromString("Hello World!");
 
-            Response<BinaryData> response = IsAsync
+            NullableResponse<BinaryData> response = IsAsync
                 ? await client.CreateEntryAsync(body, waitForCommit: false)
                 : client.CreateEntry(body, waitForCommit: false);
 

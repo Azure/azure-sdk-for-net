@@ -110,8 +110,8 @@ namespace Azure.Analytics.Defender.Easm
             string name = default;
             string displayName = default;
             Guid? uuid = default;
-            DateTimeOffset? createdDate = default;
-            DateTimeOffset? updatedDate = default;
+            DateTimeOffset? createdOn = default;
+            DateTimeOffset? updatedOn = default;
             AssetState? state = default;
             string externalId = default;
             IList<string> labels = default;
@@ -157,7 +157,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    createdDate = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("updatedDate"u8))
@@ -166,7 +166,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    updatedDate = prop.Value.GetDateTimeOffset("O");
+                    updatedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("state"u8))
@@ -248,8 +248,8 @@ namespace Azure.Analytics.Defender.Easm
                 name,
                 displayName,
                 uuid,
-                createdDate,
-                updatedDate,
+                createdOn,
+                updatedOn,
                 state,
                 externalId,
                 labels ?? new ChangeTrackingList<string>(),

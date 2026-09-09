@@ -17,12 +17,66 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
 #pragma warning disable CS0618 // Suppress generated overloads that would otherwise reference obsolete compatibility types.
     [CodeGenSuppress("NetworkFabricData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(ManagedServiceIdentity), typeof(string), typeof(string), typeof(string), typeof(IEnumerable<string>), typeof(StorageAccountConfiguration), typeof(IEnumerable<NetworkFabricLock>), typeof(ResourceIdentifier), typeof(int?), typeof(int), typeof(string), typeof(string), typeof(long), typeof(TerminalServerConfiguration), typeof(ManagementNetworkConfigurationProperties), typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(IEnumerable<string>), typeof(int?), typeof(IEnumerable<ResourceIdentifier>), typeof(IEnumerable<NetworkFabricFeatureFlag>), typeof(IEnumerable<ResourceIdentifier>), typeof(UniqueRouteDistinguisherProperties), typeof(int?), typeof(IEnumerable<string>), typeof(long?), typeof(string), typeof(AuthorizedTransceiverProperties), typeof(NetworkFabricConfigurationState?), typeof(NetworkFabricProvisioningState?), typeof(NetworkFabricAdministrativeState?), typeof(NetworkFabricQosConfigurationState?))]
+    [CodeGenSuppress("NetworkFabricInternetGatewayData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(string), typeof(ResourceIdentifier), typeof(System.Net.IPAddress), typeof(int?), typeof(InternetGatewayType), typeof(InternetGatewayType?), typeof(ResourceIdentifier), typeof(string), typeof(NetworkFabricProvisioningState?))]
+    [CodeGenSuppress("NetworkFabricInternetGatewayData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(string), typeof(ResourceIdentifier), typeof(string), typeof(int?), typeof(InternetGatewayType), typeof(ResourceIdentifier), typeof(NetworkFabricProvisioningState?))]
     [CodeGenSuppress("NetworkTapData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(IDictionary<string, string>), typeof(AzureLocation), typeof(ManagedServiceIdentity), typeof(string), typeof(ResourceIdentifier), typeof(ResourceIdentifier), typeof(IEnumerable<ResourceIdentifier>), typeof(IEnumerable<NetworkTapPropertiesDestinationsItem>), typeof(NetworkTapPollingType?), typeof(string), typeof(NetworkFabricConfigurationState?), typeof(NetworkFabricProvisioningState?), typeof(NetworkFabricAdministrativeState?))]
     [CodeGenSuppress("NetworkFabricInternalNetworkData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(string), typeof(StaticRouteConfigurationExtension?), typeof(int?), typeof(IEnumerable<ConnectedSubnet>), typeof(IEnumerable<ConnectedSubnet>), typeof(ImportRoutePolicy), typeof(ExportRoutePolicy), typeof(ResourceIdentifier), typeof(ResourceIdentifier), typeof(IsMonitoringEnabled?), typeof(int), typeof(InternalNetworkBgpConfiguration), typeof(InternalNetworkStaticRouteConfiguration), typeof(IEnumerable<PrefixLimitProperties>), typeof(IEnumerable<PrefixLimitProperties>), typeof(string), typeof(ResourceIdentifier), typeof(NetworkFabricConfigurationState?), typeof(NetworkFabricProvisioningState?), typeof(NetworkFabricAdministrativeState?))]
     [CodeGenSuppress("NetworkToNetworkInterconnectData", typeof(ResourceIdentifier), typeof(string), typeof(ResourceType), typeof(SystemData), typeof(NniType?), typeof(IsManagementType?), typeof(NetworkFabricBooleanValue), typeof(Layer2Configuration), typeof(NetworkToNetworkInterconnectOptionBLayer3Configuration), typeof(NpbStaticRouteConfiguration), typeof(NniStaticRouteConfiguration), typeof(ImportRoutePolicyInformation), typeof(ExportRoutePolicyInformation), typeof(ResourceIdentifier), typeof(ResourceIdentifier), typeof(NetworkFabricMicroBfdState?), typeof(ConditionalDefaultRouteProperties), typeof(string), typeof(NetworkFabricConfigurationState?), typeof(NetworkFabricProvisioningState?), typeof(NetworkFabricAdministrativeState?))]
 #pragma warning restore CS0618
     public static partial class ArmManagedNetworkFabricModelFactory
     {
+        // TODO: Remove this workaround after https://github.com/microsoft/typespec/issues/11707 is fixed.
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string annotation = default, ResourceIdentifier internetGatewayRuleId = default, System.Net.IPAddress iPv4Address = default, int? port = default, InternetGatewayType typePropertiesType = default, InternetGatewayType? internetGatewayType = default, ResourceIdentifier networkFabricControllerId = default, string lastOperationDetails = default, NetworkFabricProvisioningState? provisioningState = default)
+        {
+            return new NetworkFabricInternetGatewayData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation is null && internetGatewayRuleId is null && port is null && internetGatewayType is null && networkFabricControllerId is null && lastOperationDetails is null && provisioningState is null ? default : new InternetGatewayProperties(
+                    annotation,
+                    internetGatewayRuleId,
+                    default,
+                    port,
+                    internetGatewayType,
+                    internetGatewayType,
+                    networkFabricControllerId,
+                    new LastOperationProperties(lastOperationDetails, default),
+                    provisioningState,
+                    default),
+                default);
+        }
+
+        // TODO: Remove this workaround after https://github.com/microsoft/typespec/issues/11707 is fixed.
+        /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkFabricInternetGatewayData"/>. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static NetworkFabricInternetGatewayData NetworkFabricInternetGatewayData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string annotation, ResourceIdentifier internetGatewayRuleId, string iPV4Address, int? port, InternetGatewayType typePropertiesType, ResourceIdentifier networkFabricControllerId, NetworkFabricProvisioningState? provisioningState)
+        {
+            return new NetworkFabricInternetGatewayData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                annotation is null && internetGatewayRuleId is null && iPV4Address is null && port is null && networkFabricControllerId is null && provisioningState is null ? default : new InternetGatewayProperties(
+                    annotation,
+                    internetGatewayRuleId,
+                    iPV4Address,
+                    port,
+                    typePropertiesType,
+                    default,
+                    networkFabricControllerId,
+                    default,
+                    provisioningState,
+                    default),
+                default);
+        }
+
         /// <summary> Initializes a new instance of <see cref="Models.NetworkFabricOperationStatusResult"/>. </summary>
         /// <returns> A new <see cref="Models.NetworkFabricOperationStatusResult"/> instance for mocking. </returns>
         public static NetworkFabricOperationStatusResult NetworkFabricOperationStatusResult(ResourceIdentifier id, ResourceIdentifier resourceId, string name, string status, float? percentComplete, DateTimeOffset? startOn, DateTimeOffset? endOn, IEnumerable<NetworkFabricOperationStatusResult> operations, ResponseError error)
@@ -65,17 +119,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="allowASOverride"> Enable Or Disable state. </param>
         /// <param name="fabricAsn"> ASN of Network Fabric. Example: 65048. </param>
         /// <param name="peerAsn"> Peer ASN. Example: 65047. </param>
-        /// <param name="iPv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
-        /// <param name="iPv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
-        /// <param name="iPv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
-        /// <param name="iPv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
+        /// <param name="ipv4ListenRangePrefixes"> List of BGP IPv4 Listen Range prefixes. </param>
+        /// <param name="ipv6ListenRangePrefixes"> List of BGP IPv6 Listen Ranges prefixes. </param>
+        /// <param name="ipv4NeighborAddress"> List with stringified IPv4 Neighbor Addresses. </param>
+        /// <param name="ipv6NeighborAddress"> List with stringified IPv6 Neighbor Address. </param>
         /// <param name="bmpConfiguration"> Bmp configuration properties. </param>
         /// <param name="v4OverV6BgpSession"> State. </param>
         /// <param name="v6OverV4BgpSession"> State. </param>
         /// <returns> A new <see cref="Models.InternalNetworkBgpConfiguration"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete and will be removed in a future version. Use BgpConfiguration instead.")]
-        public static InternalNetworkBgpConfiguration InternalNetworkBgpConfiguration(string annotation = default, BfdConfiguration bfdConfiguration = default, NetworkFabricBooleanValue? defaultRouteOriginate = default, int? allowAS = default, AllowASOverride? allowASOverride = default, long? fabricAsn = default, long? peerAsn = default, IEnumerable<string> iPv4ListenRangePrefixes = default, IEnumerable<string> iPv6ListenRangePrefixes = default, IEnumerable<NeighborAddress> iPv4NeighborAddress = default, IEnumerable<NeighborAddress> iPv6NeighborAddress = default, InternalNetworkBmpProperties bmpConfiguration = default, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default)
+        // TODO: Remove this workaround after https://github.com/microsoft/typespec/issues/11707 is fixed.
+        public static InternalNetworkBgpConfiguration InternalNetworkBgpConfiguration(string annotation = default, BfdConfiguration bfdConfiguration = default, NetworkFabricBooleanValue? defaultRouteOriginate = default, int? allowAS = default, AllowASOverride? allowASOverride = default, long? fabricAsn = default, long? peerAsn = default, IEnumerable<string> ipv4ListenRangePrefixes = default, IEnumerable<string> ipv6ListenRangePrefixes = default, IEnumerable<NeighborAddress> ipv4NeighborAddress = default, IEnumerable<NeighborAddress> ipv6NeighborAddress = default, InternalNetworkBmpProperties bmpConfiguration = default, NetworkFabricV4OverV6BgpSessionState? v4OverV6BgpSession = default, NetworkFabricV6OverV4BgpSessionState? v6OverV4BgpSession = default)
         {
             throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use BgpConfiguration instead.");
         }
@@ -323,16 +378,17 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
         /// <param name="username"> Username for the terminal server connection. </param>
         /// <param name="password"> Password for the terminal server connection. </param>
         /// <param name="serialNumber"> Serial Number of Terminal server. </param>
-        /// <param name="primaryIpv4Prefix"> IPv4 Address Prefix. </param>
-        /// <param name="primaryIpv6Prefix"> IPv6 Address Prefix. </param>
-        /// <param name="secondaryIpv4Prefix"> Secondary IPv4 Address Prefix. </param>
-        /// <param name="secondaryIpv6Prefix"> Secondary IPv6 Address Prefix. </param>
+        /// <param name="primaryIPv4Prefix"> IPv4 Address Prefix. </param>
+        /// <param name="primaryIPv6Prefix"> IPv6 Address Prefix. </param>
+        /// <param name="secondaryIPv4Prefix"> Secondary IPv4 Address Prefix. </param>
+        /// <param name="secondaryIPv6Prefix"> Secondary IPv6 Address Prefix. </param>
         /// <param name="networkDeviceId"> ARM Resource ID used for the NetworkDevice. </param>
         /// <param name="secretRotationStatus"> Secret rotation status for the terminal server's secrets. </param>
         /// <returns> A new <see cref="Models.TerminalServerConfiguration"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This method is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerConfiguration instead.")]
-        public static TerminalServerConfiguration TerminalServerConfiguration(string username = default, string password = default, string serialNumber = default, string primaryIpv4Prefix = default, string primaryIpv6Prefix = default, string secondaryIpv4Prefix = default, string secondaryIpv6Prefix = default, ResourceIdentifier networkDeviceId = default, IEnumerable<NetworkFabricSecretRotationStatus> secretRotationStatus = default)
+        // TODO: Remove this workaround after https://github.com/microsoft/typespec/issues/11707 is fixed.
+        public static TerminalServerConfiguration TerminalServerConfiguration(string username = default, string password = default, string serialNumber = default, string primaryIPv4Prefix = default, string primaryIPv6Prefix = default, string secondaryIPv4Prefix = default, string secondaryIPv6Prefix = default, ResourceIdentifier networkDeviceId = default, IEnumerable<NetworkFabricSecretRotationStatus> secretRotationStatus = default)
         {
             throw new NotSupportedException("This method is obsolete and will be removed in a future version. Use NetworkFabricTerminalServerConfiguration instead.");
         }
@@ -356,14 +412,15 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 
         /// <summary> Initializes a new instance of <see cref="ManagedNetworkFabric.NetworkDeviceInterfaceData"/>. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static NetworkDeviceInterfaceData NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, System.Net.IPAddress ipv4Address, string ipv6Address, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
+        // TODO: Remove this workaround after https://github.com/microsoft/typespec/issues/11707 is fixed.
+        public static NetworkDeviceInterfaceData NetworkDeviceInterfaceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string annotation, string physicalIdentifier, string connectedTo, NetworkDeviceInterfaceType? interfaceType, System.Net.IPAddress iPv4Address, string ipv6Address, NetworkFabricProvisioningState? provisioningState, NetworkFabricAdministrativeState? administrativeState)
         {
             return new NetworkDeviceInterfaceData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                new NetworkInterfaceProperties(annotation, null, physicalIdentifier, connectedTo, interfaceType, ipv4Address, ipv6Address, default, default, default, default, provisioningState, administrativeState, default),
+                new NetworkInterfaceProperties(annotation, null, physicalIdentifier, connectedTo, interfaceType, iPv4Address, ipv6Address, default, default, default, default, provisioningState, administrativeState, default),
                 identity: default,
                 additionalBinaryDataProperties: null);
         }

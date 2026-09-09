@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary>
     /// Describes the policy to be used for placement of a Service Fabric service.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: 
+    /// Please note this is the base class. The derived classes available for instantiation are: 
     /// </summary>
     public partial class ServicePlacementPolicyDescription : ProvisionableConstruct
     {
+        private BicepValue<ServicePlacementPolicyType> _type;
+
         /// <summary> Creates a new ServicePlacementPolicyDescription. </summary>
         public ServicePlacementPolicyDescription()
         {
+        }
+
+        /// <summary> The type of placement policy for a service fabric service. Following are the possible values. </summary>
+        internal BicepValue<ServicePlacementPolicyType> Type
+        {
+            get
+            {
+                Initialize();
+                return _type;
+            }
         }
 
         /// <summary> Define all the provisionable properties for ServicePlacementPolicyDescription. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _type = DefineProperty<ServicePlacementPolicyType>(nameof(Type), new string[] { "type" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

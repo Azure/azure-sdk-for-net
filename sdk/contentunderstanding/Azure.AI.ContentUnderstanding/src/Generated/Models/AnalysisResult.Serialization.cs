@@ -110,6 +110,21 @@ namespace Azure.AI.ContentUnderstanding
                 }
                 writer.WriteEndArray();
             }
+            if (Optional.IsCollectionDefined(Infos))
+            {
+                writer.WritePropertyName("infos"u8);
+                writer.WriteStartArray();
+                foreach (ResponseError item in Infos)
+                {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
+                    ((IJsonModel<ResponseError>)item).Write(writer, options);
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(StringEncoding))
             {
                 writer.WritePropertyName("stringEncoding"u8);
@@ -168,6 +183,7 @@ namespace Azure.AI.ContentUnderstanding
             string apiVersion = default;
             DateTimeOffset? createdAt = default;
             IList<ResponseError> warnings = default;
+            IList<ResponseError> infos = default;
             string stringEncoding = default;
             IList<AnalysisContent> contents = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -213,6 +229,27 @@ namespace Azure.AI.ContentUnderstanding
                     warnings = array;
                     continue;
                 }
+                if (prop.NameEquals("infos"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<ResponseError> array = new List<ResponseError>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(ModelReaderWriter.Read<ResponseError>(new BinaryData(Encoding.UTF8.GetBytes(item.GetRawText())), options, AzureAIContentUnderstandingContext.Default));
+                        }
+                    }
+                    infos = array;
+                    continue;
+                }
                 if (prop.NameEquals("stringEncoding"u8))
                 {
                     stringEncoding = prop.Value.GetString();
@@ -238,6 +275,7 @@ namespace Azure.AI.ContentUnderstanding
                 apiVersion,
                 createdAt,
                 warnings ?? new ChangeTrackingList<ResponseError>(),
+                infos ?? new ChangeTrackingList<ResponseError>(),
                 stringEncoding,
                 contents,
                 additionalBinaryDataProperties);

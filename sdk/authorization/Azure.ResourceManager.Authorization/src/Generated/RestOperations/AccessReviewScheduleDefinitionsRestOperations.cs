@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Authorization
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        internal HttpMessage CreateGetByIdRequest(string subscriptionId, string scheduleDefinitionId, RequestContext context)
+        internal HttpMessage CreateGetByIdRequest(Guid subscriptionId, string scheduleDefinitionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/", false);
             uri.AppendPath(scheduleDefinitionId, true);
             if (_apiVersion != null)
@@ -65,12 +65,12 @@ namespace Azure.ResourceManager.Authorization
             return message;
         }
 
-        internal HttpMessage CreateCreateOrUpdateByIdRequest(string subscriptionId, string scheduleDefinitionId, RequestContent content, RequestContext context)
+        internal HttpMessage CreateCreateOrUpdateByIdRequest(Guid subscriptionId, string scheduleDefinitionId, RequestContent content, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/", false);
             uri.AppendPath(scheduleDefinitionId, true);
             if (_apiVersion != null)
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.Authorization
             return message;
         }
 
-        internal HttpMessage CreateDeleteByIdRequest(string subscriptionId, string scheduleDefinitionId, RequestContext context)
+        internal HttpMessage CreateDeleteByIdRequest(Guid subscriptionId, string scheduleDefinitionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/", false);
             uri.AppendPath(scheduleDefinitionId, true);
             if (_apiVersion != null)
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.Authorization
             return message;
         }
 
-        internal HttpMessage CreateGetAllRequest(string subscriptionId, string filter, RequestContext context)
+        internal HttpMessage CreateGetAllRequest(Guid subscriptionId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Authorization/accessReviewScheduleDefinitions", false);
             if (_apiVersion != null)
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Authorization
             return message;
         }
 
-        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, string subscriptionId, string filter, RequestContext context)
+        internal HttpMessage CreateNextGetAllRequest(Uri nextPage, Guid subscriptionId, string filter, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             if (nextPage.IsAbsoluteUri)
@@ -156,12 +156,12 @@ namespace Azure.ResourceManager.Authorization
             return message;
         }
 
-        internal HttpMessage CreateStopRequest(string subscriptionId, string scheduleDefinitionId, RequestContext context)
+        internal HttpMessage CreateStopRequest(Guid subscriptionId, string scheduleDefinitionId, RequestContext context)
         {
             RawRequestUriBuilder uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/subscriptions/", false);
-            uri.AppendPath(subscriptionId, true);
+            uri.AppendPath(subscriptionId.ToString(), true);
             uri.AppendPath("/providers/Microsoft.Authorization/accessReviewScheduleDefinitions/", false);
             uri.AppendPath(scheduleDefinitionId, true);
             uri.AppendPath("/stop", false);

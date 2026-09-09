@@ -229,7 +229,7 @@ namespace Azure.Provisioning.Compute
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" }, isOutput: true);
             _identity = DefineModelProperty<ManagedServiceIdentity>(nameof(Identity), new string[] { "identity" });
             _eTag = DefineProperty<string>(nameof(ETag), new string[] { "etag" }, isOutput: true);
-            _parent = DefineResource<VirtualMachineScaleSet>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<VirtualMachineScaleSet>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

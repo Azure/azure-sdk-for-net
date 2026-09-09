@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             writer.WritePropertyName("queryId"u8);
             writer.WriteStringValue(QueryId);
             writer.WritePropertyName("bucketStartTimeUTC"u8);
-            writer.WriteStringValue(BucketStartOn, "O");
+            writer.WriteStringValue(BucketStartsOn, "O");
             writer.WritePropertyName("bucketEndTimeUTC"u8);
-            writer.WriteStringValue(BucketEndOn, "O");
+            writer.WriteStringValue(BucketEndsOn, "O");
             writer.WritePropertyName("firstActivityTimeUTC"u8);
             writer.WriteStringValue(FirstActivityOn, "O");
             writer.WritePropertyName("lastActivityTimeUTC"u8);
@@ -124,8 +124,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             EntityTimelineKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string queryId = default;
-            DateTimeOffset bucketStartOn = default;
-            DateTimeOffset bucketEndOn = default;
+            DateTimeOffset bucketStartsOn = default;
+            DateTimeOffset bucketEndsOn = default;
             DateTimeOffset firstActivityOn = default;
             DateTimeOffset lastActivityOn = default;
             string content = default;
@@ -144,12 +144,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 if (prop.NameEquals("bucketStartTimeUTC"u8))
                 {
-                    bucketStartOn = prop.Value.GetDateTimeOffset("O");
+                    bucketStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("bucketEndTimeUTC"u8))
                 {
-                    bucketEndOn = prop.Value.GetDateTimeOffset("O");
+                    bucketEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("firstActivityTimeUTC"u8))
@@ -181,8 +181,8 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 kind,
                 additionalBinaryDataProperties,
                 queryId,
-                bucketStartOn,
-                bucketEndOn,
+                bucketStartsOn,
+                bucketEndsOn,
                 firstActivityOn,
                 lastActivityOn,
                 content,

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StorageCache.Models;
 
@@ -71,8 +72,11 @@ namespace Azure.ResourceManager.StorageCache
     [ModelReaderWriterBuildable(typeof(OutstandingCondition))]
     [ModelReaderWriterBuildable(typeof(PrimingJob))]
     [ModelReaderWriterBuildable(typeof(PrimingJobContent))]
+    [ModelReaderWriterBuildable(typeof(RebalanceJobsListResult))]
+    [ModelReaderWriterBuildable(typeof(RebalanceJobUpdateProperties))]
     [ModelReaderWriterBuildable(typeof(RequiredAmlFileSystemSubnetsSize))]
     [ModelReaderWriterBuildable(typeof(RequiredAmlFileSystemSubnetsSizeContent))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(StorageCacheActiveDirectorySettings))]
     [ModelReaderWriterBuildable(typeof(StorageCacheActiveDirectorySettingsCredentials))]
     [ModelReaderWriterBuildable(typeof(StorageCacheAscOperationError))]
@@ -87,6 +91,11 @@ namespace Azure.ResourceManager.StorageCache
     [ModelReaderWriterBuildable(typeof(StorageCacheImportJobResource))]
     [ModelReaderWriterBuildable(typeof(StorageCacheImportJobsResult))]
     [ModelReaderWriterBuildable(typeof(StorageCacheNetworkSettings))]
+    [ModelReaderWriterBuildable(typeof(StorageCacheRebalanceJobData))]
+    [ModelReaderWriterBuildable(typeof(StorageCacheRebalanceJobPatch))]
+    [ModelReaderWriterBuildable(typeof(StorageCacheRebalanceJobProperties))]
+    [ModelReaderWriterBuildable(typeof(StorageCacheRebalanceJobPropertiesStatus))]
+    [ModelReaderWriterBuildable(typeof(StorageCacheRebalanceJobResource))]
     [ModelReaderWriterBuildable(typeof(StorageCacheResource))]
     [ModelReaderWriterBuildable(typeof(StorageCacheRestriction))]
     [ModelReaderWriterBuildable(typeof(StorageCacheSecuritySettings))]

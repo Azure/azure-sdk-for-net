@@ -133,6 +133,9 @@ namespace Azure.Storage
         public const string UseLegacyDefaultConcurrencySwitchName = "Azure.Storage.UseLegacyDefaultConcurrency";
         public const string UseLegacyDefaultConcurrencyEnvVar = "AZURE_STORAGE_USE_LEGACY_DEFAULT_CONCURRENCY";
 
+        public const string CseV2AllowMisorderedAuthRegionsSwitchName = "Azure.Storage.CseV2AllowMisorderedAuthRegions";
+        public const string CseV2AllowMisorderedAuthRegionsEnvVar = "AZURE_STORAGE_CSE_V2_ALLOW_MISORDERED_AUTH_REGIONS";
+
         public const string DefaultScope = ".default";
         public const string DefaultAudience = "https://storage.azure.com";
 

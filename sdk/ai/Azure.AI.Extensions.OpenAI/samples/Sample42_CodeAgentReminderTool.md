@@ -242,7 +242,7 @@ Synchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgent_CodeAgentReminderTool_Sync
 Console.WriteLine($"Sending prompt {prompt} in session {session.AgentSessionId}...");
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
-ProjectCreateResponseOptions responseOptions = new()
+CreateResponseOptions responseOptions = new()
 {
     InputItems = { ResponseItem.CreateUserMessageItem(prompt) },
     SessionId = session.AgentSessionId,
@@ -272,7 +272,7 @@ Asynchronous sample:
 ```C# Snippet:Sample_GetResponseFromAgent_CodeAgentReminderTool_Async
 Console.WriteLine($"Sending prompt {prompt} in session {session.AgentSessionId}...");
 ProjectResponsesClient responseClient = projectClient.ProjectOpenAIClient.GetProjectResponsesClientForAgentEndpoint(agentVersion.Name);
-ProjectCreateResponseOptions responseOptions = new()
+CreateResponseOptions responseOptions = new()
 {
     InputItems = { ResponseItem.CreateUserMessageItem(prompt) },
     SessionId = session.AgentSessionId,
@@ -308,13 +308,13 @@ ProjectsRoutine created = null;
 foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutines(order: MemoryStoreListOrder.Descending, limit: 1))
 {
     // The routine created no earlier than response and not later than one minute after response.
-    if (routine.CreatedAt >= responseTime && routine.CreatedAt < responseTime.AddMinutes(1))
+    if (routine.CreatedOn >= responseTime && routine.CreatedOn < responseTime.AddMinutes(1))
     {
         created = routine;
         break;
     }
     // If the latest routine was created before the response, our routine was not created.
-    else if (routine.CreatedAt < responseTime)
+    else if (routine.CreatedOn < responseTime)
     {
         break;
     }
@@ -334,13 +334,13 @@ ProjectsRoutine created = null;
 await foreach (ProjectsRoutine routine in projectClient.Routines.GetRoutinesAsync(order: MemoryStoreListOrder.Descending, limit: 1))
 {
     // The routine created no earlier than response and not later than one minute after response.
-    if (routine.CreatedAt >= responseTime && routine.CreatedAt < responseTime.AddMinutes(1))
+    if (routine.CreatedOn >= responseTime && routine.CreatedOn < responseTime.AddMinutes(1))
     {
         created = routine;
         break;
     }
     // If the latest routine was created before the response, our routine was not created.
-    else if (routine.CreatedAt < responseTime)
+    else if (routine.CreatedOn < responseTime)
     {
         break;
     }
@@ -391,10 +391,10 @@ bool runWasTriggered = false;
 while (DateTime.UtcNow < deadline)
 {
     Thread.Sleep(500);
-    foreach (RoutineRun run in projectClient.Routines.GetRoutineRuns(name: created.Name))
+    foreach (RoutineRun run in projectClient.Routines.GetRoutineRuns(routineName: created.Name))
     {
         runWasTriggered = true;
-        Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredAt?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedAt?.ToString() ?? "<Not ended yet>"}");
+        Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredOn?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedOn?.ToString() ?? "<Not ended yet>"}");
         if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
             string.Equals(run.Status, "failed", StringComparison.InvariantCultureIgnoreCase) ||
             string.Equals(run.Status, "killed", StringComparison.InvariantCultureIgnoreCase))
@@ -420,10 +420,10 @@ bool runWasTriggered = false;
 while (DateTime.UtcNow < deadline)
 {
     await Task.Delay(500);
-    await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(name: created.Name))
+    await foreach (RoutineRun run in projectClient.Routines.GetRoutineRunsAsync(routineName: created.Name))
     {
         runWasTriggered = true;
-        Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredAt?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedAt?.ToString() ?? "<Not ended yet>"}");
+        Console.WriteLine($"    - run ID {run.Id}, status: {run.Status}, trigger type: {run.TriggerType}, triggered at: {run.TriggeredOn?.ToString() ?? "<Not triggered yet>"}, ended at: {run.EndedOn?.ToString() ?? "<Not ended yet>"}");
         if (string.Equals(run.Status, "finished", StringComparison.InvariantCultureIgnoreCase) ||
             string.Equals(run.Status, "failed", StringComparison.InvariantCultureIgnoreCase) ||
             string.Equals(run.Status, "killed", StringComparison.InvariantCultureIgnoreCase))

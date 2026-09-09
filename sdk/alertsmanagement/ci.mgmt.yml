@@ -17,3 +17,5 @@ extends:
       safeName: AzureResourceManagerAlertProcessingRules
     - name: Azure.ResourceManager.TenantActivityLogAlerts
       safeName: AzureResourceManagerTenantActivityLogAlerts
+    - name: Azure.ResourceManager.PreviewAlertRule
+      safeName: AzureResourceManagerPreviewAlertRule

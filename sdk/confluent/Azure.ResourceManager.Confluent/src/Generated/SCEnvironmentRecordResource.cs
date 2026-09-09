@@ -53,9 +53,9 @@ namespace Azure.ResourceManager.Confluent
         {
             TryGetApiVersion(ResourceType, out string scEnvironmentRecordApiVersion);
             _scEnvironmentRecordsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);
-            _scEnvironmentRecordsRestClient = new SCEnvironmentRecords(_scEnvironmentRecordsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scEnvironmentRecordApiVersion ?? "2025-08-18-preview");
+            _scEnvironmentRecordsRestClient = new SCEnvironmentRecords(_scEnvironmentRecordsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scEnvironmentRecordApiVersion ?? "2026-06-02-preview");
             _scEnvironmentRecordClusterClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Confluent", ResourceType.Namespace, Diagnostics);
-            _scEnvironmentRecordClusterRestClient = new SCEnvironmentRecordCluster(_scEnvironmentRecordClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scEnvironmentRecordApiVersion ?? "2025-08-18-preview");
+            _scEnvironmentRecordClusterRestClient = new SCEnvironmentRecordCluster(_scEnvironmentRecordClusterClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scEnvironmentRecordApiVersion ?? "2026-06-02-preview");
             ValidateResourceId(id);
         }
 
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Confluent
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2025-08-18-preview. </description>
+        /// <description> 2026-06-02-preview. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -619,6 +619,39 @@ namespace Azure.ResourceManager.Confluent
             Argument.AssertNotNullOrEmpty(clusterId, nameof(clusterId));
 
             return GetSCClusterRecords().Get(clusterId, cancellationToken);
+        }
+
+        /// <summary> Gets a collection of ConfluentNetworkGateways in the <see cref="SCEnvironmentRecordResource"/>. </summary>
+        /// <returns> An object representing collection of ConfluentNetworkGateways and their operations over a ConfluentNetworkGatewayResource. </returns>
+        public virtual ConfluentNetworkGatewayCollection GetConfluentNetworkGateways()
+        {
+            return GetCachedClient(client => new ConfluentNetworkGatewayCollection(client, Id));
+        }
+
+        /// <summary> Get confluent network gateway by Id. </summary>
+        /// <param name="networkGatewayId"> Confluent network gateway id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkGatewayId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkGatewayId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ConfluentNetworkGatewayResource>> GetConfluentNetworkGatewayAsync(string networkGatewayId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkGatewayId, nameof(networkGatewayId));
+
+            return await GetConfluentNetworkGateways().GetAsync(networkGatewayId, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary> Get confluent network gateway by Id. </summary>
+        /// <param name="networkGatewayId"> Confluent network gateway id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="networkGatewayId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="networkGatewayId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ConfluentNetworkGatewayResource> GetConfluentNetworkGateway(string networkGatewayId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(networkGatewayId, nameof(networkGatewayId));
+
+            return GetConfluentNetworkGateways().Get(networkGatewayId, cancellationToken);
         }
     }
 }

@@ -39,11 +39,15 @@ namespace Azure.AI.Inference
         /// <inheritdoc cref="ChatCompletionsToolChoicePreset.Required"/>
         public static readonly ChatCompletionsToolChoice Required = new(ChatCompletionsToolChoicePreset.Required);
 
+        /// <summary> Converts a <see cref="FunctionDefinition"/> into a tool choice that constrains the model to calling that function. </summary>
+        /// <param name="functionDefinition"> The definition of the function the model must call. </param>
         public static implicit operator ChatCompletionsToolChoice(FunctionDefinition functionDefinition)
         {
             return new(functionDefinition);
         }
 
+        /// <summary> Converts a <see cref="ChatCompletionsToolDefinition"/> into a tool choice that constrains the model to calling that tool. </summary>
+        /// <param name="functionToolDefinition"> The definition of the tool the model must call. </param>
         public static implicit operator ChatCompletionsToolChoice(ChatCompletionsToolDefinition functionToolDefinition)
         {
             return new(functionToolDefinition);
