@@ -71,7 +71,7 @@ $ErrorActionPreference = 'Stop'
 $defaultSkipEmails = @(
     'bebroder@microsoft.com',
     'mharder@microsoft.com',
-    'djurek@microsoft.com',
+    # 'djurek@microsoft.com',
     'chononiw@microsoft.com',
     'raychen@microsoft.com'
 )
@@ -83,7 +83,7 @@ $defaultSkipEmails = @(
 $defaultSkipAliases = @(
     'benbp',
     'mikeharder',
-    'danieljurek',
+    # 'danieljurek',
     'chidozieononiwu',
     'raych1'
 )
