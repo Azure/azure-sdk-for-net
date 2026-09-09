@@ -157,7 +157,7 @@ function Invoke-AutoReleaseResolution {
   # the correct group and are not confused by name collisions across groups. Packages pulled in solely
   # for validation are not releasable.
   $releasableKeys = New-Object 'System.Collections.Generic.HashSet[string]' ([System.StringComparer]::OrdinalIgnoreCase)
-  $artifactNameToPackageName = [System.Collections.Generic.Dictionary[string, string]]::new()
+  $artifactNameToPackageName = [System.Collections.Generic.Dictionary[string, string]]::new([System.StringComparer]::OrdinalIgnoreCase)
   foreach ($package in $changedPackages) {
     if ($package.IncludedForValidation) { continue }
 
