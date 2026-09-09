@@ -24,7 +24,7 @@ namespace Azure.Security.CodeTransparency
         /// The string value associated with the key if present; otherwise an empty string if the key is absent,
         /// the value is not a text string, or the CBOR payload is invalid/not a map.
         /// </returns>
-        public static string GetStringValueFromCborMapByKey(byte[] cborBytes, string key)
+        internal static string GetStringValueFromCborMapByKey(byte[] cborBytes, string key)
         {
             if (cborBytes == null || cborBytes.Length == 0 || string.IsNullOrEmpty(key))
                 return string.Empty;
@@ -76,7 +76,7 @@ namespace Azure.Security.CodeTransparency
         /// The string value associated with the key if present; otherwise an empty string if the key is absent,
         /// the value is not a text string, or the CBOR payload is invalid/not a map.
         /// </returns>
-        public static string GetStringValueFromCborMapByKey(byte[] cborBytes, int key)
+        internal static string GetStringValueFromCborMapByKey(byte[] cborBytes, int key)
         {
             if (cborBytes == null || cborBytes.Length == 0)
                 return string.Empty;
