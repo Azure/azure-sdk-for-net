@@ -1,10 +1,23 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
+using System.ComponentModel;
+using Azure.Provisioning;
+
 namespace Azure.Provisioning.EventGrid;
 
 public partial class SystemTopicEventSubscription
 {
+    /// <summary> Gets or sets the expiration time of the event subscription. </summary>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    [Obsolete("This property is deprecated and it will be removed in a future version. Please use ExpiresOn instead.")]
+    public BicepValue<DateTimeOffset> ExpireOn
+    {
+        get => ExpiresOn;
+        set => ExpiresOn = value;
+    }
+
     public static partial class ResourceVersions
     {
         /// <summary> API version "2025-02-15". </summary>

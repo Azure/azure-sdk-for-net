@@ -234,7 +234,9 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.EventGrid.DeliveryWithResourceIdentity DeliveryWithResourceIdentity { get { throw null; } set { } }
         public Azure.Provisioning.EventGrid.EventSubscriptionDestination Destination { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.EventDeliverySchema> EventDeliverySchema { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use ExpiresOn instead.")]
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.EventGrid.EventSubscriptionFilter Filter { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepList<string> Labels { get { throw null; } set { } }
@@ -303,7 +305,9 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.EventGrid.DeliveryWithResourceIdentity DeliveryWithResourceIdentity { get { throw null; } set { } }
         public Azure.Provisioning.EventGrid.EventSubscriptionDestination Destination { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.EventDeliverySchema> EventDeliverySchema { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use ExpiresOn instead.")]
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.EventGrid.EventSubscriptionFilter Filter { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepList<string> Labels { get { throw null; } set { } }
@@ -813,7 +817,9 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.EventGrid.DeliveryWithResourceIdentity DeliveryWithResourceIdentity { get { throw null; } set { } }
         public Azure.Provisioning.EventGrid.EventSubscriptionDestination Destination { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.EventDeliverySchema> EventDeliverySchema { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use ExpiresOn instead.")]
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.EventGrid.EventSubscriptionFilter Filter { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepList<string> Labels { get { throw null; } set { } }
@@ -1016,7 +1022,9 @@ namespace Azure.Provisioning.EventGrid
         public NamespaceTopicEventSubscription(string bicepIdentifier, string resourceVersion = null) : base (default(string), default(Azure.Core.ResourceType), default(string)) { }
         public Azure.Provisioning.EventGrid.DeliveryConfiguration DeliveryConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.DeliverySchema> EventDeliverySchema { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use ExpiresOn instead.")]
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.EventGrid.FiltersConfiguration FiltersConfiguration { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepValue<string> Name { get { throw null; } set { } }
@@ -1478,7 +1486,9 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.EventGrid.DeliveryWithResourceIdentity DeliveryWithResourceIdentity { get { throw null; } set { } }
         public Azure.Provisioning.EventGrid.EventSubscriptionDestination Destination { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.EventDeliverySchema> EventDeliverySchema { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use ExpiresOn instead.")]
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.EventGrid.EventSubscriptionFilter Filter { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepList<string> Labels { get { throw null; } set { } }
@@ -1803,7 +1813,9 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.EventGrid.DeliveryWithResourceIdentity DeliveryWithResourceIdentity { get { throw null; } set { } }
         public Azure.Provisioning.EventGrid.EventSubscriptionDestination Destination { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.EventDeliverySchema> EventDeliverySchema { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use ExpiresOn instead.")]
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.EventGrid.EventSubscriptionFilter Filter { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepList<string> Labels { get { throw null; } set { } }
@@ -1840,7 +1852,9 @@ namespace Azure.Provisioning.EventGrid
         public Azure.Provisioning.EventGrid.DeliveryWithResourceIdentity DeliveryWithResourceIdentity { get { throw null; } set { } }
         public Azure.Provisioning.EventGrid.EventSubscriptionDestination Destination { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.EventGrid.EventDeliverySchema> EventDeliverySchema { get { throw null; } set { } }
+        [System.ObsoleteAttribute("This property is deprecated and it will be removed in a future version. Please use ExpiresOn instead.")]
         public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpireOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> ExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.EventGrid.EventSubscriptionFilter Filter { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<Azure.Core.ResourceIdentifier> Id { get { throw null; } }
         public Azure.Provisioning.BicepList<string> Labels { get { throw null; } set { } }

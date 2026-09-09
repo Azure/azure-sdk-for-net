@@ -18,7 +18,7 @@ namespace Azure.Provisioning.EventGrid
         private DeliveryConfiguration _deliveryConfiguration;
         private BicepValue<DeliverySchema> _eventDeliverySchema;
         private FiltersConfiguration _filtersConfiguration;
-        private BicepValue<DateTimeOffset> _expireOn;
+        private BicepValue<DateTimeOffset> _expiresOn;
         private BicepDictionary<string> _tags;
 
         /// <summary> Creates a new SubscriptionProperties. </summary>
@@ -81,18 +81,18 @@ namespace Azure.Provisioning.EventGrid
             }
         }
 
-        /// <summary> Gets or sets the ExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ExpireOn
+        /// <summary> Gets or sets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
             {
                 Initialize();
-                return _expireOn;
+                return _expiresOn;
             }
             set
             {
                 Initialize();
-                _expireOn.Assign(value);
+                _expiresOn.Assign(value);
             }
         }
 
@@ -119,7 +119,7 @@ namespace Azure.Provisioning.EventGrid
             _deliveryConfiguration = DefineModelProperty<DeliveryConfiguration>(nameof(DeliveryConfiguration), new string[] { "deliveryConfiguration" });
             _eventDeliverySchema = DefineProperty<DeliverySchema>(nameof(EventDeliverySchema), new string[] { "eventDeliverySchema" });
             _filtersConfiguration = DefineModelProperty<FiltersConfiguration>(nameof(FiltersConfiguration), new string[] { "filtersConfiguration" });
-            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expirationTimeUtc" }, format: "O");
+            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expirationTimeUtc" }, format: "O");
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             DefineAdditionalProperties();
         }

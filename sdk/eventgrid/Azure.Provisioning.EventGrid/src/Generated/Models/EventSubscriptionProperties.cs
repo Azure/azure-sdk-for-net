@@ -20,7 +20,7 @@ namespace Azure.Provisioning.EventGrid
         private DeliveryWithResourceIdentity _deliveryWithResourceIdentity;
         private EventSubscriptionFilter _filter;
         private BicepList<string> _labels;
-        private BicepValue<DateTimeOffset> _expireOn;
+        private BicepValue<DateTimeOffset> _expiresOn;
         private BicepValue<EventDeliverySchema> _eventDeliverySchema;
         private EventSubscriptionRetryPolicy _retryPolicy;
         private DeadLetterDestination _deadLetterDestination;
@@ -111,18 +111,18 @@ namespace Azure.Provisioning.EventGrid
             }
         }
 
-        /// <summary> Gets or sets the ExpireOn. </summary>
-        public BicepValue<DateTimeOffset> ExpireOn
+        /// <summary> Gets or sets the ExpiresOn. </summary>
+        public BicepValue<DateTimeOffset> ExpiresOn
         {
             get
             {
                 Initialize();
-                return _expireOn;
+                return _expiresOn;
             }
             set
             {
                 Initialize();
-                _expireOn.Assign(value);
+                _expiresOn.Assign(value);
             }
         }
 
@@ -196,7 +196,7 @@ namespace Azure.Provisioning.EventGrid
             _deliveryWithResourceIdentity = DefineModelProperty<DeliveryWithResourceIdentity>(nameof(DeliveryWithResourceIdentity), new string[] { "deliveryWithResourceIdentity" });
             _filter = DefineModelProperty<EventSubscriptionFilter>(nameof(Filter), new string[] { "filter" });
             _labels = DefineListProperty<string>(nameof(Labels), new string[] { "labels" });
-            _expireOn = DefineProperty<DateTimeOffset>(nameof(ExpireOn), new string[] { "expirationTimeUtc" }, format: "O");
+            _expiresOn = DefineProperty<DateTimeOffset>(nameof(ExpiresOn), new string[] { "expirationTimeUtc" }, format: "O");
             _eventDeliverySchema = DefineProperty<EventDeliverySchema>(nameof(EventDeliverySchema), new string[] { "eventDeliverySchema" });
             _retryPolicy = DefineModelProperty<EventSubscriptionRetryPolicy>(nameof(RetryPolicy), new string[] { "retryPolicy" });
             _deadLetterDestination = DefineModelProperty<DeadLetterDestination>(nameof(DeadLetterDestination), new string[] { "deadLetterDestination" });
