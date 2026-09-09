@@ -11,8 +11,6 @@ namespace Azure.Provisioning.AppConfiguration
 {
     public partial class AppConfigurationSnapshot
     {
-        private BicepValue<string> _snapshotType;
-
         /// <summary> Gets the expiration date of the snapshot. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [Obsolete("This property is obsolete and will be removed in a future version. Please use ExpiresOn instead.")]
@@ -22,14 +20,11 @@ namespace Azure.Provisioning.AppConfiguration
         }
 
         /// <summary> Gets the type of the resource. </summary>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        [Obsolete("This property is obsolete and will be removed in a future version. Please use ResourceType instead.")]
         public BicepValue<string> SnapshotType
         {
-            get { Initialize(); return _snapshotType; }
-        }
-
-        partial void DefineAdditionalProperties()
-        {
-            _snapshotType = DefineProperty<string>(nameof(SnapshotType), new string[] { "type" }, isOutput: true);
+            get { return ResourceType.ToString(); }
         }
 
         /// <summary> Supported API versions retained for compatibility. </summary>

@@ -208,6 +208,7 @@ namespace Azure.Provisioning.AppConfiguration
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.AppConfigurationProvisioningState> ProvisioningState { get { throw null; } }
         public Azure.Provisioning.BicepValue<long> RetentionPeriod { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<long> Size { get { throw null; } }
+        [System.ObsoleteAttribute("This property is obsolete and will be removed in a future version. Please use ResourceType instead.")]
         public Azure.Provisioning.BicepValue<string> SnapshotType { get { throw null; } }
         public Azure.Provisioning.BicepValue<Azure.Provisioning.AppConfiguration.AppConfigurationSnapshotStatus> Status { get { throw null; } }
         public Azure.Provisioning.Resources.SystemData SystemData { get { throw null; } }
