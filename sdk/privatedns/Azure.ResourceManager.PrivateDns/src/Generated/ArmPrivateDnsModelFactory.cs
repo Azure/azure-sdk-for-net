@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.PrivateDns.Models
         /// <param name="internalId"> Private zone internal Id. </param>
         /// <param name="eTag"> The ETag of the zone. </param>
         /// <returns> A new <see cref="PrivateDns.PrivateDnsZoneData"/> instance for mocking. </returns>
-        public static PrivateDnsZoneData PrivateDnsZoneData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, long? maxNumberOfRecords = default, long? numberOfRecords = default, long? maxNumberOfVirtualNetworkLinks = default, long? numberOfVirtualNetworkLinks = default, long? maxNumberOfVirtualNetworkLinksWithRegistration = default, long? numberOfVirtualNetworkLinksWithRegistration = default, PrivateDnsProvisioningState? privateDnsProvisioningState = default, string internalId = default, ETag? eTag = default)
+        public static PrivateDnsZoneData PrivateDnsZoneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, long? maxNumberOfRecords, long? numberOfRecords, long? maxNumberOfVirtualNetworkLinks, long? numberOfVirtualNetworkLinks, long? maxNumberOfVirtualNetworkLinksWithRegistration, long? numberOfVirtualNetworkLinksWithRegistration, PrivateDnsProvisioningState? privateDnsProvisioningState, string internalId, ETag? eTag)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
