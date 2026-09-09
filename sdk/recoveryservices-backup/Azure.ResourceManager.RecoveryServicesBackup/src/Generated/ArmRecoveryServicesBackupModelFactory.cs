@@ -1767,6 +1767,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new BackupProtectedItemConfigureSourceScanContent(sourceScanAction, default);
         }
 
+        /// <summary> Target details for file / folder restore. </summary>
         /// <param name="clientScripts"> List of client scripts. </param>
         /// <returns> A new <see cref="Models.InstantItemRecoveryTarget"/> instance for mocking. </returns>
         public static InstantItemRecoveryTarget InstantItemRecoveryTarget(IEnumerable<ClientScriptForConnect> clientScripts = default)
@@ -1776,6 +1777,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             return new InstantItemRecoveryTarget((clientScripts ?? new ChangeTrackingList<ClientScriptForConnect>()).ToList(), default);
         }
 
+        /// <summary> Client script details for file / folder restore. </summary>
         /// <param name="scriptContent"> File content of the client script for file / folder restore. </param>
         /// <param name="scriptExtension"> File extension of the client script for file / folder restore - .ps1 , .sh , etc. </param>
         /// <param name="osType"> OS type - Windows, Linux etc. for which this file / folder restore client script works. </param>
@@ -4153,6 +4155,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 renewExistingRegistration);
         }
 
+        /// <summary> Parameters for the listInstantItemRecoveryOperationResult action. </summary>
         /// <param name="provisionInstantItemRecoveryOperationId"> Operation ID returned by the prior provisionInstantItemRecovery action whose iSCSI mount scripts are to be retrieved. </param>
         /// <returns> A new <see cref="Models.InstantItemRecoveryOperationResultContent"/> instance for mocking. </returns>
         public static InstantItemRecoveryOperationResultContent InstantItemRecoveryOperationResultContent(string provisionInstantItemRecoveryOperationId = default)
