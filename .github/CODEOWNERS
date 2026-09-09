@@ -113,9 +113,6 @@
 # PRLabel: %AI Projects
 /sdk/ai/Azure.AI.Projects/    @dargilco @nick863 @rhurey @trangevi @trrwilson
 
-# ServiceLabel: %AI Model Inference %AI Projects
-# ServiceOwners: @rhurey
-
 # ServiceLabel: %AI Projects
 # ServiceOwners: @dargilco @nick863 @trangevi
 
