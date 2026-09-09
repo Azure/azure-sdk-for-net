@@ -41,7 +41,9 @@ memoizes and hands GetOrAdd the same instance every time, so the ordinal compari
 on reference equality.
 
 Both SingleTenant rows are independent of EndpointCount, so their spread across the three parameter
-values is this harness's noise floor. Read nothing from a difference smaller than that spread.
+values is this harness's noise floor. It came out at about 12%, so each baseline is pooled across
+its three rows before any percentage below is computed; a per-row comparison would manufacture
+differences out of that spread.
 
 BenchmarkDotNet v0.15.8, Windows 11 (10.0.26200.9106/25H2/2025Update/HudsonValley2) (Hyper-V)
 Intel Xeon Platinum 8370C CPU 2.80GHz (Max: 2.79GHz), 1 CPU, 16 logical and 8 physical cores
@@ -49,47 +51,51 @@ Intel Xeon Platinum 8370C CPU 2.80GHz (Max: 2.79GHz), 1 CPU, 16 logical and 8 ph
   [Host]    : .NET 8.0.31 (8.0.31, 8.0.3126.42015), X64 RyuJIT x86-64-v4
   MediumRun : .NET 8.0.31 (8.0.31, 8.0.3126.42015), X64 RyuJIT x86-64-v4
 
-Job=MediumRun  IterationCount=15  LaunchCount=2  WarmupCount=10   BatchSize=512
+Job=MediumRun  IterationCount=15  LaunchCount=2  WarmupCount=10
 
-| Method                       | EndpointCount | Mean         | Error        | Ratio | Allocated |
-|----------------------------- |-------------- |-------------:|-------------:|------:|----------:|
-| SingleTenant_NoRoutingTags   | 1             | 643,799.5 ns | 34,496.91 ns | 1.006 |  766208 B |
-| SingleTenant_WithRoutingTags | 1             | 726,850.7 ns | 35,138.94 ns | 1.136 |  766208 B |
-| MultiTenant                  | 1             | 765,342.8 ns | 97,410.61 ns | 1.196 |  757760 B |
-| GroupOnly                    | 1             |     998.2 ns |     34.32 ns | 0.002 |       0 B |
-| SingleTenant_NoRoutingTags   | 3             | 658,007.1 ns | 68,808.27 ns | 1.020 |  766208 B |
-| SingleTenant_WithRoutingTags | 3             | 703,885.8 ns | 31,395.07 ns | 1.092 |  766208 B |
-| MultiTenant                  | 3             | 686,400.9 ns | 40,725.12 ns | 1.064 |  757760 B |
-| GroupOnly                    | 3             |   2,522.1 ns |    111.31 ns | 0.004 |       0 B |
-| SingleTenant_NoRoutingTags   | 25            | 588,613.8 ns | 13,589.76 ns | 1.000 |  766208 B |
-| SingleTenant_WithRoutingTags | 25            | 690,046.4 ns | 18,759.69 ns | 1.170 |  766208 B |
-| MultiTenant                  | 25            | 818,049.2 ns | 60,325.65 ns | 1.390 |  757760 B |
-| GroupOnly                    | 25            |  16,216.6 ns |    733.30 ns | 0.030 |       0 B |
+| Method                       | EndpointCount | Mean         | Error        | StdDev        | Ratio | RatioSD | Gen0    | Gen1    | Allocated | Alloc Ratio |
+|----------------------------- |-------------- |-------------:|-------------:|--------------:|------:|--------:|--------:|--------:|----------:|------------:|
+| SingleTenant_NoRoutingTags   | 1             | 643,799.5 ns | 34,496.91 ns |  51,633.35 ns | 1.006 |    0.11 | 30.2734 | 21.4844 |  766208 B |        1.00 |
+| SingleTenant_WithRoutingTags | 1             | 726,850.7 ns | 35,138.94 ns |  52,594.32 ns | 1.136 |    0.12 | 30.2734 | 21.4844 |  766208 B |        1.00 |
+| MultiTenant                  | 1             | 765,342.8 ns | 97,410.61 ns | 145,799.63 ns | 1.196 |    0.24 | 29.2969 |  9.7656 |  757760 B |        0.99 |
+| GroupOnly                    | 1             |     998.2 ns |     34.32 ns |      48.11 ns | 0.002 |    0.00 |       - |       - |         - |        0.00 |
+| SingleTenant_NoRoutingTags   | 3             | 658,007.1 ns | 68,808.27 ns | 102,988.99 ns | 1.020 |    0.21 | 30.2734 | 21.4844 |  766208 B |        1.00 |
+| SingleTenant_WithRoutingTags | 3             | 703,885.8 ns | 31,395.07 ns |  46,990.67 ns | 1.092 |    0.16 | 30.2734 | 21.4844 |  766208 B |        1.00 |
+| MultiTenant                  | 3             | 686,400.9 ns | 40,725.12 ns |  60,955.45 ns | 1.064 |    0.17 | 29.2969 |  9.7656 |  757760 B |        0.99 |
+| GroupOnly                    | 3             |   2,522.1 ns |    111.31 ns |     159.64 ns | 0.004 |    0.00 |       - |       - |         - |        0.00 |
+| SingleTenant_NoRoutingTags   | 25            | 588,613.8 ns | 13,589.76 ns |  19,050.95 ns | 1.000 |    0.04 | 30.2734 | 21.4844 |  766208 B |        1.00 |
+| SingleTenant_WithRoutingTags | 25            | 690,046.4 ns | 18,759.69 ns |  27,497.71 ns | 1.170 |    0.06 | 30.2734 | 21.4844 |  766208 B |        1.00 |
+| MultiTenant                  | 25            | 818,049.2 ns | 60,325.65 ns |  86,517.25 ns | 1.390 |    0.15 | 29.2969 |  9.7656 |  757760 B |        0.99 |
+| GroupOnly                    | 25            |  16,216.6 ns |    733.30 ns |   1,097.56 ns | 0.030 |    0.00 |       - |       - |         - |        0.00 |
 
-Reading these numbers:
+Pooled baselines: 630 us without the routing attributes, 707 us with them.
 
-The noise floor is about 12%: SingleTenant_NoRoutingTags does identical work in all three rows and
-came out 644, 658 and 589 us. Nothing below that is a result.
+1. Grouping is cheap and allocates nothing. GroupOnly sorts 512 Activities into N buckets and does
+   nothing else. GetOrAdd scans the buckets already open, so the average scan is (N+1)/2 deep, and
+   the measured cost is a flat ~2.4 ns per comparison at every N: 1.95, 2.46 and 2.44. That is 1 us
+   at one endpoint and 16 us at 25, against roughly 800 us to convert the same batch, so about 2%.
+   Extrapolating the same 2.4 ns to the 64-partition cap gives about 41 us, or 5%. Not worth
+   replacing with a hash, which would add an allocation to the one-to-three endpoint case that every
+   deployment pays.
 
-Grouping is linear in the endpoint count and allocates nothing. 998 ns, 2.5 us and 16.2 us for 512
-lookups is roughly 2, 5 and 32 ns per lookup against 1, 3 and 25 open groups, which is the ordinal
-scan doing exactly what a scan does. The zero in the allocation column is the useful part: it is
-direct evidence that the group and list pooling holds, with no garbage per export. In absolute terms
-16.2 us against 818 us of conversion is about 2% of a routed export at 25 endpoints, and a linear
-extrapolation to the 64-partition cap gives roughly 40 us, or 5%. The scan is not worth replacing;
-a hash would add an allocation to the one-to-three endpoint case that every deployment pays.
+2. The routing attributes cost the single-tenant path about 12% (707 us against 630 us pooled).
+   That is the bias that has to come out before routing is judged at all.
 
-Routing is not cheaper than single-tenant. The two extra custom dimensions cost the baseline 7 to
-17% (SingleTenant_WithRoutingTags against SingleTenant_NoRoutingTags), and once that bias is
-accounted for MultiTenant is within noise of its like-for-like partner at 1 and 3 endpoints and
-about 19% slower at 25, where grouping and route validation have grown. Against the realistic
-single-tenant workload, which carries no routing attributes at all, the routed path costs 4 to 39%
-more depending on endpoint count.
+3. Routing itself costs roughly 9% to 30% over a plain single-tenant conversion, depending on
+   endpoint count, and the endpoint count is what moves it. Against the like-for-like baseline that
+   also carries the attributes, the routed path is within noise at 1 and 3 endpoints and about 16%
+   slower at 25.
 
-The one stable non-time result is allocation: MultiTenant allocates 757,760 B against 766,208 B,
-about 1% less, identically in all three parameter rows. That is the routed path consuming the two
-routing attributes instead of serializing them as custom dimensions, and it is consistent enough
-across rows to be believed where the timings are not.
+4. The routed path allocates 8,448 B less per batch, identically in all three rows. This is not the
+   routing attributes: both baselines allocate 766,208 B whether they carry those attributes or not,
+   so serializing them costs nothing measurable. It is the two per-call objects the single-tenant
+   path builds and the routed path does not - a List<TelemetryItem> grown to 512 entries (8,384 B of
+   backing arrays plus the list) and a TelemetrySchemaTypeCounter (64 B) - which sums to exactly the
+   observed gap. The routed path writes into the pooled group list instead. The Gen1 column carries
+   the same story more usefully: 21.5 against 9.8.
+
+MemoryDiagnoser does not count ArrayPool rents, and AzMonList rents on both paths, so the Allocated
+column excludes that traffic. GroupOnly's zero is unaffected: EndpointRouteBatch uses no pool.
 */
 namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
 {

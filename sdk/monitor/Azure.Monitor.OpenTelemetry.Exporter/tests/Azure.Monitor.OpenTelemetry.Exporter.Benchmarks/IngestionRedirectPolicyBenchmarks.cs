@@ -21,8 +21,8 @@ whether or not the feature is switched on:
 
   - CreateRequest builds a fresh RawRequestUriBuilder per request. It previously reused one
     instance, which is what let a learned redirect permanently retarget every later request.
-  - Once any redirect has been learned, the policy materializes a Uri and a key string and takes
-    a lock on every request. Before the first redirect it does none of that.
+  - Once any redirect has been learned, the policy builds a cache key string and takes a lock on
+    every request. Before the first redirect it does neither.
 
 The three cases below separate those costs:
 
@@ -47,24 +47,26 @@ Intel Xeon Platinum 8370C CPU 2.80GHz (Max: 2.79GHz), 1 CPU, 16 logical and 8 ph
 
 Job=MediumRun  IterationCount=15  LaunchCount=2  WarmupCount=10
 
-| Method                     | Mean        | Error      | StdDev     | Ratio | Gen0   | Allocated | Alloc Ratio |
-|--------------------------- |------------:|-----------:|-----------:|------:|-------:|----------:|------------:|
-| NoRedirectLearned          |   586.05 ns |  37.084 ns |  55.506 ns |  1.01 | 0.0467 |    1192 B |        1.00 |
-| RedirectLearned            | 1,145.17 ns | 114.137 ns | 170.835 ns |  1.97 | 0.0572 |    1440 B |        1.21 |
-| RedirectLearnedOtherOrigin |   759.45 ns |  77.354 ns | 115.780 ns |  1.31 | 0.0525 |    1336 B |        1.12 |
-| BuildRequestUri            |    64.72 ns |   5.728 ns |   8.395 ns |  0.11 | 0.0067 |     168 B |        0.14 |
+| Method                     | Mean      | Error    | StdDev    | Ratio | RatioSD | Gen0   | Allocated | Alloc Ratio |
+|--------------------------- |----------:|---------:|----------:|------:|--------:|-------:|----------:|------------:|
+| NoRedirectLearned          | 358.12 ns | 4.647 ns |  6.956 ns |  1.00 |    0.03 | 0.0381 |     968 B |        1.00 |
+| RedirectLearned            | 730.98 ns | 7.614 ns | 10.920 ns |  2.04 |    0.05 | 0.0477 |    1216 B |        1.26 |
+| RedirectLearnedOtherOrigin | 533.85 ns | 9.576 ns | 14.334 ns |  1.49 |    0.05 | 0.0439 |    1112 B |        1.15 |
+| BuildRequestUri            |  48.00 ns | 1.025 ns |  1.535 ns |  0.13 |    0.00 | 0.0067 |     168 B |        0.17 |
 
-Reading these numbers: the transport is a no-op, so the whole of a real request is missing. An
-ingestion POST costs milliseconds. The 559 ns and 248 B that a learned redirect adds is therefore
-around 0.06% of a request that takes 1 ms, and the per-request builder that every caller pays
-regardless is 65 ns. Both are too small to be worth optimizing, which is the useful result: the
-correctness fixes did not cost the single-tenant path anything that matters.
+1. A learned redirect adds 373 ns and 248 B per request, roughly doubling what the policy itself
+   costs. An ingestion POST costs milliseconds, so that is about 0.04% of a real request. The
+   per-request URI builder every caller pays regardless is 48 ns. Neither is worth optimizing, which
+   is the useful result: the correctness fixes did not cost the single-tenant path anything.
 
-Where that 559 ns goes is not where it first appears. RedirectLearnedOtherOrigin pays the key
-materialization and the lock in full and lands only 173 ns above the baseline, so the remaining
-386 ns belongs to IsTrustedIngestionRedirect and the rewrite, not to the lock. The trust check
-lower-cases two IdnHost values, which is also most of the 248 B. Anyone optimizing this should start
-there and not at the cache.
+2. That 373 ns splits about evenly. Building the cache key and taking the lock is 176 ns and 144 B,
+   which is what RedirectLearnedOtherOrigin pays before missing. The trust check and the rewrite are
+   the remaining 197 ns and 104 B. The 144 B is the origin key itself: GetLeftPart returns a 61
+   character string. Anyone optimizing this should look at both halves, not just the lock.
+
+3. The transport answers 200 with no headers in steady state. An earlier revision attached a cache
+   directive to every 200, which built a header inside the measured region and added 224 B to every
+   transport-using row.
 
 One optimization was tried and rejected. The cache-hit path calls request.Uri.ToUri() twice, which
 looks like two Uri allocations. Hoisting it into a local left the allocated bytes byte-for-byte
@@ -174,6 +176,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
         private sealed class RedirectOnceTransport : HttpPipelineTransport
         {
             private int _redirectsRemaining;
+            private bool _completingRedirect;
 
             internal void ArmRedirect() => _redirectsRemaining = 1;
 
@@ -190,22 +193,31 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Benchmarks
 
             private MockResponse BuildResponse()
             {
-                if (_redirectsRemaining == 0)
+                if (_redirectsRemaining > 0)
                 {
-                    // Carries the cache directive because the policy reads it from the response that
-                    // completes the redirect, not from the 307 itself.
-                    var ok = new MockResponse(200);
-                    ok.AddHeader(new HttpHeader("Cache-Control", "max-age=3600"));
+                    _redirectsRemaining--;
+                    _completingRedirect = true;
 
-                    return ok;
+                    var redirect = new MockResponse(307);
+                    redirect.AddHeader(new HttpHeader("Location", RedirectTarget));
+
+                    return redirect;
                 }
 
-                _redirectsRemaining--;
+                if (_completingRedirect)
+                {
+                    _completingRedirect = false;
 
-                var response = new MockResponse(307);
-                response.AddHeader(new HttpHeader("Location", RedirectTarget));
+                    // The policy reads the cache directive off the response that completes a redirect,
+                    // never off the 307, so it belongs only here. Putting it on every 200 would build
+                    // a header inside the measured region and inflate every row by that allocation.
+                    var completing = new MockResponse(200);
+                    completing.AddHeader(new HttpHeader("Cache-Control", "max-age=3600"));
 
-                return response;
+                    return completing;
+                }
+
+                return new MockResponse(200);
             }
         }
     }
