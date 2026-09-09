@@ -78,9 +78,12 @@ namespace TestProjects.Spector.Tests
             var generatedFiles = Directory.GetFiles(clientCodeDirectory, "*.cs", SearchOption.AllDirectories);
             return generatedFiles
                 .Where(f => f.EndsWith("Client.cs", StringComparison.Ordinal) && !f.EndsWith("RestClient.cs", StringComparison.Ordinal))
+                .OrderByDescending(f => f.EndsWith("ArmClient.cs", StringComparison.Ordinal))
+                .ThenBy(f => f, StringComparer.Ordinal)
                 .FirstOrDefault()
                 ?? generatedFiles
                     .Where(f => Path.GetFileName(f).StartsWith("Mockable", StringComparison.Ordinal))
+                    .OrderBy(f => f, StringComparer.Ordinal)
                     .FirstOrDefault();
         }
 
