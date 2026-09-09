@@ -1424,7 +1424,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectedRegistrySyncProperties"/>. </summary>
+        /// <summary> The sync properties of the connected registry with its parent. </summary>
         /// <param name="tokenId"> The resource ID of the ACR token used to authenticate the connected registry to its parent during sync. </param>
         /// <param name="schedule"> The cron expression indicating the schedule that the connected registry will sync with its parent. </param>
         /// <param name="syncWindow"> The time window during which sync is enabled for each schedule occurrence. Specify the duration using the format P[n]Y[n]M[n]DT[n]H[n]M[n]S as per ISO8601. </param>
@@ -1446,7 +1446,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ConnectedRegistryStatusDetail"/>. </summary>
+        /// <summary> The status detail properties of the connected registry. </summary>
         /// <param name="statusDetailType"> The component of the connected registry corresponding to the status. </param>
         /// <param name="code"> The HTTP status code. </param>
         /// <param name="description"> The description of the status. </param>
