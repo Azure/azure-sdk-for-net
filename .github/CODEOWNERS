@@ -518,7 +518,7 @@
 # ServiceOwners: @wanyang7
 
 # PRLabel: %Tables
-/sdk/tables/    @jorgerangel-msft @jsquire
+/sdk/tables/    @JonathanCrd @jsquire
 
 # AzureSdkOwners: @jorgerangel-msft
 # ServiceLabel: %Tables
