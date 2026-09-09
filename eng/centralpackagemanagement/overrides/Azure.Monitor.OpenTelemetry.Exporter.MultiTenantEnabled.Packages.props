@@ -1,0 +1,4 @@
+<Project>
+  <!-- Import the exporter overrides to get the required test packages. -->
+  <Import Project="$(MSBuildThisFileDirectory)Azure.Monitor.OpenTelemetry.Exporter.Packages.props" />
+</Project>

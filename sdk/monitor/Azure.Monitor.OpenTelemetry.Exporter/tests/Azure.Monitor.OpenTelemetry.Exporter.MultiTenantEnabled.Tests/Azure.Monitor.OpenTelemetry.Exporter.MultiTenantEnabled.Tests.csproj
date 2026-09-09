@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    A second test assembly exists solely so the multi-tenant AppContext switch can be observed being
+    read. MultiTenantConfig.Enabled is a static readonly, evaluated once when the type is first
+    touched, so a test cannot turn it on partway through a process that has already used it. This
+    project runs in its own test host with the switch set before anything touches that type.
+  -->
+  <PropertyGroup>
+    <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="OpenTelemetry" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Azure.Monitor.OpenTelemetry.Exporter.csproj" />
+  </ItemGroup>
+</Project>
