@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 writer.WritePropertyName("matchExpressions"u8);
                 writer.WriteStartArray();
-                foreach (PropertySelectorRequirementPatch item in MatchExpressions)
+                foreach (ContainerServiceFleetPropertySelectorRequirementPatch item in MatchExpressions)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            IList<PropertySelectorRequirementPatch> matchExpressions = default;
+            IList<ContainerServiceFleetPropertySelectorRequirementPatch> matchExpressions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    List<PropertySelectorRequirementPatch> array = new List<PropertySelectorRequirementPatch>();
+                    List<ContainerServiceFleetPropertySelectorRequirementPatch> array = new List<ContainerServiceFleetPropertySelectorRequirementPatch>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(PropertySelectorRequirementPatch.DeserializePropertySelectorRequirementPatch(item, options));
+                        array.Add(ContainerServiceFleetPropertySelectorRequirementPatch.DeserializeContainerServiceFleetPropertySelectorRequirementPatch(item, options));
                     }
                     matchExpressions = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PropertySelectorPatch(matchExpressions ?? new ChangeTrackingList<PropertySelectorRequirementPatch>(), additionalBinaryDataProperties);
+            return new PropertySelectorPatch(matchExpressions ?? new ChangeTrackingList<ContainerServiceFleetPropertySelectorRequirementPatch>(), additionalBinaryDataProperties);
         }
     }
 }

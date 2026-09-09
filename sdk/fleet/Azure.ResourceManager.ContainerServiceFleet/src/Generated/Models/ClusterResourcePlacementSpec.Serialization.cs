@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 return null;
             }
             ContainerServiceFleetPlacementPolicy policy = default;
-            RolloutStrategy rolloutStrategy = default;
+            ContainerServiceFleetRolloutStrategy rolloutStrategy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    rolloutStrategy = RolloutStrategy.DeserializeRolloutStrategy(prop.Value, options);
+                    rolloutStrategy = ContainerServiceFleetRolloutStrategy.DeserializeContainerServiceFleetRolloutStrategy(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

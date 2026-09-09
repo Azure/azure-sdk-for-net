@@ -12,23 +12,23 @@ using Azure.ResourceManager.ContainerServiceFleet;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> A label selector requirement that can be patched. </summary>
-    public partial class LabelSelectorRequirementPatch
+    public partial class ContainerServiceFleetLabelSelectorRequirementPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LabelSelectorRequirementPatch"/>. </summary>
-        public LabelSelectorRequirementPatch()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetLabelSelectorRequirementPatch"/>. </summary>
+        public ContainerServiceFleetLabelSelectorRequirementPatch()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LabelSelectorRequirementPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetLabelSelectorRequirementPatch"/>. </summary>
         /// <param name="key"> key is the label key that the selector applies to. </param>
         /// <param name="operator"> operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist. </param>
         /// <param name="values"> values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LabelSelectorRequirementPatch(string key, ContainerServiceFleetLabelSelectorOperator? @operator, IList<string> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetLabelSelectorRequirementPatch(string key, ContainerServiceFleetLabelSelectorOperator? @operator, IList<string> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Key = key;
             Operator = @operator;

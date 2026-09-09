@@ -12,25 +12,25 @@ using Azure.ResourceManager.ContainerServiceFleet;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The placement policy settings that can be patched. </summary>
-    public partial class PlacementPolicyPatch
+    public partial class ContainerServiceFleetPlacementPolicyPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PlacementPolicyPatch"/>. </summary>
-        public PlacementPolicyPatch()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetPlacementPolicyPatch"/>. </summary>
+        public ContainerServiceFleetPlacementPolicyPatch()
         {
             ClusterNames = new ChangeTrackingList<string>();
             Tolerations = new ChangeTrackingList<ContainerServiceFleetToleration>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlacementPolicyPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetPlacementPolicyPatch"/>. </summary>
         /// <param name="placementType"> The placement type that can be patched. </param>
         /// <param name="clusterNames"> The member cluster names that can be patched. </param>
         /// <param name="affinity"> The cluster affinity settings that can be patched. </param>
         /// <param name="tolerations"> The tolerations that can be patched. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PlacementPolicyPatch(ContainerServiceFleetPlacementType? placementType, IList<string> clusterNames, AffinityPatch affinity, IList<ContainerServiceFleetToleration> tolerations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetPlacementPolicyPatch(ContainerServiceFleetPlacementType? placementType, IList<string> clusterNames, AffinityPatch affinity, IList<ContainerServiceFleetToleration> tolerations, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             PlacementType = placementType;
             ClusterNames = clusterNames;
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public IList<ContainerServiceFleetToleration> Tolerations { get; }
 
         /// <summary> The cluster selector terms that can be patched. </summary>
-        public IList<ClusterSelectorTermPatch> AffinityRequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms
+        public IList<ContainerServiceFleetClusterSelectorTermPatch> AffinityRequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms
         {
             get
             {

@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             }
             string displayName = default;
             ContainerServiceFleetGateType @type = default;
-            ScheduledStartConfiguration scheduledStartConfiguration = default;
+            ContainerServiceFleetScheduledStartConfiguration scheduledStartConfiguration = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    scheduledStartConfiguration = ScheduledStartConfiguration.DeserializeScheduledStartConfiguration(prop.Value, options);
+                    scheduledStartConfiguration = ContainerServiceFleetScheduledStartConfiguration.DeserializeContainerServiceFleetScheduledStartConfiguration(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

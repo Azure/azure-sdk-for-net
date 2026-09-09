@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 writer.WritePropertyName("clusterSelectorTerms"u8);
                 writer.WriteStartArray();
-                foreach (ClusterSelectorTermPatch item in ClusterSelectorTerms)
+                foreach (ContainerServiceFleetClusterSelectorTermPatch item in ClusterSelectorTerms)
                 {
                     writer.WriteObjectValue(item, options);
                 }
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 return null;
             }
-            IList<ClusterSelectorTermPatch> clusterSelectorTerms = default;
+            IList<ContainerServiceFleetClusterSelectorTermPatch> clusterSelectorTerms = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -136,10 +136,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    List<ClusterSelectorTermPatch> array = new List<ClusterSelectorTermPatch>();
+                    List<ContainerServiceFleetClusterSelectorTermPatch> array = new List<ContainerServiceFleetClusterSelectorTermPatch>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(ClusterSelectorTermPatch.DeserializeClusterSelectorTermPatch(item, options));
+                        array.Add(ContainerServiceFleetClusterSelectorTermPatch.DeserializeContainerServiceFleetClusterSelectorTermPatch(item, options));
                     }
                     clusterSelectorTerms = array;
                     continue;
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ClusterSelectorPatch(clusterSelectorTerms ?? new ChangeTrackingList<ClusterSelectorTermPatch>(), additionalBinaryDataProperties);
+            return new ClusterSelectorPatch(clusterSelectorTerms ?? new ChangeTrackingList<ContainerServiceFleetClusterSelectorTermPatch>(), additionalBinaryDataProperties);
         }
     }
 }

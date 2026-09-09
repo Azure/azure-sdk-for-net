@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         internal ClusterAffinityPatch ClusterAffinity { get; set; }
 
         /// <summary> The cluster selector terms that can be patched. </summary>
-        public IList<ClusterSelectorTermPatch> RequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms
+        public IList<ContainerServiceFleetClusterSelectorTermPatch> RequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms
         {
             get
             {

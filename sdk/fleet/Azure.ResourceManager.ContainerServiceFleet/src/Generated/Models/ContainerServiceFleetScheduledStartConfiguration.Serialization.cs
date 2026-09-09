@@ -14,56 +14,56 @@ using Azure.ResourceManager.ContainerServiceFleet;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> Configuration for ScheduledStart gate. </summary>
-    public partial class ScheduledStartConfiguration : IJsonModel<ScheduledStartConfiguration>
+    public partial class ContainerServiceFleetScheduledStartConfiguration : IJsonModel<ContainerServiceFleetScheduledStartConfiguration>
     {
-        /// <summary> Initializes a new instance of <see cref="ScheduledStartConfiguration"/> for deserialization. </summary>
-        internal ScheduledStartConfiguration()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetScheduledStartConfiguration"/> for deserialization. </summary>
+        internal ContainerServiceFleetScheduledStartConfiguration()
         {
         }
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScheduledStartConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ContainerServiceFleetScheduledStartConfiguration PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduledStartConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetScheduledStartConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeScheduledStartConfiguration(document.RootElement, options);
+                        return DeserializeContainerServiceFleetScheduledStartConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledStartConfiguration)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetScheduledStartConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduledStartConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetScheduledStartConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledStartConfiguration)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetScheduledStartConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ScheduledStartConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContainerServiceFleetScheduledStartConfiguration>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScheduledStartConfiguration IPersistableModel<ScheduledStartConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContainerServiceFleetScheduledStartConfiguration IPersistableModel<ContainerServiceFleetScheduledStartConfiguration>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ScheduledStartConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerServiceFleetScheduledStartConfiguration>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ScheduledStartConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerServiceFleetScheduledStartConfiguration>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -74,10 +74,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduledStartConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetScheduledStartConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledStartConfiguration)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetScheduledStartConfiguration)} does not support writing '{format}' format.");
             }
             writer.WritePropertyName("startDay"u8);
             writer.WriteStringValue(StartDay.ToString());
@@ -104,30 +104,30 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScheduledStartConfiguration IJsonModel<ScheduledStartConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContainerServiceFleetScheduledStartConfiguration IJsonModel<ContainerServiceFleetScheduledStartConfiguration>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScheduledStartConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ContainerServiceFleetScheduledStartConfiguration JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScheduledStartConfiguration>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetScheduledStartConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledStartConfiguration)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetScheduledStartConfiguration)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScheduledStartConfiguration(document.RootElement, options);
+            return DeserializeContainerServiceFleetScheduledStartConfiguration(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ScheduledStartConfiguration DeserializeScheduledStartConfiguration(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerServiceFleetScheduledStartConfiguration DeserializeContainerServiceFleetScheduledStartConfiguration(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            DayOfWeek startDay = default;
+            ContainerServiceFleetDayOfWeek startDay = default;
             string startTime = default;
             string utcOffset = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             {
                 if (prop.NameEquals("startDay"u8))
                 {
-                    startDay = new DayOfWeek(prop.Value.GetString());
+                    startDay = new ContainerServiceFleetDayOfWeek(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("startTime"u8))
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScheduledStartConfiguration(startDay, startTime, utcOffset, additionalBinaryDataProperties);
+            return new ContainerServiceFleetScheduledStartConfiguration(startDay, startTime, utcOffset, additionalBinaryDataProperties);
         }
     }
 }

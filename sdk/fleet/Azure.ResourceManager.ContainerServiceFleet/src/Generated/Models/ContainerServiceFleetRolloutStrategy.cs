@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The rollout strategy configuration. </summary>
-    public partial class RolloutStrategy
+    public partial class ContainerServiceFleetRolloutStrategy
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="RolloutStrategy"/>. </summary>
-        public RolloutStrategy()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetRolloutStrategy"/>. </summary>
+        public ContainerServiceFleetRolloutStrategy()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="RolloutStrategy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetRolloutStrategy"/>. </summary>
         /// <param name="type"> The type of rollout strategy. Default is RollingUpdate. </param>
         /// <param name="clusterUpdateStrategy"> Reference to an existing cluster update strategy. Required when type is External. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal RolloutStrategy(RolloutStrategyType? @type, ClusterUpdateStrategyReference clusterUpdateStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetRolloutStrategy(ContainerServiceFleetRolloutStrategyType? @type, ClusterUpdateStrategyReference clusterUpdateStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             ClusterUpdateStrategy = clusterUpdateStrategy;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> The type of rollout strategy. Default is RollingUpdate. </summary>
-        public RolloutStrategyType? Type { get; set; }
+        public ContainerServiceFleetRolloutStrategyType? Type { get; set; }
 
         /// <summary> Reference to an existing cluster update strategy. Required when type is External. </summary>
         internal ClusterUpdateStrategyReference ClusterUpdateStrategy { get; set; }

@@ -12,23 +12,23 @@ using Azure.ResourceManager.ContainerServiceFleet;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The label selector settings that can be patched. </summary>
-    public partial class LabelSelectorPatch
+    public partial class ContainerServiceFleetLabelSelectorPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="LabelSelectorPatch"/>. </summary>
-        public LabelSelectorPatch()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetLabelSelectorPatch"/>. </summary>
+        public ContainerServiceFleetLabelSelectorPatch()
         {
             MatchLabels = new ChangeTrackingDictionary<string, string>();
-            MatchExpressions = new ChangeTrackingList<LabelSelectorRequirementPatch>();
+            MatchExpressions = new ChangeTrackingList<ContainerServiceFleetLabelSelectorRequirementPatch>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="LabelSelectorPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetLabelSelectorPatch"/>. </summary>
         /// <param name="matchLabels"> matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed. </param>
         /// <param name="matchExpressions"> The label selector requirements that can be patched. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal LabelSelectorPatch(IDictionary<string, string> matchLabels, IList<LabelSelectorRequirementPatch> matchExpressions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetLabelSelectorPatch(IDictionary<string, string> matchLabels, IList<ContainerServiceFleetLabelSelectorRequirementPatch> matchExpressions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MatchLabels = matchLabels;
             MatchExpressions = matchExpressions;
@@ -39,6 +39,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public IDictionary<string, string> MatchLabels { get; }
 
         /// <summary> The label selector requirements that can be patched. </summary>
-        public IList<LabelSelectorRequirementPatch> MatchExpressions { get; }
+        public IList<ContainerServiceFleetLabelSelectorRequirementPatch> MatchExpressions { get; }
     }
 }

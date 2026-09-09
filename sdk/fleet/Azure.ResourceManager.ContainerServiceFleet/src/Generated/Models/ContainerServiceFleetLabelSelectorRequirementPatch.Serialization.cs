@@ -13,52 +13,52 @@ using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    /// <summary> A property selector requirement that can be patched. </summary>
-    public partial class PropertySelectorRequirementPatch : IJsonModel<PropertySelectorRequirementPatch>
+    /// <summary> A label selector requirement that can be patched. </summary>
+    public partial class ContainerServiceFleetLabelSelectorRequirementPatch : IJsonModel<ContainerServiceFleetLabelSelectorRequirementPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PropertySelectorRequirementPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ContainerServiceFleetLabelSelectorRequirementPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropertySelectorRequirementPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetLabelSelectorRequirementPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePropertySelectorRequirementPatch(document.RootElement, options);
+                        return DeserializeContainerServiceFleetLabelSelectorRequirementPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PropertySelectorRequirementPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetLabelSelectorRequirementPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropertySelectorRequirementPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetLabelSelectorRequirementPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PropertySelectorRequirementPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetLabelSelectorRequirementPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PropertySelectorRequirementPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContainerServiceFleetLabelSelectorRequirementPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PropertySelectorRequirementPatch IPersistableModel<PropertySelectorRequirementPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContainerServiceFleetLabelSelectorRequirementPatch IPersistableModel<ContainerServiceFleetLabelSelectorRequirementPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PropertySelectorRequirementPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerServiceFleetLabelSelectorRequirementPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PropertySelectorRequirementPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerServiceFleetLabelSelectorRequirementPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,15 +69,15 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropertySelectorRequirementPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetLabelSelectorRequirementPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PropertySelectorRequirementPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetLabelSelectorRequirementPatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Name))
+            if (Optional.IsDefined(Key))
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("key"u8);
+                writer.WriteStringValue(Key);
             }
             if (Optional.IsDefined(Operator))
             {
@@ -118,38 +118,38 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PropertySelectorRequirementPatch IJsonModel<PropertySelectorRequirementPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContainerServiceFleetLabelSelectorRequirementPatch IJsonModel<ContainerServiceFleetLabelSelectorRequirementPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PropertySelectorRequirementPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ContainerServiceFleetLabelSelectorRequirementPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropertySelectorRequirementPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetLabelSelectorRequirementPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PropertySelectorRequirementPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetLabelSelectorRequirementPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePropertySelectorRequirementPatch(document.RootElement, options);
+            return DeserializeContainerServiceFleetLabelSelectorRequirementPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PropertySelectorRequirementPatch DeserializePropertySelectorRequirementPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerServiceFleetLabelSelectorRequirementPatch DeserializeContainerServiceFleetLabelSelectorRequirementPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string name = default;
-            ContainerServiceFleetPropertySelectorOperator? @operator = default;
+            string key = default;
+            ContainerServiceFleetLabelSelectorOperator? @operator = default;
             IList<string> values = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (prop.NameEquals("key"u8))
                 {
-                    name = prop.Value.GetString();
+                    key = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("operator"u8))
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    @operator = new ContainerServiceFleetPropertySelectorOperator(prop.Value.GetString());
+                    @operator = new ContainerServiceFleetLabelSelectorOperator(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("values"u8))
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PropertySelectorRequirementPatch(name, @operator, values ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
+            return new ContainerServiceFleetLabelSelectorRequirementPatch(key, @operator, values ?? new ChangeTrackingList<string>(), additionalBinaryDataProperties);
         }
     }
 }

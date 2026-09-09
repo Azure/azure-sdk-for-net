@@ -27,7 +27,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="deletePolicy"> Delete options of a fleet managed namespace. </param>
         /// <param name="propagationPolicy"> The profile of the propagation to create the namespace. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal FleetManagedNamespacePropertiesPatch(ContainerServiceFleetManagedNamespaceProperties managedNamespaceProperties, ContainerServiceFleetAdoptionPolicy? adoptionPolicy, ContainerServiceFleetDeletePolicy? deletePolicy, PropagationPolicyPatch propagationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal FleetManagedNamespacePropertiesPatch(ContainerServiceFleetManagedNamespaceProperties managedNamespaceProperties, ContainerServiceFleetAdoptionPolicy? adoptionPolicy, ContainerServiceFleetDeletePolicy? deletePolicy, ContainerServiceFleetPropagationPolicyPatch propagationPolicy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ManagedNamespaceProperties = managedNamespaceProperties;
             AdoptionPolicy = adoptionPolicy;
@@ -46,6 +46,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public ContainerServiceFleetDeletePolicy? DeletePolicy { get; set; }
 
         /// <summary> The profile of the propagation to create the namespace. </summary>
-        public PropagationPolicyPatch PropagationPolicy { get; set; }
+        public ContainerServiceFleetPropagationPolicyPatch PropagationPolicy { get; set; }
     }
 }

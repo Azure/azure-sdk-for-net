@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="policy"> Policy defines how to select member clusters to place the selected resources. If unspecified, all the joined member clusters are selected. </param>
         /// <param name="rolloutStrategy"> The rollout strategy configuration for the cluster resource placement. </param>
         /// <returns> A new <see cref="Models.ClusterResourcePlacementSpec"/> instance for mocking. </returns>
-        public static ClusterResourcePlacementSpec ClusterResourcePlacementSpec(ContainerServiceFleetPlacementPolicy policy = default, RolloutStrategy rolloutStrategy = default)
+        public static ClusterResourcePlacementSpec ClusterResourcePlacementSpec(ContainerServiceFleetPlacementPolicy policy = default, ContainerServiceFleetRolloutStrategy rolloutStrategy = default)
         {
             return new ClusterResourcePlacementSpec(policy, rolloutStrategy, default);
         }
@@ -396,10 +396,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <param name="type"> The type of rollout strategy. Default is RollingUpdate. </param>
         /// <param name="clusterUpdateStrategyName"> The name of an existing cluster staged update strategy. </param>
-        /// <returns> A new <see cref="Models.RolloutStrategy"/> instance for mocking. </returns>
-        public static RolloutStrategy RolloutStrategy(RolloutStrategyType? @type = default, string clusterUpdateStrategyName = default)
+        /// <returns> A new <see cref="Models.ContainerServiceFleetRolloutStrategy"/> instance for mocking. </returns>
+        public static ContainerServiceFleetRolloutStrategy ContainerServiceFleetRolloutStrategy(ContainerServiceFleetRolloutStrategyType? @type = default, string clusterUpdateStrategyName = default)
         {
-            return new RolloutStrategy(@type, clusterUpdateStrategyName is null ? default : new ClusterUpdateStrategyReference(clusterUpdateStrategyName, default), default);
+            return new ContainerServiceFleetRolloutStrategy(@type, clusterUpdateStrategyName is null ? default : new ClusterUpdateStrategyReference(clusterUpdateStrategyName, default), default);
         }
 
         /// <summary> Status information for the fleet managed namespace. </summary>
@@ -428,24 +428,24 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="deletePolicy"> Delete options of a fleet managed namespace. </param>
         /// <param name="propagationPolicy"> The profile of the propagation to create the namespace. </param>
         /// <returns> A new <see cref="Models.FleetManagedNamespacePropertiesPatch"/> instance for mocking. </returns>
-        public static FleetManagedNamespacePropertiesPatch FleetManagedNamespacePropertiesPatch(ContainerServiceFleetManagedNamespaceProperties managedNamespaceProperties = default, ContainerServiceFleetAdoptionPolicy? adoptionPolicy = default, ContainerServiceFleetDeletePolicy? deletePolicy = default, PropagationPolicyPatch propagationPolicy = default)
+        public static FleetManagedNamespacePropertiesPatch FleetManagedNamespacePropertiesPatch(ContainerServiceFleetManagedNamespaceProperties managedNamespaceProperties = default, ContainerServiceFleetAdoptionPolicy? adoptionPolicy = default, ContainerServiceFleetDeletePolicy? deletePolicy = default, ContainerServiceFleetPropagationPolicyPatch propagationPolicy = default)
         {
             return new FleetManagedNamespacePropertiesPatch(managedNamespaceProperties, adoptionPolicy, deletePolicy, propagationPolicy, default);
         }
 
         /// <param name="type"> The type of the policy to be used. </param>
         /// <param name="defaultClusterResourcePlacement"> The default ClusterResourcePlacement policy configuration that can be patched. </param>
-        /// <returns> A new <see cref="Models.PropagationPolicyPatch"/> instance for mocking. </returns>
-        public static PropagationPolicyPatch PropagationPolicyPatch(ContainerServiceFleetPropagationType? @type = default, ClusterResourcePlacementSpecPatch defaultClusterResourcePlacement = default)
+        /// <returns> A new <see cref="Models.ContainerServiceFleetPropagationPolicyPatch"/> instance for mocking. </returns>
+        public static ContainerServiceFleetPropagationPolicyPatch ContainerServiceFleetPropagationPolicyPatch(ContainerServiceFleetPropagationType? @type = default, ClusterResourcePlacementSpecPatch defaultClusterResourcePlacement = default)
         {
-            return new PropagationPolicyPatch(@type, defaultClusterResourcePlacement is null ? default : new PlacementProfilePatch(defaultClusterResourcePlacement, default), default);
+            return new ContainerServiceFleetPropagationPolicyPatch(@type, defaultClusterResourcePlacement is null ? default : new PlacementProfilePatch(defaultClusterResourcePlacement, default), default);
         }
 
         /// <summary> The ClusterResourcePlacement settings that can be patched. </summary>
         /// <param name="policy"> The placement policy that can be patched. </param>
         /// <param name="rolloutStrategy"> The rollout strategy configuration that can be patched. </param>
         /// <returns> A new <see cref="Models.ClusterResourcePlacementSpecPatch"/> instance for mocking. </returns>
-        public static ClusterResourcePlacementSpecPatch ClusterResourcePlacementSpecPatch(PlacementPolicyPatch policy = default, RolloutStrategy rolloutStrategy = default)
+        public static ClusterResourcePlacementSpecPatch ClusterResourcePlacementSpecPatch(ContainerServiceFleetPlacementPolicyPatch policy = default, ContainerServiceFleetRolloutStrategy rolloutStrategy = default)
         {
             return new ClusterResourcePlacementSpecPatch(policy, rolloutStrategy, default);
         }
@@ -454,57 +454,57 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="clusterNames"> The member cluster names that can be patched. </param>
         /// <param name="affinityRequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms"> The cluster selector terms that can be patched. </param>
         /// <param name="tolerations"> The tolerations that can be patched. </param>
-        /// <returns> A new <see cref="Models.PlacementPolicyPatch"/> instance for mocking. </returns>
-        public static PlacementPolicyPatch PlacementPolicyPatch(ContainerServiceFleetPlacementType? placementType = default, IEnumerable<string> clusterNames = default, IEnumerable<ClusterSelectorTermPatch> affinityRequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms = default, IEnumerable<ContainerServiceFleetToleration> tolerations = default)
+        /// <returns> A new <see cref="Models.ContainerServiceFleetPlacementPolicyPatch"/> instance for mocking. </returns>
+        public static ContainerServiceFleetPlacementPolicyPatch ContainerServiceFleetPlacementPolicyPatch(ContainerServiceFleetPlacementType? placementType = default, IEnumerable<string> clusterNames = default, IEnumerable<ContainerServiceFleetClusterSelectorTermPatch> affinityRequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms = default, IEnumerable<ContainerServiceFleetToleration> tolerations = default)
         {
             clusterNames ??= new ChangeTrackingList<string>();
             tolerations ??= new ChangeTrackingList<ContainerServiceFleetToleration>();
 
-            return new PlacementPolicyPatch(placementType, (clusterNames ?? new ChangeTrackingList<string>()).ToList(), affinityRequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms is null ? default : new AffinityPatch(new ClusterAffinityPatch(new ClusterSelectorPatch((affinityRequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms ?? new ChangeTrackingList<ClusterSelectorTermPatch>()).ToList(), default), default), default), (tolerations ?? new ChangeTrackingList<ContainerServiceFleetToleration>()).ToList(), default);
+            return new ContainerServiceFleetPlacementPolicyPatch(placementType, (clusterNames ?? new ChangeTrackingList<string>()).ToList(), affinityRequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms is null ? default : new AffinityPatch(new ClusterAffinityPatch(new ClusterSelectorPatch((affinityRequiredDuringSchedulingIgnoredDuringExecutionClusterSelectorTerms ?? new ChangeTrackingList<ContainerServiceFleetClusterSelectorTermPatch>()).ToList(), default), default), default), (tolerations ?? new ChangeTrackingList<ContainerServiceFleetToleration>()).ToList(), default);
         }
 
         /// <param name="labelSelector"> The label selector that can be patched. </param>
         /// <param name="propertySelectorMatchExpressions"> The property selector requirements that can be patched. </param>
-        /// <returns> A new <see cref="Models.ClusterSelectorTermPatch"/> instance for mocking. </returns>
-        public static ClusterSelectorTermPatch ClusterSelectorTermPatch(LabelSelectorPatch labelSelector = default, IEnumerable<PropertySelectorRequirementPatch> propertySelectorMatchExpressions = default)
+        /// <returns> A new <see cref="Models.ContainerServiceFleetClusterSelectorTermPatch"/> instance for mocking. </returns>
+        public static ContainerServiceFleetClusterSelectorTermPatch ContainerServiceFleetClusterSelectorTermPatch(ContainerServiceFleetLabelSelectorPatch labelSelector = default, IEnumerable<ContainerServiceFleetPropertySelectorRequirementPatch> propertySelectorMatchExpressions = default)
         {
-            return new ClusterSelectorTermPatch(labelSelector, propertySelectorMatchExpressions is null ? default : new PropertySelectorPatch((propertySelectorMatchExpressions ?? new ChangeTrackingList<PropertySelectorRequirementPatch>()).ToList(), default), default);
+            return new ContainerServiceFleetClusterSelectorTermPatch(labelSelector, propertySelectorMatchExpressions is null ? default : new PropertySelectorPatch((propertySelectorMatchExpressions ?? new ChangeTrackingList<ContainerServiceFleetPropertySelectorRequirementPatch>()).ToList(), default), default);
         }
 
         /// <summary> The label selector settings that can be patched. </summary>
         /// <param name="matchLabels"> matchLabels is a map of {key,value} pairs. A single {key,value} in the matchLabels map is equivalent to an element of matchExpressions, whose key field is "key", the operator is "In", and the values array contains only "value". The requirements are ANDed. </param>
         /// <param name="matchExpressions"> The label selector requirements that can be patched. </param>
-        /// <returns> A new <see cref="Models.LabelSelectorPatch"/> instance for mocking. </returns>
-        public static LabelSelectorPatch LabelSelectorPatch(IDictionary<string, string> matchLabels = default, IEnumerable<LabelSelectorRequirementPatch> matchExpressions = default)
+        /// <returns> A new <see cref="Models.ContainerServiceFleetLabelSelectorPatch"/> instance for mocking. </returns>
+        public static ContainerServiceFleetLabelSelectorPatch ContainerServiceFleetLabelSelectorPatch(IDictionary<string, string> matchLabels = default, IEnumerable<ContainerServiceFleetLabelSelectorRequirementPatch> matchExpressions = default)
         {
             matchLabels ??= new ChangeTrackingDictionary<string, string>();
-            matchExpressions ??= new ChangeTrackingList<LabelSelectorRequirementPatch>();
+            matchExpressions ??= new ChangeTrackingList<ContainerServiceFleetLabelSelectorRequirementPatch>();
 
-            return new LabelSelectorPatch(matchLabels ?? new ChangeTrackingDictionary<string, string>(), (matchExpressions ?? new ChangeTrackingList<LabelSelectorRequirementPatch>()).ToList(), default);
+            return new ContainerServiceFleetLabelSelectorPatch(matchLabels ?? new ChangeTrackingDictionary<string, string>(), (matchExpressions ?? new ChangeTrackingList<ContainerServiceFleetLabelSelectorRequirementPatch>()).ToList(), default);
         }
 
         /// <summary> A label selector requirement that can be patched. </summary>
         /// <param name="key"> key is the label key that the selector applies to. </param>
         /// <param name="operator"> operator represents a key's relationship to a set of values. Valid operators are In, NotIn, Exists and DoesNotExist. </param>
         /// <param name="values"> values is an array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch. </param>
-        /// <returns> A new <see cref="Models.LabelSelectorRequirementPatch"/> instance for mocking. </returns>
-        public static LabelSelectorRequirementPatch LabelSelectorRequirementPatch(string key = default, ContainerServiceFleetLabelSelectorOperator? @operator = default, IEnumerable<string> values = default)
+        /// <returns> A new <see cref="Models.ContainerServiceFleetLabelSelectorRequirementPatch"/> instance for mocking. </returns>
+        public static ContainerServiceFleetLabelSelectorRequirementPatch ContainerServiceFleetLabelSelectorRequirementPatch(string key = default, ContainerServiceFleetLabelSelectorOperator? @operator = default, IEnumerable<string> values = default)
         {
             values ??= new ChangeTrackingList<string>();
 
-            return new LabelSelectorRequirementPatch(key, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new ContainerServiceFleetLabelSelectorRequirementPatch(key, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <summary> A property selector requirement that can be patched. </summary>
         /// <param name="name"> The property name that can be patched. </param>
         /// <param name="operator"> The property selector operator that can be patched. </param>
         /// <param name="values"> The property values that can be patched. </param>
-        /// <returns> A new <see cref="Models.PropertySelectorRequirementPatch"/> instance for mocking. </returns>
-        public static PropertySelectorRequirementPatch PropertySelectorRequirementPatch(string name = default, ContainerServiceFleetPropertySelectorOperator? @operator = default, IEnumerable<string> values = default)
+        /// <returns> A new <see cref="Models.ContainerServiceFleetPropertySelectorRequirementPatch"/> instance for mocking. </returns>
+        public static ContainerServiceFleetPropertySelectorRequirementPatch ContainerServiceFleetPropertySelectorRequirementPatch(string name = default, ContainerServiceFleetPropertySelectorOperator? @operator = default, IEnumerable<string> values = default)
         {
             values ??= new ChangeTrackingList<string>();
 
-            return new PropertySelectorRequirementPatch(name, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new ContainerServiceFleetPropertySelectorRequirementPatch(name, @operator, (values ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="state"> The state of the Gate. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="ContainerServiceFleet.ContainerServiceFleetGateData"/> instance for mocking. </returns>
-        public static ContainerServiceFleetGateData ContainerServiceFleetGateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerServiceFleetGateProvisioningState? provisioningState = default, string displayName = default, ContainerServiceFleetGateType? gateType = default, ScheduledStartProperties scheduledStartProperties = default, ContainerServiceFleetGateTarget target = default, ContainerServiceFleetGateState? state = default, ETag? eTag = default)
+        public static ContainerServiceFleetGateData ContainerServiceFleetGateData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ContainerServiceFleetGateProvisioningState? provisioningState = default, string displayName = default, ContainerServiceFleetGateType? gateType = default, ContainerServiceFleetScheduledStartProperties scheduledStartProperties = default, ContainerServiceFleetGateTarget target = default, ContainerServiceFleetGateState? state = default, ETag? eTag = default)
         {
             return new ContainerServiceFleetGateData(
                 id,
@@ -543,10 +543,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="startTime"> The local time of day when the scheduled start occurs in 24-hour (HH:mm) format. </param>
         /// <param name="utcOffset"> The UTC offset for the scheduled time in HH:mm format, -14:00 to +14:00. </param>
         /// <param name="absoluteStartsOn"> The absolute UTC time when the gate will complete. Set when the gate is created. </param>
-        /// <returns> A new <see cref="Models.ScheduledStartProperties"/> instance for mocking. </returns>
-        public static ScheduledStartProperties ScheduledStartProperties(DayOfWeek startDay = default, string startTime = default, string utcOffset = default, DateTimeOffset? absoluteStartsOn = default)
+        /// <returns> A new <see cref="Models.ContainerServiceFleetScheduledStartProperties"/> instance for mocking. </returns>
+        public static ContainerServiceFleetScheduledStartProperties ContainerServiceFleetScheduledStartProperties(ContainerServiceFleetDayOfWeek startDay = default, string startTime = default, string utcOffset = default, DateTimeOffset? absoluteStartsOn = default)
         {
-            return new ScheduledStartProperties(startDay, startTime, utcOffset, absoluteStartsOn, default);
+            return new ContainerServiceFleetScheduledStartProperties(startDay, startTime, utcOffset, absoluteStartsOn, default);
         }
 
         /// <summary> The target that the Gate is controlling, e.g. an Update Run. Exactly one of the properties objects will be set. </summary>
@@ -721,7 +721,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="type"> The type of the Gate determines how it is completed. </param>
         /// <param name="scheduledStartConfiguration"> Scheduled start configuration for gates of type ScheduledStart. </param>
         /// <returns> A new <see cref="Models.ContainerServiceFleetGateConfiguration"/> instance for mocking. </returns>
-        public static ContainerServiceFleetGateConfiguration ContainerServiceFleetGateConfiguration(string displayName = default, ContainerServiceFleetGateType @type = default, ScheduledStartConfiguration scheduledStartConfiguration = default)
+        public static ContainerServiceFleetGateConfiguration ContainerServiceFleetGateConfiguration(string displayName = default, ContainerServiceFleetGateType @type = default, ContainerServiceFleetScheduledStartConfiguration scheduledStartConfiguration = default)
         {
             return new ContainerServiceFleetGateConfiguration(displayName, @type, scheduledStartConfiguration, default);
         }
@@ -730,10 +730,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="startDay"> The day of the week when the scheduled start occurs. </param>
         /// <param name="startTime"> The local time of day when the scheduled start occurs in 24-hour (HH:mm) format. </param>
         /// <param name="utcOffset"> The UTC offset for the scheduled time in HH:mm format, -14:00 to +14:00. </param>
-        /// <returns> A new <see cref="Models.ScheduledStartConfiguration"/> instance for mocking. </returns>
-        public static ScheduledStartConfiguration ScheduledStartConfiguration(DayOfWeek startDay = default, string startTime = default, string utcOffset = default)
+        /// <returns> A new <see cref="Models.ContainerServiceFleetScheduledStartConfiguration"/> instance for mocking. </returns>
+        public static ContainerServiceFleetScheduledStartConfiguration ContainerServiceFleetScheduledStartConfiguration(ContainerServiceFleetDayOfWeek startDay = default, string startTime = default, string utcOffset = default)
         {
-            return new ScheduledStartConfiguration(startDay, startTime, utcOffset, default);
+            return new ContainerServiceFleetScheduledStartConfiguration(startDay, startTime, utcOffset, default);
         }
 
         /// <summary> The update to be applied to the ManagedClusters. </summary>

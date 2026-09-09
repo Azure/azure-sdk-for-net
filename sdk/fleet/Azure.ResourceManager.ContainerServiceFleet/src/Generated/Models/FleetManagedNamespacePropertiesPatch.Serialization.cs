@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             ContainerServiceFleetManagedNamespaceProperties managedNamespaceProperties = default;
             ContainerServiceFleetAdoptionPolicy? adoptionPolicy = default;
             ContainerServiceFleetDeletePolicy? deletePolicy = default;
-            PropagationPolicyPatch propagationPolicy = default;
+            ContainerServiceFleetPropagationPolicyPatch propagationPolicy = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    propagationPolicy = PropagationPolicyPatch.DeserializePropagationPolicyPatch(prop.Value, options);
+                    propagationPolicy = ContainerServiceFleetPropagationPolicyPatch.DeserializeContainerServiceFleetPropagationPolicyPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

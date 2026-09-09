@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="policy"> The placement policy that can be patched. </param>
         /// <param name="rolloutStrategy"> The rollout strategy configuration that can be patched. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterResourcePlacementSpecPatch(PlacementPolicyPatch policy, RolloutStrategy rolloutStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterResourcePlacementSpecPatch(ContainerServiceFleetPlacementPolicyPatch policy, ContainerServiceFleetRolloutStrategy rolloutStrategy, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Policy = policy;
             RolloutStrategy = rolloutStrategy;
@@ -33,9 +33,9 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> The placement policy that can be patched. </summary>
-        public PlacementPolicyPatch Policy { get; set; }
+        public ContainerServiceFleetPlacementPolicyPatch Policy { get; set; }
 
         /// <summary> The rollout strategy configuration that can be patched. </summary>
-        public RolloutStrategy RolloutStrategy { get; set; }
+        public ContainerServiceFleetRolloutStrategy RolloutStrategy { get; set; }
     }
 }

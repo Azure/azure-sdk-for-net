@@ -11,18 +11,18 @@ using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    /// <summary> Properties for ScheduledStart gate. </summary>
-    public partial class ScheduledStartProperties
+    /// <summary> Configuration for ScheduledStart gate. </summary>
+    public partial class ContainerServiceFleetScheduledStartConfiguration
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledStartProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetScheduledStartConfiguration"/>. </summary>
         /// <param name="startDay"> The day of the week when the scheduled start occurs. </param>
         /// <param name="startTime"> The local time of day when the scheduled start occurs in 24-hour (HH:mm) format. </param>
         /// <param name="utcOffset"> The UTC offset for the scheduled time in HH:mm format, -14:00 to +14:00. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="startTime"/> or <paramref name="utcOffset"/> is null. </exception>
-        public ScheduledStartProperties(DayOfWeek startDay, string startTime, string utcOffset)
+        public ContainerServiceFleetScheduledStartConfiguration(ContainerServiceFleetDayOfWeek startDay, string startTime, string utcOffset)
         {
             Argument.AssertNotNull(startTime, nameof(startTime));
             Argument.AssertNotNull(utcOffset, nameof(utcOffset));
@@ -32,31 +32,26 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             UtcOffset = utcOffset;
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScheduledStartProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetScheduledStartConfiguration"/>. </summary>
         /// <param name="startDay"> The day of the week when the scheduled start occurs. </param>
         /// <param name="startTime"> The local time of day when the scheduled start occurs in 24-hour (HH:mm) format. </param>
         /// <param name="utcOffset"> The UTC offset for the scheduled time in HH:mm format, -14:00 to +14:00. </param>
-        /// <param name="absoluteStartsOn"> The absolute UTC time when the gate will complete. Set when the gate is created. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScheduledStartProperties(DayOfWeek startDay, string startTime, string utcOffset, DateTimeOffset? absoluteStartsOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetScheduledStartConfiguration(ContainerServiceFleetDayOfWeek startDay, string startTime, string utcOffset, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             StartDay = startDay;
             StartTime = startTime;
             UtcOffset = utcOffset;
-            AbsoluteStartsOn = absoluteStartsOn;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The day of the week when the scheduled start occurs. </summary>
-        public DayOfWeek StartDay { get; set; }
+        public ContainerServiceFleetDayOfWeek StartDay { get; set; }
 
         /// <summary> The local time of day when the scheduled start occurs in 24-hour (HH:mm) format. </summary>
         public string StartTime { get; set; }
 
         /// <summary> The UTC offset for the scheduled time in HH:mm format, -14:00 to +14:00. </summary>
         public string UtcOffset { get; set; }
-
-        /// <summary> The absolute UTC time when the gate will complete. Set when the gate is created. </summary>
-        public DateTimeOffset? AbsoluteStartsOn { get; }
     }
 }

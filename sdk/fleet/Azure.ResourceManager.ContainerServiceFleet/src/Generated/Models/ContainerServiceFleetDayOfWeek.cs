@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerServiceFleet;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The days of a week. </summary>
-    public readonly partial struct DayOfWeek : IEquatable<DayOfWeek>
+    public readonly partial struct ContainerServiceFleetDayOfWeek : IEquatable<ContainerServiceFleetDayOfWeek>
     {
         private readonly string _value;
         /// <summary> The day Monday. </summary>
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> The day Sunday. </summary>
         private const string SundayValue = "Sunday";
 
-        /// <summary> Initializes a new instance of <see cref="DayOfWeek"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DayOfWeek(string value)
+        public ContainerServiceFleetDayOfWeek(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -41,50 +41,50 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> The day Monday. </summary>
-        public static DayOfWeek Monday { get; } = new DayOfWeek(MondayValue);
+        public static ContainerServiceFleetDayOfWeek Monday { get; } = new ContainerServiceFleetDayOfWeek(MondayValue);
 
         /// <summary> The day Tuesday. </summary>
-        public static DayOfWeek Tuesday { get; } = new DayOfWeek(TuesdayValue);
+        public static ContainerServiceFleetDayOfWeek Tuesday { get; } = new ContainerServiceFleetDayOfWeek(TuesdayValue);
 
         /// <summary> The day Wednesday. </summary>
-        public static DayOfWeek Wednesday { get; } = new DayOfWeek(WednesdayValue);
+        public static ContainerServiceFleetDayOfWeek Wednesday { get; } = new ContainerServiceFleetDayOfWeek(WednesdayValue);
 
         /// <summary> The day Thursday. </summary>
-        public static DayOfWeek Thursday { get; } = new DayOfWeek(ThursdayValue);
+        public static ContainerServiceFleetDayOfWeek Thursday { get; } = new ContainerServiceFleetDayOfWeek(ThursdayValue);
 
         /// <summary> The day Friday. </summary>
-        public static DayOfWeek Friday { get; } = new DayOfWeek(FridayValue);
+        public static ContainerServiceFleetDayOfWeek Friday { get; } = new ContainerServiceFleetDayOfWeek(FridayValue);
 
         /// <summary> The day Saturday. </summary>
-        public static DayOfWeek Saturday { get; } = new DayOfWeek(SaturdayValue);
+        public static ContainerServiceFleetDayOfWeek Saturday { get; } = new ContainerServiceFleetDayOfWeek(SaturdayValue);
 
         /// <summary> The day Sunday. </summary>
-        public static DayOfWeek Sunday { get; } = new DayOfWeek(SundayValue);
+        public static ContainerServiceFleetDayOfWeek Sunday { get; } = new ContainerServiceFleetDayOfWeek(SundayValue);
 
-        /// <summary> Determines if two <see cref="DayOfWeek"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerServiceFleetDayOfWeek"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DayOfWeek left, DayOfWeek right) => left.Equals(right);
+        public static bool operator ==(ContainerServiceFleetDayOfWeek left, ContainerServiceFleetDayOfWeek right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DayOfWeek"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="ContainerServiceFleetDayOfWeek"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DayOfWeek left, DayOfWeek right) => !left.Equals(right);
+        public static bool operator !=(ContainerServiceFleetDayOfWeek left, ContainerServiceFleetDayOfWeek right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DayOfWeek"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerServiceFleetDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DayOfWeek(string value) => new DayOfWeek(value);
+        public static implicit operator ContainerServiceFleetDayOfWeek(string value) => new ContainerServiceFleetDayOfWeek(value);
 
-        /// <summary> Converts a string to a <see cref="DayOfWeek"/>. </summary>
+        /// <summary> Converts a string to a <see cref="ContainerServiceFleetDayOfWeek"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DayOfWeek?(string value) => value == null ? null : new DayOfWeek(value);
+        public static implicit operator ContainerServiceFleetDayOfWeek?(string value) => value == null ? null : new ContainerServiceFleetDayOfWeek(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DayOfWeek other && Equals(other);
+        public override bool Equals(object obj) => obj is ContainerServiceFleetDayOfWeek other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DayOfWeek other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(ContainerServiceFleetDayOfWeek other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

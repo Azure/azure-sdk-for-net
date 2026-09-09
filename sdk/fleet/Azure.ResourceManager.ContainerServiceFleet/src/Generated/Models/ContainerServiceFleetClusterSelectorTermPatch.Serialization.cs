@@ -13,52 +13,52 @@ using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
-    /// <summary> The propagation settings that can be patched. </summary>
-    public partial class PropagationPolicyPatch : IJsonModel<PropagationPolicyPatch>
+    /// <summary> A cluster selector term that can be patched. </summary>
+    public partial class ContainerServiceFleetClusterSelectorTermPatch : IJsonModel<ContainerServiceFleetClusterSelectorTermPatch>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PropagationPolicyPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ContainerServiceFleetClusterSelectorTermPatch PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropagationPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetClusterSelectorTermPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializePropagationPolicyPatch(document.RootElement, options);
+                        return DeserializeContainerServiceFleetClusterSelectorTermPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PropagationPolicyPatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetClusterSelectorTermPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropagationPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetClusterSelectorTermPatch>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceFleetContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(PropagationPolicyPatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetClusterSelectorTermPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<PropagationPolicyPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ContainerServiceFleetClusterSelectorTermPatch>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PropagationPolicyPatch IPersistableModel<PropagationPolicyPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ContainerServiceFleetClusterSelectorTermPatch IPersistableModel<ContainerServiceFleetClusterSelectorTermPatch>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<PropagationPolicyPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerServiceFleetClusterSelectorTermPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<PropagationPolicyPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerServiceFleetClusterSelectorTermPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropagationPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetClusterSelectorTermPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PropagationPolicyPatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetClusterSelectorTermPatch)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Type))
+            if (Optional.IsDefined(LabelSelector))
             {
-                writer.WritePropertyName("type"u8);
-                writer.WriteStringValue(Type.Value.ToString());
+                writer.WritePropertyName("labelSelector"u8);
+                writer.WriteObjectValue(LabelSelector, options);
             }
-            if (Optional.IsDefined(PlacementProfile))
+            if (Optional.IsDefined(PropertySelector))
             {
-                writer.WritePropertyName("placementProfile"u8);
-                writer.WriteObjectValue(PlacementProfile, options);
+                writer.WritePropertyName("propertySelector"u8);
+                writer.WriteObjectValue(PropertySelector, options);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,50 +103,50 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        PropagationPolicyPatch IJsonModel<PropagationPolicyPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ContainerServiceFleetClusterSelectorTermPatch IJsonModel<ContainerServiceFleetClusterSelectorTermPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual PropagationPolicyPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ContainerServiceFleetClusterSelectorTermPatch JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<PropagationPolicyPatch>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetClusterSelectorTermPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PropagationPolicyPatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetClusterSelectorTermPatch)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializePropagationPolicyPatch(document.RootElement, options);
+            return DeserializeContainerServiceFleetClusterSelectorTermPatch(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static PropagationPolicyPatch DeserializePropagationPolicyPatch(JsonElement element, ModelReaderWriterOptions options)
+        internal static ContainerServiceFleetClusterSelectorTermPatch DeserializeContainerServiceFleetClusterSelectorTermPatch(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            ContainerServiceFleetPropagationType? @type = default;
-            PlacementProfilePatch placementProfile = default;
+            ContainerServiceFleetLabelSelectorPatch labelSelector = default;
+            PropertySelectorPatch propertySelector = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("type"u8))
+                if (prop.NameEquals("labelSelector"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    @type = new ContainerServiceFleetPropagationType(prop.Value.GetString());
+                    labelSelector = ContainerServiceFleetLabelSelectorPatch.DeserializeContainerServiceFleetLabelSelectorPatch(prop.Value, options);
                     continue;
                 }
-                if (prop.NameEquals("placementProfile"u8))
+                if (prop.NameEquals("propertySelector"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    placementProfile = PlacementProfilePatch.DeserializePlacementProfilePatch(prop.Value, options);
+                    propertySelector = PropertySelectorPatch.DeserializePropertySelectorPatch(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new PropagationPolicyPatch(@type, placementProfile, additionalBinaryDataProperties);
+            return new ContainerServiceFleetClusterSelectorTermPatch(labelSelector, propertySelector, additionalBinaryDataProperties);
         }
     }
 }

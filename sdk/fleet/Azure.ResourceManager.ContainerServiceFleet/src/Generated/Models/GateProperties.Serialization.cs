@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             ContainerServiceFleetGateProvisioningState? provisioningState = default;
             string displayName = default;
             ContainerServiceFleetGateType gateType = default;
-            ScheduledStartProperties scheduledStartProperties = default;
+            ContainerServiceFleetScheduledStartProperties scheduledStartProperties = default;
             ContainerServiceFleetGateTarget target = default;
             ContainerServiceFleetGateState state = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                     {
                         continue;
                     }
-                    scheduledStartProperties = ScheduledStartProperties.DeserializeScheduledStartProperties(prop.Value, options);
+                    scheduledStartProperties = ContainerServiceFleetScheduledStartProperties.DeserializeContainerServiceFleetScheduledStartProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("target"u8))

@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> The propagation settings that can be patched. </summary>
-    public partial class PropagationPolicyPatch
+    public partial class ContainerServiceFleetPropagationPolicyPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PropagationPolicyPatch"/>. </summary>
-        public PropagationPolicyPatch()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetPropagationPolicyPatch"/>. </summary>
+        public ContainerServiceFleetPropagationPolicyPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PropagationPolicyPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetPropagationPolicyPatch"/>. </summary>
         /// <param name="type"> The type of the policy to be used. </param>
         /// <param name="placementProfile"> The placement profile that can be patched. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PropagationPolicyPatch(ContainerServiceFleetPropagationType? @type, PlacementProfilePatch placementProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetPropagationPolicyPatch(ContainerServiceFleetPropagationType? @type, PlacementProfilePatch placementProfile, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Type = @type;
             PlacementProfile = placementProfile;

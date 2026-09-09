@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> Initializes a new instance of <see cref="ClusterSelectorPatch"/>. </summary>
         public ClusterSelectorPatch()
         {
-            ClusterSelectorTerms = new ChangeTrackingList<ClusterSelectorTermPatch>();
+            ClusterSelectorTerms = new ChangeTrackingList<ContainerServiceFleetClusterSelectorTermPatch>();
         }
 
         /// <summary> Initializes a new instance of <see cref="ClusterSelectorPatch"/>. </summary>
         /// <param name="clusterSelectorTerms"> The cluster selector terms that can be patched. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterSelectorPatch(IList<ClusterSelectorTermPatch> clusterSelectorTerms, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ClusterSelectorPatch(IList<ContainerServiceFleetClusterSelectorTermPatch> clusterSelectorTerms, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ClusterSelectorTerms = clusterSelectorTerms;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The cluster selector terms that can be patched. </summary>
-        public IList<ClusterSelectorTermPatch> ClusterSelectorTerms { get; } = new ChangeTrackingList<ClusterSelectorTermPatch>();
+        public IList<ContainerServiceFleetClusterSelectorTermPatch> ClusterSelectorTerms { get; } = new ChangeTrackingList<ContainerServiceFleetClusterSelectorTermPatch>();
     }
 }

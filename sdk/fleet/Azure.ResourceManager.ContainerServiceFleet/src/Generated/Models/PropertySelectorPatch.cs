@@ -20,19 +20,19 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <summary> Initializes a new instance of <see cref="PropertySelectorPatch"/>. </summary>
         public PropertySelectorPatch()
         {
-            MatchExpressions = new ChangeTrackingList<PropertySelectorRequirementPatch>();
+            MatchExpressions = new ChangeTrackingList<ContainerServiceFleetPropertySelectorRequirementPatch>();
         }
 
         /// <summary> Initializes a new instance of <see cref="PropertySelectorPatch"/>. </summary>
         /// <param name="matchExpressions"> The property selector requirements that can be patched. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PropertySelectorPatch(IList<PropertySelectorRequirementPatch> matchExpressions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal PropertySelectorPatch(IList<ContainerServiceFleetPropertySelectorRequirementPatch> matchExpressions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MatchExpressions = matchExpressions;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The property selector requirements that can be patched. </summary>
-        public IList<PropertySelectorRequirementPatch> MatchExpressions { get; } = new ChangeTrackingList<PropertySelectorRequirementPatch>();
+        public IList<ContainerServiceFleetPropertySelectorRequirementPatch> MatchExpressions { get; } = new ChangeTrackingList<ContainerServiceFleetPropertySelectorRequirementPatch>();
     }
 }

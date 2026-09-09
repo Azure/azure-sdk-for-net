@@ -28,7 +28,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="type"> The type of the Gate determines how it is completed. </param>
         /// <param name="scheduledStartConfiguration"> Scheduled start configuration for gates of type ScheduledStart. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerServiceFleetGateConfiguration(string displayName, ContainerServiceFleetGateType @type, ScheduledStartConfiguration scheduledStartConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetGateConfiguration(string displayName, ContainerServiceFleetGateType @type, ContainerServiceFleetScheduledStartConfiguration scheduledStartConfiguration, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             DisplayName = displayName;
             Type = @type;
@@ -43,6 +43,6 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public ContainerServiceFleetGateType Type { get; set; }
 
         /// <summary> Scheduled start configuration for gates of type ScheduledStart. </summary>
-        public ScheduledStartConfiguration ScheduledStartConfiguration { get; set; }
+        public ContainerServiceFleetScheduledStartConfiguration ScheduledStartConfiguration { get; set; }
     }
 }

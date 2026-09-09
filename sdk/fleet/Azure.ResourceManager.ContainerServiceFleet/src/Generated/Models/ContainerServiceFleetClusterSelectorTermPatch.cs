@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> A cluster selector term that can be patched. </summary>
-    public partial class ClusterSelectorTermPatch
+    public partial class ContainerServiceFleetClusterSelectorTermPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ClusterSelectorTermPatch"/>. </summary>
-        public ClusterSelectorTermPatch()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetClusterSelectorTermPatch"/>. </summary>
+        public ContainerServiceFleetClusterSelectorTermPatch()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ClusterSelectorTermPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetClusterSelectorTermPatch"/>. </summary>
         /// <param name="labelSelector"> The label selector that can be patched. </param>
         /// <param name="propertySelector"> The property selector that can be patched. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ClusterSelectorTermPatch(LabelSelectorPatch labelSelector, PropertySelectorPatch propertySelector, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetClusterSelectorTermPatch(ContainerServiceFleetLabelSelectorPatch labelSelector, PropertySelectorPatch propertySelector, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             LabelSelector = labelSelector;
             PropertySelector = propertySelector;
@@ -33,13 +33,13 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         }
 
         /// <summary> The label selector that can be patched. </summary>
-        public LabelSelectorPatch LabelSelector { get; set; }
+        public ContainerServiceFleetLabelSelectorPatch LabelSelector { get; set; }
 
         /// <summary> The property selector that can be patched. </summary>
         internal PropertySelectorPatch PropertySelector { get; set; }
 
         /// <summary> The property selector requirements that can be patched. </summary>
-        public IList<PropertySelectorRequirementPatch> PropertySelectorMatchExpressions
+        public IList<ContainerServiceFleetPropertySelectorRequirementPatch> PropertySelectorMatchExpressions
         {
             get
             {

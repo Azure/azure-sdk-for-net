@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet
         }
 
         /// <summary> Details for ScheduledStart gate. </summary>
-        public ScheduledStartProperties ScheduledStartProperties
+        public ContainerServiceFleetScheduledStartProperties ScheduledStartProperties
         {
             get
             {

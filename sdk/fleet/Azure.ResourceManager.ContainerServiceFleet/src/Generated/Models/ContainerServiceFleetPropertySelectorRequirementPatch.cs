@@ -12,23 +12,23 @@ using Azure.ResourceManager.ContainerServiceFleet;
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> A property selector requirement that can be patched. </summary>
-    public partial class PropertySelectorRequirementPatch
+    public partial class ContainerServiceFleetPropertySelectorRequirementPatch
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="PropertySelectorRequirementPatch"/>. </summary>
-        public PropertySelectorRequirementPatch()
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetPropertySelectorRequirementPatch"/>. </summary>
+        public ContainerServiceFleetPropertySelectorRequirementPatch()
         {
             Values = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="PropertySelectorRequirementPatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetPropertySelectorRequirementPatch"/>. </summary>
         /// <param name="name"> The property name that can be patched. </param>
         /// <param name="operator"> The property selector operator that can be patched. </param>
         /// <param name="values"> The property values that can be patched. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal PropertySelectorRequirementPatch(string name, ContainerServiceFleetPropertySelectorOperator? @operator, IList<string> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerServiceFleetPropertySelectorRequirementPatch(string name, ContainerServiceFleetPropertySelectorOperator? @operator, IList<string> values, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Operator = @operator;

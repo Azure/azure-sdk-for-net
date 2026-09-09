@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="target"> The target that the Gate is controlling, e.g. an Update Run. </param>
         /// <param name="state"> The state of the Gate. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GateProperties(ContainerServiceFleetGateProvisioningState? provisioningState, string displayName, ContainerServiceFleetGateType gateType, ScheduledStartProperties scheduledStartProperties, ContainerServiceFleetGateTarget target, ContainerServiceFleetGateState state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GateProperties(ContainerServiceFleetGateProvisioningState? provisioningState, string displayName, ContainerServiceFleetGateType gateType, ContainerServiceFleetScheduledStartProperties scheduledStartProperties, ContainerServiceFleetGateTarget target, ContainerServiceFleetGateState state, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DisplayName = displayName;
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         public ContainerServiceFleetGateType GateType { get; set; }
 
         /// <summary> Details for ScheduledStart gate. </summary>
-        public ScheduledStartProperties ScheduledStartProperties { get; set; }
+        public ContainerServiceFleetScheduledStartProperties ScheduledStartProperties { get; set; }
 
         /// <summary> The target that the Gate is controlling, e.g. an Update Run. </summary>
         public ContainerServiceFleetGateTarget Target { get; set; }
