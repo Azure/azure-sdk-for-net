@@ -262,25 +262,6 @@ namespace Azure.Core.Extensions.Tests
                 Throws.ArgumentException.With.Message.Contains("mutually exclusive"));
         }
 
-        [TestCase(null, "client", "My", "CurrentUser")]
-        [TestCase("tenant", null, "My", "CurrentUser")]
-        [TestCase("tenant", "client", null, "CurrentUser")]
-        [TestCase("tenant", "client", "My", null)]
-        public void CertificateSubjectRequiresAllConfiguration(string tenantId, string clientId, string storeName, string storeLocation)
-        {
-            IConfiguration configuration = GetConfiguration(
-                new KeyValuePair<string, string>("tenantId", tenantId),
-                new KeyValuePair<string, string>("clientId", clientId),
-                new KeyValuePair<string, string>("clientCertificateSubject", "subject"),
-                new KeyValuePair<string, string>("clientCertificateStoreName", storeName),
-                new KeyValuePair<string, string>("clientCertificateStoreLocation", storeLocation)
-            );
-
-            Assert.That(
-                () => ClientFactory.CreateCredential(configuration),
-                Throws.ArgumentException.With.Message.Contains("'tenantId', 'clientId', 'clientCertificateStoreName', and 'clientCertificateStoreLocation'"));
-        }
-
         [Test]
         public void CreatesClientSecretCredentials()
         {

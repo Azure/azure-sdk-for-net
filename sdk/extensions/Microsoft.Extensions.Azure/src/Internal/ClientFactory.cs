@@ -260,15 +260,6 @@ namespace Microsoft.Extensions.Azure
                 throw new ArgumentException("'clientCertificate' and 'clientCertificateSubject' are mutually exclusive.");
             }
 
-            if (findCertificateBySubject &&
-                (string.IsNullOrWhiteSpace(tenantId) ||
-                 string.IsNullOrWhiteSpace(clientId) ||
-                 string.IsNullOrWhiteSpace(certificateStoreName) ||
-                 string.IsNullOrWhiteSpace(certificateStoreLocation)))
-            {
-                throw new ArgumentException("For a client certificate subject, 'tenantId', 'clientId', 'clientCertificateStoreName', and 'clientCertificateStoreLocation' must be specified via the configuration.");
-            }
-
             if (!string.IsNullOrWhiteSpace(tenantId) &&
                 !string.IsNullOrWhiteSpace(clientId) &&
                 (findCertificateByThumbprint || findCertificateBySubject))
