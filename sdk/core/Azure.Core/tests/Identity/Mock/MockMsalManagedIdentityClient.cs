@@ -18,6 +18,7 @@ namespace Azure.Core.Tests.Identity.Mock
     {
         public Func<CancellationToken, IManagedIdentityApplication> ClientAppFactory { get; set; }
         public Func<TokenRequestContext, CancellationToken, AuthenticationResult> AcquireTokenForManagedIdentityAsyncFactory { get; set; }
+        public bool? LastIsTokenBindingAvailable { get; private set; }
 
         /// <summary>
         /// When set, this is invoked by <see cref="GetManagedIdentityCapabilitiesAsync"/> to produce the
@@ -25,6 +26,7 @@ namespace Azure.Core.Tests.Identity.Mock
         /// failing — for example, when the IMDS endpoint is unreachable on a developer machine.
         /// </summary>
         public Func<TokenRequestContext, CancellationToken, ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesFactory { get; set; }
+        public Func<TokenRequestContext, CancellationToken, ValueTask<ManagedIdentityCapabilities>> GetManagedIdentityCapabilitiesAsyncFactory { get; set; }
 
         private Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource _detectedSource;
         private ManagedIdentityId _azureManagedIdentityId;
@@ -54,6 +56,8 @@ namespace Azure.Core.Tests.Identity.Mock
 
         public override ValueTask<AuthenticationResult> AcquireTokenForManagedIdentityAsyncCore(bool async, TokenRequestContext requestContext, bool isTokenBindingAvailable, CancellationToken cancellationToken)
         {
+            LastIsTokenBindingAvailable = isTokenBindingAvailable;
+
             if (AcquireTokenForManagedIdentityAsyncFactory != null)
             {
                 return new ValueTask<AuthenticationResult>(AcquireTokenForManagedIdentityAsyncFactory(requestContext, cancellationToken));
@@ -64,9 +68,15 @@ namespace Azure.Core.Tests.Identity.Mock
             // Non-IMDS sources (AppService, CloudShell, etc.) are detected from env vars
             // without HTTP probing, so MSAL handles them safely.
 #pragma warning disable CS0618 // DefaultToImds is obsolete
+            if (_detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.None)
+            {
+                _detectedSource = ManagedIdentityApplication.GetManagedIdentitySource();
+            }
+
             if (Pipeline != null &&
                 (_detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.DefaultToImds ||
-                 _detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.Imds))
+                 _detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.Imds ||
+                 _detectedSource == Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource.None))
 #pragma warning restore CS0618
             {
                 return new ValueTask<AuthenticationResult>(SendDirectImdsRequest(requestContext, cancellationToken));
@@ -77,6 +87,11 @@ namespace Azure.Core.Tests.Identity.Mock
 
         public override ValueTask<ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesAsync(TokenRequestContext context, CancellationToken cancellationToken)
         {
+            if (GetManagedIdentityCapabilitiesAsyncFactory != null)
+            {
+                return GetManagedIdentityCapabilitiesFromFactoryAsync(context, cancellationToken);
+            }
+
             if (GetManagedIdentityCapabilitiesFactory != null)
             {
                 // Allows tests to simulate the MSAL source/capability probe (which throws when IMDS is
@@ -93,15 +108,26 @@ namespace Azure.Core.Tests.Identity.Mock
             return new ValueTask<ManagedIdentityCapabilities>(CreateManagedIdentityCapabilities(_detectedSource));
         }
 
+        private async ValueTask<ManagedIdentityCapabilities> GetManagedIdentityCapabilitiesFromFactoryAsync(TokenRequestContext context, CancellationToken cancellationToken)
+        {
+            ManagedIdentityCapabilities capabilities = await GetManagedIdentityCapabilitiesAsyncFactory(context, cancellationToken).ConfigureAwait(false);
+            _detectedSource = capabilities.Source;
+            return capabilities;
+        }
+
         /// <summary>
         /// Builds a <see cref="ManagedIdentityCapabilities"/> reporting the given <paramref name="source"/>.
         /// Tests use this with <see cref="GetManagedIdentityCapabilitiesFactory"/> to drive the credential down a
         /// specific code path (for example, <c>None</c> to reach the token-acquisition call).
         /// </summary>
-        internal static ManagedIdentityCapabilities CreateCapabilities(Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource source)
-            => CreateManagedIdentityCapabilities(source);
+        internal static ManagedIdentityCapabilities CreateCapabilities(
+            Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource source,
+            Microsoft.Identity.Client.AppConfig.MtlsBindingStrength maxSupportedBindingStrength = Microsoft.Identity.Client.AppConfig.MtlsBindingStrength.None)
+            => CreateManagedIdentityCapabilities(source, maxSupportedBindingStrength);
 
-        private static ManagedIdentityCapabilities CreateManagedIdentityCapabilities(Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource source)
+        private static ManagedIdentityCapabilities CreateManagedIdentityCapabilities(
+            Microsoft.Identity.Client.ManagedIdentity.ManagedIdentitySource source,
+            Microsoft.Identity.Client.AppConfig.MtlsBindingStrength maxSupportedBindingStrength = Microsoft.Identity.Client.AppConfig.MtlsBindingStrength.None)
         {
             ConstructorInfo ctor = typeof(ManagedIdentityCapabilities).GetConstructor(
                 BindingFlags.Instance | BindingFlags.NonPublic,
@@ -116,7 +142,7 @@ namespace Azure.Core.Tests.Identity.Mock
                     "The MSAL library version may have changed its internal API. Update the reflection call to match the current constructor signature.");
             }
 
-            return (ManagedIdentityCapabilities)ctor.Invoke([source, Microsoft.Identity.Client.AppConfig.MtlsBindingStrength.None, null]);
+            return (ManagedIdentityCapabilities)ctor.Invoke([source, maxSupportedBindingStrength, null]);
         }
 
         private AuthenticationResult SendDirectImdsRequest(TokenRequestContext requestContext, CancellationToken cancellationToken)
