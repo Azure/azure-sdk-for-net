@@ -1,9 +1,9 @@
 # Release History
 
-## 12.28.0-beta.1 (Unreleased)
+## 12.27.0-beta.2 (Unreleased)
 
 ### Bugs Fixed
-- Prevented carriage-return and line-feed injection in Blob Batch subrequest headers.
+- Fixed bug where header values were not being sanitized for CR or LF characters when using `BlobBatchClient` APIs.
 
 ## 12.27.0-beta.1 (2026-07-22)
 
