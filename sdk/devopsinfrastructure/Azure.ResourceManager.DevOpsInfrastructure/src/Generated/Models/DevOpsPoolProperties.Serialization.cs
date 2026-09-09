@@ -92,8 +92,11 @@ namespace Azure.ResourceManager.DevOpsInfrastructure.Models
             writer.WriteObjectValue(AgentProfile, options);
             writer.WritePropertyName("fabricProfile"u8);
             writer.WriteObjectValue(FabricProfile, options);
-            writer.WritePropertyName("devCenterProjectResourceId"u8);
-            writer.WriteStringValue(DevCenterProjectResourceId);
+            if (Optional.IsDefined(DevCenterProjectResourceId))
+            {
+                writer.WritePropertyName("devCenterProjectResourceId"u8);
+                writer.WriteStringValue(DevCenterProjectResourceId);
+            }
             if (Optional.IsDefined(RuntimeConfiguration))
             {
                 writer.WritePropertyName("runtimeConfiguration"u8);

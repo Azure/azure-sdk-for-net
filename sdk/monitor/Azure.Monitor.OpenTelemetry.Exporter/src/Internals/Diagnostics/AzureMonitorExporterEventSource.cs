@@ -350,8 +350,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
         public void TransmitterFailed(string origin, bool isAadEnabled, string instrumentationKey, string exceptionMessage) => WriteEvent(33, origin, isAadEnabled, instrumentationKey, exceptionMessage);
 
         [UnconditionalSuppressMessage("ReflectionAnalysis", "IL2026:RequiresUnreferencedCode", Justification = "Parameters to this method are primitive and are trimmer safe.")]
-        [Event(34, Message = "Exporter encountered a transmission failure and will wait {0} milliseconds before transmitting again.", Level = EventLevel.Warning)]
-        public void BackoffEnabled(double milliseconds) => WriteEvent(34, milliseconds);
+        [Event(34, Message = "Exporter encountered a transmission failure and will wait {0} milliseconds before transmitting again. Endpoint: {1}.", Level = EventLevel.Warning)]
+        public void BackoffEnabled(double milliseconds, string endpoint) => WriteEvent(34, milliseconds, endpoint);
 
         [NonEvent]
         public void FailedToDeserializeIngestionResponse(Exception ex)
@@ -557,5 +557,32 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics
 
         [Event(60, Message = "Ingestion rejected a batch of {0} stored payloads with status code {1}. Retrying them individually to isolate the rejected payload.", Level = EventLevel.Warning)]
         public void CoalescedBatchRejected(int batchSize, int statusCode) => WriteEvent(60, batchSize, statusCode);
+
+        [Event(61, Message = "Multi-tenant export is enabled. Activities are routed by their microsoft.instrumentation_key and microsoft.ingestion_endpoint tags.", Level = EventLevel.Informational)]
+        public void MultiTenantExportEnabled() => WriteEvent(61);
+
+        [Event(62, Message = "Live Metrics was disabled because multi-tenant export is enabled. Live Metrics streams to the endpoint from the exporter's own connection string and cannot serve routed tenants.", Level = EventLevel.Warning)]
+        public void LiveMetricsDisabledForMultiTenantExport() => WriteEvent(62);
+
+        [Event(63, Message = "Failed to persist routed telemetry for ingestion endpoint '{0}'. This telemetry item will be lost. The endpoint's storage partition is full or unwritable.", Level = EventLevel.Error)]
+        public void FailedToPersistRoutedTelemetry(string ingestionEndpoint) => WriteEvent(63, ingestionEndpoint);
+
+        [Event(64, Message = "Rate-limited sampling of {0} traces per second was ignored because multi-tenant export is enabled. The limit is per process, so it would be shared across every tenant the process carries. Fixed-rate sampling of {1} is used instead; set SamplingRatio to change it.", Level = EventLevel.Warning)]
+        public void RateLimitedSamplingIgnoredForMultiTenantExport(double tracesPerSecond, float samplingRatio) => WriteEvent(64, tracesPerSecond, samplingRatio);
+
+        [Event(65, Message = "Storage partition for ingestion endpoint '{0}' is directory '{1}'. The directory name is a hash of the endpoint and cannot be reversed.", Level = EventLevel.Informational)]
+        public void MultiTenantPartitionCreated(string ingestionEndpoint, string directory) => WriteEvent(65, ingestionEndpoint, directory);
+
+        [NonEvent]
+        public void RoutedTelemetryPersistenceThrew(string ingestionEndpoint, Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                RoutedTelemetryPersistenceThrew(ingestionEndpoint, ex.FlattenException().ToInvariantString());
+            }
+        }
+
+        [Event(66, Message = "Failed to persist routed telemetry for ingestion endpoint '{0}'. This telemetry item will be lost. {1}", Level = EventLevel.Error)]
+        public void RoutedTelemetryPersistenceThrew(string ingestionEndpoint, string exceptionMessage) => WriteEvent(66, ingestionEndpoint, exceptionMessage);
     }
 }
