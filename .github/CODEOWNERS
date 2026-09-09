@@ -520,7 +520,7 @@
 # PRLabel: %Tables
 /sdk/tables/    @JonathanCrd @jsquire
 
-# AzureSdkOwners: @jorgerangel-msft
+# AzureSdkOwners: @JonathanCrd @jsquire
 # ServiceLabel: %Tables
 
 # PRLabel: %Voice Live
