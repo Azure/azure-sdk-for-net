@@ -5,6 +5,9 @@ description: |
   is actionable for Copilot, and either comments, closes clear service-side issues, or assigns
   Copilot to implementation work.
 
+imports:
+  - shared/copilot-cli-version-probe-guard.md
+
 on:
   workflow_dispatch:
     inputs:
