@@ -73,17 +73,6 @@ export function updateProvisioningCodeModel(
         modelSettableUsage: Array.from(
           modelSettableUsage,
           ([modelId, isSettable]) => ({ modelId, isSettable })
-        ),
-        previewOnlyModels: Array.from(models)
-          .filter((model) => isPreviewOnly(model))
-          .map((model) => model.crossLanguageDefinitionId),
-        previewOnlyProperties: Array.from(models).flatMap((model) =>
-          model.properties
-            .filter((property) => isPreviewOnly(property))
-            .map((property) => ({
-              modelId: model.crossLanguageDefinitionId,
-              propertyName: property.name
-            }))
         )
       }
     });
@@ -247,23 +236,6 @@ function distinctBy<T>(values: T[], getKey: (value: T) => string): T[] {
     seen.add(key);
     return true;
   });
-}
-
-export function isPreviewOnly(value: object): boolean {
-  const apiVersions = Reflect.get(value, "apiVersions");
-  if (
-    !Array.isArray(apiVersions) ||
-    !apiVersions.every((version) => typeof version === "string")
-  ) {
-    throw new Error(
-      "The base C# code model does not contain API-version metadata."
-    );
-  }
-
-  return (
-    apiVersions.length > 0 &&
-    apiVersions.every((version) => version.toLowerCase().includes("preview"))
-  );
 }
 
 function collectScopes(

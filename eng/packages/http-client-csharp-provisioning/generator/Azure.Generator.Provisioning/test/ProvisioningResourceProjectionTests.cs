@@ -162,10 +162,10 @@ namespace Azure.Generator.Provisioning.Tests
         [Test]
         public void PreviewOnlyModelIsExperimental()
         {
-            var model = CreateModel("PreviewModel");
+            var model = CreateModel("PreviewModel", apiVersions: ["2024-01-01-preview"]);
             ProvisioningMockHelpers.LoadMockPlugin(
                 inputModels: () => [model],
-                previewOnlyModels: [model.CrossLanguageDefinitionId]);
+                armProviderSchema: () => new ArmProviderSchema([], []));
 
             var provider = new ProvisioningModelProvider(model);
 
@@ -175,14 +175,19 @@ namespace Azure.Generator.Provisioning.Tests
         [Test]
         public void StableModelWithPreviewOnlyPropertyMarksOnlyPropertyExperimental()
         {
-            var previewProperty = CreateProperty("PreviewValue");
-            var stableProperty = CreateProperty("StableValue");
+            var previewProperty = CreateProperty(
+                "PreviewValue",
+                apiVersions: ["2024-01-01-preview"]);
+            var stableProperty = CreateProperty(
+                "StableValue",
+                apiVersions: ["2024-01-01-preview", "2024-02-01"]);
             var model = CreateModel(
                 "StableModel",
-                [previewProperty, stableProperty]);
+                [previewProperty, stableProperty],
+                apiVersions: ["2024-01-01-preview", "2024-02-01"]);
             ProvisioningMockHelpers.LoadMockPlugin(
                 inputModels: () => [model],
-                previewOnlyProperties: [(model.CrossLanguageDefinitionId, previewProperty.Name)]);
+                armProviderSchema: () => new ArmProviderSchema([], []));
 
             var provider = new ProvisioningModelProvider(model);
             var properties = provider.Properties.ToDictionary(property => property.Name);
@@ -1224,7 +1229,8 @@ namespace Azure.Generator.Provisioning.Tests
             IReadOnlyList<InputModelType>? derivedModels = null,
             string? discriminatorValue = null,
             InputModelProperty? discriminatorProperty = null,
-            string? crossLanguageDefinitionId = null)
+            string? crossLanguageDefinitionId = null,
+            IReadOnlyList<string>? apiVersions = null)
             => new(
                 name,
                 "Sample.Models",
@@ -1243,7 +1249,8 @@ namespace Azure.Generator.Provisioning.Tests
                 null,
                 false,
                 new InputSerializationOptions(),
-                false);
+                false,
+                apiVersions);
 
         private static ResourceMethod CreateMethod(ResourceOperationKind kind, ResourceScope scope)
         {
@@ -1468,7 +1475,14 @@ namespace Azure.Generator.Provisioning.Tests
                 writableScopes.Contains(ResourceScope.Extension));
         }
 
-        private static InputModelProperty CreateProperty(string name, bool isRequired = false, bool isReadOnly = false, bool isDiscriminator = false, InputType? type = null, string? serializedName = null)
+        private static InputModelProperty CreateProperty(
+            string name,
+            bool isRequired = false,
+            bool isReadOnly = false,
+            bool isDiscriminator = false,
+            InputType? type = null,
+            string? serializedName = null,
+            IReadOnlyList<string>? apiVersions = null)
             => new(
                 name: name,
                 summary: null,
@@ -1482,7 +1496,8 @@ namespace Azure.Generator.Provisioning.Tests
                 access: null,
                 isDiscriminator: isDiscriminator,
                 serializedName: serializedName ?? name.ToVariableName(),
-                serializationOptions: new(json: new(serializedName ?? name.ToVariableName())));
+                serializationOptions: new(json: new(serializedName ?? name.ToVariableName())),
+                apiVersions: apiVersions);
 
         private static void AssertExperimental(IReadOnlyList<AttributeStatement> attributes)
         {

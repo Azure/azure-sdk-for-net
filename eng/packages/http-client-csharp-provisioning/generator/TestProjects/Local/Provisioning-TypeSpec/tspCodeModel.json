@@ -7419,9 +7419,7 @@
                 "modelId": "ProvisioningTypeSpec.BaseItemAttributes",
                 "isSettable": true
               }
-            ],
-            "previewOnlyModels": [],
-            "previewOnlyProperties": []
+            ]
           }
         }
       ],

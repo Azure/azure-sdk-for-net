@@ -46,8 +46,7 @@ namespace Azure.Generator.Provisioning.Providers
             => TypeSignatureModifiers.Public | TypeSignatureModifiers.Partial | TypeSignatureModifiers.Class;
 
         protected override IReadOnlyList<MethodBodyStatement> BuildAttributes()
-            => [.. base.BuildAttributes(), .. ApiVersionHelpers.BuildExperimentalAttributes(
-                ProvisioningGenerator.Instance.InputLibrary.IsModelPreviewOnly(_inputModel))];
+            => [.. base.BuildAttributes(), .. ApiVersionHelpers.BuildExperimentalAttributes(_inputModel.ApiVersions)];
 
         protected override CSharpType? BuildBaseType()
             => base.BuildBaseType() ?? new CSharpType(typeof(ProvisionableConstruct));

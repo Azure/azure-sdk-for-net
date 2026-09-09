@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageVersion Update="Azure.Generator" Version="1.0.0-alpha.20260908.4" />
+    <PackageVersion Update="Azure.Generator.Management" Version="1.0.0-alpha.20260908.3" />
     <PackageReference Include="Azure.Generator" />
     <PackageReference Include="Azure.Generator.Management" />
     <!-- Reference Azure.Provisioning for runtime types (ProvisionableConstruct, BicepValue<T>, etc.) -->

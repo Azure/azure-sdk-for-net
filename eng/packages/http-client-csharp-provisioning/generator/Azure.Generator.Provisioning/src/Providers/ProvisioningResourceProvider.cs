@@ -180,10 +180,7 @@ namespace Azure.Generator.Provisioning.Providers
 
         protected override IReadOnlyList<MethodBodyStatement> BuildAttributes()
             => [.. base.BuildAttributes(), .. ApiVersionHelpers.BuildExperimentalAttributes(
-                _resourceProjection is not null
-                    ? _resourceProjection.ApiVersions.Count > 0 &&
-                        _resourceProjection.ApiVersions.All(ApiVersionHelpers.IsPreviewApiVersion)
-                    : ProvisioningGenerator.Instance.InputLibrary.IsModelPreviewOnly(_inputModel))];
+                _resourceProjection?.ApiVersions ?? _inputModel.ApiVersions)];
 
         protected override CSharpType? BuildBaseType()
         {

@@ -11,26 +11,7 @@ import {
   type RbacRole,
   type ValidArmResourceSchema
 } from "../../../http-client-csharp-mgmt/emitter/src/resource-metadata.js";
-import {
-  buildResourceProjectionMetadata,
-  isPreviewOnly
-} from "../src/provisioning-code-model.js";
-
-describe("preview-only API versions", () => {
-  it("requires every API version to be preview", () => {
-    strictEqual(
-      isPreviewOnly({
-        apiVersions: ["2024-01-01-preview", "2024-02-01-preview"]
-      }),
-      true
-    );
-    strictEqual(
-      isPreviewOnly({ apiVersions: ["2024-01-01-preview", "2024-02-01"] }),
-      false
-    );
-    strictEqual(isPreviewOnly({ apiVersions: [] }), false);
-  });
-});
+import { buildResourceProjectionMetadata } from "../src/provisioning-code-model.js";
 
 describe("resource projection metadata", () => {
   it("collapses resources and preserves distinct aggregate values", () => {
