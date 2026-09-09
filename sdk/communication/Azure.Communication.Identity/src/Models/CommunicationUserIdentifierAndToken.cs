@@ -9,7 +9,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Communication.Identity
 {
-    [CodeGenType("CommunicationIdentityAccessTokenResult")]
     [CodeGenSuppress("CommunicationUserIdentifierAndToken", typeof(CommunicationIdentity))]
     public partial class CommunicationUserIdentifierAndToken
     {
