@@ -11,13 +11,13 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The databases data security posture management (DSPM) configuration. </summary>
-    public partial class DefenderFoDatabasesAwsOfferingDatabasesDspm : ProvisionableConstruct
+    public partial class DefenderForDatabasesAwsOfferingDatabasesDspm : ProvisionableConstruct
     {
         private BicepValue<bool> _enabled;
         private BicepValue<string> _cloudRoleArn;
 
-        /// <summary> Creates a new DefenderFoDatabasesAwsOfferingDatabasesDspm. </summary>
-        public DefenderFoDatabasesAwsOfferingDatabasesDspm()
+        /// <summary> Creates a new DefenderForDatabasesAwsOfferingDatabasesDspm. </summary>
+        public DefenderForDatabasesAwsOfferingDatabasesDspm()
         {
         }
 
@@ -51,7 +51,7 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for DefenderFoDatabasesAwsOfferingDatabasesDspm. </summary>
+        /// <summary> Define all the provisionable properties for DefenderForDatabasesAwsOfferingDatabasesDspm. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -60,7 +60,7 @@ namespace Azure.Provisioning.SecurityCenter
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for DefenderFoDatabasesAwsOfferingDatabasesDspm that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for DefenderForDatabasesAwsOfferingDatabasesDspm that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

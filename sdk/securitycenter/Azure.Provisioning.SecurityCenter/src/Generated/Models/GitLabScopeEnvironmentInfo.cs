@@ -8,22 +8,22 @@
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The GitLab scope connector's environment data. </summary>
-    public partial class GitlabScopeEnvironment : SecurityConnectorEnvironment
+    public partial class GitLabScopeEnvironmentInfo : SecurityConnectorEnvironment
     {
-        /// <summary> Creates a new GitlabScopeEnvironment. </summary>
-        public GitlabScopeEnvironment()
+        /// <summary> Creates a new GitLabScopeEnvironmentInfo. </summary>
+        public GitLabScopeEnvironmentInfo()
         {
             EnvironmentType.Assign(SecurityCenter.EnvironmentType.GitlabScope);
         }
 
-        /// <summary> Define all the provisionable properties for GitlabScopeEnvironment. </summary>
+        /// <summary> Define all the provisionable properties for GitLabScopeEnvironmentInfo. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for GitlabScopeEnvironment that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for GitLabScopeEnvironmentInfo that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

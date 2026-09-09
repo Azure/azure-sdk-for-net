@@ -11,15 +11,16 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The sensitivity label. </summary>
-    public partial class MipSensitivityLabel : ProvisionableConstruct
+    public partial class SensitivityLabel : ProvisionableConstruct
     {
         private BicepValue<string> _displayName;
         private BicepValue<string> _description;
         private BicepValue<SensitivityLabelRank> _rank;
+        private BicepValue<int> _order;
         private BicepValue<bool> _enabled;
 
-        /// <summary> Creates a new MipSensitivityLabel. </summary>
-        public MipSensitivityLabel()
+        /// <summary> Creates a new SensitivityLabel. </summary>
+        public SensitivityLabel()
         {
         }
 
@@ -68,6 +69,21 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
+        /// <summary> Gets or sets the Order. </summary>
+        public BicepValue<int> Order
+        {
+            get
+            {
+                Initialize();
+                return _order;
+            }
+            set
+            {
+                Initialize();
+                _order.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the Enabled. </summary>
         public BicepValue<bool> Enabled
         {
@@ -83,18 +99,19 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for MipSensitivityLabel. </summary>
+        /// <summary> Define all the provisionable properties for SensitivityLabel. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _displayName = DefineProperty<string>(nameof(DisplayName), new string[] { "displayName" });
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _rank = DefineProperty<SensitivityLabelRank>(nameof(Rank), new string[] { "rank" });
+            _order = DefineProperty<int>(nameof(Order), new string[] { "order" });
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for MipSensitivityLabel that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for SensitivityLabel that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

@@ -10,14 +10,14 @@ using Azure.Provisioning;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Represents an alert sync setting. </summary>
-    public partial class SecurityAlertSyncSettings : SecuritySetting
+    public partial class AlertSyncSettings : SecuritySetting
     {
         private AlertSyncSettingProperties _properties;
 
-        /// <summary> Creates a new SecurityAlertSyncSettings. </summary>
+        /// <summary> Creates a new AlertSyncSettings. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public SecurityAlertSyncSettings(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, resourceVersion)
+        public AlertSyncSettings(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, resourceVersion)
         {
             Kind.Assign(SettingKind.AlertSyncSettings);
         }
@@ -54,7 +54,7 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for SecurityAlertSyncSettings. </summary>
+        /// <summary> Define all the provisionable properties for AlertSyncSettings. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -62,7 +62,7 @@ namespace Azure.Provisioning.SecurityCenter
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for SecurityAlertSyncSettings that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for AlertSyncSettings that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

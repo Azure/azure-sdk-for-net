@@ -11,13 +11,15 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Microsoft information protection built-in and custom information types, labels, and integration status. </summary>
-    public partial class GetSensitivitySettingsResponsePropertiesMipInformation : ProvisionableConstruct
+    public partial class SensitivitySettingsMipInformation : ProvisionableConstruct
     {
         private BicepValue<MipIntegrationStatus> _mipIntegrationStatus;
+        private BicepList<InformationProtectionSensitivityLabel> _labels;
+        private BicepList<InfoType> _customInfoTypes;
         private BicepList<BuiltInInfoType> _builtInInfoTypes;
 
-        /// <summary> Creates a new GetSensitivitySettingsResponsePropertiesMipInformation. </summary>
-        public GetSensitivitySettingsResponsePropertiesMipInformation()
+        /// <summary> Creates a new SensitivitySettingsMipInformation. </summary>
+        public SensitivitySettingsMipInformation()
         {
         }
 
@@ -36,6 +38,36 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
+        /// <summary> Gets or sets the Labels. </summary>
+        public BicepList<InformationProtectionSensitivityLabel> Labels
+        {
+            get
+            {
+                Initialize();
+                return _labels;
+            }
+            set
+            {
+                Initialize();
+                _labels.Assign(value);
+            }
+        }
+
+        /// <summary> Gets or sets the CustomInfoTypes. </summary>
+        public BicepList<InfoType> CustomInfoTypes
+        {
+            get
+            {
+                Initialize();
+                return _customInfoTypes;
+            }
+            set
+            {
+                Initialize();
+                _customInfoTypes.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the BuiltInInfoTypes. </summary>
         public BicepList<BuiltInInfoType> BuiltInInfoTypes
         {
@@ -51,16 +83,18 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for GetSensitivitySettingsResponsePropertiesMipInformation. </summary>
+        /// <summary> Define all the provisionable properties for SensitivitySettingsMipInformation. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _mipIntegrationStatus = DefineProperty<MipIntegrationStatus>(nameof(MipIntegrationStatus), new string[] { "mipIntegrationStatus" });
+            _labels = DefineListProperty<InformationProtectionSensitivityLabel>(nameof(Labels), new string[] { "labels" });
+            _customInfoTypes = DefineListProperty<InfoType>(nameof(CustomInfoTypes), new string[] { "customInfoTypes" });
             _builtInInfoTypes = DefineListProperty<BuiltInInfoType>(nameof(BuiltInInfoTypes), new string[] { "builtInInfoTypes" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for GetSensitivitySettingsResponsePropertiesMipInformation that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for SensitivitySettingsMipInformation that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

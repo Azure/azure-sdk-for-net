@@ -12,14 +12,15 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> A plan's extension properties. </summary>
-    public partial class PlanExtension : ProvisionableConstruct
+    public partial class SecurityConnectorExtension : ProvisionableConstruct
     {
         private BicepValue<string> _name;
-        private BicepValue<IsExtensionEnabled> _isEnabled;
+        private BicepValue<SecurityCenterExtensionIsEnabled> _isEnabled;
         private BicepDictionary<BinaryData> _additionalExtensionProperties;
+        private SecurityCenterOperationStatus _operationStatus;
 
-        /// <summary> Creates a new PlanExtension. </summary>
-        public PlanExtension()
+        /// <summary> Creates a new SecurityConnectorExtension. </summary>
+        public SecurityConnectorExtension()
         {
         }
 
@@ -39,7 +40,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the IsEnabled. </summary>
-        public BicepValue<IsExtensionEnabled> IsEnabled
+        public BicepValue<SecurityCenterExtensionIsEnabled> IsEnabled
         {
             get
             {
@@ -68,17 +69,28 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for PlanExtension. </summary>
+        /// <summary> Gets the OperationStatus. </summary>
+        public SecurityCenterOperationStatus OperationStatus
+        {
+            get
+            {
+                Initialize();
+                return _operationStatus;
+            }
+        }
+
+        /// <summary> Define all the provisionable properties for SecurityConnectorExtension. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
-            _isEnabled = DefineProperty<IsExtensionEnabled>(nameof(IsEnabled), new string[] { "isEnabled" }, isRequired: true);
+            _isEnabled = DefineProperty<SecurityCenterExtensionIsEnabled>(nameof(IsEnabled), new string[] { "isEnabled" }, isRequired: true);
             _additionalExtensionProperties = DefineDictionaryProperty<BinaryData>(nameof(AdditionalExtensionProperties), new string[] { "additionalExtensionProperties" });
+            _operationStatus = DefineModelProperty<SecurityCenterOperationStatus>(nameof(OperationStatus), new string[] { "operationStatus" }, isOutput: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for PlanExtension that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for SecurityConnectorExtension that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

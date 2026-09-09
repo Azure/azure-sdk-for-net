@@ -14,6 +14,7 @@ namespace Azure.Provisioning.SecurityCenter
     public partial class SecurityAssessmentMetadataProperties : ProvisionableConstruct
     {
         private BicepValue<string> _displayName;
+        private BicepValue<string> _policyDefinitionId;
         private BicepValue<string> _description;
         private BicepValue<string> _remediationDescription;
         private BicepList<SecurityAssessmentResourceCategory> _categories;
@@ -42,6 +43,16 @@ namespace Azure.Provisioning.SecurityCenter
             {
                 Initialize();
                 _displayName.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the PolicyDefinitionId. </summary>
+        public BicepValue<string> PolicyDefinitionId
+        {
+            get
+            {
+                Initialize();
+                return _policyDefinitionId;
             }
         }
 
@@ -200,6 +211,7 @@ namespace Azure.Provisioning.SecurityCenter
         {
             base.DefineProvisionableProperties();
             _displayName = DefineProperty<string>(nameof(DisplayName), new string[] { "displayName" }, isRequired: true);
+            _policyDefinitionId = DefineProperty<string>(nameof(PolicyDefinitionId), new string[] { "policyDefinitionId" }, isOutput: true);
             _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             _remediationDescription = DefineProperty<string>(nameof(RemediationDescription), new string[] { "remediationDescription" });
             _categories = DefineListProperty<SecurityAssessmentResourceCategory>(nameof(Categories), new string[] { "categories" });

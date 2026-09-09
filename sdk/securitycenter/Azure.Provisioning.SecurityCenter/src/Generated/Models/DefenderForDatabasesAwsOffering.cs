@@ -12,7 +12,7 @@ namespace Azure.Provisioning.SecurityCenter
     {
         private DefenderForDatabasesAwsOfferingArcAutoProvisioning _arcAutoProvisioning;
         private DefenderForDatabasesAwsOfferingRds _rds;
-        private DefenderFoDatabasesAwsOfferingDatabasesDspm _databasesDspm;
+        private DefenderForDatabasesAwsOfferingDatabasesDspm _databasesDspm;
 
         /// <summary> Creates a new DefenderForDatabasesAwsOffering. </summary>
         public DefenderForDatabasesAwsOffering()
@@ -51,7 +51,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the DatabasesDspm. </summary>
-        public DefenderFoDatabasesAwsOfferingDatabasesDspm DatabasesDspm
+        public DefenderForDatabasesAwsOfferingDatabasesDspm DatabasesDspm
         {
             get
             {
@@ -71,7 +71,7 @@ namespace Azure.Provisioning.SecurityCenter
             base.DefineProvisionableProperties();
             _arcAutoProvisioning = DefineModelProperty<DefenderForDatabasesAwsOfferingArcAutoProvisioning>(nameof(ArcAutoProvisioning), new string[] { "arcAutoProvisioning" });
             _rds = DefineModelProperty<DefenderForDatabasesAwsOfferingRds>(nameof(Rds), new string[] { "rds" });
-            _databasesDspm = DefineModelProperty<DefenderFoDatabasesAwsOfferingDatabasesDspm>(nameof(DatabasesDspm), new string[] { "databasesDspm" });
+            _databasesDspm = DefineModelProperty<DefenderForDatabasesAwsOfferingDatabasesDspm>(nameof(DatabasesDspm), new string[] { "databasesDspm" });
             DefineAdditionalProperties();
         }
 

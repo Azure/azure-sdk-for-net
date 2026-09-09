@@ -12,14 +12,16 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Azure DevOps Organization properties. </summary>
-    public partial class DevOpsOrgProperties : ProvisionableConstruct
+    public partial class AzureDevOpsOrgProperties : ProvisionableConstruct
     {
         private BicepValue<string> _provisioningStatusMessage;
         private BicepValue<DateTimeOffset> _provisioningStatusUpdatedOn;
+        private BicepValue<DevOpsProvisioningState> _provisioningState;
+        private BicepValue<OnboardingState> _onboardingState;
         private ActionableRemediation _actionableRemediation;
 
-        /// <summary> Creates a new DevOpsOrgProperties. </summary>
-        public DevOpsOrgProperties()
+        /// <summary> Creates a new AzureDevOpsOrgProperties. </summary>
+        public AzureDevOpsOrgProperties()
         {
         }
 
@@ -43,6 +45,31 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<DevOpsProvisioningState> ProvisioningState
+        {
+            get
+            {
+                Initialize();
+                return _provisioningState;
+            }
+        }
+
+        /// <summary> Gets or sets the OnboardingState. </summary>
+        public BicepValue<OnboardingState> OnboardingState
+        {
+            get
+            {
+                Initialize();
+                return _onboardingState;
+            }
+            set
+            {
+                Initialize();
+                _onboardingState.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the ActionableRemediation. </summary>
         public ActionableRemediation ActionableRemediation
         {
@@ -58,17 +85,19 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for DevOpsOrgProperties. </summary>
+        /// <summary> Define all the provisionable properties for AzureDevOpsOrgProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _provisioningStatusMessage = DefineProperty<string>(nameof(ProvisioningStatusMessage), new string[] { "provisioningStatusMessage" }, isOutput: true);
             _provisioningStatusUpdatedOn = DefineProperty<DateTimeOffset>(nameof(ProvisioningStatusUpdatedOn), new string[] { "provisioningStatusUpdateTimeUtc" }, isOutput: true, format: "O");
+            _provisioningState = DefineProperty<DevOpsProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
+            _onboardingState = DefineProperty<OnboardingState>(nameof(OnboardingState), new string[] { "onboardingState" });
             _actionableRemediation = DefineModelProperty<ActionableRemediation>(nameof(ActionableRemediation), new string[] { "actionableRemediation" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for DevOpsOrgProperties that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for AzureDevOpsOrgProperties that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

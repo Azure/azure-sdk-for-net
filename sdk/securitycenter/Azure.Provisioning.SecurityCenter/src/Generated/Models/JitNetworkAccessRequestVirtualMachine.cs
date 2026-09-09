@@ -13,11 +13,27 @@ namespace Azure.Provisioning.SecurityCenter
     /// <summary> The JitNetworkAccessRequestVirtualMachine. </summary>
     public partial class JitNetworkAccessRequestVirtualMachine : ProvisionableConstruct
     {
+        private BicepValue<string> _id;
         private BicepList<JitNetworkAccessRequestPort> _ports;
 
         /// <summary> Creates a new JitNetworkAccessRequestVirtualMachine. </summary>
         public JitNetworkAccessRequestVirtualMachine()
         {
+        }
+
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<string> Id
+        {
+            get
+            {
+                Initialize();
+                return _id;
+            }
+            set
+            {
+                Initialize();
+                _id.Assign(value);
+            }
         }
 
         /// <summary> Gets or sets the Ports. </summary>
@@ -39,6 +55,7 @@ namespace Azure.Provisioning.SecurityCenter
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isRequired: true);
             _ports = DefineListProperty<JitNetworkAccessRequestPort>(nameof(Ports), new string[] { "ports" }, isRequired: true);
             DefineAdditionalProperties();
         }

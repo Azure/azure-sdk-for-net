@@ -13,12 +13,28 @@ namespace Azure.Provisioning.SecurityCenter
     /// <summary> The logic app action that should be triggered. To learn more about Microsoft Defender for Cloud's Workflow Automation capabilities, visit https://aka.ms/ASCWorkflowAutomationLearnMore. </summary>
     public partial class SecurityAutomationActionLogicApp : SecurityAutomationAction
     {
+        private BicepValue<string> _logicAppResourceId;
         private BicepValue<Uri> _uri;
 
         /// <summary> Creates a new SecurityAutomationActionLogicApp. </summary>
         public SecurityAutomationActionLogicApp()
         {
             ActionType.Assign(SecurityCenter.ActionType.LogicApp);
+        }
+
+        /// <summary> Gets or sets the LogicAppResourceId. </summary>
+        public BicepValue<string> LogicAppResourceId
+        {
+            get
+            {
+                Initialize();
+                return _logicAppResourceId;
+            }
+            set
+            {
+                Initialize();
+                _logicAppResourceId.Assign(value);
+            }
         }
 
         /// <summary> Gets or sets the Uri. </summary>
@@ -40,6 +56,7 @@ namespace Azure.Provisioning.SecurityCenter
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _logicAppResourceId = DefineProperty<string>(nameof(LogicAppResourceId), new string[] { "logicAppResourceId" });
             _uri = DefineProperty<Uri>(nameof(Uri), new string[] { "uri" });
             DefineAdditionalProperties();
         }

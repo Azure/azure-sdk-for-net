@@ -211,7 +211,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Extensions. </summary>
-        public BicepList<PlanExtension> Extensions
+        public BicepList<SecurityConnectorExtension> Extensions
         {
             get
             {

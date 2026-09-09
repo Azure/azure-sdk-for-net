@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
@@ -14,7 +15,10 @@ namespace Azure.Provisioning.SecurityCenter
     public partial class DevOpsConfigurationProperties : ProvisionableConstruct
     {
         private BicepValue<string> _provisioningStatusMessage;
+        private BicepValue<DateTimeOffset> _provisioningStatusUpdatedOn;
+        private BicepValue<DevOpsProvisioningState> _provisioningState;
         private Authorization _authorization;
+        private BicepValue<AutoDiscovery> _autoDiscovery;
         private BicepList<string> _topLevelInventoryList;
         private BicepList<DevOpsCapability> _capabilities;
         private AgentlessConfiguration _agentlessConfiguration;
@@ -34,6 +38,26 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
+        /// <summary> Gets the ProvisioningStatusUpdatedOn. </summary>
+        public BicepValue<DateTimeOffset> ProvisioningStatusUpdatedOn
+        {
+            get
+            {
+                Initialize();
+                return _provisioningStatusUpdatedOn;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<DevOpsProvisioningState> ProvisioningState
+        {
+            get
+            {
+                Initialize();
+                return _provisioningState;
+            }
+        }
+
         /// <summary> Gets or sets the Authorization. </summary>
         internal Authorization Authorization
         {
@@ -46,6 +70,21 @@ namespace Azure.Provisioning.SecurityCenter
             {
                 Initialize();
                 AssignOrReplace(ref _authorization, value);
+            }
+        }
+
+        /// <summary> Gets or sets the AutoDiscovery. </summary>
+        public BicepValue<AutoDiscovery> AutoDiscovery
+        {
+            get
+            {
+                Initialize();
+                return _autoDiscovery;
+            }
+            set
+            {
+                Initialize();
+                _autoDiscovery.Assign(value);
             }
         }
 
@@ -111,7 +150,10 @@ namespace Azure.Provisioning.SecurityCenter
         {
             base.DefineProvisionableProperties();
             _provisioningStatusMessage = DefineProperty<string>(nameof(ProvisioningStatusMessage), new string[] { "provisioningStatusMessage" }, isOutput: true);
+            _provisioningStatusUpdatedOn = DefineProperty<DateTimeOffset>(nameof(ProvisioningStatusUpdatedOn), new string[] { "provisioningStatusUpdateTimeUtc" }, isOutput: true, format: "O");
+            _provisioningState = DefineProperty<DevOpsProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _authorization = DefineModelProperty<Authorization>(nameof(Authorization), new string[] { "authorization" });
+            _autoDiscovery = DefineProperty<AutoDiscovery>(nameof(AutoDiscovery), new string[] { "autoDiscovery" });
             _topLevelInventoryList = DefineListProperty<string>(nameof(TopLevelInventoryList), new string[] { "topLevelInventoryList" });
             _capabilities = DefineListProperty<DevOpsCapability>(nameof(Capabilities), new string[] { "capabilities" }, isOutput: true);
             _agentlessConfiguration = DefineModelProperty<AgentlessConfiguration>(nameof(AgentlessConfiguration), new string[] { "agentlessConfiguration" });

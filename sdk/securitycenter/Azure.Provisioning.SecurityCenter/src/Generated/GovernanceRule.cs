@@ -95,6 +95,19 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
+        /// <summary> Gets the TenantId. </summary>
+        public BicepValue<string> TenantId
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new GovernanceRuleProperties();
+                }
+                return Properties.TenantId;
+            }
+        }
+
         /// <summary> Gets or sets the DisplayName. </summary>
         public BicepValue<string> DisplayName
         {

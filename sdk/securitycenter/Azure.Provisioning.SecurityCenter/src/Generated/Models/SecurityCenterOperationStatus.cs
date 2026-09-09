@@ -11,13 +11,13 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> A status describing the success/failure of the enablement/disablement operation. </summary>
-    public partial class ExtensionOperationStatus : ProvisionableConstruct
+    public partial class SecurityCenterOperationStatus : ProvisionableConstruct
     {
         private BicepValue<string> _code;
         private BicepValue<string> _message;
 
-        /// <summary> Creates a new ExtensionOperationStatus. </summary>
-        public ExtensionOperationStatus()
+        /// <summary> Creates a new SecurityCenterOperationStatus. </summary>
+        public SecurityCenterOperationStatus()
         {
         }
 
@@ -41,7 +41,7 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for ExtensionOperationStatus. </summary>
+        /// <summary> Define all the provisionable properties for SecurityCenterOperationStatus. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -50,7 +50,7 @@ namespace Azure.Provisioning.SecurityCenter
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for ExtensionOperationStatus that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for SecurityCenterOperationStatus that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

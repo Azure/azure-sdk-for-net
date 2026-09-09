@@ -15,7 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> An API collection as represented by Microsoft Defender for APIs. </summary>
-    public partial class SecurityCenterApiCollection : ProvisionableResource
+    public partial class ApiCollection : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
@@ -23,10 +23,10 @@ namespace Azure.Provisioning.SecurityCenter
         private ApiCollectionProperties _properties;
         private ResourceReference<ProvisionableResource> _scope;
 
-        /// <summary> Creates a new SecurityCenterApiCollection. </summary>
+        /// <summary> Creates a new ApiCollection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public SecurityCenterApiCollection(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Security/apiCollections", resourceVersion ?? "2023-11-15")
+        public ApiCollection(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Security/apiCollections", resourceVersion ?? "2023-11-15")
         {
         }
 
@@ -92,6 +92,19 @@ namespace Azure.Provisioning.SecurityCenter
             {
                 Initialize();
                 _scope.Value = value;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<SecurityCenterProvisioningState> ProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApiCollectionProperties();
+                }
+                return Properties.ProvisioningState;
             }
         }
 
@@ -212,7 +225,7 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for SecurityCenterApiCollection. </summary>
+        /// <summary> Define all the provisionable properties for ApiCollection. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -224,17 +237,17 @@ namespace Azure.Provisioning.SecurityCenter
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing SecurityCenterApiCollection. </summary>
+        /// <summary> Creates a reference to an existing ApiCollection. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static SecurityCenterApiCollection FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static ApiCollection FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            SecurityCenterApiCollection result = new SecurityCenterApiCollection(bicepIdentifier, resourceVersion);
+            ApiCollection result = new ApiCollection(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for SecurityCenterApiCollection that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for ApiCollection that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary> Get the requirements for naming this resource. </summary>

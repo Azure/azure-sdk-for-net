@@ -14,7 +14,7 @@ namespace Azure.Provisioning.SecurityCenter
     public partial class ArcAutoProvisioning : ProvisionableConstruct
     {
         private BicepValue<bool> _enabled;
-        private DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration _configuration;
+        private DefenderForDatabasesAwsOfferingArcAutoProvisioningConfiguration _configuration;
 
         /// <summary> Creates a new ArcAutoProvisioning. </summary>
         public ArcAutoProvisioning()
@@ -37,7 +37,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Configuration. </summary>
-        public DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration Configuration
+        public DefenderForDatabasesAwsOfferingArcAutoProvisioningConfiguration Configuration
         {
             get
             {
@@ -56,7 +56,7 @@ namespace Azure.Provisioning.SecurityCenter
         {
             base.DefineProvisionableProperties();
             _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" });
-            _configuration = DefineModelProperty<DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration>(nameof(Configuration), new string[] { "configuration" });
+            _configuration = DefineModelProperty<DefenderForDatabasesAwsOfferingArcAutoProvisioningConfiguration>(nameof(Configuration), new string[] { "configuration" });
             DefineAdditionalProperties();
         }
 

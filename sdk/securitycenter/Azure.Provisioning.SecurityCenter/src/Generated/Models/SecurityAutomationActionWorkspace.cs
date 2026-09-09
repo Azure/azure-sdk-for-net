@@ -5,21 +5,41 @@
 
 #nullable disable
 
+using Azure.Provisioning;
+
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The Log Analytics Workspace to which event data will be exported. Security alerts data will reside in the 'SecurityAlert' table and the assessments data will reside in the 'SecurityRecommendation' table (under the 'Security'/'SecurityCenterFree' solutions). Note that in order to view the data in the workspace, the Security Center Log Analytics free/standard solution needs to be enabled on that workspace. To learn more about Microsoft Defender for Cloud continuous export capabilities, visit https://aka.ms/ASCExportLearnMore. </summary>
     public partial class SecurityAutomationActionWorkspace : SecurityAutomationAction
     {
+        private BicepValue<string> _workspaceResourceId;
+
         /// <summary> Creates a new SecurityAutomationActionWorkspace. </summary>
         public SecurityAutomationActionWorkspace()
         {
             ActionType.Assign(SecurityCenter.ActionType.Workspace);
         }
 
+        /// <summary> Gets or sets the WorkspaceResourceId. </summary>
+        public BicepValue<string> WorkspaceResourceId
+        {
+            get
+            {
+                Initialize();
+                return _workspaceResourceId;
+            }
+            set
+            {
+                Initialize();
+                _workspaceResourceId.Assign(value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for SecurityAutomationActionWorkspace. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _workspaceResourceId = DefineProperty<string>(nameof(WorkspaceResourceId), new string[] { "workspaceResourceId" });
             DefineAdditionalProperties();
         }
 

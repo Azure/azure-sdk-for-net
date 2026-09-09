@@ -12,7 +12,7 @@ namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary>
     /// The security connector environment data.
-    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AwsEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GitlabScopeEnvironment"/>, <see cref="DockerHubEnvironmentInfo"/>, and <see cref="JFrogEnvironmentInfo"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AwsEnvironment"/>, <see cref="GcpProjectEnvironment"/>, <see cref="GithubScopeEnvironment"/>, <see cref="AzureDevOpsScopeEnvironment"/>, <see cref="GitLabScopeEnvironmentInfo"/>, <see cref="DockerHubEnvironmentInfo"/>, and <see cref="JFrogEnvironmentInfo"/>.
     /// </summary>
     public partial class SecurityConnectorEnvironment : ProvisionableConstruct
     {

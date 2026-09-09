@@ -12,6 +12,7 @@ namespace Azure.Provisioning.SecurityCenter
     /// <summary> The target Event Hub to which event data will be exported. To learn more about Microsoft Defender for Cloud continuous export capabilities, visit https://aka.ms/ASCExportLearnMore. </summary>
     public partial class SecurityAutomationActionEventHub : SecurityAutomationAction
     {
+        private BicepValue<string> _eventHubResourceId;
         private BicepValue<string> _sasPolicyName;
         private BicepValue<string> _connectionString;
         private BicepValue<bool> _isTrustedServiceEnabled;
@@ -20,6 +21,21 @@ namespace Azure.Provisioning.SecurityCenter
         public SecurityAutomationActionEventHub()
         {
             ActionType.Assign(SecurityCenter.ActionType.EventHub);
+        }
+
+        /// <summary> Gets or sets the EventHubResourceId. </summary>
+        public BicepValue<string> EventHubResourceId
+        {
+            get
+            {
+                Initialize();
+                return _eventHubResourceId;
+            }
+            set
+            {
+                Initialize();
+                _eventHubResourceId.Assign(value);
+            }
         }
 
         /// <summary> Gets the SasPolicyName. </summary>
@@ -66,6 +82,7 @@ namespace Azure.Provisioning.SecurityCenter
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _eventHubResourceId = DefineProperty<string>(nameof(EventHubResourceId), new string[] { "eventHubResourceId" });
             _sasPolicyName = DefineProperty<string>(nameof(SasPolicyName), new string[] { "sasPolicyName" }, isOutput: true);
             _connectionString = DefineProperty<string>(nameof(ConnectionString), new string[] { "connectionString" });
             _isTrustedServiceEnabled = DefineProperty<bool>(nameof(IsTrustedServiceEnabled), new string[] { "isTrustedServiceEnabled" });

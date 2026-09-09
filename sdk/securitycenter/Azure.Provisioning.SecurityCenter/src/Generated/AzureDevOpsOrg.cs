@@ -14,18 +14,18 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Azure DevOps Organization resource. </summary>
-    public partial class DevOpsOrg : ProvisionableResource
+    public partial class AzureDevOpsOrg : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private DevOpsOrgProperties _properties;
+        private AzureDevOpsOrgProperties _properties;
         private ResourceReference<DevOpsConfiguration> _parent;
 
-        /// <summary> Creates a new DevOpsOrg. </summary>
+        /// <summary> Creates a new AzureDevOpsOrg. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public DevOpsOrg(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs", resourceVersion ?? "2025-11-01-preview")
+        public AzureDevOpsOrg(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs", resourceVersion ?? "2025-11-01-preview")
         {
         }
 
@@ -65,7 +65,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        public DevOpsOrgProperties Properties
+        public AzureDevOpsOrgProperties Properties
         {
             get
             {
@@ -94,29 +94,29 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for DevOpsOrg. </summary>
+        /// <summary> Define all the provisionable properties for AzureDevOpsOrg. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<DevOpsOrgProperties>(nameof(Properties), new string[] { "properties" });
+            _properties = DefineModelProperty<AzureDevOpsOrgProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<DevOpsConfiguration>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing DevOpsOrg. </summary>
+        /// <summary> Creates a reference to an existing AzureDevOpsOrg. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static DevOpsOrg FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static AzureDevOpsOrg FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            DevOpsOrg result = new DevOpsOrg(bicepIdentifier, resourceVersion);
+            AzureDevOpsOrg result = new AzureDevOpsOrg(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for DevOpsOrg that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for AzureDevOpsOrg that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

@@ -14,7 +14,7 @@ namespace Azure.Provisioning.SecurityCenter
     public partial class SensitiveDataDiscoveryProperties : ProvisionableConstruct
     {
         private BicepValue<bool> _isEnabled;
-        private ExtensionOperationStatus _operationStatus;
+        private SecurityCenterOperationStatus _operationStatus;
 
         /// <summary> Creates a new SensitiveDataDiscoveryProperties. </summary>
         public SensitiveDataDiscoveryProperties()
@@ -37,7 +37,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets the OperationStatus. </summary>
-        public ExtensionOperationStatus OperationStatus
+        public SecurityCenterOperationStatus OperationStatus
         {
             get
             {
@@ -51,7 +51,7 @@ namespace Azure.Provisioning.SecurityCenter
         {
             base.DefineProvisionableProperties();
             _isEnabled = DefineProperty<bool>(nameof(IsEnabled), new string[] { "isEnabled" });
-            _operationStatus = DefineModelProperty<ExtensionOperationStatus>(nameof(OperationStatus), new string[] { "operationStatus" }, isOutput: true);
+            _operationStatus = DefineModelProperty<SecurityCenterOperationStatus>(nameof(OperationStatus), new string[] { "operationStatus" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

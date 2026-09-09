@@ -16,8 +16,8 @@ namespace Azure.Provisioning.SecurityCenter
     {
         private BicepValue<DateTimeOffset> _lastModifiedUtc;
         private BicepValue<string> _version;
-        private BicepDictionary<MipSensitivityLabel> _labels;
-        private BicepDictionary<UserDefinedInformationType> _informationTypes;
+        private BicepDictionary<SensitivityLabel> _labels;
+        private BicepDictionary<SecurityInformationTypeInfo> _informationTypes;
 
         /// <summary> Creates a new InformationProtectionPolicyProperties. </summary>
         public InformationProtectionPolicyProperties()
@@ -45,7 +45,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Labels. </summary>
-        public BicepDictionary<MipSensitivityLabel> Labels
+        public BicepDictionary<SensitivityLabel> Labels
         {
             get
             {
@@ -60,7 +60,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the InformationTypes. </summary>
-        public BicepDictionary<UserDefinedInformationType> InformationTypes
+        public BicepDictionary<SecurityInformationTypeInfo> InformationTypes
         {
             get
             {
@@ -80,8 +80,8 @@ namespace Azure.Provisioning.SecurityCenter
             base.DefineProvisionableProperties();
             _lastModifiedUtc = DefineProperty<DateTimeOffset>(nameof(LastModifiedUtc), new string[] { "lastModifiedUtc" }, isOutput: true, format: "O");
             _version = DefineProperty<string>(nameof(Version), new string[] { "version" }, isOutput: true);
-            _labels = DefineDictionaryProperty<MipSensitivityLabel>(nameof(Labels), new string[] { "labels" });
-            _informationTypes = DefineDictionaryProperty<UserDefinedInformationType>(nameof(InformationTypes), new string[] { "informationTypes" });
+            _labels = DefineDictionaryProperty<SensitivityLabel>(nameof(Labels), new string[] { "labels" });
+            _informationTypes = DefineDictionaryProperty<SecurityInformationTypeInfo>(nameof(InformationTypes), new string[] { "informationTypes" });
             DefineAdditionalProperties();
         }
 

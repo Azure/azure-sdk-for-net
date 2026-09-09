@@ -122,7 +122,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Labels. </summary>
-        public BicepDictionary<MipSensitivityLabel> Labels
+        public BicepDictionary<SensitivityLabel> Labels
         {
             get
             {
@@ -139,7 +139,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the InformationTypes. </summary>
-        public BicepDictionary<UserDefinedInformationType> InformationTypes
+        public BicepDictionary<SecurityInformationTypeInfo> InformationTypes
         {
             get
             {

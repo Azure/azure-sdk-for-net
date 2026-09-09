@@ -22,7 +22,7 @@ namespace Azure.Provisioning.SecurityCenter
         private BicepValue<SecurityCenterPricingInheritance> _inherited;
         private BicepValue<string> _inheritedFrom;
         private BicepValue<SecurityCenterResourcesCoverageStatus> _resourcesCoverageStatus;
-        private BicepList<PlanExtension> _extensions;
+        private BicepList<SecurityConnectorExtension> _extensions;
         private BicepValue<bool> _isDeprecated;
         private BicepList<string> _replacedBy;
 
@@ -127,7 +127,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Extensions. </summary>
-        public BicepList<PlanExtension> Extensions
+        public BicepList<SecurityConnectorExtension> Extensions
         {
             get
             {
@@ -173,7 +173,7 @@ namespace Azure.Provisioning.SecurityCenter
             _inherited = DefineProperty<SecurityCenterPricingInheritance>(nameof(Inherited), new string[] { "inherited" }, isOutput: true);
             _inheritedFrom = DefineProperty<string>(nameof(InheritedFrom), new string[] { "inheritedFrom" }, isOutput: true);
             _resourcesCoverageStatus = DefineProperty<SecurityCenterResourcesCoverageStatus>(nameof(ResourcesCoverageStatus), new string[] { "resourcesCoverageStatus" }, isOutput: true);
-            _extensions = DefineListProperty<PlanExtension>(nameof(Extensions), new string[] { "extensions" });
+            _extensions = DefineListProperty<SecurityConnectorExtension>(nameof(Extensions), new string[] { "extensions" });
             _isDeprecated = DefineProperty<bool>(nameof(IsDeprecated), new string[] { "deprecated" }, isOutput: true);
             _replacedBy = DefineListProperty<string>(nameof(ReplacedBy), new string[] { "replacedBy" }, isOutput: true);
             DefineAdditionalProperties();

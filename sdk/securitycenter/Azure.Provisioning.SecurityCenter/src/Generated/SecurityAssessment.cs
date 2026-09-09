@@ -191,6 +191,36 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
+        /// <summary> Gets the AzurePortalUri. </summary>
+        public BicepValue<string> LinksAzurePortalUri
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAssessmentPropertiesResponse();
+                }
+                return Properties.LinksAzurePortalUri;
+            }
+        }
+
+        /// <summary> Gets or sets the Status. </summary>
+        public SecurityAssessmentStatusResult Status
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Status;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAssessmentPropertiesResponse();
+                }
+                Properties.Status = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for SecurityAssessment. </summary>
         protected override void DefineProvisionableProperties()
         {

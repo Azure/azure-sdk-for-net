@@ -13,7 +13,7 @@ namespace Azure.Provisioning.SecurityCenter
     /// <summary> Defenders CSPM Permissions Management offering configurations. </summary>
     public partial class DefenderCspmAwsOfferingCiem : ProvisionableConstruct
     {
-        private DefenderCspmAwsOfferingCiemOidc _ciemOidc;
+        private DefenderCspmAwsOfferingCiemCiemOidc _ciemOidc;
         private DefenderCspmAwsOfferingCiemLogCollectionOidc _logCollectionOidc;
         private AwsCloudTrailConfiguration _cloudTrailAuditLogIngestion;
 
@@ -23,7 +23,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the CiemOidc. </summary>
-        public DefenderCspmAwsOfferingCiemOidc CiemOidc
+        public DefenderCspmAwsOfferingCiemCiemOidc CiemOidc
         {
             get
             {
@@ -88,7 +88,7 @@ namespace Azure.Provisioning.SecurityCenter
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            _ciemOidc = DefineModelProperty<DefenderCspmAwsOfferingCiemOidc>(nameof(CiemOidc), new string[] { "ciemOidc" });
+            _ciemOidc = DefineModelProperty<DefenderCspmAwsOfferingCiemCiemOidc>(nameof(CiemOidc), new string[] { "ciemOidc" });
             _logCollectionOidc = DefineModelProperty<DefenderCspmAwsOfferingCiemLogCollectionOidc>(nameof(LogCollectionOidc), new string[] { "logCollectionOidc" });
             _cloudTrailAuditLogIngestion = DefineModelProperty<AwsCloudTrailConfiguration>(nameof(CloudTrailAuditLogIngestion), new string[] { "cloudTrailAuditLogIngestion" });
             DefineAdditionalProperties();

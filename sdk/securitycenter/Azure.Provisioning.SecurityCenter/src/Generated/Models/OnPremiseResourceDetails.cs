@@ -13,6 +13,7 @@ namespace Azure.Provisioning.SecurityCenter
     /// <summary> Details of the On Premise resource that was assessed. </summary>
     public partial class OnPremiseResourceDetails : SecurityCenterResourceDetails
     {
+        private BicepValue<string> _workspaceId;
         private BicepValue<Guid> _vmUuid;
         private BicepValue<string> _sourceComputerId;
         private BicepValue<string> _machineName;
@@ -21,6 +22,21 @@ namespace Azure.Provisioning.SecurityCenter
         public OnPremiseResourceDetails()
         {
             Source.Assign(SecurityCenterResourceSource.OnPremiseResourceDetails);
+        }
+
+        /// <summary> Gets or sets the WorkspaceId. </summary>
+        public BicepValue<string> WorkspaceId
+        {
+            get
+            {
+                Initialize();
+                return _workspaceId;
+            }
+            set
+            {
+                Initialize();
+                _workspaceId.Assign(value);
+            }
         }
 
         /// <summary> Gets or sets the VmUuid. </summary>
@@ -72,6 +88,7 @@ namespace Azure.Provisioning.SecurityCenter
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _workspaceId = DefineProperty<string>(nameof(WorkspaceId), new string[] { "workspaceId" }, isRequired: true);
             _vmUuid = DefineProperty<Guid>(nameof(VmUuid), new string[] { "vmuuid" }, isRequired: true);
             _sourceComputerId = DefineProperty<string>(nameof(SourceComputerId), new string[] { "sourceComputerId" }, isRequired: true);
             _machineName = DefineProperty<string>(nameof(MachineName), new string[] { "machineName" }, isRequired: true);

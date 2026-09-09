@@ -10,15 +10,15 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
-    /// <summary> Pre-configured sensitive information type. </summary>
-    public partial class BuiltInInfoType : ProvisionableConstruct
+    /// <summary> Custom user-defined information type. </summary>
+    public partial class InfoType : ProvisionableConstruct
     {
         private BicepValue<string> _name;
         private BicepValue<string> _id;
-        private BicepValue<string> _dns;
+        private BicepValue<string> _description;
 
-        /// <summary> Creates a new BuiltInInfoType. </summary>
-        public BuiltInInfoType()
+        /// <summary> Creates a new InfoType. </summary>
+        public InfoType()
         {
         }
 
@@ -52,32 +52,32 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Gets or sets the Dns. </summary>
-        public BicepValue<string> Dns
+        /// <summary> Gets or sets the Description. </summary>
+        public BicepValue<string> Description
         {
             get
             {
                 Initialize();
-                return _dns;
+                return _description;
             }
             set
             {
                 Initialize();
-                _dns.Assign(value);
+                _description.Assign(value);
             }
         }
 
-        /// <summary> Define all the provisionable properties for BuiltInInfoType. </summary>
+        /// <summary> Define all the provisionable properties for InfoType. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _id = DefineProperty<string>(nameof(Id), new string[] { "id" });
-            _dns = DefineProperty<string>(nameof(Dns), new string[] { "type" });
+            _description = DefineProperty<string>(nameof(Description), new string[] { "description" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for BuiltInInfoType that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for InfoType that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

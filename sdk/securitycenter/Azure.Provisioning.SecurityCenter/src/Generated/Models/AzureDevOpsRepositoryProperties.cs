@@ -12,18 +12,21 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Azure DevOps Repository properties. </summary>
-    public partial class DevOpsRepositoryProperties : ProvisionableConstruct
+    public partial class AzureDevOpsRepositoryProperties : ProvisionableConstruct
     {
         private BicepValue<string> _provisioningStatusMessage;
         private BicepValue<DateTimeOffset> _provisioningStatusUpdatedOn;
+        private BicepValue<DevOpsProvisioningState> _provisioningState;
         private BicepValue<string> _parentOrgName;
         private BicepValue<string> _parentProjectName;
         private BicepValue<string> _repoId;
+        private BicepValue<string> _repoUri;
         private BicepValue<string> _visibility;
+        private BicepValue<OnboardingState> _onboardingState;
         private ActionableRemediation _actionableRemediation;
 
-        /// <summary> Creates a new DevOpsRepositoryProperties. </summary>
-        public DevOpsRepositoryProperties()
+        /// <summary> Creates a new AzureDevOpsRepositoryProperties. </summary>
+        public AzureDevOpsRepositoryProperties()
         {
         }
 
@@ -44,6 +47,16 @@ namespace Azure.Provisioning.SecurityCenter
             {
                 Initialize();
                 return _provisioningStatusUpdatedOn;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<DevOpsProvisioningState> ProvisioningState
+        {
+            get
+            {
+                Initialize();
+                return _provisioningState;
             }
         }
 
@@ -87,6 +100,16 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
+        /// <summary> Gets the RepoUri. </summary>
+        public BicepValue<string> RepoUri
+        {
+            get
+            {
+                Initialize();
+                return _repoUri;
+            }
+        }
+
         /// <summary> Gets the Visibility. </summary>
         public BicepValue<string> Visibility
         {
@@ -94,6 +117,21 @@ namespace Azure.Provisioning.SecurityCenter
             {
                 Initialize();
                 return _visibility;
+            }
+        }
+
+        /// <summary> Gets or sets the OnboardingState. </summary>
+        public BicepValue<OnboardingState> OnboardingState
+        {
+            get
+            {
+                Initialize();
+                return _onboardingState;
+            }
+            set
+            {
+                Initialize();
+                _onboardingState.Assign(value);
             }
         }
 
@@ -112,21 +150,24 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for DevOpsRepositoryProperties. </summary>
+        /// <summary> Define all the provisionable properties for AzureDevOpsRepositoryProperties. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _provisioningStatusMessage = DefineProperty<string>(nameof(ProvisioningStatusMessage), new string[] { "provisioningStatusMessage" }, isOutput: true);
             _provisioningStatusUpdatedOn = DefineProperty<DateTimeOffset>(nameof(ProvisioningStatusUpdatedOn), new string[] { "provisioningStatusUpdateTimeUtc" }, isOutput: true, format: "O");
+            _provisioningState = DefineProperty<DevOpsProvisioningState>(nameof(ProvisioningState), new string[] { "provisioningState" }, isOutput: true);
             _parentOrgName = DefineProperty<string>(nameof(ParentOrgName), new string[] { "parentOrgName" });
             _parentProjectName = DefineProperty<string>(nameof(ParentProjectName), new string[] { "parentProjectName" });
             _repoId = DefineProperty<string>(nameof(RepoId), new string[] { "repoId" }, isOutput: true);
+            _repoUri = DefineProperty<string>(nameof(RepoUri), new string[] { "repoUrl" }, isOutput: true);
             _visibility = DefineProperty<string>(nameof(Visibility), new string[] { "visibility" }, isOutput: true);
+            _onboardingState = DefineProperty<OnboardingState>(nameof(OnboardingState), new string[] { "onboardingState" });
             _actionableRemediation = DefineModelProperty<ActionableRemediation>(nameof(ActionableRemediation), new string[] { "actionableRemediation" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for DevOpsRepositoryProperties that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for AzureDevOpsRepositoryProperties that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

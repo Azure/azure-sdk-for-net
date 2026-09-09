@@ -16,7 +16,8 @@ namespace Azure.Provisioning.SecurityCenter
     {
         private BicepList<Guid> _sensitiveInfoTypesIds;
         private BicepValue<float> _sensitivityThresholdLabelOrder;
-        private GetSensitivitySettingsResponsePropertiesMipInformation _mipInformation;
+        private BicepValue<string> _sensitivityThresholdLabelId;
+        private SensitivitySettingsMipInformation _mipInformation;
 
         /// <summary> Creates a new SensitivitySettingsProperties. </summary>
         public SensitivitySettingsProperties()
@@ -53,8 +54,23 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
+        /// <summary> Gets or sets the SensitivityThresholdLabelId. </summary>
+        public BicepValue<string> SensitivityThresholdLabelId
+        {
+            get
+            {
+                Initialize();
+                return _sensitivityThresholdLabelId;
+            }
+            set
+            {
+                Initialize();
+                _sensitivityThresholdLabelId.Assign(value);
+            }
+        }
+
         /// <summary> Gets or sets the MipInformation. </summary>
-        public GetSensitivitySettingsResponsePropertiesMipInformation MipInformation
+        public SensitivitySettingsMipInformation MipInformation
         {
             get
             {
@@ -74,7 +90,8 @@ namespace Azure.Provisioning.SecurityCenter
             base.DefineProvisionableProperties();
             _sensitiveInfoTypesIds = DefineListProperty<Guid>(nameof(SensitiveInfoTypesIds), new string[] { "sensitiveInfoTypesIds" });
             _sensitivityThresholdLabelOrder = DefineProperty<float>(nameof(SensitivityThresholdLabelOrder), new string[] { "sensitivityThresholdLabelOrder" });
-            _mipInformation = DefineModelProperty<GetSensitivitySettingsResponsePropertiesMipInformation>(nameof(MipInformation), new string[] { "mipInformation" });
+            _sensitivityThresholdLabelId = DefineProperty<string>(nameof(SensitivityThresholdLabelId), new string[] { "sensitivityThresholdLabelId" });
+            _mipInformation = DefineModelProperty<SensitivitySettingsMipInformation>(nameof(MipInformation), new string[] { "mipInformation" });
             DefineAdditionalProperties();
         }
 

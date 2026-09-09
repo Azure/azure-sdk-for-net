@@ -13,17 +13,17 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Security assessment metadata response. </summary>
-    public partial class SubscriptionAssessmentMetadata : ProvisionableResource
+    public partial class SecurityAssessmentMetadata : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
         private SecurityAssessmentMetadataPropertiesResult _properties;
 
-        /// <summary> Creates a new SubscriptionAssessmentMetadata. </summary>
+        /// <summary> Creates a new SecurityAssessmentMetadata. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public SubscriptionAssessmentMetadata(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Security/assessmentMetadata", resourceVersion ?? "2025-05-04")
+        public SecurityAssessmentMetadata(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Security/assessmentMetadata", resourceVersion ?? "2025-05-04")
         {
         }
 
@@ -91,6 +91,19 @@ namespace Azure.Provisioning.SecurityCenter
                     Properties = new SecurityAssessmentMetadataPropertiesResult();
                 }
                 Properties.DisplayName = value;
+            }
+        }
+
+        /// <summary> Gets the PolicyDefinitionId. </summary>
+        public BicepValue<string> PolicyDefinitionId
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new SecurityAssessmentMetadataPropertiesResult();
+                }
+                return Properties.PolicyDefinitionId;
             }
         }
 
@@ -332,7 +345,7 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for SubscriptionAssessmentMetadata. </summary>
+        /// <summary> Define all the provisionable properties for SecurityAssessmentMetadata. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -343,17 +356,17 @@ namespace Azure.Provisioning.SecurityCenter
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing SubscriptionAssessmentMetadata. </summary>
+        /// <summary> Creates a reference to an existing SecurityAssessmentMetadata. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static SubscriptionAssessmentMetadata FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static SecurityAssessmentMetadata FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            SubscriptionAssessmentMetadata result = new SubscriptionAssessmentMetadata(bicepIdentifier, resourceVersion);
+            SecurityAssessmentMetadata result = new SecurityAssessmentMetadata(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for SubscriptionAssessmentMetadata that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for SecurityAssessmentMetadata that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>

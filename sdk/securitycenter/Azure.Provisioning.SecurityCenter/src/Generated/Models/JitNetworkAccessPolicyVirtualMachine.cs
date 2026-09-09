@@ -13,12 +13,28 @@ namespace Azure.Provisioning.SecurityCenter
     /// <summary> The JitNetworkAccessPolicyVirtualMachine. </summary>
     public partial class JitNetworkAccessPolicyVirtualMachine : ProvisionableConstruct
     {
+        private BicepValue<string> _id;
         private BicepList<JitNetworkAccessPortRule> _ports;
         private BicepValue<string> _publicIPAddress;
 
         /// <summary> Creates a new JitNetworkAccessPolicyVirtualMachine. </summary>
         public JitNetworkAccessPolicyVirtualMachine()
         {
+        }
+
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<string> Id
+        {
+            get
+            {
+                Initialize();
+                return _id;
+            }
+            set
+            {
+                Initialize();
+                _id.Assign(value);
+            }
         }
 
         /// <summary> Gets or sets the Ports. </summary>
@@ -55,6 +71,7 @@ namespace Azure.Provisioning.SecurityCenter
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _id = DefineProperty<string>(nameof(Id), new string[] { "id" }, isRequired: true);
             _ports = DefineListProperty<JitNetworkAccessPortRule>(nameof(Ports), new string[] { "ports" }, isRequired: true);
             _publicIPAddress = DefineProperty<string>(nameof(PublicIPAddress), new string[] { "publicIpAddress" });
             DefineAdditionalProperties();

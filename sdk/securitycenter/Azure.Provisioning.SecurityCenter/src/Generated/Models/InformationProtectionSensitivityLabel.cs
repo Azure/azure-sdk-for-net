@@ -10,15 +10,15 @@ using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.SecurityCenter
 {
-    /// <summary> Pre-configured sensitive information type. </summary>
-    public partial class BuiltInInfoType : ProvisionableConstruct
+    /// <summary> Microsoft information protection sensitivity label. </summary>
+    public partial class InformationProtectionSensitivityLabel : ProvisionableConstruct
     {
         private BicepValue<string> _name;
         private BicepValue<string> _id;
-        private BicepValue<string> _dns;
+        private BicepValue<float> _order;
 
-        /// <summary> Creates a new BuiltInInfoType. </summary>
-        public BuiltInInfoType()
+        /// <summary> Creates a new InformationProtectionSensitivityLabel. </summary>
+        public InformationProtectionSensitivityLabel()
         {
         }
 
@@ -52,32 +52,32 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Gets or sets the Dns. </summary>
-        public BicepValue<string> Dns
+        /// <summary> Gets or sets the Order. </summary>
+        public BicepValue<float> Order
         {
             get
             {
                 Initialize();
-                return _dns;
+                return _order;
             }
             set
             {
                 Initialize();
-                _dns.Assign(value);
+                _order.Assign(value);
             }
         }
 
-        /// <summary> Define all the provisionable properties for BuiltInInfoType. </summary>
+        /// <summary> Define all the provisionable properties for InformationProtectionSensitivityLabel. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _id = DefineProperty<string>(nameof(Id), new string[] { "id" });
-            _dns = DefineProperty<string>(nameof(Dns), new string[] { "type" });
+            _order = DefineProperty<float>(nameof(Order), new string[] { "order" });
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for BuiltInInfoType that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for InformationProtectionSensitivityLabel that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

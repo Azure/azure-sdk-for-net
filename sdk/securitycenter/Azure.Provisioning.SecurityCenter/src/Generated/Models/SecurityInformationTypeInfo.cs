@@ -12,7 +12,7 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> The information type. </summary>
-    public partial class UserDefinedInformationType : ProvisionableConstruct
+    public partial class SecurityInformationTypeInfo : ProvisionableConstruct
     {
         private BicepValue<string> _displayName;
         private BicepValue<string> _description;
@@ -22,8 +22,8 @@ namespace Azure.Provisioning.SecurityCenter
         private BicepValue<bool> _isCustom;
         private BicepList<InformationProtectionKeyword> _keywords;
 
-        /// <summary> Creates a new UserDefinedInformationType. </summary>
-        public UserDefinedInformationType()
+        /// <summary> Creates a new SecurityInformationTypeInfo. </summary>
+        public SecurityInformationTypeInfo()
         {
         }
 
@@ -132,7 +132,7 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for UserDefinedInformationType. </summary>
+        /// <summary> Define all the provisionable properties for SecurityInformationTypeInfo. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -146,7 +146,7 @@ namespace Azure.Provisioning.SecurityCenter
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for UserDefinedInformationType that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for SecurityInformationTypeInfo that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

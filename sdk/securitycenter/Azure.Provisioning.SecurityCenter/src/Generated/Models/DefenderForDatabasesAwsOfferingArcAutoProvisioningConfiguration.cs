@@ -11,13 +11,13 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> Configuration for servers Arc auto provisioning for a given environment. </summary>
-    public partial class DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration : ProvisionableConstruct
+    public partial class DefenderForDatabasesAwsOfferingArcAutoProvisioningConfiguration : ProvisionableConstruct
     {
         private BicepValue<string> _proxy;
         private BicepValue<string> _privateLinkScope;
 
-        /// <summary> Creates a new DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration. </summary>
-        public DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration()
+        /// <summary> Creates a new DefenderForDatabasesAwsOfferingArcAutoProvisioningConfiguration. </summary>
+        public DefenderForDatabasesAwsOfferingArcAutoProvisioningConfiguration()
         {
         }
 
@@ -51,7 +51,7 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration. </summary>
+        /// <summary> Define all the provisionable properties for DefenderForDatabasesAwsOfferingArcAutoProvisioningConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -60,7 +60,7 @@ namespace Azure.Provisioning.SecurityCenter
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for DefenderFoDatabasesAwsOfferingArcAutoProvisioningConfiguration that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for DefenderForDatabasesAwsOfferingArcAutoProvisioningConfiguration that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

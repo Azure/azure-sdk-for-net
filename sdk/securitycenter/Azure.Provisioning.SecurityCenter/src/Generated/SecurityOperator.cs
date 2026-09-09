@@ -20,6 +20,7 @@ namespace Azure.Provisioning.SecurityCenter
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
+        private SecurityConnectorIdentity _identity;
 
         /// <summary> Creates a new SecurityOperator. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
@@ -63,6 +64,21 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
+        /// <summary> Gets or sets the Identity. </summary>
+        public SecurityConnectorIdentity Identity
+        {
+            get
+            {
+                Initialize();
+                return _identity;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _identity, value);
+            }
+        }
+
         /// <summary> Define all the provisionable properties for SecurityOperator. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -70,6 +86,7 @@ namespace Azure.Provisioning.SecurityCenter
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
+            _identity = DefineModelProperty<SecurityConnectorIdentity>(nameof(Identity), new string[] { "identity" });
             DefineAdditionalProperties();
         }
 

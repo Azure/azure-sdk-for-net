@@ -11,13 +11,13 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.SecurityCenter
 {
     /// <summary> AWS Defender CSPM Permissions Management OIDC (open id connect) connection configurations. </summary>
-    public partial class DefenderCspmAwsOfferingCiemOidc : ProvisionableConstruct
+    public partial class DefenderCspmAwsOfferingCiemCiemOidc : ProvisionableConstruct
     {
         private BicepValue<string> _cloudRoleArn;
         private BicepValue<string> _azureActiveDirectoryAppName;
 
-        /// <summary> Creates a new DefenderCspmAwsOfferingCiemOidc. </summary>
-        public DefenderCspmAwsOfferingCiemOidc()
+        /// <summary> Creates a new DefenderCspmAwsOfferingCiemCiemOidc. </summary>
+        public DefenderCspmAwsOfferingCiemCiemOidc()
         {
         }
 
@@ -51,7 +51,7 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for DefenderCspmAwsOfferingCiemOidc. </summary>
+        /// <summary> Define all the provisionable properties for DefenderCspmAwsOfferingCiemCiemOidc. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -60,7 +60,7 @@ namespace Azure.Provisioning.SecurityCenter
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for DefenderCspmAwsOfferingCiemOidc that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for DefenderCspmAwsOfferingCiemCiemOidc that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

@@ -13,19 +13,19 @@ using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.SecurityCenter
 {
-    /// <summary> Azure DevOps Project resource. </summary>
-    public partial class DevOpsProject : ProvisionableResource
+    /// <summary> Azure DevOps Repository resource. </summary>
+    public partial class AzureDevOpsRepository : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private SystemData _systemData;
-        private DevOpsProjectProperties _properties;
-        private ResourceReference<DevOpsOrg> _parent;
+        private AzureDevOpsRepositoryProperties _properties;
+        private ResourceReference<AzureDevOpsProject> _parent;
 
-        /// <summary> Creates a new DevOpsProject. </summary>
+        /// <summary> Creates a new AzureDevOpsRepository. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public DevOpsProject(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects", resourceVersion ?? "2025-11-01-preview")
+        public AzureDevOpsRepository(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Security/securityConnectors/devops/azureDevOpsOrgs/projects/repos", resourceVersion ?? "2025-11-01-preview")
         {
         }
 
@@ -65,7 +65,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Properties. </summary>
-        public DevOpsProjectProperties Properties
+        public AzureDevOpsRepositoryProperties Properties
         {
             get
             {
@@ -80,7 +80,7 @@ namespace Azure.Provisioning.SecurityCenter
         }
 
         /// <summary> Gets or sets the Parent. </summary>
-        public DevOpsOrg Parent
+        public AzureDevOpsProject Parent
         {
             get
             {
@@ -94,29 +94,29 @@ namespace Azure.Provisioning.SecurityCenter
             }
         }
 
-        /// <summary> Define all the provisionable properties for DevOpsProject. </summary>
+        /// <summary> Define all the provisionable properties for AzureDevOpsRepository. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _systemData = DefineModelProperty<SystemData>(nameof(SystemData), new string[] { "systemData" }, isOutput: true);
-            _properties = DefineModelProperty<DevOpsProjectProperties>(nameof(Properties), new string[] { "properties" });
-            _parent = DefineResource<DevOpsOrg>(nameof(Parent), new string[] { "parent" }, isRequired: true);
+            _properties = DefineModelProperty<AzureDevOpsRepositoryProperties>(nameof(Properties), new string[] { "properties" });
+            _parent = DefineResource<AzureDevOpsProject>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 
-        /// <summary> Creates a reference to an existing DevOpsProject. </summary>
+        /// <summary> Creates a reference to an existing AzureDevOpsRepository. </summary>
         /// <param name="bicepIdentifier"> The bicep identifier name. </param>
         /// <param name="resourceVersion"> The resource API version. </param>
-        public static DevOpsProject FromExisting(string bicepIdentifier, string resourceVersion = null)
+        public static AzureDevOpsRepository FromExisting(string bicepIdentifier, string resourceVersion = null)
         {
-            DevOpsProject result = new DevOpsProject(bicepIdentifier, resourceVersion);
+            AzureDevOpsRepository result = new AzureDevOpsRepository(bicepIdentifier, resourceVersion);
             result.IsExistingResource = true;
             return result;
         }
 
-        /// <summary> Define additional provisionable properties for DevOpsProject that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for AzureDevOpsRepository that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
 
         /// <summary></summary>
