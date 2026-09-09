@@ -7,7 +7,6 @@ using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Communication.Identity
 {
-    [CodeGenType("CommunicationIdentityTokenScope")]
     public readonly partial struct CommunicationTokenScope
     {
         /// <summary> Use this for full access to Calling APIs. </summary>
