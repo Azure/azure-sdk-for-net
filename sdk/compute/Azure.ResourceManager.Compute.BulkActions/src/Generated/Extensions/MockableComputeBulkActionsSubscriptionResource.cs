@@ -22,10 +22,10 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
     /// <summary> A class to add extension methods to <see cref="SubscriptionResource"/>. </summary>
     public partial class MockableComputeBulkActionsSubscriptionResource : ArmResource
     {
-        private ClientDiagnostics _launchBulkInstancesOperationClientDiagnostics;
-        private LaunchBulkInstancesOperation _launchBulkInstancesOperationRestClient;
         private ClientDiagnostics _bulkCreateCustomClientDiagnostics;
         private BulkCreateCustom _bulkCreateCustomRestClient;
+        private ClientDiagnostics _bulkCreateClientDiagnostics;
+        private BulkCreate _bulkCreateRestClient;
         private ClientDiagnostics _scheduledActionsClientDiagnostics;
         private ScheduledActions _scheduledActionsRestClient;
         private ClientDiagnostics _scheduledActionOperationStatusClientDiagnostics;
@@ -43,79 +43,21 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         {
         }
 
-        private ClientDiagnostics LaunchBulkInstancesOperationClientDiagnostics => _launchBulkInstancesOperationClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
-
-        private LaunchBulkInstancesOperation LaunchBulkInstancesOperationRestClient => _launchBulkInstancesOperationRestClient ??= new LaunchBulkInstancesOperation(LaunchBulkInstancesOperationClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-06-preview");
-
         private ClientDiagnostics BulkCreateCustomClientDiagnostics => _bulkCreateCustomClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private BulkCreateCustom BulkCreateCustomRestClient => _bulkCreateCustomRestClient ??= new BulkCreateCustom(BulkCreateCustomClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-06-preview");
+        private BulkCreateCustom BulkCreateCustomRestClient => _bulkCreateCustomRestClient ??= new BulkCreateCustom(BulkCreateCustomClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-06-preview");
+
+        private ClientDiagnostics BulkCreateClientDiagnostics => _bulkCreateClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+
+        private BulkCreate BulkCreateRestClient => _bulkCreateRestClient ??= new BulkCreate(BulkCreateClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-06-preview");
 
         private ClientDiagnostics ScheduledActionsClientDiagnostics => _scheduledActionsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledActions ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActions(ScheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-06-preview");
+        private ScheduledActions ScheduledActionsRestClient => _scheduledActionsRestClient ??= new ScheduledActions(ScheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-06-preview");
 
         private ClientDiagnostics ScheduledActionOperationStatusClientDiagnostics => _scheduledActionOperationStatusClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private ScheduledActionOperationStatus ScheduledActionOperationStatusRestClient => _scheduledActionOperationStatusRestClient ??= new ScheduledActionOperationStatus(ScheduledActionOperationStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-06-preview");
-
-        /// <summary>
-        /// List LaunchBulkInstancesOperation resources by subscriptionId.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/launchBulkInstancesOperations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LaunchBulkInstancesOperation_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LocationBasedLaunchBulkInstancesOperationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<LocationBasedLaunchBulkInstancesOperationResource> GetLocationBasedLaunchBulkInstancesOperationsAsync(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new AsyncPageableWrapper<LocationBasedLaunchBulkInstancesOperationData, LocationBasedLaunchBulkInstancesOperationResource>(new LaunchBulkInstancesOperationGetBySubscriptionAsyncCollectionResultOfT(LaunchBulkInstancesOperationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableComputeBulkActionsSubscriptionResource.GetLocationBasedLaunchBulkInstancesOperations"), data => new LocationBasedLaunchBulkInstancesOperationResource(Client, data));
-        }
-
-        /// <summary>
-        /// List LaunchBulkInstancesOperation resources by subscriptionId.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/launchBulkInstancesOperations. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LaunchBulkInstancesOperation_ListBySubscription. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="LocationBasedLaunchBulkInstancesOperationResource"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<LocationBasedLaunchBulkInstancesOperationResource> GetLocationBasedLaunchBulkInstancesOperations(AzureLocation location, CancellationToken cancellationToken = default)
-        {
-            RequestContext context = new RequestContext
-            {
-                CancellationToken = cancellationToken
-            };
-            return new PageableWrapper<LocationBasedLaunchBulkInstancesOperationData, LocationBasedLaunchBulkInstancesOperationResource>(new LaunchBulkInstancesOperationGetBySubscriptionCollectionResultOfT(LaunchBulkInstancesOperationRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableComputeBulkActionsSubscriptionResource.GetLocationBasedLaunchBulkInstancesOperations"), data => new LocationBasedLaunchBulkInstancesOperationResource(Client, data));
-        }
+        private ScheduledActionOperationStatus ScheduledActionOperationStatusRestClient => _scheduledActionOperationStatusRestClient ??= new ScheduledActionOperationStatus(ScheduledActionOperationStatusClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-09-06-preview");
 
         /// <summary>
         /// List BulkCreateCustom resources by subscriptionId.
@@ -130,7 +72,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -159,7 +101,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -176,7 +118,65 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// List ScheduledAction resources by subscription ID
+        /// List BulkCreate resources by subscriptionId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/bulkCreate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BulkCreate_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-09-06-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="LocationBasedBulkCreateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<LocationBasedBulkCreateResource> GetLocationBasedBulkCreatesAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<LocationBasedBulkCreateData, LocationBasedBulkCreateResource>(new BulkCreateGetBySubscriptionAsyncCollectionResultOfT(BulkCreateRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableComputeBulkActionsSubscriptionResource.GetLocationBasedBulkCreates"), data => new LocationBasedBulkCreateResource(Client, data));
+        }
+
+        /// <summary>
+        /// List BulkCreate resources by subscriptionId.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/bulkCreate. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BulkCreate_ListBySubscription. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-09-06-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <returns> A collection of <see cref="LocationBasedBulkCreateResource"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<LocationBasedBulkCreateResource> GetLocationBasedBulkCreates(AzureLocation location, CancellationToken cancellationToken = default)
+        {
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<LocationBasedBulkCreateData, LocationBasedBulkCreateResource>(new BulkCreateGetBySubscriptionCollectionResultOfT(BulkCreateRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableComputeBulkActionsSubscriptionResource.GetLocationBasedBulkCreates"), data => new LocationBasedBulkCreateResource(Client, data));
+        }
+
+        /// <summary>
+        /// Lists scheduled actions in the specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// List ScheduledAction resources by subscription ID
+        /// Lists scheduled actions in the specified subscription.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -232,106 +232,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// Get the status of a LaunchBulkInstancesOperation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/launchBulkInstancesOperations/asyncOperations/{asyncOperationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LaunchBulkInstancesOperation_GetOperationStatus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="asyncOperationId"> The async operation id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual async Task<Response<OperationStatusResult>> GetOperationStatusAsync(AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
-
-            using DiagnosticScope scope = LaunchBulkInstancesOperationClientDiagnostics.CreateScope("MockableComputeBulkActionsSubscriptionResource.GetOperationStatus");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = LaunchBulkInstancesOperationRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, asyncOperationId, context);
-                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeBulkActionsContext.Default), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Get the status of a LaunchBulkInstancesOperation.
-        /// <list type="bullet">
-        /// <item>
-        /// <term> Request Path. </term>
-        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/launchBulkInstancesOperations/asyncOperations/{asyncOperationId}. </description>
-        /// </item>
-        /// <item>
-        /// <term> Operation Id. </term>
-        /// <description> LaunchBulkInstancesOperation_GetOperationStatus. </description>
-        /// </item>
-        /// <item>
-        /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="asyncOperationId"> The async operation id. </param>
-        /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
-        /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
-        public virtual Response<OperationStatusResult> GetOperationStatus(AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
-        {
-            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
-
-            using DiagnosticScope scope = LaunchBulkInstancesOperationClientDiagnostics.CreateScope("MockableComputeBulkActionsSubscriptionResource.GetOperationStatus");
-            scope.Start();
-            try
-            {
-                RequestContext context = new RequestContext
-                {
-                    CancellationToken = cancellationToken
-                };
-                HttpMessage message = LaunchBulkInstancesOperationRestClient.CreateGetOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, asyncOperationId, context);
-                Response result = Pipeline.ProcessMessage(message, context);
-                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeBulkActionsContext.Default), result);
-                if (response.Value == null)
-                {
-                    throw new RequestFailedException(response.GetRawResponse());
-                }
-                return response;
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
         /// Get the status of an async operation of a BulkCreateCustom.
         /// <list type="bullet">
         /// <item>
@@ -344,7 +244,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -394,7 +294,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -432,7 +332,107 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// Get the status of a ScheduledActions asynchronous operation. Both the `Azure-AsyncOperation` and `Location` headers returned by long-running operations point at this endpoint.
+        /// Get the status of an async operation of a BulkCreate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/bulkCreate/asyncOperations/{asyncOperationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BulkCreate_GetAsyncOperationStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-09-06-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="asyncOperationId"> The async operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual async Task<Response<OperationStatusResult>> GetAsyncOperationStatusAsync(AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
+
+            using DiagnosticScope scope = BulkCreateClientDiagnostics.CreateScope("MockableComputeBulkActionsSubscriptionResource.GetAsyncOperationStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = BulkCreateRestClient.CreateGetAsyncOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, asyncOperationId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeBulkActionsContext.Default), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the status of an async operation of a BulkCreate.
+        /// <list type="bullet">
+        /// <item>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/providers/Microsoft.Compute/locations/{location}/bulkCreate/asyncOperations/{asyncOperationId}. </description>
+        /// </item>
+        /// <item>
+        /// <term> Operation Id. </term>
+        /// <description> BulkCreate_GetAsyncOperationStatus. </description>
+        /// </item>
+        /// <item>
+        /// <term> Default Api Version. </term>
+        /// <description> 2026-09-06-preview. </description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="location"> The location name. </param>
+        /// <param name="asyncOperationId"> The async operation id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="asyncOperationId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="asyncOperationId"/> is an empty string, and was expected to be non-empty. </exception>
+        public virtual Response<OperationStatusResult> GetAsyncOperationStatus(AzureLocation location, string asyncOperationId, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNullOrEmpty(asyncOperationId, nameof(asyncOperationId));
+
+            using DiagnosticScope scope = BulkCreateClientDiagnostics.CreateScope("MockableComputeBulkActionsSubscriptionResource.GetAsyncOperationStatus");
+            scope.Start();
+            try
+            {
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = BulkCreateRestClient.CreateGetAsyncOperationStatusRequest(Guid.Parse(Id.SubscriptionId), location, asyncOperationId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<OperationStatusResult> response = Response.FromValue(ModelReaderWriter.Read<OperationStatusResult>(result.Content, ModelSerializationExtensions.WireOptions, AzureResourceManagerComputeBulkActionsContext.Default), result);
+                if (response.Value == null)
+                {
+                    throw new RequestFailedException(response.GetRawResponse());
+                }
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Gets the status of the specified scheduled action operation.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -444,12 +444,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="operationId"> The operation id. </param>
+        /// <param name="location"> The Azure region where the operation is running. </param>
+        /// <param name="operationId"> The operation ID in UUID format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         }
 
         /// <summary>
-        /// Get the status of a ScheduledActions asynchronous operation. Both the `Azure-AsyncOperation` and `Location` headers returned by long-running operations point at this endpoint.
+        /// Gets the status of the specified scheduled action operation.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -494,12 +494,12 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="location"> The location name. </param>
-        /// <param name="operationId"> The operation id. </param>
+        /// <param name="location"> The Azure region where the operation is running. </param>
+        /// <param name="operationId"> The operation ID in UUID format. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>

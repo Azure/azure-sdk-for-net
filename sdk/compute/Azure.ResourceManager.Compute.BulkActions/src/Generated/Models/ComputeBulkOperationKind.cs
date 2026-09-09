@@ -15,8 +15,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
     public readonly partial struct ComputeBulkOperationKind : IEquatable<ComputeBulkOperationKind>
     {
         private readonly string _value;
-        /// <summary> The default value for this enum type. </summary>
-        private const string UnknownValue = "Unknown";
         /// <summary> Start operations on the resources. </summary>
         private const string StartValue = "Start";
         /// <summary> Deallocate operations on the resources. </summary>
@@ -27,8 +25,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         private const string CreateValue = "Create";
         /// <summary> Delete operations on the resources. </summary>
         private const string DeleteValue = "Delete";
-        /// <summary> Post-Start VM agent health-check sub-operation; surfaced when the customer opts into verifyVmAgentHealth on a Start request. </summary>
-        private const string GetInstanceViewValue = "GetInstanceView";
+        private const string UnknownValue = "Unknown";
 
         /// <summary> Initializes a new instance of <see cref="ComputeBulkOperationKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -39,9 +36,6 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
 
             _value = value;
         }
-
-        /// <summary> The default value for this enum type. </summary>
-        public static ComputeBulkOperationKind Unknown { get; } = new ComputeBulkOperationKind(UnknownValue);
 
         /// <summary> Start operations on the resources. </summary>
         public static ComputeBulkOperationKind Start { get; } = new ComputeBulkOperationKind(StartValue);
@@ -58,8 +52,8 @@ namespace Azure.ResourceManager.Compute.BulkActions.Models
         /// <summary> Delete operations on the resources. </summary>
         public static ComputeBulkOperationKind Delete { get; } = new ComputeBulkOperationKind(DeleteValue);
 
-        /// <summary> Post-Start VM agent health-check sub-operation; surfaced when the customer opts into verifyVmAgentHealth on a Start request. </summary>
-        public static ComputeBulkOperationKind GetInstanceView { get; } = new ComputeBulkOperationKind(GetInstanceViewValue);
+        /// <summary> Gets the Unknown. </summary>
+        public static ComputeBulkOperationKind Unknown { get; } = new ComputeBulkOperationKind(UnknownValue);
 
         /// <summary> Determines if two <see cref="ComputeBulkOperationKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -13,7 +13,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Schedule properties for update (PATCH). All properties are optional so individual fields can be patched (merge semantics); omitting a property preserves the current value. </summary>
+    /// <summary> Schedule changes for a scheduled action. Omitted properties keep their current values. </summary>
     public partial class ScheduledActionsSchedulePatch : IJsonModel<ScheduledActionsSchedulePatch>
     {
         /// <param name="data"> The data to parse. </param>

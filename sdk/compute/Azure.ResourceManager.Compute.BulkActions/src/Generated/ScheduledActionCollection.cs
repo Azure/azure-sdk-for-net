@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         {
             TryGetApiVersion(ScheduledActionResource.ResourceType, out string scheduledActionApiVersion);
             _scheduledActionsClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions", ScheduledActionResource.ResourceType.Namespace, Diagnostics);
-            _scheduledActionsRestClient = new ScheduledActions(_scheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledActionApiVersion ?? "2026-08-06-preview");
+            _scheduledActionsRestClient = new ScheduledActions(_scheduledActionsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, scheduledActionApiVersion ?? "2026-09-06-preview");
             ValidateResourceId(id);
         }
 
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Create a ScheduledAction
+        /// Creates or updates a scheduled action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -68,13 +68,13 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
+        /// <param name="data"> The scheduled action to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Create a ScheduledAction
+        /// Creates or updates a scheduled action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -126,13 +126,13 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="waitUntil"> <see cref="WaitUntil.Completed"/> if the method should wait to return until the long-running operation has completed on the service; <see cref="WaitUntil.Started"/> if it should return after starting the operation. For more information on long-running operations, please see <see href="https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/core/Azure.Core/samples/LongRunningOperations.md"> Azure.Core Long-Running Operation samples</see>. </param>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
-        /// <param name="data"> Resource create parameters. </param>
+        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
+        /// <param name="data"> The scheduled action to create or update. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> or <paramref name="data"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Get a ScheduledAction
+        /// Gets the specified scheduled action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -184,11 +184,11 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// Get a ScheduledAction
+        /// Gets the specified scheduled action.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -233,11 +233,11 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// List ScheduledAction resources by resource group
+        /// Lists scheduled actions in the specified resource group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         }
 
         /// <summary>
-        /// List ScheduledAction resources by resource group
+        /// Lists scheduled actions in the specified resource group.
         /// <list type="bullet">
         /// <item>
         /// <term> Request Path. </term>
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -338,11 +338,11 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -395,11 +395,11 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -452,11 +452,11 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -513,11 +513,11 @@ namespace Azure.ResourceManager.Compute.BulkActions
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-08-06-preview. </description>
+        /// <description> 2026-09-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="scheduledActionName"> The name of the ScheduledAction. </param>
+        /// <param name="scheduledActionName"> The name of the scheduled action. It must be 3 to 24 characters and can contain only letters, numbers, and hyphens. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="scheduledActionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="scheduledActionName"/> is an empty string, and was expected to be non-empty. </exception>

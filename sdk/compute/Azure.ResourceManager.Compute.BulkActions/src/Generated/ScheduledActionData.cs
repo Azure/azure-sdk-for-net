@@ -13,7 +13,7 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.BulkActions
 {
-    /// <summary> The scheduled action resource. </summary>
+    /// <summary> A recurring action that operates on specified compute resources. </summary>
     public partial class ScheduledActionData : TrackedResourceData
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>

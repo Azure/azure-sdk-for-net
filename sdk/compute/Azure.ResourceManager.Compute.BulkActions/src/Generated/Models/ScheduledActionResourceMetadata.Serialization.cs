@@ -14,7 +14,7 @@ using Azure.ResourceManager.Compute.BulkActions;
 
 namespace Azure.ResourceManager.Compute.BulkActions.Models
 {
-    /// <summary> Represents an scheduled action resource metadata. </summary>
+    /// <summary> A compute resource associated with a scheduled action. </summary>
     public partial class ScheduledActionResourceMetadata : IJsonModel<ScheduledActionResourceMetadata>
     {
         /// <summary> Initializes a new instance of <see cref="ScheduledActionResourceMetadata"/> for deserialization. </summary>
