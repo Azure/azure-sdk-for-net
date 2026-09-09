@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="location"> The location of the new virtual machine or environment. </param>
         /// <param name="tags"> The tags of the resource. </param>
         /// <returns> A new <see cref="Models.DevTestLabScheduleCreationParameter"/> instance for mocking. </returns>
-        public static DevTestLabScheduleCreationParameter DevTestLabScheduleCreationParameter(DevTestLabEnableStatus? status = default, string taskType = default, DevTestLabWeekDetails weeklyRecurrence = default, string timeZoneId = default, DevTestLabNotificationSettings notificationSettings = default, ResourceIdentifier targetResourceId = default, string dailyRecurrenceTime = default, int? hourlyRecurrenceMinute = default, string name = default, AzureLocation? location = default, IDictionary<string, string> tags = default)
+        public static DevTestLabScheduleCreationParameter DevTestLabScheduleCreationParameter(DevTestLabEnableStatus? status, string taskType, DevTestLabWeekDetails weeklyRecurrence, string timeZoneId, DevTestLabNotificationSettings notificationSettings, ResourceIdentifier targetResourceId, string dailyRecurrenceTime, int? hourlyRecurrenceMinute, string name, AzureLocation? location, IDictionary<string, string> tags)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="dailyRecurrenceTime"> The time of day the schedule will occur. </param>
         /// <param name="hourlyRecurrenceMinute"> Minutes of the hour the schedule will run. </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabScheduleData"/> instance for mocking. </returns>
-        public static DevTestLabScheduleData DevTestLabScheduleData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevTestLabEnableStatus? status = default, string taskType = default, DevTestLabWeekDetails weeklyRecurrence = default, string timeZoneId = default, DevTestLabNotificationSettings notificationSettings = default, DateTimeOffset? createdOn = default, string targetResourceId = default, string provisioningState = default, Guid? uniqueIdentifier = default, string dailyRecurrenceTime = default, int? hourlyRecurrenceMinute = default)
+        public static DevTestLabScheduleData DevTestLabScheduleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabEnableStatus? status, string taskType, DevTestLabWeekDetails weeklyRecurrence, string timeZoneId, DevTestLabNotificationSettings notificationSettings, DateTimeOffset? createdOn, string targetResourceId, string provisioningState, Guid? uniqueIdentifier, string dailyRecurrenceTime, int? hourlyRecurrenceMinute)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <param name="estimatedLabCost"> The cost component of the cost item. </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabCostData"/> instance for mocking. </returns>
-        public static DevTestLabCostData DevTestLabCostData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DevTestLabTargetCost targetCost = default, IEnumerable<DevTestLabCostDetails> labCostDetails = default, IEnumerable<DevTestLabResourceCost> resourceCosts = default, string currencyCode = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, DateTimeOffset? createdOn = default, string provisioningState = default, Guid? uniqueIdentifier = default, double? estimatedLabCost = default)
+        public static DevTestLabCostData DevTestLabCostData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DevTestLabTargetCost targetCost, IEnumerable<DevTestLabCostDetails> labCostDetails, IEnumerable<DevTestLabResourceCost> resourceCosts, string currencyCode, DateTimeOffset? startOn, DateTimeOffset? endOn, DateTimeOffset? createdOn, string provisioningState, Guid? uniqueIdentifier, double? estimatedLabCost)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -857,7 +857,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
         /// <param name="uniqueIdentifier"> The unique immutable identifier of a resource (Guid). </param>
         /// <param name="labVmId"> The identifier of the VM from which a formula is to be created. </param>
         /// <returns> A new <see cref="DevTestLabs.DevTestLabFormulaData"/> instance for mocking. </returns>
-        public static DevTestLabFormulaData DevTestLabFormulaData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, string description = default, string author = default, string osType = default, DateTimeOffset? createdOn = default, DevTestLabVmCreationContent formulaContent = default, string provisioningState = default, Guid? uniqueIdentifier = default, string labVmId = default)
+        public static DevTestLabFormulaData DevTestLabFormulaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string description, string author, string osType, DateTimeOffset? createdOn, DevTestLabVmCreationContent formulaContent, string provisioningState, Guid? uniqueIdentifier, string labVmId)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
