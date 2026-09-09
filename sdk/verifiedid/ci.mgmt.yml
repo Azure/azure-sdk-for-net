@@ -9,7 +9,6 @@ trigger:
   paths:
     include:
     - sdk/verifiedid/Azure.ResourceManager.VerifiedId
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

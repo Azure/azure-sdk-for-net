@@ -10,7 +10,6 @@ trigger:
     include:
     - sdk/azurestackhci/Azure.ResourceManager.Hci
     - sdk/azurestackhci/Azure.ResourceManager.Hci.Vm
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/iothub/Azure.ResourceManager.IotHub
+    - sdk/iothub/Azure.Provisioning.IotHub
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

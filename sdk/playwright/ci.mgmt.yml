@@ -9,7 +9,6 @@ trigger:
   paths:
     include:
     - sdk/playwright/Azure.ResourceManager.Playwright
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

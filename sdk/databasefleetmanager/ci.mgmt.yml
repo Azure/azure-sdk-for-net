@@ -9,7 +9,6 @@ trigger:
   paths:
     include:
     - sdk/databasefleetmanager/Azure.ResourceManager.DatabaseFleetManager
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

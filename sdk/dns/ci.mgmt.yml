@@ -10,6 +10,7 @@ trigger:
   paths:
     include:
     - sdk/dns/Azure.ResourceManager.Dns
+    - sdk/dns/Azure.Provisioning.Dns
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

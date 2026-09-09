@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/logic/Azure.ResourceManager.Logic
+    - sdk/logic/Azure.Provisioning.Logic
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

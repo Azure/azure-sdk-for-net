@@ -9,7 +9,6 @@ trigger:
   paths:
     include:
     - sdk/commerce/Azure.ResourceManager.Commerce
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

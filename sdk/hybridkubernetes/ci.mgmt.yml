@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/hybridkubernetes/Azure.ResourceManager.Kubernetes
+    - sdk/hybridkubernetes/Azure.Provisioning.Kubernetes
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

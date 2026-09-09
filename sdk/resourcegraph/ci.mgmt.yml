@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/resourcegraph/Azure.ResourceManager.ResourceGraph
+    - sdk/resourcegraph/Azure.Provisioning.ResourceGraph
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

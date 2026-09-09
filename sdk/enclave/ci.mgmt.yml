@@ -9,7 +9,7 @@ trigger:
   paths:
     include:
     - sdk/enclave/Azure.ResourceManager.Enclave
-
+    - sdk/enclave/Azure.Provisioning.Enclave
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

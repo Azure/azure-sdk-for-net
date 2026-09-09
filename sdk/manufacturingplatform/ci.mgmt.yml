@@ -9,7 +9,6 @@ trigger:
   paths:
     include:
     - sdk/manufacturingplatform/Azure.ResourceManager.ManufacturingPlatform
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

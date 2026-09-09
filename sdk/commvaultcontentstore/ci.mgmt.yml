@@ -9,7 +9,6 @@ trigger:
   paths:
     include:
     - sdk/commvaultcontentstore/Azure.ResourceManager.CommvaultContentStore
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

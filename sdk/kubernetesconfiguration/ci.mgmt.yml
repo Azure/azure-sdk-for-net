@@ -8,6 +8,10 @@ trigger:
     - release/*
   paths:
     include:
+    - sdk/kubernetesconfiguration/Azure.Provisioning.KubernetesConfiguration.PrivateLinkScopes
+    - sdk/kubernetesconfiguration/Azure.Provisioning.KubernetesConfiguration.FluxConfigurations
+    - sdk/kubernetesconfiguration/Azure.Provisioning.KubernetesConfiguration.ExtensionTypes
+    - sdk/kubernetesconfiguration/Azure.Provisioning.KubernetesConfiguration.Extensions
     - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration.PrivateLinkScopes
     - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration.Extensions
     - sdk/kubernetesconfiguration/Azure.ResourceManager.KubernetesConfiguration.ExtensionTypes

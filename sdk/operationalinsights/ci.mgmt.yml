@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/operationalinsights/Azure.ResourceManager.OperationalInsights
+    - sdk/operationalinsights/Azure.Provisioning.OperationalInsights
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

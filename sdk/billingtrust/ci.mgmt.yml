@@ -9,7 +9,6 @@ trigger:
   paths:
     include:
     - sdk/billingtrust/Azure.ResourceManager.Billing.Trust
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

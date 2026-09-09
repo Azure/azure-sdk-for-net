@@ -9,8 +9,7 @@ trigger:
   paths:
     include:
     - sdk/appconfiguration/Azure.ResourceManager.AppConfiguration
-# These comments should stay.
-
+    - sdk/appconfiguration/Azure.Provisioning.AppConfiguration
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

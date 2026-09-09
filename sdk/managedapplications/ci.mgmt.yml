@@ -9,7 +9,6 @@ trigger:
   paths:
     include:
     - sdk/managedapplications/Azure.ResourceManager.ManagedApplications
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

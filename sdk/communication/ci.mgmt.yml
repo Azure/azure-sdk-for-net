@@ -8,6 +8,7 @@ trigger:
   paths:
     include:
     - sdk/communication/Azure.ResourceManager.Communication
+    - sdk/communication/Azure.Provisioning.Communication
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

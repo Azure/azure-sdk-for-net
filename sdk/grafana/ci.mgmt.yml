@@ -9,7 +9,6 @@ trigger:
   paths:
     include:
     - sdk/grafana/Azure.ResourceManager.Grafana
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

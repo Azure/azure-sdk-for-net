@@ -9,7 +9,6 @@ trigger:
   paths:
     include:
     - sdk/napsteromniagentapi/Azure.ResourceManager.NapsterOmniagentApi
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

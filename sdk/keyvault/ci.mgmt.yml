@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/keyvault/Azure.ResourceManager.KeyVault
+    - sdk/keyvault/Azure.Provisioning.KeyVault
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

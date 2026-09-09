@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/securitycenter/Azure.ResourceManager.SecurityCenter
+    - sdk/securitycenter/Azure.Provisioning.SecurityCenter
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

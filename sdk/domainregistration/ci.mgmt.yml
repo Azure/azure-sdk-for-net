@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/domainregistration/Azure.ResourceManager.DomainRegistration
+    - sdk/domainregistration/Azure.Provisioning.DomainRegistration
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

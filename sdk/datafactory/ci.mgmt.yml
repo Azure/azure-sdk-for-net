@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/datafactory/Azure.ResourceManager.DataFactory
+    - sdk/datafactory/Azure.Provisioning.DataFactory
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/standbypool/Azure.ResourceManager.StandbyPool
+    - sdk/standbypool/Azure.Provisioning.StandbyPool
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

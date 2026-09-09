@@ -13,6 +13,7 @@ trigger:
     - sdk/monitor/Azure.ResourceManager.Monitor.Workspaces
     - sdk/monitor/Azure.ResourceManager.Monitor
     - sdk/monitor/Azure.ResourceManager.Monitor.Slis
+    - sdk/monitor/Azure.Provisioning.Monitor
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

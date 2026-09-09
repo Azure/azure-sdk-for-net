@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/loadtestservice/Azure.ResourceManager.LoadTesting
+    - sdk/loadtestservice/Azure.Provisioning.LoadTesting
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

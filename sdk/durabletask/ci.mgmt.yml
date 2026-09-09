@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/durabletask/Azure.ResourceManager.DurableTask
+    - sdk/durabletask/Azure.Provisioning.DurableTask
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

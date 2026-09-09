@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/websites/Azure.ResourceManager.AppService
+    - sdk/websites/Azure.Provisioning.AppService
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/recoveryservices/Azure.ResourceManager.RecoveryServices
+    - sdk/recoveryservices/Azure.Provisioning.RecoveryServices
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

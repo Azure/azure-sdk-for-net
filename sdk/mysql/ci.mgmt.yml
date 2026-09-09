@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/mysql/Azure.ResourceManager.MySql
+    - sdk/mysql/Azure.Provisioning.MySql
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

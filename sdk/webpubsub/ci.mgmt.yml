@@ -8,6 +8,7 @@ trigger:
   paths:
     include:
     - sdk/webpubsub/Azure.ResourceManager.WebPubSub
+    - sdk/webpubsub/Azure.Provisioning.WebPubSub
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

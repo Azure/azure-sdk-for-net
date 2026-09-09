@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/trafficmanager/Azure.ResourceManager.TrafficManager
+    - sdk/trafficmanager/Azure.Provisioning.TrafficManager
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

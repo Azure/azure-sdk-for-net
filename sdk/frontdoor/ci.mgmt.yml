@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/frontdoor/Azure.ResourceManager.FrontDoor
+    - sdk/frontdoor/Azure.Provisioning.FrontDoor
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

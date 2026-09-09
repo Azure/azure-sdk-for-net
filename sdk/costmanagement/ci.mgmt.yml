@@ -9,6 +9,7 @@ trigger:
     - release/*
   paths:
     include:
+    - sdk/costmanagement/Azure.Provisioning.CostManagement
     - sdk/costmanagement/Azure.ResourceManager.CostManagement
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml

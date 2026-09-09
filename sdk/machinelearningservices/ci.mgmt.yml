@@ -8,6 +8,7 @@ trigger:
   paths:
     include:
     - sdk/machinelearningservices/Azure.ResourceManager.MachineLearning
+    - sdk/machinelearningservices/Azure.Provisioning.MachineLearning
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

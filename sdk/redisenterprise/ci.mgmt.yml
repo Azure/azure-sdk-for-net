@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/redisenterprise/Azure.ResourceManager.RedisEnterprise
+    - sdk/redisenterprise/Azure.Provisioning.RedisEnterprise
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

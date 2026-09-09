@@ -10,6 +10,8 @@ trigger:
     include:
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry
     - sdk/containerregistry/Azure.ResourceManager.ContainerRegistry.Tasks
+    - sdk/containerregistry/Azure.Provisioning.ContainerRegistry
+    - sdk/containerregistry/Azure.Provisioning.ContainerRegistry.Tasks
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

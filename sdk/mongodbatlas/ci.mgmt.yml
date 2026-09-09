@@ -9,7 +9,6 @@ trigger:
   paths:
     include:
     - sdk/mongodbatlas/Azure.ResourceManager.MongoDBAtlas
-
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:

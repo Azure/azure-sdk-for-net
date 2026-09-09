@@ -9,6 +9,7 @@ trigger:
   paths:
     include:
     - sdk/cdn/Azure.ResourceManager.Cdn
+    - sdk/cdn/Azure.Provisioning.Cdn
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
