@@ -163,7 +163,7 @@ namespace Azure.Generator.Management.Visitors
                     method,
                     constructorParameters,
                     newInstanceExpression.Parameters,
-                    excludedArgumentIndex: constructorParameterIndex);
+                    excludedArgumentIndex: FindOriginalArgumentIndex(constructorParameter, newInstanceExpression.Parameters));
                 if (TryBuildCompatibilityArgument(method, constructorParameter, unavailableDirectParameterNames, out var argument))
                 {
                     arguments.Add(argument.Argument);
@@ -453,6 +453,46 @@ namespace Azure.Generator.Management.Visitors
                 !IsDefaultExpression(argument)
                 && ReferencesParameter(argument, parameter));
         }
+
+        private static int? FindOriginalArgumentIndex(
+            ParameterProvider constructorParameter,
+            IReadOnlyList<ValueExpression> originalArguments)
+        {
+            for (var index = 0; index < originalArguments.Count; index++)
+            {
+                var argument = originalArguments[index];
+                if (argument is PositionalParameterReferenceExpression { ParameterName: var parameterName }
+                    && string.Equals(parameterName, constructorParameter.Name, StringComparison.OrdinalIgnoreCase))
+                {
+                    return index;
+                }
+
+                if (argument is VariableExpression variable
+                    && string.Equals(variable.Declaration.RequestedName, constructorParameter.Name, StringComparison.OrdinalIgnoreCase)
+                    && AreCompatibleParameterTypes(variable.Type, constructorParameter.Type))
+                {
+                    return index;
+                }
+
+                if (ConstructsType(argument, constructorParameter.Type))
+                {
+                    return index;
+                }
+            }
+
+            return null;
+        }
+
+        private static bool ConstructsType(ValueExpression expression, CSharpType expectedType)
+            => expression switch
+            {
+                NewInstanceExpression { Type: not null } instance => instance.Type.AreNamesEqual(expectedType),
+                TernaryConditionalExpression ternary => ConstructsType(ternary.Consequent, expectedType)
+                    || ConstructsType(ternary.Alternative, expectedType),
+                KeywordExpression { Expression: not null } keyword => ConstructsType(keyword.Expression!, expectedType),
+                PositionalParameterReferenceExpression positional => ConstructsType(positional.ParameterValue, expectedType),
+                _ => false
+            };
 
         private static HashSet<string> GetUnavailableDirectParameterNames(
             MethodProvider method,

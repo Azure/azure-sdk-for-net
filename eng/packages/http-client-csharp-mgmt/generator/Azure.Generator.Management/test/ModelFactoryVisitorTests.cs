@@ -609,6 +609,61 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
+        public void ModelFactoryVisitorRebuildsReorderedNestedModelArgument()
+        {
+            var nestedModel = InputFactory.Model(
+                "TestProperties",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties: [InputFactory.Property("annotation", InputPrimitiveType.String)]);
+            var inputModel = InputFactory.Model(
+                "TestModel",
+                usage: InputModelTypeUsage.Output | InputModelTypeUsage.Input | InputModelTypeUsage.Json,
+                properties:
+                [
+                    InputFactory.Property("properties", nestedModel),
+                    InputFactory.Property("identity", InputPrimitiveType.String)
+                ]);
+
+            var plugin = ManagementMockHelpers.LoadMockPlugin(inputModels: () => [inputModel, nestedModel]);
+            var model = plugin.Object.TypeFactory.CreateModel(inputModel)!;
+            var nestedProvider = plugin.Object.TypeFactory.CreateModel(nestedModel)!;
+            var modelFactory = plugin.Object.OutputLibrary.TypeProviders.OfType<ModelFactoryProvider>().Single();
+            var annotationParameter = new ParameterProvider("annotation", $"", typeof(string), Default);
+            var identityParameter = new ParameterProvider("identity", $"", typeof(string), Default);
+            var signature = new MethodSignature(
+                "TestModel",
+                $"Creates a test model.",
+                MethodSignatureModifiers.Public | MethodSignatureModifiers.Static,
+                model.Type,
+                $"A test model.",
+                [annotationParameter, identityParameter]);
+            var nestedArguments = nestedProvider.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name == "annotation" ? annotationParameter : parameter.DefaultValue ?? Default)
+                .ToArray();
+            var reorderedArguments = model.FullConstructor.Signature.Parameters
+                .Select(parameter => parameter.Name switch
+                {
+                    "properties" => (ValueExpression)identityParameter,
+                    "identity" => New.Instance(nestedProvider.Type, nestedArguments),
+                    _ => parameter.DefaultValue ?? Default
+                })
+                .ToArray();
+            modelFactory.Update(methods:
+                [new MethodProvider(signature, Return(New.Instance(model.Type, reorderedArguments)), modelFactory)]);
+
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType",
+                BindingFlags.NonPublic | BindingFlags.Instance)!;
+            visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
+
+            var visitedBody = modelFactory.Methods.Single().BodyStatements!.ToDisplayString();
+            Assert.That(visitedBody, Does.Contain("new global::Samples.Models.TestProperties(annotation,"));
+            var rendered = plugin.Object.GetWriter(modelFactory).Write().Content;
+            Assert.That(rendered, Does.Contain("new global::Samples.Models.TestProperties(annotation,"));
+            Assert.That(rendered, Does.Contain("), identity,"));
+        }
+
+        [Test]
         public void ModelFactoryVisitorAlwaysConstructsNestedModelForNonNullableValueParameter()
         {
             var nestedModel = InputFactory.Model(
