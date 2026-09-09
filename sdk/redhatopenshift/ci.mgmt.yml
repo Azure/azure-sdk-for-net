@@ -8,7 +8,7 @@ trigger:
     - release/*
   paths:
     include:
-    - sdk/redhatopenshift/Azure.ResourceManager.RedHatOpenshift
+    - sdk/redhatopenshift/Azure.ResourceManager.RedHatOpenShift
 extends:
   template: /eng/pipelines/templates/stages/archetype-sdk-client.yml
   parameters:
