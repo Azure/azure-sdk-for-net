@@ -57,7 +57,7 @@ namespace Azure.Provisioning.DesktopVirtualization
     public partial class AppAttachPackageInfoProperties : Azure.Provisioning.Primitives.ProvisionableConstruct
     {
         public AppAttachPackageInfoProperties() { }
-        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CertificateExpireOn { get { throw null; } set { } }
+        public Azure.Provisioning.BicepValue<System.DateTimeOffset> CertificateExpiresOn { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> CertificateName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> DisplayName { get { throw null; } set { } }
         public Azure.Provisioning.BicepValue<string> ImagePath { get { throw null; } set { } }
