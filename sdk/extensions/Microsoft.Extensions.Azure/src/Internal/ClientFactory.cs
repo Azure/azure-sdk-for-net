@@ -111,11 +111,6 @@ namespace Microsoft.Extensions.Azure
             var azureCloud = configuration["azureCloud"];
             var managedIdentityClientId = configuration["managedIdentityClientId"];
 
-            if (!string.IsNullOrWhiteSpace(certificate) && !string.IsNullOrWhiteSpace(certificateSubject))
-            {
-                throw new ArgumentException("'clientCertificate' and 'clientCertificateSubject' are mutually exclusive.");
-            }
-
             IEnumerable<string> additionallyAllowedTenantsList = null;
 
             if (!string.IsNullOrWhiteSpace(additionallyAllowedTenants))
@@ -258,7 +253,13 @@ namespace Microsoft.Extensions.Azure
                 return new ClientSecretCredential(tenantId, clientId, clientSecret, options);
             }
 
+            bool findCertificateByThumbprint = !string.IsNullOrWhiteSpace(certificate);
             bool findCertificateBySubject = !string.IsNullOrWhiteSpace(certificateSubject);
+            if (findCertificateByThumbprint && findCertificateBySubject)
+            {
+                throw new ArgumentException("'clientCertificate' and 'clientCertificateSubject' are mutually exclusive.");
+            }
+
             if (findCertificateBySubject &&
                 (string.IsNullOrWhiteSpace(tenantId) ||
                  string.IsNullOrWhiteSpace(clientId) ||
@@ -270,7 +271,7 @@ namespace Microsoft.Extensions.Azure
 
             if (!string.IsNullOrWhiteSpace(tenantId) &&
                 !string.IsNullOrWhiteSpace(clientId) &&
-                (!string.IsNullOrWhiteSpace(certificate) || findCertificateBySubject))
+                (findCertificateByThumbprint || findCertificateBySubject))
             {
                 StoreLocation storeLocation = StoreLocation.CurrentUser;
 
