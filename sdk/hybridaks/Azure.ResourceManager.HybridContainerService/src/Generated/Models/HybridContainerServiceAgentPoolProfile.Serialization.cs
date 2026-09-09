@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
-    public partial class HybridContainerServiceAgentPoolProfile : IUtf8JsonSerializable, IJsonModel<HybridContainerServiceAgentPoolProfile>
+    /// <summary> Profile for agent pool properties specified during creation. </summary>
+    public partial class HybridContainerServiceAgentPoolProfile : IJsonModel<HybridContainerServiceAgentPoolProfile>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<HybridContainerServiceAgentPoolProfile>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HybridContainerServiceAgentPoolProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeHybridContainerServiceAgentPoolProfile(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(HybridContainerServiceAgentPoolProfile)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridContainerServiceContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(HybridContainerServiceAgentPoolProfile)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<HybridContainerServiceAgentPoolProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridContainerServiceAgentPoolProfile IPersistableModel<HybridContainerServiceAgentPoolProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<HybridContainerServiceAgentPoolProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<HybridContainerServiceAgentPoolProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,20 +69,19 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HybridContainerServiceAgentPoolProfile)} does not support writing '{format}' format.");
             }
-
             if (Optional.IsDefined(OSType))
             {
-                writer.WritePropertyName("osType"u8);
+                writer.WritePropertyName("OSType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
             if (Optional.IsDefined(OSSku))
             {
-                writer.WritePropertyName("osSKU"u8);
+                writer.WritePropertyName("OSSku"u8);
                 writer.WriteStringValue(OSSku.Value.ToString());
             }
             if (Optional.IsCollectionDefined(NodeLabels))
@@ -51,6 +91,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 foreach (var item in NodeLabels)
                 {
                     writer.WritePropertyName(item.Key);
+                    if (item.Value == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item.Value);
                 }
                 writer.WriteEndObject();
@@ -59,8 +104,13 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             {
                 writer.WritePropertyName("nodeTaints"u8);
                 writer.WriteStartArray();
-                foreach (var item in NodeTaints)
+                foreach (string item in NodeTaints)
                 {
+                    if (item == null)
+                    {
+                        writer.WriteNullValue();
+                        continue;
+                    }
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
@@ -85,15 +135,15 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WritePropertyName("maxPods"u8);
                 writer.WriteNumberValue(MaxPods.Value);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
-                foreach (var item in _serializedAdditionalRawData)
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -102,167 +152,153 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             }
         }
 
-        HybridContainerServiceAgentPoolProfile IJsonModel<HybridContainerServiceAgentPoolProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        HybridContainerServiceAgentPoolProfile IJsonModel<HybridContainerServiceAgentPoolProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual HybridContainerServiceAgentPoolProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(HybridContainerServiceAgentPoolProfile)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeHybridContainerServiceAgentPoolProfile(document.RootElement, options);
         }
 
-        internal static HybridContainerServiceAgentPoolProfile DeserializeHybridContainerServiceAgentPoolProfile(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static HybridContainerServiceAgentPoolProfile DeserializeHybridContainerServiceAgentPoolProfile(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             HybridContainerServiceOSType? osType = default;
-            HybridContainerServiceOSSku? ossku = default;
+            HybridContainerServiceOSSku? osSku = default;
             IDictionary<string, string> nodeLabels = default;
             IList<string> nodeTaints = default;
             int? maxCount = default;
             int? minCount = default;
             bool? enableAutoScaling = default;
             int? maxPods = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("osType"u8))
+                if (prop.NameEquals("OSType"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osType = new HybridContainerServiceOSType(property.Value.GetString());
+                    osType = new HybridContainerServiceOSType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("osSKU"u8))
+                if (prop.NameEquals("OSSku"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    ossku = new HybridContainerServiceOSSku(property.Value.GetString());
+                    osSku = new HybridContainerServiceOSSku(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("nodeLabels"u8))
+                if (prop.NameEquals("nodeLabels"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     Dictionary<string, string> dictionary = new Dictionary<string, string>();
-                    foreach (var property0 in property.Value.EnumerateObject())
+                    foreach (var prop0 in prop.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, property0.Value.GetString());
+                        if (prop0.Value.ValueKind == JsonValueKind.Null)
+                        {
+                            dictionary.Add(prop0.Name, null);
+                        }
+                        else
+                        {
+                            dictionary.Add(prop0.Name, prop0.Value.GetString());
+                        }
                     }
                     nodeLabels = dictionary;
                     continue;
                 }
-                if (property.NameEquals("nodeTaints"u8))
+                if (prop.NameEquals("nodeTaints"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
                     List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
+                    foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(item.GetString());
+                        if (item.ValueKind == JsonValueKind.Null)
+                        {
+                            array.Add(null);
+                        }
+                        else
+                        {
+                            array.Add(item.GetString());
+                        }
                     }
                     nodeTaints = array;
                     continue;
                 }
-                if (property.NameEquals("maxCount"u8))
+                if (prop.NameEquals("maxCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxCount = property.Value.GetInt32();
+                    maxCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("minCount"u8))
+                if (prop.NameEquals("minCount"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    minCount = property.Value.GetInt32();
+                    minCount = prop.Value.GetInt32();
                     continue;
                 }
-                if (property.NameEquals("enableAutoScaling"u8))
+                if (prop.NameEquals("enableAutoScaling"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    enableAutoScaling = property.Value.GetBoolean();
+                    enableAutoScaling = prop.Value.GetBoolean();
                     continue;
                 }
-                if (property.NameEquals("maxPods"u8))
+                if (prop.NameEquals("maxPods"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    maxPods = property.Value.GetInt32();
+                    maxPods = prop.Value.GetInt32();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new HybridContainerServiceAgentPoolProfile(
                 osType,
-                ossku,
+                osSku,
                 nodeLabels ?? new ChangeTrackingDictionary<string, string>(),
                 nodeTaints ?? new ChangeTrackingList<string>(),
                 maxCount,
                 minCount,
                 enableAutoScaling,
                 maxPods,
-                serializedAdditionalRawData);
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<HybridContainerServiceAgentPoolProfile>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerHybridContainerServiceContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceAgentPoolProfile)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        HybridContainerServiceAgentPoolProfile IPersistableModel<HybridContainerServiceAgentPoolProfile>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceAgentPoolProfile>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeHybridContainerServiceAgentPoolProfile(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceAgentPoolProfile)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<HybridContainerServiceAgentPoolProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

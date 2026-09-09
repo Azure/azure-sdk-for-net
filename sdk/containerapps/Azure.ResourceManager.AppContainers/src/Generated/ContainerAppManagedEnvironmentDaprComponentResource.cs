@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.AppContainers
             return GetCachedClient(client => new DaprComponentResiliencyPolicyCollection(client, Id));
         }
 
-        /// <summary> Get a Dapr component resiliency policy. </summary>
+        /// <summary> Gets the details of a resiliency policy for a Dapr component. </summary>
         /// <param name="name"> Name of the Dapr Component Resiliency Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.AppContainers
             return await GetDaprComponentResiliencyPolicies().GetAsync(name, cancellationToken).ConfigureAwait(false);
         }
 
-        /// <summary> Get a Dapr component resiliency policy. </summary>
+        /// <summary> Gets the details of a resiliency policy for a Dapr component. </summary>
         /// <param name="name"> Name of the Dapr Component Resiliency Policy. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>

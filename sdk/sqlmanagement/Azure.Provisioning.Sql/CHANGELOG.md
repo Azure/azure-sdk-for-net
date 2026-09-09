@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated code generation to the TypeSpec-based provisioning generator.
+
 ## 1.2.0-beta.1 (2026-03-02)
 
 ### Features Added

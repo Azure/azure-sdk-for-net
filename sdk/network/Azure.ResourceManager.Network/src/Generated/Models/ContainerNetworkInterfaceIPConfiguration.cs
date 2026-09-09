@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <param name="type"> Sub Resource type. </param>
         /// <param name="eTag"> A unique read-only string that changes whenever the resource is updated. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ContainerNetworkInterfaceIPConfiguration(ContainerNetworkInterfaceIpConfigurationPropertiesFormat properties, string name, string @type, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ContainerNetworkInterfaceIPConfiguration(ContainerNetworkInterfaceIPConfigurationPropertiesFormat properties, string name, string @type, ETag? eTag, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Properties = properties;
             Name = name;
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
 
         /// <summary> Properties of the container network interface IP configuration. </summary>
         [WirePath("properties")]
-        internal ContainerNetworkInterfaceIpConfigurationPropertiesFormat Properties { get; }
+        internal ContainerNetworkInterfaceIPConfigurationPropertiesFormat Properties { get; }
 
         /// <summary> The name of the resource. This name can be used to access the resource. </summary>
         [WirePath("name")]

@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteBase64StringValue(Value.ToArray(), "D");
+                writer.WriteBase64StringValue(Value, "D");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {

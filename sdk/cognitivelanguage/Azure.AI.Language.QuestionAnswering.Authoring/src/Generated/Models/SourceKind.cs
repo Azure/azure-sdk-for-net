@@ -17,7 +17,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         /// <summary> File Source. </summary>
         private const string FileValue = "file";
         /// <summary> URI Source. </summary>
-        private const string UrlValue = "url";
+        private const string UriValue = "url";
 
         /// <summary> Initializes a new instance of <see cref="SourceKind"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -33,7 +33,7 @@ namespace Azure.AI.Language.QuestionAnswering.Authoring
         public static SourceKind File { get; } = new SourceKind(FileValue);
 
         /// <summary> URI Source. </summary>
-        public static SourceKind Url { get; } = new SourceKind(UrlValue);
+        public static SourceKind Uri { get; } = new SourceKind(UriValue);
 
         /// <summary> Determines if two <see cref="SourceKind"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

@@ -125,13 +125,14 @@ if (updateResult.Status == MemoryStoreUpdateStatus.Failed)
 
 Synchronous sample:
 ```C# Snippet:Sample_CheckMemorySearch_Sync
+/*
 MemorySearchOptions searchOptions = new(scope)
 {
     Items = { ResponseItem.CreateUserMessageItem("What was the joke?") },
 };
 MemoryStoreSearchResponse resp = projectClient.MemoryStores.SearchMemories(
     memoryStoreName: memoryStore.Name,
-    options: searchOptions
+    options: searchOptionscd
 );
 Console.WriteLine("==The output from memory search tool.==");
 foreach (MemorySearchItem item in resp.Memories)
@@ -139,10 +140,12 @@ foreach (MemorySearchItem item in resp.Memories)
     Console.WriteLine(item.MemoryItem.Content);
 }
 Console.WriteLine("==End of memory search tool output.==");
+*/
 ```
 
 Asynchronous sample:
 ```C# Snippet:Sample_CheckMemorySearch_Async
+/*
 MemorySearchOptions searchOptions = new(scope)
 {
     Items = { ResponseItem.CreateUserMessageItem("What was the joke?") },
@@ -157,6 +160,7 @@ foreach (MemorySearchItem item in resp.Memories)
     Console.WriteLine(item.MemoryItem.Content);
 }
 Console.WriteLine("==End of memory tool output.==");
+*/
 ```
 
 8. Create another Agent capable to use `MemorySearchPreviewTool`.

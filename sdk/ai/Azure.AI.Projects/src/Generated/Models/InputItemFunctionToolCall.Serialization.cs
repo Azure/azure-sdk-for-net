@@ -83,6 +83,11 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("call_id"u8);
             writer.WriteStringValue(CallId);
+            if (Optional.IsDefined(Caller))
+            {
+                writer.WritePropertyName("caller"u8);
+                writer.WriteObjectValue(Caller, options);
+            }
             if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
@@ -128,6 +133,7 @@ namespace Azure.AI.Projects
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             string id = default;
             string callId = default;
+            ToolCallCaller caller = default;
             string @namespace = default;
             string name = default;
             string arguments = default;
@@ -147,6 +153,16 @@ namespace Azure.AI.Projects
                 if (prop.NameEquals("call_id"u8))
                 {
                     callId = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("caller"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        caller = null;
+                        continue;
+                    }
+                    caller = ToolCallCaller.DeserializeToolCallCaller(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("namespace"u8))
@@ -183,6 +199,7 @@ namespace Azure.AI.Projects
                 additionalBinaryDataProperties,
                 id,
                 callId,
+                caller,
                 @namespace,
                 name,
                 arguments,

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataMigration
         DatabaseMigrationsMongoToCosmosDbRUMongoResource IOperationSource<DatabaseMigrationsMongoToCosmosDbRUMongoResource>.CreateResult(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = JsonDocument.Parse(response.ContentStream);
-            DatabaseMigrationCosmosDbMongoData data = DatabaseMigrationCosmosDbMongoData.DeserializeDatabaseMigrationCosmosDbMongoData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            DatabaseMigrationCosmosDBMongoData data = DatabaseMigrationCosmosDBMongoData.DeserializeDatabaseMigrationCosmosDBMongoData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DatabaseMigrationsMongoToCosmosDbRUMongoResource(_client, data);
         }
 
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.DataMigration
         async ValueTask<DatabaseMigrationsMongoToCosmosDbRUMongoResource> IOperationSource<DatabaseMigrationsMongoToCosmosDbRUMongoResource>.CreateResultAsync(Response response, CancellationToken cancellationToken)
         {
             using JsonDocument document = await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-            DatabaseMigrationCosmosDbMongoData data = DatabaseMigrationCosmosDbMongoData.DeserializeDatabaseMigrationCosmosDbMongoData(document.RootElement, ModelSerializationExtensions.WireOptions);
+            DatabaseMigrationCosmosDBMongoData data = DatabaseMigrationCosmosDBMongoData.DeserializeDatabaseMigrationCosmosDBMongoData(document.RootElement, ModelSerializationExtensions.WireOptions);
             return new DatabaseMigrationsMongoToCosmosDbRUMongoResource(_client, data);
         }
     }

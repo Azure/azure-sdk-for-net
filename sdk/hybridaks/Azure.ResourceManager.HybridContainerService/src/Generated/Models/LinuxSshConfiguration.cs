@@ -7,60 +7,32 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
     /// <summary> SSH configuration for VMs of the provisioned cluster. </summary>
     internal partial class LinuxSshConfiguration
     {
-        /// <summary>
-        /// Keeps track of any properties unknown to the library.
-        /// <para>
-        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+        /// <summary> Keeps track of any properties unknown to the library. </summary>
+        private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="LinuxSshConfiguration"/>. </summary>
         public LinuxSshConfiguration()
         {
-            PublicKeys = new ChangeTrackingList<LinuxSshPublicKey>();
+            SshPublicKeys = new ChangeTrackingList<LinuxSshPublicKey>();
         }
 
         /// <summary> Initializes a new instance of <see cref="LinuxSshConfiguration"/>. </summary>
-        /// <param name="publicKeys"> The list of SSH public keys used to authenticate with VMs. A maximum of 1 key may be specified. </param>
-        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal LinuxSshConfiguration(IList<LinuxSshPublicKey> publicKeys, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        /// <param name="sshPublicKeys"> The list of SSH public keys used to authenticate with VMs. A maximum of 1 key may be specified. </param>
+        /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+        internal LinuxSshConfiguration(IList<LinuxSshPublicKey> sshPublicKeys, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            PublicKeys = publicKeys;
-            _serializedAdditionalRawData = serializedAdditionalRawData;
+            SshPublicKeys = sshPublicKeys;
+            _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> The list of SSH public keys used to authenticate with VMs. A maximum of 1 key may be specified. </summary>
-        public IList<LinuxSshPublicKey> PublicKeys { get; }
+        public IList<LinuxSshPublicKey> SshPublicKeys { get; } = new ChangeTrackingList<LinuxSshPublicKey>();
     }
 }

@@ -109,8 +109,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                 return null;
             }
             ResilienceManagementJobStatus? status = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             TimeSpan? duration = default;
             JobErrorInfo errorDetails = default;
             ResourceIdentifier resourceId = default;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("duration"u8))
@@ -264,8 +264,8 @@ namespace Azure.ResourceManager.ResilienceManagement.Models
             }
             return new RecoveryJobProperties(
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 duration,
                 errorDetails,
                 resourceId,

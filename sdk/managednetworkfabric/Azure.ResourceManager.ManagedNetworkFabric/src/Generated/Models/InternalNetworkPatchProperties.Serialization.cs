@@ -203,8 +203,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             IsMonitoringEnabled? isMonitoringEnabled = default;
             BgpPatchConfiguration bgpSettings = default;
             StaticRoutePatchConfiguration staticRouteSettings = default;
-            NativeIpv4PrefixLimitPatchProperties nativeIPv4PrefixLimit = default;
-            NativeIpv6PrefixLimitPatchProperties nativeIPv6PrefixLimit = default;
+            NativeIPv4PrefixLimitPatchProperties nativeIPv4PrefixLimit = default;
+            NativeIPv6PrefixLimitPatchProperties nativeIPv6PrefixLimit = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    nativeIPv4PrefixLimit = NativeIpv4PrefixLimitPatchProperties.DeserializeNativeIpv4PrefixLimitPatchProperties(prop.Value, options);
+                    nativeIPv4PrefixLimit = NativeIPv4PrefixLimitPatchProperties.DeserializeNativeIPv4PrefixLimitPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("nativeIpv6PrefixLimit"u8))
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                     {
                         continue;
                     }
-                    nativeIPv6PrefixLimit = NativeIpv6PrefixLimitPatchProperties.DeserializeNativeIpv6PrefixLimitPatchProperties(prop.Value, options);
+                    nativeIPv6PrefixLimit = NativeIPv6PrefixLimitPatchProperties.DeserializeNativeIPv6PrefixLimitPatchProperties(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

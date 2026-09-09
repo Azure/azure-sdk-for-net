@@ -36,7 +36,7 @@
     "dist/**"
   ],
   "dependencies": {
-    "@typespec/http-client-csharp": "1.0.0-alpha.20260812.4"
+    "@typespec/http-client-csharp": "1.0.0-alpha.20260818.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.2.0",
@@ -48,7 +48,7 @@
     "@typespec/versioning": "0.85.0",
     "@azure-tools/typespec-azure-core": "0.71.0",
     "@azure-tools/typespec-azure-resource-manager": "0.71.0",
-    "@azure-tools/typespec-client-generator-core": "0.71.0",
+    "@azure-tools/typespec-client-generator-core": "0.71.1",
     "@vitest/coverage-v8": "^4.1.10",
     "@vitest/ui": "^4.1.10",
     "c8": "^10.1.2",

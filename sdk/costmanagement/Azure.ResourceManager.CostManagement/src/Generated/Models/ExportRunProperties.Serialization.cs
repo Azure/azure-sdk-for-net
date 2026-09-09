@@ -94,25 +94,25 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WritePropertyName("submittedTime"u8);
                 writer.WriteStringValue(SubmittedOn.Value, "O");
             }
-            if (Optional.IsDefined(ProcessingStartOn))
+            if (Optional.IsDefined(ProcessingStartsOn))
             {
                 writer.WritePropertyName("processingStartTime"u8);
-                writer.WriteStringValue(ProcessingStartOn.Value, "O");
+                writer.WriteStringValue(ProcessingStartsOn.Value, "O");
             }
-            if (Optional.IsDefined(ProcessingEndOn))
+            if (Optional.IsDefined(ProcessingEndsOn))
             {
                 writer.WritePropertyName("processingEndTime"u8);
-                writer.WriteStringValue(ProcessingEndOn.Value, "O");
+                writer.WriteStringValue(ProcessingEndsOn.Value, "O");
             }
-            if (Optional.IsDefined(StartOn))
+            if (Optional.IsDefined(StartsOn))
             {
                 writer.WritePropertyName("startDate"u8);
-                writer.WriteStringValue(StartOn.Value, "O");
+                writer.WriteStringValue(StartsOn.Value, "O");
             }
-            if (Optional.IsDefined(EndOn))
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endDate"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             if (Optional.IsDefined(FileName))
             {
@@ -180,10 +180,10 @@ namespace Azure.ResourceManager.CostManagement.Models
             ExportRunExecutionStatus? status = default;
             string submittedBy = default;
             DateTimeOffset? submittedOn = default;
-            DateTimeOffset? processingStartOn = default;
-            DateTimeOffset? processingEndOn = default;
-            DateTimeOffset? startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset? processingStartsOn = default;
+            DateTimeOffset? processingEndsOn = default;
+            DateTimeOffset? startsOn = default;
+            DateTimeOffset? endsOn = default;
             string fileName = default;
             string manifestFile = default;
             CommonExportProperties runSettings = default;
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    processingStartOn = prop.Value.GetDateTimeOffset("O");
+                    processingStartsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("processingEndTime"u8))
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    processingEndOn = prop.Value.GetDateTimeOffset("O");
+                    processingEndsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("startDate"u8))
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endDate"u8))
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("fileName"u8))
@@ -297,10 +297,10 @@ namespace Azure.ResourceManager.CostManagement.Models
                 status,
                 submittedBy,
                 submittedOn,
-                processingStartOn,
-                processingEndOn,
-                startOn,
-                endOn,
+                processingStartsOn,
+                processingEndsOn,
+                startsOn,
+                endsOn,
                 fileName,
                 manifestFile,
                 runSettings,

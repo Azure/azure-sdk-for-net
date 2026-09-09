@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
     public static partial class ArmResourceHealthModelFactory
     {
 
+        /// <summary> availabilityStatus of a resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 default);
         }
 
+        /// <summary> Properties of availability state. </summary>
         /// <param name="availabilityState"> Availability status of the resource. When it is null, this availabilityStatus object represents an availability impacting event. </param>
         /// <param name="title"> Title description of the availability status. </param>
         /// <param name="summary"> Summary description of the availability status. </param>
@@ -87,6 +89,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 default);
         }
 
+        /// <summary> An annotation describing a change in the availabilityState to Available from Unavailable with a reasonType of type Unplanned. </summary>
         /// <param name="unavailableOccuredOn"> Timestamp for when the availabilityState changed to Unavailable. </param>
         /// <param name="resolvedOn"> Timestamp when the availabilityState changes to Available. </param>
         /// <param name="unavailableSummary"> Brief description of cause of the resource becoming unavailable. </param>
@@ -96,6 +99,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return new ResourceHealthAvailabilityStateRecentlyResolved(unavailableOccuredOn, resolvedOn, unavailableSummary, default);
         }
 
+        /// <summary> Lists actions the user can take based on the current availabilityState of the resource. </summary>
         /// <param name="action"> Recommended action. </param>
         /// <param name="actionUri"> Link to the action. </param>
         /// <param name="actionUriComment"> the comment for the Action. </param>
@@ -123,6 +127,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 default);
         }
 
+        /// <summary> Properties of the service impacting event. </summary>
         /// <param name="title"> Title of the incident. </param>
         /// <param name="service"> Service impacted by the event. </param>
         /// <param name="region"> Region impacted by the event. </param>
@@ -153,6 +158,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 default);
         }
 
+        /// <summary> Key value tuple. </summary>
         /// <param name="key"> Key of tuple. </param>
         /// <param name="value"> Value of tuple. </param>
         /// <returns> A new <see cref="Models.ResourceHealthKeyValueItem"/> instance for mocking. </returns>
@@ -181,6 +187,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 default);
         }
 
+        /// <summary> The metadata supported value detail. </summary>
         /// <param name="id"> The id of the metadata value. </param>
         /// <param name="previousId"> The previous value of the id field in case the data has changed. </param>
         /// <param name="serviceGuid"> The permanent guid for the service. Used when the id is a service name. </param>
@@ -293,6 +300,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 default);
         }
 
+        /// <summary> Article of event. </summary>
         /// <param name="articleContent"> Article content of event. </param>
         /// <param name="articleId"> Article Id. </param>
         /// <param name="parameters"> It provides a map of parameter name and value. </param>
@@ -302,6 +310,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return new ResourceHealthEventArticle(articleContent, articleId, parameters, default);
         }
 
+        /// <summary> Useful links for service health event. </summary>
         /// <param name="linkType"> Type of link. </param>
         /// <param name="displayText"> Display text of link. </param>
         /// <param name="extensionName"> It provides the name of portal extension to produce link for given service health event. </param>
@@ -319,6 +328,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 default);
         }
 
+        /// <summary> Display text of link. </summary>
         /// <param name="value"> Display text of link. </param>
         /// <param name="localizedValue"> Localized display text of link. </param>
         /// <returns> A new <see cref="Models.ResourceHealthEventLinkDisplayText"/> instance for mocking. </returns>
@@ -327,6 +337,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return new ResourceHealthEventLinkDisplayText(value, localizedValue, default);
         }
 
+        /// <summary> Azure service impacted by the service health event. </summary>
         /// <param name="impactedService"> Impacted service name. </param>
         /// <param name="impactedServiceGuid"> Impacted service guid. This is the permanent identifier for the impacted service. </param>
         /// <param name="impactedRegions"> List regions impacted by the service health event. </param>
@@ -338,6 +349,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return new ResourceHealthEventImpact(impactedService, impactedServiceGuid, (impactedRegions ?? new ChangeTrackingList<ResourceHealthEventImpactedServiceRegion>()).ToList(), default);
         }
 
+        /// <summary> Azure region impacted by the service health event. </summary>
         /// <param name="impactedRegion"> Impacted region name. </param>
         /// <param name="status"> Current status of event in the region. </param>
         /// <param name="impactedSubscriptions"> List subscription impacted by the service health event. </param>
@@ -361,6 +373,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 default);
         }
 
+        /// <summary> Update for service health event. </summary>
         /// <param name="summary"> Summary text for the given update for the service health event. </param>
         /// <param name="updatedOn"> It provides the Timestamp for the given update for the service health event. </param>
         /// <param name="eventTags">
@@ -376,6 +389,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return new ResourceHealthEventUpdate(summary, updatedOn, (eventTags ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Recommended actions of event. </summary>
         /// <param name="message"> Recommended action title for the service health event. </param>
         /// <param name="actions"> Recommended actions for the service health event. </param>
         /// <param name="localeCode"> Recommended action locale for the service health event. </param>
@@ -387,6 +401,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return new ResourceHealthEventRecommendedActions(message, (actions ?? new ChangeTrackingList<ResourceHealthEventRecommendedActionsItem>()).ToList(), localeCode, default);
         }
 
+        /// <summary> Recommended action for the service health event. </summary>
         /// <param name="groupId"> Recommended action group Id for the service health event. </param>
         /// <param name="actionText"> Recommended action text. </param>
         /// <returns> A new <see cref="Models.ResourceHealthEventRecommendedActionsItem"/> instance for mocking. </returns>
@@ -395,6 +410,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return new ResourceHealthEventRecommendedActionsItem(groupId, actionText, default);
         }
 
+        /// <summary> Frequently asked question for the service health event. </summary>
         /// <param name="question"> FAQ question for the service health event. </param>
         /// <param name="answer"> FAQ answer for the service health event. </param>
         /// <param name="localeCode"> FAQ locale for the service health event. </param>
@@ -423,6 +439,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 default);
         }
 
+        /// <summary> Banner type of emerging issue. </summary>
         /// <param name="title"> The banner title. </param>
         /// <param name="message"> The details of banner. </param>
         /// <param name="cloud"> The cloud type of this banner. </param>
@@ -433,6 +450,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return new EmergingIssueBannerType(title, message, cloud, lastModifiedOn, default);
         }
 
+        /// <summary> Active event type of emerging issue. </summary>
         /// <param name="title"> The active event title. </param>
         /// <param name="description"> The details of active event. </param>
         /// <param name="trackingId"> The tracking id of this active event. </param>
@@ -462,6 +480,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 default);
         }
 
+        /// <summary> Object of the emerging issue impact on services and regions. </summary>
         /// <param name="id"> The impacted service id. </param>
         /// <param name="name"> The impacted service name. </param>
         /// <param name="regions"> The list of impacted regions for corresponding emerging issues. </param>
@@ -473,6 +492,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             return new EmergingIssueImpact(id, name, (regions ?? new ChangeTrackingList<EmergingIssueImpactedRegion>()).ToList(), default);
         }
 
+        /// <summary> Object of impacted region. </summary>
         /// <param name="id"> The impacted region id. </param>
         /// <param name="name"> The impacted region name. </param>
         /// <returns> A new <see cref="Models.EmergingIssueImpactedRegion"/> instance for mocking. </returns>

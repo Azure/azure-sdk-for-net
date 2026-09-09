@@ -9,14 +9,40 @@ using Azure.Core;
 using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 using Azure.Provisioning.Resources;
+using Microsoft.TypeSpec.Generator.Customizations;
 
 namespace Azure.Provisioning.PostgreSql;
 
 /// <summary>
 /// PostgreSqlFlexibleServer.
 /// </summary>
+[CodeGenSuppress("GetResourceNameRequirements")]
 public partial class PostgreSqlFlexibleServer : ProvisionableResource
 {
+    /// <summary>
+    /// Maximum number of replicas that a primary server can have.
+    /// </summary>
+    [CodeGenMember("ReplicaCapacity")]
+    public BicepValue<int> ReplicaCapacity
+    {
+        get
+        {
+            if (Properties is null)
+            {
+                Properties = new ServerProperties();
+            }
+            return Properties.ReplicaCapacity;
+        }
+        set
+        {
+            if (Properties is null)
+            {
+                Properties = new ServerProperties();
+            }
+            Properties.ReplicaCapacity = value;
+        }
+    }
+
     /// <summary>
     /// Max storage allowed for a server.
     /// </summary>
@@ -26,4 +52,12 @@ public partial class PostgreSqlFlexibleServer : ProvisionableResource
         get { Initialize(); return Storage.StorageSizeInGB; }
         set { Initialize(); Storage.StorageSizeInGB = value; }
     }
+
+    /// <summary>
+    /// Get the requirements for naming this resource.
+    /// </summary>
+    /// <returns>Naming requirements.</returns>
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    public override ResourceNameRequirements GetResourceNameRequirements() =>
+        new(3, 63, ResourceNameCharacters.LowercaseLetters | ResourceNameCharacters.Numbers | ResourceNameCharacters.Hyphen);
 }

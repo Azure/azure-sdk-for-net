@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(Blob))
             {
                 writer.WritePropertyName("blob"u8);
-                writer.WriteBase64StringValue(Blob.ToArray(), "D");
+                writer.WriteBase64StringValue(Blob, "D");
             }
             if (Optional.IsDefined(PublicCertificateLocation))
             {

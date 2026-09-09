@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Nginx.Models
             if (options.Format != "W" && Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
-                writer.WriteBase64StringValue(Content.ToArray(), "D");
+                writer.WriteBase64StringValue(Content, "D");
             }
             if (options.Format != "W" && Optional.IsDefined(Filepath))
             {

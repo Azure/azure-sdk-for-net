@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             writer.WritePropertyName("isAdmin"u8);
             writer.WriteBooleanValue(IsAdmin);
             writer.WritePropertyName("certificateThumbprint"u8);
-            writer.WriteBase64StringValue(CertificateThumbprint.ToArray(), "D");
+            writer.WriteBase64StringValue(CertificateThumbprint, "D");
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)

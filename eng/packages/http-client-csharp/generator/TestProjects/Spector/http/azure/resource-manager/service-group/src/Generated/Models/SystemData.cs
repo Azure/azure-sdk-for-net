@@ -15,12 +15,12 @@ namespace Azure.ResourceManager.CommonTypes
 
         public CreatedByType? CreatedByType => throw null;
 
-        public DateTimeOffset? CreatedAt => throw null;
+        public DateTimeOffset? CreatedOn => throw null;
 
         public string LastModifiedBy => throw null;
 
         public CreatedByType? LastModifiedByType => throw null;
 
-        public DateTimeOffset? LastModifiedAt => throw null;
+        public DateTimeOffset? LastModifiedOn => throw null;
     }
 }

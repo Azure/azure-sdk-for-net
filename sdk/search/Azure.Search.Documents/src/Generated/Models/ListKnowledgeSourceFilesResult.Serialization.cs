@@ -94,6 +94,11 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteObjectValue(item, options);
             }
             writer.WriteEndArray();
+            if (options.Format != "W" && Optional.IsDefined(OdataNextLink))
+            {
+                writer.WritePropertyName("@odata.nextLink"u8);
+                writer.WriteStringValue(OdataNextLink);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -137,6 +142,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 return null;
             }
             IList<KnowledgeSourceFile> value = default;
+            string odataNextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -150,12 +156,17 @@ namespace Azure.Search.Documents.Indexes.Models
                     value = array;
                     continue;
                 }
+                if (prop.NameEquals("@odata.nextLink"u8))
+                {
+                    odataNextLink = prop.Value.GetString();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ListKnowledgeSourceFilesResult(value, additionalBinaryDataProperties);
+            return new ListKnowledgeSourceFilesResult(value, odataNextLink, additionalBinaryDataProperties);
         }
     }
 }

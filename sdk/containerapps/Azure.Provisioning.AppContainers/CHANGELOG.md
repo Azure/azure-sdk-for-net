@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+- Migrated library generation to the TypeSpec provisioning emitter.
+
 ## 1.2.0 (2026-03-13)
 
 ### Other Changes

@@ -149,6 +149,24 @@ namespace Azure.ResourceManager.Network
             }
         }
 
+        /// <summary> Enables UDP flow tracking for traffic associated with the frontend IP configuration. When enabled, packets belonging to the same UDP flow are consistently directed to the same backend instance. This setting applies to all associated load balancing rules and takes precedence over rule-level enableConnectionTracking settings. </summary>
+        [WirePath("properties.enableConnectionTracking")]
+        public bool? EnableConnectionTracking
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableConnectionTracking;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontendIPConfigurationPropertiesFormat();
+                }
+                Properties.EnableConnectionTracking = value;
+            }
+        }
+
         /// <summary> Resource ID. </summary>
         [WirePath("properties.publicIPPrefix.id")]
         public ResourceIdentifier PublicIPPrefixId
