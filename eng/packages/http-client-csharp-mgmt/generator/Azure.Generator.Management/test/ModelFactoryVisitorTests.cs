@@ -568,7 +568,7 @@ namespace Azure.Generator.Mgmt.Tests
         }
 
         [Test]
-        public void RebuildsPrimaryFactoryBodyFromCurrentConstructor()
+        public void ModelFactoryVisitorRebuildsPrimaryFactoryBodyFromCurrentConstructor()
         {
             var inputModel = InputFactory.Model(
                 "TestModel",
@@ -598,7 +598,10 @@ namespace Azure.Generator.Mgmt.Tests
                 modelFactory);
             modelFactory.Update(methods: [method]);
 
-            Management.Visitors.ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
+            var visitType = typeof(Management.Visitors.ModelFactoryVisitor).GetMethod(
+                "VisitType",
+                BindingFlags.NonPublic | BindingFlags.Instance)!;
+            visitType.Invoke(new Management.Visitors.ModelFactoryVisitor(), [modelFactory]);
 
             var rendered = new TypeProviderWriter(modelFactory).Write().Content;
             Assert.That(rendered, Does.Contain("string legacyValue"));

@@ -704,7 +704,7 @@ namespace Azure.Generator.Management.Visitors
         /// Inputs are old and expected types; output is whether direct assignment or helper conversion can make them compatible.
         /// Used by <see cref="TryGetMethodParameter"/> to allow nullable/value and list-interface shape differences.
         /// </summary>
-        internal static bool AreCompatibleParameterTypes(CSharpType parameterType, CSharpType expectedType)
+        private static bool AreCompatibleParameterTypes(CSharpType parameterType, CSharpType expectedType)
             => parameterType.AreNamesEqual(expectedType)
             || parameterType.InputType.AreNamesEqual(expectedType.InputType)
             || AreCompatibleListTypes(parameterType, expectedType)
@@ -732,7 +732,7 @@ namespace Azure.Generator.Management.Visitors
         /// Inputs are the matched old parameter and expected type; output is the expression to pass to generated code.
         /// Used after name/type matching to handle list materialization and nullable value-type unwrapping.
         /// </summary>
-        internal static ValueExpression BuildParameterArgument(ParameterProvider parameter, CSharpType expectedType)
+        private static ValueExpression BuildParameterArgument(ParameterProvider parameter, CSharpType expectedType)
         {
             if (AreCompatibleListTypes(parameter.Type, expectedType))
             {

@@ -258,12 +258,10 @@ namespace Azure.Generator.Management.Visitors
                                     // Flatten the property to the new instance parameters
                                     // If the property is null, we need to ensure that we create a new instance of the model type.
                                     // If the property is not null, we can use the existing value.
-                                    var directParameters = GetDirectWrapperParameters(method, value, parameterMap);
-                                    var usedDirectParameters = new HashSet<ParameterProvider>();
-                                    var ctorParams = BuildConstructorParameters(variable.Type, value, parameterMap, directParameters: directParameters, usedDirectParameters: usedDirectParameters);
+                                    var ctorParams = BuildConstructorParameters(variable.Type, value, parameterMap);
                                     if (ctorParams is not null)
                                     {
-                                        var condition = BuildConditionExpression(value, parameterMap, directParameters: usedDirectParameters);
+                                        var condition = BuildConditionExpression(value, parameterMap);
                                         if (condition is null)
                                         {
                                             // No nullable params to test (e.g., all flattened leaves are required value types) -
@@ -302,35 +300,7 @@ namespace Azure.Generator.Management.Visitors
             }
         }
 
-        private static IReadOnlyList<ParameterProvider> GetDirectWrapperParameters(
-            MethodProvider method,
-            IReadOnlyList<FlattenPropertyInfo> flattenedProperties,
-            IReadOnlyDictionary<ParameterProvider, ParameterProvider> parameterMap)
-        {
-            if (flattenedProperties.Count == 0)
-            {
-                return [];
-            }
-
-            var internalProperty = flattenedProperties[0].InternalProperty;
-            var outerConstructorParameters = TryGetModelProvider(method.Signature.ReturnType!, out var returnModel)
-                ? returnModel.FullConstructor.Signature.Parameters
-                : [];
-
-            return method.Signature.Parameters.Where(parameter =>
-                !parameterMap.Values.Contains(parameter)
-                && !outerConstructorParameters.Any(outerParameter =>
-                    !string.Equals(outerParameter.Name, internalProperty.Name, StringComparison.OrdinalIgnoreCase)
-                    && string.Equals(outerParameter.Name, parameter.Name, StringComparison.OrdinalIgnoreCase)
-                    && ModelFactoryBackwardCompatHelper.AreCompatibleParameterTypes(parameter.Type, outerParameter.Type)))
-                .ToArray();
-        }
-
-        private static ValueExpression? BuildConditionExpression(
-            List<FlattenPropertyInfo> flattenedProperties,
-            IReadOnlyDictionary<ParameterProvider, ParameterProvider>? parameterMap = null,
-            bool publicConstructor = false,
-            IEnumerable<ParameterProvider>? directParameters = null)
+        private static ValueExpression? BuildConditionExpression(List<FlattenPropertyInfo> flattenedProperties, IReadOnlyDictionary<ParameterProvider, ParameterProvider>? parameterMap = null, bool publicConstructor = false)
         {
             // Whether the wrapper that owns these flattened leaves is optional. When the wrapper
             // is required, we must always construct it (returning null here makes
@@ -347,14 +317,6 @@ namespace Azure.Generator.Management.Visitors
                 return null;
             }
 
-            // A direct non-nullable value-type parameter is always present, so the wrapper must always be
-            // constructed. Omitting it from an otherwise nullable guard would discard its value whenever all
-            // nullable parameters are null.
-            if (directParameters?.Any(parameter => parameter.Type.IsValueType && !parameter.Type.IsNullable) == true)
-            {
-                return null;
-            }
-
             ScopedApi<bool>? result = null;
             foreach (var (flattenProperty, _) in flattenedProperties)
             {
@@ -362,39 +324,29 @@ namespace Azure.Generator.Management.Visitors
                 var effectiveParameter = (parameterMap is not null && parameterMap.TryGetValue(propertyParameter, out var updatedParameter))
                     ? updatedParameter
                     : propertyParameter;
-                AddParameterToCondition(effectiveParameter, includeNonNullableReferenceType: false);
-            }
-            foreach (var directParameter in directParameters ?? [])
-            {
-                AddParameterToCondition(directParameter, includeNonNullableReferenceType: true);
-            }
-            return result;
 
-            void AddParameterToCondition(ParameterProvider parameter, bool includeNonNullableReferenceType)
-            {
-                // Preserve the legacy behavior for flattened/public-constructor parameters by skipping
-                // every non-nullable parameter. Direct model-factory reference parameters can still be
-                // omitted at runtime and therefore must participate in the all-null guard.
-                if (!parameter.Type.IsNullable
-                    && (!includeNonNullableReferenceType || parameter.Type.IsValueType))
+                // A non-nullable parameter (e.g. a required value type kept as `T` in the
+                // public constructor) can never be null, so it must not appear in the
+                // "all params null → default the parent" guard.
+                if (!effectiveParameter.Type.IsNullable)
                 {
-                    return;
+                    continue;
                 }
 
-                result = result is null
-                    ? parameter.Is(Null)
-                    : result.And(parameter.Is(Null));
+                if (result is null)
+                {
+                    result = effectiveParameter.Is(Null);
+                }
+                else
+                {
+                    result = result.And(effectiveParameter.Is(Null));
+                }
             }
+            return result;
         }
 
         // Use the flattened property as the parameter, if it is an overridden value type, we need to use the Value property.
-        private ValueExpression[]? BuildConstructorParameters(
-            CSharpType propertyType,
-            List<FlattenPropertyInfo> flattenedProperties,
-            IReadOnlyDictionary<ParameterProvider, ParameterProvider>? parameterMap = null,
-            bool publicConstructor = false,
-            IReadOnlyList<ParameterProvider>? directParameters = null,
-            HashSet<ParameterProvider>? usedDirectParameters = null)
+        private ValueExpression[]? BuildConstructorParameters(CSharpType propertyType, List<FlattenPropertyInfo> flattenedProperties, IReadOnlyDictionary<ParameterProvider, ParameterProvider>? parameterMap = null, bool publicConstructor = false)
         {
             if (!TryGetModelProvider(propertyType, out var propertyModelType))
             {
@@ -452,17 +404,6 @@ namespace Azure.Generator.Management.Visitors
                 }
                 else
                 {
-                    var directParameter = directParameters?.FirstOrDefault(parameter =>
-                        !(usedDirectParameters?.Contains(parameter) ?? false)
-                        && string.Equals(parameter.Name, constructorParameter.Name, StringComparison.OrdinalIgnoreCase)
-                        && ModelFactoryBackwardCompatHelper.AreCompatibleParameterTypes(parameter.Type, constructorParameterType));
-                    if (directParameter is not null)
-                    {
-                        parameters.Add(ModelFactoryBackwardCompatHelper.BuildParameterArgument(directParameter, constructorParameterType));
-                        usedDirectParameters?.Add(directParameter);
-                        continue;
-                    }
-
                     // No name match found, try to match by type with unused flattened properties
                     var typeMatchIndex = -1;
                     for (int i = 0; i < flattenedProperties.Count; i++)
@@ -514,7 +455,7 @@ namespace Azure.Generator.Management.Visitors
 
                                 if (innerFlattenedProperties.Count > 0)
                                 {
-                                    var innerParameters = BuildConstructorParameters(constructorParameterType, innerFlattenedProperties, parameterMap, directParameters: directParameters, usedDirectParameters: usedDirectParameters);
+                                    var innerParameters = BuildConstructorParameters(constructorParameterType, innerFlattenedProperties, parameterMap);
                                     if (innerParameters is not null)
                                     {
                                         parameters.Add(New.Instance(constructorParameterType, innerParameters));
