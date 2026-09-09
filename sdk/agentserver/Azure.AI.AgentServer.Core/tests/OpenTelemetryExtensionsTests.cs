@@ -3,6 +3,7 @@
 
 using System.Collections.Concurrent;
 using System.Diagnostics;
+using System.Diagnostics.Metrics;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -13,6 +14,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenTelemetry;
 using NUnit.Framework;
 using OpenTelemetry;
+using OpenTelemetry.Metrics;
 using OpenTelemetry.Trace;
 
 namespace Azure.AI.AgentServer.Core.Tests;
@@ -188,6 +190,20 @@ public class OpenTelemetryExtensionsTests
         Assert.That(
             processor.Activities,
             Has.None.Matches<Activity>(activity => activity.Source.Name == "System.Net.Http"));
+    }
+
+    [Test]
+    public void HttpClientMetrics_EnabledByDefault()
+    {
+        Environment.SetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT", "http://localhost:4317");
+        FoundryEnvironment.Reload();
+
+        using var serviceProvider = BuildServiceProvider();
+        _ = serviceProvider.GetRequiredService<MeterProvider>();
+        using var meter = new Meter("System.Net.Http");
+        var counter = meter.CreateCounter<long>("test.request.duration");
+
+        Assert.That(counter.Enabled, Is.True);
     }
 
     [Test]

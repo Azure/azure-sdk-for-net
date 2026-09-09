@@ -137,6 +137,7 @@ internal static class OpenTelemetryExtensions
             {
                 metrics.AddMeter(AgentHostTelemetry.ResponsesMeterName);
                 metrics.AddMeter(AgentHostTelemetry.InvocationsMeterName);
+                metrics.AddMeter("System.Net.Http");
             });
 
         // Logging with OTel bridge
