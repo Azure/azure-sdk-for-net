@@ -87,14 +87,6 @@ namespace Azure.Security.CodeTransparency
         public virtual Azure.NullableResponse<System.BinaryData> GetEntryV09(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetEntryV09Async(string entryId, Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<System.BinaryData>> GetEntryV09Async(string entryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("GetOperation is deprecated as it was removed from the recent IETF SCITT draft.")]
-        public virtual Azure.Response GetOperation(string operationId, Azure.RequestContext context) { throw null; }
-        [System.ObsoleteAttribute("GetOperation is deprecated as it was removed from the recent IETF SCITT draft.")]
-        public virtual Azure.NullableResponse<System.BinaryData> GetOperation(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("GetOperationAsync is deprecated as it was removed from the recent IETF SCITT draft.")]
-        public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationAsync(string operationId, Azure.RequestContext context) { throw null; }
-        [System.ObsoleteAttribute("GetOperationAsync is deprecated as it was removed from the recent IETF SCITT draft.")]
-        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<System.BinaryData>> GetOperationAsync(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response GetOperationV09(string operationId, Azure.RequestContext context) { throw null; }
         public virtual Azure.NullableResponse<System.BinaryData> GetOperationV09(string operationId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetOperationV09Async(string operationId, Azure.RequestContext context) { throw null; }

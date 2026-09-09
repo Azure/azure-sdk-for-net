@@ -95,56 +95,6 @@ namespace Azure.Security.CodeTransparency.Samples
 
         [Test]
         [Ignore("Only validating compilation of examples")]
-        public void Example_CodeTransparency_GetOperation_GetOperation()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
-
-            Response response = client.GetOperation("2.131", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CodeTransparency_GetOperation_GetOperation_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
-
-            Response response = await client.GetOperationAsync("2.131", null);
-
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_CodeTransparency_GetOperation_GetOperation_Convenience()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
-
-            NullableResponse<BinaryData> response = client.GetOperation("2.131");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_CodeTransparency_GetOperation_GetOperation_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<endpoint>");
-            AzureKeyCredential credential = new AzureKeyCredential("<key>");
-            CodeTransparencyClient client = new CodeTransparencyClient(endpoint, credential);
-
-            NullableResponse<BinaryData> response = await client.GetOperationAsync("2.131");
-        }
-
-        [Test]
-        [Ignore("Only validating compilation of examples")]
         public void Example_CodeTransparency_GetEntry_GetEntry()
         {
             Uri endpoint = new Uri("<endpoint>");

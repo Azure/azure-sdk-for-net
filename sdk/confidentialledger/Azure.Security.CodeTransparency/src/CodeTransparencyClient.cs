@@ -891,22 +891,6 @@ namespace Azure.Security.CodeTransparency
         /// <summary> Get the transparent statement. </summary>
         public virtual async Task<Response<BinaryData>> GetEntryStatementAsync(string entryId, CancellationToken cancellationToken = default) => await GetEntryStatementV09Async(entryId, cancellationToken).ConfigureAwait(false);
 
-        /// <summary> Get operation status. </summary>
-        [Obsolete("GetOperation is deprecated as it was removed from the recent IETF SCITT draft.")]
-        public virtual Response GetOperation(string operationId, RequestContext context) => GetOperationV09(operationId, context);
-
-        /// <summary> Get operation status. </summary>
-        [Obsolete("GetOperationAsync is deprecated as it was removed from the recent IETF SCITT draft.")]
-        public virtual async Task<Response> GetOperationAsync(string operationId, RequestContext context) => await GetOperationV09Async(operationId, context).ConfigureAwait(false);
-
-        /// <summary> Get operation status. </summary>
-        [Obsolete("GetOperation is deprecated as it was removed from the recent IETF SCITT draft.")]
-        public virtual NullableResponse<BinaryData> GetOperation(string operationId, CancellationToken cancellationToken = default) => GetOperationV09(operationId, cancellationToken);
-
-        /// <summary> Get operation status. </summary>
-        [Obsolete("GetOperationAsync is deprecated as it was removed from the recent IETF SCITT draft.")]
-        public virtual async Task<NullableResponse<BinaryData>> GetOperationAsync(string operationId, CancellationToken cancellationToken = default) => await GetOperationV09Async(operationId, cancellationToken).ConfigureAwait(false);
-
         private static ResponseClassifier _responseClassifier200;
         private static ResponseClassifier ResponseClassifier200 => _responseClassifier200 ??= new StatusCodeClassifier(stackalloc ushort[] { 200 });
         private static ResponseClassifier _responseClassifier201202;
