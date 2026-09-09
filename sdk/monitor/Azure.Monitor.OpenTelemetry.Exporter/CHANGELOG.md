@@ -10,9 +10,6 @@
 
 ### Other Changes
 
-- Reduced allocations when converting a batch of Activities. The list holding the converted telemetry is now sized from the batch up front instead of growing from the default capacity, which removes about 4 KB of transient garbage per export for a 512-Activity batch.
-  ([#62853](https://github.com/Azure/azure-sdk-for-net/pull/62853))
-
 ## 1.9.0 (2026-09-04)
 
 ### Features Added
