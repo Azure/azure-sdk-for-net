@@ -1,9 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Description>This is the Azure.ResourceManager.CommonEdgeSiteManagerOperations client library for developing .NET applications with rich experience.</Description>
+    <Description>Azure Resource Manager client SDK for Azure resource provider Microsoft.Edge.</Description>
     <AssemblyTitle>SDK Code Generation Azure.ResourceManager.CommonEdgeSiteManagerOperations</AssemblyTitle>
     <Version>1.0.0-beta.1</Version>
-    <PackageTags>Azure.ResourceManager.CommonEdgeSiteManagerOperations</PackageTags>
+    <PackageId>Azure.ResourceManager.CommonEdgeSiteManagerOperations</PackageId>
+    <PackageTags>azure;management;arm;resource manager;commonedgesitemanageroperations</PackageTags>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
 
