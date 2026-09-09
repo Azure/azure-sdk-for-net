@@ -2,10 +2,9 @@
 // Licensed under the MIT License. See License.txt in the project root for license information.
 
 import { ManagementCodeModelTransformer } from "@azure-typespec/http-client-csharp-mgmt";
+import { CodeModel, InputModelType } from "@typespec/http-client-csharp";
 
 type ArmProviderSchema = Parameters<ManagementCodeModelTransformer>[2];
-type CodeModel = Parameters<ManagementCodeModelTransformer>[0];
-type InputModelType = CodeModel["models"][number];
 type ArmResourceSchema = ArmProviderSchema["resources"][number];
 type ArmResourceMetadata = ArmResourceSchema["metadata"];
 type ResourceScopeKind = ArmResourceMetadata["scope"]["kind"];
