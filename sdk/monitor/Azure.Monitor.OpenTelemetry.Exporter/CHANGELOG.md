@@ -4,7 +4,7 @@
 
 ### Features Added
 
-### Breaking Changes
+- Extended multi-tenant export to logs, off by default and enabled with the same `Azure.Monitor.OpenTelemetry.EnableMultiTenantExport` AppContext switch used for traces. When enabled, a `LogRecord` carrying the `microsoft.instrumentation_key` and `microsoft.ingestion_endpoint` attributes is sent to that endpoint instead of the exporter's own; log records without both attributes are dropped. The two routing attributes are consumed for routing and are not emitted as custom properties. Routing reads only `LogRecord.Attributes`, not logging scopes. Live Metrics disablement and the Microsoft Entra ID restriction that apply to multi-tenant traces apply to logs as well, since both are enforced on the shared transmitter.
 
 ### Bugs Fixed
 

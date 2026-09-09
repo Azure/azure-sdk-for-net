@@ -42,12 +42,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
             [NotNullWhen(true)] out string? instrumentationKey,
             [NotNullWhen(true)] out string? ingestionEndpoint)
         {
-            ingestionEndpoint = null;
-
             // Only a string is accepted: ToString() on an array-valued tag yields "System.String[]",
             // which would become a tenant of its own.
-            var rawKey = mappedTags[SemanticSlot.MicrosoftInstrumentationKey] as string;
-            var trimmedKey = rawKey != null && rawKey.Length <= MaxInstrumentationKeyLength ? rawKey.Trim() : null;
+            return TryGetRoute(
+                mappedTags[SemanticSlot.MicrosoftInstrumentationKey] as string,
+                mappedTags[SemanticSlot.MicrosoftIngestionEndpoint] as string,
+                out instrumentationKey,
+                out ingestionEndpoint);
+        }
+
+        /// <summary>
+        /// Validates raw routing values and reduces them to the canonical instrumentation key and
+        /// ingestion endpoint used to group telemetry. Signal-neutral: traces resolve the raw values
+        /// from an <see cref="AzMonList"/>, logs from <see cref="System.Diagnostics.Activity"/>-free
+        /// <c>LogRecord.Attributes</c>, but both share this validation core.
+        /// </summary>
+        /// <remarks>
+        /// A non-string value is rejected by the caller passing <see langword="null"/>: an
+        /// array-valued attribute stringified to "System.String[]" would otherwise become a tenant
+        /// of its own.
+        /// </remarks>
+        internal static bool TryGetRoute(
+            string? rawInstrumentationKey,
+            string? rawIngestionEndpoint,
+            [NotNullWhen(true)] out string? instrumentationKey,
+            [NotNullWhen(true)] out string? ingestionEndpoint)
+        {
+            ingestionEndpoint = null;
+
+            var trimmedKey = rawInstrumentationKey != null && rawInstrumentationKey.Length <= MaxInstrumentationKeyLength ? rawInstrumentationKey.Trim() : null;
             if (trimmedKey == null || trimmedKey.Length == 0)
             {
                 instrumentationKey = null;
@@ -56,8 +79,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
             instrumentationKey = trimmedKey;
 
-            var rawEndpoint = mappedTags[SemanticSlot.MicrosoftIngestionEndpoint] as string;
-            if (rawEndpoint == null || (ingestionEndpoint = NormalizeEndpoint(rawEndpoint)) == null)
+            if (rawIngestionEndpoint == null || (ingestionEndpoint = NormalizeEndpoint(rawIngestionEndpoint)) == null)
             {
                 instrumentationKey = null;
                 return false;
