@@ -2,8 +2,6 @@
 // Licensed under the MIT License.
 
 using System;
-using System.Reflection;
-using System.Runtime.ExceptionServices;
 using System.Security.Cryptography;
 
 namespace Azure.Security.CodeTransparency
@@ -12,11 +10,14 @@ namespace Azure.Security.CodeTransparency
     {
         public static void ExportPublicPoint(ECDsa key, string expectedCurveName, out byte[] x, out byte[] y)
         {
-#if NETSTANDARD2_0
-            if (!TryExportParameters(key, expectedCurveName, out x, out y))
+#if NETFRAMEWORK
+            if (!(key is ECDsaCng cng))
             {
-                ExportCngPublicPoint(key, expectedCurveName, out x, out y);
+                throw new PlatformNotSupportedException("Only ECDsaCng keys are supported on .NET Framework.");
             }
+
+            byte[] blob = cng.Key.Export(CngKeyBlobFormat.EccPublicBlob);
+            ReadCngPublicBlob(blob, expectedCurveName, out x, out y);
 #else
             ECParameters parameters = key.ExportParameters(false);
             ValidateCurve(parameters.Curve.Oid, expectedCurveName);
@@ -27,10 +28,12 @@ namespace Azure.Security.CodeTransparency
 
         public static ECDsa Create(string curveName, byte[] x, byte[] y)
         {
-#if NETSTANDARD2_0
-            return TryCreateWithParameters(curveName, x, y, out ECDsa key)
-                ? key
-                : CreateFromCngPublicBlob(curveName, x, y);
+#if NETFRAMEWORK
+            byte[] blob = CreateCngPublicBlob(curveName, x, y);
+            using (CngKey key = CngKey.Import(blob, CngKeyBlobFormat.EccPublicBlob))
+            {
+                return new ECDsaCng(key);
+            }
 #else
             return ECDsa.Create(new ECParameters
             {
@@ -44,143 +47,7 @@ namespace Azure.Security.CodeTransparency
 #endif
         }
 
-#if NETSTANDARD2_0
-        private static bool TryExportParameters(ECDsa key, string expectedCurveName, out byte[] x, out byte[] y)
-        {
-            try
-            {
-                MethodInfo export = key.GetType().GetMethod("ExportParameters", new[] { typeof(bool) });
-                object parameters = Invoke(export, key, false);
-                object point = GetField(parameters, "Q");
-                x = CloneCoordinate(GetField(point, "X") as byte[]);
-                y = CloneCoordinate(GetField(point, "Y") as byte[]);
-                ValidateCurve(parameters, expectedCurveName);
-                return true;
-            }
-            catch (TypeLoadException)
-            {
-                x = null;
-                y = null;
-                return false;
-            }
-        }
-
-        private static bool TryCreateWithParameters(string curveName, byte[] x, byte[] y, out ECDsa key)
-        {
-            try
-            {
-                Type parametersType = GetAlgorithmsType("System.Security.Cryptography.ECParameters");
-                Type pointType = GetAlgorithmsType("System.Security.Cryptography.ECPoint");
-                Type curveType = GetAlgorithmsType("System.Security.Cryptography.ECCurve");
-                Type namedCurvesType = curveType.GetNestedType("NamedCurves", BindingFlags.Public);
-
-                object point = Activator.CreateInstance(pointType);
-                SetField(point, "X", CloneCoordinate(x));
-                SetField(point, "Y", CloneCoordinate(y));
-
-                object parameters = Activator.CreateInstance(parametersType);
-                SetField(parameters, "Curve", namedCurvesType.GetProperty(GetNamedCurveProperty(curveName), BindingFlags.Public | BindingFlags.Static).GetValue(null));
-                SetField(parameters, "Q", point);
-
-                MethodInfo create = typeof(ECDsa).GetMethod("Create", BindingFlags.Public | BindingFlags.Static, null, new[] { parametersType }, null);
-                key = (ECDsa)Invoke(create, null, parameters);
-                return true;
-            }
-            catch (TypeLoadException)
-            {
-                key = null;
-                return false;
-            }
-        }
-
-        private static Type GetAlgorithmsType(string typeName)
-        {
-            return Type.GetType($"{typeName}, System.Security.Cryptography.Algorithms", throwOnError: true);
-        }
-
-        private static object GetField(object instance, string fieldName)
-        {
-            return instance.GetType().GetField(fieldName, BindingFlags.Public | BindingFlags.Instance).GetValue(instance);
-        }
-
-        private static void SetField(object instance, string fieldName, object value)
-        {
-            instance.GetType().GetField(fieldName, BindingFlags.Public | BindingFlags.Instance).SetValue(instance, value);
-        }
-
-        private static object Invoke(MethodInfo method, object instance, params object[] arguments)
-        {
-            if (method == null)
-            {
-                throw new MissingMethodException("The runtime does not provide the required ECDSA parameter API.");
-            }
-
-            try
-            {
-                return method.Invoke(instance, arguments);
-            }
-            catch (TargetInvocationException ex) when (ex.InnerException != null)
-            {
-                ExceptionDispatchInfo.Capture(ex.InnerException).Throw();
-                throw;
-            }
-        }
-
-        private static void ValidateCurve(object parameters, string expectedCurveName)
-        {
-            object curve = GetField(parameters, "Curve");
-            object oid = curve.GetType().GetProperty("Oid", BindingFlags.Public | BindingFlags.Instance).GetValue(curve);
-            ValidateCurve((Oid)oid, expectedCurveName);
-        }
-
-        private static void ExportCngPublicPoint(ECDsa key, string expectedCurveName, out byte[] x, out byte[] y)
-        {
-            Type blobFormatType = GetCngType("System.Security.Cryptography.CngKeyBlobFormat");
-            object blobFormat = blobFormatType.GetProperty("EccPublicBlob", BindingFlags.Public | BindingFlags.Static).GetValue(null);
-            PropertyInfo keyProperty = key.GetType().GetProperty("Key", BindingFlags.Public | BindingFlags.Instance);
-            if (keyProperty == null)
-            {
-                throw new PlatformNotSupportedException("This runtime cannot export ECDSA public keys without ECParameters.");
-            }
-
-            object cngKey = keyProperty.GetValue(key);
-            try
-            {
-                MethodInfo export = cngKey.GetType().GetMethod("Export", new[] { blobFormatType });
-                byte[] blob = (byte[])Invoke(export, cngKey, blobFormat);
-                ReadCngPublicBlob(blob, expectedCurveName, out x, out y);
-            }
-            finally
-            {
-                (cngKey as IDisposable)?.Dispose();
-            }
-        }
-
-        private static ECDsa CreateFromCngPublicBlob(string curveName, byte[] x, byte[] y)
-        {
-            byte[] blob = CreateCngPublicBlob(curveName, x, y);
-            Type cngKeyType = GetCngType("System.Security.Cryptography.CngKey");
-            Type blobFormatType = GetCngType("System.Security.Cryptography.CngKeyBlobFormat");
-            object blobFormat = blobFormatType.GetProperty("EccPublicBlob", BindingFlags.Public | BindingFlags.Static).GetValue(null);
-            MethodInfo import = cngKeyType.GetMethod("Import", BindingFlags.Public | BindingFlags.Static, null, new[] { typeof(byte[]), blobFormatType }, null);
-            object cngKey = Invoke(import, null, blob, blobFormat);
-            try
-            {
-                Type ecdsaCngType = GetCngType("System.Security.Cryptography.ECDsaCng");
-                ConstructorInfo constructor = ecdsaCngType.GetConstructor(new[] { cngKeyType });
-                return (ECDsa)constructor.Invoke(new[] { cngKey });
-            }
-            finally
-            {
-                (cngKey as IDisposable)?.Dispose();
-            }
-        }
-
-        private static Type GetCngType(string typeName)
-        {
-            return Type.GetType($"{typeName}, System.Security.Cryptography.Cng", throwOnError: true);
-        }
-
+#if NETFRAMEWORK
         private static byte[] CreateCngPublicBlob(string curveName, byte[] x, byte[] y)
         {
             int fieldSize = GetFieldSize(curveName);
@@ -267,18 +134,7 @@ namespace Azure.Security.CodeTransparency
             }
         }
 
-        private static string GetNamedCurveProperty(string curveName)
-        {
-            return curveName switch
-            {
-                "P-256" => "nistP256",
-                "P-384" => "nistP384",
-                "P-521" => "nistP521",
-                _ => throw new NotSupportedException($"Unsupported curve '{curveName}'."),
-            };
-        }
-
-#if !NETSTANDARD2_0
+#if !NETFRAMEWORK
         private static ECCurve GetNamedCurve(string curveName)
         {
             return curveName switch
