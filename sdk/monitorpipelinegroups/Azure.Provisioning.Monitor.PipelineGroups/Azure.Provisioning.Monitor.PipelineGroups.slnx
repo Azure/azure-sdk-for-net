@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="src/Azure.Provisioning.Monitor.PipelineGroups.csproj" />
-  <Project Path="tests/Azure.Provisioning.Monitor.PipelineGroups.Tests.csproj" />
-</Solution>

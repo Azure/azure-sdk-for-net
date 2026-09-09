@@ -9,5 +9,3 @@ extends:
     Artifacts:
     - name: Azure.ResourceManager.Monitor.PipelineGroups
       safeName: AzureResourceManagerMonitorPipelineGroups
-    - name: Azure.Provisioning.Monitor.PipelineGroups
-      safeName: AzureProvisioningMonitorPipelineGroups

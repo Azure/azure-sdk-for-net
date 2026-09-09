@@ -1,5 +1,0 @@
-directory: specification/monitoringservice/resource-manager/Microsoft.Monitor/PipelineGroups
-commit: 93a93bde465da771962ad11bf03a2f34a1b1eb0f
-repo: ArcturusZhang/azure-rest-api-specs
-additionalDirectories:
-emitterPackageJsonPath: eng/azure-typespec-http-client-csharp-provisioning-emitter-package.json
