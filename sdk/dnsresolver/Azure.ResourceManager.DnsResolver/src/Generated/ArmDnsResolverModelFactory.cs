@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                virtualNetworkId is null && dnsResolverState is null ? default : new DnsResolverProperties(new SubResource(virtualNetworkId, default), dnsResolverState, default, default, default),
+                virtualNetworkId is null && dnsResolverState is null && provisioningState is null && resourceGuid is null ? default : new DnsResolverProperties(new SubResource(virtualNetworkId, default), dnsResolverState, provisioningState, resourceGuid, default),
                 eTag,
                 default);
         }
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                default,
+                ipConfigurations is null && provisioningState is null && resourceGuid is null ? default : new InboundEndpointProperties((ipConfigurations ?? new ChangeTrackingList<InboundEndpointIPConfiguration>()).ToList(), provisioningState, resourceGuid, default),
                 eTag,
                 default);
         }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                subnetId is null ? default : new OutboundEndpointProperties(new SubResource(subnetId, default), default, default, default),
+                subnetId is null && provisioningState is null && resourceGuid is null ? default : new OutboundEndpointProperties(new SubResource(subnetId, default), provisioningState, resourceGuid, default),
                 eTag,
                 default);
         }
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                dnsResolverOutboundEndpoints is null ? default : new DnsForwardingRulesetProperties((dnsResolverOutboundEndpoints ?? new ChangeTrackingList<WritableSubResource>()).ToList(), default, default, default),
+                dnsResolverOutboundEndpoints is null && provisioningState is null && resourceGuid is null ? default : new DnsForwardingRulesetProperties((dnsResolverOutboundEndpoints ?? new ChangeTrackingList<WritableSubResource>()).ToList(), provisioningState, resourceGuid, default),
                 rulesetName,
                 eTag,
                 default);
@@ -209,12 +209,12 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 name,
                 resourceType,
                 systemData,
-                dnsForwardingRuleState is null ? default : new ForwardingRuleProperties(
-                    default,
-                    default,
-                    default,
+                domainName is null && targetDnsServers is null && metadata is null && dnsForwardingRuleState is null && provisioningState is null ? default : new ForwardingRuleProperties(
+                    domainName,
+                    (targetDnsServers ?? new ChangeTrackingList<TargetDnsServer>()).ToList(),
+                    metadata ?? new ChangeTrackingDictionary<string, string>(),
                     dnsForwardingRuleState,
-                    default,
+                    provisioningState,
                     default),
                 eTag,
                 default);
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 name,
                 resourceType,
                 systemData,
-                virtualNetworkId is null ? default : new VirtualNetworkLinkProperties(new SubResource(virtualNetworkId, default), default, default, default),
+                virtualNetworkId is null && metadata is null && provisioningState is null ? default : new VirtualNetworkLinkProperties(new SubResource(virtualNetworkId, default), metadata ?? new ChangeTrackingDictionary<string, string>(), provisioningState, default),
                 eTag,
                 default);
         }
@@ -327,13 +327,13 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                actionType is null && dnsResolverDomainLists is null && dnsSecurityRuleState is null ? default : new DnsSecurityRuleProperties(
-                    default,
+                new DnsSecurityRuleProperties(
+                    priority,
                     new DnsSecurityRuleAction(actionType, default),
                     (dnsResolverDomainLists ?? new ChangeTrackingList<WritableSubResource>()).ToList(),
-                    default,
+                    (managedDomainLists ?? new ChangeTrackingList<ManagedDomainList>()).ToList(),
                     dnsSecurityRuleState,
-                    default,
+                    provisioningState,
                     default),
                 eTag,
                 default);
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                virtualNetworkId is null ? default : new DnsResolverPolicyVirtualNetworkLinkProperties(new SubResource(virtualNetworkId, default), default, default),
+                virtualNetworkId is null && provisioningState is null ? default : new DnsResolverPolicyVirtualNetworkLinkProperties(new SubResource(virtualNetworkId, default), provisioningState, default),
                 eTag,
                 default);
         }
@@ -446,7 +446,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
         /// <returns> A new <see cref="Models.DnsResolverDomainListBulk"/> instance for mocking. </returns>
         public static DnsResolverDomainListBulk DnsResolverDomainListBulk(Uri storageUri = default, DnsResolverDomainListBulkAction action = default)
         {
-            return new DnsResolverDomainListBulk(default, (IDictionary<string, BinaryData>)default);
+            return new DnsResolverDomainListBulk(new DnsResolverDomainListBulkProperties(storageUri, action, default), default);
         }
     }
 }
