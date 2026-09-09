@@ -256,21 +256,21 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<Connection>> GetConnections(string subscriptionId, string resourceGroupName, string sandboxGroupName, bool? includeSandboxIds = default, int? page = default, int? pageSize = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<SandboxConnection>> GetConnections(string subscriptionId, string resourceGroupName, string sandboxGroupName, bool? includeSandboxIds = default, int? page = default, int? pageSize = default, string labels = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sandboxGroupName, nameof(sandboxGroupName));
 
             Response result = GetConnections(subscriptionId, resourceGroupName, sandboxGroupName, includeSandboxIds, page, pageSize, labels, cancellationToken.ToRequestContext());
-            List<Connection> value = new List<Connection>();
+            List<SandboxConnection> value = new List<SandboxConnection>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(Connection.DeserializeConnection(item, ModelSerializationExtensions.WireOptions));
+                value.Add(SandboxConnection.DeserializeSandboxConnection(item, ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<Connection>)value, result);
+            return Response.FromValue((IReadOnlyList<SandboxConnection>)value, result);
         }
 
         /// <summary> Lists connections in a sandbox group. </summary>
@@ -285,21 +285,21 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<Connection>>> GetConnectionsAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, bool? includeSandboxIds = default, int? page = default, int? pageSize = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<SandboxConnection>>> GetConnectionsAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, bool? includeSandboxIds = default, int? page = default, int? pageSize = default, string labels = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sandboxGroupName, nameof(sandboxGroupName));
 
             Response result = await GetConnectionsAsync(subscriptionId, resourceGroupName, sandboxGroupName, includeSandboxIds, page, pageSize, labels, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<Connection> value = new List<Connection>();
+            List<SandboxConnection> value = new List<SandboxConnection>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(Connection.DeserializeConnection(item, ModelSerializationExtensions.WireOptions));
+                value.Add(SandboxConnection.DeserializeSandboxConnection(item, ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<Connection>)value, result);
+            return Response.FromValue((IReadOnlyList<SandboxConnection>)value, result);
         }
 
         /// <summary>
@@ -390,7 +390,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Connection> GetConnection(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, bool? includeSandboxIds = default, CancellationToken cancellationToken = default)
+        public virtual Response<SandboxConnection> GetConnection(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, bool? includeSandboxIds = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -398,7 +398,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             Response result = GetConnection(subscriptionId, resourceGroupName, sandboxGroupName, id, includeSandboxIds, cancellationToken.ToRequestContext());
-            return Response.FromValue((Connection)result, result);
+            return Response.FromValue((SandboxConnection)result, result);
         }
 
         /// <summary> Gets a specific connection by ID. </summary>
@@ -411,7 +411,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Connection>> GetConnectionAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, bool? includeSandboxIds = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SandboxConnection>> GetConnectionAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, bool? includeSandboxIds = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -419,7 +419,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             Response result = await GetConnectionAsync(subscriptionId, resourceGroupName, sandboxGroupName, id, includeSandboxIds, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Connection)result, result);
+            return Response.FromValue((SandboxConnection)result, result);
         }
 
         /// <summary>
@@ -507,7 +507,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Connection> PostConnection(string subscriptionId, string resourceGroupName, string sandboxGroupName, CreateConnectionContent body, CancellationToken cancellationToken = default)
+        public virtual Response<SandboxConnection> PostConnection(string subscriptionId, string resourceGroupName, string sandboxGroupName, CreateConnectionContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -515,7 +515,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = PostConnection(subscriptionId, resourceGroupName, sandboxGroupName, body, cancellationToken.ToRequestContext());
-            return Response.FromValue((Connection)result, result);
+            return Response.FromValue((SandboxConnection)result, result);
         }
 
         /// <summary> Creates a new connection. </summary>
@@ -527,7 +527,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Connection>> PostConnectionAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, CreateConnectionContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SandboxConnection>> PostConnectionAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, CreateConnectionContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -535,7 +535,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = await PostConnectionAsync(subscriptionId, resourceGroupName, sandboxGroupName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Connection)result, result);
+            return Response.FromValue((SandboxConnection)result, result);
         }
 
         /// <summary>
@@ -628,7 +628,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="id"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Connection> PostConnectionAuthorize(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, AuthorizeConnectionContent body, CancellationToken cancellationToken = default)
+        public virtual Response<SandboxConnection> PostConnectionAuthorize(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, AuthorizeConnectionContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -637,7 +637,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = PostConnectionAuthorize(subscriptionId, resourceGroupName, sandboxGroupName, id, body, cancellationToken.ToRequestContext());
-            return Response.FromValue((Connection)result, result);
+            return Response.FromValue((SandboxConnection)result, result);
         }
 
         /// <summary> Authorizes a connection with parameter values. </summary>
@@ -650,7 +650,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="id"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Connection>> PostConnectionAuthorizeAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, AuthorizeConnectionContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SandboxConnection>> PostConnectionAuthorizeAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, AuthorizeConnectionContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -659,7 +659,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = await PostConnectionAuthorizeAsync(subscriptionId, resourceGroupName, sandboxGroupName, id, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Connection)result, result);
+            return Response.FromValue((SandboxConnection)result, result);
         }
 
         /// <summary>
@@ -750,7 +750,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<GenerateConsentLinkResponse> PostConnectionConsentLink(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, GenerateConsentLinkContent body = default, CancellationToken cancellationToken = default)
+        public virtual Response<GenerateConsentLinkResult> PostConnectionConsentLink(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, GenerateConsentLinkContent body = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -758,7 +758,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             Response result = PostConnectionConsentLink(subscriptionId, resourceGroupName, sandboxGroupName, id, body, cancellationToken.ToRequestContext());
-            return Response.FromValue((GenerateConsentLinkResponse)result, result);
+            return Response.FromValue((GenerateConsentLinkResult)result, result);
         }
 
         /// <summary> Generates a consent link for a connection. </summary>
@@ -771,7 +771,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<GenerateConsentLinkResponse>> PostConnectionConsentLinkAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, GenerateConsentLinkContent body = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<GenerateConsentLinkResult>> PostConnectionConsentLinkAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, GenerateConsentLinkContent body = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -779,7 +779,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             Response result = await PostConnectionConsentLinkAsync(subscriptionId, resourceGroupName, sandboxGroupName, id, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((GenerateConsentLinkResponse)result, result);
+            return Response.FromValue((GenerateConsentLinkResult)result, result);
         }
 
         /// <summary>
@@ -870,7 +870,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Connection> PostConnectionRefresh(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, bool? includeSandboxIds = default, CancellationToken cancellationToken = default)
+        public virtual Response<SandboxConnection> PostConnectionRefresh(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, bool? includeSandboxIds = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -878,7 +878,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             Response result = PostConnectionRefresh(subscriptionId, resourceGroupName, sandboxGroupName, id, includeSandboxIds, cancellationToken.ToRequestContext());
-            return Response.FromValue((Connection)result, result);
+            return Response.FromValue((SandboxConnection)result, result);
         }
 
         /// <summary> Refreshes a connection's state from the upstream provider. </summary>
@@ -891,7 +891,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Connection>> PostConnectionRefreshAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, bool? includeSandboxIds = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SandboxConnection>> PostConnectionRefreshAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, bool? includeSandboxIds = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -899,7 +899,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             Response result = await PostConnectionRefreshAsync(subscriptionId, resourceGroupName, sandboxGroupName, id, includeSandboxIds, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Connection)result, result);
+            return Response.FromValue((SandboxConnection)result, result);
         }
 
         /// <summary>
@@ -992,7 +992,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="id"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Connection> PutConnectionPolicyRules(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, UpdatePolicyRulesContent body, CancellationToken cancellationToken = default)
+        public virtual Response<SandboxConnection> PutConnectionPolicyRules(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, UpdatePolicyRulesContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1001,7 +1001,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = PutConnectionPolicyRules(subscriptionId, resourceGroupName, sandboxGroupName, id, body, cancellationToken.ToRequestContext());
-            return Response.FromValue((Connection)result, result);
+            return Response.FromValue((SandboxConnection)result, result);
         }
 
         /// <summary> Updates the policy rules and tool settings on a connection. </summary>
@@ -1014,7 +1014,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="id"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Connection>> PutConnectionPolicyRulesAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, UpdatePolicyRulesContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SandboxConnection>> PutConnectionPolicyRulesAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, UpdatePolicyRulesContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1023,7 +1023,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = await PutConnectionPolicyRulesAsync(subscriptionId, resourceGroupName, sandboxGroupName, id, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Connection)result, result);
+            return Response.FromValue((SandboxConnection)result, result);
         }
     }
 }

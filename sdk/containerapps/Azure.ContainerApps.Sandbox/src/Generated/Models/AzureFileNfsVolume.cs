@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ContainerApps.Sandbox
 {
     /// <summary> AzureFileNfsVolume wire model. </summary>
-    public partial class AzureFileNfsVolume : Volume
+    public partial class AzureFileNfsVolume : SandboxGroupVolume
     {
         /// <summary> Initializes a new instance of <see cref="AzureFileNfsVolume"/>. </summary>
         public AzureFileNfsVolume() : base(VolumeType.AzureFileNfs)

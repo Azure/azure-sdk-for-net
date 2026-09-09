@@ -371,21 +371,21 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<Volume>> GetVolumes(string subscriptionId, string resourceGroupName, string sandboxGroupName, int? page = default, int? pageSize = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<SandboxGroupVolume>> GetVolumes(string subscriptionId, string resourceGroupName, string sandboxGroupName, int? page = default, int? pageSize = default, string labels = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sandboxGroupName, nameof(sandboxGroupName));
 
             Response result = GetVolumes(subscriptionId, resourceGroupName, sandboxGroupName, page, pageSize, labels, cancellationToken.ToRequestContext());
-            List<Volume> value = new List<Volume>();
+            List<SandboxGroupVolume> value = new List<SandboxGroupVolume>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(Volume.DeserializeVolume(item, ModelSerializationExtensions.WireOptions));
+                value.Add(SandboxGroupVolume.DeserializeSandboxGroupVolume(item, ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<Volume>)value, result);
+            return Response.FromValue((IReadOnlyList<SandboxGroupVolume>)value, result);
         }
 
         /// <summary> Lists volumes with pagination support. </summary>
@@ -399,21 +399,21 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<Volume>>> GetVolumesAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, int? page = default, int? pageSize = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<SandboxGroupVolume>>> GetVolumesAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, int? page = default, int? pageSize = default, string labels = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sandboxGroupName, nameof(sandboxGroupName));
 
             Response result = await GetVolumesAsync(subscriptionId, resourceGroupName, sandboxGroupName, page, pageSize, labels, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<Volume> value = new List<Volume>();
+            List<SandboxGroupVolume> value = new List<SandboxGroupVolume>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(Volume.DeserializeVolume(item, ModelSerializationExtensions.WireOptions));
+                value.Add(SandboxGroupVolume.DeserializeSandboxGroupVolume(item, ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<Volume>)value, result);
+            return Response.FromValue((IReadOnlyList<SandboxGroupVolume>)value, result);
         }
 
         /// <summary>
@@ -496,14 +496,14 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<VolumeCountResponse> GetVolumesCount(string subscriptionId, string resourceGroupName, string sandboxGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<VolumeCountResult> GetVolumesCount(string subscriptionId, string resourceGroupName, string sandboxGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sandboxGroupName, nameof(sandboxGroupName));
 
             Response result = GetVolumesCount(subscriptionId, resourceGroupName, sandboxGroupName, cancellationToken.ToRequestContext());
-            return Response.FromValue((VolumeCountResponse)result, result);
+            return Response.FromValue((VolumeCountResult)result, result);
         }
 
         /// <summary> Gets the count of volumes, grouped by volume type. </summary>
@@ -514,14 +514,14 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<VolumeCountResponse>> GetVolumesCountAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VolumeCountResult>> GetVolumesCountAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sandboxGroupName, nameof(sandboxGroupName));
 
             Response result = await GetVolumesCountAsync(subscriptionId, resourceGroupName, sandboxGroupName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((VolumeCountResponse)result, result);
+            return Response.FromValue((VolumeCountResult)result, result);
         }
 
         /// <summary>
@@ -609,7 +609,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="volumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Volume> GetVolume(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, CancellationToken cancellationToken = default)
+        public virtual Response<SandboxGroupVolume> GetVolume(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -617,7 +617,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             Response result = GetVolume(subscriptionId, resourceGroupName, sandboxGroupName, volumeName, cancellationToken.ToRequestContext());
-            return Response.FromValue((Volume)result, result);
+            return Response.FromValue((SandboxGroupVolume)result, result);
         }
 
         /// <summary> Gets a specific volume by name. </summary>
@@ -629,7 +629,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="volumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Volume>> GetVolumeAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SandboxGroupVolume>> GetVolumeAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -637,7 +637,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             Response result = await GetVolumeAsync(subscriptionId, resourceGroupName, sandboxGroupName, volumeName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Volume)result, result);
+            return Response.FromValue((SandboxGroupVolume)result, result);
         }
 
         /// <summary>
@@ -728,7 +728,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="volumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<VolumeListDirectoryResponse> GetVolumeFiles(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, string path = default, CancellationToken cancellationToken = default)
+        public virtual Response<VolumeListDirectoryResult> GetVolumeFiles(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, string path = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -736,7 +736,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             Response result = GetVolumeFiles(subscriptionId, resourceGroupName, sandboxGroupName, volumeName, path, cancellationToken.ToRequestContext());
-            return Response.FromValue((VolumeListDirectoryResponse)result, result);
+            return Response.FromValue((VolumeListDirectoryResult)result, result);
         }
 
         /// <summary> List directory contents within a volume. </summary>
@@ -749,7 +749,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="volumeName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<VolumeListDirectoryResponse>> GetVolumeFilesAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, string path = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<VolumeListDirectoryResult>> GetVolumeFilesAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, string path = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -757,7 +757,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(volumeName, nameof(volumeName));
 
             Response result = await GetVolumeFilesAsync(subscriptionId, resourceGroupName, sandboxGroupName, volumeName, path, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((VolumeListDirectoryResponse)result, result);
+            return Response.FromValue((VolumeListDirectoryResult)result, result);
         }
 
         /// <summary>
@@ -1090,7 +1090,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="volumeName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Volume> PostVolumeFork(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, ForkDataDiskVolumeContent body, CancellationToken cancellationToken = default)
+        public virtual Response<SandboxGroupVolume> PostVolumeFork(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, ForkDataDiskVolumeContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1099,7 +1099,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = PostVolumeFork(subscriptionId, resourceGroupName, sandboxGroupName, volumeName, body, cancellationToken.ToRequestContext());
-            return Response.FromValue((Volume)result, result);
+            return Response.FromValue((SandboxGroupVolume)result, result);
         }
 
         /// <summary> Forks a data disk volume. </summary>
@@ -1112,7 +1112,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="volumeName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Volume>> PostVolumeForkAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, ForkDataDiskVolumeContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SandboxGroupVolume>> PostVolumeForkAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, ForkDataDiskVolumeContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1121,7 +1121,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = await PostVolumeForkAsync(subscriptionId, resourceGroupName, sandboxGroupName, volumeName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Volume)result, result);
+            return Response.FromValue((SandboxGroupVolume)result, result);
         }
 
         /// <summary>
@@ -1214,7 +1214,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="volumeName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Volume> PutVolume(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, Volume body, CancellationToken cancellationToken = default)
+        public virtual Response<SandboxGroupVolume> PutVolume(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, SandboxGroupVolume body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1223,7 +1223,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = PutVolume(subscriptionId, resourceGroupName, sandboxGroupName, volumeName, body, cancellationToken.ToRequestContext());
-            return Response.FromValue((Volume)result, result);
+            return Response.FromValue((SandboxGroupVolume)result, result);
         }
 
         /// <summary> Creates a new volume. </summary>
@@ -1236,7 +1236,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="volumeName"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="volumeName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Volume>> PutVolumeAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, Volume body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SandboxGroupVolume>> PutVolumeAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string volumeName, SandboxGroupVolume body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -1245,7 +1245,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = await PutVolumeAsync(subscriptionId, resourceGroupName, sandboxGroupName, volumeName, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Volume)result, result);
+            return Response.FromValue((SandboxGroupVolume)result, result);
         }
 
         /// <summary>

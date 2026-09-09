@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ContainerApps.Sandbox
 {
     /// <summary> DataDiskVolume wire model. </summary>
-    public partial class DataDiskVolume : Volume
+    public partial class DataDiskVolume : SandboxGroupVolume
     {
         /// <summary> Initializes a new instance of <see cref="DataDiskVolume"/>. </summary>
         /// <param name="size"> size value. </param>

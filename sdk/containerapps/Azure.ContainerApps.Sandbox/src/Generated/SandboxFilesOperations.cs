@@ -138,7 +138,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<FileOpStatusResponse> DeleteSandboxFile(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, string path = default, bool? recursive = default, string containerName = default, CancellationToken cancellationToken = default)
+        public virtual Response<FileOpStatusResult> DeleteSandboxFile(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, string path = default, bool? recursive = default, string containerName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -146,7 +146,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             Response result = DeleteSandboxFile(subscriptionId, resourceGroupName, sandboxGroupName, id, path, recursive, containerName, cancellationToken.ToRequestContext());
-            return Response.FromValue((FileOpStatusResponse)result, result);
+            return Response.FromValue((FileOpStatusResult)result, result);
         }
 
         /// <summary> Deletes a file or directory in a running sandbox. If the target is a directory, the `recursive` query parameter must be set to true to delete it and its contents. </summary>
@@ -161,7 +161,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<FileOpStatusResponse>> DeleteSandboxFileAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, string path = default, bool? recursive = default, string containerName = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileOpStatusResult>> DeleteSandboxFileAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, string path = default, bool? recursive = default, string containerName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -169,7 +169,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             Response result = await DeleteSandboxFileAsync(subscriptionId, resourceGroupName, sandboxGroupName, id, path, recursive, containerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((FileOpStatusResponse)result, result);
+            return Response.FromValue((FileOpStatusResult)result, result);
         }
 
         /// <summary>
@@ -393,7 +393,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="id"/> or <paramref name="path"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<DirListingResponse> GetSandboxFilesList(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, string path, string containerName = default, CancellationToken cancellationToken = default)
+        public virtual Response<DirListingResult> GetSandboxFilesList(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, string path, string containerName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -402,7 +402,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(path, nameof(path));
 
             Response result = GetSandboxFilesList(subscriptionId, resourceGroupName, sandboxGroupName, id, path, containerName, cancellationToken.ToRequestContext());
-            return Response.FromValue((DirListingResponse)result, result);
+            return Response.FromValue((DirListingResult)result, result);
         }
 
         /// <summary> Lists the contents of a directory in a running sandbox. The response includes file and directory names, sizes, and metadata. </summary>
@@ -416,7 +416,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="id"/> or <paramref name="path"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<DirListingResponse>> GetSandboxFilesListAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, string path, string containerName = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<DirListingResult>> GetSandboxFilesListAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, string path, string containerName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -425,7 +425,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(path, nameof(path));
 
             Response result = await GetSandboxFilesListAsync(subscriptionId, resourceGroupName, sandboxGroupName, id, path, containerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((DirListingResponse)result, result);
+            return Response.FromValue((DirListingResult)result, result);
         }
 
         /// <summary>
@@ -649,7 +649,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="id"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<FileOpStatusResponse> PostSandboxFileMkdir(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, MkDirContent body, string containerName = default, CancellationToken cancellationToken = default)
+        public virtual Response<FileOpStatusResult> PostSandboxFileMkdir(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, MkDirContent body, string containerName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -658,7 +658,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = PostSandboxFileMkdir(subscriptionId, resourceGroupName, sandboxGroupName, id, body, containerName, cancellationToken.ToRequestContext());
-            return Response.FromValue((FileOpStatusResponse)result, result);
+            return Response.FromValue((FileOpStatusResult)result, result);
         }
 
         /// <summary> Creates a directory in a running sandbox. If the `createParents` property is set to true, any missing parent directories will also be created. </summary>
@@ -672,7 +672,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="id"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<FileOpStatusResponse>> PostSandboxFileMkdirAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, MkDirContent body, string containerName = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<FileOpStatusResult>> PostSandboxFileMkdirAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, MkDirContent body, string containerName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -681,7 +681,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = await PostSandboxFileMkdirAsync(subscriptionId, resourceGroupName, sandboxGroupName, id, body, containerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((FileOpStatusResponse)result, result);
+            return Response.FromValue((FileOpStatusResult)result, result);
         }
 
         /// <summary>
@@ -788,7 +788,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="id"/>, <paramref name="path"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<WriteFileResponse> PutSandboxFile(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, string path, BinaryData content, bool? createDirs = default, int? mode = default, string containerName = default, CancellationToken cancellationToken = default)
+        public virtual Response<WriteFileResult> PutSandboxFile(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, string path, BinaryData content, bool? createDirs = default, int? mode = default, string containerName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -798,7 +798,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNull(content, nameof(content));
 
             Response result = PutSandboxFile(subscriptionId, resourceGroupName, sandboxGroupName, id, path, RequestContent.Create(content), createDirs, mode, containerName, cancellationToken.ToRequestContext());
-            return Response.FromValue((WriteFileResponse)result, result);
+            return Response.FromValue((WriteFileResult)result, result);
         }
 
         /// <summary> Writes a file to a running sandbox. The file is streamed directly from the request body. </summary>
@@ -815,7 +815,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="id"/>, <paramref name="path"/> or <paramref name="content"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="id"/> or <paramref name="path"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<WriteFileResponse>> PutSandboxFileAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, string path, BinaryData content, bool? createDirs = default, int? mode = default, string containerName = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<WriteFileResult>> PutSandboxFileAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, string path, BinaryData content, bool? createDirs = default, int? mode = default, string containerName = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -825,7 +825,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNull(content, nameof(content));
 
             Response result = await PutSandboxFileAsync(subscriptionId, resourceGroupName, sandboxGroupName, id, path, RequestContent.Create(content), createDirs, mode, containerName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((WriteFileResponse)result, result);
+            return Response.FromValue((WriteFileResult)result, result);
         }
     }
 }

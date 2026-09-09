@@ -238,14 +238,14 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<NamedEgressPolicyListResponse> GetEgressPolicies(string subscriptionId, string resourceGroupName, string sandboxGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<NamedEgressPolicyListResult> GetEgressPolicies(string subscriptionId, string resourceGroupName, string sandboxGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sandboxGroupName, nameof(sandboxGroupName));
 
             Response result = GetEgressPolicies(subscriptionId, resourceGroupName, sandboxGroupName, cancellationToken.ToRequestContext());
-            return Response.FromValue((NamedEgressPolicyListResponse)result, result);
+            return Response.FromValue((NamedEgressPolicyListResult)result, result);
         }
 
         /// <summary> Lists all named egress policies in a sandbox group. </summary>
@@ -256,14 +256,14 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<NamedEgressPolicyListResponse>> GetEgressPoliciesAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<NamedEgressPolicyListResult>> GetEgressPoliciesAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sandboxGroupName, nameof(sandboxGroupName));
 
             Response result = await GetEgressPoliciesAsync(subscriptionId, resourceGroupName, sandboxGroupName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((NamedEgressPolicyListResponse)result, result);
+            return Response.FromValue((NamedEgressPolicyListResult)result, result);
         }
 
         /// <summary>

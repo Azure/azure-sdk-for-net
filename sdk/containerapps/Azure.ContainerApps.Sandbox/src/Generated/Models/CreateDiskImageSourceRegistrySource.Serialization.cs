@@ -80,7 +80,7 @@ namespace Azure.ContainerApps.Sandbox
             }
             base.JsonModelWriteCore(writer, options);
             writer.WritePropertyName("imageUrl"u8);
-            writer.WriteStringValue(ImageUrl);
+            writer.WriteStringValue(ImageReference);
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
@@ -115,7 +115,7 @@ namespace Azure.ContainerApps.Sandbox
             }
             CreateDiskImageSourceKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string imageUrl = default;
+            string imageReference = default;
             RegistryAuthentication authentication = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -126,7 +126,7 @@ namespace Azure.ContainerApps.Sandbox
                 }
                 if (prop.NameEquals("imageUrl"u8))
                 {
-                    imageUrl = prop.Value.GetString();
+                    imageReference = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("authentication"u8))
@@ -143,7 +143,7 @@ namespace Azure.ContainerApps.Sandbox
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CreateDiskImageSourceRegistrySource(kind, additionalBinaryDataProperties, imageUrl, authentication);
+            return new CreateDiskImageSourceRegistrySource(kind, additionalBinaryDataProperties, imageReference, authentication);
         }
     }
 }

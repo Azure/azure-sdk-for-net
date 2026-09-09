@@ -19,7 +19,7 @@ namespace Azure.ContainerApps.Sandbox
         private readonly Uri _endpoint;
         private static readonly string[] AuthorizationScopes = new string[] { "https://management.azuredevcompute.io/.default" };
         private readonly string _apiVersion;
-        private Sandboxes _cachedSandboxes;
+        private SandboxesClient _cachedSandboxesClient;
         private ConnectionsOperations _cachedConnectionsOperations;
         private ContentPackagesOperations _cachedContentPackagesOperations;
         private CredentialsOperations _cachedCredentialsOperations;
@@ -92,10 +92,10 @@ namespace Azure.ContainerApps.Sandbox
         /// <summary> The ClientDiagnostics is used to provide tracing support for the client library. </summary>
         internal ClientDiagnostics ClientDiagnostics { get; }
 
-        /// <summary> Initializes a new instance of Sandboxes. </summary>
-        public virtual Sandboxes GetSandboxesClient()
+        /// <summary> Initializes a new instance of SandboxesClient. </summary>
+        public virtual SandboxesClient GetSandboxesClient()
         {
-            return Volatile.Read(ref _cachedSandboxes) ?? Interlocked.CompareExchange(ref _cachedSandboxes, new Sandboxes(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedSandboxes;
+            return Volatile.Read(ref _cachedSandboxesClient) ?? Interlocked.CompareExchange(ref _cachedSandboxesClient, new SandboxesClient(ClientDiagnostics, Pipeline, _endpoint, _apiVersion), null) ?? _cachedSandboxesClient;
         }
 
         /// <summary> Initializes a new instance of ConnectionsOperations. </summary>

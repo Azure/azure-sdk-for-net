@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.ContainerApps.Sandbox
 {
     /// <summary> AzureBlobByoVolume wire model. </summary>
-    public partial class AzureBlobByoVolume : Volume, IJsonModel<AzureBlobByoVolume>
+    public partial class AzureBlobByoVolume : SandboxGroupVolume, IJsonModel<AzureBlobByoVolume>
     {
         /// <summary> Initializes a new instance of <see cref="AzureBlobByoVolume"/> for deserialization. </summary>
         internal AzureBlobByoVolume()
@@ -22,7 +22,7 @@ namespace Azure.ContainerApps.Sandbox
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Volume PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SandboxGroupVolume PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureBlobByoVolume>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -98,7 +98,7 @@ namespace Azure.ContainerApps.Sandbox
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Volume JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SandboxGroupVolume JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureBlobByoVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

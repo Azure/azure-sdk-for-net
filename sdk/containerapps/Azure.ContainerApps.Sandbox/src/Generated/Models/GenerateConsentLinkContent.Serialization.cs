@@ -84,10 +84,10 @@ namespace Azure.ContainerApps.Sandbox
             {
                 throw new FormatException($"The model {nameof(GenerateConsentLinkContent)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(RedirectUrl))
+            if (Optional.IsDefined(RedirectUri))
             {
                 writer.WritePropertyName("redirectUrl"u8);
-                writer.WriteStringValue(RedirectUrl);
+                writer.WriteStringValue(RedirectUri);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -131,13 +131,13 @@ namespace Azure.ContainerApps.Sandbox
             {
                 return null;
             }
-            string redirectUrl = default;
+            string redirectUri = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("redirectUrl"u8))
                 {
-                    redirectUrl = prop.Value.GetString();
+                    redirectUri = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -145,7 +145,7 @@ namespace Azure.ContainerApps.Sandbox
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new GenerateConsentLinkContent(redirectUrl, additionalBinaryDataProperties);
+            return new GenerateConsentLinkContent(redirectUri, additionalBinaryDataProperties);
         }
     }
 }

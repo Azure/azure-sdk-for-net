@@ -13,11 +13,11 @@ using System.Text.Json;
 namespace Azure.ContainerApps.Sandbox
 {
     /// <summary> AzureFileCifsVolume wire model. </summary>
-    public partial class AzureFileCifsVolume : Volume, IJsonModel<AzureFileCifsVolume>
+    public partial class AzureFileCifsVolume : SandboxGroupVolume, IJsonModel<AzureFileCifsVolume>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Volume PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SandboxGroupVolume PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureFileCifsVolume>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -82,7 +82,7 @@ namespace Azure.ContainerApps.Sandbox
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Volume JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SandboxGroupVolume JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<AzureFileCifsVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

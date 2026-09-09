@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ContainerApps.Sandbox
 {
     /// <summary> AzureBlobVolume wire model. </summary>
-    public partial class AzureBlobVolume : Volume
+    public partial class AzureBlobVolume : SandboxGroupVolume
     {
         /// <summary> Initializes a new instance of <see cref="AzureBlobVolume"/>. </summary>
         public AzureBlobVolume() : base(VolumeType.AzureBlob)

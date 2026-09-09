@@ -238,14 +238,14 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SecretListResponse> GetSecrets(string subscriptionId, string resourceGroupName, string sandboxGroupName, CancellationToken cancellationToken = default)
+        public virtual Response<SecretListResult> GetSecrets(string subscriptionId, string resourceGroupName, string sandboxGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sandboxGroupName, nameof(sandboxGroupName));
 
             Response result = GetSecrets(subscriptionId, resourceGroupName, sandboxGroupName, cancellationToken.ToRequestContext());
-            return Response.FromValue((SecretListResponse)result, result);
+            return Response.FromValue((SecretListResult)result, result);
         }
 
         /// <summary> Lists all secrets in the sandbox group. </summary>
@@ -256,14 +256,14 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SecretListResponse>> GetSecretsAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecretListResult>> GetSecretsAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sandboxGroupName, nameof(sandboxGroupName));
 
             Response result = await GetSecretsAsync(subscriptionId, resourceGroupName, sandboxGroupName, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SecretListResponse)result, result);
+            return Response.FromValue((SecretListResult)result, result);
         }
 
         /// <summary>
@@ -351,7 +351,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="secretId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SecretKeysResponse> GetSecretKeys(string subscriptionId, string resourceGroupName, string sandboxGroupName, string secretId, CancellationToken cancellationToken = default)
+        public virtual Response<SecretKeysResult> GetSecretKeys(string subscriptionId, string resourceGroupName, string sandboxGroupName, string secretId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -359,7 +359,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
 
             Response result = GetSecretKeys(subscriptionId, resourceGroupName, sandboxGroupName, secretId, cancellationToken.ToRequestContext());
-            return Response.FromValue((SecretKeysResponse)result, result);
+            return Response.FromValue((SecretKeysResult)result, result);
         }
 
         /// <summary> Lists key names of a secret (values are not returned). </summary>
@@ -371,7 +371,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="secretId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SecretKeysResponse>> GetSecretKeysAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string secretId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecretKeysResult>> GetSecretKeysAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string secretId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -379,7 +379,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
 
             Response result = await GetSecretKeysAsync(subscriptionId, resourceGroupName, sandboxGroupName, secretId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SecretKeysResponse)result, result);
+            return Response.FromValue((SecretKeysResult)result, result);
         }
 
         /// <summary>
@@ -467,7 +467,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="secretId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<SecretPeekResponse> PostSecretPeek(string subscriptionId, string resourceGroupName, string sandboxGroupName, string secretId, CancellationToken cancellationToken = default)
+        public virtual Response<SecretPeekResult> PostSecretPeek(string subscriptionId, string resourceGroupName, string sandboxGroupName, string secretId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -475,7 +475,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
 
             Response result = PostSecretPeek(subscriptionId, resourceGroupName, sandboxGroupName, secretId, cancellationToken.ToRequestContext());
-            return Response.FromValue((SecretPeekResponse)result, result);
+            return Response.FromValue((SecretPeekResult)result, result);
         }
 
         /// <summary> Peeks (retrieves) all secret values. </summary>
@@ -487,7 +487,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="secretId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<SecretPeekResponse>> PostSecretPeekAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string secretId, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SecretPeekResult>> PostSecretPeekAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string secretId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -495,7 +495,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(secretId, nameof(secretId));
 
             Response result = await PostSecretPeekAsync(subscriptionId, resourceGroupName, sandboxGroupName, secretId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((SecretPeekResponse)result, result);
+            return Response.FromValue((SecretPeekResult)result, result);
         }
 
         /// <summary>
@@ -588,7 +588,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="secretId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Secret> PutSecret(string subscriptionId, string resourceGroupName, string sandboxGroupName, string secretId, CreateSecretContent body, CancellationToken cancellationToken = default)
+        public virtual Response<SandboxSecret> PutSecret(string subscriptionId, string resourceGroupName, string sandboxGroupName, string secretId, CreateSecretContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -597,7 +597,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = PutSecret(subscriptionId, resourceGroupName, sandboxGroupName, secretId, body, cancellationToken.ToRequestContext());
-            return Response.FromValue((Secret)result, result);
+            return Response.FromValue((SandboxSecret)result, result);
         }
 
         /// <summary> Upserts key-value pairs in a secret. </summary>
@@ -610,7 +610,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/>, <paramref name="secretId"/> or <paramref name="body"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="secretId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Secret>> PutSecretAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string secretId, CreateSecretContent body, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SandboxSecret>> PutSecretAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string secretId, CreateSecretContent body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -619,7 +619,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = await PutSecretAsync(subscriptionId, resourceGroupName, sandboxGroupName, secretId, body, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Secret)result, result);
+            return Response.FromValue((SandboxSecret)result, result);
         }
     }
 }

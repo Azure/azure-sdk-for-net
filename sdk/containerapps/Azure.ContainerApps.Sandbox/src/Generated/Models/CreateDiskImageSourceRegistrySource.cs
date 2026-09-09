@@ -14,28 +14,28 @@ namespace Azure.ContainerApps.Sandbox
     public partial class CreateDiskImageSourceRegistrySource : CreateDiskImageSource
     {
         /// <summary> Initializes a new instance of <see cref="CreateDiskImageSourceRegistrySource"/>. </summary>
-        /// <param name="imageUrl"> imageUrl value. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="imageUrl"/> is null. </exception>
-        public CreateDiskImageSourceRegistrySource(string imageUrl) : base(CreateDiskImageSourceKind.Registry)
+        /// <param name="imageReference"> imageUrl value. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="imageReference"/> is null. </exception>
+        public CreateDiskImageSourceRegistrySource(string imageReference) : base(CreateDiskImageSourceKind.Registry)
         {
-            Argument.AssertNotNull(imageUrl, nameof(imageUrl));
+            Argument.AssertNotNull(imageReference, nameof(imageReference));
 
-            ImageUrl = imageUrl;
+            ImageReference = imageReference;
         }
 
         /// <summary> Initializes a new instance of <see cref="CreateDiskImageSourceRegistrySource"/>. </summary>
         /// <param name="kind"> The disk image source type. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        /// <param name="imageUrl"> imageUrl value. </param>
+        /// <param name="imageReference"> imageUrl value. </param>
         /// <param name="authentication"> Authentication used to access the registry. </param>
-        internal CreateDiskImageSourceRegistrySource(CreateDiskImageSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string imageUrl, RegistryAuthentication authentication) : base(kind, additionalBinaryDataProperties)
+        internal CreateDiskImageSourceRegistrySource(CreateDiskImageSourceKind kind, IDictionary<string, BinaryData> additionalBinaryDataProperties, string imageReference, RegistryAuthentication authentication) : base(kind, additionalBinaryDataProperties)
         {
-            ImageUrl = imageUrl;
+            ImageReference = imageReference;
             Authentication = authentication;
         }
 
         /// <summary> imageUrl value. </summary>
-        public string ImageUrl { get; }
+        public string ImageReference { get; }
 
         /// <summary> Authentication used to access the registry. </summary>
         public RegistryAuthentication Authentication { get; set; }

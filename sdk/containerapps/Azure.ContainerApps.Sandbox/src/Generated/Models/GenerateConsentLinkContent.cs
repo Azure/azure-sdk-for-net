@@ -22,15 +22,15 @@ namespace Azure.ContainerApps.Sandbox
         }
 
         /// <summary> Initializes a new instance of <see cref="GenerateConsentLinkContent"/>. </summary>
-        /// <param name="redirectUrl"> redirectUrl value. </param>
+        /// <param name="redirectUri"> redirectUrl value. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal GenerateConsentLinkContent(string redirectUrl, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal GenerateConsentLinkContent(string redirectUri, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            RedirectUrl = redirectUrl;
+            RedirectUri = redirectUri;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> redirectUrl value. </summary>
-        public string RedirectUrl { get; set; }
+        public string RedirectUri { get; set; }
     }
 }

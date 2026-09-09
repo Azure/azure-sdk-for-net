@@ -249,21 +249,21 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<IReadOnlyList<Snapshot>> GetSnapshots(string subscriptionId, string resourceGroupName, string sandboxGroupName, int? page = default, int? pageSize = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyList<SandboxSnapshot>> GetSnapshots(string subscriptionId, string resourceGroupName, string sandboxGroupName, int? page = default, int? pageSize = default, string labels = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sandboxGroupName, nameof(sandboxGroupName));
 
             Response result = GetSnapshots(subscriptionId, resourceGroupName, sandboxGroupName, page, pageSize, labels, cancellationToken.ToRequestContext());
-            List<Snapshot> value = new List<Snapshot>();
+            List<SandboxSnapshot> value = new List<SandboxSnapshot>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(Snapshot.DeserializeSnapshot(item, ModelSerializationExtensions.WireOptions));
+                value.Add(SandboxSnapshot.DeserializeSandboxSnapshot(item, ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<Snapshot>)value, result);
+            return Response.FromValue((IReadOnlyList<SandboxSnapshot>)value, result);
         }
 
         /// <summary> Lists snapshots with pagination support. </summary>
@@ -277,21 +277,21 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<IReadOnlyList<Snapshot>>> GetSnapshotsAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, int? page = default, int? pageSize = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyList<SandboxSnapshot>>> GetSnapshotsAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, int? page = default, int? pageSize = default, string labels = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sandboxGroupName, nameof(sandboxGroupName));
 
             Response result = await GetSnapshotsAsync(subscriptionId, resourceGroupName, sandboxGroupName, page, pageSize, labels, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            List<Snapshot> value = new List<Snapshot>();
+            List<SandboxSnapshot> value = new List<SandboxSnapshot>();
             BinaryData data = result.Content;
             using JsonDocument document = JsonDocument.Parse(data);
             foreach (var item in document.RootElement.EnumerateArray())
             {
-                value.Add(Snapshot.DeserializeSnapshot(item, ModelSerializationExtensions.WireOptions));
+                value.Add(SandboxSnapshot.DeserializeSandboxSnapshot(item, ModelSerializationExtensions.WireOptions));
             }
-            return Response.FromValue((IReadOnlyList<Snapshot>)value, result);
+            return Response.FromValue((IReadOnlyList<SandboxSnapshot>)value, result);
         }
 
         /// <summary>
@@ -487,7 +487,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<Snapshot> GetSnapshot(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, CancellationToken cancellationToken = default)
+        public virtual Response<SandboxSnapshot> GetSnapshot(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -495,7 +495,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             Response result = GetSnapshot(subscriptionId, resourceGroupName, sandboxGroupName, id, cancellationToken.ToRequestContext());
-            return Response.FromValue((Snapshot)result, result);
+            return Response.FromValue((SandboxSnapshot)result, result);
         }
 
         /// <summary> Gets a specific snapshot by ID. </summary>
@@ -507,7 +507,7 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sandboxGroupName"/> or <paramref name="id"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<Snapshot>> GetSnapshotAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SandboxSnapshot>> GetSnapshotAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, string id, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
@@ -515,7 +515,7 @@ namespace Azure.ContainerApps.Sandbox
             Argument.AssertNotNullOrEmpty(id, nameof(id));
 
             Response result = await GetSnapshotAsync(subscriptionId, resourceGroupName, sandboxGroupName, id, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((Snapshot)result, result);
+            return Response.FromValue((SandboxSnapshot)result, result);
         }
     }
 }

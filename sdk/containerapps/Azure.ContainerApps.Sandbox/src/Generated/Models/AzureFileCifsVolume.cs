@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ContainerApps.Sandbox
 {
     /// <summary> AzureFileCifsVolume wire model. </summary>
-    public partial class AzureFileCifsVolume : Volume
+    public partial class AzureFileCifsVolume : SandboxGroupVolume
     {
         /// <summary> Initializes a new instance of <see cref="AzureFileCifsVolume"/>. </summary>
         public AzureFileCifsVolume() : base(VolumeType.AzureFileCifs)

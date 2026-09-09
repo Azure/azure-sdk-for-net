@@ -12,7 +12,7 @@ using System.Text.Json;
 namespace Azure.ContainerApps.Sandbox
 {
     /// <summary> AzureBlobByoVolume wire model. </summary>
-    public partial class AzureBlobByoVolume : Volume
+    public partial class AzureBlobByoVolume : SandboxGroupVolume
     {
         /// <summary> Initializes a new instance of <see cref="AzureBlobByoVolume"/>. </summary>
         /// <param name="storageContainerResourceId"> storageContainerResourceId value. </param>

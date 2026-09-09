@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Azure.ContainerApps.Sandbox
 {
     /// <summary> DataDiskVolume wire model. </summary>
-    public partial class DataDiskVolume : Volume, IJsonModel<DataDiskVolume>
+    public partial class DataDiskVolume : SandboxGroupVolume, IJsonModel<DataDiskVolume>
     {
         /// <summary> Initializes a new instance of <see cref="DataDiskVolume"/> for deserialization. </summary>
         internal DataDiskVolume()
@@ -22,7 +22,7 @@ namespace Azure.ContainerApps.Sandbox
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Volume PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected override SandboxGroupVolume PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataDiskVolume>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
@@ -109,7 +109,7 @@ namespace Azure.ContainerApps.Sandbox
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected override Volume JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected override SandboxGroupVolume JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<DataDiskVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")

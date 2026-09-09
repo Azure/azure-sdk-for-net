@@ -247,14 +247,14 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<ContentPackageListResponse> GetContentPackages(string subscriptionId, string resourceGroupName, string sandboxGroupName, int? page = default, int? pageSize = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual Response<ContentPackageListResult> GetContentPackages(string subscriptionId, string resourceGroupName, string sandboxGroupName, int? page = default, int? pageSize = default, string labels = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sandboxGroupName, nameof(sandboxGroupName));
 
             Response result = GetContentPackages(subscriptionId, resourceGroupName, sandboxGroupName, page, pageSize, labels, cancellationToken.ToRequestContext());
-            return Response.FromValue((ContentPackageListResponse)result, result);
+            return Response.FromValue((ContentPackageListResult)result, result);
         }
 
         /// <summary> Lists content packages for the sandbox group. </summary>
@@ -268,14 +268,14 @@ namespace Azure.ContainerApps.Sandbox
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sandboxGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<ContentPackageListResponse>> GetContentPackagesAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, int? page = default, int? pageSize = default, string labels = default, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContentPackageListResult>> GetContentPackagesAsync(string subscriptionId, string resourceGroupName, string sandboxGroupName, int? page = default, int? pageSize = default, string labels = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(sandboxGroupName, nameof(sandboxGroupName));
 
             Response result = await GetContentPackagesAsync(subscriptionId, resourceGroupName, sandboxGroupName, page, pageSize, labels, cancellationToken.ToRequestContext()).ConfigureAwait(false);
-            return Response.FromValue((ContentPackageListResponse)result, result);
+            return Response.FromValue((ContentPackageListResult)result, result);
         }
 
         /// <summary>

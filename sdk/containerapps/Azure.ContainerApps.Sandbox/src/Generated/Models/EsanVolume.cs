@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ContainerApps.Sandbox
 {
     /// <summary> Elastic SAN volume. </summary>
-    public partial class EsanVolume : Volume
+    public partial class EsanVolume : SandboxGroupVolume
     {
         /// <summary> Initializes a new instance of <see cref="EsanVolume"/>. </summary>
         /// <param name="size"> Requested and provisioned volume size. </param>
