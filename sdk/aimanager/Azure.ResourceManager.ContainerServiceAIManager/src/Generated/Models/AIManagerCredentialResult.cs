@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
     /// <summary> The credential result response. </summary>
-    public partial class CredentialResult
+    public partial class AIManagerCredentialResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CredentialResult"/>. </summary>
-        internal CredentialResult()
+        /// <summary> Initializes a new instance of <see cref="AIManagerCredentialResult"/>. </summary>
+        internal AIManagerCredentialResult()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CredentialResult"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AIManagerCredentialResult"/>. </summary>
         /// <param name="name"> The name of the credential. </param>
         /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CredentialResult(string name, BinaryData value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIManagerCredentialResult(string name, BinaryData value, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
             Value = value;

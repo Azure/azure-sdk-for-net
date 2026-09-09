@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="overrides"> User overrides layered on top of profile resolution. </param>
         /// <param name="status"> Runtime status, populated once reconciliation begins. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelDeploymentProperties(ModelDeploymentProvisioningState? provisioningState, ResourceIdentifier modelResourceId, ResourceIdentifier modelSourceResourceId, ModelDeploymentPerformanceMode? performanceMode, string vmSize, ScalingProfile scale, ModelDeploymentOverrides overrides, ModelDeploymentStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelDeploymentProperties(ModelDeploymentProvisioningState? provisioningState, ResourceIdentifier modelResourceId, ResourceIdentifier modelSourceResourceId, ModelDeploymentPerformanceMode? performanceMode, string vmSize, ModelDeploymentScalingProfile scale, ModelDeploymentOverrides overrides, ModelDeploymentStatus status, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             ModelResourceId = modelResourceId;
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         public string VmSize { get; set; }
 
         /// <summary> Scaling configuration for the deployment. Provide either `manual` (fixed replica count) or `autoscale` (autoscaling between min/max replicas), but not both. </summary>
-        public ScalingProfile Scale { get; set; }
+        public ModelDeploymentScalingProfile Scale { get; set; }
 
         /// <summary> User overrides layered on top of profile resolution. </summary>
         internal ModelDeploymentOverrides Overrides { get; set; }

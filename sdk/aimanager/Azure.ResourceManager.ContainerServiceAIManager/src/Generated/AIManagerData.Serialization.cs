@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
-                writer.WriteStringValue(ETag);
+                writer.WriteStringValue(ETag.Value.ToString());
             }
             if (Optional.IsDefined(Identity))
             {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             AIManagerProperties properties = default;
-            string eTag = default;
+            ETag? eTag = default;
             ManagedServiceIdentity identity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -239,7 +239,11 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 }
                 if (prop.NameEquals("eTag"u8))
                 {
-                    eTag = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    eTag = new ETag(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("identity"u8))

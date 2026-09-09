@@ -11,22 +11,22 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
     /// <summary> The specification of a model. All fields are read-only. </summary>
-    public partial class ModelSpec
+    public partial class AIModelSpec
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ModelSpec"/>. </summary>
-        internal ModelSpec()
+        /// <summary> Initializes a new instance of <see cref="AIModelSpec"/>. </summary>
+        internal AIModelSpec()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ModelSpec"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AIModelSpec"/>. </summary>
         /// <param name="license"> The license of the model, when known. SPDX license identifier, e.g. `mit`, `apache-2.0`. </param>
         /// <param name="isRestricted"> Whether access to the model is restricted and requires credential. </param>
         /// <param name="maxContextLength"> The maximum context length supported by the model, in tokens. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelSpec(string license, bool isRestricted, int maxContextLength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIModelSpec(string license, bool isRestricted, int maxContextLength, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             License = license;
             IsRestricted = isRestricted;

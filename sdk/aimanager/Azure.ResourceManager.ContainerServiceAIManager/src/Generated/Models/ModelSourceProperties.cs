@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="description"> An optional, free-form description of the source. </param>
         /// <param name="credential"> Credential the platform uses to authenticate to the source. Optional for public sources (e.g. ungated Hugging Face models). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ModelSourceProperties(ResourceProvisioningState? provisioningState, ModelSourceType sourceType, string description, CredentialValue credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelSourceProperties(ContainerServiceAIManagerProvisioningState? provisioningState, ModelSourceType sourceType, string description, CredentialValue credential, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             SourceType = sourceType;
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         }
 
         /// <summary> The status of the last operation. </summary>
-        public ResourceProvisioningState? ProvisioningState { get; }
+        public ContainerServiceAIManagerProvisioningState? ProvisioningState { get; }
 
         /// <summary> Model source type. Constrains the legal authentication kinds. Immutable after creation. </summary>
         public ModelSourceType SourceType { get; set; }

@@ -36,51 +36,51 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
     ///   autoscaling with an idle state should delete the `ModelDeployment`
     ///   instead.
     /// </summary>
-    public partial class ScalingProfile : IJsonModel<ScalingProfile>
+    public partial class ModelDeploymentScalingProfile : IJsonModel<ModelDeploymentScalingProfile>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScalingProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual ModelDeploymentScalingProfile PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScalingProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ModelDeploymentScalingProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeScalingProfile(document.RootElement, options);
+                        return DeserializeModelDeploymentScalingProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScalingProfile)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelDeploymentScalingProfile)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScalingProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ModelDeploymentScalingProfile>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceAIManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ScalingProfile)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelDeploymentScalingProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ScalingProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<ModelDeploymentScalingProfile>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScalingProfile IPersistableModel<ScalingProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        ModelDeploymentScalingProfile IPersistableModel<ModelDeploymentScalingProfile>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ScalingProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ModelDeploymentScalingProfile>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ScalingProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ModelDeploymentScalingProfile>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScalingProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ModelDeploymentScalingProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScalingProfile)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelDeploymentScalingProfile)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(Manual))
             {
@@ -125,31 +125,31 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ScalingProfile IJsonModel<ScalingProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        ModelDeploymentScalingProfile IJsonModel<ModelDeploymentScalingProfile>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ScalingProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual ModelDeploymentScalingProfile JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ScalingProfile>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<ModelDeploymentScalingProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScalingProfile)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelDeploymentScalingProfile)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeScalingProfile(document.RootElement, options);
+            return DeserializeModelDeploymentScalingProfile(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ScalingProfile DeserializeScalingProfile(JsonElement element, ModelReaderWriterOptions options)
+        internal static ModelDeploymentScalingProfile DeserializeModelDeploymentScalingProfile(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             ManualScalingProfile manual = default;
-            AutoscaleProfile autoscale = default;
+            ModelDeploymentAutoscaleProfile autoscale = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     {
                         continue;
                     }
-                    autoscale = AutoscaleProfile.DeserializeAutoscaleProfile(prop.Value, options);
+                    autoscale = ModelDeploymentAutoscaleProfile.DeserializeModelDeploymentAutoscaleProfile(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ScalingProfile(manual, autoscale, additionalBinaryDataProperties);
+            return new ModelDeploymentScalingProfile(manual, autoscale, additionalBinaryDataProperties);
         }
     }
 }

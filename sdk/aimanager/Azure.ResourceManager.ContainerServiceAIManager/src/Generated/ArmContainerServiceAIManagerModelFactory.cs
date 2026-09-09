@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Azure;
 using Azure.Core;
 using Azure.ResourceManager.ContainerServiceAIManager;
 using Azure.ResourceManager.Models;
@@ -18,6 +19,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
     public static partial class ArmContainerServiceAIManagerModelFactory
     {
 
+        /// <summary> The AI Manager resource. For more information, see https://aka.ms/aks/aimanager. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -28,7 +30,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="ContainerServiceAIManager.AIManagerData"/> instance for mocking. </returns>
-        public static AIManagerData AIManagerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AIManagerProperties properties = default, string eTag = default, ManagedServiceIdentity identity = default)
+        public static AIManagerData AIManagerData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, AIManagerProperties properties = default, ETag? eTag = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -45,15 +47,17 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                 default);
         }
 
+        /// <summary> AI Manager properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="deletePolicy"> Delete options of the AI Manager. Defaults to `Delete` if not specified. </param>
         /// <param name="managedResourceGroupName"> The name of the managed resource group created by the AI Manager to hold underlying infrastructure resources. </param>
         /// <returns> A new <see cref="Models.AIManagerProperties"/> instance for mocking. </returns>
-        public static AIManagerProperties AIManagerProperties(AIManagerProvisioningState? provisioningState = default, DeletePolicy? deletePolicy = default, string managedResourceGroupName = default)
+        public static AIManagerProperties AIManagerProperties(AIManagerProvisioningState? provisioningState = default, AIManagerDeletePolicy? deletePolicy = default, string managedResourceGroupName = default)
         {
             return new AIManagerProperties(provisioningState, deletePolicy, managedResourceGroupName, default);
         }
 
+        /// <summary> The AI Manager resource patch model. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="Models.AIManagerPatch"/> instance for mocking. </returns>
@@ -64,23 +68,26 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
             return new AIManagerPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, default);
         }
 
+        /// <summary> The list credential result response. </summary>
         /// <param name="kubeconfigs"> Array of credential results. </param>
-        /// <returns> A new <see cref="Models.CredentialResults"/> instance for mocking. </returns>
-        public static CredentialResults CredentialResults(IEnumerable<CredentialResult> kubeconfigs = default)
+        /// <returns> A new <see cref="Models.AIManagerCredentialResults"/> instance for mocking. </returns>
+        public static AIManagerCredentialResults AIManagerCredentialResults(IEnumerable<AIManagerCredentialResult> kubeconfigs = default)
         {
-            kubeconfigs ??= new ChangeTrackingList<CredentialResult>();
+            kubeconfigs ??= new ChangeTrackingList<AIManagerCredentialResult>();
 
-            return new CredentialResults((kubeconfigs ?? new ChangeTrackingList<CredentialResult>()).ToList(), default);
+            return new AIManagerCredentialResults((kubeconfigs ?? new ChangeTrackingList<AIManagerCredentialResult>()).ToList(), default);
         }
 
+        /// <summary> The credential result response. </summary>
         /// <param name="name"> The name of the credential. </param>
         /// <param name="value"> Base64-encoded Kubernetes configuration file. </param>
-        /// <returns> A new <see cref="Models.CredentialResult"/> instance for mocking. </returns>
-        public static CredentialResult CredentialResult(string name = default, BinaryData value = default)
+        /// <returns> A new <see cref="Models.AIManagerCredentialResult"/> instance for mocking. </returns>
+        public static AIManagerCredentialResult AIManagerCredentialResult(string name = default, BinaryData value = default)
         {
-            return new CredentialResult(name, value, default);
+            return new AIManagerCredentialResult(name, value, default);
         }
 
+        /// <summary> The AI Manager namespace resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -88,7 +95,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="ContainerServiceAIManager.AIManagerNamespaceData"/> instance for mocking. </returns>
-        public static AIManagerNamespaceData AIManagerNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AIManagerNamespaceProperties properties = default, string eTag = default)
+        public static AIManagerNamespaceData AIManagerNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AIManagerNamespaceProperties properties = default, ETag? eTag = default)
         {
             return new AIManagerNamespaceData(
                 id,
@@ -100,6 +107,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                 default);
         }
 
+        /// <summary> AI Manager namespace properties. </summary>
         /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="labels"> Labels applied to the Kubernetes namespace. </param>
         /// <param name="annotations"> Annotations applied to the Kubernetes namespace. </param>
@@ -112,16 +120,18 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
             return new AIManagerNamespaceProperties(provisioningState, labels ?? new ChangeTrackingDictionary<string, string>(), annotations ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Access information for an AI Manager namespace, including the OpenAI-compatible gateway endpoint and the API keys used to authenticate against it. </summary>
         /// <param name="endpoint"> OpenAI-compatible inference gateway base URL (for example, `https://team-alpha.&lt;cluster&gt;.&lt;region&gt;.aksapp.io/v1`). </param>
         /// <param name="primaryKey"> Primary API key. Send as `Authorization: Bearer &lt;key&gt;` or `api-key: &lt;key&gt;`. Treat as secret; do not log or persist in plaintext. </param>
         /// <param name="secondaryKey"> Secondary API key, accepted by the gateway in the same headers as `primaryKey`. Generated independently when the namespace is created, then overwritten by the previous `primaryKey` on each `rotateKeys` call so clients can roll over without downtime. Treat as secret; do not log or persist in plaintext. </param>
         /// <param name="lastRotatedOn"> UTC time the keys were last rotated by `rotateKeys`. Absent until the first rotation. Clients can use this to detect rotation and refresh cached credentials. </param>
-        /// <returns> A new <see cref="Models.NamespaceAccessInfo"/> instance for mocking. </returns>
-        public static NamespaceAccessInfo NamespaceAccessInfo(Uri endpoint = default, string primaryKey = default, string secondaryKey = default, DateTimeOffset? lastRotatedOn = default)
+        /// <returns> A new <see cref="Models.AIManagerNamespaceAccessInfo"/> instance for mocking. </returns>
+        public static AIManagerNamespaceAccessInfo AIManagerNamespaceAccessInfo(Uri endpoint = default, string primaryKey = default, string secondaryKey = default, DateTimeOffset? lastRotatedOn = default)
         {
-            return new NamespaceAccessInfo(endpoint, primaryKey, secondaryKey, lastRotatedOn, default);
+            return new AIManagerNamespaceAccessInfo(endpoint, primaryKey, secondaryKey, lastRotatedOn, default);
         }
 
+        /// <summary> An AI model exposed by Microsoft.ContainerService. Read-only, globally-shared catalog entry that is platform-maintained and auto-provisioned by the resource provider. Can be referenced by `ModelDeployment` resources. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -139,40 +149,45 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                 default);
         }
 
+        /// <summary> AI model properties. </summary>
         /// <param name="modelId"> The Hugging Face model identifier in `&lt;org&gt;/&lt;repo&gt;` form, e.g. `microsoft/Phi-4-mini-instruct`. Uniquely identifies the upstream model that backs this catalog entry. </param>
         /// <param name="description"> An optional, free-form description of the model. </param>
         /// <param name="spec"> Specification of the model. </param>
         /// <returns> A new <see cref="Models.AIModelProperties"/> instance for mocking. </returns>
-        public static AIModelProperties AIModelProperties(string modelId = default, string description = default, ModelSpec spec = default)
+        public static AIModelProperties AIModelProperties(string modelId = default, string description = default, AIModelSpec spec = default)
         {
             return new AIModelProperties(modelId, description, spec, default);
         }
 
+        /// <summary> The specification of a model. All fields are read-only. </summary>
         /// <param name="license"> The license of the model, when known. SPDX license identifier, e.g. `mit`, `apache-2.0`. </param>
         /// <param name="isRestricted"> Whether access to the model is restricted and requires credential. </param>
         /// <param name="maxContextLength"> The maximum context length supported by the model, in tokens. </param>
-        /// <returns> A new <see cref="Models.ModelSpec"/> instance for mocking. </returns>
-        public static ModelSpec ModelSpec(string license = default, bool isRestricted = default, int maxContextLength = default)
+        /// <returns> A new <see cref="Models.AIModelSpec"/> instance for mocking. </returns>
+        public static AIModelSpec AIModelSpec(string license = default, bool isRestricted = default, int maxContextLength = default)
         {
-            return new ModelSpec(license, isRestricted, maxContextLength, default);
+            return new AIModelSpec(license, isRestricted, maxContextLength, default);
         }
 
-        /// <returns> A new <see cref="Models.CalculateCostRequest"/> instance for mocking. </returns>
-        public static CalculateCostRequest CalculateCostRequest()
+        /// <summary> Request body for the AI model `calculateCost` action. </summary>
+        /// <returns> A new <see cref="Models.CalculateCostContent"/> instance for mocking. </returns>
+        public static CalculateCostContent CalculateCostContent()
         {
-            return new CalculateCostRequest(default);
+            return new CalculateCostContent(default);
         }
 
+        /// <summary> Response body for the AI model `calculateCost` action. </summary>
         /// <param name="currency"> ISO 4217 currency code, e.g. "USD". </param>
         /// <param name="plans"> Ranked list of GPU SKU pricing plans. Feasible plans first, ordered by `totalHourlyPrice` ascending; infeasible plans last. </param>
-        /// <returns> A new <see cref="Models.CalculateCostResponse"/> instance for mocking. </returns>
-        public static CalculateCostResponse CalculateCostResponse(string currency = default, IEnumerable<CalculateCostPlan> plans = default)
+        /// <returns> A new <see cref="Models.CalculateCostResult"/> instance for mocking. </returns>
+        public static CalculateCostResult CalculateCostResult(string currency = default, IEnumerable<CalculateCostPlan> plans = default)
         {
             plans ??= new ChangeTrackingList<CalculateCostPlan>();
 
-            return new CalculateCostResponse(currency, (plans ?? new ChangeTrackingList<CalculateCostPlan>()).ToList(), default);
+            return new CalculateCostResult(currency, (plans ?? new ChangeTrackingList<CalculateCostPlan>()).ToList(), default);
         }
 
+        /// <summary> A GPU SKU pricing plan returned by the `calculateCost` action. Describes the cost of running a single model replica on the specified `vmSize`. To estimate the cost of running multiple replicas, scale `totalHourlyPrice` by the desired replica count, bounded by `maxAvailableReplicas`. </summary>
         /// <param name="vmSize"> Azure VM SKU, e.g. "Standard_ND96isr_H100_v5". Matches the value accepted by `ModelDeploymentProperties.vmSize`. </param>
         /// <param name="quantization"> Resolved quantization on this SKU. </param>
         /// <param name="vmsPerReplica"> Number of VMs required to host one replica on this SKU. </param>
@@ -187,7 +202,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// </param>
         /// <param name="infeasibilityReason"> Reason explaining why the plan is not deployable. This is a per-plan annotation, not an ARM error envelope. </param>
         /// <returns> A new <see cref="Models.CalculateCostPlan"/> instance for mocking. </returns>
-        public static CalculateCostPlan CalculateCostPlan(string vmSize = default, string quantization = default, int vmsPerReplica = default, int maxAvailableReplicas = default, ServingPerformanceEstimation servingPerformanceEstimation = default, double vmHourlyPrice = default, double? totalHourlyPrice = default, DateTimeOffset? priceAsOf = default, bool feasible = default, InfeasibilityReason infeasibilityReason = default)
+        public static CalculateCostPlan CalculateCostPlan(string vmSize = default, string quantization = default, int vmsPerReplica = default, int maxAvailableReplicas = default, AIModelServingPerformanceEstimation servingPerformanceEstimation = default, double vmHourlyPrice = default, double? totalHourlyPrice = default, DateTimeOffset? priceAsOf = default, bool feasible = default, AIModelInfeasibilityReason infeasibilityReason = default)
         {
             return new CalculateCostPlan(
                 vmSize,
@@ -203,22 +218,25 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                 default);
         }
 
+        /// <summary> Estimated relative inference performance of a single model replica on a given GPU SKU. Each metric is a scaling coefficient in the range `[0, 1]` relative to the best-performing SKU for this model, which scores `1`. </summary>
         /// <param name="relativeLatencyScore"> Relative inference latency score in `[0, 1]`. Higher is better (`1` matches the best-performing SKU's latency for this model). Note: this is a normalized score, not a raw latency ratio -- a larger value indicates lower latency. </param>
         /// <param name="relativeThroughputScore"> Relative inference throughput score in `[0, 1]`. Higher is better (`1` matches the best-performing SKU's throughput for this model). </param>
-        /// <returns> A new <see cref="Models.ServingPerformanceEstimation"/> instance for mocking. </returns>
-        public static ServingPerformanceEstimation ServingPerformanceEstimation(float relativeLatencyScore = default, float relativeThroughputScore = default)
+        /// <returns> A new <see cref="Models.AIModelServingPerformanceEstimation"/> instance for mocking. </returns>
+        public static AIModelServingPerformanceEstimation AIModelServingPerformanceEstimation(float relativeLatencyScore = default, float relativeThroughputScore = default)
         {
-            return new ServingPerformanceEstimation(relativeLatencyScore, relativeThroughputScore, default);
+            return new AIModelServingPerformanceEstimation(relativeLatencyScore, relativeThroughputScore, default);
         }
 
+        /// <summary> Reason explaining why a `CalculateCostPlan` is not deployable. This is a per-plan annotation surfaced inside a successful `calculateCost` response, not an ARM error envelope. </summary>
         /// <param name="code"> Machine-readable reason code. </param>
         /// <param name="message"> Human-readable message accompanying `code`. </param>
-        /// <returns> A new <see cref="Models.InfeasibilityReason"/> instance for mocking. </returns>
-        public static InfeasibilityReason InfeasibilityReason(InfeasibleCode code = default, string message = default)
+        /// <returns> A new <see cref="Models.AIModelInfeasibilityReason"/> instance for mocking. </returns>
+        public static AIModelInfeasibilityReason AIModelInfeasibilityReason(AIModelInfeasibleCode code = default, string message = default)
         {
-            return new InfeasibilityReason(code, message, default);
+            return new AIModelInfeasibilityReason(code, message, default);
         }
 
+        /// <summary> A model source registered with an AI Manager. Describes an external model registry (e.g. Hugging Face) and the credentials the platform uses to pull artifacts from it. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -226,7 +244,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="ContainerServiceAIManager.ModelSourceData"/> instance for mocking. </returns>
-        public static ModelSourceData ModelSourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ModelSourceProperties properties = default, string eTag = default)
+        public static ModelSourceData ModelSourceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ModelSourceProperties properties = default, ETag? eTag = default)
         {
             return new ModelSourceData(
                 id,
@@ -243,11 +261,18 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="description"> An optional, free-form description of the source. </param>
         /// <param name="credentialInlineValue"> The access token, password, or other secret value. </param>
         /// <returns> A new <see cref="Models.ModelSourceProperties"/> instance for mocking. </returns>
-        public static ModelSourceProperties ModelSourceProperties(ResourceProvisioningState? provisioningState = default, ModelSourceType sourceType = default, string description = default, string credentialInlineValue = default)
+        public static ModelSourceProperties ModelSourceProperties(ContainerServiceAIManagerProvisioningState? provisioningState = default, ModelSourceType sourceType = default, string description = default, string credentialInlineValue = default)
         {
             return new ModelSourceProperties(provisioningState, sourceType, description, credentialInlineValue is null ? default : new CredentialValue(new InlineCredential(credentialInlineValue, default), default), default);
         }
 
+        /// <summary>
+        /// A running deployment of a model in an AI Manager namespace.
+        /// PUT (create or update) on this resource is a full replace: the request body
+        /// represents the complete desired state, and any optional property omitted
+        /// from the body is reset to its default value (or cleared, if it has no
+        /// default). Callers must always send the full desired state on every PUT.
+        /// </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -255,7 +280,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="eTag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields. </param>
         /// <returns> A new <see cref="ContainerServiceAIManager.ModelDeploymentData"/> instance for mocking. </returns>
-        public static ModelDeploymentData ModelDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ModelDeploymentProperties properties = default, string eTag = default)
+        public static ModelDeploymentData ModelDeploymentData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, ModelDeploymentProperties properties = default, ETag? eTag = default)
         {
             return new ModelDeploymentData(
                 id,
@@ -276,7 +301,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="overridesValues"> Experimental free-form override key/value pairs. Subject to change without notice; not part of the stable contract. Recognized keys are documented per release and may be added, renamed, or removed at any time. </param>
         /// <param name="status"> Runtime status, populated once reconciliation begins. </param>
         /// <returns> A new <see cref="Models.ModelDeploymentProperties"/> instance for mocking. </returns>
-        public static ModelDeploymentProperties ModelDeploymentProperties(ModelDeploymentProvisioningState? provisioningState = default, ResourceIdentifier modelResourceId = default, ResourceIdentifier modelSourceResourceId = default, ModelDeploymentPerformanceMode? performanceMode = default, string vmSize = default, ScalingProfile scale = default, IDictionary<string, string> overridesValues = default, ModelDeploymentStatus status = default)
+        public static ModelDeploymentProperties ModelDeploymentProperties(ModelDeploymentProvisioningState? provisioningState = default, ResourceIdentifier modelResourceId = default, ResourceIdentifier modelSourceResourceId = default, ModelDeploymentPerformanceMode? performanceMode = default, string vmSize = default, ModelDeploymentScalingProfile scale = default, IDictionary<string, string> overridesValues = default, ModelDeploymentStatus status = default)
         {
             return new ModelDeploymentProperties(
                 provisioningState,
@@ -292,20 +317,22 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <param name="manualReplicas"> Fixed number of replicas. May be `0` to stop serving traffic while keeping the deployment configuration (see `ScalingProfile`). </param>
         /// <param name="autoscale"> Autoscaling configuration. Mutually exclusive with `manual`. </param>
-        /// <returns> A new <see cref="Models.ScalingProfile"/> instance for mocking. </returns>
-        public static ScalingProfile ScalingProfile(int? manualReplicas = default, AutoscaleProfile autoscale = default)
+        /// <returns> A new <see cref="Models.ModelDeploymentScalingProfile"/> instance for mocking. </returns>
+        public static ModelDeploymentScalingProfile ModelDeploymentScalingProfile(int? manualReplicas = default, ModelDeploymentAutoscaleProfile autoscale = default)
         {
-            return new ScalingProfile(manualReplicas is null ? default : new ManualScalingProfile(manualReplicas.GetValueOrDefault(), default), autoscale, default);
+            return new ModelDeploymentScalingProfile(manualReplicas is null ? default : new ManualScalingProfile(manualReplicas.GetValueOrDefault(), default), autoscale, default);
         }
 
+        /// <summary> Autoscaling configuration: scale replica count between a minimum and maximum. </summary>
         /// <param name="minReplicas"> The minimum number of replicas. Must be at least `1`; scale-to-zero is not supported in autoscale mode (see `ScalingProfile`). </param>
         /// <param name="maxReplicas"> The maximum number of replicas. If not specified, the service derives a default from the subscription GPU quota. </param>
-        /// <returns> A new <see cref="Models.AutoscaleProfile"/> instance for mocking. </returns>
-        public static AutoscaleProfile AutoscaleProfile(int minReplicas = default, int? maxReplicas = default)
+        /// <returns> A new <see cref="Models.ModelDeploymentAutoscaleProfile"/> instance for mocking. </returns>
+        public static ModelDeploymentAutoscaleProfile ModelDeploymentAutoscaleProfile(int minReplicas = default, int? maxReplicas = default)
         {
-            return new AutoscaleProfile(minReplicas, maxReplicas, default);
+            return new ModelDeploymentAutoscaleProfile(minReplicas, maxReplicas, default);
         }
 
+        /// <summary> The runtime status of a model deployment. All fields are read-only and populated once reconciliation has started. </summary>
         /// <param name="endpoint"> The inference endpoint URL exposed by the deployment, once ready. </param>
         /// <param name="engine"> The inference engine used to serve the model, e.g. "vllm". </param>
         /// <param name="engineVersion"> The version of the inference engine, e.g. "0.17". </param>

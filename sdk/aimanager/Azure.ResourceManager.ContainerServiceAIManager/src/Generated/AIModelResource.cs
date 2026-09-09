@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CalculateCostResponse>> CalculateCostAsync(CalculateCostRequest content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CalculateCostResult>> CalculateCostAsync(CalculateCostContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -224,9 +224,9 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiModelsRestClient.CreateCalculateCostRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, CalculateCostRequest.ToRequestContent(content), context);
+                HttpMessage message = _aiModelsRestClient.CreateCalculateCostRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, CalculateCostContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CalculateCostResponse> response = Response.FromValue(CalculateCostResponse.FromResponse(result), result);
+                Response<CalculateCostResult> response = Response.FromValue(CalculateCostResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// <param name="content"> The content of the action request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CalculateCostResponse> CalculateCost(CalculateCostRequest content, CancellationToken cancellationToken = default)
+        public virtual Response<CalculateCostResult> CalculateCost(CalculateCostContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -276,9 +276,9 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _aiModelsRestClient.CreateCalculateCostRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, CalculateCostRequest.ToRequestContent(content), context);
+                HttpMessage message = _aiModelsRestClient.CreateCalculateCostRequest(Guid.Parse(Id.SubscriptionId), Id.Parent.Name, Id.Name, CalculateCostContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CalculateCostResponse> response = Response.FromValue(CalculateCostResponse.FromResponse(result), result);
+                Response<CalculateCostResult> response = Response.FromValue(CalculateCostResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

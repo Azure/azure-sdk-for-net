@@ -12,22 +12,22 @@ using Azure.ResourceManager.ContainerServiceAIManager;
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
     /// <summary> Response body for the AI model `calculateCost` action. </summary>
-    public partial class CalculateCostResponse
+    public partial class CalculateCostResult
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CalculateCostResponse"/>. </summary>
-        internal CalculateCostResponse()
+        /// <summary> Initializes a new instance of <see cref="CalculateCostResult"/>. </summary>
+        internal CalculateCostResult()
         {
             Plans = new ChangeTrackingList<CalculateCostPlan>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CalculateCostResponse"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculateCostResult"/>. </summary>
         /// <param name="currency"> ISO 4217 currency code, e.g. "USD". </param>
         /// <param name="plans"> Ranked list of GPU SKU pricing plans. Feasible plans first, ordered by `totalHourlyPrice` ascending; infeasible plans last. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CalculateCostResponse(string currency, IReadOnlyList<CalculateCostPlan> plans, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CalculateCostResult(string currency, IReadOnlyList<CalculateCostPlan> plans, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Currency = currency;
             Plans = plans;

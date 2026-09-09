@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
             {
                 return null;
             }
-            ResourceProvisioningState? provisioningState = default;
+            ContainerServiceAIManagerProvisioningState? provisioningState = default;
             ModelSourceType sourceType = default;
             string description = default;
             CredentialValue credential = default;
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     {
                         continue;
                     }
-                    provisioningState = new ResourceProvisioningState(prop.Value.GetString());
+                    provisioningState = new ContainerServiceAIManagerProvisioningState(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("sourceType"u8))

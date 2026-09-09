@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="description"> An optional, free-form description of the model. </param>
         /// <param name="spec"> Specification of the model. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AIModelProperties(string modelId, string description, ModelSpec spec, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIModelProperties(string modelId, string description, AIModelSpec spec, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ModelId = modelId;
             Description = description;
@@ -41,6 +41,6 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         public string Description { get; }
 
         /// <summary> Specification of the model. </summary>
-        public ModelSpec Spec { get; }
+        public AIModelSpec Spec { get; }
     }
 }

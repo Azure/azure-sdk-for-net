@@ -12,27 +12,27 @@ using Azure.ResourceManager.ContainerServiceAIManager;
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
     /// <summary> The list credential result response. </summary>
-    public partial class CredentialResults
+    public partial class AIManagerCredentialResults
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CredentialResults"/>. </summary>
-        internal CredentialResults()
+        /// <summary> Initializes a new instance of <see cref="AIManagerCredentialResults"/>. </summary>
+        internal AIManagerCredentialResults()
         {
-            Kubeconfigs = new ChangeTrackingList<CredentialResult>();
+            Kubeconfigs = new ChangeTrackingList<AIManagerCredentialResult>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="CredentialResults"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AIManagerCredentialResults"/>. </summary>
         /// <param name="kubeconfigs"> Array of credential results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CredentialResults(IReadOnlyList<CredentialResult> kubeconfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIManagerCredentialResults(IReadOnlyList<AIManagerCredentialResult> kubeconfigs, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Kubeconfigs = kubeconfigs;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
         /// <summary> Array of credential results. </summary>
-        public IReadOnlyList<CredentialResult> Kubeconfigs { get; }
+        public IReadOnlyList<AIManagerCredentialResult> Kubeconfigs { get; }
     }
 }

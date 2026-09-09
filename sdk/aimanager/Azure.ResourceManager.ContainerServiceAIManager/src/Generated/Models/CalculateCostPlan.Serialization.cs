@@ -170,12 +170,12 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
             string quantization = default;
             int vmsPerReplica = default;
             int maxAvailableReplicas = default;
-            ServingPerformanceEstimation servingPerformanceEstimation = default;
+            AIModelServingPerformanceEstimation servingPerformanceEstimation = default;
             double vmHourlyPrice = default;
             double? totalHourlyPrice = default;
             DateTimeOffset? priceAsOf = default;
             bool feasible = default;
-            InfeasibilityReason infeasibilityReason = default;
+            AIModelInfeasibilityReason infeasibilityReason = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     {
                         continue;
                     }
-                    servingPerformanceEstimation = ServingPerformanceEstimation.DeserializeServingPerformanceEstimation(prop.Value, options);
+                    servingPerformanceEstimation = AIModelServingPerformanceEstimation.DeserializeAIModelServingPerformanceEstimation(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("vmHourlyPrice"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     {
                         continue;
                     }
-                    infeasibilityReason = InfeasibilityReason.DeserializeInfeasibilityReason(prop.Value, options);
+                    infeasibilityReason = AIModelInfeasibilityReason.DeserializeAIModelInfeasibilityReason(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

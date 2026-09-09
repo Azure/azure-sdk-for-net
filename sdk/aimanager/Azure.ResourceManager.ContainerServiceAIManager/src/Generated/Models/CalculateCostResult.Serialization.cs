@@ -15,58 +15,58 @@ using Azure.ResourceManager.ContainerServiceAIManager;
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
     /// <summary> Response body for the AI model `calculateCost` action. </summary>
-    public partial class CalculateCostResponse : IJsonModel<CalculateCostResponse>
+    public partial class CalculateCostResult : IJsonModel<CalculateCostResult>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CalculateCostResponse PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CalculateCostResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CalculateCostResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CalculateCostResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCalculateCostResponse(document.RootElement, options);
+                        return DeserializeCalculateCostResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CalculateCostResponse)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CalculateCostResult)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CalculateCostResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CalculateCostResult>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceAIManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CalculateCostResponse)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CalculateCostResult)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CalculateCostResponse>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CalculateCostResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CalculateCostResponse IPersistableModel<CalculateCostResponse>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CalculateCostResult IPersistableModel<CalculateCostResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CalculateCostResponse>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CalculateCostResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CalculateCostResponse"/> from. </param>
-        internal static CalculateCostResponse FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="CalculateCostResult"/> from. </param>
+        internal static CalculateCostResult FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeCalculateCostResponse(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeCalculateCostResult(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CalculateCostResponse>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CalculateCostResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CalculateCostResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CalculateCostResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CalculateCostResponse)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CalculateCostResult)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -116,24 +116,24 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CalculateCostResponse IJsonModel<CalculateCostResponse>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CalculateCostResult IJsonModel<CalculateCostResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CalculateCostResponse JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CalculateCostResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CalculateCostResponse>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CalculateCostResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CalculateCostResponse)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CalculateCostResult)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCalculateCostResponse(document.RootElement, options);
+            return DeserializeCalculateCostResult(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CalculateCostResponse DeserializeCalculateCostResponse(JsonElement element, ModelReaderWriterOptions options)
+        internal static CalculateCostResult DeserializeCalculateCostResult(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CalculateCostResponse(currency, plans, additionalBinaryDataProperties);
+            return new CalculateCostResult(currency, plans, additionalBinaryDataProperties);
         }
     }
 }

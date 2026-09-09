@@ -11,19 +11,19 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
     /// <summary> Request body for the AI model `calculateCost` action. </summary>
-    public partial class CalculateCostRequest
+    public partial class CalculateCostContent
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="CalculateCostRequest"/>. </summary>
-        public CalculateCostRequest()
+        /// <summary> Initializes a new instance of <see cref="CalculateCostContent"/>. </summary>
+        public CalculateCostContent()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="CalculateCostRequest"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CalculateCostContent"/>. </summary>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CalculateCostRequest(IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CalculateCostContent(IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }

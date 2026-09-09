@@ -15,58 +15,58 @@ using Azure.ResourceManager.ContainerServiceAIManager;
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
     /// <summary> Access information for an AI Manager namespace, including the OpenAI-compatible gateway endpoint and the API keys used to authenticate against it. </summary>
-    public partial class NamespaceAccessInfo : IJsonModel<NamespaceAccessInfo>
+    public partial class AIManagerNamespaceAccessInfo : IJsonModel<AIManagerNamespaceAccessInfo>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NamespaceAccessInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AIManagerNamespaceAccessInfo PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NamespaceAccessInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIManagerNamespaceAccessInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeNamespaceAccessInfo(document.RootElement, options);
+                        return DeserializeAIManagerNamespaceAccessInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NamespaceAccessInfo)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AIManagerNamespaceAccessInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NamespaceAccessInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIManagerNamespaceAccessInfo>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceAIManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(NamespaceAccessInfo)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AIManagerNamespaceAccessInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<NamespaceAccessInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AIManagerNamespaceAccessInfo>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NamespaceAccessInfo IPersistableModel<NamespaceAccessInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AIManagerNamespaceAccessInfo IPersistableModel<AIManagerNamespaceAccessInfo>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<NamespaceAccessInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AIManagerNamespaceAccessInfo>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
-        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="NamespaceAccessInfo"/> from. </param>
-        internal static NamespaceAccessInfo FromResponse(Response response)
+        /// <param name="response"> The <see cref="Response"/> to deserialize the <see cref="AIManagerNamespaceAccessInfo"/> from. </param>
+        internal static AIManagerNamespaceAccessInfo FromResponse(Response response)
         {
             using JsonDocument document = JsonDocument.Parse(response.Content, ModelSerializationExtensions.JsonDocumentOptions);
-            return DeserializeNamespaceAccessInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
+            return DeserializeAIManagerNamespaceAccessInfo(document.RootElement, ModelSerializationExtensions.WireOptions);
         }
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<NamespaceAccessInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AIManagerNamespaceAccessInfo>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -77,10 +77,10 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NamespaceAccessInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIManagerNamespaceAccessInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NamespaceAccessInfo)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AIManagerNamespaceAccessInfo)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
@@ -121,24 +121,24 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        NamespaceAccessInfo IJsonModel<NamespaceAccessInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AIManagerNamespaceAccessInfo IJsonModel<AIManagerNamespaceAccessInfo>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual NamespaceAccessInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AIManagerNamespaceAccessInfo JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<NamespaceAccessInfo>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIManagerNamespaceAccessInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NamespaceAccessInfo)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AIManagerNamespaceAccessInfo)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNamespaceAccessInfo(document.RootElement, options);
+            return DeserializeAIManagerNamespaceAccessInfo(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static NamespaceAccessInfo DeserializeNamespaceAccessInfo(JsonElement element, ModelReaderWriterOptions options)
+        internal static AIManagerNamespaceAccessInfo DeserializeAIManagerNamespaceAccessInfo(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NamespaceAccessInfo(endpoint, primaryKey, secondaryKey, lastRotatedOn, additionalBinaryDataProperties);
+            return new AIManagerNamespaceAccessInfo(endpoint, primaryKey, secondaryKey, lastRotatedOn, additionalBinaryDataProperties);
         }
     }
 }

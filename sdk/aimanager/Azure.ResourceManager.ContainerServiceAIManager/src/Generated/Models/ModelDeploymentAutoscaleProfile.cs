@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
     /// <summary> Autoscaling configuration: scale replica count between a minimum and maximum. </summary>
-    public partial class AutoscaleProfile
+    public partial class ModelDeploymentAutoscaleProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="AutoscaleProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelDeploymentAutoscaleProfile"/>. </summary>
         /// <param name="minReplicas"> The minimum number of replicas. Must be at least `1`; scale-to-zero is not supported in autoscale mode (see `ScalingProfile`). </param>
-        public AutoscaleProfile(int minReplicas)
+        public ModelDeploymentAutoscaleProfile(int minReplicas)
         {
             MinReplicas = minReplicas;
         }
 
-        /// <summary> Initializes a new instance of <see cref="AutoscaleProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelDeploymentAutoscaleProfile"/>. </summary>
         /// <param name="minReplicas"> The minimum number of replicas. Must be at least `1`; scale-to-zero is not supported in autoscale mode (see `ScalingProfile`). </param>
         /// <param name="maxReplicas"> The maximum number of replicas. If not specified, the service derives a default from the subscription GPU quota. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AutoscaleProfile(int minReplicas, int? maxReplicas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelDeploymentAutoscaleProfile(int minReplicas, int? maxReplicas, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             MinReplicas = minReplicas;
             MaxReplicas = maxReplicas;

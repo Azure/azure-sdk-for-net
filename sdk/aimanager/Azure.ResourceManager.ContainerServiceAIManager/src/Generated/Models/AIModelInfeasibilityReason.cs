@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
     /// <summary> Reason explaining why a `CalculateCostPlan` is not deployable. This is a per-plan annotation surfaced inside a successful `calculateCost` response, not an ARM error envelope. </summary>
-    public partial class InfeasibilityReason
+    public partial class AIModelInfeasibilityReason
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="InfeasibilityReason"/>. </summary>
-        internal InfeasibilityReason()
+        /// <summary> Initializes a new instance of <see cref="AIModelInfeasibilityReason"/>. </summary>
+        internal AIModelInfeasibilityReason()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="InfeasibilityReason"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AIModelInfeasibilityReason"/>. </summary>
         /// <param name="code"> Machine-readable reason code. </param>
         /// <param name="message"> Human-readable message accompanying `code`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal InfeasibilityReason(InfeasibleCode code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIModelInfeasibilityReason(AIModelInfeasibleCode code, string message, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Code = code;
             Message = message;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         }
 
         /// <summary> Machine-readable reason code. </summary>
-        public InfeasibleCode Code { get; }
+        public AIModelInfeasibleCode Code { get; }
 
         /// <summary> Human-readable message accompanying `code`. </summary>
         public string Message { get; }

@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NamespaceAccessInfo>> GetAccessKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AIManagerNamespaceAccessInfo>> GetAccessKeysAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _aiManagerNamespacesClientDiagnostics.CreateScope("AIManagerNamespaceResource.GetAccessKeys");
             scope.Start();
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 };
                 HttpMessage message = _aiManagerNamespacesRestClient.CreateGetAccessKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NamespaceAccessInfo> response = Response.FromValue(NamespaceAccessInfo.FromResponse(result), result);
+                Response<AIManagerNamespaceAccessInfo> response = Response.FromValue(AIManagerNamespaceAccessInfo.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NamespaceAccessInfo> GetAccessKeys(CancellationToken cancellationToken = default)
+        public virtual Response<AIManagerNamespaceAccessInfo> GetAccessKeys(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _aiManagerNamespacesClientDiagnostics.CreateScope("AIManagerNamespaceResource.GetAccessKeys");
             scope.Start();
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 };
                 HttpMessage message = _aiManagerNamespacesRestClient.CreateGetAccessKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NamespaceAccessInfo> response = Response.FromValue(NamespaceAccessInfo.FromResponse(result), result);
+                Response<AIManagerNamespaceAccessInfo> response = Response.FromValue(AIManagerNamespaceAccessInfo.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CredentialResults>> GetCredentialAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AIManagerCredentialResults>> GetCredentialAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _aiManagerNamespacesClientDiagnostics.CreateScope("AIManagerNamespaceResource.GetCredential");
             scope.Start();
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 };
                 HttpMessage message = _aiManagerNamespacesRestClient.CreateGetCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CredentialResults> response = Response.FromValue(CredentialResults.FromResponse(result), result);
+                Response<AIManagerCredentialResults> response = Response.FromValue(AIManagerCredentialResults.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CredentialResults> GetCredential(CancellationToken cancellationToken = default)
+        public virtual Response<AIManagerCredentialResults> GetCredential(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _aiManagerNamespacesClientDiagnostics.CreateScope("AIManagerNamespaceResource.GetCredential");
             scope.Start();
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 };
                 HttpMessage message = _aiManagerNamespacesRestClient.CreateGetCredentialRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CredentialResults> response = Response.FromValue(CredentialResults.FromResponse(result), result);
+                Response<AIManagerCredentialResults> response = Response.FromValue(AIManagerCredentialResults.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<NamespaceAccessInfo>> RotateKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<AIManagerNamespaceAccessInfo>> RotateKeysAsync(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _aiManagerNamespacesClientDiagnostics.CreateScope("AIManagerNamespaceResource.RotateKeys");
             scope.Start();
@@ -514,7 +514,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 };
                 HttpMessage message = _aiManagerNamespacesRestClient.CreateRotateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<NamespaceAccessInfo> response = Response.FromValue(NamespaceAccessInfo.FromResponse(result), result);
+                Response<AIManagerNamespaceAccessInfo> response = Response.FromValue(AIManagerNamespaceAccessInfo.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<NamespaceAccessInfo> RotateKeys(CancellationToken cancellationToken = default)
+        public virtual Response<AIManagerNamespaceAccessInfo> RotateKeys(CancellationToken cancellationToken = default)
         {
             using DiagnosticScope scope = _aiManagerNamespacesClientDiagnostics.CreateScope("AIManagerNamespaceResource.RotateKeys");
             scope.Start();
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager
                 };
                 HttpMessage message = _aiManagerNamespacesRestClient.CreateRotateKeysRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Parent.Name, Id.Name, context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<NamespaceAccessInfo> response = Response.FromValue(NamespaceAccessInfo.FromResponse(result), result);
+                Response<AIManagerNamespaceAccessInfo> response = Response.FromValue(AIManagerNamespaceAccessInfo.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());

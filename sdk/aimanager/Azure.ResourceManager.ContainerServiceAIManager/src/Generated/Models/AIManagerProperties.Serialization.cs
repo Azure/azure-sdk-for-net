@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                 return null;
             }
             AIManagerProvisioningState? provisioningState = default;
-            DeletePolicy? deletePolicy = default;
+            AIManagerDeletePolicy? deletePolicy = default;
             string managedResourceGroupName = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     {
                         continue;
                     }
-                    deletePolicy = new DeletePolicy(prop.Value.GetString());
+                    deletePolicy = new AIManagerDeletePolicy(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("managedResourceGroupName"u8))

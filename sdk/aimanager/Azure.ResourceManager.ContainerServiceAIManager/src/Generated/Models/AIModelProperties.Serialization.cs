@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
             }
             string modelId = default;
             string description = default;
-            ModelSpec spec = default;
+            AIModelSpec spec = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                 }
                 if (prop.NameEquals("spec"u8))
                 {
-                    spec = ModelSpec.DeserializeModelSpec(prop.Value, options);
+                    spec = AIModelSpec.DeserializeAIModelSpec(prop.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

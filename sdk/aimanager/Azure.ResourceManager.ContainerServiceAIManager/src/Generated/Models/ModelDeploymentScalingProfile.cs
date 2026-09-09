@@ -33,21 +33,21 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
     ///   autoscaling with an idle state should delete the `ModelDeployment`
     ///   instead.
     /// </summary>
-    public partial class ScalingProfile
+    public partial class ModelDeploymentScalingProfile
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ScalingProfile"/>. </summary>
-        public ScalingProfile()
+        /// <summary> Initializes a new instance of <see cref="ModelDeploymentScalingProfile"/>. </summary>
+        public ModelDeploymentScalingProfile()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ScalingProfile"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ModelDeploymentScalingProfile"/>. </summary>
         /// <param name="manual"> Manual scaling configuration with a fixed replica count. Mutually exclusive with `autoscale`. </param>
         /// <param name="autoscale"> Autoscaling configuration. Mutually exclusive with `manual`. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ScalingProfile(ManualScalingProfile manual, AutoscaleProfile autoscale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal ModelDeploymentScalingProfile(ManualScalingProfile manual, ModelDeploymentAutoscaleProfile autoscale, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Manual = manual;
             Autoscale = autoscale;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         internal ManualScalingProfile Manual { get; set; }
 
         /// <summary> Autoscaling configuration. Mutually exclusive with `manual`. </summary>
-        public AutoscaleProfile Autoscale { get; set; }
+        public ModelDeploymentAutoscaleProfile Autoscale { get; set; }
 
         /// <summary> Fixed number of replicas. May be `0` to stop serving traffic while keeping the deployment configuration (see `ScalingProfile`). </summary>
         public int? ManualReplicas

@@ -12,7 +12,7 @@ using Azure.ResourceManager.ContainerServiceAIManager;
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
     /// <summary> Delete options of the AI Manager. </summary>
-    public readonly partial struct DeletePolicy : IEquatable<DeletePolicy>
+    public readonly partial struct AIManagerDeletePolicy : IEquatable<AIManagerDeletePolicy>
     {
         private readonly string _value;
         /// <summary> Keep the underlying cluster resources even if the AIManager resource is deleted. </summary>
@@ -20,10 +20,10 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <summary> Delete both the underlying cluster resources and the AIManager resource together. </summary>
         private const string DeleteValue = "Delete";
 
-        /// <summary> Initializes a new instance of <see cref="DeletePolicy"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AIManagerDeletePolicy"/>. </summary>
         /// <param name="value"> The value. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        public DeletePolicy(string value)
+        public AIManagerDeletePolicy(string value)
         {
             Argument.AssertNotNull(value, nameof(value));
 
@@ -31,35 +31,35 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         }
 
         /// <summary> Keep the underlying cluster resources even if the AIManager resource is deleted. </summary>
-        public static DeletePolicy Keep { get; } = new DeletePolicy(KeepValue);
+        public static AIManagerDeletePolicy Keep { get; } = new AIManagerDeletePolicy(KeepValue);
 
         /// <summary> Delete both the underlying cluster resources and the AIManager resource together. </summary>
-        public static DeletePolicy Delete { get; } = new DeletePolicy(DeleteValue);
+        public static AIManagerDeletePolicy Delete { get; } = new AIManagerDeletePolicy(DeleteValue);
 
-        /// <summary> Determines if two <see cref="DeletePolicy"/> values are the same. </summary>
+        /// <summary> Determines if two <see cref="AIManagerDeletePolicy"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator ==(DeletePolicy left, DeletePolicy right) => left.Equals(right);
+        public static bool operator ==(AIManagerDeletePolicy left, AIManagerDeletePolicy right) => left.Equals(right);
 
-        /// <summary> Determines if two <see cref="DeletePolicy"/> values are not the same. </summary>
+        /// <summary> Determines if two <see cref="AIManagerDeletePolicy"/> values are not the same. </summary>
         /// <param name="left"> The left value to compare. </param>
         /// <param name="right"> The right value to compare. </param>
-        public static bool operator !=(DeletePolicy left, DeletePolicy right) => !left.Equals(right);
+        public static bool operator !=(AIManagerDeletePolicy left, AIManagerDeletePolicy right) => !left.Equals(right);
 
-        /// <summary> Converts a string to a <see cref="DeletePolicy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AIManagerDeletePolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeletePolicy(string value) => new DeletePolicy(value);
+        public static implicit operator AIManagerDeletePolicy(string value) => new AIManagerDeletePolicy(value);
 
-        /// <summary> Converts a string to a <see cref="DeletePolicy"/>. </summary>
+        /// <summary> Converts a string to a <see cref="AIManagerDeletePolicy"/>. </summary>
         /// <param name="value"> The value. </param>
-        public static implicit operator DeletePolicy?(string value) => value == null ? null : new DeletePolicy(value);
+        public static implicit operator AIManagerDeletePolicy?(string value) => value == null ? null : new AIManagerDeletePolicy(value);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public override bool Equals(object obj) => obj is DeletePolicy other && Equals(other);
+        public override bool Equals(object obj) => obj is AIManagerDeletePolicy other && Equals(other);
 
         /// <inheritdoc/>
-        public bool Equals(DeletePolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
+        public bool Equals(AIManagerDeletePolicy other) => string.Equals(_value, other._value, StringComparison.InvariantCultureIgnoreCase);
 
         /// <inheritdoc/>
         [EditorBrowsable(EditorBrowsableState.Never)]

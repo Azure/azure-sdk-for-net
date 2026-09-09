@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// </param>
         /// <param name="infeasibilityReason"> Reason explaining why the plan is not deployable. This is a per-plan annotation, not an ARM error envelope. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal CalculateCostPlan(string vmSize, string quantization, int vmsPerReplica, int maxAvailableReplicas, ServingPerformanceEstimation servingPerformanceEstimation, double vmHourlyPrice, double? totalHourlyPrice, DateTimeOffset? priceAsOf, bool feasible, InfeasibilityReason infeasibilityReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CalculateCostPlan(string vmSize, string quantization, int vmsPerReplica, int maxAvailableReplicas, AIModelServingPerformanceEstimation servingPerformanceEstimation, double vmHourlyPrice, double? totalHourlyPrice, DateTimeOffset? priceAsOf, bool feasible, AIModelInfeasibilityReason infeasibilityReason, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSize = vmSize;
             Quantization = quantization;
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         public int MaxAvailableReplicas { get; }
 
         /// <summary> Estimated relative inference performance of a single model replica on this SKU. Omitted when an estimate is unavailable. </summary>
-        public ServingPerformanceEstimation ServingPerformanceEstimation { get; }
+        public AIModelServingPerformanceEstimation ServingPerformanceEstimation { get; }
 
         /// <summary> On-demand hourly price for a single VM of this SKU, in `currency`. </summary>
         public double VmHourlyPrice { get; }
@@ -82,6 +82,6 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         public bool Feasible { get; }
 
         /// <summary> Reason explaining why the plan is not deployable. This is a per-plan annotation, not an ARM error envelope. </summary>
-        public InfeasibilityReason InfeasibilityReason { get; }
+        public AIModelInfeasibilityReason InfeasibilityReason { get; }
     }
 }

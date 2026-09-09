@@ -9,67 +9,56 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 using Azure.ResourceManager.ContainerServiceAIManager;
 
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
-    /// <summary> Request body for the AI model `calculateCost` action. </summary>
-    public partial class CalculateCostRequest : IJsonModel<CalculateCostRequest>
+    /// <summary> The specification of a model. All fields are read-only. </summary>
+    public partial class AIModelSpec : IJsonModel<AIModelSpec>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CalculateCostRequest PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AIModelSpec PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CalculateCostRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIModelSpec>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCalculateCostRequest(document.RootElement, options);
+                        return DeserializeAIModelSpec(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CalculateCostRequest)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AIModelSpec)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CalculateCostRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIModelSpec>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceAIManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CalculateCostRequest)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AIModelSpec)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CalculateCostRequest>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AIModelSpec>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CalculateCostRequest IPersistableModel<CalculateCostRequest>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AIModelSpec IPersistableModel<AIModelSpec>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CalculateCostRequest>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
-
-        /// <param name="calculateCostRequest"> The <see cref="CalculateCostRequest"/> to serialize into <see cref="RequestContent"/>. </param>
-        internal static RequestContent ToRequestContent(CalculateCostRequest calculateCostRequest)
-        {
-            if (calculateCostRequest == null)
-            {
-                return null;
-            }
-            return RequestContent.Create(calculateCostRequest, ModelSerializationExtensions.WireOptions);
-        }
+        string IPersistableModel<AIModelSpec>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CalculateCostRequest>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AIModelSpec>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -80,10 +69,25 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CalculateCostRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIModelSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CalculateCostRequest)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AIModelSpec)} does not support writing '{format}' format.");
+            }
+            if (options.Format != "W" && Optional.IsDefined(License))
+            {
+                writer.WritePropertyName("license"u8);
+                writer.WriteStringValue(License);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("isRestricted"u8);
+                writer.WriteBooleanValue(IsRestricted);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("maxContextLength"u8);
+                writer.WriteNumberValue(MaxContextLength);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -104,38 +108,56 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CalculateCostRequest IJsonModel<CalculateCostRequest>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AIModelSpec IJsonModel<AIModelSpec>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CalculateCostRequest JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AIModelSpec JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CalculateCostRequest>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIModelSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CalculateCostRequest)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AIModelSpec)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCalculateCostRequest(document.RootElement, options);
+            return DeserializeAIModelSpec(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CalculateCostRequest DeserializeCalculateCostRequest(JsonElement element, ModelReaderWriterOptions options)
+        internal static AIModelSpec DeserializeAIModelSpec(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string license = default;
+            bool isRestricted = default;
+            int maxContextLength = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
+                if (prop.NameEquals("license"u8))
+                {
+                    license = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("isRestricted"u8))
+                {
+                    isRestricted = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("maxContextLength"u8))
+                {
+                    maxContextLength = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CalculateCostRequest(additionalBinaryDataProperties);
+            return new AIModelSpec(license, isRestricted, maxContextLength, additionalBinaryDataProperties);
         }
     }
 }

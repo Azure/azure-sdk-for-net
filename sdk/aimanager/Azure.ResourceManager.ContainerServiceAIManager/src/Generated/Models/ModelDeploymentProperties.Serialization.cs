@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
             ResourceIdentifier modelSourceResourceId = default;
             ModelDeploymentPerformanceMode? performanceMode = default;
             string vmSize = default;
-            ScalingProfile scale = default;
+            ModelDeploymentScalingProfile scale = default;
             ModelDeploymentOverrides overrides = default;
             ModelDeploymentStatus status = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     {
                         continue;
                     }
-                    scale = ScalingProfile.DeserializeScalingProfile(prop.Value, options);
+                    scale = ModelDeploymentScalingProfile.DeserializeModelDeploymentScalingProfile(prop.Value, options);
                     continue;
                 }
                 if (prop.NameEquals("overrides"u8))

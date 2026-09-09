@@ -13,52 +13,52 @@ using Azure.ResourceManager.ContainerServiceAIManager;
 
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
-    /// <summary> Estimated relative inference performance of a single model replica on a given GPU SKU. Each metric is a scaling coefficient in the range `[0, 1]` relative to the best-performing SKU for this model, which scores `1`. </summary>
-    public partial class ServingPerformanceEstimation : IJsonModel<ServingPerformanceEstimation>
+    /// <summary> Reason explaining why a `CalculateCostPlan` is not deployable. This is a per-plan annotation surfaced inside a successful `calculateCost` response, not an ARM error envelope. </summary>
+    public partial class AIModelInfeasibilityReason : IJsonModel<AIModelInfeasibilityReason>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServingPerformanceEstimation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AIModelInfeasibilityReason PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServingPerformanceEstimation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIModelInfeasibilityReason>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeServingPerformanceEstimation(document.RootElement, options);
+                        return DeserializeAIModelInfeasibilityReason(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServingPerformanceEstimation)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AIModelInfeasibilityReason)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServingPerformanceEstimation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIModelInfeasibilityReason>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceAIManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ServingPerformanceEstimation)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AIModelInfeasibilityReason)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ServingPerformanceEstimation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AIModelInfeasibilityReason>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ServingPerformanceEstimation IPersistableModel<ServingPerformanceEstimation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AIModelInfeasibilityReason IPersistableModel<AIModelInfeasibilityReason>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ServingPerformanceEstimation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AIModelInfeasibilityReason>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ServingPerformanceEstimation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AIModelInfeasibilityReason>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServingPerformanceEstimation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIModelInfeasibilityReason>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServingPerformanceEstimation)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AIModelInfeasibilityReason)} does not support writing '{format}' format.");
             }
             if (options.Format != "W")
             {
-                writer.WritePropertyName("relativeLatencyScore"u8);
-                writer.WriteNumberValue(RelativeLatencyScore);
+                writer.WritePropertyName("code"u8);
+                writer.WriteStringValue(Code.ToString());
             }
             if (options.Format != "W")
             {
-                writer.WritePropertyName("relativeThroughputScore"u8);
-                writer.WriteNumberValue(RelativeThroughputScore);
+                writer.WritePropertyName("message"u8);
+                writer.WriteStringValue(Message);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,42 +103,42 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ServingPerformanceEstimation IJsonModel<ServingPerformanceEstimation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AIModelInfeasibilityReason IJsonModel<AIModelInfeasibilityReason>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServingPerformanceEstimation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AIModelInfeasibilityReason JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServingPerformanceEstimation>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIModelInfeasibilityReason>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServingPerformanceEstimation)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AIModelInfeasibilityReason)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeServingPerformanceEstimation(document.RootElement, options);
+            return DeserializeAIModelInfeasibilityReason(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ServingPerformanceEstimation DeserializeServingPerformanceEstimation(JsonElement element, ModelReaderWriterOptions options)
+        internal static AIModelInfeasibilityReason DeserializeAIModelInfeasibilityReason(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            float relativeLatencyScore = default;
-            float relativeThroughputScore = default;
+            AIModelInfeasibleCode code = default;
+            string message = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("relativeLatencyScore"u8))
+                if (prop.NameEquals("code"u8))
                 {
-                    relativeLatencyScore = prop.Value.GetSingle();
+                    code = new AIModelInfeasibleCode(prop.Value.GetString());
                     continue;
                 }
-                if (prop.NameEquals("relativeThroughputScore"u8))
+                if (prop.NameEquals("message"u8))
                 {
-                    relativeThroughputScore = prop.Value.GetSingle();
+                    message = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ServingPerformanceEstimation(relativeLatencyScore, relativeThroughputScore, additionalBinaryDataProperties);
+            return new AIModelInfeasibilityReason(code, message, additionalBinaryDataProperties);
         }
     }
 }

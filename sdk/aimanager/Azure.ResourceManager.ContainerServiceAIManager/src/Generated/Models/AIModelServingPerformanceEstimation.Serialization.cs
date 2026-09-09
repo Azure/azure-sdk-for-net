@@ -13,52 +13,52 @@ using Azure.ResourceManager.ContainerServiceAIManager;
 
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
-    /// <summary> The credential result response. </summary>
-    public partial class CredentialResult : IJsonModel<CredentialResult>
+    /// <summary> Estimated relative inference performance of a single model replica on a given GPU SKU. Each metric is a scaling coefficient in the range `[0, 1]` relative to the best-performing SKU for this model, which scores `1`. </summary>
+    public partial class AIModelServingPerformanceEstimation : IJsonModel<AIModelServingPerformanceEstimation>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CredentialResult PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual AIModelServingPerformanceEstimation PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIModelServingPerformanceEstimation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeCredentialResult(document.RootElement, options);
+                        return DeserializeAIModelServingPerformanceEstimation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CredentialResult)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AIModelServingPerformanceEstimation)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIModelServingPerformanceEstimation>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerContainerServiceAIManagerContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(CredentialResult)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AIModelServingPerformanceEstimation)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<CredentialResult>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<AIModelServingPerformanceEstimation>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CredentialResult IPersistableModel<CredentialResult>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        AIModelServingPerformanceEstimation IPersistableModel<AIModelServingPerformanceEstimation>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<CredentialResult>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<AIModelServingPerformanceEstimation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<CredentialResult>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<AIModelServingPerformanceEstimation>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,20 +69,20 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIModelServingPerformanceEstimation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CredentialResult)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(AIModelServingPerformanceEstimation)} does not support writing '{format}' format.");
             }
-            if (options.Format != "W" && Optional.IsDefined(Name))
+            if (options.Format != "W")
             {
-                writer.WritePropertyName("name"u8);
-                writer.WriteStringValue(Name);
+                writer.WritePropertyName("relativeLatencyScore"u8);
+                writer.WriteNumberValue(RelativeLatencyScore);
             }
-            if (options.Format != "W" && Optional.IsDefined(Value))
+            if (options.Format != "W")
             {
-                writer.WritePropertyName("value"u8);
-                writer.WriteBase64StringValue(Value.ToArray(), "D");
+                writer.WritePropertyName("relativeThroughputScore"u8);
+                writer.WriteNumberValue(RelativeThroughputScore);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -103,46 +103,42 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        CredentialResult IJsonModel<CredentialResult>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        AIModelServingPerformanceEstimation IJsonModel<AIModelServingPerformanceEstimation>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual CredentialResult JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual AIModelServingPerformanceEstimation JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<CredentialResult>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<AIModelServingPerformanceEstimation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CredentialResult)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(AIModelServingPerformanceEstimation)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCredentialResult(document.RootElement, options);
+            return DeserializeAIModelServingPerformanceEstimation(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static CredentialResult DeserializeCredentialResult(JsonElement element, ModelReaderWriterOptions options)
+        internal static AIModelServingPerformanceEstimation DeserializeAIModelServingPerformanceEstimation(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string name = default;
-            BinaryData value = default;
+            float relativeLatencyScore = default;
+            float relativeThroughputScore = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("name"u8))
+                if (prop.NameEquals("relativeLatencyScore"u8))
                 {
-                    name = prop.Value.GetString();
+                    relativeLatencyScore = prop.Value.GetSingle();
                     continue;
                 }
-                if (prop.NameEquals("value"u8))
+                if (prop.NameEquals("relativeThroughputScore"u8))
                 {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    value = BinaryData.FromBytes(prop.Value.GetBytesFromBase64("D"));
+                    relativeThroughputScore = prop.Value.GetSingle();
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +146,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new CredentialResult(name, value, additionalBinaryDataProperties);
+            return new AIModelServingPerformanceEstimation(relativeLatencyScore, relativeThroughputScore, additionalBinaryDataProperties);
         }
     }
 }

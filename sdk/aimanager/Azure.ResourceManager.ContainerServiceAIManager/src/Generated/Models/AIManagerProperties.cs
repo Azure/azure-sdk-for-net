@@ -26,7 +26,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         /// <param name="deletePolicy"> Delete options of the AI Manager. Defaults to `Delete` if not specified. </param>
         /// <param name="managedResourceGroupName"> The name of the managed resource group created by the AI Manager to hold underlying infrastructure resources. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AIManagerProperties(AIManagerProvisioningState? provisioningState, DeletePolicy? deletePolicy, string managedResourceGroupName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIManagerProperties(AIManagerProvisioningState? provisioningState, AIManagerDeletePolicy? deletePolicy, string managedResourceGroupName, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             DeletePolicy = deletePolicy;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerServiceAIManager.Models
         public AIManagerProvisioningState? ProvisioningState { get; }
 
         /// <summary> Delete options of the AI Manager. Defaults to `Delete` if not specified. </summary>
-        public DeletePolicy? DeletePolicy { get; set; }
+        public AIManagerDeletePolicy? DeletePolicy { get; set; }
 
         /// <summary> The name of the managed resource group created by the AI Manager to hold underlying infrastructure resources. </summary>
         public string ManagedResourceGroupName { get; }

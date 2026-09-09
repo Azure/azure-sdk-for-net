@@ -11,21 +11,21 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
     /// <summary> Estimated relative inference performance of a single model replica on a given GPU SKU. Each metric is a scaling coefficient in the range `[0, 1]` relative to the best-performing SKU for this model, which scores `1`. </summary>
-    public partial class ServingPerformanceEstimation
+    public partial class AIModelServingPerformanceEstimation
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ServingPerformanceEstimation"/>. </summary>
-        internal ServingPerformanceEstimation()
+        /// <summary> Initializes a new instance of <see cref="AIModelServingPerformanceEstimation"/>. </summary>
+        internal AIModelServingPerformanceEstimation()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServingPerformanceEstimation"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AIModelServingPerformanceEstimation"/>. </summary>
         /// <param name="relativeLatencyScore"> Relative inference latency score in `[0, 1]`. Higher is better (`1` matches the best-performing SKU's latency for this model). Note: this is a normalized score, not a raw latency ratio -- a larger value indicates lower latency. </param>
         /// <param name="relativeThroughputScore"> Relative inference throughput score in `[0, 1]`. Higher is better (`1` matches the best-performing SKU's throughput for this model). </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServingPerformanceEstimation(float relativeLatencyScore, float relativeThroughputScore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIModelServingPerformanceEstimation(float relativeLatencyScore, float relativeThroughputScore, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             RelativeLatencyScore = relativeLatencyScore;
             RelativeThroughputScore = relativeThroughputScore;

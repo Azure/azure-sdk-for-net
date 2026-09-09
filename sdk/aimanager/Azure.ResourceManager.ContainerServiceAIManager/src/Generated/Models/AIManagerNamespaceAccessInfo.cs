@@ -11,23 +11,23 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.ContainerServiceAIManager.Models
 {
     /// <summary> Access information for an AI Manager namespace, including the OpenAI-compatible gateway endpoint and the API keys used to authenticate against it. </summary>
-    public partial class NamespaceAccessInfo
+    public partial class AIManagerNamespaceAccessInfo
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="NamespaceAccessInfo"/>. </summary>
-        internal NamespaceAccessInfo()
+        /// <summary> Initializes a new instance of <see cref="AIManagerNamespaceAccessInfo"/>. </summary>
+        internal AIManagerNamespaceAccessInfo()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NamespaceAccessInfo"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="AIManagerNamespaceAccessInfo"/>. </summary>
         /// <param name="endpoint"> OpenAI-compatible inference gateway base URL (for example, `https://team-alpha.&lt;cluster&gt;.&lt;region&gt;.aksapp.io/v1`). </param>
         /// <param name="primaryKey"> Primary API key. Send as `Authorization: Bearer &lt;key&gt;` or `api-key: &lt;key&gt;`. Treat as secret; do not log or persist in plaintext. </param>
         /// <param name="secondaryKey"> Secondary API key, accepted by the gateway in the same headers as `primaryKey`. Generated independently when the namespace is created, then overwritten by the previous `primaryKey` on each `rotateKeys` call so clients can roll over without downtime. Treat as secret; do not log or persist in plaintext. </param>
         /// <param name="lastRotatedOn"> UTC time the keys were last rotated by `rotateKeys`. Absent until the first rotation. Clients can use this to detect rotation and refresh cached credentials. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal NamespaceAccessInfo(Uri endpoint, string primaryKey, string secondaryKey, DateTimeOffset? lastRotatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AIManagerNamespaceAccessInfo(Uri endpoint, string primaryKey, string secondaryKey, DateTimeOffset? lastRotatedOn, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Endpoint = endpoint;
             PrimaryKey = primaryKey;
