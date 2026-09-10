@@ -9,11 +9,17 @@ This sample demonstrates a **resilient research agent** that bridges a durable, 
 - **The invocations protocol**:
   - **`POST /invocations`** starts a new turn (or *steers* an in-flight one). With `Accept: text/event-stream` it streams live; otherwise it returns `202 Accepted` with the invocation id to resume later.
   - **`GET /invocations/{invocationId}`** is **resume** — it re-attaches to the *existing* stream after the opaque `last_event_id` / `Last-Event-ID` resume token or returns a JSON status snapshot. It is a read of durable state and **never starts a new run**.
-  - **`POST /invocations/{invocationId}/cancel`** cancels the active run for the session.
+  - **`POST /invocations/{invocationId}/cancel`** cancels the identified active or steering-queued invocation, not an unrelated turn in the session.
 - **Task-bound stream**: the engine binds a lazy stream to the turn's `InputId`; the
   producer writes through `TaskContext.Stream` and the POST path subscribes through
   `TaskRun.Stream`. Replay covers events emitted before the HTTP subscriber attaches.
 - **Crash recovery & checkpointing**: per-sub-call metadata watermarks and a file-backed checkpoint store let the task resume mid-phase after a restart; the replay backing retains `SseItem<string>` events so a reconnecting subscriber sees everything after its last event id.
+
+Cancelling a queued invocation does not allocate a stream that was never
+materialized. A later GET can therefore return `404 Not Found`. If a stream
+already exists, Core closes it after the successful durable cancellation
+transition, allowing SSE subscribers to finish and replay. For a turn that has
+already started, Core waits for the producer to wind down before closing its stream.
 
 ## Prerequisites
 
