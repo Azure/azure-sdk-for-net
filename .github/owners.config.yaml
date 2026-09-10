@@ -163,7 +163,6 @@ sections:
       pr-labels: [Mgmt]
 
   - name: Management Libraries
-    sort: true
     paths:
     - path: "/sdk/apicenter/Azure.ResourceManager.ApiCenter/"
       owners: [ArcturusZhang, ArthurMa1978]
