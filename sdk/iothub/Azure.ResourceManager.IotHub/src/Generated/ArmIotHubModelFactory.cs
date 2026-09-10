@@ -868,7 +868,7 @@ namespace Azure.ResourceManager.IotHub.Models
         /// <returns> A new <see cref="Models.EventHubConsumerGroupInfoCreateOrUpdateContent"/> instance for mocking. </returns>
         public static EventHubConsumerGroupInfoCreateOrUpdateContent EventHubConsumerGroupInfoCreateOrUpdateContent(string name = default)
         {
-            return new EventHubConsumerGroupInfoCreateOrUpdateContent(default, default);
+            return new EventHubConsumerGroupInfoCreateOrUpdateContent(name is null ? default : new EventHubConsumerGroupName(name, default), default);
         }
 
         /// <summary> Input values. </summary>
