@@ -20,6 +20,7 @@ using Azure.Provisioning.Roles;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> An environment for hosting container apps. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppManagedEnvironment : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

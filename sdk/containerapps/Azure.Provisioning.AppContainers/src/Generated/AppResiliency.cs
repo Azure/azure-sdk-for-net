@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Configuration to setup App Resiliency. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class AppResiliency : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

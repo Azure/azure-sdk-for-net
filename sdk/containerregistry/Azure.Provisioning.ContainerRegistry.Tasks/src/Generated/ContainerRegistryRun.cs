@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ContainerRegistry.Tasks
 {
     /// <summary> Run resource properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryRun : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

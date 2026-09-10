@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.BotService
 {
     /// <summary> Bot channel resource definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BotChannel : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

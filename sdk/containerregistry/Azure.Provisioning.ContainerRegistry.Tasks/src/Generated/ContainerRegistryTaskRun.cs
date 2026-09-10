@@ -18,6 +18,7 @@ namespace Azure.Provisioning.ContainerRegistry.Tasks
     /// The task run that has the ARM resource and properties.
     /// The task run will have the information of request and result of a run.
     /// </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerRegistryTaskRun : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

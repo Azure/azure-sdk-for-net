@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.BotService
 {
     /// <summary> The Private Endpoint Connection resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class BotServicePrivateEndpointConnection : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

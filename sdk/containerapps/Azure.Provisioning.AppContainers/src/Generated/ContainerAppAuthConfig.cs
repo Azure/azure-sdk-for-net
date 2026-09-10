@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Configuration settings for the Azure ContainerApp Service Authentication / Authorization feature. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ContainerAppAuthConfig : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Dapr Component Resiliency Policy. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DaprComponentResiliencyPolicy : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

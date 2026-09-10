@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.AppContainers
 {
     /// <summary> Schema for the workflow object. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class LogicAppWorkflowEnvelope : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
