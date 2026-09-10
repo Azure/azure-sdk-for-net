@@ -48,6 +48,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Logs
                 {
                     options.SetResourceBuilder(resourceBuilder);
 
+                    // Availability/event bodies are surfaced from the formatted message, so it has to
+                    // be captured rather than dropped.
+                    options.IncludeFormattedMessage = true;
+
                     // Stamp the routing tags onto every LogRecord before the exporter's own
                     // processor sees it, the same way the trace demo stamps Activity tags.
                     options.AddProcessor(_routingProcessor);
@@ -67,21 +71,91 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Logs
             });
         }
 
+        // Attribute keys the exporter recognizes to classify a LogRecord into a specific Application
+        // Insights telemetry type. Kept in sync with LogsHelper's constants.
+        private const string CustomEventNameAttribute = "microsoft.custom_event.name";
+        private const string AvailabilityIdAttribute = "microsoft.availability.id";
+        private const string AvailabilityNameAttribute = "microsoft.availability.name";
+        private const string AvailabilityDurationAttribute = "microsoft.availability.duration";
+        private const string AvailabilitySuccessAttribute = "microsoft.availability.success";
+        private const string AvailabilityRunLocationAttribute = "microsoft.availability.runLocation";
+
         public IReadOnlyDictionary<string, int> GeneratedPerTenant => _routingProcessor.Counts;
 
+        /// <summary>
+        /// Emits every telemetry shape the log exporter can produce - trace (message), exception,
+        /// custom event, and availability - cycling through them so a routed batch carries a mix.
+        /// The classifying attributes are attached through a list-valued log state, which the SDK
+        /// surfaces verbatim as <see cref="LogRecord.Attributes"/>; the routing processor then appends
+        /// the tenant tags in its OnEnd.
+        /// </summary>
         public void GenerateLogs(int count)
         {
             var logger = _loggerFactory.CreateLogger<MultiTenantLogDemo>();
 
             for (int i = 0; i < count; i++)
             {
-                logger.LogInformation("MultiTenantLog-{iteration} from {name}.", i, "demo");
+                switch (i % 4)
+                {
+                    case 0:
+                        // Trace / MessageData: an ordinary structured log with no special attributes.
+                        logger.LogInformation("MultiTenantTrace-{iteration} from {source}.", i, "demo");
+                        break;
+
+                    case 1:
+                        // ExceptionData: any LogRecord carrying an exception becomes an exception.
+                        try
+                        {
+                            throw new InvalidOperationException($"Injected failure #{i}");
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.LogError(ex, "MultiTenantException-{iteration} failed.", i);
+                        }
+                        break;
+
+                    case 2:
+                        // EventData: the microsoft.custom_event.name attribute names a custom event.
+                        Emit(
+                            logger,
+                            LogLevel.Information,
+                            $"MultiTenantEvent-{i}",
+                            exception: null,
+                            new KeyValuePair<string, object?>(CustomEventNameAttribute, "MultiTenantDemoEvent"),
+                            new KeyValuePair<string, object?>("demo.iteration", i));
+                        break;
+
+                    default:
+                        // AvailabilityData: requires id, name, duration, and success together.
+                        Emit(
+                            logger,
+                            LogLevel.Information,
+                            $"MultiTenantAvailability-{i}",
+                            exception: null,
+                            new KeyValuePair<string, object?>(AvailabilityIdAttribute, Guid.NewGuid().ToString("N")),
+                            new KeyValuePair<string, object?>(AvailabilityNameAttribute, "MultiTenantDemoTest"),
+                            new KeyValuePair<string, object?>(AvailabilityDurationAttribute, "00:00:01.500"),
+                            new KeyValuePair<string, object?>(AvailabilitySuccessAttribute, i % 8 != 3),
+                            new KeyValuePair<string, object?>(AvailabilityRunLocationAttribute, "demo-region"));
+                        break;
+                }
 
                 if (i % 250 == 0)
                 {
                     Thread.Sleep(10);
                 }
             }
+        }
+
+        /// <summary>
+        /// Logs with an explicit list-valued state so arbitrary attribute keys (including the
+        /// dotted <c>microsoft.*</c> classifiers, which are not valid message-template placeholders)
+        /// land verbatim on <see cref="LogRecord.Attributes"/>.
+        /// </summary>
+        private static void Emit(ILogger logger, LogLevel level, string message, Exception? exception, params KeyValuePair<string, object?>[] attributes)
+        {
+            var state = new List<KeyValuePair<string, object?>>(attributes);
+            logger.Log(level, new EventId(0), state, exception, (_, _) => message);
         }
 
         public void Dispose() => _loggerFactory.Dispose();
