@@ -69,18 +69,17 @@
 # Client Libraries
 ####################
 
-/sdk/agentserver/Azure.AI.AgentServer.Core/    @Shivakishore14
-
-/sdk/agentserver/Azure.AI.AgentServer.Invocations/    @Shivakishore14
-
-/sdk/agentserver/Azure.AI.AgentServer.Responses/    @Shivakishore14
-
-/sdk/ai/Azure.AI.Extensions.OpenAI/    @rhurey
-
-/sdk/ai/Azure.AI.Projects.Agents/    @rhurey
-
 # PRLabel: %AI Agents
 /sdk/agentserver/    @ankitbko @RaviPidaparthi @Shivakishore14 @vangarp
+
+# PRLabel: %AI Agents
+/sdk/agentserver/Azure.AI.AgentServer.Core/    @Shivakishore14
+
+# PRLabel: %AI Agents
+/sdk/agentserver/Azure.AI.AgentServer.Invocations/    @Shivakishore14
+
+# PRLabel: %AI Agents
+/sdk/agentserver/Azure.AI.AgentServer.Responses/    @Shivakishore14
 
 # Sources: sdk/agentserver/owners.yaml
 # ServiceLabel: %AI Agents
@@ -95,6 +94,12 @@
 # Sources: sdk/ai/owners.yaml
 # ServiceLabel: %AI Model Inference
 # ServiceOwners: @dargilco @glharper @trangevi
+
+# PRLabel: %AI Projects
+/sdk/ai/Azure.AI.Extensions.OpenAI/    @rhurey
+
+# PRLabel: %AI Projects
+/sdk/ai/Azure.AI.Projects.Agents/    @rhurey
 
 # PRLabel: %AI Projects
 /sdk/ai/Azure.AI.Projects/    @dargilco @nick863 @rhurey @trangevi

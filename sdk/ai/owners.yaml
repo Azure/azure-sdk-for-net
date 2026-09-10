@@ -3,6 +3,12 @@
 version: 1
 
 paths:
+  - path: Azure.AI.Extensions.OpenAI/
+    owners: [rhurey]
+    pr-labels: [AI Projects]
+  - path: Azure.AI.Projects.Agents/
+    owners: [rhurey]
+    pr-labels: [AI Projects]
   - path: "."
     owners: [dargilco, glharper, nick863, trangevi, trrwilson]
     pr-labels: [AI Model Inference, AI Projects]

@@ -89,16 +89,6 @@ sections:
     defined-in-files: true
     sort: true
     paths:
-    - path: "/sdk/agentserver/Azure.AI.AgentServer.Core/"
-      owners: [Shivakishore14]
-    - path: "/sdk/agentserver/Azure.AI.AgentServer.Invocations/"
-      owners: [Shivakishore14]
-    - path: "/sdk/agentserver/Azure.AI.AgentServer.Responses/"
-      owners: [Shivakishore14]
-    - path: "/sdk/ai/Azure.AI.Extensions.OpenAI/"
-      owners: [rhurey]
-    - path: "/sdk/ai/Azure.AI.Projects.Agents/"
-      owners: [rhurey]
     - path: "/sdk/azurestack*/"
       owners: [bganapa]
       pr-labels: [Azure Stack]
