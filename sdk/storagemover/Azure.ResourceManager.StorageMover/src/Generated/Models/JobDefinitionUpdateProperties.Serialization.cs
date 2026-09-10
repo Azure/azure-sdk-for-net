@@ -120,10 +120,10 @@ namespace Azure.ResourceManager.StorageMover.Models
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode);
             }
-            if (Optional.IsDefined(MoverSyncedUntil))
+            if (Optional.IsDefined(MoverSyncedOn))
             {
                 writer.WritePropertyName("moverSyncedUntil"u8);
-                writer.WriteStringValue(MoverSyncedUntil.Value, "O");
+                writer.WriteStringValue(MoverSyncedOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             StorageMoverDataIntegrityValidation? dataIntegrityValidation = default;
             StorageMoverScheduleInfo schedule = default;
             string syncMode = default;
-            DateTimeOffset? moverSyncedUntil = default;
+            DateTimeOffset? moverSyncedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                     {
                         continue;
                     }
-                    moverSyncedUntil = prop.Value.GetDateTimeOffset("O");
+                    moverSyncedOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 dataIntegrityValidation,
                 schedule,
                 syncMode,
-                moverSyncedUntil,
+                moverSyncedOn,
                 additionalBinaryDataProperties);
         }
     }
