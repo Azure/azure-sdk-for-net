@@ -1,6 +1,6 @@
-# Azure.ResourceManager.ContainerServiceAIManager management client library for .NET
+# Microsoft Azure Container Service AIManager management client library for .NET
 
-This library supports managing Microsoft Azure resources.
+This library supports managing Microsoft Azure Container Service AIManager resources.
 
 This library follows the [new Azure SDK guidelines](https://azure.github.io/azure-sdk/general_introduction.html), and provides many core capabilities:
 
@@ -10,11 +10,11 @@ This library follows the [new Azure SDK guidelines](https://azure.github.io/azur
     - Better error-handling.
     - Support uniform telemetry across all languages.
 
-## Getting started
+## Getting started 
 
 ### Install the package
 
-Install the Azure.ResourceManager.ContainerServiceAIManager management library for .NET with [NuGet](https://www.nuget.org/):
+Install the Microsoft Azure Container Service AIManager management library for .NET with [NuGet](https://www.nuget.org/):
 
 ```dotnetcli
 dotnet add package Azure.ResourceManager.ContainerServiceAIManager --prerelease
@@ -22,7 +22,7 @@ dotnet add package Azure.ResourceManager.ContainerServiceAIManager --prerelease
 
 ### Prerequisites
 
-* You must have a [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
+* You must have an [Microsoft Azure subscription](https://azure.microsoft.com/free/dotnet/).
 
 ### Authenticate the Client
 
