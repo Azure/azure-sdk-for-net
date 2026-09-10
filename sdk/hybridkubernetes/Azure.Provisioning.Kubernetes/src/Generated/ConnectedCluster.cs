@@ -18,6 +18,7 @@ using Azure.Provisioning.Roles;
 namespace Azure.Provisioning.Kubernetes
 {
     /// <summary> Represents a connected cluster. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ConnectedCluster : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Maps
 {
     /// <summary> The private endpoint connection resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class MapsPrivateEndpointConnection : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.IotHub
 {
     /// <summary> The X509 Certificate. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class IotHubCertificateDescription : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
