@@ -260,14 +260,14 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
         /// <param name="provisioningState"> Provisioning state of the Agent Space. </param>
         /// <param name="currentAgentCount"> Current number of agents in the Agent Space. </param>
         /// <param name="memberAgents"> List of agents referencing the Agent Space. </param>
-        /// <param name="lastPolicyPropagation"> Timestamp of the last policy propagation to agents in this Agent Space. </param>
+        /// <param name="lastPolicyPropagationOn"> Timestamp of the last policy propagation to agents in this Agent Space. </param>
         /// <param name="complianceStatus"> Compliance status of the Agent Space. </param>
         /// <param name="description"> Description of the Agent Space. </param>
         /// <param name="policiesGenevaActionsConfiguration"> Configuration for Geneva Actions policy. </param>
         /// <param name="maxAgentCount"> Maximum number of agents allowed in the Agent Space. </param>
         /// <param name="serviceTreeId"> Universal unique ID (UUID) of the Service Tree associated with this Agent Space. </param>
         /// <returns> A new <see cref="Models.AgentSpaceProperties"/> instance for mocking. </returns>
-        public static AgentSpaceProperties AgentSpaceProperties(AgentSpaceProvisioningState? provisioningState = default, int? currentAgentCount = default, IEnumerable<string> memberAgents = default, DateTimeOffset? lastPolicyPropagation = default, AgentSpaceComplianceStatus complianceStatus = default, string description = default, GenevaActionsPolicy policiesGenevaActionsConfiguration = default, int? maxAgentCount = default, string serviceTreeId = default)
+        public static AgentSpaceProperties AgentSpaceProperties(AgentSpaceProvisioningState? provisioningState = default, int? currentAgentCount = default, IEnumerable<string> memberAgents = default, DateTimeOffset? lastPolicyPropagationOn = default, AgentSpaceComplianceStatus complianceStatus = default, string description = default, GenevaActionsPolicy policiesGenevaActionsConfiguration = default, int? maxAgentCount = default, string serviceTreeId = default)
         {
             memberAgents ??= new ChangeTrackingList<string>();
 
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
                 provisioningState,
                 currentAgentCount,
                 (memberAgents ?? new ChangeTrackingList<string>()).ToList(),
-                lastPolicyPropagation,
+                lastPolicyPropagationOn,
                 complianceStatus,
                 description,
                 policiesGenevaActionsConfiguration is null ? default : new AgentSpacePolicies(policiesGenevaActionsConfiguration, default),
