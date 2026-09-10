@@ -18,11 +18,11 @@ scoring:
   threshold: 0.8
 
 stimuli:
-  - name: spec-pr-lookup-relays-past-due-guidance
+  - name: project-path-lookup-relays-past-due-guidance
     environment:
       skills:
         - ..
-    prompt: "Get the release plan for spec PR https://github.com/Azure/azure-rest-api-specs/pull/38387 and summarize its status and any required actions. Use the Azure SDK MCP tools."
+    prompt: "Get the release plan for TypeSpec project specification/contosowidgetmanager/Contoso.WidgetManager and summarize its status and any required actions. Use the Azure SDK MCP tools."
     graders:
       - type: skill-invocation
         config:
@@ -34,6 +34,29 @@ stimuli:
       - type: output-matches
         config:
           pattern: "(?is)(?=.*past[- ]due)(?=.*(?:postpone|update).*(?:target|release month))(?=.*(?:abandon|close).*(?:reason|dashboard))"
+
+  - name: spec-pr-lookup-relays-past-due-guidance
+    environment:
+      skills:
+        - ..
+    prompt: "Get the release plan for spec PR https://github.com/Azure/azure-rest-api-specs/pull/38387 and summarize its status, linked spec PR URL, and any required actions. Use the Azure SDK MCP tools."
+    graders:
+      - type: skill-invocation
+        config:
+          required: [azsdk-common-prepare-release-plan]
+      - type: tool-calls
+        config:
+          required:
+            - name: "^azure-sdk-mcp-azsdk_get_release_plan$"
+      - type: output-matches
+        config:
+          pattern: "(?is)(?=.*past[- ]due)(?=.*(?:postpone|update).*(?:target|release month))(?=.*(?:abandon|close).*(?:reason|dashboard))"
+      - type: output-contains
+        config:
+          substring: "https://github.com/Azure/azure-rest-api-specs/pull/38387"
+      - type: output-not-contains
+        config:
+          substring: "https://github.com/Azure/azure-rest-api-specs/pull/12345"
 
   - name: create-relays-past-due-guidance
     environment:
