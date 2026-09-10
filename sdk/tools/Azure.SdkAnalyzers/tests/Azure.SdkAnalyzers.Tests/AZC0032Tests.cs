@@ -15,6 +15,14 @@ namespace Azure.SdkAnalyzers.Tests
 }
 ";
 
+        private const string JsonModelWrongArityStub = @"namespace System.ClientModel.Primitives
+{
+    public interface IJsonModel { }
+
+    public interface IJsonModel<T1, T2> { }
+}
+";
+
         private const string ResourceDataStub = @"namespace Azure.ResourceManager.Models
 {
     public class ResourceData { }
@@ -196,6 +204,22 @@ namespace Contoso.Serialization
 namespace Azure.Fake.Widgets
 {
     public class WidgetData : Contoso.Serialization.IJsonModel<WidgetData> { }
+}";
+
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
+        // A symbol's Name omits generic arity, so same-named interfaces in the marker's own
+        // namespace are only distinguishable by arity.
+        [Test]
+        public async Task AZC0032NotProducedForWrongArityJsonModelInterfaces()
+        {
+            const string code = JsonModelWrongArityStub + @"
+namespace Azure.Fake.Widgets
+{
+    public class WidgetData : System.ClientModel.Primitives.IJsonModel { }
+
+    public class GadgetData : System.ClientModel.Primitives.IJsonModel<GadgetData, int> { }
 }";
 
             await Verifier.VerifyAnalyzerAsync(code);

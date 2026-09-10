@@ -62,7 +62,7 @@ namespace Azure.SdkAnalyzers
 
         private static bool IsJsonModelInterface(INamedTypeSymbol interfaceSymbol)
         {
-            return interfaceSymbol.Name == JsonModelInterfaceName &&
+            return interfaceSymbol is { Name: JsonModelInterfaceName, Arity: 1 } &&
                    AnalyzerUtils.IsNamespace(interfaceSymbol.ContainingNamespace, "System", "ClientModel", "Primitives");
         }
 
