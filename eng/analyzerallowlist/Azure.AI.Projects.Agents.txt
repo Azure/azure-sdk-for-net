@@ -10,6 +10,7 @@
 # explicitly acknowledge experimental usage; acknowledging it once at the
 # assembly level matches intent.
 nowarn:OPENAI001
+nowarn:OPENAI002
 
 # AAIP001 is this library's own [Experimental] marker for preview Foundry Agent
 # features (HostedAgentDefinition, WorkflowAgentDefinition, AgentToolboxes,
@@ -44,3 +45,6 @@ nowarn:AAIP001 M:Azure.AI.Projects.Agents.ProjectsAgentRecord.JsonModelWriteCore
 # override non-experimental base members. Scoping the suppression to this one
 # generated method keeps AAIP002 live everywhere else in the assembly.
 nowarn:AAIP002 M:Azure.AI.Projects.Agents.DeclarativeAgentDefinition.DeserializeDeclarativeAgentDefinition(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+# Voice Agent use the OpenAI experimental classes
+nowarn:AAIP002 M:Azure.AI.Projects.Agents.VoiceResponseBase.DeserializeVoiceResponseBase(System.Text.Json.JsonElement,System.ClientModel.Primitives.ModelReaderWriterOptions)
+nowarn:AAIP002 M:Azure.AI.Projects.Agents.VoiceResponseBase.JsonModelWriteCore(System.Text.Json.Utf8JsonWriter,System.ClientModel.Primitives.ModelReaderWriterOptions)

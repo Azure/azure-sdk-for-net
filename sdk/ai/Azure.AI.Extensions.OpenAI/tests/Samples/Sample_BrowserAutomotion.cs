@@ -56,12 +56,13 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         {
             NetworkTimeout = TimeSpan.FromMinutes(5)
         };
+        options.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 
         #endregion
         #region Snippet:Sample_CreateAgent_BrowserAutomotion_Async
         AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
-        BrowserAutomationPreviewTool playwrightTool = new(
+        BrowserAutomationTool playwrightTool = new(
             new BrowserAutomationToolOptions(
                 new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
             ));
@@ -125,7 +126,7 @@ public class Sample_BrowserAutomotion : ProjectsOpenAITestBase
         AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
         #region Snippet:Sample_CreateAgent_BrowserAutomotion_Sync
         AIProjectConnection playwrightConnection = projectClient.Connections.GetConnection(playwrightConnectionName);
-        BrowserAutomationPreviewTool playwrightTool = new(
+        BrowserAutomationTool playwrightTool = new(
             new BrowserAutomationToolOptions(
                 new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
             ));

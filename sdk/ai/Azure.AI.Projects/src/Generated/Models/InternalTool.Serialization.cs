@@ -137,6 +137,8 @@ namespace Azure.AI.Projects
                         return BingCustomSearchPreviewTool.DeserializeBingCustomSearchPreviewTool(element, options);
                     case "browser_automation_preview":
                         return BrowserAutomationPreviewTool.DeserializeBrowserAutomationPreviewTool(element, options);
+                    case "browser_automation":
+                        return BrowserAutomationTool.DeserializeBrowserAutomationTool(element, options);
                     case "azure_function":
                         return AzureFunctionTool.DeserializeAzureFunctionTool(element, options);
                     case "capture_structured_outputs":

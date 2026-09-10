@@ -12,11 +12,6 @@ namespace Azure.AI.Projects
     /// <summary> The options for a task generation data generation job. Use with multiturn evaluation scenarios and with prompt, file, or agent sources. Generated dataset rows include fields such as `id`, `category`, `test_case_description`, and `desired_num_turns`. </summary>
     public partial class SimulationSeedDataGenerationJobOptions : DataGenerationJobOptions, IJsonModel<SimulationSeedDataGenerationJobOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="SimulationSeedDataGenerationJobOptions"/> for deserialization. </summary>
-        internal SimulationSeedDataGenerationJobOptions()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataGenerationJobOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -104,7 +99,6 @@ namespace Azure.AI.Projects
                 return null;
             }
             DataGenerationJobKind @type = default;
-            int maxSamples = default;
             float? trainSplit = default;
             DataGenerationModelOptions modelOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -113,11 +107,6 @@ namespace Azure.AI.Projects
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new DataGenerationJobKind(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("max_samples"u8))
-                {
-                    maxSamples = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("train_split"u8))
@@ -143,7 +132,7 @@ namespace Azure.AI.Projects
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new SimulationSeedDataGenerationJobOptions(@type, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties);
+            return new SimulationSeedDataGenerationJobOptions(@type, trainSplit, modelOptions, additionalBinaryDataProperties);
         }
     }
 }

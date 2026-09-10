@@ -159,12 +159,9 @@ namespace Azure.AI.Projects
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.BrowserAutomationPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BrowserAutomationPreviewTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.BrowserAutomationPreviewTool is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.BrowserAutomationToolConnectionParameters is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(BrowserAutomationTool))]
     [ModelReaderWriterBuildable(typeof(BrowserAutomationToolConnectionParameters))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.BrowserAutomationToolConnectionParameters is experimental and may change in future versions.
-#pragma warning disable AAIP001 // global::Azure.AI.Projects.BrowserAutomationToolParameters is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(BrowserAutomationToolParameters))]
-#pragma warning restore AAIP001 // global::Azure.AI.Projects.BrowserAutomationToolParameters is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(CaptureStructuredOutputsTool))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Evaluation.ChartCoordinate is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(ChartCoordinate))]

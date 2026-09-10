@@ -11,7 +11,7 @@ namespace Azure.AI.Projects.Agents
 {
     /// <summary>
     /// A tool that can be used to generate a response.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FabricIQPreviewTool"/>, <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenAPITool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, <see cref="A2ATool"/>, <see cref="WorkIQPreviewTool"/>, <see cref="WebIQPreviewTool"/>, <see cref="MemorySearchPreviewTool"/>, <see cref="ProgrammaticToolCallingParam"/>, and <see cref="ToolSearchTool"/>.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="FabricIQPreviewTool"/>, <see cref="BingGroundingTool"/>, <see cref="MicrosoftFabricPreviewTool"/>, <see cref="SharepointPreviewTool"/>, <see cref="AzureAISearchTool"/>, <see cref="OpenAPITool"/>, <see cref="BingCustomSearchPreviewTool"/>, <see cref="BrowserAutomationPreviewTool"/>, <see cref="BrowserAutomationTool"/>, <see cref="AzureFunctionTool"/>, <see cref="CaptureStructuredOutputsTool"/>, <see cref="A2APreviewTool"/>, <see cref="A2ATool"/>, <see cref="WorkIQPreviewTool"/>, <see cref="WebIQPreviewTool"/>, <see cref="MemorySearchPreviewTool"/>, <see cref="ProgrammaticToolCallingParam"/>, and <see cref="ToolSearchTool"/>.
     /// </summary>
     [PersistableModelProxy(typeof(UnknownTool))]
     public abstract partial class ProjectsAgentTool : IJsonModel<ProjectsAgentTool>
@@ -143,6 +143,8 @@ namespace Azure.AI.Projects.Agents
                         return BingCustomSearchPreviewTool.DeserializeBingCustomSearchPreviewTool(element, options);
                     case "browser_automation_preview":
                         return BrowserAutomationPreviewTool.DeserializeBrowserAutomationPreviewTool(element, options);
+                    case "browser_automation":
+                        return BrowserAutomationTool.DeserializeBrowserAutomationTool(element, options);
                     case "azure_function":
                         return AzureFunctionTool.DeserializeAzureFunctionTool(element, options);
                     case "capture_structured_outputs":

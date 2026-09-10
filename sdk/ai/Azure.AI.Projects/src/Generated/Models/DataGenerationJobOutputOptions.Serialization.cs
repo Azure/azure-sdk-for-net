@@ -96,6 +96,11 @@ namespace Azure.AI.Projects
                 }
                 writer.WriteEndObject();
             }
+            if (Optional.IsDefined(WriteMode))
+            {
+                writer.WritePropertyName("write_mode"u8);
+                writer.WriteStringValue(WriteMode.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -141,6 +146,7 @@ namespace Azure.AI.Projects
             string name = default;
             string description = default;
             IDictionary<string, string> tags = default;
+            DataGenerationJobOutputWriteMode? writeMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -175,12 +181,21 @@ namespace Azure.AI.Projects
                     tags = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("write_mode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    writeMode = new DataGenerationJobOutputWriteMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new DataGenerationJobOutputOptions(name, description, tags ?? new ChangeTrackingDictionary<string, string>(), additionalBinaryDataProperties);
+            return new DataGenerationJobOutputOptions(name, description, tags ?? new ChangeTrackingDictionary<string, string>(), writeMode, additionalBinaryDataProperties);
         }
     }
 }

@@ -45,6 +45,7 @@ Develop Agents using the Azure AI Foundry platform, leveraging an extensive ecos
     - [Create Azure Playwright workspace](#create-azure-playwright-workspace)
     - [Configure Microsoft Foundry](#configure-microsoft-foundry)
     - [Using Browser automation tool](#using-browser-automation-tool)
+    - [Browser automation preview tool](#browser-automation-preview-tool)
   - [SharePoint tool](#sharepoint)
   - [Fabric Data Agent tool](#fabric)
     - [Create a Fabric Capacity](#create-a-fabric-capacity)
@@ -1480,15 +1481,16 @@ ResponseResult response = await responseClient.CreateResponseAsync(responseOptio
 Console.WriteLine(response.GetOutputText());
 ```
 
-### Browser automation (preview)<a id="browser-automation"></a>
+### Browser automation<a id="browser-automation"></a>
 
 Playwright is a Node.js library for browser automation. Microsoft provides the [Azure Playwright workspace](https://learn.microsoft.com/javascript/api/overview/azure/playwright-readme), which can execute Playwright-based tasks triggered by an Agent using the BrowserAutomationAgentTool.
 
 #### Create Azure Playwright workspace
 
-1. Deploy an Azure Playwright workspace.
-2. In the **Get started** section, open **2. Set up authentication**.
-3. **Select Service Access Token**, then choose **Generate Token**. **Save the token immediately-once you close the page, it cannot be viewed again.**
+1. Deploy an Azure Playwright workspace and open the resource.
+2. In left panel select **Access management** and check the box **Playwright Service Access Token**.
+3. Click **Generate Token**.
+4. **Save the token immediately-once you close the page, it cannot be viewed again.**
 
 #### Configure Microsoft Foundry
 
@@ -1510,6 +1512,7 @@ AIProjectClientOptions options = new()
 {
     NetworkTimeout = TimeSpan.FromMinutes(5)
 };
+options.AddPolicy(GetDumpPolicy(), System.ClientModel.Primitives.PipelinePosition.PerCall);
 AIProjectClient projectClient = new(endpoint: new Uri(projectEndpoint), tokenProvider: new DefaultAzureCredential(), options: options);
 ```
 
@@ -1517,7 +1520,7 @@ To use Azure Playwright workspace we need to create agent with `BrowserAutomatio
 
 ```C# Snippet:Sample_CreateAgent_BrowserAutomotion_Async
 AIProjectConnection playwrightConnection = await projectClient.Connections.GetConnectionAsync(playwrightConnectionName);
-BrowserAutomationPreviewTool playwrightTool = new(
+BrowserAutomationTool playwrightTool = new(
     new BrowserAutomationToolOptions(
         new BrowserAutomationToolConnectionOptions(playwrightConnection.Id)
     ));
@@ -1557,6 +1560,11 @@ await foreach (StreamingResponseUpdate update in responseClient.CreateResponseSt
     ParseResponse(update);
 }
 ```
+
+#### Browser automation preview tool
+Along with `BrowserAutomationTool`, Azure.AI.Extensions.OpenAI contain `BrowserAutomationPreviewTool`, which has the same functionality as `BrowserAutomationTool`.
+This tool was released to preview the functionality, please use the stable version of the tool.
+
 
 ### SharePoint tool (preview)<a id="sharepoint"></a>
 `SharepointPreviewTool` allows Agent to access SharePoint pages to get the data context. Use the SharePoint connection name as it is shown in the connections section of Microsoft Foundry to get the connection. Get the connection ID to initialize the `SharePointGroundingToolOptions`, which will be used to create `SharepointPreviewTool`.

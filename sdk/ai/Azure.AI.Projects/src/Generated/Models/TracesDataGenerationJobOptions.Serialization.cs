@@ -12,11 +12,6 @@ namespace Azure.AI.Projects
     /// <summary> The options for a data generation job with Traces type. </summary>
     public partial class TracesDataGenerationJobOptions : DataGenerationJobOptions, IJsonModel<TracesDataGenerationJobOptions>
     {
-        /// <summary> Initializes a new instance of <see cref="TracesDataGenerationJobOptions"/> for deserialization. </summary>
-        internal TracesDataGenerationJobOptions()
-        {
-        }
-
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
         protected override DataGenerationJobOptions PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
@@ -76,6 +71,11 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(TracesDataGenerationJobOptions)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsDefined(MaxSamples))
+            {
+                writer.WritePropertyName("max_samples"u8);
+                writer.WriteNumberValue(MaxSamples.Value);
+            }
             if (Optional.IsDefined(RedactPrivateContent))
             {
                 writer.WritePropertyName("redact_private_content"u8);
@@ -109,21 +109,16 @@ namespace Azure.AI.Projects
                 return null;
             }
             DataGenerationJobKind @type = default;
-            int maxSamples = default;
             float? trainSplit = default;
             DataGenerationModelOptions modelOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            int? maxSamples = default;
             bool? redactPrivateContent = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new DataGenerationJobKind(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("max_samples"u8))
-                {
-                    maxSamples = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("train_split"u8))
@@ -144,6 +139,15 @@ namespace Azure.AI.Projects
                     modelOptions = DataGenerationModelOptions.DeserializeDataGenerationModelOptions(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("max_samples"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    maxSamples = prop.Value.GetInt32();
+                    continue;
+                }
                 if (prop.NameEquals("redact_private_content"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -160,10 +164,10 @@ namespace Azure.AI.Projects
             }
             return new TracesDataGenerationJobOptions(
                 @type,
-                maxSamples,
                 trainSplit,
                 modelOptions,
                 additionalBinaryDataProperties,
+                maxSamples,
                 redactPrivateContent);
         }
     }

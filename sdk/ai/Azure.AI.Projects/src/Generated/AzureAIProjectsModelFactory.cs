@@ -2555,10 +2555,13 @@ namespace Azure.AI.Projects
         /// <param name="agentVersion"> The agent version. If not specified, traces for ALL versions of the agent are included within the time window. </param>
         /// <param name="startsOn"> Start of the time window (Unix timestamp in seconds) for fetching traces. </param>
         /// <param name="endsOn"> End of the time window (Unix timestamp in seconds). Defaults to current time. </param>
+        /// <param name="traceIds"> Optional explicit list of trace IDs to include. </param>
         /// <returns> A new <see cref="Projects.TracesDataGenerationJobSource"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default)
+        public static TracesDataGenerationJobSource TracesDataGenerationJobSource(string description = default, string agentId = default, string agentName = default, string agentVersion = default, DateTimeOffset startsOn = default, DateTimeOffset? endsOn = default, IEnumerable<string> traceIds = default)
         {
+            traceIds ??= new ChangeTrackingList<string>();
+
             return new TracesDataGenerationJobSource(
                 DataGenerationJobSourceType.Traces,
                 additionalBinaryDataProperties: null,
@@ -2567,7 +2570,8 @@ namespace Azure.AI.Projects
                 agentName,
                 agentVersion,
                 startsOn,
-                endsOn);
+                endsOn,
+                traceIds.ToList());
         }
 
         /// <summary> File source for data generation jobs — Azure OpenAI file input. </summary>
@@ -2585,14 +2589,13 @@ namespace Azure.AI.Projects
         /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Projects.SimpleQnADataGenerationJobOptions"/>, <see cref="Projects.TracesDataGenerationJobOptions"/>, <see cref="Projects.SimulationSeedDataGenerationJobOptions"/>, and <see cref="Projects.ToolUseFineTuningDataGenerationJobOptions"/>.
         /// </summary>
         /// <param name="type"> The data generation job type. </param>
-        /// <param name="maxSamples"> Maximum number of samples to generate. </param>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
         /// <returns> A new <see cref="Projects.DataGenerationJobOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static DataGenerationJobOptions DataGenerationJobOptions(string @type = default, int maxSamples = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
+        public static DataGenerationJobOptions DataGenerationJobOptions(string @type = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
         {
-            return new UnknownDataGenerationJobOptions(new DataGenerationJobKind(@type), maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties: null);
+            return new UnknownDataGenerationJobOptions(new DataGenerationJobKind(@type), trainSplit, modelOptions, additionalBinaryDataProperties: null);
         }
 
         /// <summary> LLM model options for data generation jobs. </summary>
@@ -2605,76 +2608,76 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> The options for a data generation job with SimpleQnA type. </summary>
-        /// <param name="maxSamples"> Maximum number of samples to generate. </param>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
+        /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
         /// <param name="questionTypes"> The question types to generate. Used only for fine-tuning scenarios. </param>
         /// <returns> A new <see cref="Projects.SimpleQnADataGenerationJobOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static SimpleQnADataGenerationJobOptions SimpleQnADataGenerationJobOptions(int maxSamples = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default, IEnumerable<SimpleQnAFineTuningQuestionType> questionTypes = default)
+        public static SimpleQnADataGenerationJobOptions SimpleQnADataGenerationJobOptions(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int maxSamples = default, IEnumerable<SimpleQnAFineTuningQuestionType> questionTypes = default)
         {
             questionTypes ??= new ChangeTrackingList<SimpleQnAFineTuningQuestionType>();
 
             return new SimpleQnADataGenerationJobOptions(
                 DataGenerationJobKind.SimpleQna,
-                maxSamples,
                 trainSplit,
                 modelOptions,
                 additionalBinaryDataProperties: null,
+                maxSamples,
                 questionTypes.ToList());
         }
 
         /// <summary> The options for a data generation job with Traces type. </summary>
-        /// <param name="maxSamples"> Maximum number of samples to generate. </param>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
+        /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. If omitted, sampling is turned off. </param>
         /// <param name="redactPrivateContent"> Whether to redact private content from traces. When omitted or set to true, private content is redacted. Set to false to opt out of redaction. </param>
         /// <returns> A new <see cref="Projects.TracesDataGenerationJobOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static TracesDataGenerationJobOptions TracesDataGenerationJobOptions(int maxSamples = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default, bool? redactPrivateContent = default)
+        public static TracesDataGenerationJobOptions TracesDataGenerationJobOptions(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int? maxSamples = default, bool? redactPrivateContent = default)
         {
             return new TracesDataGenerationJobOptions(
                 DataGenerationJobKind.Traces,
-                maxSamples,
                 trainSplit,
                 modelOptions,
                 additionalBinaryDataProperties: null,
+                maxSamples,
                 redactPrivateContent);
         }
 
         /// <summary> The options for a task generation data generation job. Use with multiturn evaluation scenarios and with prompt, file, or agent sources. Generated dataset rows include fields such as `id`, `category`, `test_case_description`, and `desired_num_turns`. </summary>
-        /// <param name="maxSamples"> Maximum number of samples to generate. </param>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
         /// <returns> A new <see cref="Projects.SimulationSeedDataGenerationJobOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static SimulationSeedDataGenerationJobOptions SimulationSeedDataGenerationJobOptions(int maxSamples = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
+        public static SimulationSeedDataGenerationJobOptions SimulationSeedDataGenerationJobOptions(float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
         {
-            return new SimulationSeedDataGenerationJobOptions(DataGenerationJobKind.SimulationSeed, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties: null);
+            return new SimulationSeedDataGenerationJobOptions(DataGenerationJobKind.SimulationSeed, trainSplit, modelOptions, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The options for a data generation job with ToolUse type. Used only for fine-tuning scenarios. </summary>
-        /// <param name="maxSamples"> Maximum number of samples to generate. </param>
         /// <param name="trainSplit"> The proportion of the generated data to be used for training when the data is used for fine-tuning. The rest will be used for validation. Value should be between 0 and 1. </param>
         /// <param name="modelOptions"> The LLM model options. </param>
+        /// <param name="maxSamples"> Maximum number of samples to generate, up to service-defined limits. </param>
         /// <returns> A new <see cref="Projects.ToolUseFineTuningDataGenerationJobOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static ToolUseFineTuningDataGenerationJobOptions ToolUseFineTuningDataGenerationJobOptions(int maxSamples = default, float? trainSplit = default, DataGenerationModelOptions modelOptions = default)
+        public static ToolUseFineTuningDataGenerationJobOptions ToolUseFineTuningDataGenerationJobOptions(float? trainSplit = default, DataGenerationModelOptions modelOptions = default, int maxSamples = default)
         {
-            return new ToolUseFineTuningDataGenerationJobOptions(DataGenerationJobKind.ToolUse, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties: null);
+            return new ToolUseFineTuningDataGenerationJobOptions(DataGenerationJobKind.ToolUse, trainSplit, modelOptions, additionalBinaryDataProperties: null, maxSamples);
         }
 
         /// <summary> Output options for data generation job. </summary>
         /// <param name="name"> Name to assign to the output. Used as the filename for Azure OpenAI file outputs (fine-tuning scenarios) and as the dataset name for dataset outputs (evaluation scenario). </param>
         /// <param name="description"> Description to assign to the output. Applies only to dataset outputs (evaluation scenario); ignored for Azure OpenAI file outputs. </param>
         /// <param name="tags"> Tags to assign to the output. Applies only to dataset outputs (evaluation scenario); ignored for Azure OpenAI file outputs. </param>
+        /// <param name="writeMode"> Controls how dataset outputs are written. If omitted, defaults to `overwrite` and creates the next dataset version using only newly generated rows. </param>
         /// <returns> A new <see cref="Projects.DataGenerationJobOutputOptions"/> instance for mocking. </returns>
         [Experimental("AAIP001")]
-        public static DataGenerationJobOutputOptions DataGenerationJobOutputOptions(string name = default, string description = default, IDictionary<string, string> tags = default)
+        public static DataGenerationJobOutputOptions DataGenerationJobOutputOptions(string name = default, string description = default, IDictionary<string, string> tags = default, DataGenerationJobOutputWriteMode? writeMode = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DataGenerationJobOutputOptions(name, description, tags, additionalBinaryDataProperties: null);
+            return new DataGenerationJobOutputOptions(name, description, tags, writeMode, additionalBinaryDataProperties: null);
         }
 
         /// <summary> Result produced by a successful data generation job. </summary>

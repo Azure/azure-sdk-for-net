@@ -3,6 +3,8 @@
 ## 3.0.0-beta.3 (Unreleased)
 
 ### Features Added
+- Added the `AgentTelephony` client.
+- Added the `AgentEndpointConversations` client.
 
 ### Breaking Changes
 

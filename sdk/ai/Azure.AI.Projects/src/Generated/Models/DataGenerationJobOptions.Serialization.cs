@@ -80,8 +80,6 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
-            writer.WritePropertyName("max_samples"u8);
-            writer.WriteNumberValue(MaxSamples);
             if (Optional.IsDefined(TrainSplit))
             {
                 writer.WritePropertyName("train_split"u8);

@@ -9,8 +9,14 @@ using Azure.AI.Projects.Agents;
 
 namespace OpenAI
 {
+    /// <summary>
+    /// How the model should select which tool (or tools) to use when generating
+    /// a response. See the `tools` parameter to see how to specify which tools
+    /// the model can call.
+    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="ToolChoiceFunction"/> and <see cref="ToolChoiceMCP"/>.
+    /// </summary>
     [PersistableModelProxy(typeof(UnknownInternalToolChoiceParam))]
-    internal abstract partial class InternalToolChoiceParam : IJsonModel<InternalToolChoiceParam>
+    public abstract partial class InternalToolChoiceParam : IJsonModel<InternalToolChoiceParam>
     {
         /// <summary> Initializes a new instance of <see cref="InternalToolChoiceParam"/> for deserialization. </summary>
         internal InternalToolChoiceParam()

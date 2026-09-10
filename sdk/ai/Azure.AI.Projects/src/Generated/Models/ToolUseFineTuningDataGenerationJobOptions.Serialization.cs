@@ -76,6 +76,8 @@ namespace Azure.AI.Projects
                 throw new FormatException($"The model {nameof(ToolUseFineTuningDataGenerationJobOptions)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            writer.WritePropertyName("max_samples"u8);
+            writer.WriteNumberValue(MaxSamples);
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -104,20 +106,15 @@ namespace Azure.AI.Projects
                 return null;
             }
             DataGenerationJobKind @type = default;
-            int maxSamples = default;
             float? trainSplit = default;
             DataGenerationModelOptions modelOptions = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            int maxSamples = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
                 {
                     @type = new DataGenerationJobKind(prop.Value.GetString());
-                    continue;
-                }
-                if (prop.NameEquals("max_samples"u8))
-                {
-                    maxSamples = prop.Value.GetInt32();
                     continue;
                 }
                 if (prop.NameEquals("train_split"u8))
@@ -138,12 +135,17 @@ namespace Azure.AI.Projects
                     modelOptions = DataGenerationModelOptions.DeserializeDataGenerationModelOptions(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("max_samples"u8))
+                {
+                    maxSamples = prop.Value.GetInt32();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ToolUseFineTuningDataGenerationJobOptions(@type, maxSamples, trainSplit, modelOptions, additionalBinaryDataProperties);
+            return new ToolUseFineTuningDataGenerationJobOptions(@type, trainSplit, modelOptions, additionalBinaryDataProperties, maxSamples);
         }
     }
 }

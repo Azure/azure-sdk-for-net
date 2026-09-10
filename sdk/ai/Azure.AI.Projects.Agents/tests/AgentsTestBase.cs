@@ -209,6 +209,7 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
         OpenAPI,
         A2A,
         BrowserAutomation,
+        BrowserAutomationGA,
         ReminderPreview,
         WorkIQ,
         FabricIQ,
@@ -304,6 +305,14 @@ public class AgentsTestBase : RecordedTestBase<AgentsTestEnvironment>
                 Description = "Test Open API"
             },
             ToolType.BrowserAutomation => new BrowserAutomationPreviewToolboxTool(
+            new BrowserAutomationToolOptions(
+                new BrowserAutomationToolConnectionParameters(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
+            ))
+            {
+                Name = "browser-automation",
+                Description = "Test browser automation"
+            },
+            ToolType.BrowserAutomationGA => new BrowserAutomationToolboxTool(
             new BrowserAutomationToolOptions(
                 new BrowserAutomationToolConnectionParameters(TestEnvironment.PLAYWRIGHT_CONNECTION_ID)
             ))

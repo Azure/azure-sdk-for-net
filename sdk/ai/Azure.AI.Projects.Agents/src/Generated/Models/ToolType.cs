@@ -42,6 +42,7 @@ namespace OpenAI
         private const string AzureAiSearchValue = "azure_ai_search";
         private const string AzureFunctionValue = "azure_function";
         private const string BingGroundingValue = "bing_grounding";
+        private const string BrowserAutomationValue = "browser_automation";
         private const string CaptureStructuredOutputsValue = "capture_structured_outputs";
         private const string OpenapiValue = "openapi";
 
@@ -144,6 +145,9 @@ namespace OpenAI
 
         /// <summary> Gets the BingGrounding. </summary>
         public static ToolType BingGrounding { get; } = new ToolType(BingGroundingValue);
+
+        /// <summary> Gets the BrowserAutomation. </summary>
+        public static ToolType BrowserAutomation { get; } = new ToolType(BrowserAutomationValue);
 
         /// <summary> Gets the CaptureStructuredOutputs. </summary>
         public static ToolType CaptureStructuredOutputs { get; } = new ToolType(CaptureStructuredOutputsValue);
