@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Dns
 {
     /// <summary> Describes a DNS record set (a collection of DNS records with the same name and type). </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DnsCnameRecord : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

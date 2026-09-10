@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Partner configuration information. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class PartnerConfiguration : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

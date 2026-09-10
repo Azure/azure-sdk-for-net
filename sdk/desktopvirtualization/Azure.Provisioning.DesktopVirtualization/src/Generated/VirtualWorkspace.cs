@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Represents a Workspace definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualWorkspace : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

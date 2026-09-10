@@ -18,6 +18,7 @@ using Azure.Provisioning.Roles;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> EventGrid Topic. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventGridTopic : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

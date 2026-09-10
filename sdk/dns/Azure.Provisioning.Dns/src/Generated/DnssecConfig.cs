@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Dns
 {
     /// <summary> Represents the DNSSEC configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DnssecConfig : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

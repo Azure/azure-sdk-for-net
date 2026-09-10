@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Event Subscription. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class NamespaceTopicEventSubscription : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

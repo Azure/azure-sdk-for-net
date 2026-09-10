@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Schema for Application properties. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class VirtualApplication : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

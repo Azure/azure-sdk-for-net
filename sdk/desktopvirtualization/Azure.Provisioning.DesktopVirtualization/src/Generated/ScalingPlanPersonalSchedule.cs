@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.DesktopVirtualization
 {
     /// <summary> Represents a ScalingPlanPersonalSchedule definition. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ScalingPlanPersonalSchedule : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

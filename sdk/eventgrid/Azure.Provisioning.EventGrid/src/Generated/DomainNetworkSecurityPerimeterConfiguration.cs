@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> Network security perimeter configuration. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class DomainNetworkSecurityPerimeterConfiguration : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

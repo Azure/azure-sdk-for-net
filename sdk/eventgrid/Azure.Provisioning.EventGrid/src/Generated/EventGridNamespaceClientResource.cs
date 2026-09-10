@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.EventGrid
 {
     /// <summary> The Client resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class EventGridNamespaceClientResource : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
