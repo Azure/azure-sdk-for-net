@@ -564,7 +564,14 @@ public partial struct JsonPatch
 
         bool jsonFound = jsonReader.Advance(ref pathReader);
 
-        ReadOnlyMemory<byte> data = NeedsQuotes(encodedValue.Kind, jsonPath.IsArrayIndex()) ? new([(byte)'"', .. encodedValue.Value.Span, (byte)'"']) : encodedValue.Value;
+        ReadOnlyMemory<byte> data = encodedValue.Value;
+        if (NeedsQuotes(encodedValue.Kind) && (!jsonPath.IsRoot() || encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend)))
+        {
+            ReadOnlySpan<byte> valueBytes = encodedValue.Kind.HasFlag(ValueKind.Utf8String)
+                ? JsonEncodedText.Encode(data.Span).EncodedUtf8Bytes
+                : data.Span;
+            data = new([(byte)'"', .. valueBytes, (byte)'"']);
+        }
         ReadOnlySpan<byte> propertyName = pathReader.Current.ValueSpan;
 
         int index = 0;
@@ -604,7 +611,7 @@ public partial struct JsonPatch
             // fast path for root
             if (encodedValue.Kind.HasFlag(ValueKind.ArrayItemAppend))
             {
-                return NeedsQuotes(encodedValue.Kind, true)
+                return NeedsQuotes(encodedValue.Kind)
                     ? new([(byte)'[', (byte)'"', .. encodedValue.Value.Span, (byte)'"', (byte)']'])
                     : new([(byte)'[', .. encodedValue.Value.Span, (byte)']']);
             }
@@ -617,10 +624,10 @@ public partial struct JsonPatch
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    private static bool NeedsQuotes(ValueKind kind, bool isArrayIndex)
+    private static bool NeedsQuotes(ValueKind kind)
     {
         var stringKinds = ValueKind.Utf8String | ValueKind.TimeSpan | ValueKind.Guid | ValueKind.DateTime;
-        return (kind & stringKinds) > 0 && (isArrayIndex || kind.HasFlag(ValueKind.ArrayItemAppend));
+        return (kind & stringKinds) > 0;
     }
 
     private static ReadOnlyMemory<byte> GetNonRootNewJson(ref JsonPathReader reader, bool isParentRoot, bool isArrayIndex, EncodedValue encodedValue)
