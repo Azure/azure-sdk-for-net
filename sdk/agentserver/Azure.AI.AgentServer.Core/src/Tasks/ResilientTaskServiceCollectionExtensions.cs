@@ -71,7 +71,8 @@ public static class ResilientTaskServiceCollectionExtensions
         ArgumentNullException.ThrowIfNull(credentialFactory);
 
         TaskCredentialRegistrationState state = GetOrCreateCredentialState(services);
-        if (!services.Any(descriptor => descriptor.ServiceType == typeof(TokenCredential)))
+        if (!services.Any(descriptor =>
+            descriptor.ServiceType == typeof(TokenCredential) && !descriptor.IsKeyedService))
         {
             ServiceDescriptor descriptor =
                 ServiceDescriptor.Singleton<TokenCredential>(credentialFactory);
@@ -487,6 +488,7 @@ public static class ResilientTaskServiceCollectionExtensions
         ServiceDescriptor? defaultDescriptor = state.DefaultDescriptor;
         bool hasConsumerCredential = services.Any(descriptor =>
             descriptor.ServiceType == typeof(TokenCredential)
+            && !descriptor.IsKeyedService
             && !ReferenceEquals(descriptor, defaultDescriptor));
 
         if (!hasConsumerCredential)

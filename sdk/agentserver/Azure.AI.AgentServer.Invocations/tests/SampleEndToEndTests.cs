@@ -1010,19 +1010,21 @@ public class SampleEndToEndTests
     }
 
     [Test]
-    public async Task ResilientResearch_CancelQueuedInvocation_PreventsExecution()
+    public async Task ResilientResearch_CancelQueuedInvocation_ReturnsNotFoundWithoutCancellingTurns()
     {
         var activeStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         var releaseActive = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         var steeredStarted = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         var releaseSteered = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
         int steeredExecutions = 0;
+        TaskContext<Snippets.SampleResilientResearchSnippets.ResearchRequest>? activeContext = null;
 
         await using var env = await CreateControlledResilientResearchServerAsync(
             async (context, cancellationToken) =>
             {
                 if (!context.IsSteeredTurn)
                 {
+                    activeContext = context;
                     activeStarted.TrySetResult();
                     await releaseActive.Task;
                     return new("active-completed", Array.Empty<string>());
@@ -1053,24 +1055,24 @@ public class SampleEndToEndTests
             using HttpResponseMessage cancel = await env.Client.PostAsync(
                 $"/invocations/{queuedInvocationId}/cancel?agent_session_id={sessionId}",
                 content: null);
-            Assert.That(cancel.StatusCode, Is.EqualTo(HttpStatusCode.Accepted));
+            Assert.That(cancel.StatusCode, Is.EqualTo(HttpStatusCode.NotFound),
+                "This sample layer supports cancellation of the active invocation, not queued inputs.");
+            Assert.That(activeContext!.CancelRequested, Is.False);
+            Assert.That(Volatile.Read(ref steeredExecutions), Is.Zero);
 
             releaseActive.TrySetResult();
+            await steeredStarted.Task.WaitAsync(TimeSpan.FromSeconds(5));
+            Assert.That(Volatile.Read(ref steeredExecutions), Is.EqualTo(1),
+                "Rejecting a queued cancellation must not remove that queued input.");
+            releaseSteered.TrySetResult();
             TaskDefinition<
                 Snippets.SampleResilientResearchSnippets.ResearchRequest,
                 Snippets.SampleResilientResearchSnippets.ResearchResult> research =
                 env.Services.GetResilientTask<
                     Snippets.SampleResilientResearchSnippets.ResearchRequest,
                     Snippets.SampleResilientResearchSnippets.ResearchResult>("research");
-            Task settled = WaitForResearchChainToSettleAsync(
+            await WaitForResearchChainToSettleAsync(
                 research, taskId, activeInvocationId, queuedInvocationId);
-            Task first = await Task.WhenAny(settled, steeredStarted.Task);
-            Assert.That(
-                first,
-                Is.SameAs(settled),
-                "The cancelled queued invocation must never be promoted or executed.");
-            await settled;
-            Assert.That(Volatile.Read(ref steeredExecutions), Is.Zero);
         }
         finally
         {
