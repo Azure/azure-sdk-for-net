@@ -106,7 +106,7 @@ public class AgentVoiceAssistant : IDisposable
         {
             await foreach (SessionUpdate update in _session!.GetUpdatesAsync(cancellationToken).ConfigureAwait(false))
             {
-                await HandleUpdateAsync(update, cancellationToken).ConfigureAwait(false);
+                await HandleUpdateAsync(update).ConfigureAwait(false);
             }
         }
         catch (OperationCanceledException)
@@ -115,7 +115,7 @@ public class AgentVoiceAssistant : IDisposable
         }
     }
 
-    private async Task HandleUpdateAsync(SessionUpdate update, CancellationToken cancellationToken)
+    private async Task HandleUpdateAsync(SessionUpdate update)
     {
         _logger.LogDebug("Received event: {EventType}", update.GetType().Name);
 
@@ -143,8 +143,6 @@ public class AgentVoiceAssistant : IDisposable
                 if (_audioProcessor != null)
                     await _audioProcessor.StopPlaybackAsync().ConfigureAwait(false);
 
-                try { await _session!.CancelResponseAsync(cancellationToken).ConfigureAwait(false); }
-                catch (Exception ex) { _logger.LogDebug(ex, "No response to cancel"); }
                 break;
 
             case SessionUpdateInputAudioBufferSpeechStopped:

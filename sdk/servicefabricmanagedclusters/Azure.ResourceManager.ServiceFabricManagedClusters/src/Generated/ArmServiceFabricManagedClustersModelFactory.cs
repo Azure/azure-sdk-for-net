@@ -59,6 +59,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> User assigned identity for the application. </summary>
         /// <param name="name"> The friendly name of user assigned identity. </param>
         /// <param name="principalId"> The principal id of user assigned identity. </param>
         /// <returns> A new <see cref="Models.ApplicationUserAssignedIdentityInfo"/> instance for mocking. </returns>
@@ -67,6 +68,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ApplicationUserAssignedIdentityInfo(name, principalId, default);
         }
 
+        /// <summary> Describes the policy for a monitored application upgrade. </summary>
         /// <param name="applicationHealthPolicy"> Defines a health policy used to evaluate the health of an application or one of its children entities. </param>
         /// <param name="forceRestart"> If true, then processes are forcefully restarted during upgrade even when the code version has not changed (the upgrade only changes configuration or data). </param>
         /// <param name="rollingUpgradeMonitoringPolicy"> The policy used for monitoring the application upgrade. </param>
@@ -88,6 +90,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> Defines a health policy used to evaluate the health of an application or one of its children entities. </summary>
         /// <param name="considerWarningAsError"> Indicates whether warnings are treated with the same severity as errors. </param>
         /// <param name="maxPercentUnhealthyDeployedApplications">
         /// The maximum allowed percentage of unhealthy deployed applications. Allowed values are Byte values from zero to 100.
@@ -105,6 +108,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ApplicationHealthPolicy(considerWarningAsError, maxPercentUnhealthyDeployedApplications, defaultServiceTypeHealthPolicy, serviceTypeHealthPolicyMap ?? new ChangeTrackingDictionary<string, ServiceTypeHealthPolicy>(), default);
         }
 
+        /// <summary> Represents the health policy used to evaluate the health of services belonging to a service type. </summary>
         /// <param name="maxPercentUnhealthyServices">
         /// The maximum allowed percentage of unhealthy services.
         /// The percentage represents the maximum tolerated percentage of services that can be unhealthy before the application is considered in error.
@@ -132,6 +136,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ServiceTypeHealthPolicy(maxPercentUnhealthyServices, maxPercentUnhealthyPartitionsPerService, maxPercentUnhealthyReplicasPerPartition, default);
         }
 
+        /// <summary> The policy used for monitoring the application upgrade. </summary>
         /// <param name="failureAction"> The compensating action to perform when a Monitored upgrade encounters monitoring policy or health policy violations. Invalid indicates the failure action is invalid. Rollback specifies that the upgrade will start rolling back automatically. Manual indicates that the upgrade will switch to UnmonitoredManual upgrade mode. </param>
         /// <param name="healthCheckWaitDuration"> The amount of time to wait after completing an upgrade domain before applying health policies. It is interpreted as a string representing an ISO 8601 duration with following format "hh:mm:ss.fff". </param>
         /// <param name="healthCheckStableDuration"> The amount of time that the application or cluster must remain healthy before the upgrade proceeds to the next upgrade domain. It is interpreted as a string representing an ISO 8601 duration with following format "hh:mm:ss.fff". </param>
@@ -161,6 +166,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ServiceFabricManagedApplicationPatch(tags ?? new ChangeTrackingDictionary<string, string>(), applicationUpdateParameters is null ? default : new ApplicationUpdateParametersProperties(applicationUpdateParameters ?? new ChangeTrackingDictionary<string, string>(), default), default);
         }
 
+        /// <summary> Parameters for Resume Upgrade action. The upgrade domain name must be specified. </summary>
         /// <param name="upgradeDomainName"> The upgrade domain name. Expected to be the next upgrade domain if the application is upgrading. </param>
         /// <returns> A new <see cref="Models.RuntimeResumeApplicationUpgradeContent"/> instance for mocking. </returns>
         public static RuntimeResumeApplicationUpgradeContent RuntimeResumeApplicationUpgradeContent(string upgradeDomainName = default)
@@ -168,6 +174,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new RuntimeResumeApplicationUpgradeContent(upgradeDomainName, default);
         }
 
+        /// <summary> Parameters for the Update Upgrade action. </summary>
         /// <param name="name"> The name of the application, including the 'fabric:' URI scheme. </param>
         /// <param name="upgradeKind"> The kind of the upgrade. </param>
         /// <param name="applicationHealthPolicy"> Defines a health policy used to evaluate the health of an application or one of its children entities. </param>
@@ -178,6 +185,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new RuntimeUpdateApplicationUpgradeContent(name, upgradeKind, applicationHealthPolicy, updateDescription, default);
         }
 
+        /// <summary> Cluster level definition for a health policy used to evaluate the health of an application or one of its children entities. </summary>
         /// <param name="considerWarningAsError"> Indicates whether warnings are treated with the same severity as errors. </param>
         /// <param name="maxPercentUnhealthyDeployedApplications">
         /// The maximum allowed percentage of unhealthy deployed applications. Allowed values are Byte values from zero to 100.
@@ -195,6 +203,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new RuntimeApplicationHealthPolicy(considerWarningAsError, maxPercentUnhealthyDeployedApplications, defaultServiceTypeHealthPolicy, serviceTypeHealthPolicyMap ?? new ChangeTrackingDictionary<string, RuntimeServiceTypeHealthPolicy>(), default);
         }
 
+        /// <summary> Cluster level definition that represents the health policy used to evaluate the health of services belonging to a service type. </summary>
         /// <param name="maxPercentUnhealthyServices">
         /// The maximum allowed percentage of unhealthy services.
         /// The percentage represents the maximum tolerated percentage of services that can be unhealthy before the application is considered in error.
@@ -222,6 +231,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new RuntimeServiceTypeHealthPolicy(maxPercentUnhealthyServices, maxPercentUnhealthyPartitionsPerService, maxPercentUnhealthyReplicasPerPartition, default);
         }
 
+        /// <summary> Describes the parameters for updating a rolling upgrade of application or cluster. </summary>
         /// <param name="rollingUpgradeMode"> The mode used to monitor health during a rolling upgrade. </param>
         /// <param name="forceRestart"> If true, then processes are forcefully restarted during upgrade even when the code version has not changed (the upgrade only changes configuration or data). </param>
         /// <param name="replicaSetCheckTimeoutInMilliseconds"> The maximum amount of time to block processing of an upgrade domain and prevent loss of availability when there are unexpected issues. When this timeout expires, processing of the upgrade domain will proceed regardless of availability loss issues. The timeout is reset at the start of each upgrade domain. Valid values are between 0 and 42949672925 inclusive. (unsigned 32-bit integer). </param>
@@ -249,6 +259,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> Parameters for fetching the health of an application. </summary>
         /// <param name="eventsHealthStateFilter"> Allows filtering of the health events returned in the response based on health state. </param>
         /// <param name="deployedApplicationsHealthStateFilter"> Allows filtering of the deployed applications health state objects returned in the result of application health query based on their health state. </param>
         /// <param name="servicesHealthStateFilter"> Allows filtering of the services health state objects returned in the result of services health query based on their health state. </param>
@@ -266,6 +277,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> Parameters for restarting a deployed code package. </summary>
         /// <param name="nodeName"> The name of the node where the code package needs to be restarted. Use '*' to restart on all nodes where the code package is running. </param>
         /// <param name="serviceManifestName"> The name of the service manifest as specified in the code package. </param>
         /// <param name="codePackageName"> The name of the code package as specified in the service manifest. </param>
@@ -306,6 +318,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> Application type update request. </summary>
         /// <param name="tags"> Application type update parameters. </param>
         /// <returns> A new <see cref="Models.ServiceFabricManagedApplicationTypePatch"/> instance for mocking. </returns>
         public static ServiceFabricManagedApplicationTypePatch ServiceFabricManagedApplicationTypePatch(IDictionary<string, string> tags = default)
@@ -339,6 +352,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> Application type version update request. </summary>
         /// <param name="tags"> Application type version update parameters. </param>
         /// <returns> A new <see cref="Models.ServiceFabricManagedApplicationTypeVersionPatch"/> instance for mocking. </returns>
         public static ServiceFabricManagedApplicationTypeVersionPatch ServiceFabricManagedApplicationTypeVersionPatch(IDictionary<string, string> tags = default)
@@ -348,6 +362,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ServiceFabricManagedApplicationTypeVersionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> The service resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -371,6 +386,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary>
+        /// The service resource properties.
+        /// Please note this is the base class. The derived classes available for instantiation are: <see cref="Models.StatefulServiceProperties"/> and <see cref="Models.StatelessServiceProperties"/>.
+        /// </summary>
         /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: "NodeColor == blue)". </param>
         /// <param name="correlationScheme"> A list that describes the correlation of the service with other services. </param>
         /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetric objects. </param>
@@ -411,6 +430,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 serviceDnsName);
         }
 
+        /// <summary>
+        /// Describes how the service is partitioned.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.UniformInt64RangePartitionScheme"/>, <see cref="Models.SingletonPartitionScheme"/>, and <see cref="Models.NamedPartitionScheme"/>.
+        /// </summary>
         /// <param name="partitionScheme"></param>
         /// <returns> A new <see cref="Models.ManagedServicePartitionScheme"/> instance for mocking. </returns>
         public static ManagedServicePartitionScheme ManagedServicePartitionScheme(string partitionScheme = default)
@@ -418,6 +441,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new UnknownPartition(default, default);
         }
 
+        /// <summary> Describes a partitioning scheme where an integer range is allocated evenly across a number of partitions. </summary>
         /// <param name="count"> The number of partitions. </param>
         /// <param name="lowKey">
         /// The lower bound of the partition key range that
@@ -433,12 +457,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new UniformInt64RangePartitionScheme(default, default, count, lowKey, highKey);
         }
 
+        /// <summary> Describes the partition scheme of a singleton-partitioned, or non-partitioned service. </summary>
         /// <returns> A new <see cref="Models.SingletonPartitionScheme"/> instance for mocking. </returns>
         public static SingletonPartitionScheme SingletonPartitionScheme()
         {
             return new SingletonPartitionScheme(default, default);
         }
 
+        /// <summary> Describes the named partition scheme of the service. </summary>
         /// <param name="names"> Array for the names of the partitions. </param>
         /// <returns> A new <see cref="Models.NamedPartitionScheme"/> instance for mocking. </returns>
         public static NamedPartitionScheme NamedPartitionScheme(IEnumerable<string> names = default)
@@ -448,6 +474,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NamedPartitionScheme(default, default, (names ?? new ChangeTrackingList<string>()).ToList());
         }
 
+        /// <summary> The common service resource properties. </summary>
         /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: "NodeColor == blue)". </param>
         /// <param name="correlationScheme"> A list that describes the correlation of the service with other services. </param>
         /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetric objects. </param>
@@ -472,6 +499,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> Creates a particular correlation between services. </summary>
         /// <param name="scheme"> The ServiceCorrelationScheme which describes the relationship between this service and the service specified via ServiceName. </param>
         /// <param name="serviceName"> The Arm Resource ID of the service that the correlation relationship is established with. </param>
         /// <returns> A new <see cref="Models.ManagedServiceCorrelation"/> instance for mocking. </returns>
@@ -480,6 +508,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ManagedServiceCorrelation(scheme, serviceName, default);
         }
 
+        /// <summary> Specifies a metric to load balance a service during runtime. </summary>
         /// <param name="name"> The name of the metric. If the service chooses to report load during runtime, the load metric name should match the name that is specified in Name exactly. Note that metric names are case sensitive. </param>
         /// <param name="weight"> The service load metric relative weight, compared to other metrics configured for this service, as a number. </param>
         /// <param name="primaryDefaultLoad"> Used only for Stateful services. The default amount of load, as a number, that this service creates for this metric when it is a Primary replica. </param>
@@ -497,6 +526,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary>
+        /// Describes the policy to be used for placement of a Service Fabric service.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.ServicePlacementInvalidDomainPolicy"/>, <see cref="Models.ServicePlacementRequiredDomainPolicy"/>, <see cref="Models.ServicePlacementPreferPrimaryDomainPolicy"/>, <see cref="Models.ServicePlacementRequireDomainDistributionPolicy"/>, and <see cref="Models.ServicePlacementNonPartiallyPlaceServicePolicy"/>.
+        /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Models.ManagedServicePlacementPolicy"/> instance for mocking. </returns>
         public static ManagedServicePlacementPolicy ManagedServicePlacementPolicy(string @type = default)
@@ -504,6 +537,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new UnknownServicePlacementPolicy(default, default);
         }
 
+        /// <summary> Describes the policy to be used for placement of a Service Fabric service where a particular fault or upgrade domain should not be used for placement of the instances or replicas of that service. </summary>
         /// <param name="domainName"> The name of the domain that should not be used for placement. </param>
         /// <returns> A new <see cref="Models.ServicePlacementInvalidDomainPolicy"/> instance for mocking. </returns>
         public static ServicePlacementInvalidDomainPolicy ServicePlacementInvalidDomainPolicy(string domainName = default)
@@ -511,6 +545,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ServicePlacementInvalidDomainPolicy(default, default, domainName);
         }
 
+        /// <summary> Describes the policy to be used for placement of a Service Fabric service where the instances or replicas of that service must be placed in a particular domain. </summary>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
         /// <returns> A new <see cref="Models.ServicePlacementRequiredDomainPolicy"/> instance for mocking. </returns>
         public static ServicePlacementRequiredDomainPolicy ServicePlacementRequiredDomainPolicy(string domainName = default)
@@ -518,6 +553,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ServicePlacementRequiredDomainPolicy(default, default, domainName);
         }
 
+        /// <summary>
+        /// Describes the policy to be used for placement of a Service Fabric service where the service's
+        /// Primary replicas should optimally be placed in a particular domain.
+        /// This placement policy is usually used with fault domains in scenarios where the Service Fabric
+        /// cluster is geographically distributed in order to indicate that a service's primary replica should
+        /// be located in a particular fault domain, which in geo-distributed scenarios usually aligns with regional
+        /// or datacenter boundaries. Note that since this is an optimization it is possible that the Primary replica
+        /// may not end up located in this domain due to failures, capacity limits, or other constraints.
+        /// </summary>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
         /// <returns> A new <see cref="Models.ServicePlacementPreferPrimaryDomainPolicy"/> instance for mocking. </returns>
         public static ServicePlacementPreferPrimaryDomainPolicy ServicePlacementPreferPrimaryDomainPolicy(string domainName = default)
@@ -525,6 +569,16 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ServicePlacementPreferPrimaryDomainPolicy(default, default, domainName);
         }
 
+        /// <summary>
+        /// Describes the policy to be used for placement of a Service Fabric service where two replicas
+        /// from the same partition should never be placed in the same fault or upgrade domain.
+        /// While this is not common it can expose the service to an increased risk of concurrent failures
+        /// due to unplanned outages or other cases of subsequent/concurrent failures. As an example, consider
+        /// a case where replicas are deployed across different data center, with one replica per location.
+        /// In the event that one of the datacenters goes offline, normally the replica that was placed in that
+        /// datacenter will be packed into one of the remaining datacenters. If this is not desirable then this
+        /// policy should be set.
+        /// </summary>
         /// <param name="domainName"> The name of the domain that should used for placement as per this policy. </param>
         /// <returns> A new <see cref="Models.ServicePlacementRequireDomainDistributionPolicy"/> instance for mocking. </returns>
         public static ServicePlacementRequireDomainDistributionPolicy ServicePlacementRequireDomainDistributionPolicy(string domainName = default)
@@ -532,12 +586,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ServicePlacementRequireDomainDistributionPolicy(default, default, domainName);
         }
 
+        /// <summary> The type of placement policy for a service fabric service. Following are the possible values. </summary>
         /// <returns> A new <see cref="Models.ServicePlacementNonPartiallyPlaceServicePolicy"/> instance for mocking. </returns>
         public static ServicePlacementNonPartiallyPlaceServicePolicy ServicePlacementNonPartiallyPlaceServicePolicy()
         {
             return new ServicePlacementNonPartiallyPlaceServicePolicy(default, default);
         }
 
+        /// <summary> Specifies a metric to load balance a service during runtime. </summary>
         /// <param name="scalingMechanism"> Specifies the mechanism associated with this scaling policy. </param>
         /// <param name="scalingTrigger"> Specifies the trigger associated with this scaling policy. </param>
         /// <returns> A new <see cref="Models.ManagedServiceScalingPolicy"/> instance for mocking. </returns>
@@ -546,6 +602,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ManagedServiceScalingPolicy(scalingMechanism, scalingTrigger, default);
         }
 
+        /// <summary>
+        /// Describes the mechanism for performing a scaling operation.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.NamedPartitionAddOrRemoveScalingMechanism"/> and <see cref="Models.PartitionInstanceCountScalingMechanism"/>.
+        /// </summary>
         /// <param name="kind"></param>
         /// <returns> A new <see cref="Models.ManagedServiceScalingMechanism"/> instance for mocking. </returns>
         public static ManagedServiceScalingMechanism ManagedServiceScalingMechanism(string kind = default)
@@ -553,6 +613,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new UnknownScalingMechanism(default, default);
         }
 
+        /// <summary> Represents a scaling mechanism for adding or removing named partitions of a stateless service. Partition names are in the format '0','1'...'N-1'. </summary>
         /// <param name="minPartitionCount"> Minimum number of named partitions of the service. </param>
         /// <param name="maxPartitionCount"> Maximum number of named partitions of the service. </param>
         /// <param name="scaleIncrement"> The number of instances to add or remove during a scaling operation. </param>
@@ -562,6 +623,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NamedPartitionAddOrRemoveScalingMechanism(default, default, minPartitionCount, maxPartitionCount, scaleIncrement);
         }
 
+        /// <summary> Represents a scaling mechanism for adding or removing instances of stateless service partition. </summary>
         /// <param name="minInstanceCount"> Minimum number of instances of the partition. </param>
         /// <param name="maxInstanceCount"> Maximum number of instances of the partition. </param>
         /// <param name="scaleIncrement"> The number of instances to add or remove during a scaling operation. </param>
@@ -571,6 +633,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new PartitionInstanceCountScalingMechanism(default, default, minInstanceCount, maxInstanceCount, scaleIncrement);
         }
 
+        /// <summary>
+        /// Describes the trigger for performing a scaling operation.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.AveragePartitionLoadScalingTrigger"/> and <see cref="Models.AverageServiceLoadScalingTrigger"/>.
+        /// </summary>
         /// <param name="kind"></param>
         /// <returns> A new <see cref="Models.ManagedServiceScalingTrigger"/> instance for mocking. </returns>
         public static ManagedServiceScalingTrigger ManagedServiceScalingTrigger(string kind = default)
@@ -578,6 +644,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new UnknownScalingTrigger(default, default);
         }
 
+        /// <summary> Represents a scaling trigger related to an average load of a metric/resource of a partition. </summary>
         /// <param name="metricName"> The name of the metric for which usage should be tracked. </param>
         /// <param name="lowerLoadThreshold"> The lower limit of the load below which a scale in operation should be performed. </param>
         /// <param name="upperLoadThreshold"> The upper limit of the load beyond which a scale out operation should be performed. </param>
@@ -594,6 +661,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 scaleInterval);
         }
 
+        /// <summary> Represents a scaling policy related to an average load of a metric/resource of a service. </summary>
         /// <param name="metricName"> The name of the metric for which usage should be tracked. </param>
         /// <param name="lowerLoadThreshold"> The lower limit of the load below which a scale in operation should be performed. </param>
         /// <param name="upperLoadThreshold"> The upper limit of the load beyond which a scale out operation should be performed. </param>
@@ -612,6 +680,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 useOnlyPrimaryLoad);
         }
 
+        /// <summary> The properties of a stateful service resource. </summary>
         /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: "NodeColor == blue)". </param>
         /// <param name="correlationScheme"> A list that describes the correlation of the service with other services. </param>
         /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetric objects. </param>
@@ -665,6 +734,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 servicePlacementTimeLimit);
         }
 
+        /// <summary> The properties of a stateless service resource. </summary>
         /// <param name="placementConstraints"> The placement constraints as a string. Placement constraints are boolean expressions on node properties and allow for restricting a service to particular nodes based on the service requirements. For example, to place a service on nodes where NodeType is blue specify the following: "NodeColor == blue)". </param>
         /// <param name="correlationScheme"> A list that describes the correlation of the service with other services. </param>
         /// <param name="serviceLoadMetrics"> The service load metrics is given as an array of ServiceLoadMetric objects. </param>
@@ -710,6 +780,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 minInstancePercentage);
         }
 
+        /// <summary> Service update request. </summary>
         /// <param name="tags"> Service update parameters. </param>
         /// <returns> A new <see cref="Models.ServiceFabricManagedServicePatch"/> instance for mocking. </returns>
         public static ServiceFabricManagedServicePatch ServiceFabricManagedServicePatch(IDictionary<string, string> tags = default)
@@ -719,6 +790,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ServiceFabricManagedServicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Request to restart a replica. </summary>
         /// <param name="partitionId"> The ID of the partition. </param>
         /// <param name="replicaIds"> The IDs of the replicas to be restarted. </param>
         /// <param name="restartKind"> The kind of restart to perform. </param>
@@ -774,6 +846,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> Describes a load balancing rule. </summary>
         /// <param name="frontendPort"> The port for the external endpoint. Port numbers for each rule must be unique within the Load Balancer. Acceptable values are between 1 and 65534. </param>
         /// <param name="backendPort"> The port used for internal connections on the endpoint. Acceptable values are between 1 and 65535. </param>
         /// <param name="protocol"> The reference to the transport protocol used by the load balancing rule. </param>
@@ -795,6 +868,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> Describes a network security rule. </summary>
         /// <param name="name"> Network security rule name. </param>
         /// <param name="description"> Network security rule description. </param>
         /// <param name="protocol"> Network protocol this rule applies to. </param>
@@ -835,6 +909,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> Client certificate definition. </summary>
         /// <param name="isAdmin"> Indicates if the client certificate has admin access to the cluster. Non admin clients can perform only read only operations on the cluster. </param>
         /// <param name="thumbprint"> Certificate thumbprint. </param>
         /// <param name="commonName"> Certificate common name. </param>
@@ -845,6 +920,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ManagedClusterClientCertificate(isAdmin, thumbprint, commonName, issuerThumbprint, default);
         }
 
+        /// <summary> The settings to enable AAD authentication on the cluster. </summary>
         /// <param name="tenantId"> Azure active directory tenant id. </param>
         /// <param name="clusterApplication"> Azure active directory cluster application id. </param>
         /// <param name="clientApplication"> Azure active directory client application id. </param>
@@ -854,6 +930,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ManagedClusterAzureActiveDirectory(tenantId, clusterApplication, clientApplication, default);
         }
 
+        /// <summary> Describes a section in the fabric settings of the cluster. </summary>
         /// <param name="name"> The section name of the fabric settings. </param>
         /// <param name="parameters"> The collection of parameters in the section. </param>
         /// <returns> A new <see cref="Models.ClusterFabricSettingsSection"/> instance for mocking. </returns>
@@ -864,6 +941,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ClusterFabricSettingsSection(name, (parameters ?? new ChangeTrackingList<ClusterFabricSettingsParameterDescription>()).ToList(), default);
         }
 
+        /// <summary> Describes a parameter in fabric settings of the cluster. </summary>
         /// <param name="name"> The parameter name of fabric setting. </param>
         /// <param name="value"> The parameter value of fabric setting. </param>
         /// <returns> A new <see cref="Models.ClusterFabricSettingsParameterDescription"/> instance for mocking. </returns>
@@ -872,6 +950,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ClusterFabricSettingsParameterDescription(name, value, default);
         }
 
+        /// <summary> The IP tag associated with the public IP address. </summary>
         /// <param name="ipTagType"> IP tag type. Example: FirstPartyUsage. </param>
         /// <param name="tag"> IP tag associated with the public IP. Example: SQL, Storage etc. </param>
         /// <returns> A new <see cref="Models.ManagedClusterIPTag"/> instance for mocking. </returns>
@@ -880,6 +959,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ManagedClusterIPTag(ipTagType, tag, default);
         }
 
+        /// <summary> Describes a Subnet. </summary>
         /// <param name="name"> Subnet name. </param>
         /// <param name="isIPv6Enabled"> Indicates wether to enable Ipv6 or not. If not provided, it will take the same configuration as the cluster. </param>
         /// <param name="privateEndpointNetworkPolicies"> Enable or Disable apply network policies on private end point in the subnet. </param>
@@ -897,6 +977,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> The service endpoint properties. </summary>
         /// <param name="service"> The type of the endpoint service. </param>
         /// <param name="locations"> A list of locations. </param>
         /// <param name="networkIdentifier"> Specifies the resource id of the service endpoint to be used in the cluster. </param>
@@ -908,6 +989,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ManagedClusterServiceEndpoint(service, (locations ?? new ChangeTrackingList<AzureLocation>()).ToList(), networkIdentifier, default);
         }
 
+        /// <summary> Describes the policy used when upgrading the cluster. </summary>
         /// <param name="forceRestart"> If true, then processes are forcefully restarted during upgrade even when the code version has not changed (the upgrade only changes configuration or data). </param>
         /// <param name="healthPolicy"> The cluster health policy defines a health policy used to evaluate the health of the cluster during a cluster upgrade. </param>
         /// <param name="deltaHealthPolicy"> The cluster delta health policy defines a health policy used to evaluate the health of the cluster during a cluster upgrade. </param>
@@ -930,6 +1012,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> Defines a health policy used to evaluate the health of the cluster or of a cluster node. </summary>
         /// <param name="maxPercentUnhealthyNodes">
         /// The maximum allowed percentage of unhealthy nodes before reporting an error. For example, to allow 10% of nodes to be unhealthy, this value would be 10.
         /// The percentage represents the maximum tolerated percentage of nodes that can be unhealthy before the cluster is considered in error.
@@ -951,6 +1034,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ManagedClusterHealthPolicy(maxPercentUnhealthyNodes, maxPercentUnhealthyApplications, default);
         }
 
+        /// <summary> Describes the delta health policies for the cluster upgrade. </summary>
         /// <param name="maxPercentDeltaUnhealthyNodes">
         /// The maximum allowed percentage of nodes health degradation allowed during cluster upgrades.
         /// The delta is measured between the state of the nodes at the beginning of upgrade and the state of the nodes at the time of the health evaluation.
@@ -973,6 +1057,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ManagedClusterUpgradeDeltaHealthPolicy(maxPercentDeltaUnhealthyNodes, maxPercentUpgradeDomainDeltaUnhealthyNodes, maxPercentDeltaUnhealthyApplications, default);
         }
 
+        /// <summary> Describes the monitoring policies for the cluster upgrade. </summary>
         /// <param name="healthCheckWaitDuration"> The length of time to wait after completing an upgrade domain before performing health checks. The duration can be in either hh:mm:ss or in d.hh:mm:ss.ms format. </param>
         /// <param name="healthCheckStableDuration"> The amount of time that the application or cluster must remain healthy before the upgrade proceeds to the next upgrade domain. The duration can be in either hh:mm:ss or in d.hh:mm:ss.ms format. </param>
         /// <param name="healthCheckRetryTimeout"> The amount of time to retry health evaluation when the application or cluster is unhealthy before the upgrade rolls back. The timeout can be in either hh:mm:ss or in d.hh:mm:ss.ms format. </param>
@@ -990,6 +1075,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> Service Fabric managed cluster Sku definition. </summary>
         /// <param name="name"> Sku Name. </param>
         /// <returns> A new <see cref="Models.ServiceFabricManagedClustersSku"/> instance for mocking. </returns>
         public static ServiceFabricManagedClustersSku ServiceFabricManagedClustersSku(ServiceFabricManagedClustersSkuName name = default)
@@ -997,6 +1083,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ServiceFabricManagedClustersSku(name, default);
         }
 
+        /// <summary> Managed cluster update request. </summary>
         /// <param name="tags"> Managed cluster update parameters. </param>
         /// <returns> A new <see cref="Models.ServiceFabricManagedClusterPatch"/> instance for mocking. </returns>
         public static ServiceFabricManagedClusterPatch ServiceFabricManagedClusterPatch(IDictionary<string, string> tags = default)
@@ -1006,6 +1093,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ServiceFabricManagedClusterPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Parameters for Fault Simulation id. </summary>
         /// <param name="simulationId"> unique identifier for the fault simulation. </param>
         /// <returns> A new <see cref="Models.FaultSimulationIdContent"/> instance for mocking. </returns>
         public static FaultSimulationIdContent FaultSimulationIdContent(string simulationId = default)
@@ -1013,23 +1101,25 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new FaultSimulationIdContent(simulationId, default);
         }
 
+        /// <summary> Fault simulation object with status. </summary>
         /// <param name="simulationId"> unique identifier for the fault simulation. </param>
         /// <param name="status"> Fault simulation status. </param>
-        /// <param name="startOn"> The start time of the fault simulation. </param>
-        /// <param name="endOn"> The end time of the fault simulation. </param>
+        /// <param name="startsOn"> The start time of the fault simulation. </param>
+        /// <param name="endsOn"> The end time of the fault simulation. </param>
         /// <param name="details"> Fault simulation details. </param>
         /// <returns> A new <see cref="Models.FaultSimulation"/> instance for mocking. </returns>
-        public static FaultSimulation FaultSimulation(string simulationId = default, FaultSimulationStatus? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, FaultSimulationDetails details = default)
+        public static FaultSimulation FaultSimulation(string simulationId = default, FaultSimulationStatus? status = default, DateTimeOffset? startsOn = default, DateTimeOffset? endsOn = default, FaultSimulationDetails details = default)
         {
             return new FaultSimulation(
                 simulationId,
                 status,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 details,
                 default);
         }
 
+        /// <summary> Details for Fault Simulation. </summary>
         /// <param name="clusterId"> unique identifier for the cluster resource. </param>
         /// <param name="operationId"> unique identifier for the operation associated with the fault simulation. </param>
         /// <param name="nodeTypeFaultSimulation"> List of node type simulations associated with the cluster fault simulation. </param>
@@ -1042,6 +1132,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new FaultSimulationDetails(clusterId, operationId, (nodeTypeFaultSimulation ?? new ChangeTrackingList<NodeTypeFaultSimulation>()).ToList(), parameters, default);
         }
 
+        /// <summary> Node type fault simulation object with status. </summary>
         /// <param name="nodeTypeName"> Node type name. </param>
         /// <param name="status"> Fault simulation status. </param>
         /// <param name="operationId"> Current or latest asynchronous operation identifier on the node type. </param>
@@ -1052,6 +1143,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NodeTypeFaultSimulation(nodeTypeName, status, operationId, operationStatus, default);
         }
 
+        /// <summary> Fault Simulation Request for Start action. </summary>
         /// <param name="parameters"> Parameters for Fault Simulation start action. </param>
         /// <returns> A new <see cref="Models.FaultSimulationContentWrapper"/> instance for mocking. </returns>
         public static FaultSimulationContentWrapper FaultSimulationContentWrapper(FaultSimulationContent parameters = default)
@@ -1059,6 +1151,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new FaultSimulationContentWrapper(parameters, default);
         }
 
+        /// <summary> Describes the result of the request to list Managed VM Sizes for Service Fabric Managed Clusters. </summary>
         /// <param name="baseResourceStatus"> List of Managed VM Sizes for Service Fabric Managed Clusters. </param>
         /// <param name="isClusterZoneResilient"> URL to get the next set of Managed VM Sizes if there are any. </param>
         /// <returns> A new <see cref="Models.ManagedAzResiliencyStatus"/> instance for mocking. </returns>
@@ -1069,6 +1162,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ManagedAzResiliencyStatus((baseResourceStatus ?? new ChangeTrackingList<ResourceAzStatus>()).ToList(), isClusterZoneResilient, default);
         }
 
+        /// <summary> Describes Az Resiliency status of Base resources. </summary>
         /// <param name="resourceName"> VM Size properties. </param>
         /// <param name="resourceType"> VM Size id. </param>
         /// <param name="isZoneResilient"> VM Size name. </param>
@@ -1079,6 +1173,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ResourceAzStatus(resourceName, resourceType, isZoneResilient, details, default);
         }
 
+        /// <summary> Describes the request to apply a maintenance window on a Service Fabric Managed Cluster. </summary>
         /// <param name="startDateTime"> Effective start date of the maintenance window in yyyy-MM-dd HH:mm format. If not provided, defaults to the current time. </param>
         /// <param name="duration"> Duration of the maintenance window in hh:mm format. If not provided, defaults to 5 hours. Example: 08:30 for 8 and a half hours. </param>
         /// <param name="timeZone"> Name of the timezone. List of timezones can be obtained by executing [System.TimeZoneInfo]::GetSystemTimeZones() in PowerShell. If not provided, defaults to UTC. Example: Pacific Standard Time, UTC, W. Europe Standard Time, Korea Standard Time, Central Australia Standard Time. </param>
@@ -1088,6 +1183,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ApplyMaintenanceWindowContent(startDateTime, duration, timeZone, default);
         }
 
+        /// <summary> Describes the maintenance window status of the Service Fabric Managed Cluster. </summary>
         /// <param name="isWindowEnabled"> If maintenance window is enabled on this cluster. </param>
         /// <param name="isRegionReady"> Indicates if the region is ready to configure maintenance windows. </param>
         /// <param name="isWindowActive"> If maintenance window is active. </param>
@@ -1244,6 +1340,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> Port range details. </summary>
         /// <param name="startPort"> Starting port of a range of ports. </param>
         /// <param name="endPort"> End port of a range of ports. </param>
         /// <returns> A new <see cref="Models.EndpointRangeDescription"/> instance for mocking. </returns>
@@ -1252,6 +1349,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new EndpointRangeDescription(startPort, endPort, default);
         }
 
+        /// <summary> Specifies set of certificates that should be installed onto the virtual machines. </summary>
         /// <param name="sourceVault"> The relative URL of the Key Vault containing all of the certificates in VaultCertificates. </param>
         /// <param name="vaultCertificates"> The list of key vault references in SourceVault which contain certificates. </param>
         /// <returns> A new <see cref="Models.NodeTypeVaultSecretGroup"/> instance for mocking. </returns>
@@ -1262,6 +1360,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NodeTypeVaultSecretGroup(sourceVault, (vaultCertificates ?? new ChangeTrackingList<NodeTypeVaultCertificate>()).ToList(), default);
         }
 
+        /// <summary> Describes a single certificate reference in a Key Vault, and where the certificate should reside on the VM. </summary>
         /// <param name="certificateUri"> This is the URL of a certificate that has been uploaded to Key Vault as a secret. For adding a secret to the Key Vault, see [Add a key or secret to the key vault](https://docs.microsoft.com/azure/key-vault/key-vault-get-started/#add). </param>
         /// <param name="certificateStore"> For Windows VMs, specifies the certificate store on the Virtual Machine to which the certificate should be added. The specified certificate store is implicitly in the LocalMachine account. For Linux VMs, the certificate file is placed under the /var/lib/waagent directory, with the file name {UppercaseThumbprint}.crt for the X509 certificate file and {UppercaseThumbprint}.prv for private key. Both of these files are .pem formatted. </param>
         /// <returns> A new <see cref="Models.NodeTypeVaultCertificate"/> instance for mocking. </returns>
@@ -1270,6 +1369,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NodeTypeVaultCertificate(certificateUri, certificateStore, default);
         }
 
+        /// <summary> Describes the frontend configurations for the node type. </summary>
         /// <param name="ipAddressType"> The IP address type of this frontend configuration. If omitted the default value is IPv4. </param>
         /// <param name="loadBalancerBackendAddressPoolId"> The resource Id of the Load Balancer backend address pool that the VM instances of the node type are associated with. The format of the resource Id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/backendAddressPools/{backendAddressPoolName}'. </param>
         /// <param name="loadBalancerInboundNatPoolId"> The resource Id of the Load Balancer inbound NAT pool that the VM instances of the node type are associated with. The format of the resource Id is '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Network/loadBalancers/{loadBalancerName}/inboundNatPools/{inboundNatPoolName}'. </param>
@@ -1280,6 +1380,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NodeTypeFrontendConfiguration(ipAddressType, loadBalancerBackendAddressPoolId, loadBalancerInboundNatPoolId, applicationGatewayBackendAddressPoolId, default);
         }
 
+        /// <summary> Managed data disk description. </summary>
         /// <param name="lun"> Specifies the logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. Lun 0 is reserved for the service fabric data disk. </param>
         /// <param name="diskSizeInGB"> Disk size for each vm in the node type in GBs. </param>
         /// <param name="diskType"> Managed data disk type. Specifies the storage account type for the managed disk. </param>
@@ -1290,6 +1391,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NodeTypeVmssDataDisk(lun, diskSizeInGB, diskType, diskLetter, default);
         }
 
+        /// <summary> Provides information about NAT configuration on the default public Load Balancer for the node type. </summary>
         /// <param name="backendPort"> The internal port for the NAT configuration. </param>
         /// <param name="frontendPortRangeStart"> The port range start for the external endpoint. </param>
         /// <param name="frontendPortRangeEnd"> The port range end for the external endpoint. </param>
@@ -1299,6 +1401,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NodeTypeNatConfig(backendPort, frontendPortRangeStart, frontendPortRangeEnd, default);
         }
 
+        /// <summary> Specifies information about the marketplace image used to create the virtual machine. This element is only used for marketplace images. Before you can use a marketplace image from an API, you must enable the image for programmatic use. In the Azure portal, find the marketplace image that you want to use and then click Want to deploy programmatically, Get Started. Enter any required information and then click Save. </summary>
         /// <param name="name"> The plan ID. </param>
         /// <param name="product"> Specifies the product of the image from the marketplace. This is the same value as Offer under the imageReference element. </param>
         /// <param name="promotionCode"> The promotion code. </param>
@@ -1346,6 +1449,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> The public IP address configuration of the network interface. </summary>
         /// <param name="name"> Name of the network interface. </param>
         /// <param name="ipTags"> Specifies the list of IP tags associated with the public IP address. </param>
         /// <param name="publicIPAddressVersion"> Specifies whether the IP configuration's public IP is IPv4 or IPv6. Default is IPv4. </param>
@@ -1357,6 +1461,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ServiceFabricManagedClusterPublicIPAddressConfiguration(name, (ipTags ?? new ChangeTrackingList<ManagedClusterIPTag>()).ToList(), publicIPAddressVersion, default);
         }
 
+        /// <summary> Specifies the gallery application that should be made available to the underlying VMSS. </summary>
         /// <param name="configurationReference"> Optional, Specifies the uri to an azure blob that will replace the default configuration for the package if provided. </param>
         /// <param name="enableAutomaticUpgrade"> If set to true, when a new Gallery Application version is available in PIR/SIG, it will be automatically updated for the underlying VMSS. </param>
         /// <param name="order"> Optional, Specifies the order in which the packages have to be installed. </param>
@@ -1376,6 +1481,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> Specifies ProxyAgent settings for the virtual machine or virtual machine scale set. </summary>
         /// <param name="enabled"> Specifies whether ProxyAgent feature should be enabled on the virtual machine or virtual machine scale set. </param>
         /// <param name="keyIncarnationId"> Increasing the value of this property allows users to reset the key used for securing communication channel between guest and host. </param>
         /// <param name="wireServer"> Specifies the Wire Server endpoint settings while creating the virtual machine or virtual machine scale set. </param>
@@ -1393,6 +1499,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> Specifies particular host endpoint settings. </summary>
         /// <param name="mode"> Specifies the execution mode. In Audit mode, the system acts as if it is enforcing the access control policy, including emitting access denial entries in the logs but it does not actually deny any requests to host endpoints. In Enforce mode, the system will enforce the access control and it is the recommended mode of operation. </param>
         /// <param name="inVMAccessControlProfileReferenceId"> Specifies the InVMAccessControlProfileVersion resource id in the format of /subscriptions/{SubscriptionId}/resourceGroups/{ResourceGroupName}/providers/Microsoft.Compute/galleries/{galleryName}/inVMAccessControlProfiles/{profile}/versions/{version}. </param>
         /// <returns> A new <see cref="Models.HostEndpointSettings"/> instance for mocking. </returns>
@@ -1401,6 +1508,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new HostEndpointSettings(mode, inVMAccessControlProfileReferenceId, default);
         }
 
+        /// <summary> Describes a node type sku. </summary>
         /// <param name="name"> The sku name. Name is internally generated and is used in auto-scale scenarios. Property does not allow to be changed to other values than generated. To avoid deployment errors please omit the property. </param>
         /// <param name="tier"> Specifies the tier of the node type. Possible Values: <b>Standard</b>. </param>
         /// <param name="capacity"> The number of nodes in the node type. If present in request it will override properties.vmInstanceCount. </param>
@@ -1410,6 +1518,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NodeTypeSku(name, tier, capacity, default);
         }
 
+        /// <summary> Node type update request. </summary>
         /// <param name="tags"> Node type update parameters. </param>
         /// <param name="sku"> The node type sku. </param>
         /// <returns> A new <see cref="Models.ServiceFabricManagedNodeTypePatch"/> instance for mocking. </returns>
@@ -1420,6 +1529,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new ServiceFabricManagedNodeTypePatch(tags ?? new ChangeTrackingDictionary<string, string>(), sku, default);
         }
 
+        /// <summary> Parameters for Node type action. If nodes are not specified on the parameters, the operation will be performed in all nodes of the node type one upgrade domain at a time. </summary>
         /// <param name="nodes"> List of node names from the node type. </param>
         /// <param name="isForced"> Force the action to go through. </param>
         /// <param name="updateType"> Specifies the way the operation will be performed. </param>
@@ -1431,6 +1541,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NodeTypeActionContent((nodes ?? new ChangeTrackingList<string>()).ToList(), isForced, updateType, default);
         }
 
+        /// <summary> Defines the type of sku available for a node type. </summary>
         /// <param name="resourceType"> The type of resource the sku applies to. Value: Microsoft.ServiceFabric/managedClusters/nodeTypes. </param>
         /// <param name="sku"> The supported SKU for a for node type. </param>
         /// <param name="capacity"> Provides information about how the node count can be scaled. </param>
@@ -1440,6 +1551,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NodeTypeAvailableSku(resourceType, sku, capacity, default);
         }
 
+        /// <summary> Describes a node type supported sku. </summary>
         /// <param name="name"> The sku name. </param>
         /// <param name="tier"> Specifies the tier of the node type. Possible Values: <b>Standard</b>. </param>
         /// <returns> A new <see cref="Models.NodeTypeSupportedSku"/> instance for mocking. </returns>
@@ -1448,6 +1560,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NodeTypeSupportedSku(name, tier, default);
         }
 
+        /// <summary> Provides information about how node type can be scaled. </summary>
         /// <param name="minimum"> Lowest permitted node count in a node type. </param>
         /// <param name="maximum"> Highest permitted node count in a node type. </param>
         /// <param name="default"> Default node count in a node type. </param>
@@ -1458,6 +1571,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             return new NodeTypeSkuCapacity(minimum, maximum, @default, scaleType, default);
         }
 
+        /// <summary> The application resource. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -1467,7 +1581,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="provisioningState"> The current deployment or provisioning state, which only appears in the response. </param>
         /// <param name="version">
         /// The version of the application type as defined in the application manifest.
-        ///             This name must be the full Arm Resource ID for the referenced application type version.
+        /// This name must be the full Arm Resource ID for the referenced application type version.
         /// </param>
         /// <param name="parameters"> List of application parameters with overridden values from their default values specified in the application manifest. </param>
         /// <param name="upgradePolicy"> Describes the policy for a monitored application upgrade. </param>
@@ -1495,11 +1609,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> Describes a VM Sizes. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="serviceFabricManagedVmSize"> VM Size name. </param>
-        /// <param name="name"> VM Size name. </param>
+        /// <param name="name"> The name of the resource. </param>
         /// <returns> A new <see cref="Models.ServiceFabricManagedUnsupportedVmSize"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServiceFabricManagedUnsupportedVmSize ServiceFabricManagedUnsupportedVmSize(ResourceIdentifier id = default, ResourceType resourceType = default, SystemData systemData = default, string serviceFabricManagedVmSize = default, string name = default)
@@ -1513,12 +1628,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
+        /// <summary> Describes a node type in the cluster, each node type represents sub set of nodes in the cluster. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="isPrimary"> Indicates the Service Fabric system services for the cluster will run on this node type. This setting cannot be changed once the node type is created. </param>
-        /// <param name="vmInstanceCount"> The number of nodes in the node type. Values: -1 - Use when auto scale rules are configured or sku.capacity is defined 0 - Not supported &gt;0 - Use for manual scale. </param>
+        /// <param name="vmInstanceCount"> The number of nodes in the node type. <b>Values:</b> -1 - Use when auto scale rules are configured or sku.capacity is defined 0 - Not supported &gt;0 - Use for manual scale. </param>
         /// <param name="dataDiskSizeInGB"> Disk size for the managed disk attached to the vms on the node type in GBs. </param>
         /// <param name="dataDiskType"> Managed data disk type. Specifies the storage account type for the managed disk. </param>
         /// <param name="dataDiskLetter"> Managed data disk letter. It can not use the reserved letter C or D and it can not change after created. </param>
@@ -1645,14 +1761,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedClusterData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
-        /// <param name="skuName"> The sku of the managed cluster. </param>
+        /// <summary> The managed cluster resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="skuName"> Sku Name. </param>
         /// <param name="dnsName"> The cluster dns name. </param>
         /// <param name="fqdn"> The fully qualified domain name associated with the public load balancer of the cluster. </param>
         /// <param name="ipv4Address"> The IPv4 address associated with the public load balancer of the cluster. </param>
@@ -1670,15 +1786,15 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="azureActiveDirectory"> The AAD authentication settings of the cluster. </param>
         /// <param name="fabricSettings"> The list of custom fabric settings to configure the cluster. </param>
         /// <param name="provisioningState"> The provisioning state of the managed cluster resource. </param>
-        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property is required when **clusterUpgradeMode** is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use **availableClusterVersions**. </param>
+        /// <param name="clusterCodeVersion"> The Service Fabric runtime version of the cluster. This property is required when <b>clusterUpgradeMode</b> is set to 'Manual'. To get list of available Service Fabric versions for new clusters use [ClusterVersion API](./ClusterVersion.md). To get the list of available version for existing clusters use <b>availableClusterVersions</b>. </param>
         /// <param name="clusterUpgradeMode"> The upgrade mode of the cluster when new Service Fabric runtime version is available. </param>
-        /// <param name="clusterUpgradeCadence"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when **clusterUpgradeMode** is set to 'Automatic'. </param>
+        /// <param name="clusterUpgradeCadence"> Indicates when new cluster runtime version upgrades will be applied after they are released. By default is Wave0. Only applies when <b>clusterUpgradeMode</b> is set to 'Automatic'. </param>
         /// <param name="addOnFeatures"> List of add-on features to enable on the cluster. </param>
-        /// <param name="isAutoOSUpgradeEnabled"> Setting this to true enables automatic OS upgrade for the node types that are created using any platform OS image with version 'latest'. The default value for this setting is false. </param>
+        /// <param name="isAutoOSUpgradeEnabled"> Enables automatic OS upgrade for node types created using OS images with version 'latest'. The default value for this setting is false. </param>
         /// <param name="hasZoneResiliency"> Indicates if the cluster has zone resiliency. </param>
-        /// <param name="maxUnusedVersionsToKeep"> The policy used to clean up unused versions. </param>
+        /// <param name="maxUnusedVersionsToKeep"> Number of unused versions per application type to keep. </param>
         /// <param name="isIPv6Enabled"> Setting this to true creates IPv6 address space for the default VNet used by the cluster. This setting cannot be changed once the cluster is created. The default value for this setting is false. </param>
-        /// <param name="subnetId"> If specified, the node types for the cluster are created in this subnet instead of the default VNet. The **networkSecurityRules** specified for the cluster are also applied to this subnet. This setting cannot be changed once the cluster is created. </param>
+        /// <param name="subnetId"> If specified, the node types for the cluster are created in this subnet instead of the default VNet. The <b>networkSecurityRules</b> specified for the cluster are also applied to this subnet. This setting cannot be changed once the cluster is created. </param>
         /// <param name="ipTags"> The list of IP tags associated with the default public IP address of the cluster. </param>
         /// <param name="ipv6Address"> IPv6 address for the cluster if IPv6 is enabled. </param>
         /// <param name="isServicePublicIPEnabled"> Setting this to true will link the IPv4 address as the ServicePublicIP of the IPv6 address. It can only be set to True if IPv6 is enabled on the cluster. </param>
@@ -1692,7 +1808,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="upgradeDescription"> The policy to use when upgrading the cluster. </param>
         /// <param name="httpGatewayTokenAuthConnectionPort"> The port used for token-auth based HTTPS connections to the cluster. Cannot be set to the same port as HttpGatewayEndpoint. </param>
         /// <param name="isHttpGatewayExclusiveAuthModeEnabled"> If true, token-based authentication is not allowed on the HttpGatewayEndpoint. This is required to support TLS versions 1.3 and above. If token-based authentication is used, HttpGatewayTokenAuthConnectionPort must be defined. </param>
-        /// <param name="etag"> Azure resource etag. </param>
+        /// <param name="etag"> If eTag is provided in the response body, it may also be provided as a header per the normal etag convention.  Entity tags are used for comparing two or more entities from the same requested resource. HTTP/1.1 uses entity tags in the etag (section 14.19), If-Match (section 14.24), If-None-Match (section 14.26), and If-Range (section 14.27) header fields.",. </param>
         /// <returns> A new <see cref="ServiceFabricManagedClusters.ServiceFabricManagedClusterData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServiceFabricManagedClusterData ServiceFabricManagedClusterData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, ServiceFabricManagedClustersSkuName? skuName, string dnsName, string fqdn, IPAddress ipv4Address, Guid? clusterId, ServiceFabricManagedClusterState? clusterState, IEnumerable<BinaryData> clusterCertificateThumbprints, int? clientConnectionPort, int? httpGatewayConnectionPort, string adminUserName, string adminPassword, IEnumerable<ManagedClusterLoadBalancingRule> loadBalancingRules, bool? isRdpAccessAllowed, IEnumerable<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IEnumerable<ManagedClusterClientCertificate> clients, ManagedClusterAzureActiveDirectory azureActiveDirectory, IEnumerable<ClusterFabricSettingsSection> fabricSettings, ServiceFabricManagedResourceProvisioningState? provisioningState, string clusterCodeVersion, ManagedClusterUpgradeMode? clusterUpgradeMode, ManagedClusterUpgradeCadence? clusterUpgradeCadence, IEnumerable<ManagedClusterAddOnFeature> addOnFeatures, bool? isAutoOSUpgradeEnabled, bool? hasZoneResiliency, int? maxUnusedVersionsToKeep, bool? isIPv6Enabled, string subnetId, IEnumerable<ManagedClusterIPTag> ipTags, IPAddress ipv6Address, bool? isServicePublicIPEnabled, IEnumerable<ManagedClusterSubnet> auxiliarySubnets, IEnumerable<ManagedClusterServiceEndpoint> serviceEndpoints, ZonalUpdateMode? zonalUpdateMode, bool? useCustomVnet, ResourceIdentifier publicIPPrefixId, ResourceIdentifier publicIPv6PrefixId, ResourceIdentifier ddosProtectionPlanId, ManagedClusterUpgradePolicy upgradeDescription, int? httpGatewayTokenAuthConnectionPort, bool? isHttpGatewayExclusiveAuthModeEnabled, ETag? etag)
@@ -1755,14 +1871,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 default);
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
+        /// <summary> Describes a node type in the cluster, each node type represents sub set of nodes in the cluster. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="sku"> The node type sku. </param>
         /// <param name="isPrimary"> Indicates the Service Fabric system services for the cluster will run on this node type. This setting cannot be changed once the node type is created. </param>
-        /// <param name="vmInstanceCount"> The number of nodes in the node type. &lt;br /&gt;&lt;br /&gt;**Values:** &lt;br /&gt;-1 - Use when auto scale rules are configured or sku.capacity is defined &lt;br /&gt; 0 - Not supported &lt;br /&gt; &gt;0 - Use for manual scale. </param>
+        /// <param name="vmInstanceCount"> The number of nodes in the node type. <b>Values:</b> -1 - Use when auto scale rules are configured or sku.capacity is defined 0 - Not supported &gt;0 - Use for manual scale. </param>
         /// <param name="dataDiskSizeInGB"> Disk size for the managed disk attached to the vms on the node type in GBs. </param>
         /// <param name="dataDiskType"> Managed data disk type. Specifies the storage account type for the managed disk. </param>
         /// <param name="dataDiskLetter"> Managed data disk letter. It can not use the reserved letter C or D and it can not change after created. </param>
@@ -1777,7 +1893,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="vmImageVersion"> The version of the Azure Virtual Machines Marketplace image. A value of 'latest' can be specified to select the latest version of an image. If omitted, the default is 'latest'. </param>
         /// <param name="vmSecrets"> The secrets to install in the virtual machines. </param>
         /// <param name="vmExtensions"> Set of extensions that should be installed onto the virtual machines. </param>
-        /// <param name="userAssignedIdentities"> Identities to assign to the virtual machine scale set under the node type. </param>
+        /// <param name="userAssignedIdentities"> The list of user identities associated with the virtual machine scale set under the node type. Each entry will be an ARM resource ids in the form: '/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{identityName}'. </param>
         /// <param name="isStateless"> Indicates if the node type can only host Stateless workloads. </param>
         /// <param name="hasMultiplePlacementGroups"> Indicates if scale set associated with the node type can be composed of multiple placement groups. </param>
         /// <param name="frontendConfigurations"> Indicates the node type uses its own frontend configurations instead of the default one for the cluster. This setting can only be specified for non-primary node types and can not be added or removed after the node type is created. </param>
@@ -1798,8 +1914,8 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="vmImageResourceId"> Indicates the resource id of the vm image. This parameter is used for custom vm image. </param>
         /// <param name="subnetId"> Indicates the resource id of the subnet for the node type. </param>
         /// <param name="vmSetupActions"> Specifies the actions to be performed on the vms before bootstrapping the service fabric runtime. </param>
-        /// <param name="securityType"> Specifies the security type of the nodeType. Only Standard and TrustedLaunch are currently supported. </param>
-        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the nodeType. Can only be used with TrustedLaunch SecurityType. </param>
+        /// <param name="securityType"> Specifies the security type of the nodeType. Supported values include Standard, TrustedLaunch and ConfidentialVM. </param>
+        /// <param name="isSecureBootEnabled"> Specifies whether secure boot should be enabled on the nodeType. Can only be used with TrustedLaunch and ConfidentialVM SecurityType. </param>
         /// <param name="isNodePublicIPEnabled"> Specifies whether each node is allocated its own public IPv4 address. This is only supported on secondary node types with custom Load Balancers. </param>
         /// <param name="isNodePublicIPv6Enabled"> Specifies whether each node is allocated its own public IPv6 address. This is only supported on secondary node types with custom Load Balancers. </param>
         /// <param name="vmSharedGalleryImageId"> Indicates the resource id of the vm shared galleries image. This parameter is used for custom vm image. </param>
@@ -1810,7 +1926,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <param name="dscpConfigurationId"> Specifies the resource id of the DSCP configuration to apply to the node type network interface. </param>
         /// <param name="additionalNetworkInterfaceConfigurations"> Specifies the settings for any additional secondary network interfaces to attach to the node type. </param>
         /// <param name="computerNamePrefix"> Specifies the computer name prefix. Limited to 9 characters. If specified, allows for a longer name to be specified for the node type name. </param>
-        /// <param name="tags"> Azure resource tags. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="ServiceFabricManagedClusters.ServiceFabricManagedNodeTypeData"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public static ServiceFabricManagedNodeTypeData ServiceFabricManagedNodeTypeData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, NodeTypeSku sku, bool? isPrimary, int? vmInstanceCount, int? dataDiskSizeInGB, ServiceFabricManagedDataDiskType? dataDiskType, string dataDiskLetter, IDictionary<string, string> placementProperties, IDictionary<string, string> capacities, EndpointRangeDescription applicationPorts, EndpointRangeDescription ephemeralPorts, string vmSize, string vmImagePublisher, string vmImageOffer, string vmImageSku, string vmImageVersion, IEnumerable<NodeTypeVaultSecretGroup> vmSecrets, IEnumerable<NodeTypeVmssExtension> vmExtensions, IEnumerable<ResourceIdentifier> userAssignedIdentities, bool? isStateless, bool? hasMultiplePlacementGroups, IEnumerable<NodeTypeFrontendConfiguration> frontendConfigurations, IEnumerable<ServiceFabricManagedNetworkSecurityRule> networkSecurityRules, IEnumerable<NodeTypeVmssDataDisk> additionalDataDisks, bool? isEncryptionAtHostEnabled, ServiceFabricManagedResourceProvisioningState? provisioningState, bool? isAcceleratedNetworkingEnabled, bool? useDefaultPublicLoadBalancer, bool? useTempDataDisk, bool? isOverProvisioningEnabled, IEnumerable<string> zones, bool? isSpotVm, string hostGroupId, bool? useEphemeralOSDisk, string spotRestoreTimeout, SpotNodeVmEvictionPolicyType? evictionPolicy, ResourceIdentifier vmImageResourceId, ResourceIdentifier subnetId, IEnumerable<VmSetupAction> vmSetupActions, ServiceFabricManagedClusterSecurityType? securityType, bool? isSecureBootEnabled, bool? isNodePublicIPEnabled, bool? isNodePublicIPv6Enabled, ResourceIdentifier vmSharedGalleryImageId, ResourceIdentifier natGatewayId, IEnumerable<NodeTypeNatConfig> natConfigurations, VmImagePlan vmImagePlan, ResourceIdentifier serviceArtifactReferenceId, ResourceIdentifier dscpConfigurationId, IEnumerable<AdditionalNetworkInterfaceConfiguration> additionalNetworkInterfaceConfigurations, string computerNamePrefix, IDictionary<string, string> tags)

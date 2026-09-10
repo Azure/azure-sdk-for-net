@@ -18,6 +18,7 @@ namespace Azure.ResourceManager.DevHub.Models
     /// <summary> A factory class for creating instances of the models for mocking. </summary>
     public static partial class ArmDevHubModelFactory
     {
+        /// <summary> Artifact Generation Properties. </summary>
         /// <param name="generationLanguage"> The programming language used. </param>
         /// <param name="languageVersion"> The version of the language image used for execution in the generated dockerfile. </param>
         /// <param name="builderVersion"> The version of the language image used for building the code in the generated dockerfile. </param>
@@ -68,6 +69,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 default);
         }
 
+        /// <summary> The response from List GitHubOAuth operation. </summary>
         /// <param name="value"> Singleton list response containing one GitHubOAuthResponse response. </param>
         /// <returns> A new <see cref="Models.DeveloperHubGitHubOAuthListResult"/> instance for mocking. </returns>
         public static DeveloperHubGitHubOAuthListResult DeveloperHubGitHubOAuthListResult(IEnumerable<GitHubOAuthResponseData> value = default)
@@ -77,6 +79,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DeveloperHubGitHubOAuthListResult((value ?? new ChangeTrackingList<GitHubOAuthResponseData>()).ToList(), default);
         }
 
+        /// <summary> GitHubOAuth request object. </summary>
         /// <param name="redirectUri"> The URL the client will redirect to on successful authentication. If empty, no redirect will occur. </param>
         /// <returns> A new <see cref="Models.DeveloperHubGitHubOAuthCallContent"/> instance for mocking. </returns>
         public static DeveloperHubGitHubOAuthCallContent DeveloperHubGitHubOAuthCallContent(string redirectUri = default)
@@ -84,6 +87,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DeveloperHubGitHubOAuthCallContent(redirectUri, default);
         }
 
+        /// <summary> URL used to authorize the Developer Hub GitHub App. </summary>
         /// <param name="authUri"> URL for authorizing the Developer Hub GitHub App. </param>
         /// <param name="token"> OAuth token used to make calls to GitHub. </param>
         /// <returns> A new <see cref="Models.DeveloperHubGitHubOAuthInfoResult"/> instance for mocking. </returns>
@@ -92,6 +96,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DeveloperHubGitHubOAuthInfoResult(authUri, token, default);
         }
 
+        /// <summary> ADOOAuth request object. </summary>
         /// <param name="redirectUri"> The URL the client will redirect to on successful authentication. If empty, no redirect will occur. </param>
         /// <returns> A new <see cref="Models.DeveloperHubAdoOAuthCallContent"/> instance for mocking. </returns>
         public static DeveloperHubAdoOAuthCallContent DeveloperHubAdoOAuthCallContent(string redirectUri = default)
@@ -99,6 +104,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DeveloperHubAdoOAuthCallContent(redirectUri, default);
         }
 
+        /// <summary> Response containing ADO OAuth information. </summary>
         /// <param name="authUri"> URL used to authorize ADO app using Entra ID. </param>
         /// <param name="token"> OAuth token used to make calls to ADO APIs. </param>
         /// <returns> A new <see cref="Models.DeveloperHubAdoOAuthInfoResult"/> instance for mocking. </returns>
@@ -107,6 +113,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DeveloperHubAdoOAuthInfoResult(authUri, token, default);
         }
 
+        /// <summary> A list of REST API operations supported by an Azure Resource Provider. It contains an URL link to get the next set of results. </summary>
         /// <param name="value"> The Operation items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <returns> A new <see cref="Models.DevHubOperationListResult"/> instance for mocking. </returns>
@@ -117,6 +124,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DevHubOperationListResult((value ?? new ChangeTrackingList<DeveloperHubOperationInfo>()).ToList(), nextLink, default);
         }
 
+        /// <summary> REST API Operation. </summary>
         /// <param name="name"> The name of the operation, as per Resource-Based Access Control (RBAC). Examples: "Microsoft.Compute/virtualMachines/write", "Microsoft.Compute/virtualMachines/capture/action". </param>
         /// <param name="isDataAction"> Whether the operation applies to data-plane. This is "true" for data-plane operations and "false" for Azure Resource Manager/control-plane operations. </param>
         /// <param name="display"> Localized display information for this particular operation. </param>
@@ -134,6 +142,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 default);
         }
 
+        /// <summary> Localized display information for an operation. </summary>
         /// <param name="provider"> The localized friendly form of the resource provider name, e.g. "Microsoft Monitoring Insights" or "Microsoft Compute". </param>
         /// <param name="resource"> The localized friendly name of the resource type related to this operation. E.g. "Virtual Machines" or "Job Schedule Collections". </param>
         /// <param name="operation"> The concise, localized friendly name for the operation; suitable for dropdowns. E.g. "Create or Update Virtual Machine", "Restart Virtual Machine". </param>
@@ -189,6 +198,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 default);
         }
 
+        /// <summary> Properties of a Stage. </summary>
         /// <param name="stageName"> Stage Name. </param>
         /// <param name="dependencies"></param>
         /// <param name="gitEnvironment"></param>
@@ -200,6 +210,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DevHubStageInfo(stageName, (dependencies ?? new ChangeTrackingList<string>()).ToList(), gitEnvironment, default);
         }
 
+        /// <summary> Properties of a IacTemplate. </summary>
         /// <param name="templateName"> Template Name. </param>
         /// <param name="sourceResourceId"> the source store of the template. </param>
         /// <param name="instanceStage"> the source stage of the template. </param>
@@ -221,6 +232,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 default);
         }
 
+        /// <summary> The DevHubIacTemplateDetails. </summary>
         /// <param name="productName"> The name of the products. </param>
         /// <param name="count"> Count of the product. </param>
         /// <param name="namingConvention"> Naming convention of this product. </param>
@@ -230,6 +242,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DevHubIacTemplateDetails(productName, count, namingConvention, default);
         }
 
+        /// <summary> Resource tags. </summary>
         /// <param name="tags"> Dictionary of &lt;string&gt;. </param>
         /// <returns> A new <see cref="Models.DevHubTagsPatch"/> instance for mocking. </returns>
         public static DevHubTagsPatch DevHubTagsPatch(IDictionary<string, string> tags = default)
@@ -239,6 +252,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DevHubTagsPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> The DeveloperHubExportTemplateContent. </summary>
         /// <param name="templateName"> Template Name. </param>
         /// <param name="resourceGroupIds"></param>
         /// <param name="siteId"></param>
@@ -258,6 +272,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 default);
         }
 
+        /// <summary> The DeveloperHubPrLinkResult. </summary>
         /// <param name="prLink"> The link of the pull request. </param>
         /// <returns> A new <see cref="Models.DeveloperHubPrLinkResult"/> instance for mocking. </returns>
         public static DeveloperHubPrLinkResult DeveloperHubPrLinkResult(string prLink = default)
@@ -265,6 +280,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DeveloperHubPrLinkResult(prLink, default);
         }
 
+        /// <summary> The DeveloperHubScaleTemplateContent. </summary>
         /// <param name="templateName"> Template Name. </param>
         /// <param name="scaleRequirement"></param>
         /// <returns> A new <see cref="Models.DeveloperHubScaleTemplateContent"/> instance for mocking. </returns>
@@ -275,6 +291,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DeveloperHubScaleTemplateContent(templateName, (scaleRequirement ?? new ChangeTrackingList<DevHubScaleProperty>()).ToList(), default);
         }
 
+        /// <summary> The DevHubScaleProperty. </summary>
         /// <param name="region"> The region of the store. </param>
         /// <param name="stage"> The stage of the store. </param>
         /// <param name="numberOfStores"> Number of the store. </param>
@@ -284,6 +301,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DevHubScaleProperty(region, stage, numberOfStores, default);
         }
 
+        /// <summary> Workflow. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -307,6 +325,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 default);
         }
 
+        /// <summary> Workflow properties. </summary>
         /// <param name="githubWorkflowProfile"> Profile of a github workflow. </param>
         /// <param name="artifactGenerationProperties"> Properties for generating artifacts like dockerfile and manifests. </param>
         /// <param name="azurePipelineProfile"> Profile of an azure pipeline. </param>
@@ -317,6 +336,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DevHubWorkflowProperties(githubWorkflowProfile, artifactGenerationProperties, azurePipelineProfile, templateWorkflowProfile, default);
         }
 
+        /// <summary> GitHub Workflow Profile. </summary>
         /// <param name="repositoryOwner"> Repository Owner. </param>
         /// <param name="repositoryName"> Repository Name. </param>
         /// <param name="branchName"> Repository Branch Name. </param>
@@ -354,6 +374,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 default);
         }
 
+        /// <summary> Deployment details of the repository associated with the workflow. </summary>
         /// <param name="manifestType"> Determines the type of manifests within the repository. </param>
         /// <param name="kubeManifestLocations"></param>
         /// <param name="helmChartPath"> Helm chart directory path in repository. </param>
@@ -374,6 +395,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 default);
         }
 
+        /// <summary> Information on the azure container registry. </summary>
         /// <param name="acrSubscriptionId"> ACR subscription id. </param>
         /// <param name="acrResourceGroup"> ACR resource group. </param>
         /// <param name="acrRegistryName"> ACR registry. </param>
@@ -384,6 +406,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DevHubContainerRegistryInfo(acrSubscriptionId, acrResourceGroup, acrRegistryName, acrRepositoryName, default);
         }
 
+        /// <summary> The fields needed for OIDC with GitHub. </summary>
         /// <param name="azureClientId"> Azure Application Client ID. </param>
         /// <param name="azureTenantId"> Azure Directory (tenant) ID. </param>
         /// <returns> A new <see cref="Models.GitHubWorkflowProfileOidcCredentials"/> instance for mocking. </returns>
@@ -392,6 +415,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new GitHubWorkflowProfileOidcCredentials(azureClientId, azureTenantId, default);
         }
 
+        /// <summary> The DevHubWorkflowRun. </summary>
         /// <param name="isSucceeded"> Describes if the workflow run succeeded. </param>
         /// <param name="workflowRunUri"> URL to the run of the workflow. </param>
         /// <param name="lastRunOn"> The timestamp of the last workflow run. </param>
@@ -402,6 +426,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DevHubWorkflowRun(isSucceeded, workflowRunUri, lastRunOn, workflowRunStatus, default);
         }
 
+        /// <summary> Azure Pipeline Profile. </summary>
         /// <param name="repository"> Details of the ADO repository associated with the workflow. </param>
         /// <param name="armServiceConnection"> The name of the ARM Service Connection the pipeline is associated with. </param>
         /// <param name="build"> Build details of the repository associated with the workflow. </param>
@@ -429,6 +454,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 default);
         }
 
+        /// <summary> Details of the ADO repository associated with the workflow. </summary>
         /// <param name="repositoryOwner"> The owner of the repository the workflow is associated with. </param>
         /// <param name="repositoryName"> The name of the repository the workflow is associated with. </param>
         /// <param name="branchName"> The name of the branch the workflow is associated with. </param>
@@ -446,6 +472,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 default);
         }
 
+        /// <summary> Build details of the repository associated with the workflow. </summary>
         /// <param name="dockerfile"> Path to the Dockerfile within the repository. </param>
         /// <param name="dockerBuildContext"> Path to Dockerfile Build Context within the repository. </param>
         /// <returns> A new <see cref="Models.DevHubDockerBuildInfo"/> instance for mocking. </returns>
@@ -454,6 +481,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DevHubDockerBuildInfo(dockerfile, dockerBuildContext, default);
         }
 
+        /// <summary> Details of the pull request containing the workflow. </summary>
         /// <param name="prUri"> The URL to the Pull Request submitted against the users repository. </param>
         /// <param name="pullNumber"> The number associated with the submitted pull request. </param>
         /// <param name="prStatus"> The status of the Pull Request submitted against the users repository. </param>
@@ -463,6 +491,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DeveloperHubPullRequestContent(prUri, pullNumber, prStatus, default);
         }
 
+        /// <summary> Template Workflow Profile. </summary>
         /// <param name="repositoryProvider"> The status of the Pull Request submitted against the users repository. </param>
         /// <param name="workflowTemplate"> The properties of ADO OAuth. </param>
         /// <param name="deploymentTemplate"> The properties of ADO OAuth. </param>
@@ -492,6 +521,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 default);
         }
 
+        /// <summary> The properties of ADO OAuth. </summary>
         /// <param name="templateId"> The versioned template arm resource id. </param>
         /// <param name="destination"> destination for template creation. </param>
         /// <param name="parameters"> parameters for template creation. </param>
@@ -503,6 +533,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DevHubTemplateReference(templateId, destination, parameters ?? new ChangeTrackingDictionary<string, string>(), default);
         }
 
+        /// <summary> Details of the GitHub repository and credentials associated with the workflow. </summary>
         /// <param name="repository"> Details of the GitHub repository associated with the workflow. </param>
         /// <param name="oidcCredentials"> The fields needed for OIDC with GitHub. </param>
         /// <returns> A new <see cref="Models.GitHubProviderProfile"/> instance for mocking. </returns>
@@ -511,6 +542,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new GitHubProviderProfile(repository, oidcCredentials, default);
         }
 
+        /// <summary> Details of the GitHub repository associated with the workflow. </summary>
         /// <param name="repositoryOwner"> The owner of the repository the workflow is associated with. </param>
         /// <param name="repositoryName"> The name of the repository the workflow is associated with. </param>
         /// <param name="branchName"> The name of the branch the workflow is associated with. </param>
@@ -520,6 +552,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new GitHubRepository(repositoryOwner, repositoryName, branchName, default);
         }
 
+        /// <summary> The fields needed for OIDC with GitHub. </summary>
         /// <param name="azureClientId"> Azure Application Client ID. </param>
         /// <param name="azureTenantId"> Azure Directory (tenant) ID. </param>
         /// <returns> A new <see cref="Models.DevHubOidcCredentials"/> instance for mocking. </returns>
@@ -528,6 +561,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DevHubOidcCredentials(azureClientId, azureTenantId, default);
         }
 
+        /// <summary> Details of the GitHub repository associated with the workflow. </summary>
         /// <param name="repository"> Details of the ADO repository associated with the workflow. </param>
         /// <param name="armServiceConnection"> The name of the ARM Service Connection the pipeline is associated with. </param>
         /// <returns> A new <see cref="Models.AdoProviderProfile"/> instance for mocking. </returns>
@@ -553,6 +587,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 default);
         }
 
+        /// <summary> Template. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -570,6 +605,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 default);
         }
 
+        /// <summary> Template properties. </summary>
         /// <param name="templateName"> The name of the template. </param>
         /// <param name="defaultVersion"> The default version of the template. </param>
         /// <param name="versions"> The valid versions of the template. </param>
@@ -589,6 +625,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 default);
         }
 
+        /// <summary> VersionedTemplate. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -606,6 +643,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 default);
         }
 
+        /// <summary> VersionedTemplate properties. </summary>
         /// <param name="version"> The version of the template. </param>
         /// <param name="templateType"> The type of the template. </param>
         /// <param name="parameters"> The template parameters. </param>
@@ -617,6 +655,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DevHubVersionedTemplateProperties(version, templateType, (parameters ?? new ChangeTrackingList<DeveloperHubParameterContent>()).ToList(), default);
         }
 
+        /// <summary> Parameter for the template. </summary>
         /// <param name="name"> The paramater name. </param>
         /// <param name="description"> Description of what the paramater is used for. </param>
         /// <param name="parameterType"> The type of the template parameter. </param>
@@ -636,6 +675,7 @@ namespace Azure.ResourceManager.DevHub.Models
                 default);
         }
 
+        /// <summary> A reference to a default parameter value or a reference parameter to take the value from. </summary>
         /// <param name="value"> The default value for this parameter. </param>
         /// <param name="referenceParameter"> The Parameter to reference a value from. </param>
         /// <returns> A new <see cref="Models.DevHubTemplateParameterDefault"/> instance for mocking. </returns>
@@ -644,6 +684,7 @@ namespace Azure.ResourceManager.DevHub.Models
             return new DevHubTemplateParameterDefault(value, referenceParameter, default);
         }
 
+        /// <summary> Generated template files returned as a map&lt;path string,content string&gt;. </summary>
         /// <param name="generatedFiles"> files returned as a map&lt;path string,content string&gt;. </param>
         /// <returns> A new <see cref="Models.DeveloperHubGenerateVersionedTemplateResult"/> instance for mocking. </returns>
         public static DeveloperHubGenerateVersionedTemplateResult DeveloperHubGenerateVersionedTemplateResult(IDictionary<string, string> generatedFiles = default)

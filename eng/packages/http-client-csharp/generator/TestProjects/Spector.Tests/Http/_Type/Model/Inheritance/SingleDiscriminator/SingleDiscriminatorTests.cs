@@ -100,5 +100,22 @@ namespace TestProjects.Spector.Tests.Http._Type.Model.Inheritance.SingleDiscrimi
             Assert.IsTrue(result.Value is TRex);
             Assert.AreEqual(20, ((TRex)result.Value).Size);
         });
+
+        [SpectorTest]
+        public Task GetNoSubtypesModel() => Test(async (host) =>
+        {
+            var response = await new SingleDiscriminatorClient(host, null).GetNoSubtypesModelAsync();
+            Assert.AreEqual(200, response.GetRawResponse().Status);
+            Assert.AreEqual(10, response.Value.Size);
+            Assert.AreEqual("salmon", GetProperty(response.Value, "Kind"));
+        });
+
+        [SpectorTest]
+        public Task PutNoSubtypesModel() => Test(async (host) =>
+        {
+            var body = TypeModelInheritanceSingleDiscriminatorModelFactory.Fish("salmon", 10);
+            var response = await new SingleDiscriminatorClient(host, null).PutNoSubtypesModelAsync(body);
+            Assert.AreEqual(204, response.Status);
+        });
     }
 }

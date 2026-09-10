@@ -100,11 +100,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
             }
-            if (Optional.IsDefined(ImageDetails))
-            {
-                writer.WritePropertyName("imageDetails"u8);
-                writer.WriteObjectValue(ImageDetails, options);
-            }
             if (Optional.IsDefined(InferenceConfig))
             {
                 writer.WritePropertyName("inferenceConfig"u8);
@@ -163,7 +158,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             string condaFile = default;
             MachineLearningEnvironmentType? environmentType = default;
             string image = default;
-            ImageDetails imageDetails = default;
             MachineLearningInferenceContainerProperties inferenceConfig = default;
             MachineLearningOperatingSystemType? osType = default;
             RegistryAssetProvisioningState? provisioningState = default;
@@ -277,15 +271,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     image = prop.Value.GetString();
                     continue;
                 }
-                if (prop.NameEquals("imageDetails"u8))
-                {
-                    if (prop.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    imageDetails = ImageDetails.DeserializeImageDetails(prop.Value, options);
-                    continue;
-                }
                 if (prop.NameEquals("inferenceConfig"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -340,7 +325,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 condaFile,
                 environmentType,
                 image,
-                imageDetails,
                 inferenceConfig,
                 osType,
                 provisioningState,
