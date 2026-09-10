@@ -62,10 +62,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         private const long RecountIntervalMilliseconds = 30000;
 
         /// <summary>
-        /// The staleness allowed before refusing a write or deleting anything. A drain removes blobs
-        /// through the provider without telling this class, so the running total can read high by a
-        /// whole backlog; refusing on that is a permanent drop and evicting on it takes another
-        /// tenant's telemetry to satisfy a shortfall that no longer exists.
+        /// The staleness allowed before refusing a write or evicting telemetry. Retention cleanup
+        /// and other processes can remove blobs without updating this instance's running total.
         /// </summary>
         private const long EvictionRecountIntervalMilliseconds = 1000;
 
@@ -79,8 +77,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         private readonly object _createLock = new();
         private readonly object _evictLock = new();
         private readonly Stopwatch _clock = Stopwatch.StartNew();
-        private long _currentSizeBytes;
+        private StorageAccounting _accounting = new(0, 0, 0, 0, false);
         private long _lastRecountMilliseconds;
+        private int _recountInProgress;
         private volatile bool _disposed;
 
         internal MultiTenantStorage(
@@ -100,13 +99,39 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
             // A failure here only means the running total starts low; writes add to it and the next
             // successful recount corrects it.
-            _currentSizeBytes = TryCalculateRootSize(out var size) ? size : 0;
+            _accounting = new StorageAccounting(TryCalculateRootSize(out var size) ? size : 0, 0, 0, 0, false);
         }
 
         internal IEnumerable<EndpointStorage> Partitions => _partitions.Values;
 
+        internal long CurrentSizeBytes => Volatile.Read(ref _accounting).TotalBytes;
+
         internal ExportResult SaveTelemetry(EndpointStorage storage, byte[] content)
             => storage.BlobProvider.SaveTelemetry(content);
+
+        /// <summary>
+        /// Requests reconciliation after successful drain deletions. An overlapping write keeps
+        /// its reservation and retries reconciliation when it settles. Eviction cannot use a
+        /// dirty snapshot. Recounting avoids double-crediting previously excluded leased blobs.
+        /// </summary>
+        internal void DeleteAndUpdateBudget(Func<bool> delete)
+        {
+            BeginDeletion();
+            var deleted = false;
+            try
+            {
+                deleted = delete();
+            }
+            finally
+            {
+                CompleteDeletion(0, deleted);
+            }
+
+            if (deleted)
+            {
+                TryRecount();
+            }
+        }
 
         /// <summary>
         /// Writes to the endpoint's partition, evicting oldest-first across every partition when the
@@ -144,47 +169,97 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                 return TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
             }
 
-            var reserved = false;
+            return TryReserveWithEviction(buffer.Length) && TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
+        }
 
-            // Serialized: two writers selecting the same blob would both measure it, both see their
-            // delete succeed - File.Delete does not fail on a file that is already gone - and both
-            // credit its bytes back, leaving the total below what is actually on disk.
-            lock (_evictLock)
+        private bool TryReserveWithEviction(long length)
+        {
+            for (var attempt = 0; attempt < 3; attempt++)
             {
-                // Inside the lock: computed outside, another writer could take the room this
-                // measured, leaving the eviction below paid for and the write still refused.
-                var shortfall = Interlocked.Read(ref _currentSizeBytes) + buffer.Length - _maxSizeBytes;
-                var candidates = SelectOldest(MaxBlobsToEvict);
-
-                long evictable = 0;
-                for (int i = 0; i < candidates.Count; i++)
+                if (TryReserve(length))
                 {
-                    evictable += FileLength(candidates[i].Path);
+                    return true;
                 }
 
-                // Deleting everything on offer would still leave the write refused, so delete nothing.
-                if (evictable < shortfall)
+                var before = Volatile.Read(ref _accounting);
+                if (before.NeedsRecount || before.Deletions != 0)
                 {
-                    return false;
-                }
-
-                for (int i = 0; i < candidates.Count && !reserved; i++)
-                {
-                    // Checked before each delete, not after: room may have appeared while this writer
-                    // waited for the lock, and evicting first would spend a blob to discover that.
-                    reserved = TryReserve(buffer.Length);
-
-                    if (!reserved)
+                    if (TryRecount())
                     {
-                        TryEvict(candidates[i]);
-                        reserved = TryReserve(buffer.Length);
+                        continue;
+                    }
+
+                    if (ReferenceEquals(before, Volatile.Read(ref _accounting)) && !before.HasMutations)
+                    {
+                        return false;
+                    }
+
+                    continue;
+                }
+
+                // Serialized: two writers selecting the same blob would both measure it, both see their
+                // delete succeed - File.Delete does not fail on a file that is already gone - and both
+                // credit its bytes back, leaving the total below what is actually on disk.
+                lock (_evictLock)
+                {
+                    if (TryReserve(length))
+                    {
+                        return true;
+                    }
+
+                    before = Volatile.Read(ref _accounting);
+                    if (before.NeedsRecount || before.Deletions != 0)
+                    {
+                        continue;
+                    }
+
+                    // Inside the lock: computed outside, another writer could take the room this
+                    // measured, leaving the eviction below paid for and the write still refused.
+                    var shortfall = before.TotalBytes + length - _maxSizeBytes;
+                    var candidates = SelectOldest(MaxBlobsToEvict);
+
+                    long evictable = 0;
+                    for (int i = 0; i < candidates.Count; i++)
+                    {
+                        evictable += FileLength(candidates[i].Path);
+                    }
+
+                    // Deleting everything on offer would still leave the write refused, so delete nothing.
+                    if (evictable < shortfall)
+                    {
+                        if (!ReferenceEquals(before, Volatile.Read(ref _accounting)))
+                        {
+                            continue;
+                        }
+
+                        return false;
+                    }
+
+                    var reconcile = false;
+                    for (int i = 0; i < candidates.Count; i++)
+                    {
+                        // Checked before each delete, not after: room may have appeared while this writer
+                        // waited for the lock, and evicting first would spend a blob to discover that.
+                        if (TryReserve(length))
+                        {
+                            return true;
+                        }
+
+                        TryEvict(candidates[i], length, out reconcile);
+                        if (reconcile)
+                        {
+                            break;
+                        }
+                    }
+
+                    if (!reconcile)
+                    {
+                        return TryReserve(length);
                     }
                 }
             }
 
-            // Outside the lock: the write is the slow part, and holding it here would serialize
-            // every partition's failure path behind one disk write.
-            return reserved && TryCreateBlob(inner, buffer, leasePeriodMilliseconds, out blob);
+            return false;
         }
 
         /// <summary>
@@ -196,14 +271,16 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
         {
             while (true)
             {
-                var current = Interlocked.Read(ref _currentSizeBytes);
+                var current = Volatile.Read(ref _accounting);
 
-                if (current + length > _maxSizeBytes)
+                if (current.TotalBytes + length > _maxSizeBytes)
                 {
                     return false;
                 }
 
-                if (Interlocked.CompareExchange(ref _currentSizeBytes, current + length, current) == current)
+                var next = new StorageAccounting(current.DiskBytes, current.ReservedBytes + length,
+                    current.Writers + 1, current.Deletions, current.NeedsRecount);
+                if (ReferenceEquals(Interlocked.CompareExchange(ref _accounting, next, current), current))
                 {
                     return true;
                 }
@@ -212,24 +289,72 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
         private bool TryCreateBlob(FileBlobProvider inner, byte[] buffer, int leasePeriodMilliseconds, out PersistentBlob? blob)
         {
-            var created = leasePeriodMilliseconds > 0
-                ? inner.TryCreateBlob(new ReadOnlySpan<byte>(buffer), leasePeriodMilliseconds, out blob)
-                : inner.TryCreateBlob(new ReadOnlySpan<byte>(buffer), out blob);
-
-            if (!created)
+            var created = false;
+            try
             {
-                // Give the reservation back; nothing was written.
-                Interlocked.Add(ref _currentSizeBytes, -buffer.Length);
+                created = leasePeriodMilliseconds > 0
+                    ? inner.TryCreateBlob(new ReadOnlySpan<byte>(buffer), leasePeriodMilliseconds, out blob)
+                    : inner.TryCreateBlob(new ReadOnlySpan<byte>(buffer), out blob);
+                return created;
             }
+            finally
+            {
+                CompleteWrite(buffer.Length, created);
+            }
+        }
 
-            return created;
+        private void CompleteWrite(long length, bool created)
+        {
+            while (true)
+            {
+                var current = Volatile.Read(ref _accounting);
+                var next = new StorageAccounting(current.DiskBytes + (created ? length : 0), current.ReservedBytes - length,
+                    current.Writers - 1, current.Deletions, current.NeedsRecount);
+                if (ReferenceEquals(Interlocked.CompareExchange(ref _accounting, next, current), current))
+                {
+                    if (next.NeedsRecount && !next.HasMutations)
+                    {
+                        TryRecount();
+                    }
+
+                    return;
+                }
+            }
+        }
+
+        private void BeginDeletion()
+        {
+            while (true)
+            {
+                var current = Volatile.Read(ref _accounting);
+                var next = new StorageAccounting(current.DiskBytes, current.ReservedBytes, current.Writers,
+                    current.Deletions + 1, current.NeedsRecount);
+                if (ReferenceEquals(Interlocked.CompareExchange(ref _accounting, next, current), current))
+                {
+                    return;
+                }
+            }
+        }
+
+        private void CompleteDeletion(long evictedBytes, bool needsRecount)
+        {
+            while (true)
+            {
+                var current = Volatile.Read(ref _accounting);
+                var next = new StorageAccounting(current.DiskBytes - evictedBytes, current.ReservedBytes, current.Writers,
+                    current.Deletions - 1, current.NeedsRecount || needsRecount);
+                if (ReferenceEquals(Interlocked.CompareExchange(ref _accounting, next, current), current))
+                {
+                    return;
+                }
+            }
         }
 
         /// <summary>
         /// Re-derives the running total from disk at most once per <see cref="RecountIntervalMilliseconds"/>.
         /// </summary>
         /// <remarks>
-        /// The total drifts between recounts: retention deletes bypass it, drains remove blobs, and
+        /// The total drifts between recounts: retention deletes bypass it, and
         /// another process may share the root. That is the same tolerance <c>DirectorySizeTracker</c>
         /// documents for itself - a false positive costs one refused write that is retried, a false
         /// negative costs one blob of overshoot. Re-deriving is what keeps the drift bounded, and it
@@ -250,16 +375,52 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                 return;
             }
 
-            if (TryCalculateRootSize(out var size))
-            {
-                // Sampled after the walk, not before: a write that landed while the walk was running
-                // has already added itself to the total, and the walk may have counted it as well.
-                // Correcting against the later sample errs towards a brief overshoot rather than
-                // towards evicting telemetry that is still wanted.
-                var current = Interlocked.Read(ref _currentSizeBytes);
+            TryRecount();
+        }
 
-                Interlocked.Add(ref _currentSizeBytes, size - current);
+        /// <summary>
+        /// Publishes a disk measurement only if no tracked mutation overlaps the scan. Optional
+        /// file enumeration lets tests pause a scan without changing production timing.
+        /// </summary>
+        internal bool TryRecount(IEnumerable<string>? files = null)
+        {
+            if (Interlocked.CompareExchange(ref _recountInProgress, 1, 0) != 0)
+            {
+                return false;
             }
+
+            try
+            {
+                return TryRecountCore(files);
+            }
+            finally
+            {
+                Volatile.Write(ref _recountInProgress, 0);
+            }
+        }
+
+        private bool TryRecountCore(IEnumerable<string>? files)
+        {
+            var snapshot = Volatile.Read(ref _accounting);
+            if (snapshot.HasMutations)
+            {
+                return false;
+            }
+
+            long size;
+            if (!(files == null ? TryCalculateRootSize(out size) : TryCalculateSize(files, out size)))
+            {
+                return false;
+            }
+
+            var next = new StorageAccounting(size, 0, 0, 0, false);
+            if (!ReferenceEquals(Interlocked.CompareExchange(ref _accounting, next, snapshot), snapshot))
+            {
+                return false;
+            }
+
+            Interlocked.Exchange(ref _lastRecountMilliseconds, _clock.ElapsedMilliseconds);
+            return true;
         }
 
         private bool TryCalculateRootSize(out long size)
@@ -273,12 +434,35 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                     return true;
                 }
 
+                return TryCalculateSize(Directory.EnumerateFiles(_rootDirectory, "*.blob", SearchOption.AllDirectories), out size);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        internal static bool TryCalculateSize(IEnumerable<string> files, out long size)
+        {
+            size = 0;
+
+            try
+            {
                 // Only blobs: a leased or half-written file is named .lock or .tmp, which eviction
                 // cannot select. Counting bytes that cannot be reclaimed is what let a restart pin
                 // the budget at zero headroom.
-                foreach (var file in Directory.EnumerateFiles(_rootDirectory, "*.blob", SearchOption.AllDirectories))
+                foreach (var file in files)
                 {
-                    size += new FileInfo(file).Length;
+                    try
+                    {
+                        size += new FileInfo(file).Length;
+                    }
+                    catch (FileNotFoundException)
+                    {
+                    }
+                    catch (DirectoryNotFoundException)
+                    {
+                    }
                 }
 
                 return true;
@@ -396,8 +580,47 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
             }
         }
 
-        private bool TryEvict(EvictionCandidate candidate)
+        private bool TryBeginEviction(long requestedBytes)
         {
+            while (true)
+            {
+                var current = Volatile.Read(ref _accounting);
+                if (current.NeedsRecount || current.Deletions != 0 || current.TotalBytes + requestedBytes <= _maxSizeBytes)
+                {
+                    return false;
+                }
+
+                var next = new StorageAccounting(current.DiskBytes, current.ReservedBytes, current.Writers,
+                    current.Deletions + 1, current.NeedsRecount);
+                if (ReferenceEquals(Interlocked.CompareExchange(ref _accounting, next, current), current))
+                {
+                    return true;
+                }
+            }
+        }
+
+        private bool TryEvict(EvictionCandidate candidate, long requestedBytes, out bool reconcile)
+        {
+            reconcile = !TryBeginEviction(requestedBytes);
+            if (reconcile)
+            {
+                return false;
+            }
+
+            long deletedBytes = 0;
+            try
+            {
+                return TryEvictCore(candidate, out deletedBytes);
+            }
+            finally
+            {
+                CompleteDeletion(deletedBytes, false);
+            }
+        }
+
+        private static bool TryEvictCore(EvictionCandidate candidate, out long deletedBytes)
+        {
+            deletedBytes = 0;
             // Measured before deletion because the length is unreadable afterwards.
             var length = FileLength(candidate.Path);
 
@@ -421,7 +644,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
                 }
             }
 
-            Interlocked.Add(ref _currentSizeBytes, -length);
+            deletedBytes = length;
 
             return true;
         }
@@ -442,6 +665,36 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
             internal PersistentBlob? Blob { get; }
 
             internal string Path { get; }
+        }
+
+        /// <summary>
+        /// Each transition publishes a new identity, including successful writes whose total charge
+        /// is unchanged. A recount CAS therefore detects completed mutations as well as active ones.
+        /// </summary>
+        private sealed class StorageAccounting
+        {
+            internal StorageAccounting(long diskBytes, long reservedBytes, int writers, int deletions, bool needsRecount)
+            {
+                DiskBytes = diskBytes;
+                ReservedBytes = reservedBytes;
+                Writers = writers;
+                Deletions = deletions;
+                NeedsRecount = needsRecount;
+            }
+
+            internal long DiskBytes { get; }
+
+            internal long ReservedBytes { get; }
+
+            internal int Writers { get; }
+
+            internal int Deletions { get; }
+
+            internal bool NeedsRecount { get; }
+
+            internal bool HasMutations => Writers != 0 || Deletions != 0;
+
+            internal long TotalBytes => DiskBytes + ReservedBytes;
         }
 
         /// <summary>

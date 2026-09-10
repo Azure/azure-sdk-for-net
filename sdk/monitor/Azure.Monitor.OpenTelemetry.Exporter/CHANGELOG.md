@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Successful deletion of drained multi-tenant telemetry now releases its shared offline storage budget immediately, preventing unnecessary eviction of another endpoint's pending telemetry.
+
 ### Other Changes
 
 ## 1.9.0 (2026-09-04)

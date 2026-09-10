@@ -136,8 +136,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests.E2ETelemetryItemValidation
                 expectedMetricDataPointName: asView ? "MyHistogramRenamed" : "MyHistogram",
                 expectedMetricDataPointValue: sum,
                 expectedMetricDataPointCount: loop,
-                expectedMetricDataPointMax:max,
-                expectedMetricDataPointMin:min,
+                expectedMetricDataPointMax: max,
+                expectedMetricDataPointMin: min,
                 expectedMetricsProperties: new Dictionary<string, string> { { "tag1", "value1" }, { "tag2", "value2" } });
         }
 

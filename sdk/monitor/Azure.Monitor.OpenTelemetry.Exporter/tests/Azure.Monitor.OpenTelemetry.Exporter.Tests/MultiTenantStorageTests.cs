@@ -4,14 +4,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Metrics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 
 using Azure.Core.Pipeline;
+using Azure.Core.TestFramework;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
@@ -56,6 +61,364 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.NotEqual(eastUs!.Directory, westUs!.Directory);
             Assert.StartsWith(_rootDirectory, eastUs.Directory, StringComparison.Ordinal);
             Assert.StartsWith(_rootDirectory, westUs.Directory, StringComparison.Ordinal);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(4)]
+        public void SuccessfulDrainFreesTheSharedBudgetWithoutEvictingAnotherPartition(int blobCount)
+        {
+            var transport = new MockTransport(new MockResponse(200));
+            using var storage = CreateStorage(8192, transport);
+            var eastUs = storage.TryGet(EastUs)!;
+            var westUs = storage.TryGet(WestUs)!;
+            FreezeRecountClock(storage);
+            var payload = Encoding.UTF8.GetBytes("{\"name\":\"budget-test\"}".PadRight(4096));
+
+            for (int index = 0; index < blobCount; index++)
+            {
+                Assert.Equal(ExportResult.Success, storage.SaveTelemetry(eastUs,
+                    Encoding.UTF8.GetBytes("{\"name\":\"budget-test\"}".PadRight(4096 / blobCount))));
+            }
+
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(westUs, payload));
+            var backlog = Assert.Single(Directory.GetFiles(westUs.Directory, "*.blob"));
+
+            eastUs.TransmitFromStorageHandler.Drain();
+
+            Assert.Single(transport.Requests);
+            Assert.Empty(Directory.GetFiles(eastUs.Directory));
+            Assert.Equal(4096L, GetTrackedSize(storage));
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(eastUs, payload));
+            Assert.True(File.Exists(backlog), "A successful drain must free the budget before another partition's telemetry is evicted.");
+        }
+
+        [Fact]
+        public void RecountDuringDrainDoesNotCreditLeasedBytesTwice()
+        {
+            Action duringTransmission = null!;
+            var transport = new MockTransport(_ =>
+            {
+                duringTransmission();
+                return new MockResponse(200);
+            });
+            using var storage = CreateStorage(8192, transport);
+            var eastUs = storage.TryGet(EastUs)!;
+            var westUs = storage.TryGet(WestUs)!;
+            FreezeRecountClock(storage);
+            var payload = Encoding.UTF8.GetBytes("{\"name\":\"budget-test\"}".PadRight(4096));
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(eastUs, payload));
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(westUs, payload));
+            duringTransmission = () =>
+            {
+                typeof(MultiTenantStorage).GetField("_lastRecountMilliseconds", BindingFlags.Instance | BindingFlags.NonPublic)!
+                    .SetValue(storage, -1000L);
+                Assert.Equal(ExportResult.Success, storage.SaveTelemetry(westUs, payload));
+                Assert.Equal(8192L, GetTrackedSize(storage));
+            };
+
+            eastUs.TransmitFromStorageHandler.Drain();
+
+            Assert.Single(transport.Requests);
+            Assert.Empty(Directory.GetFiles(eastUs.Directory));
+            Assert.Equal(8192L, GetTrackedSize(storage));
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(eastUs, payload));
+            Assert.Single(Directory.GetFiles(westUs.Directory, "*.blob"));
+            Assert.Equal(8192L, GetTrackedSize(storage));
+        }
+
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void BlobDeletionCreditsTheBudgetOnlyOnce(bool getSingleBlob)
+        {
+            using var storage = CreateStorage();
+            var partition = storage.TryGet(EastUs)!;
+            FreezeRecountClock(storage);
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(partition, new byte[4096]));
+            PersistentBlob blob;
+            if (getSingleBlob)
+            {
+                Assert.True(partition.BlobProvider.TryGetBlob(out var found));
+                blob = found!;
+            }
+            else
+            {
+                blob = Assert.Single(partition.BlobProvider.GetBlobs());
+            }
+
+            Assert.True(blob.TryLease(TransmitFromStorageHandler.LeasePeriodMilliseconds));
+            var path = Assert.Single(Directory.GetFiles(partition.Directory));
+            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+            {
+                using var lockedFile = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+                ((BudgetedBlobProvider)partition.BlobProvider).DeleteAndUpdateBudget(() =>
+                {
+                    var deleted = blob.TryDelete();
+                    Assert.False(deleted);
+                    return deleted;
+                });
+                Assert.Equal(4096L, GetTrackedSize(storage));
+            }
+
+            ((BudgetedBlobProvider)partition.BlobProvider).DeleteAndUpdateBudget(() =>
+            {
+                var deleted = blob.TryDelete();
+                Assert.True(deleted);
+                return deleted;
+            });
+            Assert.Equal(0L, GetTrackedSize(storage));
+            ((BudgetedBlobProvider)partition.BlobProvider).DeleteAndUpdateBudget(blob.TryDelete);
+            Assert.Equal(0L, GetTrackedSize(storage));
+        }
+
+        [Fact]
+        public void ReclaimedLeaseDeletionDoesNotCreditUncountedBytes()
+        {
+            var transport = new MockTransport(new MockResponse(200));
+            using var storage = CreateStorage(8192, transport);
+            var eastUs = storage.TryGet(EastUs)!;
+            var westUs = storage.TryGet(WestUs)!;
+            FreezeRecountClock(storage);
+            var payload = Encoding.UTF8.GetBytes("{\"name\":\"budget-test\"}".PadRight(4096));
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(eastUs, payload));
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(westUs, payload));
+            var blob = Assert.Single(eastUs.BlobProvider.GetBlobs());
+            Assert.True(blob.TryLease(TransmitFromStorageHandler.LeasePeriodMilliseconds));
+            typeof(MultiTenantStorage).GetField("_lastRecountMilliseconds", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .SetValue(storage, -1000L);
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(westUs, payload));
+            Assert.Equal(8192L, GetTrackedSize(storage));
+            var leasedPath = Assert.Single(Directory.GetFiles(eastUs.Directory, "*.lock"));
+            var expiredPath = leasedPath.Substring(0, leasedPath.LastIndexOf('@')) + "@"
+                + DateTime.UtcNow.AddMinutes(-1).ToString("yyyy-MM-ddTHHmmss.fffffffZ", CultureInfo.InvariantCulture) + ".lock";
+            File.Move(leasedPath, expiredPath);
+
+            eastUs.TransmitFromStorageHandler.Drain();
+
+            Assert.Single(transport.Requests);
+            Assert.Empty(Directory.GetFiles(eastUs.Directory));
+            Assert.Equal(8192L, GetTrackedSize(storage));
+            Assert.Equal(2, Directory.GetFiles(westUs.Directory, "*.blob").Length);
+        }
+
+        [Theory]
+        [InlineData(400, 0)]
+        [InlineData(500, 4096)]
+        public void DrainCreditsOnlyBlobsThatWereDeleted(int status, long expectedSize)
+        {
+            var transport = new MockTransport(new MockResponse(status));
+            using var storage = CreateStorage(8192, transport);
+            var partition = storage.TryGet(EastUs)!;
+            FreezeRecountClock(storage);
+            var payload = Encoding.UTF8.GetBytes("{\"name\":\"budget-test\"}".PadRight(4096));
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(partition, payload));
+
+            partition.TransmitFromStorageHandler.Drain();
+
+            Assert.Single(transport.Requests);
+            Assert.Equal(expectedSize, GetTrackedSize(storage));
+            Assert.Equal(expectedSize, Directory.GetFiles(partition.Directory).Sum(path => new FileInfo(path).Length));
+        }
+
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public void RecountPreservesAnOutstandingReservation(bool writeSucceeds)
+        {
+            using var storage = CreateStorage(8192);
+            var partition = storage.TryGet(EastUs)!;
+            FreezeRecountClock(storage);
+            var flags = BindingFlags.Instance | BindingFlags.NonPublic;
+            var reserve = typeof(MultiTenantStorage).GetMethod("TryReserve", flags)!;
+            Assert.True((bool)reserve.Invoke(storage, new object[] { 4096L })!);
+
+            storage.DeleteAndUpdateBudget(() => true);
+
+            Assert.Equal(4096L, GetTrackedSize(storage));
+            if (!writeSucceeds)
+            {
+                Directory.Delete(partition.Directory, recursive: true);
+            }
+
+            var create = typeof(MultiTenantStorage).GetMethod("TryCreateBlob", flags)!;
+            var arguments = new object?[] { partition.Inner, new byte[4096], 0, null };
+            Assert.Equal(writeSucceeds, (bool)create.Invoke(storage, arguments)!);
+            Assert.Equal(writeSucceeds ? 4096L : 0L, GetTrackedSize(storage));
+        }
+
+        [Fact]
+        public void RecountToleratesABlobLeasedAfterEnumeration()
+        {
+            using var storage = CreateStorage();
+            var partition = storage.TryGet(EastUs)!;
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(partition, new byte[4096]));
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(partition, new byte[4096]));
+            var paths = Directory.GetFiles(partition.Directory, "*.blob");
+            var blob = partition.Inner.GetBlobs().Cast<FileBlob>().Single(candidate => candidate.FullPath == paths[0]);
+
+            IEnumerable<string> EnumerateWithLease()
+            {
+                Assert.True(blob.TryLease(TransmitFromStorageHandler.LeasePeriodMilliseconds));
+                yield return paths[0];
+                yield return paths[1];
+            }
+
+            Assert.True(MultiTenantStorage.TryCalculateSize(EnumerateWithLease(), out var size));
+            Assert.Equal(4096L, size);
+        }
+
+        [Fact]
+        public async Task RecountCannotPublishOverAConcurrentCompletedWrite()
+        {
+            using var storage = CreateStorage(8192);
+            var partition = storage.TryGet(EastUs)!;
+            FreezeRecountClock(storage);
+            using var scanStarted = new ManualResetEventSlim();
+            using var writeCompleted = new ManualResetEventSlim();
+
+            IEnumerable<string> PausedScan()
+            {
+                scanStarted.Set();
+                Assert.True(writeCompleted.Wait(TimeSpan.FromSeconds(10)));
+                yield break;
+            }
+
+            var scan = Task.Run(() => storage.TryRecount(PausedScan()));
+            try
+            {
+                Assert.True(scanStarted.Wait(TimeSpan.FromSeconds(10)));
+                Assert.Equal(ExportResult.Success, storage.SaveTelemetry(partition, new byte[4096]));
+            }
+            finally
+            {
+                writeCompleted.Set();
+            }
+
+            Assert.False(await scan);
+            Assert.Equal(4096L, storage.CurrentSizeBytes);
+        }
+
+        [Fact]
+        public void DirtyBudgetDoesNotWaitForAStalledWriterOrEvictBacklog()
+        {
+            using var storage = CreateStorage(8192);
+            var partition = storage.TryGet(EastUs)!;
+            FreezeRecountClock(storage);
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(partition, new byte[4096]));
+            var backlog = Assert.Single(Directory.GetFiles(partition.Directory, "*.blob"));
+            var flags = BindingFlags.Instance | BindingFlags.NonPublic;
+            Assert.True((bool)typeof(MultiTenantStorage).GetMethod("TryReserve", flags)!
+                .Invoke(storage, new object[] { 4096L })!);
+            storage.DeleteAndUpdateBudget(() => true);
+
+            var pendingWrite = Task.Run(() => storage.SaveTelemetry(partition, new byte[4096]));
+            Assert.True(pendingWrite.Wait(TimeSpan.FromSeconds(10)), "Persistence must not wait for a stalled reservation.");
+            Assert.Equal(ExportResult.Failure, pendingWrite.GetAwaiter().GetResult());
+            Assert.True(File.Exists(backlog));
+            Assert.Equal(8192L, storage.CurrentSizeBytes);
+            typeof(MultiTenantStorage).GetMethod("CompleteWrite", flags)!.Invoke(storage, new object[] { 4096L, false });
+            Assert.Equal(4096L, storage.CurrentSizeBytes);
+        }
+
+        [Fact]
+        public void EvictionAdmissionRechecksCapacityAfterSuccessfulRecount()
+        {
+            using var storage = CreateStorage(8192);
+            var partition = storage.TryGet(EastUs)!;
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(partition, new byte[4096]));
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(partition, new byte[4096]));
+            var blob = partition.BlobProvider.GetBlobs().First();
+            storage.DeleteAndUpdateBudget(blob.TryDelete);
+
+            Assert.Equal(4096L, storage.CurrentSizeBytes);
+            Assert.False((bool)typeof(MultiTenantStorage).GetMethod("TryBeginEviction", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .Invoke(storage, new object[] { 4096L })!);
+            Assert.Single(Directory.GetFiles(partition.Directory, "*.blob"));
+        }
+
+        [Fact]
+        public async Task ConcurrentRecountsDoNotRepeatTheDiskWalk()
+        {
+            using var storage = CreateStorage();
+            using var started = new ManualResetEventSlim();
+            using var finish = new ManualResetEventSlim();
+            var repeated = false;
+            IEnumerable<string> RepeatedScan()
+            {
+                repeated = true;
+                yield break;
+            }
+
+            IEnumerable<string> PausedScan()
+            {
+                started.Set();
+                Assert.True(finish.Wait(TimeSpan.FromSeconds(10)));
+                yield break;
+            }
+
+            var scan = Task.Run(() => storage.TryRecount(PausedScan()));
+            try
+            {
+                Assert.True(started.Wait(TimeSpan.FromSeconds(10)));
+                Assert.False(storage.TryRecount(RepeatedScan()));
+                Assert.False(repeated);
+            }
+            finally
+            {
+                finish.Set();
+            }
+
+            Assert.True(await scan);
+        }
+
+        [Theory]
+        [InlineData(false)]
+        [InlineData(true)]
+        public async Task DrainDoesNotEraseAConcurrentWritersReservation(bool writeSucceeds)
+        {
+            var transport = new MockTransport(new MockResponse(200));
+            using var storage = CreateStorage(12288, transport);
+            var eastUs = storage.TryGet(EastUs)!;
+            var westUs = storage.TryGet(WestUs)!;
+            FreezeRecountClock(storage);
+            var payload = Encoding.UTF8.GetBytes("{\"name\":\"budget-test\"}".PadRight(4096));
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(eastUs, payload));
+            Assert.Equal(ExportResult.Success, storage.SaveTelemetry(westUs, payload));
+            var backlog = Assert.Single(Directory.GetFiles(westUs.Directory, "*.blob"));
+            using var reserved = new ManualResetEventSlim();
+            using var finish = new ManualResetEventSlim();
+            var flags = BindingFlags.Instance | BindingFlags.NonPublic;
+            var writer = Task.Run(() =>
+            {
+                Assert.True((bool)typeof(MultiTenantStorage).GetMethod("TryReserve", flags)!
+                    .Invoke(storage, new object[] { 4096L })!);
+                reserved.Set();
+                Assert.True(finish.Wait(TimeSpan.FromSeconds(10)));
+                var arguments = new object?[] { eastUs.Inner, payload, 0, null };
+                return (bool)typeof(MultiTenantStorage).GetMethod("TryCreateBlob", flags)!.Invoke(storage, arguments)!;
+            });
+
+            try
+            {
+                Assert.True(reserved.Wait(TimeSpan.FromSeconds(10)));
+                eastUs.TransmitFromStorageHandler.Drain();
+                Assert.Single(transport.Requests);
+                Assert.Empty(Directory.GetFiles(eastUs.Directory));
+                Assert.Equal(12288L, storage.CurrentSizeBytes);
+                if (!writeSucceeds)
+                {
+                    Directory.Delete(eastUs.Directory);
+                }
+            }
+            finally
+            {
+                finish.Set();
+            }
+
+            Assert.Equal(writeSucceeds, await writer);
+            Assert.Equal(writeSucceeds ? 8192L : 4096L, storage.CurrentSizeBytes);
+            Assert.True(File.Exists(backlog));
         }
 
         [Fact]
@@ -538,7 +901,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
         /// <summary>
         /// Mirrors the provider's own naming, which is what orders blobs by age across directories.
         /// </summary>
-        private static string WriteBlobFile(string directory, DateTime timestampUtc, int length)        {
+        private static string WriteBlobFile(string directory, DateTime timestampUtc, int length)
+        {
             Directory.CreateDirectory(directory);
 
             var path = Path.Combine(
@@ -569,9 +933,25 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             GC.SuppressFinalize(this);
         }
 
-        private MultiTenantStorage CreateStorage(long maxSizeBytes = 1024 * 1024)
+        private static void FreezeRecountClock(MultiTenantStorage storage)
+        {
+            var clock = (Stopwatch)typeof(MultiTenantStorage).GetField("_clock", BindingFlags.Instance | BindingFlags.NonPublic)!
+                .GetValue(storage)!;
+            clock.Reset();
+        }
+
+        private static long GetTrackedSize(MultiTenantStorage storage)
+            => storage.CurrentSizeBytes;
+
+        private MultiTenantStorage CreateStorage(long maxSizeBytes = 1024 * 1024, HttpPipelineTransport? transport = null)
         {
             var options = new AzureMonitorExporterOptions();
+            if (transport != null)
+            {
+                options.Transport = transport;
+                options.Retry.MaxRetries = 0;
+            }
+
             var restClient = new ApplicationInsightsRestClient(new ClientDiagnostics(options), HttpPipelineBuilder.Build(options), EastUs);
             var connectionVars = new ConnectionVars("ikey", EastUs, EastUs, aadAudience: null);
 

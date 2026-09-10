@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
 using OpenTelemetry.PersistentStorage.Abstractions;
@@ -31,6 +32,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
             _inner = inner;
             _ingestionEndpoint = ingestionEndpoint;
         }
+
+        internal void DeleteAndUpdateBudget(Func<bool> delete) => _owner.DeleteAndUpdateBudget(delete);
 
         protected override IEnumerable<PersistentBlob> OnGetBlobs() => _inner.GetBlobs();
 

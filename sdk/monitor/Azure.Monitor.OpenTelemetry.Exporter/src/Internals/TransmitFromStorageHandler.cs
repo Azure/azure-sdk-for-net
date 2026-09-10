@@ -13,6 +13,7 @@ using System.Timers;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.ConnectionString;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.CustomerSdkStats;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.Diagnostics;
+using Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals.NetworkSdkStats;
 using OpenTelemetry;
 using OpenTelemetry.PersistentStorage.Abstractions;
@@ -386,8 +387,24 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
             return true;
         }
 
-        private static void DeleteAll(List<PendingBlob> batch)
+        private void DeleteAll(List<PendingBlob> batch)
         {
+            if (_blobProvider is BudgetedBlobProvider budgetedProvider)
+            {
+                DeleteRoutedBlobs(budgetedProvider, batch);
+            }
+            else
+            {
+                DeleteBlobs(batch);
+            }
+        }
+
+        private static void DeleteRoutedBlobs(BudgetedBlobProvider provider, List<PendingBlob> batch)
+            => provider.DeleteAndUpdateBudget(() => DeleteBlobs(batch));
+
+        private static bool DeleteBlobs(List<PendingBlob> batch)
+        {
+            var deleted = false;
             foreach (var pending in batch)
             {
                 // If the delete fails the batch may be transmitted again, resulting in duplicates.
@@ -395,7 +412,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     AzureMonitorExporterEventSource.Log.DeletedFailed();
                 }
+                else
+                {
+                    deleted = true;
+                }
             }
+
+            return deleted;
         }
 
         private static TelemetrySchemaTypeCounter CountTelemetryTypes(byte[] payload)
