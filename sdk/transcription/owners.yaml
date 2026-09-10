@@ -1,0 +1,12 @@
+# Ownership for the transcription service directory.
+
+version: 1
+
+paths:
+  - path: Azure.AI.Speech.Transcription/
+    owners: [amber-yujueWang, emilyjiji, pankopon, rhurey, xitzhang]
+    pr-labels: [Speech Transcription]
+
+label-owners:
+  - labels: [Speech Transcription]
+    service-owners: [amber-yujueWang, emilyjiji, pankopon, rhurey, xitzhang]

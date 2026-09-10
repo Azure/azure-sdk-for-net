@@ -1,0 +1,12 @@
+# Ownership for the textanalytics service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [quentinRobinson]
+    pr-labels: [Cognitive - Text Analytics]
+
+label-owners:
+  - labels: [Cognitive - Text Analytics]
+    service-owners: [quentinRobinson]

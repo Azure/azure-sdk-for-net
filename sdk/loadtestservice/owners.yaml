@@ -1,0 +1,12 @@
+# Ownership for the loadtestservice service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [azure/testing-services]
+    pr-labels: [Azure Load Testing]
+
+label-owners:
+  - labels: [Azure Load Testing]
+    service-owners: [azure/testing-services]

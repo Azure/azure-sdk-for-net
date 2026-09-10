@@ -1,0 +1,19 @@
+# Ownership for the servicebus service directory.
+
+version: 1
+
+paths:
+  - path: Microsoft.Azure.WebJobs.Extensions.ServiceBus/
+    owners: [EldertGrootenboer, j7nw4r, jsquire, sagar0207, skarri-microsoft, SwayGom]
+    pr-labels: [Functions, Service Bus]
+  - path: "."
+    owners: [EldertGrootenboer, j7nw4r, jsquire, sagar0207, skarri-microsoft, SwayGom]
+    pr-labels: [Service Bus]
+
+label-owners:
+  - labels: [Functions]
+    service-owners: [fabiocav, mathewc, alrod]
+    azure-sdk-owners: [jsquire]
+  - labels: [Service Bus]
+    service-owners: [EldertGrootenboer, j7nw4r, sagar0207, skarri-microsoft, SwayGom]
+    azure-sdk-owners: [jsquire]

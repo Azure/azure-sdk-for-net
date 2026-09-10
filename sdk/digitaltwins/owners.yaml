@@ -1,0 +1,12 @@
+# Ownership for the digitaltwins service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [abhinav-ghai, johngallardo, sjiherzig]
+    pr-labels: [Digital Twins]
+
+label-owners:
+  - labels: [Digital Twins]
+    service-owners: [abhinav-ghai, johngallardo, sjiherzig]

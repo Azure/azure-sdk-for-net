@@ -1,0 +1,12 @@
+# Ownership for the containerregistry service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [Azure/azure-sdk-write-acr]
+    pr-labels: [Container Registry]
+
+label-owners:
+  - labels: [Container Registry]
+    service-owners: [Azure/azure-sdk-write-acr]

@@ -1,0 +1,8 @@
+# Ownership for the formrecognizer service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [bojunehsu, changjian-wang]
+    pr-labels: [Cognitive - Form Recognizer]

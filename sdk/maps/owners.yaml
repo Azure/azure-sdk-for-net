@@ -1,0 +1,12 @@
+# Ownership for the maps service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [andykao1213, dubiety]
+    pr-labels: [Maps]
+
+label-owners:
+  - labels: [Maps]
+    service-owners: [dubiety]

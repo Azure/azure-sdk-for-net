@@ -1,0 +1,12 @@
+# Ownership for the anomalydetector service directory.
+
+version: 1
+
+paths:
+  - path: Azure.AI.AnomalyDetector/
+    owners: [quentinRobinson, sarkar-rajarshi]
+    pr-labels: [Cognitive - Anomaly Detector]
+
+label-owners:
+  - labels: [Cognitive - Anomaly Detector]
+    service-owners: [quentinRobinson, sarkar-rajarshi]

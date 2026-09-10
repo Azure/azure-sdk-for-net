@@ -1,0 +1,12 @@
+# Ownership for the tables service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [JonathanCrd, jsquire]
+    pr-labels: [Tables]
+
+label-owners:
+  - labels: [Tables]
+    azure-sdk-owners: [JonathanCrd, jsquire]

@@ -1,0 +1,12 @@
+# Ownership for the healthdataaiservices service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [alexathomases, Azure/healthdatadeidentification]
+    pr-labels: [Health Deidentification]
+
+label-owners:
+  - labels: [Health Deidentification]
+    service-owners: [alexathomases, Azure/healthdatadeidentification]

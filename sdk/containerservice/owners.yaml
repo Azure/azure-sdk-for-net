@@ -1,0 +1,12 @@
+# Ownership for the containerservice service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [elvazhu521, FumingZhang]
+    pr-labels: [Container Service]
+
+label-owners:
+  - labels: [Container Service]
+    service-owners: [elvazhu521, FumingZhang]

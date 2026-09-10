@@ -1,0 +1,12 @@
+# Ownership for the synapse service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [wanyang7]
+    pr-labels: [Synapse]
+
+label-owners:
+  - labels: [Synapse]
+    service-owners: [wanyang7]

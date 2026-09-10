@@ -1,0 +1,40 @@
+# Ownership for the communication service directory.
+
+version: 1
+
+paths:
+  - path: Azure.Communication.JobRouter/
+    owners: [marche0133, sarkar-rajarshi]
+    pr-labels: [Communication]
+  - path: Azure.Communication.CallAutomation/
+    owners: [juntuchen-msft, minwoolee-msft]
+    pr-labels: [Communication - Call Automation]
+  - path: Azure.Communication.Chat/
+    owners: [LuChen-Microsoft]
+    pr-labels: [Communication - Chat]
+  - path: Azure.Communication.Common/
+    owners: [alvinjiang-msft, anjulgarg, Joeleniqs, jorge-beauregard]
+    pr-labels: [Communication - Common]
+  - path: Azure.Communication.Identity/
+    owners: [alvinjiang-msft, anjulgarg, Joeleniqs, jorge-beauregard]
+    pr-labels: [Communication - Identity]
+  - path: Azure.Communication.PhoneNumbers/
+    owners: [besh2014, gfeitosa-msft, ihuseynov-msft, ilyapaliakou-msft, kirill-linnik, phermanov-msft]
+    pr-labels: [Communication - Phone Numbers]
+  - path: Azure.Communication.Rooms/
+    owners: [allchiang-msft, minnieliu, paolamvhz]
+    pr-labels: [Communication - Rooms]
+  - path: Azure.Communication.ShortCodes/
+    owners: [Arazan, whisper6284]
+    pr-labels: [Communication - Short Codes]
+  - path: Azure.Communication.Sms/
+    owners: [besh2014, gfeitosa-msft, ilyapaliakou-msft, phermanov-msft]
+    pr-labels: [Communication - SMS]
+
+label-owners:
+  - labels: [Communication]
+    service-owners: [Azure/azure-sdk-write-communication]
+  - labels: [Communication - Call Automation]
+    service-owners: [juntuchen-msft, minwoolee-msft]
+  - labels: [Communication - Common]
+    service-owners: [alvinjiang-msft, anjulgarg]

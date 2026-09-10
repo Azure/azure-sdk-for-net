@@ -1,0 +1,12 @@
+# Ownership for the modelsrepository service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [abhipsaMisra, digimaun, timtay-microsoft]
+    pr-labels: [IoT]
+
+label-owners:
+  - labels: [IoT]
+    service-owners: [abhipsaMisra, davidemontanari, digimaun, ethanann-ms, marcodalessandro, riteshrao, timtay-microsoft]

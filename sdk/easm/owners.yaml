@@ -1,0 +1,12 @@
+# Ownership for the easm service directory.
+
+version: 1
+
+paths:
+  - path: Azure.Analytics.Defender.Easm/
+    owners: [thang-bit]
+    pr-labels: [Defender EASM]
+
+label-owners:
+  - labels: [Defender EASM]
+    service-owners: [thang-bit]

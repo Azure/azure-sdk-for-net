@@ -1,0 +1,12 @@
+# Ownership for the purview service directory.
+
+version: 1
+
+paths:
+  - path: Azure.Analytics.Purview.DataMap/
+    owners: [qiaozha]
+    pr-labels: [Purview]
+
+label-owners:
+  - labels: [Purview]
+    service-owners: [qiaozha]

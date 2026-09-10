@@ -1,0 +1,12 @@
+# Ownership for the onlineexperimentation service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [Azure/azure-sdk-write-onlineexperimentation]
+    pr-labels: [Online Experimentation]
+
+label-owners:
+  - labels: [Online Experimentation]
+    service-owners: [Azure/azure-sdk-write-onlineexperimentation]

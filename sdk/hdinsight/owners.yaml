@@ -1,0 +1,12 @@
+# Ownership for the hdinsight service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [aim-for-better]
+    pr-labels: [HDInsight]
+
+label-owners:
+  - labels: [HDInsight]
+    service-owners: [aim-for-better]

@@ -1,0 +1,12 @@
+# Ownership for the contentsafety service directory.
+
+version: 1
+
+paths:
+  - path: Azure.AI.ContentSafety/
+    owners: [bojunehsu, changjian-wang]
+    pr-labels: [Cognitive - Content Safety]
+
+label-owners:
+  - labels: [Cognitive - Content Safety]
+    service-owners: [bojunehsu, changjian-wang]

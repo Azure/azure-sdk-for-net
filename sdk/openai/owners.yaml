@@ -1,0 +1,12 @@
+# Ownership for the openai service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [joseharriaga, jpalvarezl, m-nash, trrwilson]
+    pr-labels: [OpenAI]
+
+label-owners:
+  - labels: [OpenAI]
+    service-owners: [jpalvarezl, trrwilson]

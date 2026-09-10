@@ -1,0 +1,18 @@
+# Ownership for the eventgrid service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [Kishp01, rajeshka, shankarsama]
+    pr-labels: [Event Grid]
+  - path: Microsoft.Azure.WebJobs.Extensions.EventGrid/
+    owners: [Kishp01, rajeshka, shankarsama]
+    pr-labels: [Event Grid, Functions]
+
+label-owners:
+  - labels: [Event Grid]
+    service-owners: [Kishp01, rajeshka, shankarsama]
+  - labels: [Functions]
+    service-owners: [fabiocav, mathewc, alrod]
+    azure-sdk-owners: [jsquire]

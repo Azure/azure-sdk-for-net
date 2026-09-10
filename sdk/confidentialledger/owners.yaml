@@ -1,0 +1,12 @@
+# Ownership for the confidentialledger service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [andpiccione, Azure/azure-sdk-write-acl, ivarprudnikov, msftsettiy, musabbir, PallabPaul, ryazhang-microsoft, weirenlai]
+    pr-labels: [Confidential Ledger]
+
+label-owners:
+  - labels: [Confidential Ledger]
+    service-owners: [andpiccione, Azure/azure-sdk-write-acl, ivarprudnikov, msftsettiy, musabbir, PallabPaul, ryazhang-microsoft, weirenlai]

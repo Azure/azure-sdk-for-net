@@ -1,0 +1,12 @@
+# Ownership for the deviceregistry service directory.
+
+version: 1
+
+paths:
+  - path: Azure.IoT.DeviceRegistry.SoftwareUpdate/
+    owners: [devlie, wuqiten]
+    pr-labels: [Device Update]
+
+label-owners:
+  - labels: [Device Update]
+    service-owners: [devlie, wuqiten]

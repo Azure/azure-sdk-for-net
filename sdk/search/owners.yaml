@@ -1,0 +1,12 @@
+# Ownership for the search service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [Azure/azure-sdk-write-search]
+    pr-labels: [Search]
+
+label-owners:
+  - labels: [Search]
+    service-owners: [efrainretana, lc48t, mattgotteiner]

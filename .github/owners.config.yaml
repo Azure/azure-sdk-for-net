@@ -1,0 +1,507 @@
+# Repository ownership configuration.
+# Renders .github/CODEOWNERS via: azsdk config codeowners generate
+
+version: 1
+
+configs:
+  allowed-owner-yaml-paths:
+    - "sdk/*/owners.yaml"
+  default-section: Client Libraries
+  output: ".github/CODEOWNERS"
+  minimum-path-owners: 2
+  minimum-label-owners: 2
+
+sections:
+
+  - name: Orphaned paths
+
+  - name: Repository root
+    paths:
+    - path: "/*"
+      owners: [jsquire, Azure/azure-sdk-write-net-core]
+
+  - name: SDK
+    paths:
+    - path: "/sdk/"
+      owners: [jsquire, Azure/azure-sdk-write-net-core]
+
+  - name: End-to-End Samples
+    paths:
+    - path: "/samples/"
+      owners: [jsquire, Azure/azure-sdk-write-net-core]
+    - path: "/samples/voicelive/"
+      owners: [emilyjiji, xitzhang, pankopon, amber-yujueWang]
+      pr-labels: [Voice Live]
+
+  - name: Core Libraries
+    paths:
+    - path: "/sdk/core/"
+      owners: [m-nash, Azure/azure-sdk-write-net-core]
+      pr-labels: [Azure.Core]
+    - path: "/sdk/core/Azure.Core/**/Identity/"
+      owners: [JonathanCrd, Azure/azure-sdk-write-identity]
+    - path: "/sdk/identity/"
+      owners: [JonathanCrd, Azure/azure-sdk-write-identity]
+      pr-labels: [Azure.Identity]
+    - path: "/sdk/extensions/"
+      owners: [jsquire, Azure/azure-sdk-write-net-core]
+      pr-labels: [Extensions]
+    - path: "/sdk/tables/"
+      owners: [JonathanCrd, jsquire]
+      pr-labels: [Tables]
+    label-owners:
+    - labels: [Azure.Core]
+      service-owners: [m-nash, Azure/azure-sdk-write-net-core]
+      azure-sdk-owners: [m-nash]
+    - labels: [System.ClientModel]
+      service-owners: [m-nash, Azure/azure-sdk-write-net-core]
+      azure-sdk-owners: [m-nash]
+    - labels: [Azure.Identity]
+      azure-sdk-owners: [JonathanCrd]
+    - labels: [Extensions]
+      service-owners: [jsquire, Azure/azure-sdk-write-net-core]
+      azure-sdk-owners: [jsquire]
+    - labels: [Tables]
+      azure-sdk-owners: [JonathanCrd]
+
+  - name: Client Libraries
+    defined-in-files: true
+    sort: true
+    paths:
+    - path: "/sdk/agentserver/Azure.AI.AgentServer.Core/"
+      owners: [Shivakishore14]
+    - path: "/sdk/agentserver/Azure.AI.AgentServer.Invocations/"
+      owners: [Shivakishore14]
+    - path: "/sdk/agentserver/Azure.AI.AgentServer.Responses/"
+      owners: [Shivakishore14]
+    - path: "/sdk/ai/Azure.AI.Extensions.OpenAI/"
+      owners: [rhurey]
+    - path: "/sdk/ai/Azure.AI.Projects.Agents/"
+      owners: [rhurey]
+    - path: "/sdk/azurestack*/"
+      owners: [bganapa]
+      pr-labels: [Azure Stack]
+    - path: "/sdk/iot*/"
+      owners: [davidemontanari, ethanann-ms, marcodalessandro, riteshrao]
+      pr-labels: [IoT]
+    label-owners:
+    - labels: [Azure Stack]
+      service-owners: [bganapa]
+    - labels: [Analysis Services]
+      service-owners: [minghan]
+    - labels: [ARO]
+      service-owners: [jim-minter]
+    - labels: [AVS]
+      service-owners: [cataggar, nivasn-msft]
+    - labels: [BatchAI]
+      service-owners: [matthchr]
+    - labels: [Billing]
+      service-owners: [amberbhargava, ramaganesan-rg]
+    - labels: [Cognitive - Mgmt]
+      service-owners: [yangyuan]
+    - labels: [Commerce]
+      service-owners: [qiaozha]
+    - labels: [Compute - Extensions]
+      service-owners: [TravisCragg-MSFT]
+    - labels: [Compute - Images]
+      service-owners: [sandeepraichura, TravisCragg-MSFT]
+    - labels: [Compute - Managed Disks]
+      service-owners: [TravisCragg-MSFT, ushnaarshadkhan]
+    - labels: [Compute - RDFE]
+      service-owners: [Drewm3, TravisCragg-MSFT]
+    - labels: [Compute - VM]
+      service-owners: [Drewm3, TravisCragg-MSFT]
+    - labels: [Compute - VMSS]
+      service-owners: [hilaryw29, TravisCragg-MSFT]
+    - labels: [Container Instances]
+      service-owners: [drishtipeshwani09]
+    - labels: [Custom Providers]
+      service-owners: [MSEvanhi]
+    - labels: [Data Lake]
+      service-owners: [seanmcc-msft]
+    - labels: [Data Lake Storage Gen2]
+      service-owners: [amnguye, jalauzon-msft, jaschrep-msft, nickliu-msft, seanmcc-msft]
+    - labels: [Data Lake Store]
+      service-owners: [seanmcc-msft]
+    - labels: [Extension - WCF]
+      service-owners: [mconnew]
+    - labels: [Graph.Microsoft]
+      service-owners: [baywet]
+    - labels: [Microsoft Playwright Testing]
+      service-owners: [puagarwa, ShreyaAnand]
+    - labels: [Monitor - ApplicationInsights]
+      service-owners: [ischrei, raronen]
+    - labels: [Monitor - LiveMetrics]
+      service-owners: [harsimar, mattsains-msft, rajkumar-rangaraj, xiang17]
+    - labels: [Stream Analytics]
+      service-owners: [atpham256]
+    - labels: [Subscription]
+      service-owners: [ramaganesan-rg]
+    - labels: [Support]
+      service-owners: [ganganarayanan, mit2nil, shahbj79]
+
+  - name: Management Libraries Fallback
+    paths:
+    - path: "/**/*Management*/"
+      owners: [ArcturusZhang, ArthurMa1978]
+      pr-labels: [Mgmt]
+    - path: "/sdk/**/ci.mgmt.yml"
+      owners: [ArcturusZhang, ArthurMa1978, live1206]
+      pr-labels: [Mgmt]
+    - path: "/**/Azure.ResourceManager*/"
+      owners: [ArcturusZhang, ArthurMa1978, live1206]
+      pr-labels: [Mgmt]
+
+  - name: Management Libraries
+    paths:
+    - path: "/sdk/apicenter/Azure.ResourceManager.ApiCenter/"
+      owners: [ArcturusZhang, ArthurMa1978]
+      pr-labels: [API Center, Mgmt]
+    - path: "/sdk/arizeaiobservabilityeval/Azure.ResourceManager.*/"
+      owners: [ArcturusZhang, ArthurMa1978]
+      pr-labels: [Arize AI, Mgmt]
+    - path: "/sdk/resources/Azure.ResourceManager.*/"
+      owners: [Azure/arm-sdk-owners]
+      pr-labels: [ARM]
+    - path: "/sdk/websites/Azure.ResourceManager.AppService/"
+      owners: [antcp, AzureAppServiceCLI]
+      pr-labels: [App Services, Mgmt]
+    - path: "/sdk/certificateregistration/Azure.ResourceManager.*/"
+      owners: [antcp, AzureAppServiceCLI]
+      pr-labels: [App Services, Mgmt]
+    - path: "/sdk/communication/Azure.ResourceManager.Communication/"
+      owners: [ArcturusZhang, ArthurMa1978]
+      pr-labels: [Communication - Resource Manager]
+    - path: "/sdk/computefleet/Azure.ResourceManager.*/"
+      owners: [diyellap, sabanermsft]
+      pr-labels: [Compute - Fleet]
+    - path: "/sdk/confidentialledger/Azure.ResourceManager.*/"
+      owners: [Azure/azure-sdk-write-acl]
+      pr-labels: [Confidential Ledger]
+    - path: "/sdk/containerorchestratorruntime/Azure.ResourceManager.*/"
+      owners: [ArthurMa1978]
+      pr-labels: [Container Orchestrator Runtime]
+    - path: "/sdk/databasewatcher/Azure.ResourceManager.*/"
+      owners: [ArthurMa1978]
+      pr-labels: [Database Watcher]
+    - path: "/sdk/datadog/Azure.ResourceManager.*/"
+      owners: [ArcturusZhang, ArthurMa1978, jbhanuchand]
+      pr-labels: [Datadog]
+    - path: "/sdk/deviceregistry/Azure.ResourceManager.DeviceRegistry/"
+      owners: [atastrophic, rohankhandelwal, siongithub, mryanlo]
+      pr-labels: [Device Registry]
+    - path: "/sdk/deviceupdate/"
+      owners: [wuqiten, devlie]
+      pr-labels: [Device Update]
+    - path: "/sdk/domainregistration/Azure.ResourceManager.*/"
+      owners: [antcp, AzureAppServiceCLI]
+      pr-labels: [App Services, Mgmt]
+    - path: "/sdk/durabletask/Azure.ResourceManager.*/"
+      owners: [berndverst, kaibocai, torosent, philliphoff, cgillum]
+      pr-labels: [Durable Task Scheduler, Mgmt]
+    - path: "/sdk/elastic/Azure.ResourceManager.Elastic/"
+      owners: [ArthurMa1978]
+      pr-labels: [Elastic]
+    - path: "/sdk/fileshares/Azure.ResourceManager.FileShares/"
+      owners: [ankushbindlish2]
+      pr-labels: [File Shares]
+    - path: "/sdk/grafana/Azure.ResourceManager.*/"
+      owners: [qingquanzhao]
+      pr-labels: [Grafana]
+    - path: "/sdk/hardwaresecuritymodules/Azure.ResourceManager.*/"
+      owners: [emmeliaAra]
+      pr-labels: [Hardware Security Modules]
+    - path: "/sdk/hybridconnectivity/Azure.ResourceManager.*/"
+      owners: [ArcturusZhang, ArthurMa1978]
+      pr-labels: [HybridConnectivity]
+    - path: "/sdk/lambdatesthyperexecute/Azure.ResourceManager.*/"
+      owners: [ArcturusZhang, ArthurMa1978]
+      pr-labels: [LambdaTest HyperExecute]
+    - path: "/sdk/impactreporting/Azure.ResourceManager.*/"
+      owners: [adityareddy305]
+      pr-labels: [Impact Reporting]
+    - path: "/sdk/azurelargeinstance/Azure.ResourceManager.*/"
+      owners: [8Gitbrix, ArcturusZhang, ArthurMa1978]
+      pr-labels: [Large Instance]
+    - path: "/sdk/migrationassessment/Azure.ResourceManager.*/"
+      owners: [srilipta-swain]
+      pr-labels: [Migration Assessment]
+    - path: "/sdk/monitor/Azure.ResourceManager.Monitor/"
+      owners: [thomasp98296]
+      pr-labels: [Monitor]
+    - path: "/sdk/netapp/Azure.ResourceManager.*/"
+      owners: [audunn, Azure/azure-sdk-write-netappfiles]
+      pr-labels: [NetApp Files]
+    - path: "/sdk/cdn/Azure.ResourceManager.*/"
+      owners: [ArcturusZhang, ArthurMa1978]
+      pr-labels: [Network - CDN]
+    - path: "/sdk/edgeactions/Azure.ResourceManager.*/"
+      owners: [tundwed, anamikanupur]
+      pr-labels: [Network - Edge Actions]
+    - path: "/sdk/dnsresolver/Azure.ResourceManager.*/"
+      owners: [ArcturusZhang, ArthurMa1978, jotrivet]
+      pr-labels: [Network - DNS Private Resolver]
+    - path: "/sdk/frontdoor/Azure.ResourceManager.*/"
+      owners: [ArcturusZhang, ArthurMa1978]
+      pr-labels: [Network - Front Door]
+    - path: "/sdk/newrelicobservability/Azure.ResourceManager.*/"
+      owners: [vipray-ms]
+      pr-labels: [New Relic]
+    - path: "/sdk/nginx/Azure.ResourceManager.*/"
+      owners: [jamesfan1, bangbingsyb, spencerofwiti, amwaleh]
+      pr-labels: [Nginx]
+    - path: "/sdk/networkcloud/Azure.ResourceManager.*/"
+      owners: [Azure/azure-sdk-write-networkcloud]
+      pr-labels: [Operator Nexus - Network Cloud]
+    - path: "/sdk/oracle/Azure.ResourceManager.*/"
+      owners: [ArthurMa1978]
+      pr-labels: [Oracle]
+    - path: "/sdk/pineconevectordb/Azure.ResourceManager.*/"
+      owners: [ArcturusZhang, ArthurMa1978]
+      pr-labels: [Pinecone]
+    - path: "/sdk/planetarycomputer/Azure.ResourceManager.*/"
+      owners: [chahibi, karthick-rn, mandarinamdar]
+      pr-labels: [Planetary Computer]
+    - path: "/sdk/purestorageblock/Azure.ResourceManager.*/"
+      owners: [ArthurMa1978, ArcturusZhang]
+      pr-labels: [PureStorage]
+    - path: "/sdk/quota/Azure.ResourceManager.*/"
+      owners: [ArthurMa1978, ArcturusZhang]
+      pr-labels: [Quota]
+    - path: "/sdk/recoveryservices-backup/Azure.ResourceManager.*/"
+      owners: [Daya-Patil]
+      pr-labels: [Recovery Services Backup]
+    - path: "/sdk/secretsstoreextension/Azure.ResourceManager.*/"
+      owners: [cjoprey, locomotiveviaduct]
+      pr-labels: [Secret Store Extension]
+    - path: "/sdk/selfhelp/Azure.ResourceManager.*/"
+      owners: [ArcturusZhang, ArthurMa1978]
+      pr-labels: [Self Help]
+    - path: "/sdk/servicefabric/Azure.ResourceManager.*/"
+      owners: [QingChenmsft, vaishnavk, juhacket, waldmannly, a-santamaria]
+      pr-labels: [Service Fabric]
+    - path: "/sdk/sitemanager/Azure.ResourceManager.*/"
+      owners: [bsomeshekar, ArcturusZhang, ArthurMa1978]
+      pr-labels: [SiteManager]
+    - path: "/sdk/sqlmanagement/"
+      owners: [ericshape, ArcturusZhang, ArthurMa1978]
+      pr-labels: [SQL]
+    - path: "/sdk/weightsandbiases/Azure.ResourceManager.*/"
+      owners: [ArcturusZhang, ArthurMa1978]
+      pr-labels: ["Weights & Biases", Mgmt]
+    - path: "/sdk/workloadorchestration/Azure.ResourceManager.*/"
+      owners: [ArcturusZhang, ArthurMa1978]
+      pr-labels: [Workload Orchestration, Mgmt]
+    label-owners:
+    - labels: [Mgmt]
+      azure-sdk-owners: [ArthurMa1978]
+    - labels: [ARM, Mgmt]
+      service-owners: [Azure/arm-sdk-owners]
+    - labels: [ARM, Mgmt]
+      service-owners: [armleads-azure]
+    - labels: [ARM - Core, Mgmt]
+      service-owners: [armleads-azure]
+    - labels: [ARM - Managed Applications, Mgmt]
+      service-owners: [armleads-azure]
+    - labels: [ARM - RBAC, Mgmt]
+      service-owners: [armleads-azure]
+    - labels: [ARM - Service Catalog, Mgmt]
+      service-owners: [armleads-azure]
+    - labels: [ARM - Tags, Mgmt]
+      service-owners: [armleads-azure]
+    - labels: [ARM - Templates, Mgmt]
+      service-owners: [armleads-azure]
+    - labels: [Compute - Fleet, Mgmt]
+      service-owners: [diyellap, sabanermsft]
+    - labels: [Confidential Ledger, Mgmt]
+      service-owners: [Azure/azure-sdk-write-acl]
+    - labels: [Container Orchestrator Runtime, Mgmt]
+      service-owners: [ArthurMa1978]
+    - labels: [Database Watcher, Mgmt]
+      service-owners: [ArthurMa1978]
+    - labels: [Datadog, Mgmt]
+      service-owners: [jbhanuchand]
+    - labels: [Device Registry, Mgmt]
+      service-owners: [atastrophic, rohankhandelwal]
+    - labels: [Durable Task Scheduler, Mgmt]
+      service-owners: [berndverst, kaibocai, torosent, philliphoff, cgillum]
+    - labels: [Elastic, Mgmt]
+      service-owners: [ArthurMa1978]
+    - labels: [File Shares, Mgmt]
+      service-owners: [ankushbindlish2]
+    - labels: [Grafana, Mgmt]
+      service-owners: [qingquanzhao]
+    - labels: [Hardware Security Modules, Mgmt]
+      service-owners: [emmeliaAra]
+    - labels: [Impact Reporting, Mgmt]
+      service-owners: [adityareddy305]
+    - labels: [Large Instance, Mgmt]
+      service-owners: [8Gitbrix]
+    - labels: [Migration Assessment, Mgmt]
+      service-owners: [srilipta-swain]
+    - labels: [Monitor]
+      service-owners: [thomasp98296]
+    - labels: [NetApp Files, Mgmt]
+      service-owners: [audunn]
+    - labels: [Network - Edge Actions, Mgmt]
+      service-owners: [tundwed, anamikanupur]
+    - labels: [Network - DNS Private Resolver, Mgmt]
+      service-owners: [jotrivet]
+    - labels: [Network - Front Door, Mgmt]
+      service-owners: [ArthurMa1978]
+    - labels: [New Relic, Mgmt]
+      service-owners: [vipray-ms]
+    - labels: [Nginx, Mgmt]
+      service-owners: [jamesfan1, bangbingsyb, spencerofwiti, amwaleh]
+    - labels: [Operator Nexus - Network Cloud, Mgmt]
+      service-owners: [Azure/azure-sdk-write-networkcloud]
+    - labels: [Oracle, Mgmt]
+      service-owners: [ArthurMa1978]
+    - labels: [Planetary Computer, Mgmt]
+      service-owners: [chahibi, karthick-rn, mandarinamdar]
+    - labels: [Recovery Services Backup, Mgmt]
+      service-owners: [Daya-Patil]
+    - labels: [Secret Store Extension, Mgmt]
+      service-owners: [cjoprey, locomotiveviaduct]
+    - labels: [Service Fabric, Mgmt]
+      service-owners: [QingChenmsft, vaishnavk, juhacket]
+    - labels: [SiteManager, Mgmt]
+      service-owners: [bsomeshekar, ArcturusZhang, ArthurMa1978]
+    - labels: [SQL, Mgmt]
+      service-owners: [ericshape]
+    - labels: ["SQL - Backup & Restore", Mgmt]
+      service-owners: [ericshape]
+    - labels: [SQL - Data Security, Mgmt]
+      service-owners: [ericshape]
+    - labels: [SQL - Elastic Jobs, Mgmt]
+      service-owners: [ericshape]
+    - labels: [SQL - Managed Instance, Mgmt]
+      service-owners: [ericshape]
+    - labels: ["SQL - Replication & Failover", Mgmt]
+      service-owners: [ericshape]
+    - labels: [SQL - VM, Mgmt]
+      service-owners: [ericshape]
+
+  - name: Provisioning Libraries
+    paths:
+    - path: "/**/Azure.Provisioning*/"
+      owners: [ArcturusZhang, ArthurMa1978, m-nash]
+      pr-labels: [Provisioning]
+    label-owners:
+    - labels: [Provisioning]
+      azure-sdk-owners: [ArcturusZhang, ArthurMa1978]
+
+  - name: Eng Sys
+    paths:
+    - path: "/eng/"
+      owners: [danieljurek, benbp, raych1]
+    - path: "/eng/common/"
+      owners: [Azure/azure-sdk-eng]
+    - path: "/eng/mgmt/"
+      owners: [ArthurMa1978, m-nash]
+    - path: "/eng/pipelines/aggregate-reports.yml"
+      owners: [jsquire]
+    - path: "/eng/common/pipelines/codeowners-linter.yml"
+      owners: [jsquire]
+    - path: "/eng/pipelines/docindex.yml"
+      owners: [danieljurek, raych1, benbp]
+    - path: "/eng/analyzerallowlist/"
+      owners: [Azure/azure-sdk-write-net-core, jsquire]
+    - path: "/eng/apicompatbaselines/"
+      owners: [Azure/azure-sdk-write-net-core, jsquire]
+    - path: "/eng/centralpackagemanagement"
+      owners: [Azure/azure-sdk-write-net-core, jsquire]
+    - path: "/eng/centralpackagemanagement/Directory.Support.Packages.props"
+      owners: [Azure/azure-sdk-write-net-core, jsquire, ArthurMa1978, jorgerangel-msft]
+    - path: "/eng/centralpackagemanagement/Directory.Generation.Packages.props"
+      owners: [Azure/azure-sdk-write-net-core, jsquire, ArthurMa1978, jorgerangel-msft]
+    - path: "/eng/azure-typespec-http-client-csharp-emitter-package.json"
+      owners: [JoshLove-msft, m-nash, jorgerangel-msft, live1206, ArcturusZhang]
+    - path: "/eng/azure-typespec-http-client-csharp-emitter-package-lock.json"
+      owners: [JoshLove-msft, m-nash, jorgerangel-msft, live1206, ArcturusZhang]
+    - path: "/eng/azure-typespec-http-client-csharp-mgmt-emitter-package.json"
+      owners: [JoshLove-msft, m-nash, jorgerangel-msft, live1206, ArcturusZhang]
+    - path: "/eng/azure-typespec-http-client-csharp-mgmt-emitter-package-lock.json"
+      owners: [JoshLove-msft, m-nash, jorgerangel-msft, live1206, ArcturusZhang]
+    - path: "/eng/http-client-csharp-emitter-package.json"
+      owners: [JoshLove-msft, m-nash, jorgerangel-msft, live1206, ArcturusZhang]
+    - path: "/eng/http-client-csharp-emitter-package-lock.json"
+      owners: [JoshLove-msft, m-nash, jorgerangel-msft, live1206, ArcturusZhang]
+
+  - name: Code Generation
+    paths:
+    - path: "/sdk/tools/Azure.GeneratorAgent/"
+      owners: [JoshLove-msft, radhgupta, jorgerangel-msft, MaiLinhP, JonathanCrd]
+      pr-labels: [CodeGen]
+    - path: "/eng/packages/http-client-csharp/"
+      owners: [JoshLove-msft, m-nash, jorgerangel-msft, live1206, ArcturusZhang, jsquire]
+      pr-labels: [CodeGen, Client]
+    - path: "/eng/packages/http-client-csharp-mgmt/"
+      owners: [JoshLove-msft, m-nash, jorgerangel-msft, live1206, ArcturusZhang]
+      pr-labels: [CodeGen, Mgmt]
+    - path: "/eng/packages/http-client-csharp-provisioning/"
+      owners: [ArcturusZhang, m-nash, live1206, ArthurMa1978]
+      pr-labels: [CodeGen, Provisioning]
+    - path: "/eng/packages/plugins/client/"
+      owners: [JoshLove-msft, m-nash, jorgerangel-msft, jsquire]
+      pr-labels: [CodeGen, Client]
+    - path: "/eng/scripts/typespec/"
+      owners: [JoshLove-msft, m-nash, jorgerangel-msft, jsquire, live1206, ArcturusZhang, ArthurMa1978]
+      pr-labels: [CodeGen, Client]
+    label-owners:
+    - labels: [CodeGen]
+      azure-sdk-owners: [JoshLove-msft]
+    - labels: [CodeGen, Mgmt]
+      azure-sdk-owners: [live1206, ArcturusZhang, ArthurMa1978]
+
+  - name: Automation
+    paths:
+    - path: "/.github/"
+      owners: [jsquire, m-nash, JoshLove-msft, ArthurMa1978]
+    - path: "/.github/workflows/"
+      owners: [jsquire, m-nash, JoshLove-msft]
+    - path: "/.github/CODEOWNERS"
+      owners: [jsquire, m-nash, JoshLove-msft]
+    - path: "/.github/copilot-instructions.md"
+      owners: [jsquire, m-nash, JoshLove-msft]
+
+  - name: Repository configuration
+    paths:
+    - path: "/.config/"
+      owners: [jsquire, Azure/azure-sdk-write-net-core]
+    - path: "/.config/1espt/"
+      owners: [benbp]
+    - path: "/.vscode/"
+      owners: [jsquire, m-nash, JoshLove-msft]
+    - path: "/.devcontainer/"
+      owners: [jsquire, m-nash, JoshLove-msft]
+    - path: "/doc/"
+      owners: [jsquire, m-nash, JoshLove-msft]
+    - path: "/sdk/**/NuGet.*"
+      owners: [Azure/azure-sdk-write-net-core, jsquire]
+    - path: "/sdk/**/Nuget.*"
+      owners: [Azure/azure-sdk-write-net-core, jsquire]
+    - path: "/sdk/**/nuget.*"
+      owners: [Azure/azure-sdk-write-net-core, jsquire]
+    - path: "/sdk/**/global.json"
+      owners: [Azure/azure-sdk-write-net-core, jsquire]
+    - path: "/sdk/**/.editorconfig"
+      owners: [Azure/azure-sdk-write-net-core, jsquire]
+    - path: "/sdk/**/.vsconfig"
+      owners: [Azure/azure-sdk-write-net-core, jsquire]
+    - path: "/sdk/**/ci*.yml"
+      owners: [Azure/azure-sdk-write-net-core, jsquire]
+    - path: "/sdk/**/.gitignore"
+      owners: [jsquire, m-nash, JoshLove-msft]
+    - path: "/sdk/**/.gitattributes"
+      owners: [jsquire, m-nash, JoshLove-msft]
+    - path: "/sdk/**/*.sh"
+      owners: [jsquire, m-nash, JoshLove-msft]
+    - path: "/sdk/**/*.tsp"
+      owners: [jsquire, m-nash, JoshLove-msft]
+    - path: "/**/*.py"
+      owners: [jsquire, m-nash, JoshLove-msft]
+    - path: "/**/package.json"
+      owners: [JoshLove-msft, m-nash, jorgerangel-msft, jsquire, ArcturusZhang, ArthurMa1978, mikeharder]
+    - path: "/**/package-lock.json"
+      owners: [JoshLove-msft, m-nash, jorgerangel-msft, jsquire, mikeharder]

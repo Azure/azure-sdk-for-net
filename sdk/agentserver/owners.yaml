@@ -1,0 +1,12 @@
+# Ownership for the agentserver service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [ankitbko, RaviPidaparthi, Shivakishore14, vangarp]
+    pr-labels: [AI Agents]
+
+label-owners:
+  - labels: [AI Agents]
+    service-owners: [ankitbko, RaviPidaparthi, Shivakishore14, vangarp]

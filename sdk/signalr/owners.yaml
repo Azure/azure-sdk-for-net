@@ -1,0 +1,12 @@
+# Ownership for the signalr service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [chenkennt, JialinXin, vicancy, Y-Sindo]
+    pr-labels: [SignalR]
+
+label-owners:
+  - labels: [SignalR]
+    service-owners: [chenkennt, JialinXin, vicancy, Y-Sindo]

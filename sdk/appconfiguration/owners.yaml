@@ -1,0 +1,12 @@
+# Ownership for the appconfiguration service directory.
+
+version: 1
+
+paths:
+  - path: "."
+    owners: [avanigupta, jimmyca15, linglingye001, mrm9084, zhiyuanliang-ms]
+    pr-labels: [App Configuration]
+
+label-owners:
+  - labels: [App Configuration]
+    service-owners: [avanigupta, linglingye001, mrm9084, zhiyuanliang-ms]
