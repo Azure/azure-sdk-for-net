@@ -162,6 +162,14 @@ function getCheckPackageResponse([string] $OutputText) {
     }
 }
 
+function getCheckPackageResponseError([object] $CheckPackageResponse) {
+    if (!$CheckPackageResponse -or !$CheckPackageResponse.PSObject.Properties['response_error']) {
+        return $null
+    }
+
+    return $CheckPackageResponse.response_error
+}
+
 function getCheckPackageIssues([object] $CheckPackageResponse) {
     if (!$CheckPackageResponse -or !$CheckPackageResponse.PSObject.Properties['issues']) {
         return ,@()
@@ -257,7 +265,7 @@ foreach ($pkgPropertiesFile in Get-ChildItem -Path $PackageInfoDirectory -Filter
             $failedPackages += [PSCustomObject]@{
                 Name = $pkgProperties.Name
                 DirectoryPath = $pkgProperties.DirectoryPath
-                ResponseError = if ($checkPackageResponse) { $checkPackageResponse.response_error } else { $null }
+                ResponseError = getCheckPackageResponseError -CheckPackageResponse $checkPackageResponse
                 Issues = getCheckPackageIssues -CheckPackageResponse $checkPackageResponse
                 HasParsedResponse = $null -ne $checkPackageResponse
             }
