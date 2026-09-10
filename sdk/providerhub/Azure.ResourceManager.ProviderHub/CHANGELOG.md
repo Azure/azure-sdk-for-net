@@ -34,7 +34,7 @@ A property removed by the change above was required on the request model shared 
 
 **Changed: generator migration**
 
-These changes are unrelated to the removals above and come from regenerating on the current management-plane generator:
+These changes are unrelated to the removals above and come from regenerating on the current management-plane generator. Because they name no removed internal identifiers, they are also itemized individually in `eng/apicompatbaselines/Azure.ResourceManager.ProviderHub.xml`:
 
 - `Models.OperationsPutContent` was removed. The put-content operations are now exposed through `OperationsPutContentResource` and `OperationsPutContentData`, reached via `ProviderRegistrationResource.GetOperationsPutContent()`. This replaces `ProviderRegistrationResource.CreateOrUpdate(OperationsPutContent, ...)` and `ProviderRegistrationResource.GetByProviderRegistration()`.
 - `ProviderRegistrationResource.Delete` now takes a `WaitUntil` argument and returns `ArmOperation`.
