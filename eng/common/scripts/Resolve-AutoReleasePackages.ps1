@@ -231,13 +231,10 @@ function Invoke-AutoReleaseResolution {
         try
         {
           $packageName = $name
-          $lookupKeys = @($name)
-          if ($groupId) { $lookupKeys += "$groupId/$name" }
-          foreach ($artifactKey in $lookupKeys) {
-            if ($artifactNameToPackageName.ContainsKey($artifactKey)) {
-              $packageName = $artifactNameToPackageName[$artifactKey]
-              break
-            }
+          $lookupKey = if ($groupId) { "$groupId/$name" } else { $name }
+
+          if ($artifactNameToPackageName.ContainsKey($lookupKey)) {
+            $packageName = $artifactNameToPackageName[$lookupKey]
           }
           if($AzsdkExePath)
           {
