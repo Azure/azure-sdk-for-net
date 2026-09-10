@@ -1,6 +1,19 @@
 # Repository ownership configuration.
 # Renders .github/CODEOWNERS via: azsdk config codeowners generate
 
+# Instructions for CODEOWNERS file format and automatic build failure notifications:
+# https://github.com/Azure/azure-sdk/blob/main/docs/policies/opensource.md#codeowners
+#
+# IMPORTANT NOTE:
+#   The ordering of "ServiceLabel" blocks is important!
+#
+#   Matching takes place from bottom-to-top and will stop after the
+#   first match.  Place less specific matches earlier in the file
+#   and more specific matches later.
+#
+#   Be sure to add new entries in the area they belong, denoted by the
+#   header wrapped in "#" characters. (e.g. SDK, EngSys, Management)
+
 version: 1
 
 configs:
@@ -14,19 +27,27 @@ configs:
 sections:
 
   - name: Orphaned paths
+    # As of 1/15/2026 these paths have no owners:
+    # /**
+    # /.devcontainer/
+    # /common/Perf/
 
   - name: Repository root
     paths:
+    # Catch all for loose files in the root, which are mostly global configuration and
+    # should not be changed without team discussion.
     - path: "/*"
       owners: [jsquire, Azure/azure-sdk-write-net-core]
 
   - name: SDK
     paths:
+    # Catch all
     - path: "/sdk/"
       owners: [jsquire, Azure/azure-sdk-write-net-core]
 
   - name: End-to-End Samples
     paths:
+    # Samples catch-all
     - path: "/samples/"
       owners: [jsquire, Azure/azure-sdk-write-net-core]
     - path: "/samples/voicelive/"
@@ -163,6 +184,12 @@ sections:
       pr-labels: [Mgmt]
 
   - name: Management Libraries
+    # IMPORTANT NOTE:
+    #   This block acts as a catch-all, assigning Arthur triage for
+    #   all management issues not specifically owned by a partner
+    #   team.  Any management packages owned by partner teams must
+    #   blocks defined AFTER this one.  Matching takes place from
+    #   bottom-to-top and will stop after the first match.
     paths:
     - path: "/sdk/apicenter/Azure.ResourceManager.ApiCenter/"
       owners: [ArcturusZhang, ArthurMa1978]
@@ -409,22 +436,26 @@ sections:
       owners: [Azure/azure-sdk-eng]
     - path: "/eng/mgmt/"
       owners: [ArthurMa1978, m-nash]
+    # Add owners for notifications for specific pipelines
     - path: "/eng/pipelines/aggregate-reports.yml"
       owners: [jsquire]
     - path: "/eng/common/pipelines/codeowners-linter.yml"
       owners: [jsquire]
     - path: "/eng/pipelines/docindex.yml"
       owners: [danieljurek, raych1, benbp]
+    # Add owners for overrides and suppressions
     - path: "/eng/analyzerallowlist/"
       owners: [Azure/azure-sdk-write-net-core, jsquire]
     - path: "/eng/apicompatbaselines/"
       owners: [Azure/azure-sdk-write-net-core, jsquire]
+    # Add owners for package dependency changes
     - path: "/eng/centralpackagemanagement"
       owners: [Azure/azure-sdk-write-net-core, jsquire]
     - path: "/eng/centralpackagemanagement/Directory.Support.Packages.props"
       owners: [Azure/azure-sdk-write-net-core, jsquire, ArthurMa1978, jorgerangel-msft]
     - path: "/eng/centralpackagemanagement/Directory.Generation.Packages.props"
       owners: [Azure/azure-sdk-write-net-core, jsquire, ArthurMa1978, jorgerangel-msft]
+    # Add owners for emitter version changes
     - path: "/eng/azure-typespec-http-client-csharp-emitter-package.json"
       owners: [JoshLove-msft, m-nash, jorgerangel-msft, live1206, ArcturusZhang]
     - path: "/eng/azure-typespec-http-client-csharp-emitter-package-lock.json"
@@ -466,6 +497,7 @@ sections:
 
   - name: Automation
     paths:
+    # GitHub integration, CODEOWNERS, and bot rules
     - path: "/.github/"
       owners: [jsquire, m-nash, JoshLove-msft, ArthurMa1978]
     - path: "/.github/workflows/"
@@ -477,6 +509,7 @@ sections:
 
   - name: Repository configuration
     paths:
+    # Common repository-wide assets and configuration
     - path: "/.config/"
       owners: [jsquire, Azure/azure-sdk-write-net-core]
     - path: "/.config/1espt/"
@@ -487,6 +520,7 @@ sections:
       owners: [jsquire, m-nash, JoshLove-msft]
     - path: "/doc/"
       owners: [jsquire, m-nash, JoshLove-msft]
+    # Repository configuration that should not be overridden
     - path: "/sdk/**/NuGet.*"
       owners: [Azure/azure-sdk-write-net-core, jsquire]
     - path: "/sdk/**/Nuget.*"
@@ -499,8 +533,10 @@ sections:
       owners: [Azure/azure-sdk-write-net-core, jsquire]
     - path: "/sdk/**/.vsconfig"
       owners: [Azure/azure-sdk-write-net-core, jsquire]
+    # CI pipeline configuration
     - path: "/sdk/**/ci*.yml"
       owners: [Azure/azure-sdk-write-net-core, jsquire]
+    # Code standards and common mistakes
     - path: "/sdk/**/.gitignore"
       owners: [jsquire, m-nash, JoshLove-msft]
     - path: "/sdk/**/.gitattributes"
@@ -511,6 +547,7 @@ sections:
       owners: [jsquire, m-nash, JoshLove-msft]
     - path: "/**/*.py"
       owners: [jsquire, m-nash, JoshLove-msft]
+    # Add owners for NPM configuration
     - path: "/**/package.json"
       owners: [JoshLove-msft, m-nash, jorgerangel-msft, jsquire, ArcturusZhang, ArthurMa1978, mikeharder]
     - path: "/**/package-lock.json"
