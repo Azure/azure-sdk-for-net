@@ -109,8 +109,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals
                 {
                     if (!TryGetLogRoute(logRecord, out var instrumentationKey, out var ingestionEndpoint))
                     {
-                        // Most tenants do not enable observability, so a record carrying no routing
-                        // attributes is the normal steady state rather than a failed conversion.
+                        // Routing attributes are stamped upstream only on records meant to be routed;
+                        // a record without them is not addressed to any tenant, so drop it quietly
+                        // instead of misrouting it to the exporter's own connection string. This is a
+                        // normal, expected outcome rather than a failed conversion.
                         continue;
                     }
 

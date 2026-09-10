@@ -109,8 +109,9 @@ namespace Azure.Monitor.OpenTelemetry.Exporter
 
                 if (routeBatch.Count == 0)
                 {
-                    // Most tenants do not enable observability, so a batch carrying no routing tags
-                    // is the normal steady state rather than a failed export.
+                    // Routing attributes are stamped upstream only on records meant to be routed;
+                    // a batch where nothing carried them is not addressed to any tenant, so report
+                    // success rather than treating an empty routed batch as a failed export.
                     return ExportResult.Success;
                 }
 
