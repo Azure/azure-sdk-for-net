@@ -296,10 +296,18 @@ What they cover:
   - To classify usage from the `api/*.cs` listing: a **public constructor** means the type is
     used as input, a method on the package's `*ModelFactory` means it is used as output, and
     both together mean round-trip.
+- **Management request-body models follow their actual role and HTTP contract.** Use `Patch`
+  for a dedicated PATCH partial-update model and `Content` for a dedicated PUT/POST wrapper.
+  Resource-data models retain `Data`. Do not infer the verb from a method name or rename a
+  reusable domain model merely because it is used as a request body.
 - **`Resource` suffix is reserved for `ArmResource`-derived types.** A data model, options bag,
   or client named `*Resource` in a non-`Azure.ResourceManager.*` package is wrong. Third-party
   `*Resource` types being *consumed* (e.g. `OpenAI.Conversations.ConversationResource`) are not
   a finding.
+- **Omit redundant ARM role words:** `WidgetResourceData` and `WidgetResourceCollection`
+  normally become `WidgetData` and `WidgetCollection`. Keep `Resource` when it is part of the
+  domain name, such as `PrivateLinkResource`; this simplification does not apply to
+  framework-owned types.
 - **Expand single-word and abbreviated names.** `AZC0012` only covers types — apply the same
   standard to public properties and parameters. Also expand abbreviations the analyzer never
   sees, on types *and* members: `auth` → `authentication`, `agentRef` → `agent`, `params` →
@@ -309,6 +317,8 @@ What they cover:
   (`OpenApiManagedAuthDetails`) or leaves the property/parameter carrying it abbreviated
   (`Auth`/`auth`). The rename is already a break, so finishing it costs nothing now and costs
   another break later. **Always check the whole family, not just the type in front of you.**
+- For a duration concept abbreviated `TTL`, prefer `TimeToLive` and apply the shared numeric-unit
+  guidance rather than a universal unit suffix. A hop count is not a duration.
 - **Parameter names must be consistent and descriptive within a scope** (all methods on a
   client, all public constructors + the model-factory method for a type, all overloads of a
   method).
@@ -329,6 +339,25 @@ Apply these to **new or renamed** public API only. Pre-existing names on untouch
 of scope (see the changed-code scope in `review-quality.md`) — but a name on a line the PR is
 already changing, or inside a type the PR is already renaming, is fair game, because that is the
 cheapest moment it will ever be fixed.
+
+## Semantic Value Types
+
+For new or changed API, prefer a semantic representation only when the service contract and
+supported serialization preserve the meaning, range, precision, special values, and wire format.
+Names or plausible sample values alone are not evidence. Respect compatibility and the library's
+existing dependency/abstraction layer; these recommendations do not require a new dependency.
+For TypeSpec changes, also apply the support and targetability checks under Generated Code.
+
+| Actual contract | Representation or fix guidance |
+|---|---|
+| Guaranteed UUID values | Prefer `Guid`; preserve opaque or non-UUID identifiers. |
+| ARM resource IDs | Prefer `ResourceIdentifier`, not for resource names or other identifiers. |
+| ARM resource types | Prefer `ResourceType`, not for generic categories or discriminators. |
+| Entity tags | Prefer `ETag`, preserving opaque values and protocol semantics; do not retype a generic raw-header dictionary. |
+| Azure resource locations, including collection elements | Prefer `AzureLocation`, not for URLs, addresses, or arbitrary geographic values. |
+| Numeric sizes | Use a numeric type that fits the contract; SKU names and formatted quantities are not automatically numbers. |
+| ISO 8601 durations | Use TypeSpec `duration` only when its supported .NET mapping faithfully preserves the contract, including any calendar-dependent meaning. |
+| Constant-format durations | Use supported `DurationConstant` encoding rather than default ISO serialization; otherwise use a contract-preserving customization. |
 
 ## Analyzer Warnings and Suppressions
 
@@ -492,6 +521,9 @@ manually; that is the intended reading of the in-repo-analyzer rule above, not a
 - Version bumps: patch for bug fixes only — **no new public API in a patch release**; minor
   or major for new API or a new service API version. `CHANGELOG.md` must be updated in the
   same PR
+- A management library's major-version increase needs explicit .NET architecture approval for
+  a coordinated management SDK major release. This coordination does not waive compatibility
+  requirements.
 - Dependencies limited to `Azure.*` from this repo, `System.*` from the .NET team,
   Architecture-Board-approved `Microsoft.*`, and your own team's packages. Anything else →
   🔴 and needs Architecture Board approval. `Newtonsoft.Json` is not allowed — use
@@ -749,15 +781,23 @@ or in-repo path. Entries that map to no service directory are owned by `sdk/core
   artifact describes the service for every language; a copy checked in under `sdk/` forks that
   contract and starts drifting immediately. A `.tsp` file added under `sdk/` is a deliberate
   departure from that model — question it 🟡
-- **`tsp-location.yaml` must name `Azure/azure-rest-api-specs` and a commit on `main`, and
-  nothing checks this until GA** 🟡. `Verify-RestApiSpecLocation.ps1` runs only in the release
+- **`tsp-location.yaml` must name `Azure/azure-rest-api-specs`, and source-repository validation
+  does not run until GA** 🟡. `Verify-RestApiSpecLocation.ps1` runs only in the release
   pipeline and returns early for any prerelease version, so a `repo:` pointing at a personal
   fork survives the entire beta lifecycle — several libraries carry one. By GA that fork may
   be deleted or rewritten, leaving the library unregenerable from its stated source. Treat a
   renamed file (`_tsp-location.yaml`) the same way: it silently opts the library out of
   regeneration instead of recording why
-- **Shaping generated output has designated mechanisms — reach for those before anything
-  else.** `[CodeGenType]`, `[CodeGenModel]`, `[CodeGenMember]`, `[CodeGenSuppress]`, and
+- **Prefer supported, targetable `client.tsp` customizations for TypeSpec-generated APIs**, in
+  both management and data-plane libraries. Verify the project's actual capabilities and that
+  the target is addressable before recommending a decorator. Scope language-specific changes
+  to their intended language. If unsupported or untargetable, use appropriate C# customization;
+  edit hand-written C# directly.
+- If ordinary `clientName` normalization would alter a required enum-member spelling, a
+  C#-scoped `clientName` with `Azure.ClientGenerator.Core.exact("Tls1_0")` is an option when
+  supported and targetable. Do not prescribe `exact` when ordinary naming already works.
+- **C# customizations also have designated mechanisms.** `[CodeGenType]`, `[CodeGenModel]`,
+  `[CodeGenMember]`, `[CodeGenSuppress]`, and
   `[CodeGenSerialization]` in a partial-class or stubs file are how a library renames,
   replaces, or stops generating a member; each is used in hundreds of libraries. Excluding a
   file from compilation, suppressing the resulting warning, or editing emitter config to get

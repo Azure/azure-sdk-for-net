@@ -87,12 +87,18 @@ listed here.
 **Naming**
 - PascalCase for types, members, namespaces; camelCase for parameters and locals
 - No abbreviations or acronym soup; acronyms of 2 letters stay upper (`IO`), 3+ are Pascal
-  (`Http`, `Xml`, `Uri`)
+  (`Http`, `Xml`, `Uri`). `Id` and `Vm` are explicit naming exceptions
+- Before recommending expansion of an unfamiliar acronym, check domain documentation and usage
+  for the intended audience. Personal unfamiliarity or search-result ranking is not enough
 - No Hungarian notation; no type names in member names
 - No generic/vague names — `OperationResponse`, `DataCollection`, `Manager`, `Helper`,
   `Utility`, `Info` are smells
+- Assess public type names in normal unqualified use. Add domain context when needed for meaning,
+  not a mechanical provider prefix. Assess enum members with their enclosing enum
 - Async methods end in `Async`; `Try*` methods return `bool` with an `out` result
 - Boolean members read affirmatively (`IsEnabled`, not `IsNotDisabled`)
+- Numeric durations or time intervals with fixed units name those units, consistently with the
+  contract and conversion logic. This does not apply to `TimeSpan` or explicitly selectable units
 
 **Type design**
 - Prefer classes over interfaces. **Do not introduce an interface** unless you need multiple
@@ -137,8 +143,12 @@ listed here.
 **Enums & flags**
 - Enums for closed sets; `[Flags]` only for genuinely combinable values with power-of-two
   members and a `None = 0`
+- Use singular names for non-flags enums; plural names are appropriate, not mandatory, for flags
+  enums. Judge actual word meaning and declared semantics, not a trailing `s` or numeric values
 - If the set of values can grow service-side or over time, an extensible
   value-struct/`readonly struct` pattern is preferred over a plain enum
+- Keep version components unambiguous, such as `Tls1_0` for TLS 1.0. Do not guess how to split
+  digits or impose underscores on an established, unambiguous naming convention
 
 **Disposal & resources**
 - Types owning unmanaged or disposable resources implement `IDisposable` (and

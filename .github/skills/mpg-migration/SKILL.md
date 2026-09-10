@@ -120,7 +120,7 @@ If generated code is structurally wrong after stale customizations are removed, 
 
 ## Finalize
 
-1. Review locally with `mpg-migration-pr-review` rules.
+1. Review locally with `azure-sdk-dotnet-code-review`.
 2. Ensure `CHANGELOG.md` has a short migration note and `ci.mgmt.yml` exists if needed.
 3. Format TypeSpec before opening the spec PR.
 4. Push spec changes to a fork and open draft spec PR titled `Add csharp customizations for <Service> migration`.

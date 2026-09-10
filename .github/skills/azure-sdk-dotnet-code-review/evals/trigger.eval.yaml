@@ -1,13 +1,11 @@
 name: azure-sdk-dotnet-code-review-invocation-eval
-description: Invocation, composition, and anti-trigger tests for Azure SDK for .NET code review.
+description: Single-reviewer invocation, mixed-library routing, and anti-trigger tests for Azure SDK for .NET code review.
 
 type: capability
 
 environment:
   skills:
     - ".."
-    - "../../azure-sdk-mgmt-pr-review"
-    - "../../mpg-migration-pr-review"
 
 tags:
   area: code-review
@@ -41,7 +39,7 @@ stimuli:
         config:
           required: ["azure-sdk-dotnet-code-review"]
 
-  - name: compose-management-review
+  - name: invoke-management-review
     prompt: >-
       Use the azure-sdk-dotnet-code-review skill to review this synthetic diff. In
       sdk/compute/Azure.ResourceManager.Compute/src/WidgetResource.cs the PR adds:
@@ -51,18 +49,21 @@ stimuli:
         config:
           required:
             - "azure-sdk-dotnet-code-review"
+          disallowed:
             - "azure-sdk-mgmt-pr-review"
+            - "mpg-migration-pr-review"
 
-  - name: compose-management-migration-review
+  - name: invoke-mixed-library-review
     prompt: >-
-      Use the azure-sdk-dotnet-code-review skill to review this synthetic PR migrating
-      sdk/compute/Azure.ResourceManager.Compute from Swagger/AutoRest to TypeSpec. It adds:
-      `public DateTime CreatedOn { get; }`
+      Use the azure-sdk-dotnet-code-review skill to review this synthetic PR changing both
+      Azure.ResourceManager.Compute and Azure.Storage.Blobs. Both libraries add a public
+      `DateTime CreatedOn` property. Their project metadata confirms those package IDs.
     graders:
       - type: skill-invocation
         config:
           required:
             - "azure-sdk-dotnet-code-review"
+          disallowed:
             - "azure-sdk-mgmt-pr-review"
             - "mpg-migration-pr-review"
 

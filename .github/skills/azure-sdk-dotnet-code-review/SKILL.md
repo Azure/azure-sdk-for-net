@@ -1,6 +1,6 @@
 ---
 name: azure-sdk-dotnet-code-review
-description: "MUST USE for every Azure SDK for .NET code review. WHEN: review this PR or pull request; review my changes, diff, patch, or commit; API review; pre-PR review; automatic GitHub Copilot review. Performs open-ended bug, security, correctness, reliability, and maintainability analysis plus Azure SDK API design, analyzer, packaging, testing, documentation, and generated-code checks. Routes management-plane reviews to specialized skills."
+description: "MUST USE for every Azure SDK for .NET code review. WHEN: review this PR or pull request; review my changes, diff, patch, or commit; API review; pre-PR review; automatic GitHub Copilot review. Performs open-ended bug, security, correctness, reliability, and maintainability analysis plus Azure SDK API design, analyzer, packaging, testing, documentation, and generated-code checks. Applies management-plane guidance per owning library."
 ---
 
 # Azure SDK for .NET Code Review
@@ -11,20 +11,20 @@ the Azure SDK for .NET-specific rules in this skill.
 The rules are **additional minimum checks, not an exhaustive checklist**. Never narrow the review
 to only the cases named in the references.
 
-## Mandatory Specialization
+## Package Context
 
-Before any other review work, classify the change from the supplied paths, package names, and
-description:
+For library-owned changes, identify the shipping library from project/package metadata and
+established repository naming. Apply the management-specific clauses when its package ID is
+`Azure.ResourceManager` or starts with `Azure.ResourceManager.`. A matching namespace, dependency,
+or PR title alone does not establish ownership.
 
-- For a management-plane package under `sdk/<service>/Azure.ResourceManager.<package>/`, the next
-  action after loading this skill **must be a skill invocation** for `azure-sdk-mgmt-pr-review`.
-- For a Swagger/AutoRest-to-TypeSpec management migration, invoke both
-  `azure-sdk-mgmt-pr-review` and `mpg-migration-pr-review` before any file reads, searches, or
-  findings.
+Review shared tooling and configuration by their affected libraries rather than forcing a single
+package owner.
 
-Do not read this skill's references or continue a management review until those invocations
-complete. If the host has no skill-invocation capability, load and apply each specialized
-`SKILL.md` directly instead.
+Classify each library independently in a mixed PR. Associate tests and samples with their owning
+library, but review them in their own roles rather than as additional shipping API surfaces.
+For the `Azure.ResourceManager` framework package, judge the actual framework role rather than
+assuming every type is a service-specific resource or request model.
 
 ## Non-Negotiable Review Quality
 
@@ -53,9 +53,9 @@ relaxes the hard breaking-change or Framework Design Guideline rules in `review-
 1. **Open-ended review:** bugs, security, correctness, reliability, concurrency, resource lifetime,
    tests, performance, and maintainability.
 2. **Hard rules:** `references/review-quality.md`.
-3. **Specialized repository skills:** management-plane and migration rules when applicable.
-4. **Azure SDK repository rules:** relevant sections of `references/repository-rules.md`.
-5. **Derived convention:** local project, then repository, then ecosystem practice.
+3. **Azure SDK repository rules:** relevant sections of `references/repository-rules.md`,
+   including management-specific clauses for the owning library.
+4. **Derived convention:** local project, then repository, then ecosystem practice.
 
 Do not emit duplicate findings when multiple layers identify the same problem.
 
@@ -69,6 +69,10 @@ issues, prior review submissions, and all review threads before forming findings
 On a re-review, focus on commits and replies added since the previous review. Do not re-report old
 findings or narrate fixes.
 
+Released baselines are comparison evidence; novelty since a release alone does not put an API in
+scope. Recover existing or prior baseline metadata when an in-scope comparison needs it. If that
+evidence is unavailable, state the limitation rather than inventing a baseline or a finding.
+
 ### 2. Load only the relevant repository-rule sections
 
 Use the changed paths and symbols to select sections from
@@ -78,25 +82,18 @@ Use the changed paths and symbols to select sections from
 |---|---|
 | Root configuration, `eng/**`, shared props/targets | Authoritative Guidelines; Shared Configuration; Analyzer Warnings and Suppressions; Packaging, Versioning, Dependencies |
 | `.github/CODEOWNERS*`, labels, ownership files | CODEOWNERS and Labels |
-| `api/*.cs`, new or changed `public`/`protected` API | Breaking Changes; Client Design; Naming; Commonly Overlooked; Generated Code |
-| Client or model implementation under `src/**` | Client Design; Naming; Analyzer Warnings and Suppressions; Implementation |
+| `api/*.cs`, new or changed `public`/`protected` API | Breaking Changes; Client Design; Naming; Semantic Value Types; Commonly Overlooked; Generated Code |
+| Client or model implementation under `src/**` | Client Design; Naming; Semantic Value Types; Analyzer Warnings and Suppressions; Implementation |
+| Management library | Applicable sections above; management clauses in Naming and Packaging, Versioning, Dependencies |
 | Tests, test projects, test infrastructure | Analyzer Warnings and Suppressions; Testing |
 | `.csproj`, package versions, references, feeds, CPM files | Shared Configuration; Packaging, Versioning, Dependencies |
 | README, samples, snippets, doc settings, links | Docs & Samples; Broken-Link Ignores |
-| Generated output, TypeSpec/AutoRest configuration | Generated Code; Breaking Changes; Naming |
+| Generated output, TypeSpec/AutoRest configuration | Generated Code; Breaking Changes; Naming; Semantic Value Types |
 
 Consult additional sections whenever the diff crosses concerns. Do not load an unrelated section
 merely to manufacture findings.
 
-### 3. Integrate specialized review rules
-
-For a routed review, integrate the findings from the specialized skills invoked above. Their
-management-specific rules take precedence where they are more specific.
-
-The specialized skills add checks; they do not replace the open-ended review or the applicable
-repository rules here.
-
-### 4. Perform three passes
+### 3. Perform three passes
 
 1. **Open-ended pass:** inspect the change without using the rule list as a boundary. Look for
    incorrect behavior and risks the written rules did not anticipate.
@@ -104,13 +101,15 @@ repository rules here.
 3. **Falsification pass:** challenge every candidate finding against surrounding code, CI/analyzer
    coverage, prior discussion, documented exceptions, and legitimate allowed cases.
 
-### 5. Filter and report
+### 4. Filter and report
 
 Report only findings that survive all three passes.
 
 For every finding:
 
-- Anchor it to the most specific changed line that causes the issue.
+- Prefer the most specific changed source or generator-input line that causes the issue. Use an
+  API-listing line when it is the only suitable changed anchor; identify the real fix location
+  and never recommend hand-editing the listing.
 - State what can concretely go wrong.
 - Recommend the smallest correct change.
 - Use 🔴 for correctness, security, or breaking changes; 🟡 for actionable non-critical repository
