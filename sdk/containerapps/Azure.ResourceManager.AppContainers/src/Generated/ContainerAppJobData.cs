@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppContainers
 
         /// <summary> Current running state of the job. </summary>
         [WirePath("properties.runningState")]
-        public JobRunningState? RunningState
+        public ContainerAppJobRunningState? RunningState
         {
             get
             {

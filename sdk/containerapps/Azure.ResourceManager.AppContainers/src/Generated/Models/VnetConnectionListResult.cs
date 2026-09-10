@@ -20,7 +20,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> Initializes a new instance of <see cref="VnetConnectionListResult"/>. </summary>
         /// <param name="value"> The VnetConnection items on this page. </param>
-        internal VnetConnectionListResult(IEnumerable<VnetConnectionData> value)
+        internal VnetConnectionListResult(IEnumerable<SandboxGroupVnetConnectionData> value)
         {
             Value = value.ToList();
         }
@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="value"> The VnetConnection items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal VnetConnectionListResult(IList<VnetConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VnetConnectionListResult(IList<SandboxGroupVnetConnectionData> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> The VnetConnection items on this page. </summary>
         [WirePath("value")]
-        public IList<VnetConnectionData> Value { get; }
+        public IList<SandboxGroupVnetConnectionData> Value { get; }
 
         /// <summary> The link to the next page of items. </summary>
         [WirePath("nextLink")]

@@ -392,11 +392,11 @@ namespace Azure.ResourceManager.AppContainers
             }
         }
 
-        /// <summary> Gets a collection of VnetConnections in the <see cref="SandboxGroupResource"/>. </summary>
-        /// <returns> An object representing collection of VnetConnections and their operations over a VnetConnectionResource. </returns>
-        public virtual VnetConnectionCollection GetVnetConnections()
+        /// <summary> Gets a collection of SandboxGroupVnetConnections in the <see cref="SandboxGroupResource"/>. </summary>
+        /// <returns> An object representing collection of SandboxGroupVnetConnections and their operations over a SandboxGroupVnetConnectionResource. </returns>
+        public virtual SandboxGroupVnetConnectionCollection GetSandboxGroupVnetConnections()
         {
-            return GetCachedClient(client => new VnetConnectionCollection(client, Id));
+            return GetCachedClient(client => new SandboxGroupVnetConnectionCollection(client, Id));
         }
 
         /// <summary> Get the properties of a VnetConnection. </summary>
@@ -405,11 +405,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="vnetConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vnetConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<VnetConnectionResource>> GetVnetConnectionAsync(string vnetConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<SandboxGroupVnetConnectionResource>> GetSandboxGroupVnetConnectionAsync(string vnetConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vnetConnectionName, nameof(vnetConnectionName));
 
-            return await GetVnetConnections().GetAsync(vnetConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetSandboxGroupVnetConnections().GetAsync(vnetConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get the properties of a VnetConnection. </summary>
@@ -418,11 +418,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="vnetConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="vnetConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<VnetConnectionResource> GetVnetConnection(string vnetConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<SandboxGroupVnetConnectionResource> GetSandboxGroupVnetConnection(string vnetConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(vnetConnectionName, nameof(vnetConnectionName));
 
-            return GetVnetConnections().Get(vnetConnectionName, cancellationToken);
+            return GetSandboxGroupVnetConnections().Get(vnetConnectionName, cancellationToken);
         }
     }
 }

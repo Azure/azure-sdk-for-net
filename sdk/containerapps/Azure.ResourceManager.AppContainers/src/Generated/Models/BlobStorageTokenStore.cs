@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
@@ -28,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="clientId"> The Client ID of a User-Assigned Managed Identity. Should not be used along with managedIdentityResourceId. </param>
         /// <param name="managedIdentityResourceId"> The Resource ID of a User-Assigned Managed Identity. Should not be used along with clientId. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal BlobStorageTokenStore(string azureBlobStorageSasUrlSettingName, string blobContainerUri, string clientId, string managedIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal BlobStorageTokenStore(string azureBlobStorageSasUrlSettingName, string blobContainerUri, string clientId, ResourceIdentifier managedIdentityResourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             AzureBlobStorageSasUrlSettingName = azureBlobStorageSasUrlSettingName;
             BlobContainerUri = blobContainerUri;
@@ -51,6 +52,6 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <summary> The Resource ID of a User-Assigned Managed Identity. Should not be used along with clientId. </summary>
         [WirePath("managedIdentityResourceId")]
-        public string ManagedIdentityResourceId { get; set; }
+        public ResourceIdentifier ManagedIdentityResourceId { get; set; }
     }
 }

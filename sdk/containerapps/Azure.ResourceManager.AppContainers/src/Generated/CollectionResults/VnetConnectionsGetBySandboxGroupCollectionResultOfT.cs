@@ -14,7 +14,7 @@ using Azure.ResourceManager.AppContainers.Models;
 
 namespace Azure.ResourceManager.AppContainers
 {
-    internal partial class VnetConnectionsGetBySandboxGroupCollectionResultOfT : Pageable<VnetConnectionData>
+    internal partial class VnetConnectionsGetBySandboxGroupCollectionResultOfT : Pageable<SandboxGroupVnetConnectionData>
     {
         private readonly VnetConnections _client;
         private readonly Guid _subscriptionId;
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="continuationToken"> A continuation token indicating where to resume paging. </param>
         /// <param name="pageSizeHint"> The number of items per page. </param>
         /// <returns> The pages of VnetConnectionsGetBySandboxGroupCollectionResultOfT as an enumerable collection. </returns>
-        public override IEnumerable<Page<VnetConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
+        public override IEnumerable<Page<SandboxGroupVnetConnectionData>> AsPages(string continuationToken, int? pageSizeHint)
         {
             Uri nextPage = continuationToken != null ? new Uri(continuationToken) : null;
             while (true)
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.AppContainers
                 }
                 VnetConnectionListResult result = VnetConnectionListResult.FromResponse(response);
                 nextPage = result.NextLink;
-                yield return Page<VnetConnectionData>.FromValues((IReadOnlyList<VnetConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
+                yield return Page<SandboxGroupVnetConnectionData>.FromValues((IReadOnlyList<SandboxGroupVnetConnectionData>)result.Value, nextPage?.IsAbsoluteUri == true ? nextPage.AbsoluteUri : nextPage?.OriginalString, response);
                 if (nextPage == null)
                 {
                     yield break;

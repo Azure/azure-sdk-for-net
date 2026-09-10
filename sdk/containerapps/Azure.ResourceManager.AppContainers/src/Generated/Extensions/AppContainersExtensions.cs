@@ -75,21 +75,21 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="VnetConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="SandboxGroupVnetConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppContainersArmClient.GetVnetConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppContainersArmClient.GetSandboxGroupVnetConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="VnetConnectionResource"/> object. </returns>
-        public static VnetConnectionResource GetVnetConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="SandboxGroupVnetConnectionResource"/> object. </returns>
+        public static SandboxGroupVnetConnectionResource GetSandboxGroupVnetConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppContainersArmClient(client).GetVnetConnectionResource(id);
+            return GetMockableAppContainersArmClient(client).GetSandboxGroupVnetConnectionResource(id);
         }
 
         /// <summary>
@@ -165,21 +165,21 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="LabelHistoryResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ContainerAppLabelHistoryResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppContainersArmClient.GetLabelHistoryResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppLabelHistoryResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="LabelHistoryResource"/> object. </returns>
-        public static LabelHistoryResource GetLabelHistoryResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppLabelHistoryResource"/> object. </returns>
+        public static ContainerAppLabelHistoryResource GetContainerAppLabelHistoryResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppContainersArmClient(client).GetLabelHistoryResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppLabelHistoryResource(id);
         }
 
         /// <summary>
@@ -533,21 +533,21 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ContainerAppPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ContainerAppContainerPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppContainerPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ContainerAppPrivateEndpointConnectionResource"/> object. </returns>
-        public static ContainerAppPrivateEndpointConnectionResource GetContainerAppPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppContainerPrivateEndpointConnectionResource"/> object. </returns>
+        public static ContainerAppContainerPrivateEndpointConnectionResource GetContainerAppContainerPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppContainersArmClient(client).GetContainerAppPrivateEndpointConnectionResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppContainerPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -785,21 +785,21 @@ namespace Azure.ResourceManager.AppContainers
         }
 
         /// <summary>
-        /// Gets an object representing a <see cref="ManagedEnvironmentPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
+        /// Gets an object representing a <see cref="ContainerAppPrivateEndpointConnectionResource"/> along with the instance operations that can be performed on it but with no data.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppContainersArmClient.GetManagedEnvironmentPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppContainersArmClient.GetContainerAppPrivateEndpointConnectionResource(ResourceIdentifier)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="client"> The <see cref="ArmClient"/> the method will execute against. </param>
         /// <param name="id"> The resource ID of the resource to get. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
-        /// <returns> Returns a <see cref="ManagedEnvironmentPrivateEndpointConnectionResource"/> object. </returns>
-        public static ManagedEnvironmentPrivateEndpointConnectionResource GetManagedEnvironmentPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
+        /// <returns> Returns a <see cref="ContainerAppPrivateEndpointConnectionResource"/> object. </returns>
+        public static ContainerAppPrivateEndpointConnectionResource GetContainerAppPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
             Argument.AssertNotNull(client, nameof(client));
 
-            return GetMockableAppContainersArmClient(client).GetManagedEnvironmentPrivateEndpointConnectionResource(id);
+            return GetMockableAppContainersArmClient(client).GetContainerAppPrivateEndpointConnectionResource(id);
         }
 
         /// <summary>
@@ -1460,38 +1460,38 @@ namespace Azure.ResourceManager.AppContainers
         /// Gets the environment modes available to a subscription in a location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetAllAsync(AzureLocation, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetAvailableEnvironmentModesAsync(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailableEnvironmentMode"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<AvailableEnvironmentMode> GetAllAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppAvailableEnvironmentMode"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<ContainerAppAvailableEnvironmentMode> GetAvailableEnvironmentModesAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetAllAsync(location, cancellationToken);
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetAvailableEnvironmentModesAsync(location, cancellationToken);
         }
 
         /// <summary>
         /// Gets the environment modes available to a subscription in a location.
         /// <item>
         /// <term> Mocking. </term>
-        /// <description> To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetAll(AzureLocation, CancellationToken)"/> instead. </description>
+        /// <description> To mock this method, please mock <see cref="MockableAppContainersSubscriptionResource.GetAvailableEnvironmentModes(AzureLocation, CancellationToken)"/> instead. </description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource"/> the method will execute against. </param>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> is null. </exception>
-        /// <returns> A collection of <see cref="AvailableEnvironmentMode"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<AvailableEnvironmentMode> GetAll(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppAvailableEnvironmentMode"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<ContainerAppAvailableEnvironmentMode> GetAvailableEnvironmentModes(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetAll(location, cancellationToken);
+            return GetMockableAppContainersSubscriptionResource(subscriptionResource).GetAvailableEnvironmentModes(location, cancellationToken);
         }
 
         /// <summary>

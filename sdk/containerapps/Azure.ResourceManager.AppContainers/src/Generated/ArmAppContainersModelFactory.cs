@@ -294,10 +294,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="AppContainers.VnetConnectionData"/> instance for mocking. </returns>
-        public static VnetConnectionData VnetConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, VnetConnectionProperties properties = default)
+        /// <returns> A new <see cref="AppContainers.SandboxGroupVnetConnectionData"/> instance for mocking. </returns>
+        public static SandboxGroupVnetConnectionData SandboxGroupVnetConnectionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, SandboxGroupVnetConnectionProperties properties = default)
         {
-            return new VnetConnectionData(
+            return new SandboxGroupVnetConnectionData(
                 id,
                 name,
                 resourceType,
@@ -308,10 +308,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <param name="provisioningState"></param>
         /// <param name="subnetId"> Resource ID of the subnet that sandboxes in the parent SandboxGroup will be connected to. </param>
-        /// <returns> A new <see cref="Models.VnetConnectionProperties"/> instance for mocking. </returns>
-        public static VnetConnectionProperties VnetConnectionProperties(VnetConnectionProvisioningState? provisioningState = default, ResourceIdentifier subnetId = default)
+        /// <returns> A new <see cref="Models.SandboxGroupVnetConnectionProperties"/> instance for mocking. </returns>
+        public static SandboxGroupVnetConnectionProperties SandboxGroupVnetConnectionProperties(SandboxGroupVnetConnectionProvisioningState? provisioningState = default, ResourceIdentifier subnetId = default)
         {
-            return new VnetConnectionProperties(provisioningState, subnetId, default);
+            return new SandboxGroupVnetConnectionProperties(provisioningState, subnetId, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1124,14 +1124,14 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="labelHistoryRecords"> List of label history records. </param>
         /// <returns> A new <see cref="AppContainers.LabelHistoryData"/> instance for mocking. </returns>
-        public static LabelHistoryData LabelHistoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<LabelHistoryRecordItem> labelHistoryRecords = default)
+        public static LabelHistoryData LabelHistoryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IEnumerable<ContainerAppLabelHistoryRecordItem> labelHistoryRecords = default)
         {
             return new LabelHistoryData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                labelHistoryRecords is null ? default : new LabelHistoryProperties((labelHistoryRecords ?? new ChangeTrackingList<LabelHistoryRecordItem>()).ToList(), default),
+                labelHistoryRecords is null ? default : new LabelHistoryProperties((labelHistoryRecords ?? new ChangeTrackingList<ContainerAppLabelHistoryRecordItem>()).ToList(), default),
                 default);
         }
 
@@ -1139,10 +1139,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="startedOn"> Timestamp describing when the label was applied to the revision. </param>
         /// <param name="stoppedOn"> Timestamp describing when the label was removed from the revision. Only meaningful when the label is currently applied to the revision. </param>
         /// <param name="status"> Status of the label history record. </param>
-        /// <returns> A new <see cref="Models.LabelHistoryRecordItem"/> instance for mocking. </returns>
-        public static LabelHistoryRecordItem LabelHistoryRecordItem(string revision = default, DateTimeOffset? startedOn = default, DateTimeOffset? stoppedOn = default, Status? status = default)
+        /// <returns> A new <see cref="Models.ContainerAppLabelHistoryRecordItem"/> instance for mocking. </returns>
+        public static ContainerAppLabelHistoryRecordItem ContainerAppLabelHistoryRecordItem(string revision = default, DateTimeOffset? startedOn = default, DateTimeOffset? stoppedOn = default, ContainerAppLabelHistoryStatus? status = default)
         {
-            return new LabelHistoryRecordItem(revision, startedOn, stoppedOn, status, default);
+            return new ContainerAppLabelHistoryRecordItem(revision, startedOn, stoppedOn, status, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -1812,7 +1812,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="clientId"> The Client ID of a User-Assigned Managed Identity. Should not be used along with managedIdentityResourceId. </param>
         /// <param name="managedIdentityResourceId"> The Resource ID of a User-Assigned Managed Identity. Should not be used along with clientId. </param>
         /// <returns> A new <see cref="Models.ContainerAppTokenStore"/> instance for mocking. </returns>
-        public static ContainerAppTokenStore ContainerAppTokenStore(bool? isEnabled = default, double? tokenRefreshExtensionHours = default, string azureBlobStorageSasUrlSettingName = default, string blobContainerUri = default, string clientId = default, string managedIdentityResourceId = default)
+        public static ContainerAppTokenStore ContainerAppTokenStore(bool? isEnabled = default, double? tokenRefreshExtensionHours = default, string azureBlobStorageSasUrlSettingName = default, string blobContainerUri = default, string clientId = default, ResourceIdentifier managedIdentityResourceId = default)
         {
             return new ContainerAppTokenStore(isEnabled, tokenRefreshExtensionHours, azureBlobStorageSasUrlSettingName is null && blobContainerUri is null && clientId is null && managedIdentityResourceId is null ? default : new BlobStorageTokenStore(azureBlobStorageSasUrlSettingName, blobContainerUri, clientId, managedIdentityResourceId, default), default);
         }
@@ -2140,19 +2140,19 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="logsDestinations"> Open telemetry logs destinations. </param>
         /// <param name="metricsConfiguration"> Open telemetry metrics configuration. </param>
         /// <returns> A new <see cref="Models.OpenTelemetryConfiguration"/> instance for mocking. </returns>
-        public static OpenTelemetryConfiguration OpenTelemetryConfiguration(DestinationsConfiguration destinationsConfiguration = default, TracesConfiguration tracesConfiguration = default, IEnumerable<string> logsDestinations = default, MetricsConfiguration metricsConfiguration = default)
+        public static OpenTelemetryConfiguration OpenTelemetryConfiguration(ContainerAppOpenTelemetryDestinationsConfiguration destinationsConfiguration = default, ContainerAppOpenTelemetryTracesConfiguration tracesConfiguration = default, IEnumerable<string> logsDestinations = default, ContainerAppOpenTelemetryMetricsConfiguration metricsConfiguration = default)
         {
             return new OpenTelemetryConfiguration(destinationsConfiguration, tracesConfiguration, logsDestinations is null ? default : new LogsConfiguration((logsDestinations ?? new ChangeTrackingList<string>()).ToList(), default), metricsConfiguration, default);
         }
 
         /// <param name="dataDogConfiguration"> Open telemetry datadog destination configuration. </param>
         /// <param name="otlpConfigurations"> Open telemetry otlp configurations. </param>
-        /// <returns> A new <see cref="Models.DestinationsConfiguration"/> instance for mocking. </returns>
-        public static DestinationsConfiguration DestinationsConfiguration(DataDogConfiguration dataDogConfiguration = default, IEnumerable<OtlpConfiguration> otlpConfigurations = default)
+        /// <returns> A new <see cref="Models.ContainerAppOpenTelemetryDestinationsConfiguration"/> instance for mocking. </returns>
+        public static ContainerAppOpenTelemetryDestinationsConfiguration ContainerAppOpenTelemetryDestinationsConfiguration(DataDogConfiguration dataDogConfiguration = default, IEnumerable<OtlpConfiguration> otlpConfigurations = default)
         {
             otlpConfigurations ??= new ChangeTrackingList<OtlpConfiguration>();
 
-            return new DestinationsConfiguration(dataDogConfiguration, (otlpConfigurations ?? new ChangeTrackingList<OtlpConfiguration>()).ToList(), default);
+            return new ContainerAppOpenTelemetryDestinationsConfiguration(dataDogConfiguration, (otlpConfigurations ?? new ChangeTrackingList<OtlpConfiguration>()).ToList(), default);
         }
 
         /// <param name="site"> The data dog site. </param>
@@ -2185,22 +2185,22 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <param name="isDaprIncluded"> Boolean indicating if including dapr traces. </param>
         /// <param name="destinations"> Open telemetry traces destinations. </param>
-        /// <returns> A new <see cref="Models.TracesConfiguration"/> instance for mocking. </returns>
-        public static TracesConfiguration TracesConfiguration(bool? isDaprIncluded = default, IEnumerable<string> destinations = default)
+        /// <returns> A new <see cref="Models.ContainerAppOpenTelemetryTracesConfiguration"/> instance for mocking. </returns>
+        public static ContainerAppOpenTelemetryTracesConfiguration ContainerAppOpenTelemetryTracesConfiguration(bool? isDaprIncluded = default, IEnumerable<string> destinations = default)
         {
             destinations ??= new ChangeTrackingList<string>();
 
-            return new TracesConfiguration(isDaprIncluded, (destinations ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new ContainerAppOpenTelemetryTracesConfiguration(isDaprIncluded, (destinations ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="isKedaIncluded"> Boolean indicating if including keda metrics. </param>
         /// <param name="destinations"> Open telemetry metrics destinations. </param>
-        /// <returns> A new <see cref="Models.MetricsConfiguration"/> instance for mocking. </returns>
-        public static MetricsConfiguration MetricsConfiguration(bool? isKedaIncluded = default, IEnumerable<string> destinations = default)
+        /// <returns> A new <see cref="Models.ContainerAppOpenTelemetryMetricsConfiguration"/> instance for mocking. </returns>
+        public static ContainerAppOpenTelemetryMetricsConfiguration ContainerAppOpenTelemetryMetricsConfiguration(bool? isKedaIncluded = default, IEnumerable<string> destinations = default)
         {
             destinations ??= new ChangeTrackingList<string>();
 
-            return new MetricsConfiguration(isKedaIncluded, (destinations ?? new ChangeTrackingList<string>()).ToList(), default);
+            return new ContainerAppOpenTelemetryMetricsConfiguration(isKedaIncluded, (destinations ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
         /// <param name="name"> Workload profile type for the workloads to run on. </param>
@@ -2303,10 +2303,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         }
 
         /// <param name="targetMode"> The target environment mode to check migration eligibility against. </param>
-        /// <returns> A new <see cref="Models.CheckMigrationEligibilityContent"/> instance for mocking. </returns>
-        public static CheckMigrationEligibilityContent CheckMigrationEligibilityContent(string targetMode = default)
+        /// <returns> A new <see cref="Models.ContainerAppManagedEnvironmentMigrationEligibilityContent"/> instance for mocking. </returns>
+        public static ContainerAppManagedEnvironmentMigrationEligibilityContent ContainerAppManagedEnvironmentMigrationEligibilityContent(string targetMode = default)
         {
-            return new CheckMigrationEligibilityContent(targetMode, default);
+            return new ContainerAppManagedEnvironmentMigrationEligibilityContent(targetMode, default);
         }
 
         /// <param name="isEligible"> Whether the managed environment can migrate to the requested target mode. </param>
@@ -2314,26 +2314,26 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="currentMode"> The current mode of the managed environment. </param>
         /// <param name="targetMode"> The requested target mode. </param>
         /// <param name="failureReasons"> The blocking reasons preventing migration. Empty when the managed environment is eligible. </param>
-        /// <returns> A new <see cref="Models.CheckMigrationEligibilityResult"/> instance for mocking. </returns>
-        public static CheckMigrationEligibilityResult CheckMigrationEligibilityResult(bool isEligible = default, string environmentName = default, string currentMode = default, string targetMode = default, IEnumerable<MigrationEligibilityFailureReason> failureReasons = default)
+        /// <returns> A new <see cref="Models.ContainerAppManagedEnvironmentMigrationEligibilityResult"/> instance for mocking. </returns>
+        public static ContainerAppManagedEnvironmentMigrationEligibilityResult ContainerAppManagedEnvironmentMigrationEligibilityResult(bool isEligible = default, string environmentName = default, string currentMode = default, string targetMode = default, IEnumerable<ContainerAppManagedEnvironmentMigrationEligibilityFailureReason> failureReasons = default)
         {
-            failureReasons ??= new ChangeTrackingList<MigrationEligibilityFailureReason>();
+            failureReasons ??= new ChangeTrackingList<ContainerAppManagedEnvironmentMigrationEligibilityFailureReason>();
 
-            return new CheckMigrationEligibilityResult(
+            return new ContainerAppManagedEnvironmentMigrationEligibilityResult(
                 isEligible,
                 environmentName,
                 currentMode,
                 targetMode,
-                (failureReasons ?? new ChangeTrackingList<MigrationEligibilityFailureReason>()).ToList(),
+                (failureReasons ?? new ChangeTrackingList<ContainerAppManagedEnvironmentMigrationEligibilityFailureReason>()).ToList(),
                 default);
         }
 
         /// <param name="code"> The error code identifying the blocker. </param>
         /// <param name="message"> A human-readable description of the blocker. </param>
-        /// <returns> A new <see cref="Models.MigrationEligibilityFailureReason"/> instance for mocking. </returns>
-        public static MigrationEligibilityFailureReason MigrationEligibilityFailureReason(string code = default, string message = default)
+        /// <returns> A new <see cref="Models.ContainerAppManagedEnvironmentMigrationEligibilityFailureReason"/> instance for mocking. </returns>
+        public static ContainerAppManagedEnvironmentMigrationEligibilityFailureReason ContainerAppManagedEnvironmentMigrationEligibilityFailureReason(string code = default, string message = default)
         {
-            return new MigrationEligibilityFailureReason(code, message, default);
+            return new ContainerAppManagedEnvironmentMigrationEligibilityFailureReason(code, message, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -2637,7 +2637,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="eventStreamEndpoint"> The endpoint of the eventstream of the container apps job. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppJobData"/> instance for mocking. </returns>
-        public static ContainerAppJobData ContainerAppJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerAppJobProvisioningState? provisioningState = default, JobRunningState? runningState = default, string environmentId = default, string workloadProfileName = default, ContainerAppJobConfiguration configuration = default, ContainerAppJobTemplate template = default, IEnumerable<string> outboundIPAddresses = default, string eventStreamEndpoint = default, ManagedServiceIdentity identity = default)
+        public static ContainerAppJobData ContainerAppJobData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, ContainerAppJobProvisioningState? provisioningState = default, ContainerAppJobRunningState? runningState = default, string environmentId = default, string workloadProfileName = default, ContainerAppJobConfiguration configuration = default, ContainerAppJobTemplate template = default, IEnumerable<string> outboundIPAddresses = default, string eventStreamEndpoint = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -2858,7 +2858,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="message"> Human readable message indicating details about the current condition of the job execution. </param>
         /// <param name="detailedStatusReplicas"> Replicas in the execution. </param>
         /// <returns> A new <see cref="AppContainers.ContainerAppJobExecutionData"/> instance for mocking. </returns>
-        public static ContainerAppJobExecutionData ContainerAppJobExecutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, JobExecutionRunningState? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ContainerAppJobExecutionTemplate template = default, string reason = default, string message = default, IEnumerable<ReplicaExecutionStatus> detailedStatusReplicas = default)
+        public static ContainerAppJobExecutionData ContainerAppJobExecutionData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, JobExecutionRunningState? status = default, DateTimeOffset? startOn = default, DateTimeOffset? endOn = default, ContainerAppJobExecutionTemplate template = default, string reason = default, string message = default, IEnumerable<ContainerAppJobExecutionReplicaStatus> detailedStatusReplicas = default)
         {
             return new ContainerAppJobExecutionData(
                 id,
@@ -2870,7 +2870,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     startOn,
                     endOn,
                     template,
-                    new ExecutionStatus((detailedStatusReplicas ?? new ChangeTrackingList<ReplicaExecutionStatus>()).ToList(), default),
+                    new ExecutionStatus((detailedStatusReplicas ?? new ChangeTrackingList<ContainerAppJobExecutionReplicaStatus>()).ToList(), default),
                     reason,
                     message,
                     default),
@@ -2879,22 +2879,22 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <param name="name"> Replica Name. </param>
         /// <param name="containers"> Containers in the execution replica. </param>
-        /// <returns> A new <see cref="Models.ReplicaExecutionStatus"/> instance for mocking. </returns>
-        public static ReplicaExecutionStatus ReplicaExecutionStatus(string name = default, IEnumerable<ContainerExecutionStatus> containers = default)
+        /// <returns> A new <see cref="Models.ContainerAppJobExecutionReplicaStatus"/> instance for mocking. </returns>
+        public static ContainerAppJobExecutionReplicaStatus ContainerAppJobExecutionReplicaStatus(string name = default, IEnumerable<ContainerAppJobExecutionContainerStatus> containers = default)
         {
-            containers ??= new ChangeTrackingList<ContainerExecutionStatus>();
+            containers ??= new ChangeTrackingList<ContainerAppJobExecutionContainerStatus>();
 
-            return new ReplicaExecutionStatus(name, (containers ?? new ChangeTrackingList<ContainerExecutionStatus>()).ToList(), default);
+            return new ContainerAppJobExecutionReplicaStatus(name, (containers ?? new ChangeTrackingList<ContainerAppJobExecutionContainerStatus>()).ToList(), default);
         }
 
         /// <param name="name"> Container Name. </param>
         /// <param name="code"> Exit code. </param>
         /// <param name="additionalInformation"> Additional information for the container status. </param>
         /// <param name="status"> Status of the container. </param>
-        /// <returns> A new <see cref="Models.ContainerExecutionStatus"/> instance for mocking. </returns>
-        public static ContainerExecutionStatus ContainerExecutionStatus(string name = default, int? code = default, string additionalInformation = default, string status = default)
+        /// <returns> A new <see cref="Models.ContainerAppJobExecutionContainerStatus"/> instance for mocking. </returns>
+        public static ContainerAppJobExecutionContainerStatus ContainerAppJobExecutionContainerStatus(string name = default, int? code = default, string additionalInformation = default, string status = default)
         {
-            return new ContainerExecutionStatus(name, code, additionalInformation, status, default);
+            return new ContainerAppJobExecutionContainerStatus(name, code, additionalInformation, status, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
@@ -3158,10 +3158,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
         /// <param name="location"> The Azure region in which the environment mode is available. </param>
         /// <param name="properties"> The environment mode details. </param>
-        /// <returns> A new <see cref="Models.AvailableEnvironmentMode"/> instance for mocking. </returns>
-        public static AvailableEnvironmentMode AvailableEnvironmentMode(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, string location = default, AvailableEnvironmentModeProperties properties = default)
+        /// <returns> A new <see cref="Models.ContainerAppAvailableEnvironmentMode"/> instance for mocking. </returns>
+        public static ContainerAppAvailableEnvironmentMode ContainerAppAvailableEnvironmentMode(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, AzureLocation? location = default, ContainerAppAvailableEnvironmentModeProperties properties = default)
         {
-            return new AvailableEnvironmentMode(
+            return new ContainerAppAvailableEnvironmentMode(
                 id,
                 name,
                 resourceType,
@@ -3173,10 +3173,10 @@ namespace Azure.ResourceManager.AppContainers.Models
 
         /// <param name="displayName"> The display name of the environment mode. </param>
         /// <param name="description"> The description of the environment mode. </param>
-        /// <returns> A new <see cref="Models.AvailableEnvironmentModeProperties"/> instance for mocking. </returns>
-        public static AvailableEnvironmentModeProperties AvailableEnvironmentModeProperties(string displayName = default, string description = default)
+        /// <returns> A new <see cref="Models.ContainerAppAvailableEnvironmentModeProperties"/> instance for mocking. </returns>
+        public static ContainerAppAvailableEnvironmentModeProperties ContainerAppAvailableEnvironmentModeProperties(string displayName = default, string description = default)
         {
-            return new AvailableEnvironmentModeProperties(displayName, description, default);
+            return new ContainerAppAvailableEnvironmentModeProperties(displayName, description, default);
         }
 
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>

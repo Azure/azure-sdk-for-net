@@ -547,7 +547,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="content"> The migration eligibility check request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual async Task<Response<CheckMigrationEligibilityResult>> CheckMigrationEligibilityAsync(CheckMigrationEligibilityContent content, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppManagedEnvironmentMigrationEligibilityResult>> CheckMigrationEligibilityAsync(ContainerAppManagedEnvironmentMigrationEligibilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -559,9 +559,9 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateCheckMigrationEligibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CheckMigrationEligibilityContent.ToRequestContent(content), context);
+                HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateCheckMigrationEligibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppManagedEnvironmentMigrationEligibilityContent.ToRequestContent(content), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
-                Response<CheckMigrationEligibilityResult> response = Response.FromValue(CheckMigrationEligibilityResult.FromResponse(result), result);
+                Response<ContainerAppManagedEnvironmentMigrationEligibilityResult> response = Response.FromValue(ContainerAppManagedEnvironmentMigrationEligibilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.AppContainers
         /// <param name="content"> The migration eligibility check request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
-        public virtual Response<CheckMigrationEligibilityResult> CheckMigrationEligibility(CheckMigrationEligibilityContent content, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppManagedEnvironmentMigrationEligibilityResult> CheckMigrationEligibility(ContainerAppManagedEnvironmentMigrationEligibilityContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -611,9 +611,9 @@ namespace Azure.ResourceManager.AppContainers
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateCheckMigrationEligibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, CheckMigrationEligibilityContent.ToRequestContent(content), context);
+                HttpMessage message = _containerAppManagedEnvironmentsRestClient.CreateCheckMigrationEligibilityRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, ContainerAppManagedEnvironmentMigrationEligibilityContent.ToRequestContent(content), context);
                 Response result = Pipeline.ProcessMessage(message, context);
-                Response<CheckMigrationEligibilityResult> response = Response.FromValue(CheckMigrationEligibilityResult.FromResponse(result), result);
+                Response<ContainerAppManagedEnvironmentMigrationEligibilityResult> response = Response.FromValue(ContainerAppManagedEnvironmentMigrationEligibilityResult.FromResponse(result), result);
                 if (response.Value == null)
                 {
                     throw new RequestFailedException(response.GetRawResponse());
@@ -1567,11 +1567,11 @@ namespace Azure.ResourceManager.AppContainers
             return new ContainerAppManagedEnvironmentDetectorResourcePropertyResource(Client, Id.AppendChildResource("detectorProperties", "rootApi"));
         }
 
-        /// <summary> Gets a collection of ManagedEnvironmentPrivateEndpointConnections in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
-        /// <returns> An object representing collection of ManagedEnvironmentPrivateEndpointConnections and their operations over a ManagedEnvironmentPrivateEndpointConnectionResource. </returns>
-        public virtual ManagedEnvironmentPrivateEndpointConnectionCollection GetManagedEnvironmentPrivateEndpointConnections()
+        /// <summary> Gets a collection of ContainerAppPrivateEndpointConnections in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppPrivateEndpointConnections and their operations over a ContainerAppPrivateEndpointConnectionResource. </returns>
+        public virtual ContainerAppPrivateEndpointConnectionCollection GetContainerAppPrivateEndpointConnections()
         {
-            return GetCachedClient(client => new ManagedEnvironmentPrivateEndpointConnectionCollection(client, Id));
+            return GetCachedClient(client => new ContainerAppPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary> Get a private endpoint connection for a given managed environment. </summary>
@@ -1580,11 +1580,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ManagedEnvironmentPrivateEndpointConnectionResource>> GetManagedEnvironmentPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppPrivateEndpointConnectionResource>> GetContainerAppPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return await GetManagedEnvironmentPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerAppPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Get a private endpoint connection for a given managed environment. </summary>
@@ -1593,11 +1593,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ManagedEnvironmentPrivateEndpointConnectionResource> GetManagedEnvironmentPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppPrivateEndpointConnectionResource> GetContainerAppPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return GetManagedEnvironmentPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetContainerAppPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppHttpRouteConfigs in the <see cref="ContainerAppManagedEnvironmentResource"/>. </summary>

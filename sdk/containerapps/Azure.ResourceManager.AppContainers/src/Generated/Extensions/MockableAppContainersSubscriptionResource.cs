@@ -602,14 +602,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableEnvironmentMode"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<AvailableEnvironmentMode> GetAllAsync(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppAvailableEnvironmentMode"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<ContainerAppAvailableEnvironmentMode> GetAvailableEnvironmentModesAsync(AzureLocation location, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableEnvironmentModesGetAllAsyncCollectionResultOfT(AvailableEnvironmentModesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetAll");
+            return new AvailableEnvironmentModesGetAvailableEnvironmentModesAsyncCollectionResultOfT(AvailableEnvironmentModesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetAvailableEnvironmentModes");
         }
 
         /// <summary>
@@ -631,14 +631,14 @@ namespace Azure.ResourceManager.AppContainers.Mocking
         /// </summary>
         /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> A collection of <see cref="AvailableEnvironmentMode"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<AvailableEnvironmentMode> GetAll(AzureLocation location, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="ContainerAppAvailableEnvironmentMode"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<ContainerAppAvailableEnvironmentMode> GetAvailableEnvironmentModes(AzureLocation location, CancellationToken cancellationToken = default)
         {
             RequestContext context = new RequestContext
             {
                 CancellationToken = cancellationToken
             };
-            return new AvailableEnvironmentModesGetAllCollectionResultOfT(AvailableEnvironmentModesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetAll");
+            return new AvailableEnvironmentModesGetAvailableEnvironmentModesCollectionResultOfT(AvailableEnvironmentModesRestClient, Guid.Parse(Id.SubscriptionId), location, context, "MockableAppContainersSubscriptionResource.GetAvailableEnvironmentModes");
         }
 
         /// <summary>

@@ -1454,11 +1454,11 @@ namespace Azure.ResourceManager.AppContainers
             return GetContainerAppRevisions().Get(revisionName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of LabelHistories in the <see cref="ContainerAppResource"/>. </summary>
-        /// <returns> An object representing collection of LabelHistories and their operations over a LabelHistoryResource. </returns>
-        public virtual LabelHistoryCollection GetLabelHistories()
+        /// <summary> Gets a collection of ContainerAppLabelHistories in the <see cref="ContainerAppResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppLabelHistories and their operations over a ContainerAppLabelHistoryResource. </returns>
+        public virtual ContainerAppLabelHistoryCollection GetContainerAppLabelHistories()
         {
-            return GetCachedClient(client => new LabelHistoryCollection(client, Id));
+            return GetCachedClient(client => new ContainerAppLabelHistoryCollection(client, Id));
         }
 
         /// <summary> Gets the revision history associated with a Container App label. </summary>
@@ -1467,11 +1467,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<LabelHistoryResource>> GetLabelHistoryAsync(string labelName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppLabelHistoryResource>> GetContainerAppLabelHistoryAsync(string labelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(labelName, nameof(labelName));
 
-            return await GetLabelHistories().GetAsync(labelName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerAppLabelHistories().GetAsync(labelName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the revision history associated with a Container App label. </summary>
@@ -1480,11 +1480,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="labelName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="labelName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<LabelHistoryResource> GetLabelHistory(string labelName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppLabelHistoryResource> GetContainerAppLabelHistory(string labelName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(labelName, nameof(labelName));
 
-            return GetLabelHistories().Get(labelName, cancellationToken);
+            return GetContainerAppLabelHistories().Get(labelName, cancellationToken);
         }
 
         /// <summary> Gets a collection of LogicApps in the <see cref="ContainerAppResource"/>. </summary>
@@ -1553,11 +1553,11 @@ namespace Azure.ResourceManager.AppContainers
             return GetContainerAppAuthConfigs().Get(authConfigName, cancellationToken);
         }
 
-        /// <summary> Gets a collection of ContainerAppPrivateEndpointConnections in the <see cref="ContainerAppResource"/>. </summary>
-        /// <returns> An object representing collection of ContainerAppPrivateEndpointConnections and their operations over a ContainerAppPrivateEndpointConnectionResource. </returns>
-        public virtual ContainerAppPrivateEndpointConnectionCollection GetContainerAppPrivateEndpointConnections()
+        /// <summary> Gets a collection of ContainerAppContainerPrivateEndpointConnections in the <see cref="ContainerAppResource"/>. </summary>
+        /// <returns> An object representing collection of ContainerAppContainerPrivateEndpointConnections and their operations over a ContainerAppContainerPrivateEndpointConnectionResource. </returns>
+        public virtual ContainerAppContainerPrivateEndpointConnectionCollection GetContainerAppContainerPrivateEndpointConnections()
         {
-            return GetCachedClient(client => new ContainerAppPrivateEndpointConnectionCollection(client, Id));
+            return GetCachedClient(client => new ContainerAppContainerPrivateEndpointConnectionCollection(client, Id));
         }
 
         /// <summary> Gets the details of a private endpoint connection associated with a Container App. </summary>
@@ -1566,11 +1566,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual async Task<Response<ContainerAppPrivateEndpointConnectionResource>> GetContainerAppPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual async Task<Response<ContainerAppContainerPrivateEndpointConnectionResource>> GetContainerAppContainerPrivateEndpointConnectionAsync(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return await GetContainerAppPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
+            return await GetContainerAppContainerPrivateEndpointConnections().GetAsync(privateEndpointConnectionName, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary> Gets the details of a private endpoint connection associated with a Container App. </summary>
@@ -1579,11 +1579,11 @@ namespace Azure.ResourceManager.AppContainers
         /// <exception cref="ArgumentNullException"> <paramref name="privateEndpointConnectionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="privateEndpointConnectionName"/> is an empty string, and was expected to be non-empty. </exception>
         [ForwardsClientCalls]
-        public virtual Response<ContainerAppPrivateEndpointConnectionResource> GetContainerAppPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
+        public virtual Response<ContainerAppContainerPrivateEndpointConnectionResource> GetContainerAppContainerPrivateEndpointConnection(string privateEndpointConnectionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(privateEndpointConnectionName, nameof(privateEndpointConnectionName));
 
-            return GetContainerAppPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
+            return GetContainerAppContainerPrivateEndpointConnections().Get(privateEndpointConnectionName, cancellationToken);
         }
 
         /// <summary> Gets a collection of ContainerAppDetectorPropertyRevisions in the <see cref="ContainerAppResource"/>. </summary>
