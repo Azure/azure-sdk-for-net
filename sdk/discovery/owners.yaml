@@ -1,0 +1,12 @@
+# Ownership for the discovery service directory.
+
+version: 1
+
+paths:
+  - path: Azure.AI.Discovery/
+    owners: [ahall-msft, danica-du, mike-menaker]
+    pr-labels: [Discovery]
+
+label-owners:
+  - labels: [Discovery]
+    service-owners: [ahall-msft, danica-du, mike-menaker]

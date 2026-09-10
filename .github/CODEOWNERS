@@ -303,8 +303,9 @@
 # ServiceOwners: @abhinav-ghai @johngallardo @sjiherzig
 
 # PRLabel: %Discovery
-/sdk/discovery/Azure.AI.Discovery    @ahall-msft @danica-du @mike-menaker
+/sdk/discovery/Azure.AI.Discovery/    @ahall-msft @danica-du @mike-menaker
 
+# Sources: sdk/discovery/owners.yaml
 # ServiceLabel: %Discovery
 # ServiceOwners: @ahall-msft @danica-du @mike-menaker
 
@@ -538,12 +539,6 @@
 # Sources: sdk/storage/owners.yaml, sdk/storagesync/owners.yaml
 # ServiceLabel: %Storage
 # ServiceOwners: @amnguye @jalauzon-msft @jaschrep-msft @nickliu-msft @seanmcc-msft
-
-# PRLabel: %Tables
-/sdk/tables/    @JonathanCrd @jsquire
-
-# AzureSdkOwners: @JonathanCrd @jsquire
-# ServiceLabel: %Tables
 
 # PRLabel: %Voice Live
 /sdk/voicelive/Azure.AI.VoiceLive/    @amber-yujueWang @emilyjiji @pankopon @rhurey @xitzhang
