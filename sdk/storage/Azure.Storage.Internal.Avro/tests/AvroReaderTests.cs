@@ -154,6 +154,118 @@ namespace Azure.Storage.Internal.Avro.Tests
             stream.WriteByte((byte)(bytes.Length << 1));
             stream.Write(bytes, 0, bytes.Length);
         }
+
+        /// <summary>
+        /// 16-byte sync marker used by <see cref="BuildMultiBlockAvro"/> for the header and every block trailer.
+        /// </summary>
+        private static readonly byte[] s_syncMarker =
+            new byte[16] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+
+        /// <summary>
+        /// Writes an Avro-encoded long (zigzag varint).
+        /// </summary>
+        private static void WriteAvroLong(MemoryStream stream, long value)
+        {
+            ulong zigzag = (ulong)((value << 1) ^ (value >> 63));
+            byte[] encoded = EncodeVarint(zigzag);
+            stream.Write(encoded, 0, encoded.Length);
+        }
+
+        /// <summary>
+        /// Builds a valid, uncompressed multi-block Avro file whose item schema is a bare <c>long</c>.
+        /// Each element of <paramref name="blocks"/> becomes one Avro block containing the supplied longs,
+        /// so callers can exercise reads that span block boundaries.
+        /// </summary>
+        private static byte[] BuildMultiBlockAvro(long[][] blocks)
+        {
+            using MemoryStream stream = new MemoryStream();
+
+            // Magic bytes: "Obj\1".
+            stream.Write(new byte[] { 0x4F, 0x62, 0x6A, 0x01 }, 0, 4);
+
+            // Metadata map with a single entry: avro.schema => "long". Codec is omitted (null).
+            WriteAvroLong(stream, 1);                 // one entry
+            WriteAvroString(stream, "avro.schema");
+            WriteAvroString(stream, "\"long\"");
+            WriteAvroLong(stream, 0);                 // map terminator
+
+            stream.Write(s_syncMarker, 0, s_syncMarker.Length);
+
+            foreach (long[] block in blocks)
+            {
+                WriteAvroLong(stream, block.Length);  // item count
+                WriteAvroLong(stream, 0);             // block byte size (ignored by AvroReader)
+                foreach (long id in block)
+                {
+                    WriteAvroLong(stream, id);
+                }
+                stream.Write(s_syncMarker, 0, s_syncMarker.Length);
+            }
+
+            return stream.ToArray();
+        }
+
+        /// <summary>
+        /// Regression test for change feed continuation tokens: enumerating with the smallest possible
+        /// page (one event at a time) and resuming from a fresh <see cref="AvroReader"/> at every boundary
+        /// must reproduce the full event sequence exactly once, with no duplicates and no gaps.
+        /// This exercises the seekable-stream resume path (blob OpenRead and MemoryStream both report an
+        /// absolute <see cref="Stream.Position"/>), which previously double-counted the resume offset when
+        /// a resumed reader crossed an Avro block boundary.
+        /// </summary>
+        [Test]
+        public async Task Resume_AtEveryBoundary_NoDuplicateOrMissingEvents()
+        {
+            long[][] blocks = new long[][]
+            {
+                new long[] { 100, 101, 102 },
+                new long[] { 200, 201 },
+                new long[] { 300, 301, 302, 303 },
+                new long[] { 400 },
+            };
+            byte[] avro = BuildMultiBlockAvro(blocks);
+
+            // Expected full sequence, read in a single pass.
+            List<long> expected = new List<long>();
+            {
+                AvroReader reader = new AvroReader(new MemoryStream(avro));
+                await reader.Initalize(async: true);
+                while (reader.HasNext())
+                {
+                    expected.Add((long)await reader.Next(async: true));
+                }
+            }
+
+            // Chained-token simulation: after every event, capture (BlockOffset, ObjectIndex),
+            // round-trip through a brand-new resumed reader, and continue. This mirrors enumerating
+            // with pageSize == 1 and resuming from the continuation token at every boundary.
+            List<long> got = new List<long>();
+            AvroReader current = new AvroReader(new MemoryStream(avro));
+            await current.Initalize(async: true);
+            while (current.HasNext())
+            {
+                got.Add((long)await current.Next(async: true));
+                long blockOffset = current.BlockOffset;
+                long objectIndex = current.ObjectIndex;
+
+                // The whole file is consumed once the block offset reaches the end. A production
+                // ShardFactory only resumes a chunk when its length is strictly greater than the
+                // cursor's block offset, so stop here rather than resuming at (or past) EOF.
+                if (blockOffset >= avro.Length)
+                {
+                    break;
+                }
+
+                MemoryStream dataStream = new MemoryStream(avro) { Position = blockOffset };
+                MemoryStream headStream = new MemoryStream(avro);
+                current = new AvroReader(dataStream, headStream, blockOffset, objectIndex);
+                await current.Initalize(async: true);
+            }
+
+            CollectionAssert.AreEqual(expected, got);
+            CollectionAssert.AllItemsAreUnique(got);
+        }
+
         [Test]
         public void ReadFixedBytesAsync_NegativeLength_ThrowsInvalidDataException()
         {

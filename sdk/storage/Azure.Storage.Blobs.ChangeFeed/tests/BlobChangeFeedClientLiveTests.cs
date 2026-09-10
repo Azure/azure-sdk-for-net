@@ -146,7 +146,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                         firstPageEventIds.Add(e.Id);
                     }
                     continuationToken = page.ContinuationToken;
-                    if (firstPageEventIds.Count >= 10) break;
+                    if (firstPageEventIds.Count >= 10)
+                        break;
                 }
             }
             else
@@ -158,7 +159,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                         firstPageEventIds.Add(e.Id);
                     }
                     continuationToken = page.ContinuationToken;
-                    if (firstPageEventIds.Count >= 10) break;
+                    if (firstPageEventIds.Count >= 10)
+                        break;
                 }
             }
 
@@ -176,7 +178,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                         {
                             secondPageEventIds.Add(e.Id);
                         }
-                        if (secondPageEventIds.Count >= 10) break;
+                        if (secondPageEventIds.Count >= 10)
+                            break;
                     }
                 }
                 else
@@ -187,7 +190,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                         {
                             secondPageEventIds.Add(e.Id);
                         }
-                        if (secondPageEventIds.Count >= 10) break;
+                        if (secondPageEventIds.Count >= 10)
+                            break;
                     }
                 }
 
@@ -293,15 +297,15 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
                 ? await tailing.GetLastConsumableAsync()
                 : tailing.GetLastConsumable();
 
-            // Act - tailing reader. Iterate via AsPages so we can also assert that no page
-            // carries a continuation token (resumption is unsupported in non-finalized mode).
+            // Act - tailing reader. Iterate via AsPages so we can also assert that each page
+            // carries a continuation token (resumption is supported in non-finalized mode).
             List<BlobChangeFeedEvent> tailingEvents = new List<BlobChangeFeedEvent>();
             if (IsAsync)
             {
                 await foreach (Page<BlobChangeFeedEvent> page in tailing.GetChangesAsync().AsPages())
                 {
-                    Assert.IsNull(page.ContinuationToken,
-                        "Pages produced with IncludeNonFinalizedEvents=true must not carry a continuation token.");
+                    Assert.IsNotNull(page.ContinuationToken,
+                        "Pages produced with IncludeNonFinalizedEvents=true must carry a continuation token so callers can resume.");
                     tailingEvents.AddRange(page.Values);
                 }
             }
@@ -309,8 +313,8 @@ namespace Azure.Storage.Blobs.ChangeFeed.Tests
             {
                 foreach (Page<BlobChangeFeedEvent> page in tailing.GetChanges().AsPages())
                 {
-                    Assert.IsNull(page.ContinuationToken,
-                        "Pages produced with IncludeNonFinalizedEvents=true must not carry a continuation token.");
+                    Assert.IsNotNull(page.ContinuationToken,
+                        "Pages produced with IncludeNonFinalizedEvents=true must carry a continuation token so callers can resume.");
                     tailingEvents.AddRange(page.Values);
                 }
             }

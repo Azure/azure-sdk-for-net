@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs;
 using Azure.Storage.ChangeFeed.Common;
@@ -28,7 +29,9 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             DateTimeOffset? startTime = default,
             DateTimeOffset? endTime = default,
             string continuation = default,
-            bool isBatched = false)
+            bool isBatched = false,
+            CancellationToken cancellationToken = default)
+            : base(cancellationToken)
         {
             _client = client;
             _maxTransferSize = maxTransferSize;
@@ -47,7 +50,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             if (continuationToken != null)
                 throw new ArgumentException("Continuation not supported. Use ShareChangeFeedClient.GetChanges(string) instead.");
 
-            (BlobContainerClient containerClient, ChangeFeedConfiguration<ShareChangeFeedEvent> config) = _client.ResolveContainerAsync(async: false, cancellationToken: default).EnsureCompleted();
+            (BlobContainerClient containerClient, ChangeFeedConfiguration<ShareChangeFeedEvent> config) = _client.ResolveContainerAsync(async: false, cancellationToken: CancellationToken).EnsureCompleted();
 
             // Deserialize the outer Files-only envelope on resume so we can compare the
             // last-seen reset marker against the current pointer.
@@ -86,7 +89,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
             ShareChangeFeedResetPointer pointer = ResetMarkerReader.TryReadPointerAsync(
                 containerClient,
                 async: false,
-                cancellationToken: default)
+                cancellationToken: CancellationToken)
                 .EnsureCompleted();
 
             ShareChangeFeedResetEvent resetToEmit = null;
@@ -110,7 +113,7 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                         containerClient,
                         pointer.LatestMarkerPath,
                         async: false,
-                        cancellationToken: default)
+                        cancellationToken: CancellationToken)
                         .EnsureCompleted();
 
                     resetToEmit = ResetMarkerReader.BuildResetEvent(pointer, perEvent);
@@ -132,14 +135,14 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
                 ? factory.BuildChangeFeed(
                     innerCursor,
                     async: false,
-                    cancellationToken: default)
+                    cancellationToken: CancellationToken)
                     .EnsureCompleted()
                 : factory.BuildChangeFeed(
                     _startTime,
                     _endTime,
                     continuation: null,
                     async: false,
-                    cancellationToken: default)
+                    cancellationToken: CancellationToken)
                     .EnsureCompleted();
 
             bool resetEmitted = false;
@@ -147,9 +150,11 @@ namespace Azure.Storage.Files.Shares.ChangeFeed
 
             while (changeFeed.HasNext())
             {
+                CancellationToken.ThrowIfCancellationRequested();
                 Page<ShareChangeFeedEvent> rawPage = changeFeed.GetPage(
                     async: false,
-                    pageSize: pageSize)
+                    pageSize: pageSize,
+                    cancellationToken: CancellationToken)
                     .EnsureCompleted();
 
                 List<ShareChangeFeedEvent> events = new List<ShareChangeFeedEvent>();

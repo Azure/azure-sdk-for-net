@@ -65,6 +65,38 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         }
 
         /// <summary>
+        /// Wires <paramref name="containerClient"/> so <c>GetBlobClient(path).GetProperties()</c>
+        /// reports <paramref name="authoritativeLength"/>. This models the authoritative blob length
+        /// re-read that <see cref="ShardFactoryBase{TEvent}"/> performs when the container listing's
+        /// <c>ContentLength</c> lags the true length of a still-appending (non-finalized) chunk blob.
+        /// </summary>
+        private void SetupChunkProperties(
+            Mock<BlobContainerClient> containerClient,
+            string path,
+            long authoritativeLength)
+        {
+            BlobProperties properties = BlobsModelFactory.BlobProperties(contentLength: authoritativeLength);
+            Mock<BlobClient> blobClient = new Mock<BlobClient>();
+
+            if (IsAsync)
+            {
+                blobClient.Setup(b => b.GetPropertiesAsync(
+                    It.IsAny<BlobRequestConditions>(),
+                    It.IsAny<CancellationToken>()))
+                    .ReturnsAsync(Response.FromValue(properties, Mock.Of<Response>()));
+            }
+            else
+            {
+                blobClient.Setup(b => b.GetProperties(
+                    It.IsAny<BlobRequestConditions>(),
+                    It.IsAny<CancellationToken>()))
+                    .Returns(Response.FromValue(properties, Mock.Of<Response>()));
+            }
+
+            containerClient.Setup(c => c.GetBlobClient(path)).Returns(blobClient.Object);
+        }
+
+        /// <summary>
         /// Returns a chunk-factory mock that responds to any <c>BuildChunk</c> call by returning
         /// a non-empty <see cref="ChunkBase{TEvent}"/> mock with a stable <c>ChunkPath</c>.
         /// </summary>
@@ -171,9 +203,10 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
         }
 
         /// <summary>
-        /// When the cursor's <c>BlockOffset</c> exceeds the current chunk's <c>ContentLength</c>,
-        /// the factory throws — this guards against silently skipping past the end of a chunk
-        /// when a cursor was generated against a different (longer) version of the blob.
+        /// When the cursor's <c>BlockOffset</c> exceeds the chunk's authoritative length (confirmed
+        /// by a fresh GetProperties re-read, not just the container listing), the factory throws.
+        /// This guards against silently skipping past the end of a chunk when a cursor was generated
+        /// against a different (longer) version of the blob.
         /// </summary>
         [Test]
         public void BuildShard_BlockOffsetExceedsContentLength_Throws()
@@ -183,6 +216,8 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             {
                 ("chunk1.avro", 50L),  // smaller than the cursor's BlockOffset
             });
+            // Authoritative length is also below the offset, so the offset is genuinely invalid.
+            SetupChunkProperties(containerClient, "chunk1.avro", authoritativeLength: 50L);
 
             Mock<ChunkFactoryBase<TestEvent>> chunkFactory = BuildChunkFactoryMock();
 
@@ -211,6 +246,8 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
                 ("chunk1.avro", 100L),
                 ("chunk2.avro", 1000L),
             });
+            // Authoritative length confirms the cursor sits exactly at the end of chunk1.
+            SetupChunkProperties(containerClient, "chunk1.avro", authoritativeLength: 100L);
 
             Mock<ChunkFactoryBase<TestEvent>> chunkFactory = BuildChunkFactoryMock();
 
@@ -234,6 +271,98 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
             chunkFactory.Verify(f => f.BuildChunk(
                 It.IsAny<bool>(),
                 "chunk1.avro",
+                It.IsAny<long>(),
+                It.IsAny<long>(),
+                It.IsAny<CancellationToken>()), Times.Never);
+        }
+
+        /// <summary>
+        /// Reproduces the non-finalized resume bug: the container listing reports a stale
+        /// <c>ContentLength</c> (smaller than the cursor's <c>BlockOffset</c>) because the chunk
+        /// append blob is still being appended to, but the authoritative GetProperties re-read
+        /// reports the true, larger length. The factory must resume the chunk at the cursor offset
+        /// instead of falsely throwing <see cref="ArgumentException"/>.
+        /// </summary>
+        [Test]
+        public async Task BuildShard_StaleListingBelowOffset_ResumesFromAuthoritativeLength()
+        {
+            const long blockOffset = 12592;
+            const long eventIndex = 3;
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            SetupChunkListing(containerClient, new[]
+            {
+                ("chunk1.avro", 8000L),  // stale: lags behind the true blob length
+            });
+            // The blob has actually grown past the cursor offset.
+            SetupChunkProperties(containerClient, "chunk1.avro", authoritativeLength: 20000L);
+
+            Mock<ChunkFactoryBase<TestEvent>> chunkFactory = BuildChunkFactoryMock();
+
+            ShardCursor cursor = new ShardCursor("chunk1.avro", blockOffset, eventIndex);
+
+            ShardFactoryBase<TestEvent> factory = new ShardFactoryBase<TestEvent>(
+                containerClient.Object,
+                chunkFactory.Object);
+
+            ShardBase<TestEvent> shard = await factory.BuildShard(IsAsync, ShardPath, cursor);
+
+            // The current chunk is resumed at the cursor offset rather than being rejected.
+            chunkFactory.Verify(f => f.BuildChunk(
+                It.IsAny<bool>(),
+                "chunk1.avro",
+                blockOffset,
+                eventIndex,
+                It.IsAny<CancellationToken>()), Times.Once);
+
+            ShardCursor outCursor = shard.GetCursor();
+            Assert.AreEqual("chunk1.avro", outCursor.CurrentChunkPath);
+            Assert.AreEqual(blockOffset, outCursor.BlockOffset);
+            Assert.AreEqual(eventIndex, outCursor.EventIndex);
+        }
+
+        /// <summary>
+        /// When the listing reports <c>ContentLength == BlockOffset</c> but the chunk blob has
+        /// actually grown past the offset (authoritative length is larger), the factory must resume
+        /// reading the same chunk at the offset rather than prematurely advancing to the next chunk
+        /// and skipping the newly appended events.
+        /// </summary>
+        [Test]
+        public async Task BuildShard_StaleListingEqualsOffset_ResumesSameChunkNotNext()
+        {
+            const long blockOffset = 100;
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            SetupChunkListing(containerClient, new[]
+            {
+                ("chunk1.avro", 100L),   // stale: equals the offset
+                ("chunk2.avro", 1000L),
+            });
+            // chunk1 has actually grown past the offset — more events are available in it.
+            SetupChunkProperties(containerClient, "chunk1.avro", authoritativeLength: 5000L);
+
+            Mock<ChunkFactoryBase<TestEvent>> chunkFactory = BuildChunkFactoryMock();
+
+            ShardCursor cursor = new ShardCursor("chunk1.avro", blockOffset, eventIndex: 0);
+
+            ShardFactoryBase<TestEvent> factory = new ShardFactoryBase<TestEvent>(
+                containerClient.Object,
+                chunkFactory.Object);
+
+            ShardBase<TestEvent> shard = await factory.BuildShard(IsAsync, ShardPath, cursor);
+
+            // chunk1 is resumed at the offset...
+            chunkFactory.Verify(f => f.BuildChunk(
+                It.IsAny<bool>(),
+                "chunk1.avro",
+                blockOffset,
+                0L,
+                It.IsAny<CancellationToken>()), Times.Once);
+
+            // ...and chunk2 is NOT prematurely loaded.
+            chunkFactory.Verify(f => f.BuildChunk(
+                It.IsAny<bool>(),
+                "chunk2.avro",
                 It.IsAny<long>(),
                 It.IsAny<long>(),
                 It.IsAny<CancellationToken>()), Times.Never);

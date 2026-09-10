@@ -88,7 +88,20 @@ namespace Azure.Storage.ChangeFeed.Common
                 }
 
                 BlobItem currentChunkBlobItem = chunks.Dequeue();
-                if (currentChunkBlobItem.Properties.ContentLength > blockOffset)
+                long chunkLength = currentChunkBlobItem.Properties.ContentLength ?? 0;
+
+                // The ContentLength reported by the container listing can lag the true length of a
+                // chunk (append) blob that is still being appended to in a non-finalized segment.
+                // When resuming from a cursor whose block offset is at or beyond the listed length,
+                // re-read the authoritative length before concluding that the offset is invalid or
+                // that the chunk is exhausted. This avoids falsely rejecting a cursor that was issued
+                // moments earlier at the blob's true length.
+                if (blockOffset > 0 && chunkLength <= blockOffset)
+                {
+                    chunkLength = await GetChunkLength(async, currentChunkBlobItem.Name).ConfigureAwait(false);
+                }
+
+                if (chunkLength > blockOffset)
                 {
                     currentChunk = await _chunkFactory.BuildChunk(
                         async,
@@ -97,7 +110,7 @@ namespace Azure.Storage.ChangeFeed.Common
                         eventIndex)
                         .ConfigureAwait(false);
                 }
-                else if (currentChunkBlobItem.Properties.ContentLength < blockOffset)
+                else if (chunkLength < blockOffset)
                 {
                     throw new ArgumentException($"Cursor contains a blockOffset that is invalid. BlockOffset={blockOffset}");
                 }
@@ -117,6 +130,23 @@ namespace Azure.Storage.ChangeFeed.Common
                 currentChunk,
                 chunkIndex,
                 shardPath);
+        }
+
+        /// <summary>
+        /// Reads the authoritative length of a chunk blob via a fresh GetProperties call.
+        /// Used to resolve stale lengths reported by the container listing for append blobs that are
+        /// still being appended to in non-finalized segments.
+        /// </summary>
+        /// <param name="async">Whether to use async APIs.</param>
+        /// <param name="chunkPath">Blob path of the chunk.</param>
+        /// <returns>The current content length of the chunk blob.</returns>
+        private async Task<long> GetChunkLength(bool async, string chunkPath)
+        {
+            BlobClient blobClient = _containerClient.GetBlobClient(chunkPath);
+            BlobProperties properties = async
+                ? (await blobClient.GetPropertiesAsync().ConfigureAwait(false)).Value
+                : blobClient.GetProperties().Value;
+            return properties.ContentLength;
         }
     }
 }

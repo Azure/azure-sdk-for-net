@@ -173,18 +173,27 @@ namespace Azure.Storage.ChangeFeed.Common
                 changeFeedContainerExists = _containerClient.Exists(cancellationToken: cancellationToken);
 
             if (!changeFeedContainerExists)
-                throw new ArgumentException("Change Feed hasn't been enabled on this account, or is currently being enabled.");
+                throw ChangeFeedErrors.ChangeFeedNotEnabled();
 
-            DateTimeOffset? lastConsumableNullable = await GetLastConsumableInternal(
+            MetaSegmentBoundaries? boundaries = await GetMetaSegmentBoundariesInternal(
                 _containerClient,
                 _config.MetaSegmentsPath,
                 async,
                 cancellationToken)
                 .ConfigureAwait(false);
 
+            DateTimeOffset? lastConsumableNullable = boundaries?.LastConsumable;
+
             if (lastConsumableNullable.HasValue)
             {
-                lastConsumable = lastConsumableNullable.Value;
+                // When the caller has not opted in to non-finalized events, cap at the last-finalized
+                // (lfz) boundary when the service published one. lfz can be earlier than
+                // lastConsumable because lastConsumable may point past segments still in the
+                // "Publishing" state (Azure Files). When lfz is absent or malformed, fall back to
+                // lastConsumable, which preserves the Blob change feed's behavior.
+                lastConsumable = _includeNonFinalizedEvents
+                    ? lastConsumableNullable.Value
+                    : (boundaries.Value.LastFinalized ?? lastConsumableNullable.Value);
             }
             else if (_includeNonFinalizedEvents)
             {
@@ -206,7 +215,8 @@ namespace Azure.Storage.ChangeFeed.Common
                     years.Dequeue();
             }
 
-            if (years.Count == 0) return ChangeFeedBase<TEvent>.Empty();
+            if (years.Count == 0)
+                return ChangeFeedBase<TEvent>.Empty();
 
             // When _includeNonFinalizedEvents is true, do not cap segment enumeration at the
             // last consumable watermark — pass the user's endTime through directly.
@@ -245,7 +255,6 @@ namespace Azure.Storage.ChangeFeed.Common
                 startTime,
                 endTime,
                 _config,
-                _includeNonFinalizedEvents,
                 disableEventTimeFilter);
         }
 
@@ -311,6 +320,33 @@ namespace Azure.Storage.ChangeFeed.Common
             bool async,
             CancellationToken cancellationToken)
         {
+            MetaSegmentBoundaries? boundaries = await GetMetaSegmentBoundariesInternal(
+                containerClient,
+                metaSegmentsPath,
+                async,
+                cancellationToken)
+                .ConfigureAwait(false);
+
+            return boundaries?.LastConsumable;
+        }
+
+        /// <summary>
+        /// Downloads and parses the meta/segments.json file, extracting both the required
+        /// <c>lastConsumable</c> watermark and the optional last-finalized (<c>lfz</c>) timestamp
+        /// found under <c>storageDiagnostics.data.lfz</c>. Both values are read from a single blob
+        /// download so callers do not pay for two round-trips.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="MetaSegmentBoundaries"/> describing the parsed timestamps, or <c>null</c> if
+        /// the metadata blob does not exist. The last-finalized timestamp is <c>null</c> when it is
+        /// absent (e.g. Blob change feed, whose metadata has no <c>lfz</c>) or malformed.
+        /// </returns>
+        internal static async Task<MetaSegmentBoundaries?> GetMetaSegmentBoundariesInternal(
+            BlobContainerClient containerClient,
+            string metaSegmentsPath,
+            bool async,
+            CancellationToken cancellationToken)
+        {
             BlobClient blobClient = containerClient.GetBlobClient(metaSegmentsPath);
             BlobDownloadStreamingResult blobDownloadInfo;
             try
@@ -336,12 +372,73 @@ namespace Azure.Storage.ChangeFeed.Common
                 else
                     jsonMetaSegment = JsonDocument.Parse(blobDownloadInfo.Content);
 
-                return jsonMetaSegment.RootElement.GetProperty("lastConsumable").GetDateTimeOffset();
+                JsonElement root = jsonMetaSegment.RootElement;
+                DateTimeOffset lastConsumable = root.GetProperty("lastConsumable").GetDateTimeOffset();
+                DateTimeOffset? lastFinalized = TryReadLastFinalized(root);
+
+                return new MetaSegmentBoundaries(lastConsumable, lastFinalized);
             }
             finally
             {
                 jsonMetaSegment?.Dispose();
             }
         }
+
+        /// <summary>
+        /// Reads the optional last-finalized (<c>lfz</c>) timestamp from
+        /// <c>storageDiagnostics.data.lfz</c>. Returns <c>null</c> when any level of the path is
+        /// missing or when the value cannot be parsed as a timestamp, so unrelated metadata shapes
+        /// (such as the Blob change feed's) fall back to the <c>lastConsumable</c> watermark.
+        /// </summary>
+        private static DateTimeOffset? TryReadLastFinalized(JsonElement root)
+        {
+            if (root.ValueKind == JsonValueKind.Object
+                && root.TryGetProperty("storageDiagnostics", out JsonElement storageDiagnostics)
+                && storageDiagnostics.ValueKind == JsonValueKind.Object
+                && storageDiagnostics.TryGetProperty("data", out JsonElement data)
+                && data.ValueKind == JsonValueKind.Object
+                && data.TryGetProperty("lfz", out JsonElement lfz))
+            {
+                try
+                {
+                    return lfz.GetDateTimeOffset();
+                }
+                catch (FormatException)
+                {
+                    return null;
+                }
+                catch (InvalidOperationException)
+                {
+                    return null;
+                }
+            }
+
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// The finalization boundaries parsed from a change feed's <c>meta/segments.json</c> file.
+    /// </summary>
+    internal readonly struct MetaSegmentBoundaries
+    {
+        public MetaSegmentBoundaries(DateTimeOffset? lastConsumable, DateTimeOffset? lastFinalized)
+        {
+            LastConsumable = lastConsumable;
+            LastFinalized = lastFinalized;
+        }
+
+        /// <summary>
+        /// The <c>lastConsumable</c> watermark. For the Blob change feed this already represents the
+        /// finalized boundary; for the Files change feed it can point past segments still in the
+        /// <c>Publishing</c> state.
+        /// </summary>
+        public DateTimeOffset? LastConsumable { get; }
+
+        /// <summary>
+        /// The optional last-finalized (<c>lfz</c>) timestamp from <c>storageDiagnostics.data.lfz</c>.
+        /// <c>null</c> when absent or malformed.
+        /// </summary>
+        public DateTimeOffset? LastFinalized { get; }
     }
 }
