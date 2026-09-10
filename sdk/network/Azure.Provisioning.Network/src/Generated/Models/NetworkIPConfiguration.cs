@@ -41,6 +41,42 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the PrivateIPAddress. </summary>
+        public BicepValue<string> PrivateIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddress;
+            }
+        }
+
+        /// <summary> Gets the PrivateIPAllocationMethod. </summary>
+        public BicepValue<NetworkIPAllocationMethod> PrivateIPAllocationMethod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAllocationMethod;
+            }
+        }
+
+        /// <summary> Gets the Subnet. </summary>
+        public SubnetResource Subnet
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Subnet;
+            }
+        }
+
+        /// <summary> Gets the PublicIPAddress. </summary>
+        public PublicIPAddress PublicIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PublicIPAddress;
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {

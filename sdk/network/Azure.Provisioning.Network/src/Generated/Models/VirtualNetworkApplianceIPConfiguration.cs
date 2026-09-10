@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Network
     public partial class VirtualNetworkApplianceIPConfiguration : NetworkSubResource
     {
         private VirtualNetworkApplianceIPConfigurationProperties _properties;
+        private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
         private BicepValue<ResourceType> _resourceType;
 
@@ -30,6 +31,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _properties;
+            }
+        }
+
+        /// <summary> Gets the Name. </summary>
+        public BicepValue<string> Name
+        {
+            get
+            {
+                Initialize();
+                return _name;
             }
         }
 
@@ -53,6 +64,33 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the PrivateIPAddress. </summary>
+        public BicepValue<string> PrivateIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddress;
+            }
+        }
+
+        /// <summary> Gets the PrivateIPAllocationMethod. </summary>
+        public BicepValue<NetworkIPAllocationMethod> PrivateIPAllocationMethod
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAllocationMethod;
+            }
+        }
+
+        /// <summary> Gets the Primary. </summary>
+        public BicepValue<bool> Primary
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Primary;
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {
@@ -62,11 +100,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the PrivateIPAddressVersion. </summary>
+        public BicepValue<NetworkIPVersion> PrivateIPAddressVersion
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddressVersion;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for VirtualNetworkApplianceIPConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<VirtualNetworkApplianceIPConfigurationProperties>(nameof(Properties), new string[] { "properties" });
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();

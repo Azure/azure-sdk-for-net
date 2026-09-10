@@ -211,6 +211,32 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> SubnetId
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new IPAllocationPropertiesFormat();
+                }
+                return Properties.SubnetId;
+            }
+        }
+
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> VirtualNetworkId
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new IPAllocationPropertiesFormat();
+                }
+                return Properties.VirtualNetworkId;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for IPAllocation. </summary>
         protected override void DefineProvisionableProperties()
         {

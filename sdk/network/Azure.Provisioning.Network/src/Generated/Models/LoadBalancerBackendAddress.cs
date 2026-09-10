@@ -69,6 +69,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the LoadBalancerFrontendIPConfiguration. </summary>
+        public BicepValue<ResourceIdentifier> LoadBalancerFrontendIPConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LoadBalancerFrontendIPConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancerBackendAddressPropertiesFormat();
+                }
+                Properties.LoadBalancerFrontendIPConfiguration = value;
+            }
+        }
+
         /// <summary> Gets the InboundNatRulesPortMapping. </summary>
         public BicepList<NatRulePortMapping> InboundNatRulesPortMapping
         {

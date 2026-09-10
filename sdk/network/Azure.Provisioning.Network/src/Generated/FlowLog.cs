@@ -17,6 +17,7 @@ namespace Azure.Provisioning.Network
     /// <summary> A flow log resource. </summary>
     public partial class FlowLog : ProvisionableResource
     {
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
@@ -30,6 +31,16 @@ namespace Azure.Provisioning.Network
         /// <param name="resourceVersion"> The resource API version. </param>
         public FlowLog(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/networkWatchers/flowLogs", resourceVersion ?? "2025-05-01")
         {
+        }
+
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
+        {
+            get
+            {
+                Initialize();
+                return _id;
+            }
         }
 
         /// <summary> Gets or sets the Name. </summary>
@@ -248,7 +259,7 @@ namespace Azure.Provisioning.Network
         }
 
         /// <summary> Gets or sets the Format. </summary>
-        public FlowLogProperties Format
+        public FlowLogFormatParameters Format
         {
             get
             {
@@ -277,10 +288,28 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the NetworkWatcherFlowAnalyticsConfiguration. </summary>
+        public TrafficAnalyticsConfigurationProperties NetworkWatcherFlowAnalyticsConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.NetworkWatcherFlowAnalyticsConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new FlowLogPropertiesFormat();
+                }
+                Properties.NetworkWatcherFlowAnalyticsConfiguration = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for FlowLog. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });

@@ -17,6 +17,7 @@ namespace Azure.Provisioning.Network
         private BicepValue<VirtualNetworkGatewayConnectionStatus> _connectionStatus;
         private BicepValue<long> _ingressBytesTransferred;
         private BicepValue<long> _egressBytesTransferred;
+        private BicepValue<string> _lastConnectionEstablishedUtcTime;
 
         /// <summary> Creates a new TunnelConnectionHealth. </summary>
         public TunnelConnectionHealth()
@@ -63,6 +64,16 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the LastConnectionEstablishedUtcTime. </summary>
+        public BicepValue<string> LastConnectionEstablishedUtcTime
+        {
+            get
+            {
+                Initialize();
+                return _lastConnectionEstablishedUtcTime;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for TunnelConnectionHealth. </summary>
         protected override void DefineProvisionableProperties()
         {
@@ -71,6 +82,7 @@ namespace Azure.Provisioning.Network
             _connectionStatus = DefineProperty<VirtualNetworkGatewayConnectionStatus>(nameof(ConnectionStatus), new string[] { "connectionStatus" }, isOutput: true);
             _ingressBytesTransferred = DefineProperty<long>(nameof(IngressBytesTransferred), new string[] { "ingressBytesTransferred" }, isOutput: true);
             _egressBytesTransferred = DefineProperty<long>(nameof(EgressBytesTransferred), new string[] { "egressBytesTransferred" }, isOutput: true);
+            _lastConnectionEstablishedUtcTime = DefineProperty<string>(nameof(LastConnectionEstablishedUtcTime), new string[] { "lastConnectionEstablishedUtcTime" }, isOutput: true);
             DefineAdditionalProperties();
         }
 

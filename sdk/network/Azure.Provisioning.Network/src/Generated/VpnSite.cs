@@ -224,6 +224,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the VpnSiteLinks. </summary>
+        public BicepList<VpnSiteLink> VpnSiteLinks
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VpnSiteLinks;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnSiteProperties();
+                }
+                Properties.VpnSiteLinks = value;
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> VirtualWanId
         {

@@ -229,6 +229,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the ContinuousCapture. </summary>
+        public BicepValue<bool> ContinuousCapture
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContinuousCapture;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PacketCaptureResultProperties();
+                }
+                Properties.ContinuousCapture = value;
+            }
+        }
+
         /// <summary> Gets or sets the CaptureSettings. </summary>
         public PacketCaptureSettings CaptureSettings
         {

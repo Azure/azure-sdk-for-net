@@ -174,6 +174,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the ExpressRouteCircuit. </summary>
+        public BicepValue<ResourceIdentifier> ExpressRouteCircuit
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteCircuit;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteCrossConnectionProperties();
+                }
+                Properties.ExpressRouteCircuit = value;
+            }
+        }
+
         /// <summary> Gets or sets the ServiceProviderProvisioningState. </summary>
         public BicepValue<ServiceProviderProvisioningState> ServiceProviderProvisioningState
         {

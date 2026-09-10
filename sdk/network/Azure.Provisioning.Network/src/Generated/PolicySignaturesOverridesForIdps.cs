@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Network
     public partial class PolicySignaturesOverridesForIdps : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
+        private BicepValue<string> _name;
         private SignaturesOverridesProperties _properties;
         private ResourceReference<FirewallPolicy> _parent;
 
@@ -32,6 +33,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _id;
+            }
+        }
+
+        /// <summary> Gets the Name. </summary>
+        public BicepValue<string> Name
+        {
+            get
+            {
+                Initialize();
+                return _name;
             }
         }
 
@@ -87,6 +98,7 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "default");
             _properties = DefineModelProperty<SignaturesOverridesProperties>(nameof(Properties), new string[] { "properties" });
             _parent = DefineResource<FirewallPolicy>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();

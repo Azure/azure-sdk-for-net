@@ -262,6 +262,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the ActiveActive. </summary>
+        public BicepValue<bool> ActiveActive
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ActiveActive;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VirtualNetworkGatewayPropertiesFormat();
+                }
+                Properties.ActiveActive = value;
+            }
+        }
+
         /// <summary> Gets or sets the EnableHighBandwidthVpnGateway. </summary>
         public BicepValue<bool> EnableHighBandwidthVpnGateway
         {

@@ -11,13 +11,13 @@ using Azure.Provisioning.Primitives;
 namespace Azure.Provisioning.Network
 {
     /// <summary> Parameters that define the flow log format. </summary>
-    public partial class FlowLogProperties : ProvisionableConstruct
+    public partial class FlowLogFormatParameters : ProvisionableConstruct
     {
         private BicepValue<FlowLogFormatType> _type;
         private BicepValue<int> _version;
 
-        /// <summary> Creates a new FlowLogProperties. </summary>
-        public FlowLogProperties()
+        /// <summary> Creates a new FlowLogFormatParameters. </summary>
+        public FlowLogFormatParameters()
         {
         }
 
@@ -51,7 +51,7 @@ namespace Azure.Provisioning.Network
             }
         }
 
-        /// <summary> Define all the provisionable properties for FlowLogProperties. </summary>
+        /// <summary> Define all the provisionable properties for FlowLogFormatParameters. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
@@ -60,7 +60,7 @@ namespace Azure.Provisioning.Network
             DefineAdditionalProperties();
         }
 
-        /// <summary> Define additional provisionable properties for FlowLogProperties that are not part of the generated code. </summary>
+        /// <summary> Define additional provisionable properties for FlowLogFormatParameters that are not part of the generated code. </summary>
         partial void DefineAdditionalProperties();
     }
 }

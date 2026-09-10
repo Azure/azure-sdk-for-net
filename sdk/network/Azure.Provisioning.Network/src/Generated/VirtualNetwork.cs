@@ -17,6 +17,7 @@ namespace Azure.Provisioning.Network
     /// <summary> Virtual Network resource. </summary>
     public partial class VirtualNetwork : ProvisionableResource
     {
+        private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
@@ -29,6 +30,16 @@ namespace Azure.Provisioning.Network
         /// <param name="resourceVersion"> The resource API version. </param>
         public VirtualNetwork(string bicepIdentifier, string resourceVersion = null) : base(bicepIdentifier, "Microsoft.Network/virtualNetworks", resourceVersion ?? "2025-05-01")
         {
+        }
+
+        /// <summary> Gets the Id. </summary>
+        public BicepValue<ResourceIdentifier> Id
+        {
+            get
+            {
+                Initialize();
+                return _id;
+            }
         }
 
         /// <summary> Gets or sets the Name. </summary>
@@ -376,6 +387,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });

@@ -109,6 +109,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the ExpressRouteConnections. </summary>
+        public BicepList<ExpressRouteConnection> ExpressRouteConnections
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteConnections;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteGatewayProperties();
+                }
+                Properties.ExpressRouteConnections = value;
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {
@@ -119,6 +136,23 @@ namespace Azure.Provisioning.Network
                     Properties = new ExpressRouteGatewayProperties();
                 }
                 return Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets or sets the VirtualHub. </summary>
+        public BicepValue<ResourceIdentifier> VirtualHub
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VirtualHub;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteGatewayProperties();
+                }
+                Properties.VirtualHub = value;
             }
         }
 

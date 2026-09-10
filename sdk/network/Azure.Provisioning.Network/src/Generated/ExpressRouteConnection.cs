@@ -94,6 +94,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the ExpressRouteCircuitPeering. </summary>
+        public BicepValue<ResourceIdentifier> ExpressRouteCircuitPeering
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ExpressRouteCircuitPeering;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteConnectionProperties();
+                }
+                Properties.ExpressRouteCircuitPeering = value;
+            }
+        }
+
         /// <summary> Gets or sets the AuthorizationKey. </summary>
         public BicepValue<string> AuthorizationKey
         {
@@ -176,6 +193,23 @@ namespace Azure.Provisioning.Network
                     Properties = new ExpressRouteConnectionProperties();
                 }
                 Properties.EnablePrivateLinkFastPath = value;
+            }
+        }
+
+        /// <summary> Gets or sets the RoutingConfiguration. </summary>
+        public RoutingConfigurationNfv RoutingConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoutingConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExpressRouteConnectionProperties();
+                }
+                Properties.RoutingConfiguration = value;
             }
         }
 

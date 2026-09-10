@@ -211,6 +211,36 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the CustomIPPrefixParent. </summary>
+        public BicepValue<ResourceIdentifier> CustomIPPrefixParent
+        {
+            get
+            {
+                return Properties is null ? default : Properties.CustomIPPrefixParent;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomIPPrefixPropertiesFormat();
+                }
+                Properties.CustomIPPrefixParent = value;
+            }
+        }
+
+        /// <summary> Gets the ChildCustomIPPrefixes. </summary>
+        public BicepList<WritableSubResource> ChildCustomIPPrefixes
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new CustomIPPrefixPropertiesFormat();
+                }
+                return Properties.ChildCustomIPPrefixes;
+            }
+        }
+
         /// <summary> Gets or sets the CommissionedState. </summary>
         public BicepValue<CommissionedState> CommissionedState
         {

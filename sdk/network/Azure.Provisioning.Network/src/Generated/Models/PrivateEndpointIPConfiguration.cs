@@ -16,6 +16,7 @@ namespace Azure.Provisioning.Network
     {
         private PrivateEndpointIPConfigurationProperties _properties;
         private BicepValue<string> _name;
+        private BicepValue<string> _type;
         private BicepValue<ETag> _eTag;
 
         /// <summary> Creates a new PrivateEndpointIPConfiguration. </summary>
@@ -50,6 +51,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 _name.Assign(value);
+            }
+        }
+
+        /// <summary> Gets the Type. </summary>
+        public BicepValue<string> Type
+        {
+            get
+            {
+                Initialize();
+                return _type;
             }
         }
 
@@ -97,12 +108,30 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the PrivateIPAddress. </summary>
+        public BicepValue<string> PrivateIPAddress
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateIPAddress;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateEndpointIPConfigurationProperties();
+                }
+                Properties.PrivateIPAddress = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for PrivateEndpointIPConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<PrivateEndpointIPConfigurationProperties>(nameof(Properties), new string[] { "properties" });
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
+            _type = DefineProperty<string>(nameof(Type), new string[] { "type" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();
         }

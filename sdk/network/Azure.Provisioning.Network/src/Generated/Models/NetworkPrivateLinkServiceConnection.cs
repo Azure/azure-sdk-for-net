@@ -138,6 +138,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the PrivateLinkServiceConnectionState. </summary>
+        public NetworkPrivateLinkServiceConnectionState PrivateLinkServiceConnectionState
+        {
+            get
+            {
+                return Properties is null ? default : Properties.PrivateLinkServiceConnectionState;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new PrivateLinkServiceConnectionProperties();
+                }
+                Properties.PrivateLinkServiceConnectionState = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for NetworkPrivateLinkServiceConnection. </summary>
         protected override void DefineProvisionableProperties()
         {

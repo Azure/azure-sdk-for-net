@@ -125,6 +125,40 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Interval. </summary>
+        public BicepValue<int> Interval
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Interval;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayProbePropertiesFormat();
+                }
+                Properties.Interval = value;
+            }
+        }
+
+        /// <summary> Gets or sets the Timeout. </summary>
+        public BicepValue<int> Timeout
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Timeout;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayProbePropertiesFormat();
+                }
+                Properties.Timeout = value;
+            }
+        }
+
         /// <summary> Gets or sets the UnhealthyThreshold. </summary>
         public BicepValue<int> UnhealthyThreshold
         {
@@ -207,6 +241,23 @@ namespace Azure.Provisioning.Network
                     Properties = new ApplicationGatewayProbePropertiesFormat();
                 }
                 Properties.Match = value;
+            }
+        }
+
+        /// <summary> Gets or sets the EnableProbeProxyProtocolHeader. </summary>
+        public BicepValue<bool> EnableProbeProxyProtocolHeader
+        {
+            get
+            {
+                return Properties is null ? default : Properties.EnableProbeProxyProtocolHeader;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayProbePropertiesFormat();
+                }
+                Properties.EnableProbeProxyProtocolHeader = value;
             }
         }
 

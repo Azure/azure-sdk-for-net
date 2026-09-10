@@ -18,6 +18,7 @@ namespace Azure.Provisioning.Network
     {
         private BicepValue<ResourceIdentifier> _id;
         private BicepValue<string> _name;
+        private LoadBalancingRuleProperties _properties;
         private BicepValue<ETag> _eTag;
         private ResourceReference<LoadBalancer> _parent;
 
@@ -53,6 +54,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Properties. </summary>
+        internal LoadBalancingRuleProperties Properties
+        {
+            get
+            {
+                Initialize();
+                return _properties;
+            }
+            set
+            {
+                Initialize();
+                AssignOrReplace(ref _properties, value);
+            }
+        }
+
         /// <summary> Gets the ETag. </summary>
         public BicepValue<ETag> ETag
         {
@@ -83,7 +99,15 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.BackendAddressPools;
+                return Properties is null ? default : Properties.BackendAddressPools;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
+                Properties.BackendAddressPools = value;
             }
         }
 
@@ -92,7 +116,15 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.Protocol;
+                return Properties is null ? default : Properties.Protocol;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
+                Properties.Protocol = value;
             }
         }
 
@@ -101,7 +133,15 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.LoadDistribution;
+                return Properties is null ? default : Properties.LoadDistribution;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
+                Properties.LoadDistribution = value;
             }
         }
 
@@ -110,7 +150,15 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.FrontendPort;
+                return Properties is null ? default : Properties.FrontendPort;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
+                Properties.FrontendPort = value;
             }
         }
 
@@ -119,7 +167,15 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.BackendPort;
+                return Properties is null ? default : Properties.BackendPort;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
+                Properties.BackendPort = value;
             }
         }
 
@@ -128,7 +184,15 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.IdleTimeoutInMinutes;
+                return Properties is null ? default : Properties.IdleTimeoutInMinutes;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
+                Properties.IdleTimeoutInMinutes = value;
             }
         }
 
@@ -137,7 +201,15 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.EnableFloatingIP;
+                return Properties is null ? default : Properties.EnableFloatingIP;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
+                Properties.EnableFloatingIP = value;
             }
         }
 
@@ -146,7 +218,15 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.EnableTcpReset;
+                return Properties is null ? default : Properties.EnableTcpReset;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
+                Properties.EnableTcpReset = value;
             }
         }
 
@@ -155,7 +235,15 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.DisableOutboundSnat;
+                return Properties is null ? default : Properties.DisableOutboundSnat;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
+                Properties.DisableOutboundSnat = value;
             }
         }
 
@@ -164,7 +252,15 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.EnableConnectionTracking;
+                return Properties is null ? default : Properties.EnableConnectionTracking;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
+                Properties.EnableConnectionTracking = value;
             }
         }
 
@@ -173,6 +269,10 @@ namespace Azure.Provisioning.Network
         {
             get
             {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
                 return Properties.ProvisioningState;
             }
         }
@@ -182,7 +282,15 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.FrontendIPConfigurationId;
+                return Properties is null ? default : Properties.FrontendIPConfigurationId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
+                Properties.FrontendIPConfigurationId = value;
             }
         }
 
@@ -191,7 +299,15 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.BackendAddressPoolId;
+                return Properties is null ? default : Properties.BackendAddressPoolId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
+                Properties.BackendAddressPoolId = value;
             }
         }
 
@@ -200,7 +316,15 @@ namespace Azure.Provisioning.Network
         {
             get
             {
-                return Properties.ProbeId;
+                return Properties is null ? default : Properties.ProbeId;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new LoadBalancingRuleProperties();
+                }
+                Properties.ProbeId = value;
             }
         }
 
@@ -210,6 +334,7 @@ namespace Azure.Provisioning.Network
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
             _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true);
+            _properties = DefineModelProperty<LoadBalancingRuleProperties>(nameof(Properties), new string[] { "properties" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _parent = DefineResource<LoadBalancer>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();

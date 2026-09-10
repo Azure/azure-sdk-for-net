@@ -147,6 +147,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the DisableTraceRoute. </summary>
+        public BicepValue<bool> IcmpDisableTraceRoute
+        {
+            get
+            {
+                return IcmpConfiguration is null ? default : IcmpConfiguration.DisableTraceRoute;
+            }
+            set
+            {
+                if (IcmpConfiguration is null)
+                {
+                    IcmpConfiguration = new ConnectionMonitorIcmpConfiguration();
+                }
+                IcmpConfiguration.DisableTraceRoute = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ConnectionMonitorTestConfiguration. </summary>
         protected override void DefineProvisionableProperties()
         {

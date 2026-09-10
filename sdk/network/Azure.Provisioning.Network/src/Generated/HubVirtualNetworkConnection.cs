@@ -144,6 +144,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the RoutingConfiguration. </summary>
+        public RoutingConfigurationNfv RoutingConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoutingConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new HubVirtualNetworkConnectionProperties();
+                }
+                Properties.RoutingConfiguration = value;
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {

@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Network
     public partial class ServiceAssociationLink : NetworkSubResource
     {
         private ServiceAssociationLinkPropertiesFormat _properties;
+        private BicepValue<string> _name;
         private BicepValue<ETag> _eTag;
         private BicepValue<ResourceType> _resourceType;
 
@@ -30,6 +31,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _properties;
+            }
+        }
+
+        /// <summary> Gets the Name. </summary>
+        public BicepValue<string> Name
+        {
+            get
+            {
+                Initialize();
+                return _name;
             }
         }
 
@@ -53,6 +64,24 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the LinkedResourceType. </summary>
+        public BicepValue<ResourceType> LinkedResourceType
+        {
+            get
+            {
+                return Properties is null ? default : Properties.LinkedResourceType;
+            }
+        }
+
+        /// <summary> Gets the Link. </summary>
+        public BicepValue<ResourceIdentifier> Link
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Link;
+            }
+        }
+
         /// <summary> Gets the ProvisioningState. </summary>
         public BicepValue<NetworkProvisioningState> ProvisioningState
         {
@@ -62,11 +91,30 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the AllowDelete. </summary>
+        public BicepValue<bool> AllowDelete
+        {
+            get
+            {
+                return Properties is null ? default : Properties.AllowDelete;
+            }
+        }
+
+        /// <summary> Gets the Locations. </summary>
+        public BicepList<AzureLocation> Locations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Locations;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ServiceAssociationLink. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<ServiceAssociationLinkPropertiesFormat>(nameof(Properties), new string[] { "properties" });
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);
             DefineAdditionalProperties();

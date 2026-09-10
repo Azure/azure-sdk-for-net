@@ -404,6 +404,19 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the PrivateIPAddress. </summary>
+        public BicepValue<string> PrivateIPAddress
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualAppliancePropertiesFormat();
+                }
+                return Properties.PrivateIPAddress;
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> VirtualHubId
         {

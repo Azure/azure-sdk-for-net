@@ -179,6 +179,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the RoutingConfiguration. </summary>
+        public RoutingConfigurationNfv RoutingConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoutingConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new NetworkVirtualApplianceConnectionProperties();
+                }
+                Properties.RoutingConfiguration = value;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for NetworkVirtualApplianceConnection. </summary>
         protected override void DefineProvisionableProperties()
         {

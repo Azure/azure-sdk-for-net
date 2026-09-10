@@ -13,11 +13,27 @@ namespace Azure.Provisioning.Network
     /// <summary> Indicates if encryption is enabled on virtual network and if VM without encryption is allowed in encrypted VNet. </summary>
     public partial class VirtualNetworkEncryption : ProvisionableConstruct
     {
+        private BicepValue<bool> _enabled;
         private BicepValue<VirtualNetworkEncryptionEnforcement> _enforcement;
 
         /// <summary> Creates a new VirtualNetworkEncryption. </summary>
         public VirtualNetworkEncryption()
         {
+        }
+
+        /// <summary> Gets or sets the Enabled. </summary>
+        public BicepValue<bool> Enabled
+        {
+            get
+            {
+                Initialize();
+                return _enabled;
+            }
+            set
+            {
+                Initialize();
+                _enabled.Assign(value);
+            }
         }
 
         /// <summary> Gets or sets the Enforcement. </summary>
@@ -39,6 +55,7 @@ namespace Azure.Provisioning.Network
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _enabled = DefineProperty<bool>(nameof(Enabled), new string[] { "enabled" }, isRequired: true);
             _enforcement = DefineProperty<VirtualNetworkEncryptionEnforcement>(nameof(Enforcement), new string[] { "enforcement" });
             DefineAdditionalProperties();
         }

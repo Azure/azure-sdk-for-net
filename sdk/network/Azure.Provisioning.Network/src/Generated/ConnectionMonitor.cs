@@ -318,6 +318,19 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets the ConnectionMonitorType. </summary>
+        public BicepValue<ConnectionMonitorEndpointType> ConnectionMonitorType
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new ConnectionMonitorResultProperties();
+                }
+                return Properties.ConnectionMonitorType;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ConnectionMonitor. </summary>
         protected override void DefineProvisionableProperties()
         {

@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Network
     public partial class ContainerNetworkInterface : NetworkSubResource
     {
         private ContainerNetworkInterfacePropertiesFormat _properties;
+        private BicepValue<string> _name;
         private BicepValue<ResourceType> _resourceType;
         private BicepValue<ETag> _eTag;
 
@@ -30,6 +31,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _properties;
+            }
+        }
+
+        /// <summary> Gets the Name. </summary>
+        public BicepValue<string> Name
+        {
+            get
+            {
+                Initialize();
+                return _name;
             }
         }
 
@@ -80,11 +91,21 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Id. </summary>
+        public BicepValue<ResourceIdentifier> ContainerId
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ContainerId;
+            }
+        }
+
         /// <summary> Define all the provisionable properties for ContainerNetworkInterface. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
             _properties = DefineModelProperty<ContainerNetworkInterfacePropertiesFormat>(nameof(Properties), new string[] { "properties" });
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" });
             _resourceType = DefineProperty<ResourceType>(nameof(ResourceType), new string[] { "type" }, isOutput: true);
             _eTag = DefineProperty<ETag>(nameof(ETag), new string[] { "etag" }, isOutput: true);
             DefineAdditionalProperties();

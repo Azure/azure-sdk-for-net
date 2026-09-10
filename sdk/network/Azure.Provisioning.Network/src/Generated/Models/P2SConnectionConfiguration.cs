@@ -7,6 +7,7 @@
 
 using Azure;
 using Azure.Provisioning;
+using Azure.Provisioning.Resources;
 
 namespace Azure.Provisioning.Network
 {
@@ -63,6 +64,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the RoutingConfiguration. </summary>
+        public RoutingConfigurationNfv RoutingConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoutingConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new P2SConnectionConfigurationProperties();
+                }
+                Properties.RoutingConfiguration = value;
+            }
+        }
+
         /// <summary> Gets or sets the EnableInternetSecurity. </summary>
         public BicepValue<bool> EnableInternetSecurity
         {
@@ -77,6 +95,23 @@ namespace Azure.Provisioning.Network
                     Properties = new P2SConnectionConfigurationProperties();
                 }
                 Properties.EnableInternetSecurity = value;
+            }
+        }
+
+        /// <summary> Gets or sets the ConfigurationPolicyGroupAssociations. </summary>
+        public BicepList<WritableSubResource> ConfigurationPolicyGroupAssociations
+        {
+            get
+            {
+                return Properties is null ? default : Properties.ConfigurationPolicyGroupAssociations;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new P2SConnectionConfigurationProperties();
+                }
+                Properties.ConfigurationPolicyGroupAssociations = value;
             }
         }
 

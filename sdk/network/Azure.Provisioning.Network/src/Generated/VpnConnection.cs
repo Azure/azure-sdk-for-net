@@ -349,6 +349,40 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the VpnLinkConnections. </summary>
+        public BicepList<VpnSiteLinkConnection> VpnLinkConnections
+        {
+            get
+            {
+                return Properties is null ? default : Properties.VpnLinkConnections;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnConnectionProperties();
+                }
+                Properties.VpnLinkConnections = value;
+            }
+        }
+
+        /// <summary> Gets or sets the RoutingConfiguration. </summary>
+        public RoutingConfigurationNfv RoutingConfiguration
+        {
+            get
+            {
+                return Properties is null ? default : Properties.RoutingConfiguration;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new VpnConnectionProperties();
+                }
+                Properties.RoutingConfiguration = value;
+            }
+        }
+
         /// <summary> Gets or sets the Id. </summary>
         public BicepValue<ResourceIdentifier> RemoteVpnSiteId
         {

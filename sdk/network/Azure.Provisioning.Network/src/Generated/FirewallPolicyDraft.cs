@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Network
     public partial class FirewallPolicyDraft : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
+        private BicepValue<string> _name;
         private BicepValue<AzureLocation> _location;
         private BicepDictionary<string> _tags;
         private FirewallPolicyDraftProperties _properties;
@@ -34,6 +35,16 @@ namespace Azure.Provisioning.Network
             {
                 Initialize();
                 return _id;
+            }
+        }
+
+        /// <summary> Gets the Name. </summary>
+        public BicepValue<string> Name
+        {
+            get
+            {
+                Initialize();
+                return _name;
             }
         }
 
@@ -255,6 +266,7 @@ namespace Azure.Provisioning.Network
         {
             base.DefineProvisionableProperties();
             _id = DefineProperty<ResourceIdentifier>(nameof(Id), new string[] { "id" }, isOutput: true);
+            _name = DefineProperty<string>(nameof(Name), new string[] { "name" }, isRequired: true, defaultValue: "default");
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" });
             _tags = DefineDictionaryProperty<string>(nameof(Tags), new string[] { "tags" });
             _properties = DefineModelProperty<FirewallPolicyDraftProperties>(nameof(Properties), new string[] { "properties" });

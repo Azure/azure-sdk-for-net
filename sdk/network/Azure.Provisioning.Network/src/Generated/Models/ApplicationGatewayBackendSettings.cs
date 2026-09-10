@@ -109,6 +109,23 @@ namespace Azure.Provisioning.Network
             }
         }
 
+        /// <summary> Gets or sets the Timeout. </summary>
+        public BicepValue<int> Timeout
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Timeout;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ApplicationGatewayBackendSettingsPropertiesFormat();
+                }
+                Properties.Timeout = value;
+            }
+        }
+
         /// <summary> Gets or sets the TrustedRootCertificates. </summary>
         public BicepList<WritableSubResource> TrustedRootCertificates
         {
