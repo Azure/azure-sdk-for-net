@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> A custom certificate. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRCustomCertificate : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

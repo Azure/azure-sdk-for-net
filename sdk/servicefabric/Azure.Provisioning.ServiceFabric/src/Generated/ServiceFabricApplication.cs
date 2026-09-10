@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> The application resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceFabricApplication : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

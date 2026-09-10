@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> Describes a Shared Private Link Resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRSharedPrivateLink : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

@@ -15,6 +15,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.WebPubSub
 {
     /// <summary> A class represent a replica resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class WebPubSubReplica : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

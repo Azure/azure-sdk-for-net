@@ -16,6 +16,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.ServiceFabric
 {
     /// <summary> An application type version resource for the specified application type name resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ServiceFabricApplicationTypeVersion : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;

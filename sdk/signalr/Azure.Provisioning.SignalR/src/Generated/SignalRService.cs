@@ -19,6 +19,7 @@ using Azure.Provisioning.Roles;
 namespace Azure.Provisioning.SignalR
 {
     /// <summary> A class representing a resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class SignalRService : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
