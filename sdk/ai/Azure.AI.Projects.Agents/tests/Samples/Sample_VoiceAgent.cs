@@ -21,25 +21,28 @@ using OpenAI.Realtime;
 
 namespace Azure.AI.Projects.Agents.Tests.Samples;
 
-public class Sample_VoiceAgent : SamplesBase
+[NonParallelizable]
+[LiveOnly]
+public class Sample_VoiceAgent : RecordedTestBase<AgentsTestEnvironment>
 {
     [Test]
     [AsyncOnly]
     public async Task VoiceAgentAsync()
     {
         var existingAgentName = Environment.GetEnvironmentVariable("FOUNDRY_VOICE_AGENT_NAME");
+        var voiceModelName = Environment.GetEnvironmentVariable("FOUNDRY_VOICE_MODEL_NAME");
 #if SNIPPET
         var projectEndpoint = Environment.GetEnvironmentVariable("FOUNDRY_PROJECT_ENDPOINT");
-        var modelDeploymentName = Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
+        var modelDeploymentName = voiceModelName ?? Environment.GetEnvironmentVariable("FOUNDRY_MODEL_NAME");
 #else
         var projectEndpoint = TestEnvironment.FOUNDRY_PROJECT_ENDPOINT;
         var modelDeploymentName = string.IsNullOrEmpty(existingAgentName)
-            ? TestEnvironment.FOUNDRY_MODEL_NAME
+            ? voiceModelName ?? TestEnvironment.FOUNDRY_MODEL_NAME
             : null;
 #endif
         var inputAudioPath = Environment.GetEnvironmentVariable("FOUNDRY_VOICE_INPUT_AUDIO_PATH");
         var outputAudioPath = Environment.GetEnvironmentVariable("FOUNDRY_VOICE_OUTPUT_AUDIO_PATH")
-            ?? Path.Combine(Path.GetTempPath(), "voice-agent-response.pcm");
+            ?? Path.Combine(Path.GetTempPath(), $"voice-agent-response-{Guid.NewGuid():N}.pcm");
         VoiceModelType voiceModelType = string.Equals(
             Environment.GetEnvironmentVariable("FOUNDRY_VOICE_MODEL_TYPE"),
             "managed",
@@ -81,14 +84,15 @@ public class Sample_VoiceAgent : SamplesBase
                         },
                         Output = new VoiceAgentAudioOutputConfig
                         {
-                            Voice = "alloy",
-                            VoiceType = VoiceType.Openai
+                            Format = CreatePcmAudioFormat(24000),
+                            Voice = "en-US-AvaNeural",
+                            VoiceType = VoiceType.AzureStandard
                         }
                     },
                     Store = true
                 };
                 definition.OutputModalities.Add(VoiceOutputModality.Audio);
-                definition.Tools.Add(new VoiceAgentSystemTool(VoiceAgentSystemToolName.EndConversation));
+                definition.Tools.Add(new VoiceAgentEndConversationSystemTool());
                 ClientResult<ProjectsAgentVersion> createResult = await agentsClient.CreateAgentVersionAsync(
                     agentName,
                     new ProjectsAgentVersionCreationOptions(definition));
@@ -127,20 +131,17 @@ public class Sample_VoiceAgent : SamplesBase
 
             #region Snippet:Sample_VoiceAgent_Realtime
             VoiceAgentWebSocket realtimeClient = agentsClient.GetVoiceAgentWebSocket();
-            using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(3));
+            using CancellationTokenSource timeout = new(TimeSpan.FromMinutes(5));
             AgentEndpointConversations conversationsClient = agentsClient.GetAgentEndpointConversations();
-            HashSet<string> existingConversationIds = new();
-            await foreach (VoiceConversation conversation in conversationsClient.GetAgentConversationsAsync(
-                agentName,
-                cancellationToken: timeout.Token))
-            {
-                existingConversationIds.Add(conversation.Id);
-            }
+            HashSet<string> newConversationIds = new();
+            bool hasGreeting = agentVersion.Definition is VoiceAgentDefinition voiceDefinition
+                && voiceDefinition.Greeting is not null;
 
             await using VoiceAgentSession session = await realtimeClient.StartSessionAsync(
                 agentName,
                 new VoiceAgentConnectionOptions { AgentVersion = agentVersion.Version, Store = true },
                 timeout.Token);
+            newConversationIds.Add(await WaitForSessionReadyAsync(session, hasGreeting, timeout.Token));
 
             await session.AddItemAsync(BinaryData.FromObjectAsJson(new
             {
@@ -170,8 +171,31 @@ public class Sample_VoiceAgent : SamplesBase
                     break;
                 }
             }
+            if (responseAudio.Length == 0)
+            {
+                throw new InvalidOperationException("The voice response did not contain audio.");
+            }
             Console.WriteLine($"Received {responseAudio.Length} bytes of PCM response audio.");
             #endregion
+
+            if (deleteAgent)
+            {
+                #region Snippet:Sample_VoiceAgent_UpdatePitch
+                await session.ConfigureSessionAsync(BinaryData.FromObjectAsJson(new
+                {
+                    type = "realtime",
+                    audio = new
+                    {
+                        output = new
+                        {
+                            voice = "en-US-AvaNeural",
+                            voice_type = "azure-standard",
+                            pitch = "+10%"
+                        }
+                    }
+                }), timeout.Token);
+                #endregion
+            }
 
             #region Snippet:Sample_VoiceAgent_Tools
             // The agent was configured with the "end_conversation" system tool. Prompting the model
@@ -206,13 +230,16 @@ public class Sample_VoiceAgent : SamplesBase
             await session.CloseAsync();
 
             #region Snippet:Sample_VoiceAgent_AudioStreaming
-            if (!string.IsNullOrEmpty(inputAudioPath))
+            if (!string.IsNullOrEmpty(inputAudioPath) || deleteAgent)
             {
                 await using VoiceAgentSession audioSession = await realtimeClient.StartSessionAsync(
                     agentName,
                     new VoiceAgentConnectionOptions { AgentVersion = agentVersion.Version, Store = true },
                     timeout.Token);
-                using FileStream inputPcm = File.OpenRead(inputAudioPath);
+                newConversationIds.Add(await WaitForSessionReadyAsync(audioSession, hasGreeting, timeout.Token));
+                using Stream inputPcm = string.IsNullOrEmpty(inputAudioPath)
+                    ? new MemoryStream(responseAudio.ToArray())
+                    : File.OpenRead(inputAudioPath);
                 using FileStream outputPcm = File.Create(outputAudioPath);
 
                 await StreamAudioTurnAsync(
@@ -231,22 +258,13 @@ public class Sample_VoiceAgent : SamplesBase
             #endregion
 
             #region Snippet:Sample_VoiceAgent_Conversations
-            List<string> newConversationIds = new();
-            await foreach (VoiceConversation conversation in conversationsClient.GetAgentConversationsAsync(
-                agentName,
-                limit: 10,
-                order: AgentListOrder.Descending,
-                cancellationToken: timeout.Token))
-            {
-                Console.WriteLine($"Conversation {conversation.Id}: {conversation.Status}");
-                if (!existingConversationIds.Contains(conversation.Id))
-                {
-                    newConversationIds.Add(conversation.Id);
-                }
-            }
-
             foreach (string conversationId in newConversationIds)
             {
+                await WaitForConversationPersistenceAsync(
+                    conversationsClient,
+                    agentName,
+                    conversationId,
+                    timeout.Token);
                 string assistantItemId = await ReadPersistedConversationAsync(
                     conversationsClient,
                     agentName,
@@ -285,6 +303,41 @@ public class Sample_VoiceAgent : SamplesBase
                 Console.WriteLine($"DeleteAgent status: {(int)deleteResult.GetRawResponse().Status}");
             }
         }
+    }
+
+    internal static async Task<string> WaitForSessionReadyAsync(
+        VoiceAgentSession session,
+        bool hasGreeting,
+        CancellationToken cancellationToken = default)
+    {
+        string conversationId = null;
+        await foreach (VoiceAgentSessionMessage update in session.ReceiveUpdatesAsync(cancellationToken))
+        {
+            if (update.MessageType != WebSocketMessageType.Text)
+            {
+                continue;
+            }
+
+            using JsonDocument document = JsonDocument.Parse(update.Data);
+            LogRealtimeEvent(update.EventType, document.RootElement);
+            if (update.EventType == RealtimeServerEventType.SessionCreated)
+            {
+                conversationId = GetConversationId(document.RootElement)
+                    ?? throw new InvalidOperationException("session.created did not include a conversation ID.");
+                if (!hasGreeting)
+                {
+                    return conversationId;
+                }
+            }
+            else if (update.EventType == RealtimeServerEventType.ResponseDone
+                && conversationId is not null
+                && !IsCancelledResponse(document.RootElement))
+            {
+                return conversationId;
+            }
+        }
+
+        throw new InvalidOperationException("The voice session closed before initialization or its greeting completed.");
     }
 
     #region Snippet:Sample_VoiceAgent_StreamAudio
@@ -333,6 +386,7 @@ public class Sample_VoiceAgent : SamplesBase
 
         async Task<string> ReceiveOutputAsync()
         {
+            string conversationId = null;
             await foreach (VoiceAgentSessionMessage update in session.ReceiveUpdatesAsync(cancellationToken))
             {
                 if (update.MessageType != WebSocketMessageType.Text)
@@ -341,6 +395,7 @@ public class Sample_VoiceAgent : SamplesBase
                 }
                 using JsonDocument document = JsonDocument.Parse(update.Data);
                 LogRealtimeEvent(update.EventType, document.RootElement);
+                conversationId = GetConversationId(document.RootElement) ?? conversationId;
                 if (update.EventType == RealtimeServerEventType.ResponseOutputAudioDelta)
                 {
                     byte[] audioChunk = Convert.FromBase64String(document.RootElement.GetProperty("delta").GetString());
@@ -352,10 +407,10 @@ public class Sample_VoiceAgent : SamplesBase
                     {
                         continue;
                     }
-                    return GetConversationId(document.RootElement);
+                    return conversationId;
                 }
             }
-            return null;
+            throw new InvalidOperationException("The voice session closed before the audio response completed.");
         }
     }
     #endregion
@@ -385,6 +440,21 @@ public class Sample_VoiceAgent : SamplesBase
         };
         Console.WriteLine(detail is null ? $"{eventType}" : $"{eventType}: {detail}");
 
+        if (eventType == RealtimeServerEventType.Error)
+        {
+            throw new InvalidOperationException($"The voice service returned an error: {detail}");
+        }
+        if (eventType == RealtimeServerEventType.ResponseDone
+            && payload.TryGetProperty("response", out JsonElement completedResponse)
+            && completedResponse.TryGetProperty("status", out JsonElement completedStatus)
+            && (completedStatus.ValueEquals("failed") || completedStatus.ValueEquals("incomplete")))
+        {
+            string statusDetails = completedResponse.TryGetProperty("status_details", out JsonElement details)
+                ? details.ToString()
+                : "No status details were provided.";
+            throw new InvalidOperationException($"The voice response {completedStatus.GetString()}: {statusDetails}");
+        }
+
         static string GetString(JsonElement payload, string propertyName) =>
             payload.TryGetProperty(propertyName, out JsonElement value) ? value.GetString() : null;
     }
@@ -403,6 +473,15 @@ public class Sample_VoiceAgent : SamplesBase
 
     private static string GetConversationId(JsonElement eventPayload)
     {
+        if (eventPayload.TryGetProperty("conversation_id", out JsonElement id))
+        {
+            return id.GetString();
+        }
+        if (eventPayload.TryGetProperty("session", out JsonElement session)
+            && session.TryGetProperty("conversation_id", out id))
+        {
+            return id.GetString();
+        }
         return eventPayload.TryGetProperty("response", out JsonElement response)
             && response.TryGetProperty("conversation_id", out JsonElement conversationId)
                 ? conversationId.GetString()
@@ -414,6 +493,45 @@ public class Sample_VoiceAgent : SamplesBase
         return eventPayload.TryGetProperty("response", out JsonElement response)
             && response.TryGetProperty("status", out JsonElement status)
             && status.ValueEquals("cancelled");
+    }
+
+    private static async Task WaitForConversationPersistenceAsync(
+        AgentEndpointConversations conversationsClient,
+        string agentName,
+        string conversationId,
+        CancellationToken cancellationToken = default)
+    {
+        using CancellationTokenSource deadline = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        deadline.CancelAfter(TimeSpan.FromMinutes(1));
+        try
+        {
+            while (true)
+            {
+                try
+                {
+                    VoiceConversation conversation = await conversationsClient.GetAgentConversationAsync(
+                        agentName, conversationId, deadline.Token);
+                    if (conversation.Status == VoiceConversationStatus.Completed)
+                    {
+                        return;
+                    }
+                    if (conversation.Status == VoiceConversationStatus.Failed)
+                    {
+                        throw new InvalidOperationException($"Persistence failed for conversation {conversationId}.");
+                    }
+                }
+                catch (ClientResultException exception) when (exception.Status == 404)
+                {
+                    // A closed session may not be visible until persistence finalization starts.
+                }
+
+                await Task.Delay(TimeSpan.FromSeconds(1), deadline.Token);
+            }
+        }
+        catch (OperationCanceledException exception) when (!cancellationToken.IsCancellationRequested)
+        {
+            throw new TimeoutException($"Conversation {conversationId} was not persisted within one minute.", exception);
+        }
     }
 
     #region Snippet:Sample_VoiceAgent_ReadConversation
@@ -468,6 +586,13 @@ public class Sample_VoiceAgent : SamplesBase
         {
             Console.WriteLine($"Conversation item: {DescribeItem(conversationItem)}");
         }
+        if (assistantItemId is null)
+        {
+            throw new InvalidOperationException("The persisted conversation did not contain an assistant message.");
+        }
+        RealtimeItem persistedItem = await conversationsClient.GetAgentConversationItemAsync(
+            agentName, conversationId, assistantItemId, cancellationToken);
+        Console.WriteLine($"Retrieved item: {DescribeItem(persistedItem)}");
         return assistantItemId;
     }
 
@@ -557,5 +682,6 @@ public class Sample_VoiceAgent : SamplesBase
 
     public Sample_VoiceAgent(bool isAsync) : base(isAsync)
     {
+        ProjectsTestSanitizers.ApplySanitizers(this);
     }
 }

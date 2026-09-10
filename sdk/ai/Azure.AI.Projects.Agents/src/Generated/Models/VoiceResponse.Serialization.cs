@@ -175,18 +175,16 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string id = default;
             VoiceResponseBaseObject? @object = default;
             VoiceResponseBaseStatus? status = default;
             RealtimeResponseStatusDetails statusDetails = default;
             RealtimeResponseUsage usage = default;
-            string conversationId = default;
             IList<VoiceResponseBaseOutputModality> outputModalities = default;
             BinaryData maxOutputTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            string id0 = default;
+            string id = default;
             IList<RealtimeItem> output = default;
-            string conversationId0 = default;
+            string conversationId = default;
             VoiceResponseAudio audio = default;
             IDictionary<string, string> metadata = default;
             float? temperature = default;
@@ -194,11 +192,6 @@ namespace Azure.AI.Projects.Agents
             DateTimeOffset? completedAt = default;
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("object"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -235,11 +228,6 @@ namespace Azure.AI.Projects.Agents
                     usage = ModelReaderWriter.Read<RealtimeResponseUsage>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("conversation_id"u8))
-                {
-                    conversationId = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("output_modalities"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -265,7 +253,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("id"u8))
                 {
-                    id0 = prop.Value.GetString();
+                    id = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("output"u8))
@@ -291,7 +279,7 @@ namespace Azure.AI.Projects.Agents
                 }
                 if (prop.NameEquals("conversation_id"u8))
                 {
-                    conversationId0 = prop.Value.GetString();
+                    conversationId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("audio"u8))
@@ -357,18 +345,16 @@ namespace Azure.AI.Projects.Agents
                 }
             }
             return new VoiceResponse(
-                id,
                 @object,
                 status,
                 statusDetails,
                 usage,
-                conversationId,
                 outputModalities ?? new ChangeTrackingList<VoiceResponseBaseOutputModality>(),
                 maxOutputTokens,
                 additionalBinaryDataProperties,
-                id0,
+                id,
                 output ?? new ChangeTrackingList<RealtimeItem>(),
-                conversationId0,
+                conversationId,
                 audio,
                 metadata ?? new ChangeTrackingDictionary<string, string>(),
                 temperature,

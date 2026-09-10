@@ -65,17 +65,13 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // The implementation handles experimental model members without exposing them in its signature.
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             string format = options.Format == "W" ? ((IPersistableModel<VoiceResponseBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(VoiceResponseBase)} does not support writing '{format}' format.");
-            }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
             }
             if (Optional.IsDefined(Object))
             {
@@ -87,24 +83,15 @@ namespace Azure.AI.Projects.Agents
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
-#pragma warning disable AAIP002 // global::Azure.AI.Projects.Agents.VoiceResponseBase.StatusDetails is experimental and may change in future versions.
             if (Optional.IsDefined(StatusDetails))
             {
                 writer.WritePropertyName("status_details"u8);
                 writer.WriteObjectValue(StatusDetails, options);
             }
-#pragma warning restore AAIP002 // global::Azure.AI.Projects.Agents.VoiceResponseBase.StatusDetails is experimental and may change in future versions.
-#pragma warning disable AAIP002 // global::Azure.AI.Projects.Agents.VoiceResponseBase.Usage is experimental and may change in future versions.
             if (Optional.IsDefined(Usage))
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteObjectValue(Usage, options);
-            }
-#pragma warning restore AAIP002 // global::Azure.AI.Projects.Agents.VoiceResponseBase.Usage is experimental and may change in future versions.
-            if (Optional.IsDefined(ConversationId))
-            {
-                writer.WritePropertyName("conversation_id"u8);
-                writer.WriteStringValue(ConversationId);
             }
             if (Optional.IsCollectionDefined(OutputModalities))
             {
@@ -144,6 +131,7 @@ namespace Azure.AI.Projects.Agents
                 }
             }
         }
+#pragma warning restore AAIP002 // The implementation handles experimental model members without exposing them in its signature.
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -164,32 +152,23 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP002 // The implementation handles experimental model members without exposing them in its signature.
+#pragma warning disable OPENAI002 // The implementation handles experimental model members without exposing them in its signature.
         internal static VoiceResponseBase DeserializeVoiceResponseBase(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            string id = default;
             VoiceResponseBaseObject? @object = default;
             VoiceResponseBaseStatus? status = default;
-#pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeResponseStatusDetails is experimental and may change in future versions.
             RealtimeResponseStatusDetails statusDetails = default;
-#pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeResponseStatusDetails is experimental and may change in future versions.
-#pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeResponseUsage is experimental and may change in future versions.
             RealtimeResponseUsage usage = default;
-#pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeResponseUsage is experimental and may change in future versions.
-            string conversationId = default;
             IList<VoiceResponseBaseOutputModality> outputModalities = default;
             BinaryData maxOutputTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("object"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -214,9 +193,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-#pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeResponseStatusDetails is experimental and may change in future versions.
                     statusDetails = ModelReaderWriter.Read<RealtimeResponseStatusDetails>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
-#pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeResponseStatusDetails is experimental and may change in future versions.
                     continue;
                 }
                 if (prop.NameEquals("usage"u8))
@@ -225,14 +202,7 @@ namespace Azure.AI.Projects.Agents
                     {
                         continue;
                     }
-#pragma warning disable OPENAI002 // global::OpenAI.Realtime.RealtimeResponseUsage is experimental and may change in future versions.
                     usage = ModelReaderWriter.Read<RealtimeResponseUsage>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
-#pragma warning restore OPENAI002 // global::OpenAI.Realtime.RealtimeResponseUsage is experimental and may change in future versions.
-                    continue;
-                }
-                if (prop.NameEquals("conversation_id"u8))
-                {
-                    conversationId = prop.Value.GetString();
                     continue;
                 }
                 if (prop.NameEquals("output_modalities"u8))
@@ -263,18 +233,16 @@ namespace Azure.AI.Projects.Agents
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-#pragma warning disable AAIP002 // global::Azure.AI.Projects.Agents.VoiceResponseBase.VoiceResponseBase(string, Azure.AI.Projects.Agents.VoiceResponseBaseObject?, Azure.AI.Projects.Agents.VoiceResponseBaseStatus?, OpenAI.Realtime.RealtimeResponseStatusDetails, OpenAI.Realtime.RealtimeResponseUsage, string, System.Collections.Generic.IList<Azure.AI.Projects.Agents.VoiceResponseBaseOutputModality>, System.BinaryData, System.Collections.Generic.IDictionary<string, System.BinaryData>) is experimental and may change in future versions.
             return new VoiceResponseBase(
-                id,
                 @object,
                 status,
                 statusDetails,
                 usage,
-                conversationId,
                 outputModalities ?? new ChangeTrackingList<VoiceResponseBaseOutputModality>(),
                 maxOutputTokens,
                 additionalBinaryDataProperties);
-#pragma warning restore AAIP002 // global::Azure.AI.Projects.Agents.VoiceResponseBase.VoiceResponseBase(string, Azure.AI.Projects.Agents.VoiceResponseBaseObject?, Azure.AI.Projects.Agents.VoiceResponseBaseStatus?, OpenAI.Realtime.RealtimeResponseStatusDetails, OpenAI.Realtime.RealtimeResponseUsage, string, System.Collections.Generic.IList<Azure.AI.Projects.Agents.VoiceResponseBaseOutputModality>, System.BinaryData, System.Collections.Generic.IDictionary<string, System.BinaryData>) is experimental and may change in future versions.
         }
+#pragma warning restore AAIP002 // The implementation handles experimental model members without exposing them in its signature.
+#pragma warning restore OPENAI002 // The implementation handles experimental model members without exposing them in its signature.
     }
 }

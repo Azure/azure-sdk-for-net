@@ -12,12 +12,18 @@ namespace Azure.AI.Projects.Agents
     public partial class AgentTelephony
     {
         private static PipelineMessageClassifier _pipelineMessageClassifier200;
+        private static PipelineMessageClassifier _pipelineMessageClassifier200202;
         private static PipelineMessageClassifier _pipelineMessageClassifier201;
+        private static PipelineMessageClassifier _pipelineMessageClassifier202;
         private static PipelineMessageClassifier _pipelineMessageClassifier204;
 
         private static PipelineMessageClassifier PipelineMessageClassifier200 => _pipelineMessageClassifier200 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200 });
 
+        private static PipelineMessageClassifier PipelineMessageClassifier200202 => _pipelineMessageClassifier200202 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 200, 202 });
+
         private static PipelineMessageClassifier PipelineMessageClassifier201 => _pipelineMessageClassifier201 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 201 });
+
+        private static PipelineMessageClassifier PipelineMessageClassifier202 => _pipelineMessageClassifier202 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 202 });
 
         private static PipelineMessageClassifier PipelineMessageClassifier204 => _pipelineMessageClassifier204 ??= PipelineMessageClassifier.Create(stackalloc ushort[] { 204 });
 
@@ -335,6 +341,323 @@ namespace Azure.AI.Projects.Agents
             request.Headers.Set("Content-Type", "application/json");
             request.Headers.Set("Accept", "application/json");
             request.Content = content;
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateCreateTelephonyCallJobRequest(string agentName, string idempotencyKey, BinaryContent content, string foundryFeatures, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/telephony/call_jobs", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier202);
+            PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
+            request.Headers.Set("Idempotency-Key", idempotencyKey);
+            request.Headers.Set("Content-Type", "application/json");
+            request.Headers.Set("Accept", "application/json");
+            request.Content = content;
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateGetTelephonyCallJobRequest(string agentName, string callJobId, string foundryFeatures, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/telephony/call_jobs/", false);
+            uri.AppendPath(callJobId, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
+            request.Headers.Set("Accept", "application/json");
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateCancelTelephonyCallJobRequest(string agentName, string callJobId, string ifMatch, string foundryFeatures, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/telephony/call_jobs/", false);
+            uri.AppendPath(callJobId, true);
+            uri.AppendPath(":cancel", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200202);
+            PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
+            request.Headers.Set("If-Match", ifMatch);
+            request.Headers.Set("Accept", "application/json");
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateCreateTelephonyCampaignRequest(string agentName, BinaryContent content, string foundryFeatures, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/telephony/campaigns", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier201);
+            PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
+            request.Headers.Set("Content-Type", "application/json");
+            request.Headers.Set("Accept", "application/json");
+            request.Content = content;
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateGetTelephonyCampaignRequest(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/telephony/campaigns/", false);
+            uri.AppendPath(campaignId, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
+            request.Headers.Set("Accept", "application/json");
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateImportTelephonyCampaignRecipientsRequest(string agentName, string campaignId, string idempotencyKey, BinaryContent content, string foundryFeatures, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/telephony/campaigns/", false);
+            uri.AppendPath(campaignId, true);
+            uri.AppendPath("/recipients:import", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier202);
+            PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
+            request.Headers.Set("Idempotency-Key", idempotencyKey);
+            request.Headers.Set("Content-Type", "application/json");
+            request.Headers.Set("Accept", "application/json");
+            request.Content = content;
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateGetTelephonyCampaignRecipientImportRequest(string agentName, string campaignId, string importId, string foundryFeatures, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/telephony/campaigns/", false);
+            uri.AppendPath(campaignId, true);
+            uri.AppendPath("/recipient_imports/", false);
+            uri.AppendPath(importId, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
+            request.Headers.Set("Accept", "application/json");
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateValidateTelephonyCampaignRequest(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/telephony/campaigns/", false);
+            uri.AppendPath(campaignId, true);
+            uri.AppendPath(":validate", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier202);
+            PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
+            request.Headers.Set("Accept", "application/json");
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreatePublishTelephonyCampaignRequest(string agentName, string campaignId, BinaryContent content, string foundryFeatures, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/telephony/campaigns/", false);
+            uri.AppendPath(campaignId, true);
+            uri.AppendPath(":publish", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier202);
+            PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
+            request.Headers.Set("Content-Type", "application/json");
+            request.Headers.Set("Accept", "application/json");
+            request.Content = content;
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreatePauseTelephonyCampaignRequest(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/telephony/campaigns/", false);
+            uri.AppendPath(campaignId, true);
+            uri.AppendPath(":pause", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
+            request.Headers.Set("Accept", "application/json");
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateResumeTelephonyCampaignRequest(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/telephony/campaigns/", false);
+            uri.AppendPath(campaignId, true);
+            uri.AppendPath(":resume", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
+            request.Headers.Set("Accept", "application/json");
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateCancelTelephonyCampaignRequest(string agentName, string campaignId, string foundryFeatures, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/telephony/campaigns/", false);
+            uri.AppendPath(campaignId, true);
+            uri.AppendPath(":cancel", false);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "POST", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
+            request.Headers.Set("Accept", "application/json");
+            message.Apply(options);
+            return message;
+        }
+
+        internal PipelineMessage CreateGetTelephonyOperationRequest(string agentName, string operationId, string foundryFeatures, RequestOptions options)
+        {
+            ClientUriBuilder uri = new ClientUriBuilder();
+            uri.Reset(_endpoint);
+            uri.AppendPath("/agents/", false);
+            uri.AppendPath(agentName, true);
+            uri.AppendPath("/telephony/operations/", false);
+            uri.AppendPath(operationId, true);
+            if (_apiVersion != null)
+            {
+                uri.AppendQuery("api-version", _apiVersion, true);
+            }
+            PipelineMessage message = Pipeline.CreateMessage(uri.ToUri(), "GET", PipelineMessageClassifier200);
+            PipelineRequest request = message.Request;
+            if (foundryFeatures != null)
+            {
+                request.Headers.Set("Foundry-Features", foundryFeatures);
+            }
+            request.Headers.Set("Accept", "application/json");
             message.Apply(options);
             return message;
         }

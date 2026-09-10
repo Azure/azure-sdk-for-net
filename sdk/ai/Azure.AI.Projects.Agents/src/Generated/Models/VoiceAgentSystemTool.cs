@@ -31,7 +31,7 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The service-managed control action. Known values are stable; additional values may be added over time. </summary>
-        public VoiceAgentSystemToolName Name { get; set; }
+        internal VoiceAgentSystemToolName Name { get; set; }
 
         /// <summary> An optional description of the system tool. </summary>
         public string Description { get; set; }

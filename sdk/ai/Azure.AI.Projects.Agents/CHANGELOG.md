@@ -4,6 +4,9 @@
 
 ### Features Added
 
+- Added outbound telephony call-job and campaign APIs, including scheduling, recipient import, and retry-policy models.
+- Added `VoiceAgentEndConversationSystemTool` for configuring the typed service-managed end-conversation action.
+- Added `ProjectsAgentRecord.ConfigurationState` and prompt-agent harness and skill-reference configuration.
 - Added a `digitalWorkerType` parameter to `ProjectsAgentsModelFactory.ProjectsAgentRecord` for mocking the (preview) `DigitalWorkerType` value.
 - Added `VoiceAgentDefinition.ConversationEngine` (typed `VoiceConversationEngine`, with `VoiceHostedAgentConversationEngine` as the initial implementation) for fronting a hosted text agent as a voice agent's conversational backend, as an alternative to a directly-configured model.
 - Added `VoiceAgentDefinition.SubagentConfig` for configuring sibling Foundry text agents that a voice agent may consult as background specialists.
@@ -20,6 +23,8 @@
 
 ### Breaking Changes
 
+- Moved persisted response identifiers from `VoiceResponseBase` to `VoiceResponse`; use `VoiceResponse.Id` and `VoiceResponse.ConversationId` for stored response identity.
+- Voice system-tool names are now discriminators. Use `VoiceAgentEndConversationSystemTool` for the end-conversation action instead of changing a tool's name.
 - Removed the `model` parameter from the public `VoiceAgentDefinition(VoiceModelType, string)` constructor; use the new parameterless `VoiceAgentDefinition()` constructor and set the now-optional `ModelType`/`Model` properties instead (required together for a model-backed voice agent; omit both when using the new `ConversationEngine` property).
 - Renamed voice-agent configuration models to the `VoiceAgent*` family (e.g. `VoiceAudioConfig` → `VoiceAgentAudioConfig`, `VoiceSystemTool` → `VoiceAgentSystemTool`, `VoiceTurnDetection` → `VoiceAgentTurnDetectionConfig`) and renamed `VoiceResponse`'s base contract members (e.g. `VoiceResponseOutputModality` → `VoiceResponseBaseOutputModality`).
 - Removed the dedicated "message" conversation item models (`VoiceAssistantMessageItem`, `VoiceUserMessageItem`, `VoiceSystemMessageItem`, and the underlying `RealtimeConversationItemMessage*` types); persisted "message" items now round-trip through the `OpenAI.Realtime.RealtimeItem` base type instead of a dedicated typed model.
@@ -38,11 +43,14 @@
 
 ### Other Changes
 
-- Regenerated the SDK from the unified Foundry v1 Agents and voice data-plane contract, including the "batch 2" voice-agent additions from [azure-rest-api-specs#45852](https://github.com/Azure/azure-rest-api-specs/pull/45852).
+- Regenerated the SDK from the unified Foundry v1 Agents and voice data-plane contract at [`feature/foundry-release` commit `47e280efb204`](https://github.com/Azure/azure-rest-api-specs/commit/47e280efb204598c0253488a7538a08327c5548f).
 
 ### Sample Updates
 
 - Added a sample demonstrating voice-agent creation, real-time interaction, and persisted conversation retrieval.
+- Updated the voice sample to use Azure neural speech, change pitch during a session, capture the persisted conversation ID from `session.created`, and wait for persistence before reading transcripts and audio.
+- Voice sample failures now surface service errors, incomplete responses, and premature session closure instead of appearing successful.
+- Isolated the voice sample's resources and cleanup from the integration-test fixture so it does not delete unrelated project resources.
 - Updated Agent Optimization samples to use the unified `AgentOptimization*` models.
 
 ## 3.0.0-beta.2 (2026-09-03)

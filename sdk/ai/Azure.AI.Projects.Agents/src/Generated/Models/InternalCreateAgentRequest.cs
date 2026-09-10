@@ -47,6 +47,7 @@ namespace Azure.AI.Projects.Agents
         /// <param name="agentEndpoint"> An optional endpoint configuration. If not specified, a default endpoint configuration will be set for the agent. </param>
         /// <param name="agentCard"> Optional agent card for the agent. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
+#pragma warning disable AAIP001 // The implementation handles experimental model members without exposing them in its signature.
         internal InternalCreateAgentRequest(string name, AgentState? state, IDictionary<string, string> metadata, string description, ProjectsAgentDefinition definition, AgentBlueprintReference blueprintReference, DigitalWorkerType? digitalWorkerType, bool? draft, AgentEndpointConfiguration agentEndpoint, AgentCard agentCard, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Name = name;
@@ -61,6 +62,7 @@ namespace Azure.AI.Projects.Agents
             AgentCard = agentCard;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
+#pragma warning restore AAIP001 // The implementation handles experimental model members without exposing them in its signature.
 
         /// <summary>
         /// The unique name that identifies the agent. Name can be used to retrieve/update/delete the agent.

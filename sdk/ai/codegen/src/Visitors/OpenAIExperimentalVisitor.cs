@@ -24,8 +24,10 @@ namespace Extensions.Plugin.Visitors
     /// <para>
     /// The set of experimental OpenAI types is sourced from <see cref="OpenAIExperimentalCatalog"/>, which reads
     /// the OpenAI assembly the SDK compiles against, so no hand-maintained list is required. Only membership is
-    /// used: OpenAI's own diagnostic id is intentionally not propagated — the single <c>AAIP002</c> id is stamped
+    /// used for public attribution: OpenAI's own diagnostic id is not propagated — the single <c>AAIP002</c> id is stamped
     /// instead so downstream consumers acknowledge one stable Azure-owned id decoupled from OpenAI's id churn.
+    /// The upstream ids are retained separately for implementation-local opt-ins by
+    /// <see cref="ExperimentalImplementationVisitor"/>.
     /// </para>
     /// <para>
     /// Granularity: a generated type is marked <see cref="ExperimentalAttribute"/> at the <em>type</em> level

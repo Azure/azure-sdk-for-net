@@ -121,6 +121,7 @@ namespace Azure.AI.Projects.Agents
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
+#pragma warning disable AAIP001 // The implementation handles experimental model members without exposing them in its signature.
         internal static ProjectsAgentDefinition DeserializeProjectsAgentDefinition(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
@@ -145,5 +146,6 @@ namespace Azure.AI.Projects.Agents
             }
             return UnknownAgentDefinition.DeserializeUnknownAgentDefinition(element, options);
         }
+#pragma warning restore AAIP001 // The implementation handles experimental model members without exposing them in its signature.
     }
 }
