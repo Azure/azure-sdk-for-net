@@ -58,11 +58,9 @@ namespace Azure.Security.CodeTransparency
         public CodeTransparencyClient(System.Uri endpoint, Azure.Security.CodeTransparency.CodeTransparencyClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
         public virtual Azure.Response CreateEntry(Azure.Core.RequestContent content, bool? waitForCommit = default(bool?), Azure.RequestContext context = null) { throw null; }
-        [System.ObsoleteAttribute("Use CreateEntry(BinaryData, bool, CancellationToken) instead.")]
         public virtual Azure.Security.CodeTransparency.CreateEntryOperation CreateEntry(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.NullableResponse<System.BinaryData> CreateEntry(System.BinaryData body, bool? waitForCommit = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> CreateEntryAsync(Azure.Core.RequestContent content, bool? waitForCommit = default(bool?), Azure.RequestContext context = null) { throw null; }
-        [System.ObsoleteAttribute("Use CreateEntryAsync(BinaryData, bool, CancellationToken) instead.")]
         public virtual System.Threading.Tasks.Task<Azure.Security.CodeTransparency.CreateEntryOperation> CreateEntryAsync(Azure.WaitUntil waitUntil, System.BinaryData body, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<System.BinaryData>> CreateEntryAsync(System.BinaryData body, bool? waitForCommit = default(bool?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response CreateEntryV09(Azure.Core.RequestContent content, bool? waitForCommit = default(bool?), Azure.RequestContext context = null) { throw null; }
@@ -106,7 +104,6 @@ namespace Azure.Security.CodeTransparency
         public virtual Azure.Response<System.BinaryData> GetTransparencyConfigCbor(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response> GetTransparencyConfigCborAsync(Azure.RequestContext context) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<System.BinaryData>> GetTransparencyConfigCborAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
-        [System.ObsoleteAttribute("Use the static VerifyTransparentStatement method with options instead.")]
         public virtual void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes) { }
         public virtual void RunTransparentStatementVerification(byte[] signedStatementCoseSign1Bytes, byte[] receiptCoseSign1Bytes) { }
         public static void VerifyTransparentStatement(byte[] transparentStatementCoseSign1Bytes, Azure.Security.CodeTransparency.CodeTransparencyVerificationOptions verificationOptions = null, Azure.Security.CodeTransparency.CodeTransparencyClientOptions clientOptions = null) { }

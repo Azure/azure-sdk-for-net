@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Formats.Cbor;
 using System.Security.Cryptography.Cose;
 using System.Security.Cryptography.X509Certificates;
@@ -238,8 +237,6 @@ namespace Azure.Security.CodeTransparency
         /// <param name="body"> CoseSign1 signature envelope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        [Obsolete("Use CreateEntry(BinaryData, bool, CancellationToken) instead.")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual CreateEntryOperation CreateEntry(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -270,8 +267,6 @@ namespace Azure.Security.CodeTransparency
         /// <param name="body"> CoseSign1 signature envelope. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        [Obsolete("Use CreateEntryAsync(BinaryData, bool, CancellationToken) instead.")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
         public virtual async Task<CreateEntryOperation> CreateEntryAsync(WaitUntil waitUntil, BinaryData body, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
@@ -397,7 +392,6 @@ namespace Azure.Security.CodeTransparency
         /// all of them.
         /// </summary>
         /// <param name="transparentStatementCoseSign1Bytes">Receipt cbor or Cose_Sign1 (with an embedded receipt) bytes.</param>
-        [Obsolete("Use the static VerifyTransparentStatement method with options instead.")]
         public virtual void RunTransparentStatementVerification(byte[] transparentStatementCoseSign1Bytes)
         {
             var verificationOptions = new CodeTransparencyVerificationOptions
