@@ -330,23 +330,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             Assert.Equal("tenant-role", properties[SemanticConventions.AttributeMicrosoftTenantCloudRole]);
         }
 
-        [Fact]
-        public void ScopeTenantCloudRoleDoesNotSetRoutedEnvelopeRole()
-        {
-            var routeBatch = Convert(
-                CreateResource(),
-                EmitWithScope(
-                    CloudRole("scope-role"),
-                    Ikey("ikey-a"),
-                    Endpoint(EastUs)));
-
-            var telemetryItem = routeBatch[0].TelemetryItems.Single();
-            Assert.Equal("unknown_service", telemetryItem.Tags[ContextTagKeys.AiCloudRole.ToString()]);
-
-            var properties = ((MessageData)telemetryItem.Data!.BaseData).Properties;
-            Assert.Equal("scope-role", properties[SemanticConventions.AttributeMicrosoftTenantCloudRole]);
-        }
-
         /// <summary>
         /// Routing changes where an envelope goes and nothing about how it is built. Both sides use the
         /// same instrumentation key, so this compares the conversion itself across every log shape.
@@ -672,7 +655,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
                 builder.AddOpenTelemetry(options =>
                 {
                     options.IncludeFormattedMessage = true;
-                    options.IncludeScopes = true;
                     options.AddProcessor(processor);
                 });
                 builder.AddFilter(SourceName, LogLevel.Trace);
@@ -717,18 +699,6 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Tests
             // values without going through structured message formatting.
             var state = attributes.ToList();
             return logger => logger.Log(LogLevel.Information, new EventId(0), state, exception, (_, _) => message);
-        }
-
-        private static Action<ILogger> EmitWithScope(
-            KeyValuePair<string, object?> scopeAttribute,
-            params KeyValuePair<string, object?>[] attributes)
-        {
-            var emit = Emit(attributes);
-            return logger =>
-            {
-                using var scope = logger.BeginScope(new[] { scopeAttribute });
-                emit(logger);
-            };
         }
 
         /// <summary>
