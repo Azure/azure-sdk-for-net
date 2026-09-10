@@ -114,17 +114,24 @@ function Get-GitHubApiHeaders {
 
     if (Get-Command gh -ErrorAction SilentlyContinue) {
         try {
-            $token = gh auth token 2>$null
+            $output = gh auth token 2>$null
             if ($LASTEXITCODE -ne 0) {
-                $token = $null
-                Write-Host "Failed to get GitHub CLI auth token."
+                Write-Host "Failed to get GitHub CLI auth token (exit code $LASTEXITCODE); falling back to GITHUB_TOKEN."
             }
-            elseif ($token) {
-                $token = $token.Trim()
+            else {
+                foreach ($line in $output) {
+                    if ($line) {
+                        $token = [string]$line
+                        break
+                    }
+                }
+                if ($token) {
+                    $token = $token.Trim()
+                }
             }
         }
         catch {
-            Write-Host "Failed to get GitHub CLI auth token."
+            Write-Host "Failed to get GitHub CLI auth token ($($_.Exception.Message)); falling back to GITHUB_TOKEN."
         }
     }
 
