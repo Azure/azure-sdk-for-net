@@ -6,6 +6,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
+using OpenAI;
 
 namespace Azure.AI.Projects.Agents
 {
@@ -71,6 +72,16 @@ namespace Azure.AI.Projects.Agents
                 throw new FormatException($"The model {nameof(CodeInterpreterToolboxTool)} does not support writing '{format}' format.");
             }
             base.JsonModelWriteCore(writer, options);
+            if (Optional.IsCollectionDefined(AllowedCallers))
+            {
+                writer.WritePropertyName("allowed_callers"u8);
+                writer.WriteStartArray();
+                foreach (CallableToolAllowedCaller item in AllowedCallers)
+                {
+                    writer.WriteStringValue(item.ToSerialString());
+                }
+                writer.WriteEndArray();
+            }
             if (Optional.IsDefined(InternalContainer))
             {
                 writer.WritePropertyName("container"u8);
@@ -115,6 +126,7 @@ namespace Azure.AI.Projects.Agents
             string description = default;
             IDictionary<string, ToolConfig> toolConfigs = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            IList<CallableToolAllowedCaller> allowedCallers = default;
             BinaryData internalContainer = default;
             foreach (var prop in element.EnumerateObject())
             {
@@ -147,6 +159,20 @@ namespace Azure.AI.Projects.Agents
                     toolConfigs = dictionary;
                     continue;
                 }
+                if (prop.NameEquals("allowed_callers"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<CallableToolAllowedCaller> array = new List<CallableToolAllowedCaller>();
+                    foreach (var item in prop.Value.EnumerateArray())
+                    {
+                        array.Add(item.GetString().ToCallableToolAllowedCaller());
+                    }
+                    allowedCallers = array;
+                    continue;
+                }
                 if (prop.NameEquals("container"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -167,6 +193,7 @@ namespace Azure.AI.Projects.Agents
                 description,
                 toolConfigs ?? new ChangeTrackingDictionary<string, ToolConfig>(),
                 additionalBinaryDataProperties,
+                allowedCallers ?? new ChangeTrackingList<CallableToolAllowedCaller>(),
                 internalContainer);
         }
     }

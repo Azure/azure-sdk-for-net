@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ClusterQueryStartOn;
+                return Properties is null ? default : Properties.ClusterQueryStartsOn;
             }
         }
 
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         {
             get
             {
-                return Properties is null ? default : Properties.ClusterQueryEndOn;
+                return Properties is null ? default : Properties.ClusterQueryEndsOn;
             }
         }
 

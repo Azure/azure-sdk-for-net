@@ -342,6 +342,7 @@ public class AgentsTests : AgentsTestBase
     [TestCase(ToolType.WorkIQ)]
     [TestCase(ToolType.FabricIQ)]
     [TestCase(ToolType.ReminderPreview)]
+    [TestCase(ToolType.WebIQ)]
     public async Task TestToolsetVariety(ToolType toolType)
     {
         AgentAdministrationClient agentsClient = GetTestClient();

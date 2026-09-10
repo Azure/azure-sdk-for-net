@@ -1,6 +1,8 @@
 ---
 name: Azure .NET CI Failure Analysis
 description: "Analyze failed net - pullrequest checks for open, non-draft Azure SDK for .NET PRs"
+imports:
+  - shared/copilot-cli-version-probe-guard.md
 on:
   # The failure-only caller authorizes CI app events, not the sender's repository team role.
   roles: all

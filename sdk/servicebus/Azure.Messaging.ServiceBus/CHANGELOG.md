@@ -8,6 +8,8 @@
 
 ### Bugs Fixed
 
+- Fixed a bug where canceling `ServiceBusReceiver.CloseAsync` left the receiver unable to close its own links. The receiver was marked as closed, and its set of locked messages disposed, before the cancellation was observed, so every later call to `CloseAsync` returned immediately without doing any work and the links stayed open until the owning `ServiceBusClient` was disposed. The receiver is now left open and closable when a close does not complete, so the operation can be retried. ([#59309](https://github.com/Azure/azure-sdk-for-net/issues/59309))
+
 ### Other Changes
 
 ## 7.21.0-beta.1 (2026-08-21)

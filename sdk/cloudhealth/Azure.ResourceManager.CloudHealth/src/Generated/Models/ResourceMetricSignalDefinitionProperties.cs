@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <param name="metricName"> Name of the metric. </param>
         /// <param name="timeGrain"> Time range of signal. ISO duration format like PT10M. </param>
         /// <param name="aggregationType"> Type of aggregation to apply to the metric. </param>
-        /// <param name="dimensionFilter"> Optional: Dimension filter to apply to the dimension. Must only be set if also Dimension is set. </param>
+        /// <param name="dimensionFilter"> Optional: Dimension filter to apply to the dimension. </param>
         internal ResourceMetricSignalDefinitionProperties(HealthModelProvisioningState? provisioningState, string displayName, EntitySignalKind signalKind, EntitySignalRefreshInterval? refreshInterval, IDictionary<string, string> tags, string dataUnit, EntitySignalEvaluationRule evaluationRules, IDictionary<string, BinaryData> additionalBinaryDataProperties, string metricNamespace, string metricName, string timeGrain, MetricAggregationType aggregationType, string dimensionFilter) : base(provisioningState, displayName, signalKind, refreshInterval, tags, dataUnit, evaluationRules, additionalBinaryDataProperties)
         {
             MetricNamespace = metricNamespace;
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CloudHealth.Models
         /// <summary> Type of aggregation to apply to the metric. </summary>
         public MetricAggregationType AggregationType { get; set; }
 
-        /// <summary> Optional: Dimension filter to apply to the dimension. Must only be set if also Dimension is set. </summary>
+        /// <summary> Optional: Dimension filter to apply to the dimension. </summary>
         public string DimensionFilter { get; set; }
     }
 }

@@ -1,14 +1,16 @@
 # Release History
 
-## 1.3.0-beta.3 (Unreleased)
+## 1.3.0 (2026-09-03)
 
 ### Features Added
 
-### Breaking Changes
-
-### Bugs Fixed
+- Updated to support API version `2026-08-31`.
+- Added managed identity authentication support for linked IoT hubs.
+- Added the ability to disable local authentication.
 
 ### Other Changes
+
+- The preview-only Device Registry Namespace API from `2025-02-01-preview` is not included in the stable `2026-08-31` API.
 
 ## 1.3.0-beta.2 (2026-06-03)
 
@@ -110,4 +112,3 @@ This package follows the [new Azure SDK guidelines](https://azure.github.io/azur
 This package is a Public Preview version, so expect incompatible changes in subsequent releases as we improve the product. To provide feedback, submit an issue in our [Azure SDK for .NET GitHub repo](https://github.com/Azure/azure-sdk-for-net/issues).
 
 > NOTE: For more information about unified authentication, please refer to [Microsoft Azure Identity documentation for .NET](https://learn.microsoft.com/dotnet/api/overview/azure/identity-readme?view=azure-dotnet).
-

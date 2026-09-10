@@ -6,6 +6,7 @@ on:
       - '.github/workflows/ci-failure-analysis*'
       - '.github/workflows/ci-failure-analysis/**'
       - '.github/workflows/provisioning-review*'
+      - '.github/workflows/shared/copilot-cli-version-probe-guard.md'
       - '.github/workflows/mgmt-review*'
       - '.github/skills/analyze-ci-failures/**'
       - '.github/aw/actions-lock.json'

@@ -20,6 +20,7 @@ namespace Azure.ResourceManager.Nginx.Models
     public static partial class ArmNginxModelFactory
     {
 
+        /// <summary> Nginx Deployment Api Key Response. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -37,6 +38,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 default);
         }
 
+        /// <summary> Nginx Deployment Api Key Response Properties. </summary>
         /// <param name="hint"> The first three characters of the secret text to help identify it in use. This property is read-only. </param>
         /// <param name="endOn"> The time after which this Dataplane API Key is no longer valid. </param>
         /// <returns> A new <see cref="Models.NginxDeploymentApiKeyProperties"/> instance for mocking. </returns>
@@ -45,6 +47,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxDeploymentApiKeyProperties(hint, endOn, default);
         }
 
+        /// <summary> Nginx Deployment Api Key Request. </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="resourceType"></param>
@@ -62,6 +65,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 default);
         }
 
+        /// <summary> Nginx Deployment Api Key Request Properties. </summary>
         /// <param name="secretText"> Secret text to be used as a Dataplane API Key. This is a write only property that can never be read back, but the first three characters will be returned in the 'hint' property. </param>
         /// <param name="endOn"> The time after which this Dataplane API Key is no longer valid. </param>
         /// <returns> A new <see cref="Models.NginxDeploymentApiKeyRequestProperties"/> instance for mocking. </returns>
@@ -134,6 +138,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxNetworkProfile(frontEndIPConfiguration, networkInterfaceSubnetId is null ? default : new NginxNetworkInterfaceConfiguration(networkInterfaceSubnetId, default), default);
         }
 
+        /// <summary> Nginx Frontend IP Configuration. </summary>
         /// <param name="publicIPAddresses"></param>
         /// <param name="privateIPAddresses"></param>
         /// <returns> A new <see cref="Models.NginxFrontendIPConfiguration"/> instance for mocking. </returns>
@@ -145,6 +150,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxFrontendIPConfiguration((publicIPAddresses ?? new ChangeTrackingList<WritableSubResource>()).ToList(), (privateIPAddresses ?? new ChangeTrackingList<NginxPrivateIPAddress>()).ToList(), default);
         }
 
+        /// <summary> Nginx Private IP Address. </summary>
         /// <param name="privateIPAddress"></param>
         /// <param name="privateIPAllocationMethod"> Nginx Private IP Allocation Method. </param>
         /// <param name="subnetId"></param>
@@ -154,6 +160,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxPrivateIPAddress(privateIPAddress, privateIPAllocationMethod, subnetId, default);
         }
 
+        /// <summary> Nginx Storage Account. </summary>
         /// <param name="accountName"></param>
         /// <param name="containerName"></param>
         /// <returns> A new <see cref="Models.NginxStorageAccount"/> instance for mocking. </returns>
@@ -170,6 +177,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxDeploymentScalingProperties(capacity, profiles is null ? default : new NginxDeploymentAutoScaleSettings((profiles ?? new ChangeTrackingList<NginxScaleProfile>()).ToList(), default), default);
         }
 
+        /// <summary> The autoscale profile. </summary>
         /// <param name="name"></param>
         /// <param name="capacity"> The capacity parameters of the profile. </param>
         /// <returns> A new <see cref="Models.NginxScaleProfile"/> instance for mocking. </returns>
@@ -178,6 +186,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxScaleProfile(name, capacity, default);
         }
 
+        /// <summary> The capacity parameters of the profile. </summary>
         /// <param name="min"> The minimum number of NCUs the deployment can be autoscaled to. </param>
         /// <param name="max"> The maximum number of NCUs the deployment can be autoscaled to. </param>
         /// <returns> A new <see cref="Models.NginxScaleProfileCapacity"/> instance for mocking. </returns>
@@ -194,6 +203,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxDeploymentPropertiesNginxAppProtect(webApplicationFirewallActivationState is null ? default : new WebApplicationFirewallSettings(webApplicationFirewallActivationState, default), webApplicationFirewallStatus, default);
         }
 
+        /// <summary> The status of the NGINX App Protect Web Application Firewall. </summary>
         /// <param name="wafRelease"> NGINX App Protect WAF release version. </param>
         /// <param name="attackSignaturesPackage"> Package containing attack signatures for the NGINX App Protect Web Application Firewall (WAF). </param>
         /// <param name="botSignaturesPackage"> Package containing bot signatures for the NGINX App Protect Web Application Firewall (WAF). </param>
@@ -211,6 +221,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 default);
         }
 
+        /// <summary> NGINX App Protect Web Application Firewall (WAF) Package. Contains the version and revision date of the package. </summary>
         /// <param name="version"> The version of the NGINX App Protect Web Application Firewall (WAF) package. </param>
         /// <param name="revisionDatetime"> The date and time of the package revision. </param>
         /// <returns> A new <see cref="Models.WebApplicationFirewallPackage"/> instance for mocking. </returns>
@@ -219,6 +230,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new WebApplicationFirewallPackage(version, revisionDatetime, default);
         }
 
+        /// <summary> Versions of the NGINX App Protect Web Application Firewall (WAF) components. </summary>
         /// <param name="wafEngineVersion"> The version of the NGINX App Protect Web Application Firewall (WAF) engine. </param>
         /// <param name="wafNginxVersion"> The version of the NGINX App Protect Web Application Firewall (WAF) module for NGINX. </param>
         /// <returns> A new <see cref="Models.WebApplicationFirewallComponentVersions"/> instance for mocking. </returns>
@@ -267,6 +279,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 default);
         }
 
+        /// <summary> Nginx Deployment Waf Policy Metadata. </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="type"></param>
@@ -284,6 +297,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 default);
         }
 
+        /// <summary> Nginx Deployment Waf Policy Metadata Properties. </summary>
         /// <param name="filepath"></param>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="compilingState"> Nginx Deployment Waf Policy Compiling Status. </param>
@@ -294,6 +308,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxDeploymentWafPolicyMetadataProperties(filepath, provisioningState, compilingState, applyingState, default);
         }
 
+        /// <summary> Nginx Deployment Waf Policy Compiling Status. </summary>
         /// <param name="code"> Machine readable code indicating the compilation status of a WAF Policy. </param>
         /// <param name="displayStatus"> A readable string of the current status, and sometimes have the reason for the current state. If the CompilingStatus is Failed the Display Status will be The waf Policy failed to compile. </param>
         /// <param name="time"> The date and time the policy was compiled in UTC. </param>
@@ -303,6 +318,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxDeploymentWafPolicyCompilingStatus(code, displayStatus, time, default);
         }
 
+        /// <summary> Nginx Deployment Waf Policy Applying Status. </summary>
         /// <param name="code"> Machine readable code indicating the applying status code of a WAF Policy. </param>
         /// <param name="displayStatus"> A readable string of the current status, and sometimes have the reason for the current state. </param>
         /// <param name="time"> The date and time in UTC the current applying status was set. </param>
@@ -312,6 +328,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxDeploymentWafPolicyApplyingStatus(code, displayStatus, time, default);
         }
 
+        /// <summary> Nginx Deployment Default Waf Policy List Response. </summary>
         /// <param name="value"></param>
         /// <param name="nextLink"></param>
         /// <returns> A new <see cref="Models.NginxDeploymentDefaultWafPolicyListResult"/> instance for mocking. </returns>
@@ -322,6 +339,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxDeploymentDefaultWafPolicyListResult((value ?? new ChangeTrackingList<NginxDeploymentDefaultWafPolicyProperties>()).ToList(), nextLink, default);
         }
 
+        /// <summary> Nginx Deployment Default Waf Policy Properties. </summary>
         /// <param name="content"></param>
         /// <param name="filepath"></param>
         /// <returns> A new <see cref="Models.NginxDeploymentDefaultWafPolicyProperties"/> instance for mocking. </returns>
@@ -330,6 +348,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxDeploymentDefaultWafPolicyProperties(content, filepath, default);
         }
 
+        /// <summary> Nginx Certificate. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -349,6 +368,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 default);
         }
 
+        /// <summary> Nginx Certificate Properties. </summary>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="keyVirtualPath"></param>
         /// <param name="certificateVirtualPath"></param>
@@ -372,6 +392,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 default);
         }
 
+        /// <summary> Nginx Certificate Error Response Body. </summary>
         /// <param name="code"></param>
         /// <param name="message"></param>
         /// <returns> A new <see cref="Models.NginxCertificateError"/> instance for mocking. </returns>
@@ -380,6 +401,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxCertificateError(code, message, default);
         }
 
+        /// <summary> Nginx Configuration Response. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -397,6 +419,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 default);
         }
 
+        /// <summary> Nginx Configuration Response Properties. </summary>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="files"></param>
         /// <param name="protectedFiles"></param>
@@ -417,6 +440,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 default);
         }
 
+        /// <summary> Nginx Configuration File. </summary>
         /// <param name="content"></param>
         /// <param name="virtualPath"></param>
         /// <param name="contentHash"></param>
@@ -426,6 +450,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxConfigurationFile(content, virtualPath, contentHash, default);
         }
 
+        /// <summary> Nginx Configuration Package. </summary>
         /// <param name="data"></param>
         /// <param name="protectedFiles"></param>
         /// <returns> A new <see cref="Models.NginxConfigurationPackage"/> instance for mocking. </returns>
@@ -436,6 +461,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxConfigurationPackage(data, (protectedFiles ?? new ChangeTrackingList<string>()).ToList(), default);
         }
 
+        /// <summary> Nginx Configuration Request. </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="resourceType"></param>
@@ -453,6 +479,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 default);
         }
 
+        /// <summary> Nginx Configuration Request Properties. </summary>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="files"></param>
         /// <param name="protectedFiles"></param>
@@ -473,6 +500,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 default);
         }
 
+        /// <summary> Nginx Configuration Protected File Request. </summary>
         /// <param name="content"> The content of the protected file. This value is a PUT only value. If you perform a GET request on this value, it will be empty because it is a protected file. </param>
         /// <param name="virtualPath"> The virtual path of the protected file. </param>
         /// <param name="contentHash"> The hash of the content of the file. This value is used to determine if the file has changed. </param>
@@ -482,6 +510,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxConfigurationContentProtectedFile(content, virtualPath, contentHash, default);
         }
 
+        /// <summary> The request body for creating an analysis for an NGINX configuration. </summary>
         /// <param name="config"></param>
         /// <returns> A new <see cref="Models.NginxAnalysisContent"/> instance for mocking. </returns>
         public static NginxAnalysisContent NginxAnalysisContent(NginxAnalysisConfig config = default)
@@ -489,6 +518,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxAnalysisContent(config, default);
         }
 
+        /// <summary> The NginxAnalysisConfig. </summary>
         /// <param name="rootFile"> The root file of the NGINX config file(s). It must match one of the files' filepath. </param>
         /// <param name="files"></param>
         /// <param name="protectedFiles"></param>
@@ -502,6 +532,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxAnalysisConfig(rootFile, (files ?? new ChangeTrackingList<NginxConfigurationFile>()).ToList(), (protectedFiles ?? new ChangeTrackingList<NginxConfigurationContentProtectedFile>()).ToList(), package, default);
         }
 
+        /// <summary> The response body for an analysis request. Contains the status of the analysis and any errors. </summary>
         /// <param name="status"> The status of the analysis. </param>
         /// <param name="data"></param>
         /// <returns> A new <see cref="Models.NginxAnalysisResult"/> instance for mocking. </returns>
@@ -510,6 +541,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxAnalysisResult(status, data, default);
         }
 
+        /// <summary> The NginxAnalysisResultDetails. </summary>
         /// <param name="errors"></param>
         /// <param name="diagnostics"></param>
         /// <returns> A new <see cref="Models.NginxAnalysisResultDetails"/> instance for mocking. </returns>
@@ -521,6 +553,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxAnalysisResultDetails((errors ?? new ChangeTrackingList<NginxAnalysisDiagnostic>()).ToList(), (diagnostics ?? new ChangeTrackingList<NginxDiagnosticItem>()).ToList(), default);
         }
 
+        /// <summary> An error object found during the analysis of an NGINX configuration. </summary>
         /// <param name="id"> Unique identifier for the error. </param>
         /// <param name="directive"></param>
         /// <param name="description"></param>
@@ -542,6 +575,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 default);
         }
 
+        /// <summary> A diagnostic is a message associated with an NGINX config. The Analyzer returns diagnostics with a level indicating the importance of the diagnostic with optional category. </summary>
         /// <param name="id"> Unique identifier for the diagnostic. </param>
         /// <param name="directive"></param>
         /// <param name="description"></param>
@@ -567,6 +601,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 default);
         }
 
+        /// <summary> Nginx Deployment Waf Policy. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
         /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
@@ -584,6 +619,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 default);
         }
 
+        /// <summary> Nginx Deployment Waf Policy Properties. </summary>
         /// <param name="provisioningState"> Provisioning State. </param>
         /// <param name="content"> The byte content of the Policy. </param>
         /// <param name="filepath"> The file path where the Policy is to be saved. </param>
@@ -601,6 +637,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 default);
         }
 
+        /// <summary> Nginx Deployment Waf Policy Analysis Create Request. </summary>
         /// <param name="content"> The byte content of the policy. </param>
         /// <param name="filepath"> The absolute file path of the policy as in the virtual machine. </param>
         /// <returns> A new <see cref="Models.NginxDeploymentWafPolicyAnalysisCreateContent"/> instance for mocking. </returns>
@@ -617,6 +654,7 @@ namespace Azure.ResourceManager.Nginx.Models
             return new NginxDeploymentWafPolicyAnalysisResult(status, dataErrors is null ? default : new NginxDeploymentWafPolicyAnalysisData((dataErrors ?? new ChangeTrackingList<NginxDeploymentWafPolicyError>()).ToList(), default), default);
         }
 
+        /// <summary> Nginx Deployment Waf Policy Error. </summary>
         /// <param name="code"> Error code. </param>
         /// <param name="field"> Field that caused the error. </param>
         /// <param name="message"> Error message. </param>

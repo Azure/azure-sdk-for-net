@@ -75,9 +75,16 @@ namespace TestProjects.Spector.Tests
 
         private static string? GetClientCsFile(string clientCodeDirectory)
         {
-            return Directory.GetFiles(clientCodeDirectory, "*.cs", SearchOption.AllDirectories)
+            var generatedFiles = Directory.GetFiles(clientCodeDirectory, "*.cs", SearchOption.AllDirectories);
+            return generatedFiles
                 .Where(f => f.EndsWith("Client.cs", StringComparison.Ordinal) && !f.EndsWith("RestClient.cs", StringComparison.Ordinal))
-                .FirstOrDefault();
+                .OrderByDescending(f => f.EndsWith("ArmClient.cs", StringComparison.Ordinal))
+                .ThenBy(f => f, StringComparer.Ordinal)
+                .FirstOrDefault()
+                ?? generatedFiles
+                    .Where(f => Path.GetFileName(f).StartsWith("Mockable", StringComparison.Ordinal))
+                    .OrderBy(f => f, StringComparer.Ordinal)
+                    .FirstOrDefault();
         }
 
         private static string GetGeneratedDirectory(Test test, bool kebabCaseDirectories = true)

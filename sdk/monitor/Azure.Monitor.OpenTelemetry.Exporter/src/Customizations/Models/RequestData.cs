@@ -35,10 +35,10 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             // Check for Microsoft override attributes only if present (avoids overhead for standalone OTel usage)
             if (activityTagsProcessor.HasOverrideAttributes)
             {
-                var overrideUrl = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftRequestUrl)?.ToString();
-                var overrideName = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftRequestName)?.ToString();
-                var overrideSource = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftRequestSource)?.ToString();
-                var overrideResultCode = AzMonList.GetTagValue(ref activityTagsProcessor.MappedTags, SemanticConventions.AttributeMicrosoftRequestResultCode)?.ToString();
+                var overrideUrl = activityTagsProcessor.MappedTags[SemanticSlot.MicrosoftRequestUrl]?.ToString();
+                var overrideName = activityTagsProcessor.MappedTags[SemanticSlot.MicrosoftRequestName]?.ToString();
+                var overrideSource = activityTagsProcessor.MappedTags[SemanticSlot.MicrosoftRequestSource]?.ToString();
+                var overrideResultCode = activityTagsProcessor.MappedTags[SemanticSlot.MicrosoftRequestResultCode]?.ToString();
 
                 // Apply overrides if present (these take precedence)
                 if (!string.IsNullOrEmpty(overrideUrl))
@@ -102,7 +102,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         private void SetHttpRequestPropertiesAndResponseCode(Activity activity, ref AzMonList httpTagObjects, out string responseCode)
         {
             Url ??= httpTagObjects.GetRequestUrl()?.Truncate(SchemaConstants.RequestData_Url_MaxLength);
-            responseCode = AzMonList.GetTagValue(ref httpTagObjects, SemanticConventions.AttributeHttpStatusCode)
+            responseCode = httpTagObjects[SemanticSlot.HttpStatusCode]
                                                 ?.ToString().Truncate(SchemaConstants.RequestData_ResponseCode_MaxLength)
                                                 ?? "0";
         }
@@ -110,7 +110,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         private void SetHttpV2RequestPropertiesAndResponseCode(Activity activity, ref AzMonList httpTagObjects, out string responseCode)
         {
             Url ??= httpTagObjects.GetNewSchemaRequestUrl()?.Truncate(SchemaConstants.RequestData_Url_MaxLength);
-            responseCode = AzMonList.GetTagValue(ref httpTagObjects, SemanticConventions.AttributeHttpResponseStatusCode)
+            responseCode = httpTagObjects[SemanticSlot.HttpResponseStatusCode]
                                     ?.ToString().Truncate(SchemaConstants.RequestData_ResponseCode_MaxLength)
                                     ?? "0";
         }

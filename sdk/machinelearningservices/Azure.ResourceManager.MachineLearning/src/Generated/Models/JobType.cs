@@ -20,8 +20,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         private const string SweepValue = "Sweep";
         private const string PipelineValue = "Pipeline";
         private const string SparkValue = "Spark";
-        private const string FineTuningValue = "FineTuning";
-        private const string DistillationValue = "Distillation";
 
         /// <summary> Initializes a new instance of <see cref="JobType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -47,12 +45,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
 
         /// <summary> Gets the Spark. </summary>
         public static JobType Spark { get; } = new JobType(SparkValue);
-
-        /// <summary> Gets the FineTuning. </summary>
-        public static JobType FineTuning { get; } = new JobType(FineTuningValue);
-
-        /// <summary> Gets the Distillation. </summary>
-        public static JobType Distillation { get; } = new JobType(DistillationValue);
 
         /// <summary> Determines if two <see cref="JobType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

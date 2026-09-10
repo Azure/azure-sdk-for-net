@@ -95,8 +95,26 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("connectionString"u8);
-            writer.WriteStringValue(ConnectionString);
+            if (Optional.IsDefined(HostName))
+            {
+                writer.WritePropertyName("hostName"u8);
+                writer.WriteStringValue(HostName);
+            }
+            if (Optional.IsDefined(AuthenticationType))
+            {
+                writer.WritePropertyName("authenticationType"u8);
+                writer.WriteStringValue(AuthenticationType.Value.ToString());
+            }
+            if (Optional.IsDefined(SelectedUserAssignedIdentityResourceId))
+            {
+                writer.WritePropertyName("selectedUserAssignedIdentityResourceId"u8);
+                writer.WriteStringValue(SelectedUserAssignedIdentityResourceId);
+            }
+            if (Optional.IsDefined(ConnectionString))
+            {
+                writer.WritePropertyName("connectionString"u8);
+                writer.WriteStringValue(ConnectionString);
+            }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
@@ -144,6 +162,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             bool? applyAllocationPolicy = default;
             int? allocationWeight = default;
             string name = default;
+            string hostName = default;
+            IotHubAuthenticationType? authenticationType = default;
+            ResourceIdentifier selectedUserAssignedIdentityResourceId = default;
             string connectionString = default;
             AzureLocation location = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -172,6 +193,29 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     name = prop.Value.GetString();
                     continue;
                 }
+                if (prop.NameEquals("hostName"u8))
+                {
+                    hostName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("authenticationType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    authenticationType = new IotHubAuthenticationType(prop.Value.GetString());
+                    continue;
+                }
+                if (prop.NameEquals("selectedUserAssignedIdentityResourceId"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    selectedUserAssignedIdentityResourceId = new ResourceIdentifier(prop.Value.GetString());
+                    continue;
+                }
                 if (prop.NameEquals("connectionString"u8))
                 {
                     connectionString = prop.Value.GetString();
@@ -191,6 +235,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 applyAllocationPolicy,
                 allocationWeight,
                 name,
+                hostName,
+                authenticationType,
+                selectedUserAssignedIdentityResourceId,
                 connectionString,
                 location,
                 additionalBinaryDataProperties);
