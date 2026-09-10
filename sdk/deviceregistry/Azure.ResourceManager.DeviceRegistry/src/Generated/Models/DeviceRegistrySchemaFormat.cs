@@ -19,6 +19,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         private const string JsonSchemaDraft7Value = "JsonSchema/draft-07";
         /// <summary> Delta format. </summary>
         private const string Delta10Value = "Delta/1.0";
+        /// <summary> W3C Web of Things JSON-LD format. </summary>
+        private const string JsonLD11Value = "JsonLD/1.1";
 
         /// <summary> Initializes a new instance of <see cref="DeviceRegistrySchemaFormat"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -35,6 +37,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Delta format. </summary>
         public static DeviceRegistrySchemaFormat Delta10 { get; } = new DeviceRegistrySchemaFormat(Delta10Value);
+
+        /// <summary> W3C Web of Things JSON-LD format. </summary>
+        public static DeviceRegistrySchemaFormat JsonLD11 { get; } = new DeviceRegistrySchemaFormat(JsonLD11Value);
 
         /// <summary> Determines if two <see cref="DeviceRegistrySchemaFormat"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

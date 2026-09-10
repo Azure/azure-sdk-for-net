@@ -119,6 +119,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 }
                 writer.WriteEndArray();
             }
+            if (options.Format != "W" && Optional.IsDefined(HealthState))
+            {
+                writer.WritePropertyName("healthState"u8);
+                writer.WriteObjectValue(HealthState, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -166,6 +171,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             IReadOnlyList<DeviceRegistryNamespaceAssetStatusEventGroup> eventGroups = default;
             IReadOnlyList<DeviceRegistryNamespaceAssetStatusStream> streams = default;
             IReadOnlyList<DeviceRegistryNamespaceAssetStatusManagementGroup> managementGroups = default;
+            HealthState healthState = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -234,6 +240,15 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     managementGroups = array;
                     continue;
                 }
+                if (prop.NameEquals("healthState"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    healthState = HealthState.DeserializeHealthState(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -245,6 +260,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 eventGroups ?? new ChangeTrackingList<DeviceRegistryNamespaceAssetStatusEventGroup>(),
                 streams ?? new ChangeTrackingList<DeviceRegistryNamespaceAssetStatusStream>(),
                 managementGroups ?? new ChangeTrackingList<DeviceRegistryNamespaceAssetStatusManagementGroup>(),
+                healthState,
                 additionalBinaryDataProperties);
         }
     }

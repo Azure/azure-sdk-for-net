@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.DeviceRegistry;
 
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
@@ -18,25 +17,30 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
         /// <summary> Initializes a new instance of <see cref="MessagingEndpoint"/>. </summary>
-        /// <param name="address"> The endpoint address to connect to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="address"/> is null. </exception>
-        public MessagingEndpoint(string address)
+        public MessagingEndpoint()
         {
-            Argument.AssertNotNull(address, nameof(address));
-
-            Address = address;
         }
 
         /// <summary> Initializes a new instance of <see cref="MessagingEndpoint"/>. </summary>
         /// <param name="endpointType"> Type of connection used for messaging endpoint. </param>
         /// <param name="address"> The endpoint address to connect to. </param>
         /// <param name="resourceId"> The messaging endpoint Azure resource Id. </param>
+        /// <param name="deviceAddress"> The endpoint address used by devices. </param>
+        /// <param name="inboundCallerIdentity"> The identity the linked resource uses to call the ADR namespace. </param>
+        /// <param name="linkingState"> The linking state of this messaging endpoint. </param>
+        /// <param name="linkingError"> The error detail surfaced when this messaging endpoint is in the Failed linking state. </param>
+        /// <param name="provisioning"> The provisioning configuration for this messaging endpoint. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MessagingEndpoint(string endpointType, string address, string resourceId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MessagingEndpoint(string endpointType, string address, string resourceId, string deviceAddress, InboundCallerIdentity inboundCallerIdentity, NamespaceLinkingStateValue? linkingState, NamespaceLinkingError linkingError, MessagingEndpointProvisioning provisioning, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             EndpointType = endpointType;
             Address = address;
             ResourceId = resourceId;
+            DeviceAddress = deviceAddress;
+            InboundCallerIdentity = inboundCallerIdentity;
+            LinkingState = linkingState;
+            LinkingError = linkingError;
+            Provisioning = provisioning;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -48,5 +52,20 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> The messaging endpoint Azure resource Id. </summary>
         public string ResourceId { get; set; }
+
+        /// <summary> The endpoint address used by devices. </summary>
+        public string DeviceAddress { get; }
+
+        /// <summary> The identity the linked resource uses to call the ADR namespace. </summary>
+        public InboundCallerIdentity InboundCallerIdentity { get; set; }
+
+        /// <summary> The linking state of this messaging endpoint. </summary>
+        public NamespaceLinkingStateValue? LinkingState { get; }
+
+        /// <summary> The error detail surfaced when this messaging endpoint is in the Failed linking state. </summary>
+        public NamespaceLinkingError LinkingError { get; }
+
+        /// <summary> The provisioning configuration for this messaging endpoint. </summary>
+        public MessagingEndpointProvisioning Provisioning { get; set; }
     }
 }

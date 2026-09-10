@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         {
             TryGetApiVersion(ResourceType, out string deviceRegistryBillingContainerApiVersion);
             _billingContainersClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.DeviceRegistry", ResourceType.Namespace, Diagnostics);
-            _billingContainersRestClient = new BillingContainers(_billingContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryBillingContainerApiVersion ?? "2026-03-01-preview");
+            _billingContainersRestClient = new BillingContainers(_billingContainersClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, deviceRegistryBillingContainerApiVersion ?? "2026-11-01");
             ValidateResourceId(id);
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DeviceRegistry
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-03-01-preview. </description>
+        /// <description> 2026-11-01. </description>
         /// </item>
         /// <item>
         /// <term> Resource. </term>

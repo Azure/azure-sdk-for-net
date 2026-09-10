@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="DeviceRegistry.DeviceRegistryNamespaceData"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespaceData DeviceRegistryNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryNamespaceProperties properties = default, SystemAssignedServiceIdentity identity = default)
+        public static DeviceRegistryNamespaceData DeviceRegistryNamespaceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryNamespaceProperties properties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -441,42 +441,132 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <param name="uuid"> Globally unique, immutable, non-reusable ID. </param>
         /// <param name="messagingEndpoints"> Dictionary of messaging endpoints. </param>
+        /// <param name="managementEndpoints"> Dictionary of management endpoints. </param>
+        /// <param name="provisioningEndpoints"> Dictionary of provisioning endpoints. </param>
+        /// <param name="outboundIdentity"> The identity used for outbound calls from the ADR namespace. If not specified and the namespace has a system-assigned identity enabled, the system-assigned identity is used by default. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryNamespaceProperties"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespaceProperties DeviceRegistryNamespaceProperties(string uuid = default, IDictionary<string, MessagingEndpoint> messagingEndpoints = default, DeviceRegistryProvisioningState? provisioningState = default)
+        public static DeviceRegistryNamespaceProperties DeviceRegistryNamespaceProperties(string uuid = default, IDictionary<string, MessagingEndpoint> messagingEndpoints = default, IDictionary<string, ManagementEndpoint> managementEndpoints = default, IDictionary<string, ProvisioningEndpoint> provisioningEndpoints = default, OutboundIdentity outboundIdentity = default, DeviceRegistryProvisioningState? provisioningState = default)
         {
-            return new DeviceRegistryNamespaceProperties(uuid, messagingEndpoints is null ? default : new Messaging(messagingEndpoints ?? new ChangeTrackingDictionary<string, MessagingEndpoint>(), default), provisioningState, default);
+            return new DeviceRegistryNamespaceProperties(
+                uuid,
+                messagingEndpoints is null ? default : new Messaging(messagingEndpoints ?? new ChangeTrackingDictionary<string, MessagingEndpoint>(), default),
+                managementEndpoints is null ? default : new Management(managementEndpoints ?? new ChangeTrackingDictionary<string, ManagementEndpoint>(), default),
+                provisioningEndpoints is null ? default : new NamespaceProvisioning(provisioningEndpoints ?? new ChangeTrackingDictionary<string, ProvisioningEndpoint>(), default),
+                outboundIdentity,
+                provisioningState,
+                default);
         }
 
         /// <summary> Namespace messaging endpoint model used by a device to connect to a service. </summary>
         /// <param name="endpointType"> Type of connection used for messaging endpoint. </param>
         /// <param name="address"> The endpoint address to connect to. </param>
         /// <param name="resourceId"> The messaging endpoint Azure resource Id. </param>
+        /// <param name="deviceAddress"> The endpoint address used by devices. </param>
+        /// <param name="inboundCallerIdentity"> The identity the linked resource uses to call the ADR namespace. </param>
+        /// <param name="linkingState"> The linking state of this messaging endpoint. </param>
+        /// <param name="linkingError"> The error detail surfaced when this messaging endpoint is in the Failed linking state. </param>
+        /// <param name="provisioning"> The provisioning configuration for this messaging endpoint. </param>
         /// <returns> A new <see cref="Models.MessagingEndpoint"/> instance for mocking. </returns>
-        public static MessagingEndpoint MessagingEndpoint(string endpointType = default, string address = default, string resourceId = default)
+        public static MessagingEndpoint MessagingEndpoint(string endpointType = default, string address = default, string resourceId = default, string deviceAddress = default, InboundCallerIdentity inboundCallerIdentity = default, NamespaceLinkingStateValue? linkingState = default, NamespaceLinkingError linkingError = default, MessagingEndpointProvisioning provisioning = default)
         {
-            return new MessagingEndpoint(endpointType, address, resourceId, default);
+            return new MessagingEndpoint(
+                endpointType,
+                address,
+                resourceId,
+                deviceAddress,
+                inboundCallerIdentity,
+                linkingState,
+                linkingError,
+                provisioning,
+                default);
         }
 
-        /// <summary> Managed service identity (either system assigned, or none). </summary>
-        /// <param name="principalId"> The service principal ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="tenantId"> The tenant ID of the system assigned identity. This property will only be provided for a system assigned identity. </param>
-        /// <param name="type"> The type of managed identity assigned to this resource. </param>
-        /// <returns> A new <see cref="Models.SystemAssignedServiceIdentity"/> instance for mocking. </returns>
-        public static SystemAssignedServiceIdentity SystemAssignedServiceIdentity(Guid? principalId = default, Guid? tenantId = default, SystemAssignedServiceIdentityType @type = default)
+        /// <summary> The identity a linked resource uses for inbound calls to the ADR namespace. </summary>
+        /// <param name="type"> The identity type. </param>
+        /// <param name="userAssignedIdentity"> The resource ID of the user-assigned managed identity. Required when type is UserAssigned. </param>
+        /// <returns> A new <see cref="Models.InboundCallerIdentity"/> instance for mocking. </returns>
+        public static InboundCallerIdentity InboundCallerIdentity(InboundCallerIdentityType @type = default, ResourceIdentifier userAssignedIdentity = default)
         {
-            return new SystemAssignedServiceIdentity(principalId, tenantId, @type, default);
+            return new InboundCallerIdentity(@type, userAssignedIdentity, default);
         }
 
+        /// <summary> Error detail for an endpoint whose linking state is Failed. Present only while the linking state is Failed and removed when the endpoint recovers. </summary>
+        /// <param name="code"> Error code that classifies the linking failure. </param>
+        /// <param name="message"> Human-readable message describing the linking failure. </param>
+        /// <returns> A new <see cref="Models.NamespaceLinkingError"/> instance for mocking. </returns>
+        public static NamespaceLinkingError NamespaceLinkingError(string code = default, string message = default)
+        {
+            return new NamespaceLinkingError(code, message, default);
+        }
+
+        /// <summary> The provisioning configuration for a messaging endpoint. </summary>
+        /// <param name="availability"> The availability status of the messaging endpoint. </param>
+        /// <param name="allocationWeight"> The allocation weight for this messaging endpoint. </param>
+        /// <returns> A new <see cref="Models.MessagingEndpointProvisioning"/> instance for mocking. </returns>
+        public static MessagingEndpointProvisioning MessagingEndpointProvisioning(MessagingEndpointAvailability? availability = default, int? allocationWeight = default)
+        {
+            return new MessagingEndpointProvisioning(availability, allocationWeight, default);
+        }
+
+        /// <summary> Namespace management endpoint model used by service to connect to device. </summary>
+        /// <param name="endpointType"> Type of connection used for management endpoint. </param>
+        /// <param name="address"> The endpoint address to connect to. </param>
+        /// <param name="scopeId"> The scope ID for the management endpoint. </param>
+        /// <param name="resourceId"> The messaging endpoint Azure resource Id. </param>
+        /// <returns> A new <see cref="Models.ManagementEndpoint"/> instance for mocking. </returns>
+        public static ManagementEndpoint ManagementEndpoint(string endpointType = default, string address = default, string scopeId = default, string resourceId = default)
+        {
+            return new ManagementEndpoint(endpointType, address, scopeId, resourceId, default);
+        }
+
+        /// <summary> A provisioning service endpoint linked to this namespace. </summary>
+        /// <param name="endpointType"> Type of provisioning resource. </param>
+        /// <param name="resourceId"> The provisioning endpoint Azure resource Id. </param>
+        /// <param name="inboundCallerIdentity"> The identity the linked resource uses to call the ADR namespace. </param>
+        /// <param name="linkingState"> The linking state of this provisioning endpoint. </param>
+        /// <param name="linkingError"> The error detail surfaced when this provisioning endpoint is in the Failed linking state. </param>
+        /// <returns> A new <see cref="Models.ProvisioningEndpoint"/> instance for mocking. </returns>
+        public static ProvisioningEndpoint ProvisioningEndpoint(ProvisioningEndpointType endpointType = default, ResourceIdentifier resourceId = default, InboundCallerIdentity inboundCallerIdentity = default, NamespaceLinkingStateValue? linkingState = default, NamespaceLinkingError linkingError = default)
+        {
+            return new ProvisioningEndpoint(
+                endpointType,
+                resourceId,
+                inboundCallerIdentity,
+                linkingState,
+                linkingError,
+                default);
+        }
+
+        /// <summary> The identity the ADR namespace uses for outbound calls. If this property is null and the namespace has a system-assigned identity enabled, the namespace defaults to using the system-assigned identity for outbound calls. </summary>
+        /// <param name="type"> The identity type. </param>
+        /// <param name="userAssignedIdentity"> The resource ID of the user-assigned managed identity. Required when type is UserAssigned. </param>
+        /// <returns> A new <see cref="Models.OutboundIdentity"/> instance for mocking. </returns>
+        public static OutboundIdentity OutboundIdentity(OutboundIdentityType @type = default, ResourceIdentifier userAssignedIdentity = default)
+        {
+            return new OutboundIdentity(@type, userAssignedIdentity, default);
+        }
+
+        /// <summary> The type used for update operations of the Namespace. </summary>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <param name="tags"> Resource tags. </param>
-        /// <param name="namespaceUpdateMessagingEndpoints"> Dictionary of messaging endpoints. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryNamespacePatch"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespacePatch DeviceRegistryNamespacePatch(SystemAssignedServiceIdentity identity = default, IDictionary<string, string> tags = default, IDictionary<string, MessagingEndpoint> namespaceUpdateMessagingEndpoints = default)
+        public static DeviceRegistryNamespacePatch DeviceRegistryNamespacePatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, NamespaceUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
-            return new DeviceRegistryNamespacePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), namespaceUpdateMessagingEndpoints is null ? default : new NamespaceUpdateProperties(new Messaging(namespaceUpdateMessagingEndpoints ?? new ChangeTrackingDictionary<string, MessagingEndpoint>(), default), default), default);
+            return new DeviceRegistryNamespacePatch(identity, tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <param name="messagingEndpoints"> Dictionary of messaging endpoints. </param>
+        /// <param name="managementEndpoints"> Dictionary of management endpoints. </param>
+        /// <param name="provisioningEndpoints"> Dictionary of provisioning endpoints. </param>
+        /// <param name="outboundIdentity"> The identity used for outbound calls from the ADR namespace. If not specified and the namespace has a system-assigned identity enabled, the system-assigned identity is used by default. </param>
+        /// <returns> A new <see cref="Models.NamespaceUpdateProperties"/> instance for mocking. </returns>
+        public static NamespaceUpdateProperties NamespaceUpdateProperties(IDictionary<string, MessagingEndpoint> messagingEndpoints = default, IDictionary<string, ManagementEndpoint> managementEndpoints = default, IDictionary<string, ProvisioningEndpoint> provisioningEndpoints = default, OutboundIdentity outboundIdentity = default)
+        {
+            return new NamespaceUpdateProperties(messagingEndpoints is null ? default : new Messaging(messagingEndpoints ?? new ChangeTrackingDictionary<string, MessagingEndpoint>(), default), managementEndpoints is null ? default : new Management(managementEndpoints ?? new ChangeTrackingDictionary<string, ManagementEndpoint>(), default), provisioningEndpoints is null ? default : new NamespaceProvisioning(provisioningEndpoints ?? new ChangeTrackingDictionary<string, ProvisioningEndpoint>(), default), outboundIdentity, default);
         }
 
         /// <summary> Request body for the migrate resources operation in to Namespace resource. </summary>
@@ -499,118 +589,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         public static DeviceRegistryErrorDetails DeviceRegistryErrorDetails(string code = default, string message = default, string info = default, string correlationId = default)
         {
             return new DeviceRegistryErrorDetails(code, message, info, correlationId, default);
-        }
-
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="tags"> Resource tags. </param>
-        /// <param name="location"> The geo-location where the resource lives. </param>
-        /// <param name="credentialProvisioningState"> The status of the last operation. </param>
-        /// <returns> A new <see cref="DeviceRegistry.CredentialData"/> instance for mocking. </returns>
-        public static CredentialData CredentialData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistryProvisioningState? credentialProvisioningState = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CredentialData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                tags ?? new ChangeTrackingDictionary<string, string>(),
-                location,
-                credentialProvisioningState is null ? default : new CredentialProperties(credentialProvisioningState, default),
-                default);
-        }
-
-        /// <summary> The type used for update operations of the Credential. </summary>
-        /// <param name="tags"> Resource tags. </param>
-        /// <returns> A new <see cref="Models.CredentialPatch"/> instance for mocking. </returns>
-        public static CredentialPatch CredentialPatch(IDictionary<string, string> tags = default)
-        {
-            tags ??= new ChangeTrackingDictionary<string, string>();
-
-            return new CredentialPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
-        }
-
-        /// <summary> A Credential Policy. </summary>
-        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
-        /// <param name="name"> The name of the resource. </param>
-        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
-        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
-        /// <returns> A new <see cref="DeviceRegistry.PolicyData"/> instance for mocking. </returns>
-        public static PolicyData PolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, PolicyProperties properties = default)
-        {
-            return new PolicyData(
-                id,
-                name,
-                resourceType,
-                systemData,
-                properties,
-                default);
-        }
-
-        /// <summary> Details of the Credential Policy. </summary>
-        /// <param name="provisioningState"> The status of the last operation. </param>
-        /// <param name="certificate"> The certificate configuration. </param>
-        /// <returns> A new <see cref="Models.PolicyProperties"/> instance for mocking. </returns>
-        public static PolicyProperties PolicyProperties(DeviceRegistryProvisioningState? provisioningState = default, CertificateConfiguration certificate = default)
-        {
-            return new PolicyProperties(provisioningState, certificate, default);
-        }
-
-        /// <param name="certificateAuthorityConfiguration"> The configuration to set up an ICA. </param>
-        /// <param name="leafCertificateValidityPeriodInDays"> The validity period in days. </param>
-        /// <returns> A new <see cref="Models.CertificateConfiguration"/> instance for mocking. </returns>
-        public static CertificateConfiguration CertificateConfiguration(CertificateAuthorityConfiguration certificateAuthorityConfiguration = default, int leafCertificateValidityPeriodInDays = default)
-        {
-            return new CertificateConfiguration(certificateAuthorityConfiguration, new LeafCertificateConfiguration(leafCertificateValidityPeriodInDays, default), default);
-        }
-
-        /// <summary> The configuration to set up an ICA. </summary>
-        /// <param name="keyType"> Crypto type: ECC. </param>
-        /// <param name="subject"> Certificate subject. </param>
-        /// <param name="validityNotBefore"> Certificate is valid not before this date. Format ISO8601. Generated based on on validity period. </param>
-        /// <param name="validityNotAfter"> Certificate is valid not after this date. Format ISO8601. Generated based on validity period. </param>
-        /// <param name="bringYourOwnRoot"> Configuration for Bring Your Own Root. </param>
-        /// <returns> A new <see cref="Models.CertificateAuthorityConfiguration"/> instance for mocking. </returns>
-        public static CertificateAuthorityConfiguration CertificateAuthorityConfiguration(SupportedKeyType keyType = default, string subject = default, DateTimeOffset? validityNotBefore = default, DateTimeOffset? validityNotAfter = default, BringYourOwnRoot bringYourOwnRoot = default)
-        {
-            return new CertificateAuthorityConfiguration(
-                keyType,
-                subject,
-                validityNotBefore,
-                validityNotAfter,
-                bringYourOwnRoot,
-                default);
-        }
-
-        /// <summary> Configuration for Bring Your Own Root. When enabled, customers provide their own CA-signed certificates instead of using the service-managed CA. </summary>
-        /// <param name="enabled"> Indicates whether Bring Your Own Root is enabled. This can only be set at creation time and cannot be changed afterward. </param>
-        /// <param name="certificateSigningRequest"> Certificate Signing Request (CSR) in PEM format, generated by the service. Sign this CSR with your Certificate Authority and activate via the activateBringYourOwnRoot action. A new CSR is generated at policy creation and when certificates near expiration. </param>
-        /// <param name="issuingCertificateThumbprint"> Thumbprint of the issuing certificate. </param>
-        /// <param name="status"> The status of the Bring Your Own Root configuration, indicating the current state of the certificate lifecycle. </param>
-        /// <returns> A new <see cref="Models.BringYourOwnRoot"/> instance for mocking. </returns>
-        public static BringYourOwnRoot BringYourOwnRoot(bool enabled = default, string certificateSigningRequest = default, string issuingCertificateThumbprint = default, BringYourOwnRootStatus? status = default)
-        {
-            return new BringYourOwnRoot(enabled, certificateSigningRequest, issuingCertificateThumbprint, status, default);
-        }
-
-        /// <param name="policyUpdateCertificate"> The certificate configuration. </param>
-        /// <returns> A new <see cref="Models.PolicyPatch"/> instance for mocking. </returns>
-        public static PolicyPatch PolicyPatch(CertificateConfiguration policyUpdateCertificate = default)
-        {
-            return new PolicyPatch(policyUpdateCertificate is null ? default : new PolicyUpdateProperties(policyUpdateCertificate, default), default);
-        }
-
-        /// <summary> Request payload for activating a Bring Your Own Root policy with a customer-provided signed certificate. </summary>
-        /// <param name="certificateChain"> Certificate chain in PEM format, including the signed certificate. The first certificate must be the signed certificate (matching the CSR generated by the service), followed by any intermediate CAs, and optionally the root CA. Certificates must be ordered from leaf to root and concatenated in PEM format. </param>
-        /// <returns> A new <see cref="Models.ActivateBringYourOwnRootContent"/> instance for mocking. </returns>
-        public static ActivateBringYourOwnRootContent ActivateBringYourOwnRootContent(string certificateChain = default)
-        {
-            return new ActivateBringYourOwnRootContent(certificateChain, default);
         }
 
         /// <summary> Asset definition. </summary>
@@ -973,8 +951,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="eventGroups"> Array of event group statuses that describe the status of each event group. </param>
         /// <param name="streams"> Array of stream statuses that describe the status of each stream. </param>
         /// <param name="managementGroups"> Array of management group statuses that describe the status of each management group. </param>
+        /// <param name="healthState"> The details about the runtime health state of the asset. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryNamespaceAssetStatus"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespaceAssetStatus DeviceRegistryNamespaceAssetStatus(DeviceRegistryStatusConfig config = default, IEnumerable<DeviceRegistryNamespaceAssetStatusDataset> datasets = default, IEnumerable<DeviceRegistryNamespaceAssetStatusEventGroup> eventGroups = default, IEnumerable<DeviceRegistryNamespaceAssetStatusStream> streams = default, IEnumerable<DeviceRegistryNamespaceAssetStatusManagementGroup> managementGroups = default)
+        public static DeviceRegistryNamespaceAssetStatus DeviceRegistryNamespaceAssetStatus(DeviceRegistryStatusConfig config = default, IEnumerable<DeviceRegistryNamespaceAssetStatusDataset> datasets = default, IEnumerable<DeviceRegistryNamespaceAssetStatusEventGroup> eventGroups = default, IEnumerable<DeviceRegistryNamespaceAssetStatusStream> streams = default, IEnumerable<DeviceRegistryNamespaceAssetStatusManagementGroup> managementGroups = default, HealthState healthState = default)
         {
             datasets ??= new ChangeTrackingList<DeviceRegistryNamespaceAssetStatusDataset>();
             eventGroups ??= new ChangeTrackingList<DeviceRegistryNamespaceAssetStatusEventGroup>();
@@ -987,6 +966,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 (eventGroups ?? new ChangeTrackingList<DeviceRegistryNamespaceAssetStatusEventGroup>()).ToList(),
                 (streams ?? new ChangeTrackingList<DeviceRegistryNamespaceAssetStatusStream>()).ToList(),
                 (managementGroups ?? new ChangeTrackingList<DeviceRegistryNamespaceAssetStatusManagementGroup>()).ToList(),
+                healthState,
                 default);
         }
 
@@ -1085,6 +1065,24 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryNamespaceAssetStatusManagementAction(name, requestMessageSchemaReference, responseMessageSchemaReference, error, default);
         }
 
+        /// <summary> Represents the health state of a resource. </summary>
+        /// <param name="status"> The high-level health status of the resource. </param>
+        /// <param name="lastTransitionTime"> The timestamp (RFC3339) when the health status last changed. </param>
+        /// <param name="lastUpdateTime"> The timestamp (RFC3339) when the health status was last updated, even if the status did not change. </param>
+        /// <param name="message"> A human-readable message describing the last transition. </param>
+        /// <param name="reasonCode"> Unique, CamelCase reason code describing the cause of the last health state transition. </param>
+        /// <returns> A new <see cref="Models.HealthState"/> instance for mocking. </returns>
+        public static HealthState HealthState(HealthStatus? status = default, string lastTransitionTime = default, string lastUpdateTime = default, string message = default, string reasonCode = default)
+        {
+            return new HealthState(
+                status,
+                lastTransitionTime,
+                lastUpdateTime,
+                message,
+                reasonCode,
+                default);
+        }
+
         /// <summary> The type used for update operations of the NamespaceAsset. </summary>
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
@@ -1162,6 +1160,18 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> The request body for the executeAction operation on NamespaceAsset. </summary>
+        /// <param name="managementActionName"> Name of the management action to be executed. </param>
+        /// <param name="managementGroupName"> Name of the management group under which the action is to be executed. </param>
+        /// <param name="payload"> Payload required for executing the management action. </param>
+        /// <returns> A new <see cref="Models.NamespaceAssetExecuteActionRequest"/> instance for mocking. </returns>
+        public static NamespaceAssetExecuteActionRequest NamespaceAssetExecuteActionRequest(string managementActionName = default, string managementGroupName = default, IDictionary<string, BinaryData> payload = default)
+        {
+            payload ??= new ChangeTrackingDictionary<string, BinaryData>();
+
+            return new NamespaceAssetExecuteActionRequest(managementActionName, managementGroupName, payload ?? new ChangeTrackingDictionary<string, BinaryData>(), default);
+        }
+
         /// <summary> Device definition. </summary>
         /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
         /// <param name="name"> The name of the resource. </param>
@@ -1190,6 +1200,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 default);
         }
 
+        /// <summary> Defines the device properties. </summary>
         /// <param name="uuid"> A unique identifier for the device. </param>
         /// <param name="enabled"> Indicates if the resource is enabled or not. </param>
         /// <param name="externalDeviceId"> The Device ID provided by the customer. </param>
@@ -1204,9 +1215,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="version"> An integer that is incremented each time the resource is modified. </param>
         /// <param name="lastTransitionOn"> A timestamp (in UTC) that is updated each time the resource is modified. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        /// <param name="resourceId"> Resource Id of the Policy. </param>
         /// <returns> A new <see cref="Models.DeviceRegistryNamespaceDeviceProperties"/> instance for mocking. </returns>
-        public static DeviceRegistryNamespaceDeviceProperties DeviceRegistryNamespaceDeviceProperties(string uuid = default, bool? enabled = default, string externalDeviceId = default, string discoveredDeviceRef = default, string manufacturer = default, string model = default, string operatingSystem = default, string operatingSystemVersion = default, MessagingEndpoints endpoints = default, IDictionary<string, BinaryData> attributes = default, DeviceStatus status = default, long? version = default, DateTimeOffset? lastTransitionOn = default, DeviceRegistryProvisioningState? provisioningState = default, ResourceIdentifier resourceId = default)
+        public static DeviceRegistryNamespaceDeviceProperties DeviceRegistryNamespaceDeviceProperties(string uuid = default, bool? enabled = default, string externalDeviceId = default, string discoveredDeviceRef = default, string manufacturer = default, string model = default, string operatingSystem = default, string operatingSystemVersion = default, MessagingEndpoints endpoints = default, IDictionary<string, BinaryData> attributes = default, DeviceStatus status = default, long? version = default, DateTimeOffset? lastTransitionOn = default, DeviceRegistryProvisioningState? provisioningState = default)
         {
             attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
 
@@ -1225,7 +1235,6 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 version,
                 lastTransitionOn,
                 provisioningState,
-                resourceId is null ? default : new DeviceCredentialPolicy(resourceId, default),
                 default);
         }
 
@@ -1310,10 +1319,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Defines the device status properties. </summary>
         /// <param name="error"> Defines the error related to this endpoint. </param>
+        /// <param name="healthState"> Health state of the endpoint. </param>
         /// <returns> A new <see cref="Models.DeviceStatusEndpoint"/> instance for mocking. </returns>
-        public static DeviceStatusEndpoint DeviceStatusEndpoint(DeviceRegistryStatusError error = default)
+        public static DeviceStatusEndpoint DeviceStatusEndpoint(DeviceRegistryStatusError error = default, HealthState healthState = default)
         {
-            return new DeviceStatusEndpoint(error, default);
+            return new DeviceStatusEndpoint(error, healthState, default);
         }
 
         /// <summary> The type used for update operations of the NamespaceDevice. </summary>
@@ -1327,31 +1337,17 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
             return new DeviceRegistryNamespaceDevicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
         }
 
+        /// <summary> The updatable properties of the NamespaceDevice. </summary>
         /// <param name="operatingSystemVersion"> Device operating system version. </param>
         /// <param name="endpoints"> Property bag containing the device's unassigned and assigned endpoints. </param>
         /// <param name="attributes"> A set of key-value pairs that contain custom attributes set by the customer. </param>
-        /// <param name="resourceId"> Resource Id of the Policy. </param>
         /// <param name="enabled"> Indicates if the resource and identity are enabled or not. A disabled device cannot authenticate with Microsoft Entra ID. </param>
         /// <returns> A new <see cref="Models.NamespaceDeviceUpdateProperties"/> instance for mocking. </returns>
-        public static NamespaceDeviceUpdateProperties NamespaceDeviceUpdateProperties(string operatingSystemVersion = default, MessagingEndpoints endpoints = default, IDictionary<string, BinaryData> attributes = default, ResourceIdentifier resourceId = default, bool? enabled = default)
+        public static NamespaceDeviceUpdateProperties NamespaceDeviceUpdateProperties(string operatingSystemVersion = default, MessagingEndpoints endpoints = default, IDictionary<string, BinaryData> attributes = default, bool? enabled = default)
         {
             attributes ??= new ChangeTrackingDictionary<string, BinaryData>();
 
-            return new NamespaceDeviceUpdateProperties(
-                operatingSystemVersion,
-                endpoints,
-                attributes ?? new ChangeTrackingDictionary<string, BinaryData>(),
-                resourceId is null ? default : new DeviceCredentialPolicy(resourceId, default),
-                enabled,
-                default);
-        }
-
-        /// <summary> Request payload for revoking device credentials. </summary>
-        /// <param name="disable"> Indicates whether to disable the device(s) after revoking credentials. Prevents new credentials to be issued. </param>
-        /// <returns> A new <see cref="Models.DeviceCredentialsRevokeContent"/> instance for mocking. </returns>
-        public static DeviceCredentialsRevokeContent DeviceCredentialsRevokeContent(bool? disable = default)
-        {
-            return new DeviceCredentialsRevokeContent(disable, default);
+            return new NamespaceDeviceUpdateProperties(operatingSystemVersion, endpoints, attributes ?? new ChangeTrackingDictionary<string, BinaryData>(), enabled, default);
         }
 
         /// <summary> Discovered asset definition. </summary>
@@ -1824,7 +1820,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <param name="identity"> The managed service identities assigned to this resource. </param>
         /// <returns> A new <see cref="DeviceRegistry.DeviceRegistrySchemaRegistryData"/> instance for mocking. </returns>
-        public static DeviceRegistrySchemaRegistryData DeviceRegistrySchemaRegistryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistrySchemaRegistryProperties properties = default, SystemAssignedServiceIdentity identity = default)
+        public static DeviceRegistrySchemaRegistryData DeviceRegistrySchemaRegistryData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, DeviceRegistrySchemaRegistryProperties properties = default, ManagedServiceIdentity identity = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1846,9 +1842,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="displayName"> Human-readable display name. </param>
         /// <param name="description"> Human-readable description of the schema registry. </param>
         /// <param name="storageAccountContainerUri"> The Storage Account's Container URL where schemas will be stored. </param>
+        /// <param name="outboundIdentity"> The identity used for outbound calls from the ADR schema registry. If not specified and the schema registry has a system-assigned identity enabled, the system-assigned identity is used by default. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.DeviceRegistrySchemaRegistryProperties"/> instance for mocking. </returns>
-        public static DeviceRegistrySchemaRegistryProperties DeviceRegistrySchemaRegistryProperties(string uuid = default, string @namespace = default, string displayName = default, string description = default, Uri storageAccountContainerUri = default, DeviceRegistryProvisioningState? provisioningState = default)
+        public static DeviceRegistrySchemaRegistryProperties DeviceRegistrySchemaRegistryProperties(string uuid = default, string @namespace = default, string displayName = default, string description = default, Uri storageAccountContainerUri = default, OutboundIdentity outboundIdentity = default, DeviceRegistryProvisioningState? provisioningState = default)
         {
             return new DeviceRegistrySchemaRegistryProperties(
                 uuid,
@@ -1856,6 +1853,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 displayName,
                 description,
                 storageAccountContainerUri,
+                outboundIdentity,
                 provisioningState,
                 default);
         }
@@ -1865,7 +1863,7 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="tags"> Resource tags. </param>
         /// <param name="properties"> The resource-specific properties for this resource. </param>
         /// <returns> A new <see cref="Models.DeviceRegistrySchemaRegistryPatch"/> instance for mocking. </returns>
-        public static DeviceRegistrySchemaRegistryPatch DeviceRegistrySchemaRegistryPatch(SystemAssignedServiceIdentity identity = default, IDictionary<string, string> tags = default, SchemaRegistryUpdateProperties properties = default)
+        public static DeviceRegistrySchemaRegistryPatch DeviceRegistrySchemaRegistryPatch(ManagedServiceIdentity identity = default, IDictionary<string, string> tags = default, SchemaRegistryUpdateProperties properties = default)
         {
             tags ??= new ChangeTrackingDictionary<string, string>();
 
@@ -1875,10 +1873,11 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <summary> The updatable properties of the SchemaRegistry. </summary>
         /// <param name="displayName"> Human-readable display name. </param>
         /// <param name="description"> Human-readable description of the schema registry. </param>
+        /// <param name="outboundIdentity"> The identity used for outbound calls from the ADR schema registry. If not specified and the schema registry has a system-assigned identity enabled, the system-assigned identity is used by default. </param>
         /// <returns> A new <see cref="Models.SchemaRegistryUpdateProperties"/> instance for mocking. </returns>
-        public static SchemaRegistryUpdateProperties SchemaRegistryUpdateProperties(string displayName = default, string description = default)
+        public static SchemaRegistryUpdateProperties SchemaRegistryUpdateProperties(string displayName = default, string description = default, OutboundIdentity outboundIdentity = default)
         {
-            return new SchemaRegistryUpdateProperties(displayName, description, default);
+            return new SchemaRegistryUpdateProperties(displayName, description, outboundIdentity, default);
         }
 
         /// <summary> Schema definition. </summary>
@@ -1956,6 +1955,268 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 schemaContent,
                 hash,
                 provisioningState,
+                default);
+        }
+
+        /// <summary> A Certificate Authority resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="DeviceRegistry.CertificateAuthorityData"/> instance for mocking. </returns>
+        public static CertificateAuthorityData CertificateAuthorityData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CertificateAuthorityProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CertificateAuthorityData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <summary>
+        /// Details of the Certificate Authority resource.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.RootCertificateAuthorityProperties"/> and <see cref="Models.IntermediateCertificateAuthorityProperties"/>.
+        /// </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="uuid"> Globally unique, immutable, non-reusable identifier of the Certificate Authority resource. </param>
+        /// <param name="certificateAuthorityType"> The Certificate Authority type. Use Root for a self-signed, service-managed root CA, and ICA for an intermediate CA. </param>
+        /// <param name="keyType"> Crypto type: ECC. </param>
+        /// <param name="subject"> Certificate subject. </param>
+        /// <param name="validityNotBefore"> Certificate is valid not before this date. Format ISO8601. </param>
+        /// <param name="validityNotAfter"> Certificate is valid not after this date. Format ISO8601. </param>
+        /// <returns> A new <see cref="Models.CertificateAuthorityProperties"/> instance for mocking. </returns>
+        public static CertificateAuthorityProperties CertificateAuthorityProperties(DeviceRegistryProvisioningState? provisioningState = default, string uuid = default, string certificateAuthorityType = default, CertificateAuthorityKeyType keyType = default, string subject = default, DateTimeOffset? validityNotBefore = default, DateTimeOffset? validityNotAfter = default)
+        {
+            return new UnknownCertificateAuthorityProperties(
+                provisioningState,
+                uuid,
+                default,
+                keyType,
+                subject,
+                validityNotBefore,
+                validityNotAfter,
+                default);
+        }
+
+        /// <summary> Properties for a self-signed, service-managed root Certificate Authority. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="uuid"> Globally unique, immutable, non-reusable identifier of the Certificate Authority resource. </param>
+        /// <param name="keyType"> Crypto type: ECC. </param>
+        /// <param name="subject"> Certificate subject. </param>
+        /// <param name="validityNotBefore"> Certificate is valid not before this date. Format ISO8601. </param>
+        /// <param name="validityNotAfter"> Certificate is valid not after this date. Format ISO8601. </param>
+        /// <returns> A new <see cref="Models.RootCertificateAuthorityProperties"/> instance for mocking. </returns>
+        public static RootCertificateAuthorityProperties RootCertificateAuthorityProperties(DeviceRegistryProvisioningState? provisioningState = default, string uuid = default, CertificateAuthorityKeyType keyType = default, string subject = default, DateTimeOffset? validityNotBefore = default, DateTimeOffset? validityNotAfter = default)
+        {
+            return new RootCertificateAuthorityProperties(
+                provisioningState,
+                uuid,
+                default,
+                keyType,
+                subject,
+                validityNotBefore,
+                validityNotAfter,
+                default);
+        }
+
+        /// <summary> Properties for an intermediate Certificate Authority signed by another same-namespace Certificate Authority. </summary>
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="uuid"> Globally unique, immutable, non-reusable identifier of the Certificate Authority resource. </param>
+        /// <param name="keyType"> Crypto type: ECC. </param>
+        /// <param name="subject"> Certificate subject. </param>
+        /// <param name="validityNotBefore"> Certificate is valid not before this date. Format ISO8601. </param>
+        /// <param name="validityNotAfter"> Certificate is valid not after this date. Format ISO8601. </param>
+        /// <param name="issuer"> The issuer for the intermediate Certificate Authority. </param>
+        /// <returns> A new <see cref="Models.IntermediateCertificateAuthorityProperties"/> instance for mocking. </returns>
+        public static IntermediateCertificateAuthorityProperties IntermediateCertificateAuthorityProperties(DeviceRegistryProvisioningState? provisioningState = default, string uuid = default, CertificateAuthorityKeyType keyType = default, string subject = default, DateTimeOffset? validityNotBefore = default, DateTimeOffset? validityNotAfter = default, CertificateAuthorityIssuer issuer = default)
+        {
+            return new IntermediateCertificateAuthorityProperties(
+                provisioningState,
+                uuid,
+                default,
+                keyType,
+                subject,
+                validityNotBefore,
+                validityNotAfter,
+                default,
+                issuer);
+        }
+
+        /// <summary>
+        /// The issuer for an intermediate Certificate Authority.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.MicrosoftCertificateAuthorityIssuer"/> and <see cref="Models.ExternalCertificateAuthorityIssuer"/>.
+        /// </summary>
+        /// <param name="issuerType"> The Certificate Authority issuer type. </param>
+        /// <returns> A new <see cref="Models.CertificateAuthorityIssuer"/> instance for mocking. </returns>
+        public static CertificateAuthorityIssuer CertificateAuthorityIssuer(string issuerType = default)
+        {
+            return new UnknownCertificateAuthorityIssuer(default, default);
+        }
+
+        /// <summary> A Microsoft issuer for an intermediate Certificate Authority. </summary>
+        /// <param name="certificateAuthorityResourceId"> The resource ID of the root issuer Certificate Authority in the same namespace. </param>
+        /// <returns> A new <see cref="Models.MicrosoftCertificateAuthorityIssuer"/> instance for mocking. </returns>
+        public static MicrosoftCertificateAuthorityIssuer MicrosoftCertificateAuthorityIssuer(ResourceIdentifier certificateAuthorityResourceId = default)
+        {
+            return new MicrosoftCertificateAuthorityIssuer(default, default, certificateAuthorityResourceId);
+        }
+
+        /// <summary> An external issuer for an intermediate Certificate Authority. </summary>
+        /// <param name="certificateSigningRequest"> Certificate Signing Request (CSR) in PEM format, generated by the service. </param>
+        /// <param name="thumbprint"> Thumbprint of the Certificate Authority certificate signed by the external issuer. </param>
+        /// <param name="status"> The status of the external issuer certificate lifecycle. </param>
+        /// <returns> A new <see cref="Models.ExternalCertificateAuthorityIssuer"/> instance for mocking. </returns>
+        public static ExternalCertificateAuthorityIssuer ExternalCertificateAuthorityIssuer(string certificateSigningRequest = default, string thumbprint = default, CertificateAuthorityStatus? status = default)
+        {
+            return new ExternalCertificateAuthorityIssuer(default, default, certificateSigningRequest, thumbprint, status);
+        }
+
+        /// <summary> Update model for Certificate Authority. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <returns> A new <see cref="Models.CertificateAuthorityPatch"/> instance for mocking. </returns>
+        public static CertificateAuthorityPatch CertificateAuthorityPatch(IDictionary<string, string> tags = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CertificateAuthorityPatch(tags ?? new ChangeTrackingDictionary<string, string>(), default);
+        }
+
+        /// <summary> Request payload for activating a Certificate Authority with a signed certificate. </summary>
+        /// <param name="certificateChain"> Certificate chain in PEM format for activating an externally issued intermediate Certificate Authority, including the signed certificate. The first certificate must be the signed certificate matching the CSR generated by the service, followed by any intermediate CAs, and optionally the root CA. Certificates must be ordered from leaf to root and concatenated in PEM format. </param>
+        /// <returns> A new <see cref="Models.ActivateCertificateAuthorityContent"/> instance for mocking. </returns>
+        public static ActivateCertificateAuthorityContent ActivateCertificateAuthorityContent(string certificateChain = default)
+        {
+            return new ActivateCertificateAuthorityContent(certificateChain, default);
+        }
+
+        /// <summary> A Certificate Policy resource. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="DeviceRegistry.CertificatePolicyData"/> instance for mocking. </returns>
+        public static CertificatePolicyData CertificatePolicyData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, CertificatePolicyProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CertificatePolicyData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                default);
+        }
+
+        /// <param name="provisioningState"> The status of the last operation. </param>
+        /// <param name="uuid"> Globally unique, immutable, non-reusable identifier of the Certificate Policy resource. </param>
+        /// <param name="certificateValidityPeriodInDays"> The validity period in days. </param>
+        /// <returns> A new <see cref="Models.CertificatePolicyProperties"/> instance for mocking. </returns>
+        public static CertificatePolicyProperties CertificatePolicyProperties(DeviceRegistryProvisioningState? provisioningState = default, string uuid = default, int? certificateValidityPeriodInDays = default)
+        {
+            return new CertificatePolicyProperties(provisioningState, uuid, certificateValidityPeriodInDays is null ? default : new CertificatePolicyConfiguration(certificateValidityPeriodInDays.GetValueOrDefault(), default), default);
+        }
+
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="certificateValidityPeriodInDays"> The validity period in days. </param>
+        /// <returns> A new <see cref="Models.CertificatePolicyPatch"/> instance for mocking. </returns>
+        public static CertificatePolicyPatch CertificatePolicyPatch(IDictionary<string, string> tags = default, int? certificateValidityPeriodInDays = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new CertificatePolicyPatch(tags ?? new ChangeTrackingDictionary<string, string>(), certificateValidityPeriodInDays is null ? default : new CertificatePolicyUpdateProperties(new OptionalPropertiesCertificatePolicyConfiguration(certificateValidityPeriodInDays, default), default), default);
+        }
+
+        /// <summary> A Registry Device resource is a tracked resource with a provisioning lifecycle. The different capabilities of the device are defined through child Device Capability resources. </summary>
+        /// <param name="id"> Fully qualified resource ID for the resource. Ex - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/{resourceProviderNamespace}/{resourceType}/{resourceName}. </param>
+        /// <param name="name"> The name of the resource. </param>
+        /// <param name="resourceType"> The type of the resource. E.g. "Microsoft.Compute/virtualMachines" or "Microsoft.Storage/storageAccounts". </param>
+        /// <param name="systemData"> Azure Resource Manager metadata containing createdBy and modifiedBy information. </param>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="location"> The geo-location where the resource lives. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <param name="eTag"> Resource etag. </param>
+        /// <returns> A new <see cref="DeviceRegistry.RegistryDeviceData"/> instance for mocking. </returns>
+        public static RegistryDeviceData RegistryDeviceData(ResourceIdentifier id = default, string name = default, ResourceType resourceType = default, SystemData systemData = default, IDictionary<string, string> tags = default, AzureLocation location = default, RegistryDeviceProperties properties = default, string eTag = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RegistryDeviceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
+                properties,
+                eTag,
+                default);
+        }
+
+        /// <summary> The properties of a registry device. </summary>
+        /// <param name="enablementState"> Whether the device is enabled or disabled. A disabled device cannot send messages, be updated, or reprovision. </param>
+        /// <param name="uuid"> Globally unique, immutable, non-reusable ID. </param>
+        /// <param name="externalDeviceId"> A Device ID provided by the customer. </param>
+        /// <param name="manufacturer"> Device manufacturer. </param>
+        /// <param name="model"> Device model. </param>
+        /// <param name="hardwareRevision"> Device hardware revision. </param>
+        /// <param name="softwareRevision"> Device software revision. </param>
+        /// <param name="provisioningState"> Provisioning state of the resource. </param>
+        /// <returns> A new <see cref="Models.RegistryDeviceProperties"/> instance for mocking. </returns>
+        public static RegistryDeviceProperties RegistryDeviceProperties(RegistryDeviceEnablementState enablementState = default, string uuid = default, string externalDeviceId = default, string manufacturer = default, string model = default, string hardwareRevision = default, string softwareRevision = default, DeviceRegistryProvisioningState? provisioningState = default)
+        {
+            return new RegistryDeviceProperties(
+                enablementState,
+                uuid,
+                externalDeviceId,
+                manufacturer,
+                model,
+                hardwareRevision,
+                softwareRevision,
+                provisioningState,
+                default);
+        }
+
+        /// <summary> The type used for update operations of the RegistryDevice. </summary>
+        /// <param name="tags"> Resource tags. </param>
+        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <returns> A new <see cref="Models.RegistryDevicePatch"/> instance for mocking. </returns>
+        public static RegistryDevicePatch RegistryDevicePatch(IDictionary<string, string> tags = default, RegistryDeviceUpdateProperties properties = default)
+        {
+            tags ??= new ChangeTrackingDictionary<string, string>();
+
+            return new RegistryDevicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), properties, default);
+        }
+
+        /// <summary> The updatable properties of the RegistryDevice. </summary>
+        /// <param name="enablementState"> Whether the device is enabled or disabled. A disabled device cannot send messages, be updated, or reprovision. </param>
+        /// <param name="manufacturer"> Device manufacturer. </param>
+        /// <param name="model"> Device model. </param>
+        /// <param name="hardwareRevision"> Device hardware revision. </param>
+        /// <param name="softwareRevision"> Device software revision. </param>
+        /// <returns> A new <see cref="Models.RegistryDeviceUpdateProperties"/> instance for mocking. </returns>
+        public static RegistryDeviceUpdateProperties RegistryDeviceUpdateProperties(RegistryDeviceEnablementState? enablementState = default, string manufacturer = default, string model = default, string hardwareRevision = default, string softwareRevision = default)
+        {
+            return new RegistryDeviceUpdateProperties(
+                enablementState,
+                manufacturer,
+                model,
+                hardwareRevision,
+                softwareRevision,
                 default);
         }
     }

@@ -14,7 +14,7 @@ using Azure.ResourceManager.DeviceRegistry;
 namespace Azure.ResourceManager.DeviceRegistry.Models
 {
     /// <summary> The updatable properties of the Namespace. </summary>
-    internal partial class NamespaceUpdateProperties : IJsonModel<NamespaceUpdateProperties>
+    public partial class NamespaceUpdateProperties : IJsonModel<NamespaceUpdateProperties>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
@@ -79,6 +79,21 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 writer.WritePropertyName("messaging"u8);
                 writer.WriteObjectValue(Messaging, options);
             }
+            if (Optional.IsDefined(Management))
+            {
+                writer.WritePropertyName("management"u8);
+                writer.WriteObjectValue(Management, options);
+            }
+            if (Optional.IsDefined(Provisioning))
+            {
+                writer.WritePropertyName("provisioning"u8);
+                writer.WriteObjectValue(Provisioning, options);
+            }
+            if (Optional.IsDefined(OutboundIdentity))
+            {
+                writer.WritePropertyName("outboundIdentity"u8);
+                writer.WriteObjectValue(OutboundIdentity, options);
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -122,6 +137,9 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                 return null;
             }
             Messaging messaging = default;
+            Management management = default;
+            NamespaceProvisioning provisioning = default;
+            OutboundIdentity outboundIdentity = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -134,12 +152,39 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
                     messaging = Messaging.DeserializeMessaging(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("management"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    management = Management.DeserializeManagement(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("provisioning"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    provisioning = NamespaceProvisioning.DeserializeNamespaceProvisioning(prop.Value, options);
+                    continue;
+                }
+                if (prop.NameEquals("outboundIdentity"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    outboundIdentity = OutboundIdentity.DeserializeOutboundIdentity(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new NamespaceUpdateProperties(messaging, additionalBinaryDataProperties);
+            return new NamespaceUpdateProperties(messaging, management, provisioning, outboundIdentity, additionalBinaryDataProperties);
         }
     }
 }

@@ -17,6 +17,10 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         private readonly string _value;
         /// <summary> Message Schema schema type. </summary>
         private const string MessageSchemaValue = "MessageSchema";
+        /// <summary> W3C Web of Things Thing Model document. </summary>
+        private const string ThingModelValue = "ThingModel";
+        /// <summary> W3C Web of Things Thing Description document. </summary>
+        private const string ThingDescriptionValue = "ThingDescription";
 
         /// <summary> Initializes a new instance of <see cref="DeviceRegistrySchemaType"/>. </summary>
         /// <param name="value"> The value. </param>
@@ -30,6 +34,12 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Message Schema schema type. </summary>
         public static DeviceRegistrySchemaType MessageSchema { get; } = new DeviceRegistrySchemaType(MessageSchemaValue);
+
+        /// <summary> W3C Web of Things Thing Model document. </summary>
+        public static DeviceRegistrySchemaType ThingModel { get; } = new DeviceRegistrySchemaType(ThingModelValue);
+
+        /// <summary> W3C Web of Things Thing Description document. </summary>
+        public static DeviceRegistrySchemaType ThingDescription { get; } = new DeviceRegistrySchemaType(ThingDescriptionValue);
 
         /// <summary> Determines if two <see cref="DeviceRegistrySchemaType"/> values are the same. </summary>
         /// <param name="left"> The left value to compare. </param>

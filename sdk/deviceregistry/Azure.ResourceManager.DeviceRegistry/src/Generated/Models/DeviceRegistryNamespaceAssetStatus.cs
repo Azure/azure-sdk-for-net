@@ -32,14 +32,16 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
         /// <param name="eventGroups"> Array of event group statuses that describe the status of each event group. </param>
         /// <param name="streams"> Array of stream statuses that describe the status of each stream. </param>
         /// <param name="managementGroups"> Array of management group statuses that describe the status of each management group. </param>
+        /// <param name="healthState"> The details about the runtime health state of the asset. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal DeviceRegistryNamespaceAssetStatus(DeviceRegistryStatusConfig config, IReadOnlyList<DeviceRegistryNamespaceAssetStatusDataset> datasets, IReadOnlyList<DeviceRegistryNamespaceAssetStatusEventGroup> eventGroups, IReadOnlyList<DeviceRegistryNamespaceAssetStatusStream> streams, IReadOnlyList<DeviceRegistryNamespaceAssetStatusManagementGroup> managementGroups, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal DeviceRegistryNamespaceAssetStatus(DeviceRegistryStatusConfig config, IReadOnlyList<DeviceRegistryNamespaceAssetStatusDataset> datasets, IReadOnlyList<DeviceRegistryNamespaceAssetStatusEventGroup> eventGroups, IReadOnlyList<DeviceRegistryNamespaceAssetStatusStream> streams, IReadOnlyList<DeviceRegistryNamespaceAssetStatusManagementGroup> managementGroups, HealthState healthState, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Config = config;
             Datasets = datasets;
             EventGroups = eventGroups;
             Streams = streams;
             ManagementGroups = managementGroups;
+            HealthState = healthState;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
 
@@ -57,5 +59,8 @@ namespace Azure.ResourceManager.DeviceRegistry.Models
 
         /// <summary> Array of management group statuses that describe the status of each management group. </summary>
         public IReadOnlyList<DeviceRegistryNamespaceAssetStatusManagementGroup> ManagementGroups { get; }
+
+        /// <summary> The details about the runtime health state of the asset. </summary>
+        public HealthState HealthState { get; }
     }
 }
