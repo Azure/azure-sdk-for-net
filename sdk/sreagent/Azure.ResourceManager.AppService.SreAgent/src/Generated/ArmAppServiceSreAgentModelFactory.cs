@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
         /// <param name="maxAgentCount"> Maximum number of agents allowed in the Agent Space. </param>
         /// <param name="serviceTreeId"> Universal unique ID (UUID) of the Service Tree associated with this Agent Space. </param>
         /// <returns> A new <see cref="Models.AgentSpaceProperties"/> instance for mocking. </returns>
-        public static AgentSpaceProperties AgentSpaceProperties(AgentSpaceProvisioningState? provisioningState = default, int? currentAgentCount = default, IEnumerable<string> memberAgents = default, DateTimeOffset? lastPolicyPropagationOn = default, AgentSpaceComplianceStatus complianceStatus = default, string description = default, GenevaActionsPolicy policiesGenevaActionsConfiguration = default, int? maxAgentCount = default, string serviceTreeId = default)
+        public static AgentSpaceProperties AgentSpaceProperties(AgentSpaceProvisioningState? provisioningState = default, int? currentAgentCount = default, IEnumerable<string> memberAgents = default, DateTimeOffset? lastPolicyPropagationOn = default, AgentSpaceComplianceStatus complianceStatus = default, string description = default, GenevaActionsPolicy policiesGenevaActionsConfiguration = default, int? maxAgentCount = default, Guid? serviceTreeId = default)
         {
             memberAgents ??= new ChangeTrackingList<string>();
 
@@ -359,7 +359,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
         /// <param name="maxAgentCount"> Maximum number of agents allowed in the Agent Space. </param>
         /// <param name="serviceTreeId"> Universal unique ID (UUID) of the Service Tree associated with this Agent Space. </param>
         /// <returns> A new <see cref="Models.AgentSpacePatchProperties"/> instance for mocking. </returns>
-        public static AgentSpacePatchProperties AgentSpacePatchProperties(string description = default, GenevaActionsPolicyPatch policiesGenevaActionsConfiguration = default, int? maxAgentCount = default, string serviceTreeId = default)
+        public static AgentSpacePatchProperties AgentSpacePatchProperties(string description = default, GenevaActionsPolicyPatch policiesGenevaActionsConfiguration = default, int? maxAgentCount = default, Guid? serviceTreeId = default)
         {
             return new AgentSpacePatchProperties(description, policiesGenevaActionsConfiguration is null ? default : new AgentSpacePoliciesPatch(policiesGenevaActionsConfiguration, default), maxAgentCount, serviceTreeId, default);
         }

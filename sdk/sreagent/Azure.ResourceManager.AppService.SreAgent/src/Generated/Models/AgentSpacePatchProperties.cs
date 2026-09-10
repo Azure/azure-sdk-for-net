@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
         /// <param name="maxAgentCount"> Maximum number of agents allowed in the Agent Space. </param>
         /// <param name="serviceTreeId"> Universal unique ID (UUID) of the Service Tree associated with this Agent Space. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentSpacePatchProperties(string description, AgentSpacePoliciesPatch policies, int? maxAgentCount, string serviceTreeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentSpacePatchProperties(string description, AgentSpacePoliciesPatch policies, int? maxAgentCount, Guid? serviceTreeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             Policies = policies;
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
         public int? MaxAgentCount { get; set; }
 
         /// <summary> Universal unique ID (UUID) of the Service Tree associated with this Agent Space. </summary>
-        public string ServiceTreeId { get; set; }
+        public Guid? ServiceTreeId { get; set; }
 
         /// <summary> Configuration for Geneva Actions policy. </summary>
         public GenevaActionsPolicyPatch PoliciesGenevaActionsConfiguration

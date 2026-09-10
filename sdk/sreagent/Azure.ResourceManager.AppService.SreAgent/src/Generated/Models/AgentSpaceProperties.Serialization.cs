@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
             if (Optional.IsDefined(ServiceTreeId))
             {
                 writer.WritePropertyName("serviceTreeId"u8);
-                writer.WriteStringValue(ServiceTreeId);
+                writer.WriteStringValue(ServiceTreeId.Value);
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
             string description = default;
             AgentSpacePolicies policies = default;
             int? maxAgentCount = default;
-            string serviceTreeId = default;
+            Guid? serviceTreeId = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -265,7 +265,11 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
                 }
                 if (prop.NameEquals("serviceTreeId"u8))
                 {
-                    serviceTreeId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    serviceTreeId = new Guid(prop.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
