@@ -105,6 +105,31 @@ function isNewVersion(
     return $true
 }
 
+function Get-GitHubApiHeaders {
+    $token = $null
+
+    if (Get-Command gh -ErrorAction SilentlyContinue) {
+        try {
+            $token = gh auth token 2>$null
+        }
+        catch {
+            Write-Host "Failed to get GitHub CLI auth token."
+        }
+    }
+
+    if (!$token) {
+        $token = $env:GITHUB_TOKEN
+    }
+
+    if ($token) {
+        return @{
+            Authorization = ("Bearer " + $token)
+        }
+    }
+
+    return @{}
+}
+
 <#
 .SYNOPSIS
 Installs a standalone version of an engsys tool.
@@ -135,11 +160,17 @@ function Install-Standalone-Tool (
     }
 
     $tag = "${Package}_${Version}"
+    $headers = Get-GitHubApiHeaders
 
     if (!$Version -or $Version -eq "*") {
         Write-Host "Attempting to find latest version for package '$Package'"
         $releasesUrl = "https://api.github.com/repos/$Repository/releases"
-        $releases = Invoke-RestMethod -Uri $releasesUrl
+        if ($null -ne $headers -and $headers.Count -gt 0) {
+            $releases = Invoke-RestMethod -Uri $releasesUrl -Headers $headers
+        }
+        else {
+            $releases = Invoke-RestMethod -Uri $releasesUrl
+        }
         $found = $false
         foreach ($release in $releases) {
             if ($release.tag_name -like "$Package*") {
@@ -163,7 +194,12 @@ function Install-Standalone-Tool (
 
     if (isNewVersion $version $downloadFolder) {
         Write-Host "Installing '$Package' '$Version' to '$downloadFolder' from $downloadUrl"
-        Invoke-WebRequest -Uri $downloadUrl -OutFile $downloadLocation
+        if ($null -ne $headers -and $headers.Count -gt 0) {
+            Invoke-WebRequest -Uri $downloadUrl -OutFile $downloadLocation -Headers $headers
+        }
+        else {
+            Invoke-WebRequest -Uri $downloadUrl -OutFile $downloadLocation
+        }
 
         if ($downloadFile -like "*.zip") {
             Expand-Archive -Path $downloadLocation -DestinationPath $downloadFolder -Force
