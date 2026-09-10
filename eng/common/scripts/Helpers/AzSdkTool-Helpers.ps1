@@ -109,7 +109,7 @@ function isNewVersion(
 .SYNOPSIS
 Gets GitHub authorization headers from the GitHub CLI or GITHUB_TOKEN.
 .OUTPUTS
-A hashtable containing authorization headers, or an empty hashtable when no token is available.
+A hashtable containing authorization headers, or null when no token is available.
 #>
 function Get-GitHubApiHeaders {
     $token = $null
@@ -148,7 +148,7 @@ function Get-GitHubApiHeaders {
         }
     }
 
-    return @{}
+    return $null
 }
 
 <#
@@ -183,7 +183,7 @@ function Install-Standalone-Tool (
     $tag = "${Package}_${Version}"
     $headers = Get-GitHubApiHeaders
     $githubRequestParameters = @{}
-    if ($null -ne $headers -and $headers.Count -gt 0) {
+    if ($headers) {
         $githubRequestParameters.Headers = $headers
     }
 
