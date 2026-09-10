@@ -10,12 +10,16 @@ Thank you to our developer community members who helped to make the Event Hubs c
 
 ### Features Added
 
+- Added a warning log, emitted when `PrefetchSizeInBytes` is configured and a receive operation completes with no events while the AMQP link has no credit available.  This condition indicates that the prefetch size limit may be constraining receive throughput.
+
 ### Breaking Changes
 
 ### Bugs Fixed
 
 - Fixed a bug where `EventHubBufferedProducerClient` could get stuck during `FlushAsync` or `CloseAsync` until `MaximumWaitTime` elapsed.
 - Fixed retry classification for web socket failures with nested causes.  On modern .NET, a transient network failure during a web socket connection attempt surfaces as a `WebSocketException` that wraps an `HttpRequestException`, which wraps the meaningful `IOException` or `SocketException`.  The retry policy previously inspected only one level of nesting and treated these failures as terminal.  The policy now unwraps nested wrapper exceptions to a bounded depth, so transient failures such as a connection reset use the configured retries.  Terminal socket failures, such as host-not-found and host-unreachable, are not retried at any supported depth.  A host-unreachable failure on an established connection is now terminal.  Earlier versions retried it. ([#61868](https://github.com/Azure/azure-sdk-for-net/issues/61868))
+
+- Fixed the event id used when logging that a legacy checkpoint format was detected.  The event was previously written with an unregistered id and did not render for listeners.
 
 ### Other Changes
 

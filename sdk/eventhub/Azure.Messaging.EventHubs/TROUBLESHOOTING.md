@@ -26,6 +26,7 @@ This troubleshooting guide covers failure investigation techniques, errors encou
   - ["Frequent errors for "...current receiver '< RECEIVER_NAME >' with epoch '0' is getting disconnected""](#frequent-errors-for-current-receiver--receiver_name--with-epoch-0-is-getting-disconnected)
   - [Warnings being raised to the error handler that start with "The 'PartitionOwnershipExpirationInterval' and 'LoadBalancingUpdateInterval' are configured using intervals that may cause stability issues"](#warnings-being-raised-to-the-error-handler-that-start-with-the-partitionownershipexpirationinterval-and-loadbalancingupdateinterval-are-configured-using-intervals-that-may-cause-stability-issues)
   - [High CPU usage](#high-cpu-usage)
+  - [Receiving is slow when PrefetchSizeInBytes is set](#receiving-is-slow-when-prefetchsizeinbytes-is-set)
   - [A partition is not being processed](#a-partition-is-not-being-processed)
   - [Duplicate events are being processed](#duplicate-events-are-being-processed)
 - [Troubleshoot Azure Function issues](#troubleshoot-azure-function-issues)
@@ -286,6 +287,14 @@ High CPU usage is usually because an event processor owns too many partitions.  
 ### One or more partitions have high latency for processing
 
 When processing for one or more partitions is delayed, it is most often because an event processor owns too many partitions.  See: [Too many partitions are owned](#too-many-partitions-are-owned).
+
+### Receiving is slow when PrefetchSizeInBytes is set
+
+The `PrefetchSizeInBytes` option limits the AMQP link credit by a byte budget rather than by a count of events.  When the budget is smaller than a few messages, the link degrades toward fetching a very small number of messages at a time, and receive calls appear to stall.
+
+The client detects this condition and writes a warning, event id 132, to the `Azure-Messaging-EventHubs` event source.  The warning is written when a receive operation completes with no events while the link has no credit available.  It is limited to one warning per minute for each consumer.  To capture it, use the `AzureEventSourceListener`.  See: [Logging and diagnostics](#logging-and-diagnostics).
+
+To correct the underlying slowness, increase the value of `PrefetchSizeInBytes`.  You can also stop setting it and use `PrefetchCount` instead.
 
 ### A partition is not being processed
 
