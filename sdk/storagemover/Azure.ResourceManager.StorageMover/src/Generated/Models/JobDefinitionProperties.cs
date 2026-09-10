@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// <param name="syncMode"> The synchronization mode for the Job Definition. </param>
         /// <param name="moverSyncedUntil"> The last time the mover was synchronized. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal JobDefinitionProperties(string description, JobType? jobType, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, JobDefinitionPropertiesSourceTargetMap sourceTargetMap, StorageMoverProvisioningState? provisioningState, IList<ResourceIdentifier> connections, StorageMoverScheduleInfo schedule, StorageMoverDataIntegrityValidation? dataIntegrityValidation, bool? isPermissionsPreserved, bool? isCrossTenantJob, string crossTenantEndpointTenantId, string crossTenantEndpointResourceId, string syncMode, DateTimeOffset? moverSyncedUntil, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal JobDefinitionProperties(string description, JobType? jobType, StorageMoverCopyMode copyMode, string sourceName, ResourceIdentifier sourceResourceId, string sourceSubpath, string targetName, ResourceIdentifier targetResourceId, string targetSubpath, string latestJobRunName, ResourceIdentifier latestJobRunResourceId, JobRunStatus? latestJobRunStatus, string agentName, ResourceIdentifier agentResourceId, JobDefinitionPropertiesSourceTargetMap sourceTargetMap, StorageMoverProvisioningState? provisioningState, IList<ResourceIdentifier> connections, StorageMoverScheduleInfo schedule, StorageMoverDataIntegrityValidation? dataIntegrityValidation, bool? isPermissionsPreserved, bool? isCrossTenantJob, string crossTenantEndpointTenantId, ResourceIdentifier crossTenantEndpointResourceId, string syncMode, DateTimeOffset? moverSyncedUntil, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Description = description;
             JobType = jobType;
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.StorageMover.Models
         /// source-tenant copy this is the TARGET endpoint; on the
         /// target-tenant copy this is the SOURCE endpoint.
         /// </summary>
-        public string CrossTenantEndpointResourceId { get; set; }
+        public ResourceIdentifier CrossTenantEndpointResourceId { get; set; }
 
         /// <summary> The synchronization mode for the Job Definition. </summary>
         public string SyncMode { get; set; }

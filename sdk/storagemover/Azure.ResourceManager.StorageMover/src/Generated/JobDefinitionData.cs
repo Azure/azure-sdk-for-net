@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.StorageMover
         /// source-tenant copy this is the TARGET endpoint; on the
         /// target-tenant copy this is the SOURCE endpoint.
         /// </summary>
-        public string CrossTenantEndpointResourceId
+        public ResourceIdentifier CrossTenantEndpointResourceId
         {
             get
             {

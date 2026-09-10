@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             bool? isPermissionsPreserved = default;
             bool? isCrossTenantJob = default;
             string crossTenantEndpointTenantId = default;
-            string crossTenantEndpointResourceId = default;
+            ResourceIdentifier crossTenantEndpointResourceId = default;
             string syncMode = default;
             DateTimeOffset? moverSyncedUntil = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
@@ -452,7 +452,11 @@ namespace Azure.ResourceManager.StorageMover.Models
                 }
                 if (prop.NameEquals("crossTenantEndpointResourceId"u8))
                 {
-                    crossTenantEndpointResourceId = prop.Value.GetString();
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    crossTenantEndpointResourceId = new ResourceIdentifier(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("syncMode"u8))
