@@ -108,12 +108,15 @@ function isNewVersion(
 <#
 .SYNOPSIS
 Gets GitHub authorization headers from the GitHub CLI or GITHUB_TOKEN.
+.OUTPUTS
+A hashtable containing authorization headers, or an empty hashtable when no token is available.
 #>
 function Get-GitHubApiHeaders {
     $token = $null
 
     if (Get-Command gh -ErrorAction SilentlyContinue) {
         try {
+            $global:LASTEXITCODE = 0
             $output = gh auth token 2>$null
             if ($LASTEXITCODE -ne 0) {
                 Write-Host "Failed to get GitHub CLI auth token (exit code $LASTEXITCODE); falling back to GITHUB_TOKEN."
