@@ -5,7 +5,8 @@
 ### Breaking Changes
 
 - Replaced the optional `CodeTransparencyClientOptions` constructor parameter with separate endpoint-only and endpoint-plus-options constructors.
-- Changed the long-running `CreateEntry` overloads to return the concrete `CreateEntryOperation` type.
+- Removed the obsolete `CreateEntry(WaitUntil, BinaryData, CancellationToken)` overloads and `CreateEntryOperation`; use the `CreateEntry` overloads with `waitForCommit` instead.
+- Removed the obsolete single-argument `RunTransparentStatementVerification` overload; use the static `VerifyTransparentStatement` method with verification options instead.
 - Removed the obsolete `GetOperation` and `GetOperationAsync` aliases for the operation-status endpoint removed from the latest SCITT draft.
 - Removed the public `CborUtils` wire-format parsing helper; service-specific CBOR parsing is now handled internally.
 - Replaced the generated JWK/JWKS wire models with normalized, verification-oriented public types `CodeTransparencyVerificationKey` and `CodeTransparencyVerificationKeySet`, which store only public asymmetric key material. The `/jwks` (`GetPublicKeys`), COSE_Key_Set (`GetScittKeys`), and single-key (`GetScittKey`) operations now expose `CancellationToken` convenience overloads returning these normalized types, alongside the exact-wire `RequestContext` protocol overloads.
@@ -15,7 +16,6 @@
 ### Bugs Fixed
 
 - Corrected P-521 receipt verification to use the standard JOSE curve name and COSE ES512 algorithm identifier.
-- Fixed the retained `WaitUntil.Started` create-entry overloads to return before commitment and poll the entry resource for completion.
 - Fixed public-key retrieval and `ToECDsa` on .NET Framework 4.6.2.
 
 ### Other Changes
