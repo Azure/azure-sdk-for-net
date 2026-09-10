@@ -2347,7 +2347,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary>
         /// Outbound Rule for the managed network of a cognitive services account.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CognitiveServicesFqdnOutboundRule"/>, <see cref="Models.CognitiveServicesPrivateEndpointOutboundRule"/>, and <see cref="Models.ServiceTagOutboundRule"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Models.CognitiveServicesFqdnOutboundRule"/>, <see cref="Models.CognitiveServicesPrivateEndpointOutboundRule"/>, and <see cref="Models.CognitiveServicesServiceTagOutboundRule"/>.
         /// </summary>
         /// <param name="category"> Category of a managed network Outbound Rule of a cognitive services account. </param>
         /// <param name="status"> Type of a managed network Outbound Rule of a cognitive services account. </param>
@@ -2355,7 +2355,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="errorInformation"> Error information about an outbound rule of a cognitive services account if RuleStatus is failed. </param>
         /// <param name="parentRuleNames"></param>
         /// <returns> A new <see cref="Models.CognitiveServicesOutboundRuleBasicProperties"/> instance for mocking. </returns>
-        public static CognitiveServicesOutboundRuleBasicProperties CognitiveServicesOutboundRuleBasicProperties(ServiceTagOutboundRuleCategory? category = default, ServiceTagOutboundRuleStatus? status = default, string @type = default, string errorInformation = default, IEnumerable<string> parentRuleNames = default)
+        public static CognitiveServicesOutboundRuleBasicProperties CognitiveServicesOutboundRuleBasicProperties(CognitiveServicesServiceTagOutboundRuleCategory? category = default, CognitiveServicesServiceTagOutboundRuleStatus? status = default, string @type = default, string errorInformation = default, IEnumerable<string> parentRuleNames = default)
         {
             parentRuleNames ??= new ChangeTrackingList<string>();
 
@@ -2375,7 +2375,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="parentRuleNames"></param>
         /// <param name="destination"></param>
         /// <returns> A new <see cref="Models.CognitiveServicesFqdnOutboundRule"/> instance for mocking. </returns>
-        public static CognitiveServicesFqdnOutboundRule CognitiveServicesFqdnOutboundRule(ServiceTagOutboundRuleCategory? category = default, ServiceTagOutboundRuleStatus? status = default, string errorInformation = default, IEnumerable<string> parentRuleNames = default, string destination = default)
+        public static CognitiveServicesFqdnOutboundRule CognitiveServicesFqdnOutboundRule(CognitiveServicesServiceTagOutboundRuleCategory? category = default, CognitiveServicesServiceTagOutboundRuleStatus? status = default, string errorInformation = default, IEnumerable<string> parentRuleNames = default, string destination = default)
         {
             parentRuleNames ??= new ChangeTrackingList<string>();
 
@@ -2397,7 +2397,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="destination"> Private Endpoint destination. </param>
         /// <param name="fqdns"> List of FQDNs associated with the private endpoint outbound rule. </param>
         /// <returns> A new <see cref="Models.CognitiveServicesPrivateEndpointOutboundRule"/> instance for mocking. </returns>
-        public static CognitiveServicesPrivateEndpointOutboundRule CognitiveServicesPrivateEndpointOutboundRule(ServiceTagOutboundRuleCategory? category = default, ServiceTagOutboundRuleStatus? status = default, string errorInformation = default, IEnumerable<string> parentRuleNames = default, CognitiveServicesPrivateEndpointOutboundRuleDestination destination = default, IEnumerable<string> fqdns = default)
+        public static CognitiveServicesPrivateEndpointOutboundRule CognitiveServicesPrivateEndpointOutboundRule(CognitiveServicesServiceTagOutboundRuleCategory? category = default, CognitiveServicesServiceTagOutboundRuleStatus? status = default, string errorInformation = default, IEnumerable<string> parentRuleNames = default, CognitiveServicesPrivateEndpointOutboundRuleDestination destination = default, IEnumerable<string> fqdns = default)
         {
             parentRuleNames ??= new ChangeTrackingList<string>();
             fqdns ??= new ChangeTrackingList<string>();
@@ -2428,12 +2428,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="errorInformation"> Error information about an outbound rule of a cognitive services account if RuleStatus is failed. </param>
         /// <param name="parentRuleNames"></param>
         /// <param name="destination"> Service Tag destination. </param>
-        /// <returns> A new <see cref="Models.ServiceTagOutboundRule"/> instance for mocking. </returns>
-        public static ServiceTagOutboundRule ServiceTagOutboundRule(ServiceTagOutboundRuleCategory? category = default, ServiceTagOutboundRuleStatus? status = default, string errorInformation = default, IEnumerable<string> parentRuleNames = default, ServiceTagOutboundRuleDestination destination = default)
+        /// <returns> A new <see cref="Models.CognitiveServicesServiceTagOutboundRule"/> instance for mocking. </returns>
+        public static CognitiveServicesServiceTagOutboundRule CognitiveServicesServiceTagOutboundRule(CognitiveServicesServiceTagOutboundRuleCategory? category = default, CognitiveServicesServiceTagOutboundRuleStatus? status = default, string errorInformation = default, IEnumerable<string> parentRuleNames = default, CognitiveServicesServiceTagOutboundRuleDestination destination = default)
         {
             parentRuleNames ??= new ChangeTrackingList<string>();
 
-            return new ServiceTagOutboundRule(
+            return new CognitiveServicesServiceTagOutboundRule(
                 category,
                 status,
                 default,
@@ -2449,12 +2449,12 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="portRanges"> Destination port ranges. </param>
         /// <param name="action"> The action for the service tag outbound rule. </param>
         /// <param name="addressPrefixes"> Optional address prefixes. If provided, the serviceTag property will be ignored. </param>
-        /// <returns> A new <see cref="Models.ServiceTagOutboundRuleDestination"/> instance for mocking. </returns>
-        public static ServiceTagOutboundRuleDestination ServiceTagOutboundRuleDestination(string serviceTag = default, string protocol = default, string portRanges = default, ServiceTagOutboundRuleAction? action = default, IEnumerable<string> addressPrefixes = default)
+        /// <returns> A new <see cref="Models.CognitiveServicesServiceTagOutboundRuleDestination"/> instance for mocking. </returns>
+        public static CognitiveServicesServiceTagOutboundRuleDestination CognitiveServicesServiceTagOutboundRuleDestination(string serviceTag = default, string protocol = default, string portRanges = default, CognitiveServicesServiceTagOutboundRuleAction? action = default, IEnumerable<string> addressPrefixes = default)
         {
             addressPrefixes ??= new ChangeTrackingList<string>();
 
-            return new ServiceTagOutboundRuleDestination(
+            return new CognitiveServicesServiceTagOutboundRuleDestination(
                 serviceTag,
                 protocol,
                 portRanges,

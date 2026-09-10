@@ -12,25 +12,25 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Service Tag destination for an outbound rule. </summary>
-    public partial class ServiceTagOutboundRuleDestination
+    public partial class CognitiveServicesServiceTagOutboundRuleDestination
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
 
-        /// <summary> Initializes a new instance of <see cref="ServiceTagOutboundRuleDestination"/>. </summary>
-        public ServiceTagOutboundRuleDestination()
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesServiceTagOutboundRuleDestination"/>. </summary>
+        public CognitiveServicesServiceTagOutboundRuleDestination()
         {
             AddressPrefixes = new ChangeTrackingList<string>();
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceTagOutboundRuleDestination"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesServiceTagOutboundRuleDestination"/>. </summary>
         /// <param name="serviceTag"> Name of the Azure service tag to target. </param>
         /// <param name="protocol"> Network protocol used by the service tag rule. </param>
         /// <param name="portRanges"> Destination port ranges. </param>
         /// <param name="action"> The action for the service tag outbound rule. </param>
         /// <param name="addressPrefixes"> Optional address prefixes. If provided, the serviceTag property will be ignored. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal ServiceTagOutboundRuleDestination(string serviceTag, string protocol, string portRanges, ServiceTagOutboundRuleAction? action, IList<string> addressPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal CognitiveServicesServiceTagOutboundRuleDestination(string serviceTag, string protocol, string portRanges, CognitiveServicesServiceTagOutboundRuleAction? action, IList<string> addressPrefixes, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ServiceTag = serviceTag;
             Protocol = protocol;
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <summary> The action for the service tag outbound rule. </summary>
         [WirePath("action")]
-        public ServiceTagOutboundRuleAction? Action { get; set; }
+        public CognitiveServicesServiceTagOutboundRuleAction? Action { get; set; }
 
         /// <summary> Optional address prefixes. If provided, the serviceTag property will be ignored. </summary>
         [WirePath("addressPrefixes")]

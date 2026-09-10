@@ -12,14 +12,14 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Service Tag outbound rule for the managed network of a cognitive services account. </summary>
-    public partial class ServiceTagOutboundRule : CognitiveServicesOutboundRuleBasicProperties
+    public partial class CognitiveServicesServiceTagOutboundRule : CognitiveServicesOutboundRuleBasicProperties
     {
-        /// <summary> Initializes a new instance of <see cref="ServiceTagOutboundRule"/>. </summary>
-        public ServiceTagOutboundRule() : base(RuleType.ServiceTag)
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesServiceTagOutboundRule"/>. </summary>
+        public CognitiveServicesServiceTagOutboundRule() : base(RuleType.ServiceTag)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ServiceTagOutboundRule"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CognitiveServicesServiceTagOutboundRule"/>. </summary>
         /// <param name="category"> Category of a managed network Outbound Rule of a cognitive services account. </param>
         /// <param name="status"> Type of a managed network Outbound Rule of a cognitive services account. </param>
         /// <param name="type"> Type of a managed network Outbound Rule of a cognitive services account. </param>
@@ -27,13 +27,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="parentRuleNames"></param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         /// <param name="destination"> Service Tag destination. </param>
-        internal ServiceTagOutboundRule(ServiceTagOutboundRuleCategory? category, ServiceTagOutboundRuleStatus? status, RuleType @type, string errorInformation, IReadOnlyList<string> parentRuleNames, IDictionary<string, BinaryData> additionalBinaryDataProperties, ServiceTagOutboundRuleDestination destination) : base(category, status, @type, errorInformation, parentRuleNames, additionalBinaryDataProperties)
+        internal CognitiveServicesServiceTagOutboundRule(CognitiveServicesServiceTagOutboundRuleCategory? category, CognitiveServicesServiceTagOutboundRuleStatus? status, RuleType @type, string errorInformation, IReadOnlyList<string> parentRuleNames, IDictionary<string, BinaryData> additionalBinaryDataProperties, CognitiveServicesServiceTagOutboundRuleDestination destination) : base(category, status, @type, errorInformation, parentRuleNames, additionalBinaryDataProperties)
         {
             Destination = destination;
         }
 
         /// <summary> Service Tag destination. </summary>
         [WirePath("destination")]
-        public ServiceTagOutboundRuleDestination Destination { get; set; }
+        public CognitiveServicesServiceTagOutboundRuleDestination Destination { get; set; }
     }
 }

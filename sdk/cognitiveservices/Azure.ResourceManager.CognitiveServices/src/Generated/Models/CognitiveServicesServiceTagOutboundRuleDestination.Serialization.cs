@@ -14,51 +14,51 @@ using Azure.ResourceManager.CognitiveServices;
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
     /// <summary> Service Tag destination for an outbound rule. </summary>
-    public partial class ServiceTagOutboundRuleDestination : IJsonModel<ServiceTagOutboundRuleDestination>
+    public partial class CognitiveServicesServiceTagOutboundRuleDestination : IJsonModel<CognitiveServicesServiceTagOutboundRuleDestination>
     {
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServiceTagOutboundRuleDestination PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        protected virtual CognitiveServicesServiceTagOutboundRuleDestination PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceTagOutboundRuleDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesServiceTagOutboundRuleDestination>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeServiceTagOutboundRuleDestination(document.RootElement, options);
+                        return DeserializeCognitiveServicesServiceTagOutboundRuleDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceTagOutboundRuleDestination)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesServiceTagOutboundRuleDestination)} does not support reading '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceTagOutboundRuleDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesServiceTagOutboundRuleDestination>)this).GetFormatFromOptions(options) : options.Format;
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options, AzureResourceManagerCognitiveServicesContext.Default);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceTagOutboundRuleDestination)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesServiceTagOutboundRuleDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        BinaryData IPersistableModel<ServiceTagOutboundRuleDestination>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+        BinaryData IPersistableModel<CognitiveServicesServiceTagOutboundRuleDestination>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
 
         /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ServiceTagOutboundRuleDestination IPersistableModel<ServiceTagOutboundRuleDestination>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+        CognitiveServicesServiceTagOutboundRuleDestination IPersistableModel<CognitiveServicesServiceTagOutboundRuleDestination>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
 
         /// <param name="options"> The client options for reading and writing models. </param>
-        string IPersistableModel<ServiceTagOutboundRuleDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CognitiveServicesServiceTagOutboundRuleDestination>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
         /// <param name="writer"> The JSON writer. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        void IJsonModel<ServiceTagOutboundRuleDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CognitiveServicesServiceTagOutboundRuleDestination>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
@@ -69,10 +69,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceTagOutboundRuleDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesServiceTagOutboundRuleDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceTagOutboundRuleDestination)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesServiceTagOutboundRuleDestination)} does not support writing '{format}' format.");
             }
             if (Optional.IsDefined(ServiceTag))
             {
@@ -128,24 +128,24 @@ namespace Azure.ResourceManager.CognitiveServices.Models
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        ServiceTagOutboundRuleDestination IJsonModel<ServiceTagOutboundRuleDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+        CognitiveServicesServiceTagOutboundRuleDestination IJsonModel<CognitiveServicesServiceTagOutboundRuleDestination>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
 
         /// <param name="reader"> The JSON reader. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        protected virtual ServiceTagOutboundRuleDestination JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        protected virtual CognitiveServicesServiceTagOutboundRuleDestination JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            string format = options.Format == "W" ? ((IPersistableModel<ServiceTagOutboundRuleDestination>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesServiceTagOutboundRuleDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceTagOutboundRuleDestination)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesServiceTagOutboundRuleDestination)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeServiceTagOutboundRuleDestination(document.RootElement, options);
+            return DeserializeCognitiveServicesServiceTagOutboundRuleDestination(document.RootElement, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static ServiceTagOutboundRuleDestination DeserializeServiceTagOutboundRuleDestination(JsonElement element, ModelReaderWriterOptions options)
+        internal static CognitiveServicesServiceTagOutboundRuleDestination DeserializeCognitiveServicesServiceTagOutboundRuleDestination(JsonElement element, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             string serviceTag = default;
             string protocol = default;
             string portRanges = default;
-            ServiceTagOutboundRuleAction? action = default;
+            CognitiveServicesServiceTagOutboundRuleAction? action = default;
             IList<string> addressPrefixes = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    action = new ServiceTagOutboundRuleAction(prop.Value.GetString());
+                    action = new CognitiveServicesServiceTagOutboundRuleAction(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("addressPrefixes"u8))
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ServiceTagOutboundRuleDestination(
+            return new CognitiveServicesServiceTagOutboundRuleDestination(
                 serviceTag,
                 protocol,
                 portRanges,
