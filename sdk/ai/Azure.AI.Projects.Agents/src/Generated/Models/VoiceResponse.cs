@@ -25,9 +25,9 @@ namespace Azure.AI.Projects.Agents
         /// <param name="conversationId"> The id of the conversation this response belongs to. </param>
         internal VoiceResponse(string id, string conversationId)
         {
-            _id = id;
+            Id = id;
             Output = new ChangeTrackingList<RealtimeItem>();
-            _conversationId = conversationId;
+            ConversationId = conversationId;
             Metadata = new ChangeTrackingDictionary<string, string>();
         }
 
@@ -62,9 +62,11 @@ namespace Azure.AI.Projects.Agents
         /// <param name="temperature"> The sampling temperature used for the response. </param>
         /// <param name="createdOn"> The Unix timestamp (in seconds) for when the response was created. </param>
         /// <param name="completedOn"> The Unix timestamp (in seconds) for when the response completed. </param>
-        internal VoiceResponse(VoiceResponseBaseObject? @object, VoiceResponseBaseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, IList<VoiceResponseBaseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, IList<RealtimeItem> output, string conversationId, VoiceResponseAudio audio, IDictionary<string, string> metadata, float? temperature, DateTimeOffset? createdOn, DateTimeOffset? completedOn) : base(id, @object, status, statusDetails, usage, conversationId, outputModalities, maxOutputTokens, additionalBinaryDataProperties)
+        internal VoiceResponse(VoiceResponseBaseObject? @object, VoiceResponseBaseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, IList<VoiceResponseBaseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties, string id, IList<RealtimeItem> output, string conversationId, VoiceResponseAudio audio, IDictionary<string, string> metadata, float? temperature, DateTimeOffset? createdOn, DateTimeOffset? completedOn) : base(@object, status, statusDetails, usage, outputModalities, maxOutputTokens, additionalBinaryDataProperties)
         {
+            Id = id;
             Output = output;
+            ConversationId = conversationId;
             Audio = audio;
             Metadata = metadata;
             Temperature = temperature;
@@ -73,13 +75,13 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> The unique id of the response. </summary>
-        public new string Id => _id ?? default;
+        public string Id { get; }
 
         /// <summary> The output items produced by the response. May be omitted in list results; retrieve the full response (GET .../responses/{response_id}) or use the paged response-items route (GET .../responses/{response_id}/items) for its output items. Each item's `response_id` also links it back to this response in the conversation-level items list. </summary>
         public IList<RealtimeItem> Output { get; }
 
         /// <summary> The id of the conversation this response belongs to. </summary>
-        public new string ConversationId => _conversationId ?? default;
+        public string ConversationId { get; }
 
         /// <summary> The audio configuration used for the response, including the voice and audio format used for output. </summary>
         public VoiceResponseAudio Audio { get; }

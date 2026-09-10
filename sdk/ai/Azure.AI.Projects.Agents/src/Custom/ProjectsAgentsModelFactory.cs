@@ -11,10 +11,24 @@ public partial class ProjectsAgentsModelFactory
     /// <param name="state">The agent state.</param>
     public static ProjectsAgentRecord ProjectsAgentRecord(string id = default, string name = default, AgentState state = default)
     {
-        return new ProjectsAgentRecord("agent", id, name, state, default, new AgentObjectVersions(), default, default, default, default, default, default, null);
+        return new ProjectsAgentRecord(
+            @object: "agent",
+            id: id,
+            name: name,
+            state: state,
+            configurationState: default,
+            stateSource: default,
+            versions: new AgentObjectVersions(),
+            agentEndpoint: default,
+            digitalWorkerType: default,
+            instanceIdentity: default,
+            blueprint: default,
+            blueprintReference: default,
+            agentCard: default,
+            additionalBinaryDataProperties: null);
     }
 
-    internal static ProjectsAgentRecord ProjectsAgentRecord(string id = default, string name = default, AgentState state = default, AgentStateSource? stateSource = default, AgentObjectVersions versions = default, AgentEndpointConfiguration agentEndpoint = default, DigitalWorkerType? digitalWorkerType=default, AgentIdentity instanceIdentity = default, AgentIdentity blueprint = default, AgentBlueprintReference blueprintReference = default, AgentCard agentCard = default)
+    internal static ProjectsAgentRecord ProjectsAgentRecord(string id = default, string name = default, AgentState state = default, AgentState configurationState = default, AgentStateSource? stateSource = default, AgentObjectVersions versions = default, AgentEndpointConfiguration agentEndpoint = default, DigitalWorkerType? digitalWorkerType=default, AgentIdentity instanceIdentity = default, AgentIdentity blueprint = default, AgentBlueprintReference blueprintReference = default, AgentCard agentCard = default)
     {
         //return new ProjectsAgentRecord("agent", id, name, state, stateSource, versions, agentEndpoint, instanceIdentity, blueprint, blueprintReference, agentCard, additionalBinaryDataProperties: null);
         return new ProjectsAgentRecord(
@@ -22,6 +36,7 @@ public partial class ProjectsAgentsModelFactory
                 id: id,
                 name: name,
                 state: state,
+                configurationState: configurationState,
                 stateSource: stateSource,
                 versions: versions,
                 agentEndpoint: agentEndpoint,

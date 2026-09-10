@@ -123,6 +123,8 @@ namespace Azure.AI.Projects
             {
                 switch (discriminator.GetString())
                 {
+                    case "github_copilot_toolset_preview":
+                        return InternalGitHubCopilotToolsetPreview.DeserializeInternalGitHubCopilotToolsetPreview(element, options);
                     case "bing_grounding":
                         return BingGroundingTool.DeserializeBingGroundingTool(element, options);
                     case "fabric_dataagent_preview":

@@ -16,8 +16,6 @@ namespace Azure.AI.Projects.Agents
     {
         /// <summary> Keeps track of any properties unknown to the library. </summary>
         private protected readonly IDictionary<string, BinaryData> _additionalBinaryDataProperties;
-        private protected string _id;
-        private protected string _conversationId;
 
         /// <summary> Initializes a new instance of <see cref="VoiceResponseBase"/>. </summary>
         internal VoiceResponseBase()
@@ -26,7 +24,6 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Initializes a new instance of <see cref="VoiceResponseBase"/>. </summary>
-        /// <param name="id"> The unique ID of the response, will look like `resp_1234`. </param>
         /// <param name="object"> The object type, must be `realtime.response`. </param>
         /// <param name="status">
         /// The final status of the response (`completed`, `cancelled`, `failed`, or
@@ -39,14 +36,6 @@ namespace Azure.AI.Projects.Agents
         ///   Items to the Conversation, thus output from previous turns (text and
         ///   audio tokens) will become the input for later turns.
         /// </param>
-        /// <param name="conversationId">
-        /// Which conversation the response is added to, determined by the `conversation`
-        ///   field in the `response.create` event. If `auto`, the response will be added to
-        ///   the default conversation and the value of `conversation_id` will be an id like
-        ///   `conv_1234`. If `none`, the response will not be added to any conversation and
-        ///   the value of `conversation_id` will be `null`. If responses are being triggered
-        ///   automatically by VAD the response will be added to the default conversation
-        /// </param>
         /// <param name="outputModalities">
         /// The set of modalities the model used to respond, currently the only possible values are
         ///   `[\"audio\"]`, `[\"text\"]`. Audio output always include a text transcript. Setting the
@@ -58,21 +47,16 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
         [Experimental("AAIP002")]
-        internal VoiceResponseBase(string id, VoiceResponseBaseObject? @object, VoiceResponseBaseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, string conversationId, IList<VoiceResponseBaseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal VoiceResponseBase(VoiceResponseBaseObject? @object, VoiceResponseBaseStatus? status, RealtimeResponseStatusDetails statusDetails, RealtimeResponseUsage usage, IList<VoiceResponseBaseOutputModality> outputModalities, BinaryData maxOutputTokens, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
-            Id = id;
             Object = @object;
             Status = status;
             StatusDetails = statusDetails;
             Usage = usage;
-            ConversationId = conversationId;
             OutputModalities = outputModalities;
             MaxOutputTokens = maxOutputTokens;
             _additionalBinaryDataProperties = additionalBinaryDataProperties;
         }
-
-        /// <summary> The unique ID of the response, will look like `resp_1234`. </summary>
-        public string Id { get; }
 
         /// <summary> The object type, must be `realtime.response`. </summary>
         public VoiceResponseBaseObject? Object { get; }
@@ -95,16 +79,6 @@ namespace Azure.AI.Projects.Agents
         /// </summary>
         [Experimental("AAIP002")]
         public RealtimeResponseUsage Usage { get; }
-
-        /// <summary>
-        /// Which conversation the response is added to, determined by the `conversation`
-        ///   field in the `response.create` event. If `auto`, the response will be added to
-        ///   the default conversation and the value of `conversation_id` will be an id like
-        ///   `conv_1234`. If `none`, the response will not be added to any conversation and
-        ///   the value of `conversation_id` will be `null`. If responses are being triggered
-        ///   automatically by VAD the response will be added to the default conversation
-        /// </summary>
-        public string ConversationId { get; }
 
         /// <summary>
         /// The set of modalities the model used to respond, currently the only possible values are

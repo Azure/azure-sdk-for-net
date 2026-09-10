@@ -27,6 +27,9 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(AgentCardSkill))]
     [ModelReaderWriterBuildable(typeof(AgentEndpointAuthorizationScheme))]
     [ModelReaderWriterBuildable(typeof(AgentEndpointConfiguration))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.AgentHarness is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(AgentHarness))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.AgentHarness is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(AgentIdentity))]
     [ModelReaderWriterBuildable(typeof(AgentManifestOptions))]
     [ModelReaderWriterBuildable(typeof(AgentObjectVersions))]
@@ -174,6 +177,14 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.GenerateVoiceAgentRequest is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(GenerateVoiceAgentRequest))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.GenerateVoiceAgentRequest is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.GitHubCopilotHarness is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(GitHubCopilotHarness))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.GitHubCopilotHarness is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(GitHubCopilotToolsetConfig))]
+    [ModelReaderWriterBuildable(typeof(GitHubCopilotToolsetDefaultConfig))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.GitHubCopilotToolsetPreview is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(GitHubCopilotToolsetPreview))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.GitHubCopilotToolsetPreview is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(HeaderTelemetryEndpointAuth))]
     [ModelReaderWriterBuildable(typeof(HostedAgentDefinition))]
     [ModelReaderWriterBuildable(typeof(HybridSearchOptions))]
@@ -314,6 +325,9 @@ namespace Azure.AI.Projects.Agents
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.SkillInlineContent is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SkillInlineContent))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.SkillInlineContent is experimental and may change in future versions.
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.SkillReference is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(SkillReference))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.SkillReference is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SkillReferenceParam))]
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.SkillVersion is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(SkillVersion))]
@@ -433,6 +447,7 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(ToolboxSkillReference))]
     [ModelReaderWriterBuildable(typeof(ToolboxTool))]
     [ModelReaderWriterBuildable(typeof(ToolboxVersion))]
+    [ModelReaderWriterBuildable(typeof(ToolboxVersions))]
     [ModelReaderWriterBuildable(typeof(ToolChoiceAllowed))]
     [ModelReaderWriterBuildable(typeof(ToolChoiceCodeInterpreter))]
     [ModelReaderWriterBuildable(typeof(ToolChoiceComputer))]
@@ -459,6 +474,9 @@ namespace Azure.AI.Projects.Agents
     [ModelReaderWriterBuildable(typeof(UnknownAgentBlueprintReference))]
     [ModelReaderWriterBuildable(typeof(UnknownAgentDefinition))]
     [ModelReaderWriterBuildable(typeof(UnknownAgentEndpointAuthorizationScheme))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownAgentHarness is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(UnknownAgentHarness))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownAgentHarness is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Projects.Agents.UnknownAgentOptimizationDatasetInput is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(UnknownAgentOptimizationDatasetInput))]
 #pragma warning restore AAIP001 // global::Azure.AI.Projects.Agents.UnknownAgentOptimizationDatasetInput is experimental and may change in future versions.

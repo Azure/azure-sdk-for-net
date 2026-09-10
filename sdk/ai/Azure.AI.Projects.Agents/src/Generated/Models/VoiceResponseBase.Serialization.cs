@@ -72,11 +72,6 @@ namespace Azure.AI.Projects.Agents
             {
                 throw new FormatException($"The model {nameof(VoiceResponseBase)} does not support writing '{format}' format.");
             }
-            if (Optional.IsDefined(Id))
-            {
-                writer.WritePropertyName("id"u8);
-                writer.WriteStringValue(Id);
-            }
             if (Optional.IsDefined(Object))
             {
                 writer.WritePropertyName("object"u8);
@@ -96,11 +91,6 @@ namespace Azure.AI.Projects.Agents
             {
                 writer.WritePropertyName("usage"u8);
                 writer.WriteObjectValue(Usage, options);
-            }
-            if (Optional.IsDefined(ConversationId))
-            {
-                writer.WritePropertyName("conversation_id"u8);
-                writer.WriteStringValue(ConversationId);
             }
             if (Optional.IsCollectionDefined(OutputModalities))
             {
@@ -166,22 +156,15 @@ namespace Azure.AI.Projects.Agents
             {
                 return null;
             }
-            string id = default;
             VoiceResponseBaseObject? @object = default;
             VoiceResponseBaseStatus? status = default;
             RealtimeResponseStatusDetails statusDetails = default;
             RealtimeResponseUsage usage = default;
-            string conversationId = default;
             IList<VoiceResponseBaseOutputModality> outputModalities = default;
             BinaryData maxOutputTokens = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
-                if (prop.NameEquals("id"u8))
-                {
-                    id = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("object"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -218,11 +201,6 @@ namespace Azure.AI.Projects.Agents
                     usage = ModelReaderWriter.Read<RealtimeResponseUsage>(prop.Value.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions, AzureAIProjectsAgentsContext.Default);
                     continue;
                 }
-                if (prop.NameEquals("conversation_id"u8))
-                {
-                    conversationId = prop.Value.GetString();
-                    continue;
-                }
                 if (prop.NameEquals("output_modalities"u8))
                 {
                     if (prop.Value.ValueKind == JsonValueKind.Null)
@@ -252,12 +230,10 @@ namespace Azure.AI.Projects.Agents
                 }
             }
             return new VoiceResponseBase(
-                id,
                 @object,
                 status,
                 statusDetails,
                 usage,
-                conversationId,
                 outputModalities ?? new ChangeTrackingList<VoiceResponseBaseOutputModality>(),
                 maxOutputTokens,
                 additionalBinaryDataProperties);

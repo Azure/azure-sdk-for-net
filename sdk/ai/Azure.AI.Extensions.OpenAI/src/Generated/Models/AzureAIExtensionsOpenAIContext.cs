@@ -110,6 +110,11 @@ namespace Azure.AI.Extensions.OpenAI
     [ModelReaderWriterBuildable(typeof(FabricIQPreviewTool))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.FabricIQPreviewTool is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(FoundryOpenAIError))]
+    [ModelReaderWriterBuildable(typeof(GitHubCopilotToolsetConfig))]
+    [ModelReaderWriterBuildable(typeof(GitHubCopilotToolsetDefaultConfig))]
+#pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetPreview is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(GitHubCopilotToolsetPreview))]
+#pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.GitHubCopilotToolsetPreview is experimental and may change in future versions.
 #pragma warning disable AAIP001 // global::Azure.AI.Extensions.OpenAI.MemoryCommandToolCall is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(MemoryCommandToolCall))]
 #pragma warning restore AAIP001 // global::Azure.AI.Extensions.OpenAI.MemoryCommandToolCall is experimental and may change in future versions.

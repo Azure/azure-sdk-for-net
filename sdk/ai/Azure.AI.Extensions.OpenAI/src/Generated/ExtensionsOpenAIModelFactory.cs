@@ -541,6 +541,35 @@ namespace Azure.AI.Extensions.OpenAI
             return new MemorySearchResultOptions(maxMemories, additionalBinaryDataProperties: null);
         }
 
+        /// <summary> Configuration overrides for GitHub Copilot built-in tools. </summary>
+        /// <param name="defaultConfig"> The default configuration for built-in tools. If omitted, built-in tools are enabled by default. </param>
+        /// <param name="configs"> Per-tool configuration overrides. Duplicate built-in tool names are not allowed. </param>
+        /// <returns> A new <see cref="OpenAI.GitHubCopilotToolsetPreview"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static GitHubCopilotToolsetPreview GitHubCopilotToolsetPreview(GitHubCopilotToolsetDefaultConfig defaultConfig = default, IEnumerable<GitHubCopilotToolsetConfig> configs = default)
+        {
+            configs ??= new ChangeTrackingList<GitHubCopilotToolsetConfig>();
+
+            return new GitHubCopilotToolsetPreview("github_copilot_toolset_preview", defaultConfig, configs.ToList(), additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The default enablement setting for GitHub Copilot built-in tools. </summary>
+        /// <param name="enabled"> Whether built-in tools are enabled by default. Defaults to true. </param>
+        /// <returns> A new <see cref="OpenAI.GitHubCopilotToolsetDefaultConfig"/> instance for mocking. </returns>
+        public static GitHubCopilotToolsetDefaultConfig GitHubCopilotToolsetDefaultConfig(bool? enabled = default)
+        {
+            return new GitHubCopilotToolsetDefaultConfig(enabled, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An enablement override for a GitHub Copilot built-in tool. </summary>
+        /// <param name="name"> The built-in tool to configure. </param>
+        /// <param name="enabled"> Whether the built-in tool is enabled. If omitted, the toolset default applies. </param>
+        /// <returns> A new <see cref="OpenAI.GitHubCopilotToolsetConfig"/> instance for mocking. </returns>
+        public static GitHubCopilotToolsetConfig GitHubCopilotToolsetConfig(GitHubCopilotBuiltInTool name = default, bool? enabled = default)
+        {
+            return new GitHubCopilotToolsetConfig(name, enabled, additionalBinaryDataProperties: null);
+        }
+
         /// <summary> A web search configuration for bing custom search. </summary>
         /// <param name="projectConnectionId"> Project connection id for grounding with bing custom search. </param>
         /// <param name="instanceName"> Name of the custom configuration instance given to config. </param>

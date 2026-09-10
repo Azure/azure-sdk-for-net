@@ -460,6 +460,11 @@ namespace Azure.AI.Projects
     [ModelReaderWriterBuildable(typeof(InternalFileSearchTool))]
     [ModelReaderWriterBuildable(typeof(InternalFunctionTool))]
     [ModelReaderWriterBuildable(typeof(InternalFunctionToolParam))]
+    [ModelReaderWriterBuildable(typeof(InternalGitHubCopilotToolsetConfig))]
+    [ModelReaderWriterBuildable(typeof(InternalGitHubCopilotToolsetDefaultConfig))]
+#pragma warning disable AAIP001 // global::Azure.AI.Projects.InternalGitHubCopilotToolsetPreview is experimental and may change in future versions.
+    [ModelReaderWriterBuildable(typeof(InternalGitHubCopilotToolsetPreview))]
+#pragma warning restore AAIP001 // global::Azure.AI.Projects.InternalGitHubCopilotToolsetPreview is experimental and may change in future versions.
     [ModelReaderWriterBuildable(typeof(InternalImageGenTool))]
     [ModelReaderWriterBuildable(typeof(InternalImageGenToolInputImageMask))]
     [ModelReaderWriterBuildable(typeof(InternalInputImageContentParamAutoParam))]

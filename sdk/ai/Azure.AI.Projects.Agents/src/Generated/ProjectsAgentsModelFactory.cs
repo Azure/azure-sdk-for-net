@@ -270,8 +270,10 @@ namespace Azure.AI.Projects.Agents
 
         /// <summary> The prompt agent definition. </summary>
         /// <param name="contentFilterConfiguration"> Configuration for Responsible AI (RAI) content filtering and safety features. </param>
+        /// <param name="harness"> The managed runtime and agent loop used to execute this prompt agent. </param>
         /// <param name="model"> The model deployment to use for this agent. </param>
         /// <param name="instructions"> A system (or developer) message inserted into the model's context. </param>
+        /// <param name="skills"> The Foundry skills available to this prompt agent. An omitted skill version is resolved and pinned when the agent version is created. </param>
         /// <param name="temperature">
         /// What sampling temperature to use, between 0 and 2. Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
         /// We generally recommend altering this or `top_p` but not both. Defaults to `1`.
@@ -295,9 +297,10 @@ namespace Azure.AI.Projects.Agents
         /// <param name="textOptions"> Configuration options for a text response from the model. Can be plain text or structured JSON data. </param>
         /// <param name="structuredInputs"> Set of structured inputs that can participate in prompt template substitution or tool argument bindings. </param>
         /// <returns> A new <see cref="Agents.DeclarativeAgentDefinition"/> instance for mocking. </returns>
-        [Experimental("AAIP002")]
-        public static DeclarativeAgentDefinition DeclarativeAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, string model = default, string instructions = default, float? temperature = default, float? topP = default, ResponseReasoningOptions reasoningOptions = default, IEnumerable<ResponseTool> tools = default, BinaryData toolChoice = default, ResponseTextOptions textOptions = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default)
+        [Experimental("AAIP001")]
+        public static DeclarativeAgentDefinition DeclarativeAgentDefinition(ContentFilterConfiguration contentFilterConfiguration = default, AgentHarness harness = default, string model = default, string instructions = default, IEnumerable<SkillReference> skills = default, float? temperature = default, float? topP = default, ResponseReasoningOptions reasoningOptions = default, IEnumerable<ResponseTool> tools = default, BinaryData toolChoice = default, ResponseTextOptions textOptions = default, IDictionary<string, StructuredInputDefinition> structuredInputs = default)
         {
+            skills ??= new ChangeTrackingList<SkillReference>();
             tools ??= new ChangeTrackingList<ResponseTool>();
             structuredInputs ??= new ChangeTrackingDictionary<string, StructuredInputDefinition>();
 
@@ -305,8 +308,10 @@ namespace Azure.AI.Projects.Agents
                 ProjectsAgentKind.Prompt,
                 contentFilterConfiguration,
                 additionalBinaryDataProperties: null,
+                harness,
                 model,
                 instructions,
+                skills.ToList(),
                 temperature,
                 topP,
                 reasoningOptions,
@@ -317,8 +322,38 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary>
+        /// A managed runtime and agent loop used to execute a prompt agent.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.GitHubCopilotHarness"/>.
+        /// </summary>
+        /// <param name="type"> The type of managed harness. </param>
+        /// <returns> A new <see cref="Agents.AgentHarness"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static AgentHarness AgentHarness(string @type = default)
+        {
+            return new UnknownAgentHarness(@type, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The GitHub Copilot managed harness for prompt agents. </summary>
+        /// <returns> A new <see cref="Agents.GitHubCopilotHarness"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static GitHubCopilotHarness GitHubCopilotHarness()
+        {
+            return new GitHubCopilotHarness("github_copilot_preview", additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> A reference to a versioned Foundry skill. </summary>
+        /// <param name="name"> The name of the skill. </param>
+        /// <param name="version"> The skill version. If omitted, the current default version is resolved and pinned when the agent version is created. </param>
+        /// <returns> A new <see cref="Agents.SkillReference"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static SkillReference SkillReference(string name = default, string version = default)
+        {
+            return new SkillReference(name, version, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary>
         /// A tool that can be used to generate a response.
-        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FabricIQPreviewTool"/>, <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.BrowserAutomationTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, <see cref="Agents.A2ATool"/>, <see cref="Agents.WorkIQPreviewTool"/>, <see cref="Agents.WebIQPreviewTool"/>, <see cref="Agents.MemorySearchPreviewTool"/>, <see cref="OpenAI.ProgrammaticToolCallingParam"/>, and <see cref="Agents.ToolSearchTool"/>.
+        /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="Agents.FabricIQPreviewTool"/>, <see cref="Agents.GitHubCopilotToolsetPreview"/>, <see cref="Agents.BingGroundingTool"/>, <see cref="Agents.MicrosoftFabricPreviewTool"/>, <see cref="Agents.SharepointPreviewTool"/>, <see cref="Agents.AzureAISearchTool"/>, <see cref="Agents.OpenAPITool"/>, <see cref="Agents.BingCustomSearchPreviewTool"/>, <see cref="Agents.BrowserAutomationPreviewTool"/>, <see cref="Agents.BrowserAutomationTool"/>, <see cref="Agents.AzureFunctionTool"/>, <see cref="Agents.CaptureStructuredOutputsTool"/>, <see cref="Agents.A2APreviewTool"/>, <see cref="Agents.A2ATool"/>, <see cref="Agents.WorkIQPreviewTool"/>, <see cref="Agents.WebIQPreviewTool"/>, <see cref="Agents.MemorySearchPreviewTool"/>, <see cref="OpenAI.ProgrammaticToolCallingParam"/>, and <see cref="Agents.ToolSearchTool"/>.
         /// </summary>
         /// <param name="type"></param>
         /// <returns> A new <see cref="Agents.ProjectsAgentTool"/> instance for mocking. </returns>
@@ -343,6 +378,35 @@ namespace Azure.AI.Projects.Agents
                 serverLabel,
                 serverUri,
                 requireApprovalInternal);
+        }
+
+        /// <summary> Configuration overrides for GitHub Copilot built-in tools. </summary>
+        /// <param name="defaultConfig"> The default configuration for built-in tools. If omitted, built-in tools are enabled by default. </param>
+        /// <param name="configs"> Per-tool configuration overrides. Duplicate built-in tool names are not allowed. </param>
+        /// <returns> A new <see cref="Agents.GitHubCopilotToolsetPreview"/> instance for mocking. </returns>
+        [Experimental("AAIP001")]
+        public static GitHubCopilotToolsetPreview GitHubCopilotToolsetPreview(GitHubCopilotToolsetDefaultConfig defaultConfig = default, IEnumerable<GitHubCopilotToolsetConfig> configs = default)
+        {
+            configs ??= new ChangeTrackingList<GitHubCopilotToolsetConfig>();
+
+            return new GitHubCopilotToolsetPreview(ToolType.GithubCopilotToolsetPreview, additionalBinaryDataProperties: null, defaultConfig, configs.ToList());
+        }
+
+        /// <summary> The default enablement setting for GitHub Copilot built-in tools. </summary>
+        /// <param name="enabled"> Whether built-in tools are enabled by default. Defaults to true. </param>
+        /// <returns> A new <see cref="Agents.GitHubCopilotToolsetDefaultConfig"/> instance for mocking. </returns>
+        public static GitHubCopilotToolsetDefaultConfig GitHubCopilotToolsetDefaultConfig(bool? enabled = default)
+        {
+            return new GitHubCopilotToolsetDefaultConfig(enabled, additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> An enablement override for a GitHub Copilot built-in tool. </summary>
+        /// <param name="name"> The built-in tool to configure. </param>
+        /// <param name="enabled"> Whether the built-in tool is enabled. If omitted, the toolset default applies. </param>
+        /// <returns> A new <see cref="Agents.GitHubCopilotToolsetConfig"/> instance for mocking. </returns>
+        public static GitHubCopilotToolsetConfig GitHubCopilotToolsetConfig(GitHubCopilotBuiltInTool name = default, bool? enabled = default)
+        {
+            return new GitHubCopilotToolsetConfig(name, enabled, additionalBinaryDataProperties: null);
         }
 
         /// <summary> The input definition information for a bing grounding search tool as used to configure an agent. </summary>
@@ -2222,7 +2286,6 @@ namespace Azure.AI.Projects.Agents
         }
 
         /// <summary> Properties shared by persisted voice responses. </summary>
-        /// <param name="id"> The unique ID of the response, will look like `resp_1234`. </param>
         /// <param name="object"> The object type, must be `realtime.response`. </param>
         /// <param name="status">
         /// The final status of the response (`completed`, `cancelled`, `failed`, or
@@ -2235,14 +2298,6 @@ namespace Azure.AI.Projects.Agents
         ///   Items to the Conversation, thus output from previous turns (text and
         ///   audio tokens) will become the input for later turns.
         /// </param>
-        /// <param name="conversationId">
-        /// Which conversation the response is added to, determined by the `conversation`
-        ///   field in the `response.create` event. If `auto`, the response will be added to
-        ///   the default conversation and the value of `conversation_id` will be an id like
-        ///   `conv_1234`. If `none`, the response will not be added to any conversation and
-        ///   the value of `conversation_id` will be `null`. If responses are being triggered
-        ///   automatically by VAD the response will be added to the default conversation
-        /// </param>
         /// <param name="outputModalities">
         /// The set of modalities the model used to respond, currently the only possible values are
         ///   `[\"audio\"]`, `[\"text\"]`. Audio output always include a text transcript. Setting the
@@ -2254,17 +2309,15 @@ namespace Azure.AI.Projects.Agents
         /// </param>
         /// <returns> A new <see cref="Agents.VoiceResponseBase"/> instance for mocking. </returns>
         [Experimental("AAIP002")]
-        public static VoiceResponseBase VoiceResponseBase(string id = default, VoiceResponseBaseObject? @object = default, VoiceResponseBaseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, string conversationId = default, IEnumerable<VoiceResponseBaseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default)
+        public static VoiceResponseBase VoiceResponseBase(VoiceResponseBaseObject? @object = default, VoiceResponseBaseStatus? status = default, RealtimeResponseStatusDetails statusDetails = default, RealtimeResponseUsage usage = default, IEnumerable<VoiceResponseBaseOutputModality> outputModalities = default, BinaryData maxOutputTokens = default)
         {
             outputModalities ??= new ChangeTrackingList<VoiceResponseBaseOutputModality>();
 
             return new VoiceResponseBase(
-                id,
                 @object,
                 status,
                 statusDetails,
                 usage,
-                conversationId,
                 outputModalities.ToList(),
                 maxOutputTokens,
                 additionalBinaryDataProperties: null);
@@ -3773,11 +3826,27 @@ namespace Azure.AI.Projects.Agents
         /// <summary> A toolbox that stores reusable tool definitions for agents. </summary>
         /// <param name="id"> The unique identifier of the toolbox. </param>
         /// <param name="name"> The name of the toolbox. </param>
+        /// <param name="updatedOn"> The Unix timestamp (seconds) when the toolbox was last updated. This value changes when a new toolbox version is created or the toolbox is updated. </param>
+        /// <param name="versions"> The versions associated with the toolbox. </param>
         /// <param name="defaultVersion"> The version identifier that the toolbox currently points to. Defaults to the latest version. Can be changed via updateToolbox. </param>
         /// <returns> A new <see cref="Agents.ToolboxRecord"/> instance for mocking. </returns>
-        public static ToolboxRecord ToolboxRecord(string id = default, string name = default, string defaultVersion = default)
+        public static ToolboxRecord ToolboxRecord(string id = default, string name = default, DateTimeOffset updatedOn = default, ToolboxVersions versions = default, string defaultVersion = default)
         {
-            return new ToolboxRecord(id, name, defaultVersion, additionalBinaryDataProperties: null);
+            return new ToolboxRecord(
+                id,
+                name,
+                updatedOn,
+                versions,
+                defaultVersion,
+                additionalBinaryDataProperties: null);
+        }
+
+        /// <summary> The versions associated with a toolbox. </summary>
+        /// <param name="latest"> The latest version of the toolbox. </param>
+        /// <returns> A new <see cref="Agents.ToolboxVersions"/> instance for mocking. </returns>
+        public static ToolboxVersions ToolboxVersions(ToolboxVersion latest = default)
+        {
+            return new ToolboxVersions(latest, additionalBinaryDataProperties: null);
         }
 
         /// <summary> A skill resource. </summary>

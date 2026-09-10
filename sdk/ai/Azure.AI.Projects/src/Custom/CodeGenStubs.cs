@@ -29,3 +29,6 @@ namespace Azure.AI.Projects;
 [CodeGenType("CustomToolParamFormat")] internal partial class InternalCustomToolParamFormat { }
 [CodeGenType("CustomGrammarFormatParam")] internal partial class InternalCustomGrammarFormatParam { }
 [CodeGenType("FunctionToolParam")] internal partial class InternalFunctionToolParam { }
+[CodeGenType("GitHubCopilotToolsetPreview")] internal partial class InternalGitHubCopilotToolsetPreview { }
+[CodeGenType("GitHubCopilotToolsetDefaultConfig")] internal partial class InternalGitHubCopilotToolsetDefaultConfig { }
+[CodeGenType("GitHubCopilotToolsetConfig")] internal partial class InternalGitHubCopilotToolsetConfig { }
