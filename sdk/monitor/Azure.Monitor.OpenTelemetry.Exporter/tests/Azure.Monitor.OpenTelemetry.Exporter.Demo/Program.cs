@@ -196,8 +196,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
         }
 
         /// <summary>
-        /// Turns connection strings into routes, naming each after its ingestion host so the console
-        /// output and the <c>demo.tenant</c> dimension are readable.
+        /// Turns connection strings into routes, assigning each tenant a stable name based on its
+        /// position in the configured list.
         /// </summary>
         private static List<MultiTenantTraceDemo.TenantRoute> ParseRoutes(string? connectionStrings)
         {
@@ -239,16 +239,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo
                     continue;
                 }
 
-                // Tenants in the same region share an ingestion endpoint, so the host alone is not a
-                // unique name. Keeping it unique is what lets the counts and the demo.tenant
-                // dimension tell two same-endpoint tenants apart.
-                var host = new Uri(ingestionEndpoint).Host.Split('.')[0];
-                var name = host;
-
-                for (int n = 2; routes.Exists(route => route.Name == name); n++)
-                {
-                    name = $"{host}#{n}";
-                }
+                var name = $"tenant{routes.Count + 1}";
 
                 routes.Add(new MultiTenantTraceDemo.TenantRoute(name, instrumentationKey, ingestionEndpoint));
             }

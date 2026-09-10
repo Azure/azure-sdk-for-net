@@ -92,9 +92,11 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Internals.MultiTenant
 
         internal static string GetTenantCloudRole(ref AzMonList mappedTags)
         {
-            var cloudRole = mappedTags[SemanticSlot.MicrosoftTenantCloudRole] as string;
-            return string.IsNullOrWhiteSpace(cloudRole) ? UnknownService : cloudRole!.Trim();
+            return GetTenantCloudRole(mappedTags[SemanticSlot.MicrosoftTenantCloudRole] as string);
         }
+
+        internal static string GetTenantCloudRole(string? cloudRole)
+            => string.IsNullOrWhiteSpace(cloudRole) ? UnknownService : cloudRole!.Trim();
 
         /// <summary>
         /// Validates an application-supplied endpoint and reduces it to the canonical form used as a

@@ -4,7 +4,7 @@
 
 ### Features Added
 
-- Multi-tenant trace export now maps the `microsoft.tenant_cloud_role` Activity attribute to `ai.cloud.role`. Missing or invalid values use `unknown_service`, while `ai.cloud.roleInstance` remains host-derived.
+- Multi-tenant trace and log export now map the `microsoft.tenant_cloud_role` attribute to `ai.cloud.role`. Missing or invalid values use `unknown_service`, while `ai.cloud.roleInstance` remains host-derived. The attribute is read from Activity tags for traces and `LogRecord.Attributes` for logs, and only affects cloud role when multi-tenant export is enabled.
 
 - Added multi-tenant support for traces, off by default and enabled with the `Azure.Monitor.OpenTelemetry.EnableMultiTenantExport` AppContext switch. When enabled, an Activity carrying the `microsoft.instrumentation_key` and `microsoft.ingestion_endpoint` attributes is sent to that endpoint instead of the exporter's own; Activities without both attributes are dropped. Live Metrics is disabled while the switch is on, and sampling defaults to fixed-rate rather than rate-limited because a per-process rate limit would be shared across every tenant the process carries. The switch cannot be combined with Microsoft Entra ID authentication, because the credential is scoped to the exporter's own audience and would be sent to endpoints supplied by telemetry.
   ([#62707](https://github.com/Azure/azure-sdk-for-net/pull/62707))

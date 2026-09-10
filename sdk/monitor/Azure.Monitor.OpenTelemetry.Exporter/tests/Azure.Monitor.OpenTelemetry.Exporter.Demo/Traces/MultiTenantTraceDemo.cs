@@ -228,6 +228,8 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
         /// </summary>
         private sealed class TenantRoutingProcessor : BaseProcessor<Activity>
         {
+            private const string TenantCloudRoleAttributeName = "microsoft.tenant_cloud_role";
+
             private readonly IReadOnlyList<TenantRoute> _routes;
             private readonly string _runId;
             private readonly Random _random = new(Seed: 42);
@@ -259,6 +261,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Demo.Traces
 
                 data.SetTag("microsoft.instrumentation_key", route.InstrumentationKey);
                 data.SetTag("microsoft.ingestion_endpoint", route.IngestionEndpoint);
+                data.SetTag(TenantCloudRoleAttributeName, route.Name);
 
                 // Survives into customDimensions, so a query can count what actually arrived.
                 data.SetTag("demo.run_id", _runId);

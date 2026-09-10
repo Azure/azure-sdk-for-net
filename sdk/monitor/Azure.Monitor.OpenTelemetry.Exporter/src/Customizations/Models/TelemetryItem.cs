@@ -17,7 +17,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         private static volatile string? s_cloudRoleInstanceOverride;
         private static volatile string? s_componentVersionOverride;
 
-        public TelemetryItem(Activity activity, ref ActivityTagsProcessor activityTagsProcessor, AzureMonitorResource? resource, string instrumentationKey, float sampleRate, string? tenantCloudRole = null) :
+        public TelemetryItem(Activity activity, ref ActivityTagsProcessor activityTagsProcessor, AzureMonitorResource? resource, string instrumentationKey, float sampleRate) :
             this(activity.GetTelemetryType() == TelemetryType.Request ? "Request" : "RemoteDependency", FormatUtcTimestamp(activity.StartTimeUtc))
         {
             if (activity.ParentSpanId != default)
@@ -95,15 +95,15 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 
             SetResourceSdkVersionAndIkey(resource, instrumentationKey);
 
-            if (tenantCloudRole != null)
-            {
-                Tags[ContextTagKeys.AiCloudRole.ToString()] = tenantCloudRole.Truncate(SchemaConstants.Tags_AiCloudRole_MaxLength);
-            }
-
             if (sampleRate != 100f)
             {
                 SampleRate = sampleRate;
             }
+        }
+
+        internal void SetTenantCloudRole(string tenantCloudRole)
+        {
+            Tags[ContextTagKeys.AiCloudRole.ToString()] = tenantCloudRole.Truncate(SchemaConstants.Tags_AiCloudRole_MaxLength);
         }
 
         public TelemetryItem(string name, TelemetryItem telemetryItem, ActivitySpanId activitySpanId, ActivityKind kind, DateTimeOffset activityEventTimeStamp) :
