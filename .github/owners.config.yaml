@@ -81,12 +81,22 @@ sections:
     - path: "/sdk/azurestack*/"
       owners: [bganapa]
       pr-labels: [Azure Stack]
+    - path: "/sdk/discovery/Azure.AI.Discovery"
+      owners: [ahall-msft, danica-du, mike-menaker]
+      pr-labels: [Discovery]
     - path: "/sdk/iot*/"
       owners: [davidemontanari, ethanann-ms, marcodalessandro, riteshrao]
       pr-labels: [IoT]
+    - path: "/sdk/tables/"
+      owners: [JonathanCrd, jsquire]
+      pr-labels: [Tables]
     label-owners:
     - labels: [Azure Stack]
       service-owners: [bganapa]
+    - labels: [Discovery]
+      service-owners: [ahall-msft, danica-du, mike-menaker]
+    - labels: [Tables]
+      azure-sdk-owners: [JonathanCrd, jsquire]
     - labels: [Analysis Services]
       service-owners: [minghan]
     - labels: [ARO]
@@ -153,6 +163,7 @@ sections:
       pr-labels: [Mgmt]
 
   - name: Management Libraries
+    sort: true
     paths:
     - path: "/sdk/apicenter/Azure.ResourceManager.ApiCenter/"
       owners: [ArcturusZhang, ArthurMa1978]
