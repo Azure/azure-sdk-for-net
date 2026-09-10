@@ -14,6 +14,7 @@ using Azure.Provisioning.Resources;
 namespace Azure.Provisioning.Monitor
 {
     /// <summary> An action group resource. </summary>
+    [Experimental("AZPROVISION001")]
     public partial class ActionGroup : ProvisionableResource
     {
         private BicepValue<ResourceIdentifier> _id;
