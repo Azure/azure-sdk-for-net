@@ -5,7 +5,7 @@
 ### Breaking Changes
 
 - Replaced the optional `CodeTransparencyClientOptions` constructor parameter with separate endpoint-only and endpoint-plus-options constructors.
-- Removed the obsolete `CreateEntry(WaitUntil, BinaryData, CancellationToken)` overloads and `CreateEntryOperation`; use the `CreateEntry` overloads with `waitForCommit` instead.
+- Removed the obsolete `CreateEntry(WaitUntil, BinaryData, CancellationToken)` overloads and `CreateEntryOperation`; use the `CreateEntry` overloads with the optional `waitForCommit` parameter instead. Leaving it unset omits the query parameter for compatibility with older ledger deployments.
 - Removed the obsolete single-argument `RunTransparentStatementVerification` overload; use the static `VerifyTransparentStatement` method with verification options instead.
 - Removed the obsolete `GetOperation` and `GetOperationAsync` aliases for the operation-status endpoint removed from the latest SCITT draft.
 - Removed the public `CborUtils` wire-format parsing helper; service-specific CBOR parsing is now handled internally.

@@ -203,9 +203,9 @@ namespace Azure.Security.CodeTransparency.Tests
 
             CodeTransparencyClient client = new(new Uri("https://foo.bar.com"), new AzureKeyCredential("token"), options);
             BinaryData content = BinaryData.FromString("Hello World!");
-            NullableResponse<BinaryData> response = await client.CreateEntryAsync(content, waitForCommit: true);
+            NullableResponse<BinaryData> response = await client.CreateEntryAsync(content);
 
-            Assert.AreEqual("https://foo.bar.com/entries?api-version=2026-03-26&waitForCommit=true", mockTransport.Requests[0].Uri.ToString());
+            Assert.AreEqual("https://foo.bar.com/entries?api-version=2026-03-26", mockTransport.Requests[0].Uri.ToString());
             Assert.IsTrue(response.HasValue);
             Assert.AreEqual(new byte[] { 0x01, 0x02, 0x03 }, response.Value.ToArray());
             Assert.AreEqual("12.345", CodeTransparencyClient.GetEntryIdFromLocation(response.GetRawResponse()));

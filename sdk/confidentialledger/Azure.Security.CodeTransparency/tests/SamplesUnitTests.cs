@@ -83,8 +83,7 @@ namespace Azure.Security.CodeTransparency.Tests
             FileStream fileStream = File.OpenRead("signature.cose");
             BinaryData content = BinaryData.FromStream(fileStream);
 #endif
-            bool waitForCommit = true;
-            NullableResponse<BinaryData> receiptResponse = await client.CreateEntryAsync(content, waitForCommit);
+            NullableResponse<BinaryData> receiptResponse = await client.CreateEntryAsync(content);
             #endregion Snippet:CodeTransparencySubmission
 
             #region Snippet:CodeTransparencyDownloadTransparentStatement
