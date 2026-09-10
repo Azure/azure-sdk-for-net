@@ -99,10 +99,10 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Optional.IsDefined(LastPolicyPropagation))
+            if (options.Format != "W" && Optional.IsDefined(LastPolicyPropagationOn))
             {
                 writer.WritePropertyName("lastPolicyPropagation"u8);
-                writer.WriteStringValue(LastPolicyPropagation.Value, "O");
+                writer.WriteStringValue(LastPolicyPropagationOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(ComplianceStatus))
             {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
             AgentSpaceProvisioningState? provisioningState = default;
             int? currentAgentCount = default;
             IReadOnlyList<string> memberAgents = default;
-            DateTimeOffset? lastPolicyPropagation = default;
+            DateTimeOffset? lastPolicyPropagationOn = default;
             AgentSpaceComplianceStatus complianceStatus = default;
             string description = default;
             AgentSpacePolicies policies = default;
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
                     {
                         continue;
                     }
-                    lastPolicyPropagation = prop.Value.GetDateTimeOffset("O");
+                    lastPolicyPropagationOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("complianceStatus"u8))
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
                 provisioningState,
                 currentAgentCount,
                 memberAgents ?? new ChangeTrackingList<string>(),
-                lastPolicyPropagation,
+                lastPolicyPropagationOn,
                 complianceStatus,
                 description,
                 policies,

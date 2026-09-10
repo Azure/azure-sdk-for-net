@@ -27,19 +27,19 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
         /// <param name="provisioningState"> Provisioning state of the Agent Space. </param>
         /// <param name="currentAgentCount"> Current number of agents in the Agent Space. </param>
         /// <param name="memberAgents"> List of agents referencing the Agent Space. </param>
-        /// <param name="lastPolicyPropagation"> Timestamp of the last policy propagation to agents in this Agent Space. </param>
+        /// <param name="lastPolicyPropagationOn"> Timestamp of the last policy propagation to agents in this Agent Space. </param>
         /// <param name="complianceStatus"> Compliance status of the Agent Space. </param>
         /// <param name="description"> Description of the Agent Space. </param>
         /// <param name="policies"> Policy configurations for the Agent Space. </param>
         /// <param name="maxAgentCount"> Maximum number of agents allowed in the Agent Space. </param>
         /// <param name="serviceTreeId"> Universal unique ID (UUID) of the Service Tree associated with this Agent Space. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal AgentSpaceProperties(AgentSpaceProvisioningState? provisioningState, int? currentAgentCount, IReadOnlyList<string> memberAgents, DateTimeOffset? lastPolicyPropagation, AgentSpaceComplianceStatus complianceStatus, string description, AgentSpacePolicies policies, int? maxAgentCount, string serviceTreeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal AgentSpaceProperties(AgentSpaceProvisioningState? provisioningState, int? currentAgentCount, IReadOnlyList<string> memberAgents, DateTimeOffset? lastPolicyPropagationOn, AgentSpaceComplianceStatus complianceStatus, string description, AgentSpacePolicies policies, int? maxAgentCount, string serviceTreeId, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             ProvisioningState = provisioningState;
             CurrentAgentCount = currentAgentCount;
             MemberAgents = memberAgents;
-            LastPolicyPropagation = lastPolicyPropagation;
+            LastPolicyPropagationOn = lastPolicyPropagationOn;
             ComplianceStatus = complianceStatus;
             Description = description;
             Policies = policies;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AppService.SreAgent.Models
         public IReadOnlyList<string> MemberAgents { get; }
 
         /// <summary> Timestamp of the last policy propagation to agents in this Agent Space. </summary>
-        public DateTimeOffset? LastPolicyPropagation { get; }
+        public DateTimeOffset? LastPolicyPropagationOn { get; }
 
         /// <summary> Compliance status of the Agent Space. </summary>
         public AgentSpaceComplianceStatus ComplianceStatus { get; }
