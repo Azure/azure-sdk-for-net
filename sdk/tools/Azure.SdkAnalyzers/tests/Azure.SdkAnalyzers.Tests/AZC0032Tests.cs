@@ -31,6 +31,12 @@ namespace Azure.SdkAnalyzers.Tests
 }
 ";
 
+        private const string Utf8JsonSerializableStub = @"namespace Azure.Core
+{
+    public interface IUtf8JsonSerializable { }
+}
+";
+
         private const string JsonElementStub = @"namespace System.Text.Json
 {
     public struct JsonElement { }
@@ -204,6 +210,37 @@ namespace Contoso.Serialization
 namespace Azure.Fake.Widgets
 {
     public class WidgetData : Contoso.Serialization.IJsonModel<WidgetData> { }
+}";
+
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
+        // IUtf8JsonSerializable is matched on directly implemented interfaces only. Widening it to
+        // AllInterfaces the way IJsonModel<T> is matched would reclassify existing types, so the
+        // two tests below pin the narrower behavior.
+        [Test]
+        public async Task AZC0032NotProducedForUtf8JsonSerializableInheritedFromBaseModel()
+        {
+            const string code = Utf8JsonSerializableStub + @"
+namespace Azure.Fake.Widgets
+{
+    public class WidgetBase : Azure.Core.IUtf8JsonSerializable { }
+
+    public class WidgetData : WidgetBase { }
+}";
+
+            await Verifier.VerifyAnalyzerAsync(code);
+        }
+
+        [Test]
+        public async Task AZC0032NotProducedForUtf8JsonSerializableInheritedThroughAnotherInterface()
+        {
+            const string code = Utf8JsonSerializableStub + @"
+namespace Azure.Fake.Widgets
+{
+    public interface IWidgetSerializable : Azure.Core.IUtf8JsonSerializable { }
+
+    public class WidgetData : IWidgetSerializable { }
 }";
 
             await Verifier.VerifyAnalyzerAsync(code);
