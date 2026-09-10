@@ -52,6 +52,7 @@ namespace Azure.Generator.Management.Visitors
                 }
                 AddMissingLastContractModelMethods(modelFactory, updatedMethods);
                 modelFactory.Update(methods: updatedMethods);
+                ModelFactoryBackwardCompatHelper.FixModelFactoryConstructorCalls(modelFactory.Methods);
                 return modelFactory;
             }
             return base.VisitType(type);
