@@ -291,6 +291,206 @@ namespace Azure.Storage.ChangeFeed.Common.Tests
 
         #endregion
 
+        #region lfz (last-finalized) boundary
+
+        /// <summary>
+        /// Verifies that GetMetaSegmentBoundariesInternal parses the optional last-finalized (lfz)
+        /// timestamp from storageDiagnostics.data.lfz alongside lastConsumable in a single read.
+        /// </summary>
+        [Test]
+        public async Task GetMetaSegmentBoundariesInternal_LfzPresent_ReturnsBoth()
+        {
+            // Arrange
+            string json = @"{""lastConsumable"":""2026-09-04T12:00:00Z"",""storageDiagnostics"":{""data"":{""lfz"":""2026-09-04T11:15:00Z""}}}";
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            SetupMetadataDownload(containerClient, json);
+
+            // Act
+            MetaSegmentBoundaries? result = await ChangeFeedFactoryBase<TestEvent>.GetMetaSegmentBoundariesInternal(
+                containerClient.Object,
+                "meta/segments.json",
+                IsAsync,
+                CancellationToken.None);
+
+            // Assert
+            Assert.IsTrue(result.HasValue);
+            Assert.AreEqual(
+                new DateTimeOffset(2026, 9, 4, 12, 0, 0, TimeSpan.Zero),
+                result.Value.LastConsumable);
+            Assert.AreEqual(
+                new DateTimeOffset(2026, 9, 4, 11, 15, 0, TimeSpan.Zero),
+                result.Value.LastFinalized);
+        }
+
+        /// <summary>
+        /// Verifies that GetMetaSegmentBoundariesInternal leaves LastFinalized null when the metadata
+        /// has no storageDiagnostics.data.lfz (e.g. the Blob change feed), so callers fall back to
+        /// the lastConsumable watermark.
+        /// </summary>
+        [Test]
+        public async Task GetMetaSegmentBoundariesInternal_LfzAbsent_LastFinalizedNull()
+        {
+            // Arrange
+            string json = @"{""lastConsumable"":""2026-09-04T12:00:00Z""}";
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            SetupMetadataDownload(containerClient, json);
+
+            // Act
+            MetaSegmentBoundaries? result = await ChangeFeedFactoryBase<TestEvent>.GetMetaSegmentBoundariesInternal(
+                containerClient.Object,
+                "meta/segments.json",
+                IsAsync,
+                CancellationToken.None);
+
+            // Assert
+            Assert.IsTrue(result.HasValue);
+            Assert.AreEqual(
+                new DateTimeOffset(2026, 9, 4, 12, 0, 0, TimeSpan.Zero),
+                result.Value.LastConsumable);
+            Assert.IsFalse(result.Value.LastFinalized.HasValue);
+        }
+
+        /// <summary>
+        /// Verifies that a malformed lfz value is tolerated (treated as absent) while lastConsumable
+        /// is still returned, so enumeration falls back to the lastConsumable watermark.
+        /// </summary>
+        [Test]
+        public async Task GetMetaSegmentBoundariesInternal_MalformedLfz_LastFinalizedNull()
+        {
+            // Arrange
+            string json = @"{""lastConsumable"":""2026-09-04T12:00:00Z"",""storageDiagnostics"":{""data"":{""lfz"":""not-a-timestamp""}}}";
+
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            SetupMetadataDownload(containerClient, json);
+
+            // Act
+            MetaSegmentBoundaries? result = await ChangeFeedFactoryBase<TestEvent>.GetMetaSegmentBoundariesInternal(
+                containerClient.Object,
+                "meta/segments.json",
+                IsAsync,
+                CancellationToken.None);
+
+            // Assert
+            Assert.IsTrue(result.HasValue);
+            Assert.AreEqual(
+                new DateTimeOffset(2026, 9, 4, 12, 0, 0, TimeSpan.Zero),
+                result.Value.LastConsumable);
+            Assert.IsFalse(result.Value.LastFinalized.HasValue);
+        }
+
+        /// <summary>
+        /// Verifies that when IncludeNonFinalizedEvents is false and an lfz is published, the change
+        /// feed is capped at lfz rather than the later lastConsumable watermark (which can include
+        /// "Publishing" segments). The cap is observed via <see cref="ChangeFeedBase{TEvent}.LastConsumable"/>,
+        /// which both segment enumeration and per-event end-gating use.
+        /// </summary>
+        [Test]
+        public async Task BuildChangeFeed_NotIncludingNonFinalized_CapsAtLfz()
+        {
+            // Arrange — lastConsumable (09:00) is later than lfz (08:30).
+            ChangeFeedBase<TestEvent> changeFeed = await BuildChangeFeedWithMetadata(
+                @"{""lastConsumable"":""2024-01-15T09:00:00Z"",""storageDiagnostics"":{""data"":{""lfz"":""2024-01-15T08:30:00Z""}}}",
+                includeNonFinalizedEvents: false);
+
+            // Assert — capped at the finalized boundary.
+            Assert.IsNotNull(changeFeed);
+            Assert.AreEqual(
+                new DateTimeOffset(2024, 1, 15, 8, 30, 0, TimeSpan.Zero),
+                changeFeed.LastConsumable);
+        }
+
+        /// <summary>
+        /// Verifies that when IncludeNonFinalizedEvents is true, the lfz cap is not applied and the
+        /// later lastConsumable watermark is used, so non-finalized ("Publishing") segments remain
+        /// reachable.
+        /// </summary>
+        [Test]
+        public async Task BuildChangeFeed_IncludingNonFinalized_DoesNotCapAtLfz()
+        {
+            // Arrange — same metadata as the capped test.
+            ChangeFeedBase<TestEvent> changeFeed = await BuildChangeFeedWithMetadata(
+                @"{""lastConsumable"":""2024-01-15T09:00:00Z"",""storageDiagnostics"":{""data"":{""lfz"":""2024-01-15T08:30:00Z""}}}",
+                includeNonFinalizedEvents: true);
+
+            // Assert — uncapped at lastConsumable.
+            Assert.IsNotNull(changeFeed);
+            Assert.AreEqual(
+                new DateTimeOffset(2024, 1, 15, 9, 0, 0, TimeSpan.Zero),
+                changeFeed.LastConsumable);
+        }
+
+        /// <summary>
+        /// Verifies that when the metadata has no lfz (Blob change feed shape) the change feed still
+        /// caps at lastConsumable, i.e. the fallback preserves the historical Blob behavior.
+        /// </summary>
+        [Test]
+        public async Task BuildChangeFeed_NoLfz_CapsAtLastConsumable()
+        {
+            // Arrange — no storageDiagnostics.data.lfz.
+            ChangeFeedBase<TestEvent> changeFeed = await BuildChangeFeedWithMetadata(
+                @"{""lastConsumable"":""2024-01-15T09:00:00Z""}",
+                includeNonFinalizedEvents: false);
+
+            // Assert — falls back to lastConsumable.
+            Assert.IsNotNull(changeFeed);
+            Assert.AreEqual(
+                new DateTimeOffset(2024, 1, 15, 9, 0, 0, TimeSpan.Zero),
+                changeFeed.LastConsumable);
+        }
+
+        /// <summary>
+        /// Builds a change feed against a mocked container whose meta/segments.json is the supplied
+        /// <paramref name="metadataJson"/>. The first segment (08:00) is always within range for the
+        /// metadata shapes used by these tests, so the assertions focus on the resolved
+        /// <see cref="ChangeFeedBase{TEvent}.LastConsumable"/> boundary.
+        /// </summary>
+        private async Task<ChangeFeedBase<TestEvent>> BuildChangeFeedWithMetadata(
+            string metadataJson,
+            bool includeNonFinalizedEvents)
+        {
+            Mock<BlobContainerClient> containerClient = new Mock<BlobContainerClient>(MockBehavior.Strict);
+            Mock<SegmentFactoryBase<TestEvent>> segmentFactory = new Mock<SegmentFactoryBase<TestEvent>>();
+
+            containerClient.Setup(r => r.Uri).Returns(new Uri("https://account.blob.core.windows.net/container"));
+
+            if (IsAsync)
+                containerClient.Setup(r => r.ExistsAsync(It.IsAny<CancellationToken>())).ReturnsAsync(Response.FromValue(true, null));
+            else
+                containerClient.Setup(r => r.Exists(It.IsAny<CancellationToken>())).Returns(Response.FromValue(true, null));
+
+            SetupMetadataDownload(containerClient, metadataJson);
+            SetupBlobHierarchy(containerClient);
+
+            SegmentBase<TestEvent> segment = new SegmentBase<TestEvent>(
+                new List<ShardBase<TestEvent>>(),
+                0,
+                new DateTimeOffset(2024, 1, 15, 8, 0, 0, TimeSpan.Zero),
+                "idx/segments/2024/01/15/0800/meta.json");
+
+            segmentFactory.Setup(f => f.BuildSegment(
+                IsAsync,
+                "idx/segments/2024/01/15/0800/meta.json",
+                null))
+                .ReturnsAsync(segment);
+
+            ChangeFeedFactoryBase<TestEvent> factory = new ChangeFeedFactoryBase<TestEvent>(
+                containerClient.Object,
+                segmentFactory.Object,
+                CreateTestConfig(),
+                includeNonFinalizedEvents: includeNonFinalizedEvents);
+
+            return await factory.BuildChangeFeed(
+                null,
+                null,
+                null,
+                IsAsync,
+                CancellationToken.None);
+        }
+
+        #endregion
+
         #region BuildChangeFeed happy path
 
         /// <summary>
