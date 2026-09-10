@@ -6,8 +6,10 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.ContainerRegistry.Models;
 using Azure.ResourceManager.Models;
+using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry
 {
@@ -152,6 +154,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(ReplicationListResult))]
     [ModelReaderWriterBuildable(typeof(ReplicationProperties))]
     [ModelReaderWriterBuildable(typeof(ReplicationUpdateParametersProperties))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(ScopeMapData))]
     [ModelReaderWriterBuildable(typeof(ScopeMapListResult))]
     [ModelReaderWriterBuildable(typeof(ScopeMapPatch))]
@@ -168,6 +171,7 @@ namespace Azure.ResourceManager.ContainerRegistry
     [ModelReaderWriterBuildable(typeof(WebhookProperties))]
     [ModelReaderWriterBuildable(typeof(WebhookPropertiesCreateParameters))]
     [ModelReaderWriterBuildable(typeof(WebhookPropertiesUpdateParameters))]
+    [ModelReaderWriterBuildable(typeof(WritableSubResource))]
     public partial class AzureResourceManagerContainerRegistryContext : ModelReaderWriterContext
     {
     }

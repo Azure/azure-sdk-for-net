@@ -16,7 +16,7 @@ namespace Azure.AI.Projects.Agents.Tests.Samples;
 public class Sample_AgentsOptimizationCandidates : SamplesBase
 {
     #region Snippet:Sample_OptimizationCriterion_AgentsOptimizationCandidates
-    private readonly OptimizationDatasetCriterion _criterion = new(
+    private readonly AgentOptimizationDatasetCriterion _criterion = new(
         name: "Groundedness",
         instruction: """
         You are a Groundedness Evaluator.
@@ -57,12 +57,12 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
     );
     #endregion
     #region Snippet:Sample_Dataset_AgentsOptimizationCandidates
-    private OptimizationInlineDatasetInput GetDataset(int start, int itemNumber)
+    private AgentOptimizationInlineDatasetInput GetDataset(int start, int itemNumber)
     {
-        List<OptimizationDatasetItem> items = [];
+        List<AgentOptimizationDatasetItem> items = [];
         for (int i = start; i < start + itemNumber; i++)
         {
-            items.Add(new OptimizationDatasetItem()
+            items.Add(new AgentOptimizationDatasetItem()
             {
                 Query = $"What is 42 + {i * 2}? Please save the result as text: The answer is .... For example: Q: What is 42 + 12? A: The answer is 56.",
                 GroundTruth = $"The answer is {(42 + i * 2)}",
@@ -103,19 +103,19 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
         #endregion
         #region Snippet:Sample_CreateOptimizationJob_AgentsOptimizationCandidates_Async
-        OptimizationJob job = new()
+        AgentOptimizationJob job = new()
         {
             Inputs = new(
-                agent: new OptimizationAgentIdentifier(agentName: agentVersion.Name)
+                agent: new OptimizedAgentIdentifier(agentName: agentVersion.Name)
                 {
                     AgentVersion = agentVersion.Version
                 },
                 trainDataset: GetDataset(0, 7),
-                evaluators: [new OptimizationEvaluatorRef(name: "builtin.meteor_score")]
+                evaluators: [new AgentOptimizationEvaluatorRef(name: "builtin.meteor_score")]
             )
             {
                 ValidationDataset = GetDataset(7, 3),
-                Options = new OptimizationOptions()
+                Options = new AgentOptimizationOptions()
                 {
                     OptimizationModel = modelDeploymentName,
                     EvalModel = modelDeploymentName,
@@ -167,7 +167,7 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
                 }
             }
         };
-        OptimizationJob submittedJob = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
+        AgentOptimizationJob submittedJob = await jobsClient.CreateAsync(job: job, operationId: null, cancellationToken: default);
         Console.WriteLine($"Submitted optimization job: {submittedJob.Id}");
         #endregion
         #region Snippet:Sample_GetOptimizationJob_AgentsOptimizationCandidates_Async
@@ -191,7 +191,7 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
         }
         #endregion
         #region Snippet:Sample_ListCandidates_AgentsOptimizationCandidates
-        foreach (OptimizationCandidate candidate in submittedJob.Result.Candidates)
+        foreach (AgentOptimizationCandidate candidate in submittedJob.Result.Candidates)
         {
             Console.WriteLine("======================================================");
             Console.WriteLine($"CandidateID: {candidate.CandidateId}, Candidate evaluation ID:  {candidate.EvalId}, Score: {candidate.AvgScore}.");
@@ -246,19 +246,19 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
         Console.WriteLine($"Agent created (id: {agentVersion.Id}, name: {agentVersion.Name}, version: {agentVersion.Version})");
         #endregion
         #region Snippet:Sample_CreateOptimizationJob_AgentsOptimizationCandidates_Sync
-        OptimizationJob job = new()
+        AgentOptimizationJob job = new()
         {
             Inputs = new(
-                agent: new OptimizationAgentIdentifier(agentName: agentVersion.Name)
+                agent: new OptimizedAgentIdentifier(agentName: agentVersion.Name)
                 {
                     AgentVersion = agentVersion.Version
                 },
                 trainDataset: GetDataset(0, 7),
-                evaluators: [new OptimizationEvaluatorRef(name: "builtin.meteor_score")]
+                evaluators: [new AgentOptimizationEvaluatorRef(name: "builtin.meteor_score")]
             )
             {
                 ValidationDataset = GetDataset(7, 3),
-                Options = new OptimizationOptions()
+                Options = new AgentOptimizationOptions()
                 {
                     OptimizationModel = modelDeploymentName,
                     EvalModel = modelDeploymentName,
@@ -309,7 +309,7 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
                 }
             }
         };
-        OptimizationJob submittedJob = jobsClient.Create(job: job, operationId: null, cancellationToken: default);
+        AgentOptimizationJob submittedJob = jobsClient.Create(job: job, operationId: null, cancellationToken: default);
         Console.WriteLine($"Submitted optimization job: {submittedJob.Id}");
         #endregion
         #region Snippet:Sample_GetOptimizationJob_AgentsOptimizationCandidates_Sync
@@ -332,7 +332,7 @@ public class Sample_AgentsOptimizationCandidates : SamplesBase
             throw new InvalidOperationException($"The job {submittedJob.Id} has failed.");
         }
         #endregion
-        foreach (OptimizationCandidate candidate in submittedJob.Result.Candidates)
+        foreach (AgentOptimizationCandidate candidate in submittedJob.Result.Candidates)
         {
             Console.WriteLine("======================================================");
             Console.WriteLine($"CandidateID: {candidate.CandidateId}, Candidate evaluation ID:  {candidate.EvalId}, Score: {candidate.AvgScore}.");

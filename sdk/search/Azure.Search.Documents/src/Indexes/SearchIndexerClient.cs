@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Search.Documents.Indexes.Models;
+using Azure.Search.Documents.Utilities;
 
 namespace Azure.Search.Documents.Indexes
 {
@@ -291,8 +292,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<SearchIndexer>> GetIndexers(
             CancellationToken cancellationToken = default)
         {
-            Response<ListIndexersResult> result = GetIndexers(new[] { Constants.All }, cancellationToken);
-            return Response.FromValue(result.Value.Indexers, result.GetRawResponse());
+            return GetIndexers(new[] { Constants.All }, cancellationToken: cancellationToken).ToBufferedList();
         }
 
         /// <summary>
@@ -305,8 +305,7 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<SearchIndexer>>> GetIndexersAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<ListIndexersResult> result = await GetIndexersAsync(new[] { Constants.All }, cancellationToken).ConfigureAwait(false);
-            return Response.FromValue(result.Value.Indexers, result.GetRawResponse());
+            return await GetIndexersAsync(new[] { Constants.All }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
         }
 
         /// <summary>
@@ -319,9 +318,8 @@ namespace Azure.Search.Documents.Indexes
         public virtual Response<IReadOnlyList<string>> GetIndexerNames(
             CancellationToken cancellationToken = default)
         {
-            Response<ListIndexersResult> result = GetIndexers(new[] { Constants.NameKey }, cancellationToken);
-            IReadOnlyList<string> names = result.Value.Indexers.Select(value => value.Name).ToArray();
-            return Response.FromValue(names, result.GetRawResponse());
+            Response<IReadOnlyList<SearchIndexer>> response = GetIndexers(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedList();
+            return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 
         /// <summary>
@@ -334,9 +332,8 @@ namespace Azure.Search.Documents.Indexes
         public virtual async Task<Response<IReadOnlyList<string>>> GetIndexerNamesAsync(
             CancellationToken cancellationToken = default)
         {
-            Response<ListIndexersResult> result = await GetIndexersAsync(new[] { Constants.NameKey }, cancellationToken).ConfigureAwait(false);
-            IReadOnlyList<string> names = result.Value.Indexers.Select(value => value.Name).ToArray();
-            return Response.FromValue(names, result.GetRawResponse());
+            Response<IReadOnlyList<SearchIndexer>> response = await GetIndexersAsync(new[] { Constants.NameKey }, cancellationToken: cancellationToken).ToBufferedListAsync().ConfigureAwait(false);
+            return Response.FromValue<IReadOnlyList<string>>(response.Value.Select(value => value.Name).ToArray(), response.GetRawResponse());
         }
 
         #endregion

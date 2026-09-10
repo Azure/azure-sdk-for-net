@@ -9,14 +9,55 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
+using Azure.ResourceManager.ScVmm;
 
 namespace Azure.ResourceManager.ScVmm.Models
 {
-    public partial class OSProfileForVmInstance : IUtf8JsonSerializable, IJsonModel<OSProfileForVmInstance>
+    /// <summary> Defines the resource properties. </summary>
+    public partial class OSProfileForVmInstance : IJsonModel<OSProfileForVmInstance>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<OSProfileForVmInstance>)this).Write(writer, ModelSerializationExtensions.WireOptions);
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OSProfileForVmInstance PersistableModelCreateCore(BinaryData data, ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OSProfileForVmInstance>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
+                    {
+                        return DeserializeOSProfileForVmInstance(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(OSProfileForVmInstance)} does not support reading '{options.Format}' format.");
+            }
+        }
 
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual BinaryData PersistableModelWriteCore(ModelReaderWriterOptions options)
+        {
+            string format = options.Format == "W" ? ((IPersistableModel<OSProfileForVmInstance>)this).GetFormatFromOptions(options) : options.Format;
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options, AzureResourceManagerScVmmContext.Default);
+                default:
+                    throw new FormatException($"The model {nameof(OSProfileForVmInstance)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        BinaryData IPersistableModel<OSProfileForVmInstance>.Write(ModelReaderWriterOptions options) => PersistableModelWriteCore(options);
+
+        /// <param name="data"> The data to parse. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OSProfileForVmInstance IPersistableModel<OSProfileForVmInstance>.Create(BinaryData data, ModelReaderWriterOptions options) => PersistableModelCreateCore(data, options);
+
+        /// <param name="options"> The client options for reading and writing models. </param>
+        string IPersistableModel<OSProfileForVmInstance>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+
+        /// <param name="writer"> The JSON writer. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<OSProfileForVmInstance>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
             writer.WriteStartObject();
@@ -28,12 +69,16 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         protected virtual void JsonModelWriteCore(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OSProfileForVmInstance>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OSProfileForVmInstance>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OSProfileForVmInstance)} does not support writing '{format}' format.");
             }
-
+            if (Optional.IsDefined(AdminUsername))
+            {
+                writer.WritePropertyName("adminUsername"u8);
+                writer.WriteStringValue(AdminUsername);
+            }
             if (Optional.IsDefined(AdminPassword))
             {
                 writer.WritePropertyName("adminPassword"u8);
@@ -59,15 +104,50 @@ namespace Azure.ResourceManager.ScVmm.Models
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            if (Optional.IsDefined(DomainName))
             {
-                foreach (var item in _serializedAdditionalRawData)
+                writer.WritePropertyName("domainName"u8);
+                writer.WriteStringValue(DomainName);
+            }
+            if (Optional.IsDefined(DomainUsername))
+            {
+                writer.WritePropertyName("domainUsername"u8);
+                writer.WriteStringValue(DomainUsername);
+            }
+            if (Optional.IsDefined(DomainPassword))
+            {
+                writer.WritePropertyName("domainPassword"u8);
+                writer.WriteStringValue(DomainPassword);
+            }
+            if (Optional.IsDefined(Workgroup))
+            {
+                writer.WritePropertyName("workgroup"u8);
+                writer.WriteStringValue(Workgroup);
+            }
+            if (Optional.IsDefined(ProductKey))
+            {
+                writer.WritePropertyName("productKey"u8);
+                writer.WriteStringValue(ProductKey);
+            }
+            if (Optional.IsDefined(Timezone))
+            {
+                writer.WritePropertyName("timezone"u8);
+                writer.WriteNumberValue(Timezone.Value);
+            }
+            if (Optional.IsDefined(RunOnceCommands))
+            {
+                writer.WritePropertyName("runOnceCommands"u8);
+                writer.WriteStringValue(RunOnceCommands);
+            }
+            if (options.Format != "W" && _additionalBinaryDataProperties != null)
+            {
+                foreach (var item in _additionalBinaryDataProperties)
                 {
                     writer.WritePropertyName(item.Key);
 #if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
+                    writer.WriteRawValue(item.Value);
 #else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value, ModelSerializationExtensions.JsonDocumentOptions))
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
                     {
                         JsonSerializer.Serialize(writer, document.RootElement);
                     }
@@ -76,108 +156,140 @@ namespace Azure.ResourceManager.ScVmm.Models
             }
         }
 
-        OSProfileForVmInstance IJsonModel<OSProfileForVmInstance>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        OSProfileForVmInstance IJsonModel<OSProfileForVmInstance>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options) => JsonModelCreateCore(ref reader, options);
+
+        /// <param name="reader"> The JSON reader. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        protected virtual OSProfileForVmInstance JsonModelCreateCore(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<OSProfileForVmInstance>)this).GetFormatFromOptions(options) : options.Format;
+            string format = options.Format == "W" ? ((IPersistableModel<OSProfileForVmInstance>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
                 throw new FormatException($"The model {nameof(OSProfileForVmInstance)} does not support reading '{format}' format.");
             }
-
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeOSProfileForVmInstance(document.RootElement, options);
         }
 
-        internal static OSProfileForVmInstance DeserializeOSProfileForVmInstance(JsonElement element, ModelReaderWriterOptions options = null)
+        /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="options"> The client options for reading and writing models. </param>
+        internal static OSProfileForVmInstance DeserializeOSProfileForVmInstance(JsonElement element, ModelReaderWriterOptions options)
         {
-            options ??= ModelSerializationExtensions.WireOptions;
-
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
+            string adminUsername = default;
             string adminPassword = default;
             string computerName = default;
             ScVmmOSType? osType = default;
             string osSku = default;
             string osVersion = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            string domainName = default;
+            string domainUsername = default;
+            string domainPassword = default;
+            string workgroup = default;
+            string productKey = default;
+            int? timezone = default;
+            string runOnceCommands = default;
+            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+            foreach (var prop in element.EnumerateObject())
             {
-                if (property.NameEquals("adminPassword"u8))
+                if (prop.NameEquals("adminUsername"u8))
                 {
-                    adminPassword = property.Value.GetString();
+                    adminUsername = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("computerName"u8))
+                if (prop.NameEquals("adminPassword"u8))
                 {
-                    computerName = property.Value.GetString();
+                    adminPassword = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osType"u8))
+                if (prop.NameEquals("computerName"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    computerName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("osType"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    osType = new ScVmmOSType(property.Value.GetString());
+                    osType = new ScVmmOSType(prop.Value.GetString());
                     continue;
                 }
-                if (property.NameEquals("osSku"u8))
+                if (prop.NameEquals("osSku"u8))
                 {
-                    osSku = property.Value.GetString();
+                    osSku = prop.Value.GetString();
                     continue;
                 }
-                if (property.NameEquals("osVersion"u8))
+                if (prop.NameEquals("osVersion"u8))
                 {
-                    osVersion = property.Value.GetString();
+                    osVersion = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("domainName"u8))
+                {
+                    domainName = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("domainUsername"u8))
+                {
+                    domainUsername = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("domainPassword"u8))
+                {
+                    domainPassword = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("workgroup"u8))
+                {
+                    workgroup = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("productKey"u8))
+                {
+                    productKey = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("timezone"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    timezone = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("runOnceCommands"u8))
+                {
+                    runOnceCommands = prop.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
             return new OSProfileForVmInstance(
+                adminUsername,
                 adminPassword,
                 computerName,
                 osType,
                 osSku,
                 osVersion,
-                serializedAdditionalRawData);
+                domainName,
+                domainUsername,
+                domainPassword,
+                workgroup,
+                productKey,
+                timezone,
+                runOnceCommands,
+                additionalBinaryDataProperties);
         }
-
-        BinaryData IPersistableModel<OSProfileForVmInstance>.Write(ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OSProfileForVmInstance>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    return ModelReaderWriter.Write(this, options, AzureResourceManagerScVmmContext.Default);
-                default:
-                    throw new FormatException($"The model {nameof(OSProfileForVmInstance)} does not support writing '{options.Format}' format.");
-            }
-        }
-
-        OSProfileForVmInstance IPersistableModel<OSProfileForVmInstance>.Create(BinaryData data, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<OSProfileForVmInstance>)this).GetFormatFromOptions(options) : options.Format;
-
-            switch (format)
-            {
-                case "J":
-                    {
-                        using JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions);
-                        return DeserializeOSProfileForVmInstance(document.RootElement, options);
-                    }
-                default:
-                    throw new FormatException($"The model {nameof(OSProfileForVmInstance)} does not support reading '{options.Format}' format.");
-            }
-        }
-
-        string IPersistableModel<OSProfileForVmInstance>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -19,7 +19,7 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Initializes a new instance of <see cref="OperationPagedResponse"/>. </summary>
         /// <param name="value"> The items on the page. </param>
-        internal OperationPagedResponse(IEnumerable<LongRunningOperation> value)
+        internal OperationPagedResponse(IEnumerable<PlanetaryComputerOperation> value)
         {
             Value = value.ToList();
         }
@@ -28,7 +28,7 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="value"> The items on the page. </param>
         /// <param name="nextLink"> Link to the next page of results. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal OperationPagedResponse(IList<LongRunningOperation> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal OperationPagedResponse(IList<PlanetaryComputerOperation> value, Uri nextLink, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Value = value;
             NextLink = nextLink;
@@ -36,7 +36,7 @@ namespace Azure.Analytics.PlanetaryComputer
         }
 
         /// <summary> The items on the page. </summary>
-        public IList<LongRunningOperation> Value { get; }
+        public IList<PlanetaryComputerOperation> Value { get; }
 
         /// <summary> Link to the next page of results. </summary>
         public Uri NextLink { get; }

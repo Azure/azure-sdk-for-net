@@ -1,0 +1,75 @@
+# Base job wrapper for API Review Hub artifact creation. Language-specific job
+# templates provide setup steps and the request handler provides orchestration steps.
+parameters:
+  - name: jobName
+    type: string
+    default: CreateApiReviewArtifacts
+  - name: displayName
+    type: string
+    default: 'Create API review artifacts'
+  - name: poolName
+    type: string
+    default: 'azsdk-pool'
+  - name: imageOverride
+    type: string
+    default: 'ubuntu-24.04'
+  - name: variables
+    type: object
+    default: []
+  - name: sourceRepositoryFullName
+    type: string
+    default: ''
+  - name: sourceCheckoutDir
+    type: string
+    default: ''
+  - name: toolingDir
+    type: string
+    default: '$(Pipeline.Workspace)/apireview/tooling'
+  - name: setupSteps
+    type: stepList
+    default: []
+  - name: steps
+    type: stepList
+    default: []
+
+jobs:
+- job: ${{ parameters.jobName }}
+  displayName: ${{ parameters.displayName }}
+
+  pool:
+    name: ${{ parameters.poolName }}
+    demands: ImageOverride -equals ${{ parameters.imageOverride }}
+
+  variables:
+  - template: /eng/pipelines/templates/variables/globals.yml
+  - name: ApiReviewRepositoryFullName
+    value: ${{ parameters.sourceRepositoryFullName }}
+  - name: ApiReviewSourceDir
+    value: ${{ parameters.sourceCheckoutDir }}
+  - name: ApiReviewToolingDir
+    value: ${{ parameters.toolingDir }}
+  - ${{ each variable in parameters.variables }}:
+    - ${{ variable }}
+
+  steps:
+  - ${{ if ne(parameters.sourceCheckoutDir, '') }}:
+    - bash: |
+        set -Eeuo pipefail
+
+        source_repo="$SOURCE_CHECKOUT_DIR"
+        repository_full_name="$SOURCE_REPOSITORY_FULL_NAME"
+
+        rm -rf "$source_repo"
+        mkdir -p "$(dirname "$source_repo")"
+
+        echo "Cloning $repository_full_name into $source_repo"
+        git clone --filter=blob:none --no-checkout "https://github.com/$repository_full_name.git" "$source_repo"
+      env:
+        SOURCE_CHECKOUT_DIR: ${{ parameters.sourceCheckoutDir }}
+        SOURCE_REPOSITORY_FULL_NAME: ${{ parameters.sourceRepositoryFullName }}
+      displayName: 'Clone API review source repository'
+
+  - ${{ parameters.setupSteps }}
+
+  # These steps are assembled by the generic API Review Hub request pipeline.
+  - ${{ parameters.steps }}

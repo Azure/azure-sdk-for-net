@@ -8,85 +8,92 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApplicationInsights
 {
     /// <summary>
     /// A class representing a collection of <see cref="ApplicationInsightsWorkbookRevisionResource"/> and their operations.
     /// Each <see cref="ApplicationInsightsWorkbookRevisionResource"/> in the collection will belong to the same instance of <see cref="ApplicationInsightsWorkbookResource"/>.
-    /// To get an <see cref="ApplicationInsightsWorkbookRevisionCollection"/> instance call the GetApplicationInsightsWorkbookRevisions method from an instance of <see cref="ApplicationInsightsWorkbookResource"/>.
+    /// To get a <see cref="ApplicationInsightsWorkbookRevisionCollection"/> instance call the GetApplicationInsightsWorkbookRevisions method from an instance of <see cref="ApplicationInsightsWorkbookResource"/>.
     /// </summary>
     public partial class ApplicationInsightsWorkbookRevisionCollection : ArmCollection, IEnumerable<ApplicationInsightsWorkbookRevisionResource>, IAsyncEnumerable<ApplicationInsightsWorkbookRevisionResource>
     {
-        private readonly ClientDiagnostics _applicationInsightsWorkbookRevisionWorkbooksClientDiagnostics;
-        private readonly WorkbooksRestOperations _applicationInsightsWorkbookRevisionWorkbooksRestClient;
+        private readonly ClientDiagnostics _workbooksClientDiagnostics;
+        private readonly Workbooks _workbooksRestClient;
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationInsightsWorkbookRevisionCollection"/> class for mocking. </summary>
+        /// <summary> Initializes a new instance of ApplicationInsightsWorkbookRevisionCollection for mocking. </summary>
         protected ApplicationInsightsWorkbookRevisionCollection()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ApplicationInsightsWorkbookRevisionCollection"/> class. </summary>
+        /// <summary> Initializes a new instance of <see cref="ApplicationInsightsWorkbookRevisionCollection"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
-        /// <param name="id"> The identifier of the parent resource that is the target of operations. </param>
+        /// <param name="id"> The identifier of the resource that is the target of operations. </param>
         internal ApplicationInsightsWorkbookRevisionCollection(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _applicationInsightsWorkbookRevisionWorkbooksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ApplicationInsightsWorkbookRevisionResource.ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ApplicationInsightsWorkbookRevisionResource.ResourceType, out string applicationInsightsWorkbookRevisionWorkbooksApiVersion);
-            _applicationInsightsWorkbookRevisionWorkbooksRestClient = new WorkbooksRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsWorkbookRevisionWorkbooksApiVersion);
-#if DEBUG
-			ValidateResourceId(Id);
-#endif
+            TryGetApiVersion(ApplicationInsightsWorkbookRevisionResource.ResourceType, out string applicationInsightsWorkbookRevisionApiVersion);
+            _workbooksClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.ApplicationInsights", ApplicationInsightsWorkbookRevisionResource.ResourceType.Namespace, Diagnostics);
+            _workbooksRestClient = new Workbooks(_workbooksClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, applicationInsightsWorkbookRevisionApiVersion ?? "2023-06-01");
+            ValidateResourceId(id);
         }
 
+        /// <param name="id"></param>
+        [Conditional("DEBUG")]
         internal static void ValidateResourceId(ResourceIdentifier id)
         {
             if (id.ResourceType != ApplicationInsightsWorkbookResource.ResourceType)
-                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ApplicationInsightsWorkbookResource.ResourceType), nameof(id));
+            {
+                throw new ArgumentException(string.Format("Invalid resource type {0} expected {1}", id.ResourceType, ApplicationInsightsWorkbookResource.ResourceType), nameof(id));
+            }
         }
 
         /// <summary>
         /// Get a single workbook revision defined by its revisionId.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions/{revisionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions/{revisionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_RevisionGet</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkbookOperationGroup_RevisionGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookRevisionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionId"> The id of the workbook's revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<ApplicationInsightsWorkbookRevisionResource>> GetAsync(string revisionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(revisionId, nameof(revisionId));
 
-            using var scope = _applicationInsightsWorkbookRevisionWorkbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookRevisionCollection.Get");
+            using DiagnosticScope scope = _workbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookRevisionCollection.Get");
             scope.Start();
             try
             {
-                var response = await _applicationInsightsWorkbookRevisionWorkbooksRestClient.RevisionGetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionId, cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workbooksRestClient.CreateRevisionGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionId, context);
+                Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
+                Response<ApplicationInsightsWorkbookData> response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationInsightsWorkbookRevisionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -100,38 +107,42 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Get a single workbook revision defined by its revisionId.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions/{revisionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions/{revisionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_RevisionGet</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkbookOperationGroup_RevisionGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookRevisionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionId"> The id of the workbook's revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<ApplicationInsightsWorkbookRevisionResource> Get(string revisionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(revisionId, nameof(revisionId));
 
-            using var scope = _applicationInsightsWorkbookRevisionWorkbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookRevisionCollection.Get");
+            using DiagnosticScope scope = _workbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookRevisionCollection.Get");
             scope.Start();
             try
             {
-                var response = _applicationInsightsWorkbookRevisionWorkbooksRestClient.RevisionGet(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionId, cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workbooksRestClient.CreateRevisionGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionId, context);
+                Response result = Pipeline.ProcessMessage(message, context);
+                Response<ApplicationInsightsWorkbookData> response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
                 if (response.Value == null)
+                {
                     throw new RequestFailedException(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationInsightsWorkbookRevisionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -145,50 +156,50 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Get the revisions for the workbook defined by its resourceName.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_RevisionsList</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workbooks_RevisionsList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookRevisionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <returns> An async collection of <see cref="ApplicationInsightsWorkbookRevisionResource"/> that may take multiple service requests to iterate over. </returns>
+        /// <returns> A collection of <see cref="ApplicationInsightsWorkbookRevisionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<ApplicationInsightsWorkbookRevisionResource> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationInsightsWorkbookRevisionWorkbooksRestClient.CreateRevisionsListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationInsightsWorkbookRevisionWorkbooksRestClient.CreateRevisionsListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => new ApplicationInsightsWorkbookRevisionResource(Client, ApplicationInsightsWorkbookData.DeserializeApplicationInsightsWorkbookData(e)), _applicationInsightsWorkbookRevisionWorkbooksClientDiagnostics, Pipeline, "ApplicationInsightsWorkbookRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new AsyncPageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookRevisionResource>(new WorkbooksRevisionsListAsyncCollectionResultOfT(
+                _workbooksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ApplicationInsightsWorkbookRevisionCollection.GetAll"), data => new ApplicationInsightsWorkbookRevisionResource(Client, data));
         }
 
         /// <summary>
         /// Get the revisions for the workbook defined by its resourceName.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_RevisionsList</description>
+        /// <term> Operation Id. </term>
+        /// <description> Workbooks_RevisionsList. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookRevisionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,45 +207,67 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="ApplicationInsightsWorkbookRevisionResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<ApplicationInsightsWorkbookRevisionResource> GetAll(CancellationToken cancellationToken = default)
         {
-            HttpMessage FirstPageRequest(int? pageSizeHint) => _applicationInsightsWorkbookRevisionWorkbooksRestClient.CreateRevisionsListRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _applicationInsightsWorkbookRevisionWorkbooksRestClient.CreateRevisionsListNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => new ApplicationInsightsWorkbookRevisionResource(Client, ApplicationInsightsWorkbookData.DeserializeApplicationInsightsWorkbookData(e)), _applicationInsightsWorkbookRevisionWorkbooksClientDiagnostics, Pipeline, "ApplicationInsightsWorkbookRevisionCollection.GetAll", "value", "nextLink", cancellationToken);
+            RequestContext context = new RequestContext
+            {
+                CancellationToken = cancellationToken
+            };
+            return new PageableWrapper<ApplicationInsightsWorkbookData, ApplicationInsightsWorkbookRevisionResource>(new WorkbooksRevisionsListCollectionResultOfT(
+                _workbooksRestClient,
+                Guid.Parse(Id.SubscriptionId),
+                Id.ResourceGroupName,
+                Id.Name,
+                context,
+                "ApplicationInsightsWorkbookRevisionCollection.GetAll"), data => new ApplicationInsightsWorkbookRevisionResource(Client, data));
         }
 
         /// <summary>
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions/{revisionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions/{revisionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_RevisionGet</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkbookOperationGroup_RevisionGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookRevisionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionId"> The id of the workbook's revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string revisionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(revisionId, nameof(revisionId));
 
-            using var scope = _applicationInsightsWorkbookRevisionWorkbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookRevisionCollection.Exists");
+            using DiagnosticScope scope = _workbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookRevisionCollection.Exists");
             scope.Start();
             try
             {
-                var response = await _applicationInsightsWorkbookRevisionWorkbooksRestClient.RevisionGetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workbooksRestClient.CreateRevisionGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApplicationInsightsWorkbookData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationInsightsWorkbookData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -248,36 +281,50 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Checks to see if the resource exists in azure.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions/{revisionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions/{revisionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_RevisionGet</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkbookOperationGroup_RevisionGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookRevisionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionId"> The id of the workbook's revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual Response<bool> Exists(string revisionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(revisionId, nameof(revisionId));
 
-            using var scope = _applicationInsightsWorkbookRevisionWorkbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookRevisionCollection.Exists");
+            using DiagnosticScope scope = _workbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookRevisionCollection.Exists");
             scope.Start();
             try
             {
-                var response = _applicationInsightsWorkbookRevisionWorkbooksRestClient.RevisionGet(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workbooksRestClient.CreateRevisionGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApplicationInsightsWorkbookData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationInsightsWorkbookData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 return Response.FromValue(response.Value != null, response.GetRawResponse());
             }
             catch (Exception e)
@@ -291,38 +338,54 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions/{revisionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions/{revisionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_RevisionGet</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkbookOperationGroup_RevisionGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookRevisionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionId"> The id of the workbook's revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual async Task<NullableResponse<ApplicationInsightsWorkbookRevisionResource>> GetIfExistsAsync(string revisionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(revisionId, nameof(revisionId));
 
-            using var scope = _applicationInsightsWorkbookRevisionWorkbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookRevisionCollection.GetIfExists");
+            using DiagnosticScope scope = _workbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookRevisionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = await _applicationInsightsWorkbookRevisionWorkbooksRestClient.RevisionGetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionId, cancellationToken: cancellationToken).ConfigureAwait(false);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workbooksRestClient.CreateRevisionGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionId, context);
+                await Pipeline.SendAsync(message, context.CancellationToken).ConfigureAwait(false);
+                Response result = message.Response;
+                Response<ApplicationInsightsWorkbookData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationInsightsWorkbookData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApplicationInsightsWorkbookRevisionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationInsightsWorkbookRevisionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -336,38 +399,54 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// Tries to get details for this resource from the service.
         /// <list type="bullet">
         /// <item>
-        /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions/{revisionId}</description>
+        /// <term> Request Path. </term>
+        /// <description> /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/workbooks/{resourceName}/revisions/{revisionId}. </description>
         /// </item>
         /// <item>
-        /// <term>Operation Id</term>
-        /// <description>Workbooks_RevisionGet</description>
+        /// <term> Operation Id. </term>
+        /// <description> WorkbookOperationGroup_RevisionGet. </description>
         /// </item>
         /// <item>
-        /// <term>Default Api Version</term>
-        /// <description>2023-06-01</description>
-        /// </item>
-        /// <item>
-        /// <term>Resource</term>
-        /// <description><see cref="ApplicationInsightsWorkbookRevisionResource"/></description>
+        /// <term> Default Api Version. </term>
+        /// <description> 2023-06-01. </description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="revisionId"> The id of the workbook's revision. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="revisionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="revisionId"/> is an empty string, and was expected to be non-empty. </exception>
         public virtual NullableResponse<ApplicationInsightsWorkbookRevisionResource> GetIfExists(string revisionId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(revisionId, nameof(revisionId));
 
-            using var scope = _applicationInsightsWorkbookRevisionWorkbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookRevisionCollection.GetIfExists");
+            using DiagnosticScope scope = _workbooksClientDiagnostics.CreateScope("ApplicationInsightsWorkbookRevisionCollection.GetIfExists");
             scope.Start();
             try
             {
-                var response = _applicationInsightsWorkbookRevisionWorkbooksRestClient.RevisionGet(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, revisionId, cancellationToken: cancellationToken);
+                RequestContext context = new RequestContext
+                {
+                    CancellationToken = cancellationToken
+                };
+                HttpMessage message = _workbooksRestClient.CreateRevisionGetRequest(Guid.Parse(Id.SubscriptionId), Id.ResourceGroupName, Id.Name, revisionId, context);
+                Pipeline.Send(message, context.CancellationToken);
+                Response result = message.Response;
+                Response<ApplicationInsightsWorkbookData> response = default;
+                switch (result.Status)
+                {
+                    case 200:
+                        response = Response.FromValue(ApplicationInsightsWorkbookData.FromResponse(result), result);
+                        break;
+                    case 404:
+                        response = Response.FromValue((ApplicationInsightsWorkbookData)null, result);
+                        break;
+                    default:
+                        throw new RequestFailedException(result);
+                }
                 if (response.Value == null)
+                {
                     return new NoValueResponse<ApplicationInsightsWorkbookRevisionResource>(response.GetRawResponse());
+                }
                 return Response.FromValue(new ApplicationInsightsWorkbookRevisionResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
@@ -387,6 +466,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             return GetAll().GetEnumerator();
         }
 
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
         IAsyncEnumerator<ApplicationInsightsWorkbookRevisionResource> IAsyncEnumerable<ApplicationInsightsWorkbookRevisionResource>.GetAsyncEnumerator(CancellationToken cancellationToken)
         {
             return GetAllAsync(cancellationToken: cancellationToken).GetAsyncEnumerator(cancellationToken);

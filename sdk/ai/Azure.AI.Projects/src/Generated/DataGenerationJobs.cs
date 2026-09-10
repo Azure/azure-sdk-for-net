@@ -5,6 +5,7 @@
 using System;
 using System.ClientModel;
 using System.ClientModel.Primitives;
+using System.Diagnostics.CodeAnalysis;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -120,58 +121,22 @@ namespace Azure.AI.Projects
             return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
         }
 
-        /// <summary>
-        /// [Protocol Method] Submits a new data generation job for asynchronous execution.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
+        /// <summary> Submits a new data generation job for asynchronous execution. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
         /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual ClientResult CreateGenerationJob(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
+        [Experimental("SCME0006")]
+        internal virtual OperationResult CreateGenerationJob(bool waitUntilCompleted, BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
         {
             using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.CreateGenerationJob");
             scope.Start();
             try
             {
                 using PipelineMessage message = CreateCreateGenerationJobRequest(content, foundryFeatures, operationId, options);
-                return ClientResult.FromResponse(Pipeline.ProcessMessage(message, options));
-            }
-            catch (Exception e)
-            {
-                scope.Failed(e);
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// [Protocol Method] Submits a new data generation job for asynchronous execution.
-        /// <list type="bullet">
-        /// <item>
-        /// <description> This <see href="https://aka.ms/azsdk/net/protocol-methods">protocol method</see> allows explicit creation of the request and processing of the response for advanced scenarios. </description>
-        /// </item>
-        /// </list>
-        /// </summary>
-        /// <param name="content"> The content to send as the body of the request. </param>
-        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
-        /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
-        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<ClientResult> CreateGenerationJobAsync(BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
-        {
-            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.CreateGenerationJob");
-            scope.Start();
-            try
-            {
-                using PipelineMessage message = CreateCreateGenerationJobRequest(content, foundryFeatures, operationId, options);
-                return ClientResult.FromResponse(await Pipeline.ProcessMessageAsync(message, options).ConfigureAwait(false));
+                return OperationResultHelpers.ProcessMessage(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted);
             }
             catch (Exception e)
             {
@@ -181,27 +146,53 @@ namespace Azure.AI.Projects
         }
 
         /// <summary> Submits a new data generation job for asynchronous execution. </summary>
-        /// <param name="job"> The job to create. </param>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="content"> The content to send as the body of the request. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
-        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual ClientResult<DataGenerationJob> CreateGenerationJob(DataGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        /// <param name="options"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
+        /// <returns> The response returned from the service. </returns>
+        [Experimental("SCME0006")]
+        internal virtual async Task<OperationResult> CreateGenerationJobAsync(bool waitUntilCompleted, BinaryContent content, string foundryFeatures = default, string operationId = default, RequestOptions options = null)
         {
-            ClientResult result = CreateGenerationJob(job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions());
-            return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
+            using DiagnosticScope scope = ClientDiagnostics.CreateScope("DataGenerationJobs.CreateGenerationJob");
+            scope.Start();
+            try
+            {
+                using PipelineMessage message = CreateCreateGenerationJobRequest(content, foundryFeatures, operationId, options);
+                return await OperationResultHelpers.ProcessMessageAsync(Pipeline, message, options, OperationFinalStateVia.OperationLocation, waitUntilCompleted).ConfigureAwait(false);
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
         }
 
         /// <summary> Submits a new data generation job for asynchronous execution. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
         /// <param name="job"> The job to create. </param>
         /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
         /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
-        /// <exception cref="ClientResultException"> Service returned a non-success status code. </exception>
-        internal virtual async Task<ClientResult<DataGenerationJob>> CreateGenerationJobAsync(DataGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        [Experimental("SCME0006")]
+        internal virtual OperationResult CreateGenerationJob(bool waitUntilCompleted, DataGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
         {
-            ClientResult result = await CreateGenerationJobAsync(job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
-            return ClientResult.FromValue((DataGenerationJob)result, result.GetRawResponse());
+            OperationResult result = CreateGenerationJob(waitUntilCompleted, job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions());
+            return result;
+        }
+
+        /// <summary> Submits a new data generation job for asynchronous execution. </summary>
+        /// <param name="waitUntilCompleted"> Whether the method should wait until the long-running operation has completed on the service. </param>
+        /// <param name="job"> The job to create. </param>
+        /// <param name="foundryFeatures"> A feature flag opt-in required when using preview operations or modifying persisted preview resources. </param>
+        /// <param name="operationId"> Client-generated unique ID for idempotent retries. When absent, the server creates the job unconditionally. </param>
+        /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
+        [Experimental("SCME0006")]
+        internal virtual async Task<OperationResult> CreateGenerationJobAsync(bool waitUntilCompleted, DataGenerationJob job, FoundryFeaturesOptInKeys? foundryFeatures = default, string operationId = default, CancellationToken cancellationToken = default)
+        {
+            OperationResult result = await CreateGenerationJobAsync(waitUntilCompleted, job, foundryFeatures?.ToSerialString(), operationId, cancellationToken.ToRequestOptions()).ConfigureAwait(false);
+            return result;
         }
 
         /// <summary>

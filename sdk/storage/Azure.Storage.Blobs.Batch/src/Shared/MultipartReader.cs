@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 namespace Azure.Core.Http.Multipart
 {
     // https://www.ietf.org/rfc/rfc2046.txt
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
     internal class MultipartReader
     {
         public const int DefaultHeadersCountLimit = 16;

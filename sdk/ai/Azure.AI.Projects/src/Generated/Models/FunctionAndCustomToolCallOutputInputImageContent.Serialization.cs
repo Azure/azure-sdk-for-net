@@ -88,6 +88,11 @@ namespace Azure.AI.Projects
             }
             writer.WritePropertyName("detail"u8);
             writer.WriteStringValue(Detail.ToSerialString());
+            if (Optional.IsDefined(PromptCacheBreakpoint))
+            {
+                writer.WritePropertyName("prompt_cache_breakpoint"u8);
+                writer.WriteObjectValue(PromptCacheBreakpoint, options);
+            }
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -120,6 +125,7 @@ namespace Azure.AI.Projects
             Uri imageUrl = default;
             string fileId = default;
             ImageDetail detail = default;
+            PromptCacheBreakpointConfig promptCacheBreakpoint = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -152,12 +158,27 @@ namespace Azure.AI.Projects
                     detail = prop.Value.GetString().ToImageDetail();
                     continue;
                 }
+                if (prop.NameEquals("prompt_cache_breakpoint"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    promptCacheBreakpoint = PromptCacheBreakpointConfig.DeserializePromptCacheBreakpointConfig(prop.Value, options);
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new FunctionAndCustomToolCallOutputInputImageContent(@type, additionalBinaryDataProperties, imageUrl, fileId, detail);
+            return new FunctionAndCustomToolCallOutputInputImageContent(
+                @type,
+                additionalBinaryDataProperties,
+                imageUrl,
+                fileId,
+                detail,
+                promptCacheBreakpoint);
         }
     }
 }

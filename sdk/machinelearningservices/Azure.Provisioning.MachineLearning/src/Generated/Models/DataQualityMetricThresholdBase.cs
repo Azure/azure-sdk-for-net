@@ -12,15 +12,26 @@ namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// The DataQualityMetricThresholdBase.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="CategoricalDataQualityMetricThreshold"/> and <see cref="NumericalDataQualityMetricThreshold"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="CategoricalDataQualityMetricThreshold"/> and <see cref="NumericalDataQualityMetricThreshold"/>.
     /// </summary>
     public partial class DataQualityMetricThresholdBase : ProvisionableConstruct
     {
+        private BicepValue<MonitoringFeatureDataType> _dataType;
         private MonitoringThreshold _threshold;
 
         /// <summary> Creates a new DataQualityMetricThresholdBase. </summary>
         public DataQualityMetricThresholdBase()
         {
+        }
+
+        /// <summary> [Required] Specifies the data type of the metric threshold. </summary>
+        internal BicepValue<MonitoringFeatureDataType> DataType
+        {
+            get
+            {
+                Initialize();
+                return _dataType;
+            }
         }
 
         /// <summary> Gets or sets the Threshold. </summary>
@@ -59,6 +70,7 @@ namespace Azure.Provisioning.MachineLearning
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _dataType = DefineProperty<MonitoringFeatureDataType>(nameof(DataType), new string[] { "dataType" }, isRequired: true);
             _threshold = DefineModelProperty<MonitoringThreshold>(nameof(Threshold), new string[] { "threshold" });
             DefineAdditionalProperties();
         }

@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WritePropertyName("storageUrl"u8);
                 writer.WriteStringValue(StorageUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Optional.IsDefined(StorageUriExpireOn))
+            if (options.Format != "W" && Optional.IsDefined(StorageUriExpiresOn))
             {
                 writer.WritePropertyName("storageUrlExpiry"u8);
-                writer.WriteStringValue(StorageUriExpireOn.Value, "O");
+                writer.WriteStringValue(StorageUriExpiresOn.Value, "O");
             }
             if (options.Format != "W" && Optional.IsDefined(LastActivatedOn))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Batch.Models
             BatchApplicationPackageState? state = default;
             string format = default;
             Uri storageUri = default;
-            DateTimeOffset? storageUriExpireOn = default;
+            DateTimeOffset? storageUriExpiresOn = default;
             DateTimeOffset? lastActivatedOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    storageUriExpireOn = prop.Value.GetDateTimeOffset("O");
+                    storageUriExpiresOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("lastActivationTime"u8))
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Batch.Models
                 state,
                 format,
                 storageUri,
-                storageUriExpireOn,
+                storageUriExpiresOn,
                 lastActivatedOn,
                 additionalBinaryDataProperties);
         }

@@ -33,7 +33,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="vmSize"> Virtual Machine Size. </param>
         /// <param name="subnet"> Virtual network subnet resource ID the compute nodes belong to. </param>
         /// <param name="applicationSharingPolicy"> Policy for sharing applications on this compute instance among users of parent workspace. If Personal, only the creator can access applications on this compute instance. When Shared, any workspace user can access applications on this instance depending on his/her assigned role. </param>
-        /// <param name="autologgerSettings"> Specifies settings for autologger. </param>
         /// <param name="sshSettings"> Specifies policy and settings for SSH access. </param>
         /// <param name="customServices"> List of Custom Services added to the compute. </param>
         /// <param name="osImageMetadata"> Returns metadata about the operating system image for this compute instance. </param>
@@ -43,10 +42,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="errors"> Collection of errors encountered on this ComputeInstance. </param>
         /// <param name="state"> The current state of this ComputeInstance. </param>
         /// <param name="computeInstanceAuthorizationType"> The Compute Instance Authorization type. Available values are personal (default). </param>
-        /// <param name="enableOSPatching"> Enable Auto OS Patching. Possible values are: true, false. </param>
-        /// <param name="enableRootAccess"> Enable root access. Possible values are: true, false. </param>
         /// <param name="enableSSO"> Enable SSO (single sign on). Possible values are: true, false. </param>
-        /// <param name="shouldReleaseQuotaOnStop"> Release quota if compute instance stopped. Possible values are: true - release quota if compute instance stopped. false - don't release quota when compute instance stopped. </param>
         /// <param name="personalComputeInstanceSettings"> Settings for a personal compute instance. </param>
         /// <param name="setupScriptsSettings"> Details of customized scripts to execute for setting up the cluster. </param>
         /// <param name="lastOperation"> The last operation on ComputeInstance. </param>
@@ -58,12 +54,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="dataMounts"> Describes informations of dataMounts on this ComputeInstance. </param>
         /// <param name="versions"> ComputeInstance version. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal MachineLearningComputeInstanceProperties(string vmSize, ResourceId subnet, MachineLearningApplicationSharingPolicy? applicationSharingPolicy, ComputeInstanceAutologgerSettings autologgerSettings, MachineLearningComputeInstanceSshSettings sshSettings, IList<CustomService> customServices, ImageMetadata osImageMetadata, MachineLearningComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<MachineLearningComputeInstanceApplication> applications, MachineLearningComputeInstanceCreatedBy createdBy, IReadOnlyList<MachineLearningError> errors, MachineLearningComputeInstanceState? state, MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType, bool? enableOSPatching, bool? enableRootAccess, bool? enableSSO, bool? shouldReleaseQuotaOnStop, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScriptsSettings, MachineLearningComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, string idleTimeBeforeShutdown, bool? enableNodePublicIP, IReadOnlyList<MachineLearningComputeInstanceContainer> containers, IReadOnlyList<MachineLearningComputeInstanceDataDisk> dataDisks, IReadOnlyList<MachineLearningComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal MachineLearningComputeInstanceProperties(string vmSize, ResourceId subnet, MachineLearningApplicationSharingPolicy? applicationSharingPolicy, MachineLearningComputeInstanceSshSettings sshSettings, IList<CustomService> customServices, ImageMetadata osImageMetadata, MachineLearningComputeInstanceConnectivityEndpoints connectivityEndpoints, IReadOnlyList<MachineLearningComputeInstanceApplication> applications, MachineLearningComputeInstanceCreatedBy createdBy, IReadOnlyList<MachineLearningError> errors, MachineLearningComputeInstanceState? state, MachineLearningComputeInstanceAuthorizationType? computeInstanceAuthorizationType, bool? enableSSO, PersonalComputeInstanceSettings personalComputeInstanceSettings, SetupScripts setupScriptsSettings, MachineLearningComputeInstanceLastOperation lastOperation, ComputeSchedules schedules, string idleTimeBeforeShutdown, bool? enableNodePublicIP, IReadOnlyList<MachineLearningComputeInstanceContainer> containers, IReadOnlyList<MachineLearningComputeInstanceDataDisk> dataDisks, IReadOnlyList<MachineLearningComputeInstanceDataMount> dataMounts, ComputeInstanceVersion versions, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             VmSize = vmSize;
             Subnet = subnet;
             ApplicationSharingPolicy = applicationSharingPolicy;
-            AutologgerSettings = autologgerSettings;
             SshSettings = sshSettings;
             CustomServices = customServices;
             OSImageMetadata = osImageMetadata;
@@ -73,10 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             Errors = errors;
             State = state;
             ComputeInstanceAuthorizationType = computeInstanceAuthorizationType;
-            EnableOSPatching = enableOSPatching;
-            EnableRootAccess = enableRootAccess;
             EnableSSO = enableSSO;
-            ShouldReleaseQuotaOnStop = shouldReleaseQuotaOnStop;
             PersonalComputeInstanceSettings = personalComputeInstanceSettings;
             SetupScriptsSettings = setupScriptsSettings;
             LastOperation = lastOperation;
@@ -101,10 +93,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <summary> Policy for sharing applications on this compute instance among users of parent workspace. If Personal, only the creator can access applications on this compute instance. When Shared, any workspace user can access applications on this instance depending on his/her assigned role. </summary>
         [WirePath("applicationSharingPolicy")]
         public MachineLearningApplicationSharingPolicy? ApplicationSharingPolicy { get; set; }
-
-        /// <summary> Specifies settings for autologger. </summary>
-        [WirePath("autologgerSettings")]
-        internal ComputeInstanceAutologgerSettings AutologgerSettings { get; set; }
 
         /// <summary> Specifies policy and settings for SSH access. </summary>
         [WirePath("sshSettings")]
@@ -138,21 +126,9 @@ namespace Azure.ResourceManager.MachineLearning.Models
         [WirePath("computeInstanceAuthorizationType")]
         public MachineLearningComputeInstanceAuthorizationType? ComputeInstanceAuthorizationType { get; set; }
 
-        /// <summary> Enable Auto OS Patching. Possible values are: true, false. </summary>
-        [WirePath("enableOSPatching")]
-        public bool? EnableOSPatching { get; set; }
-
-        /// <summary> Enable root access. Possible values are: true, false. </summary>
-        [WirePath("enableRootAccess")]
-        public bool? EnableRootAccess { get; set; }
-
         /// <summary> Enable SSO (single sign on). Possible values are: true, false. </summary>
         [WirePath("enableSSO")]
         public bool? EnableSSO { get; set; }
-
-        /// <summary> Release quota if compute instance stopped. Possible values are: true - release quota if compute instance stopped. false - don't release quota when compute instance stopped. </summary>
-        [WirePath("releaseQuotaOnStop")]
-        public bool? ShouldReleaseQuotaOnStop { get; set; }
 
         /// <summary> Settings for a personal compute instance. </summary>
         [WirePath("personalComputeInstanceSettings")]
@@ -205,24 +181,6 @@ namespace Azure.ResourceManager.MachineLearning.Models
             set
             {
                 Subnet = new ResourceId(value);
-            }
-        }
-
-        /// <summary> Indicates whether mlflow autologger is enabled for notebooks. </summary>
-        [WirePath("autologgerSettings.mlflowAutologger")]
-        public MlflowAutologger? MlflowAutologger
-        {
-            get
-            {
-                return AutologgerSettings is null ? default : AutologgerSettings.MlflowAutologger;
-            }
-            set
-            {
-                if (AutologgerSettings is null)
-                {
-                    AutologgerSettings = new ComputeInstanceAutologgerSettings();
-                }
-                AutologgerSettings.MlflowAutologger = value;
             }
         }
 

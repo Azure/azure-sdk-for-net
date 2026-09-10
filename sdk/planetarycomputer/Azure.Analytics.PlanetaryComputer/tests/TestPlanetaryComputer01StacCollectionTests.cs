@@ -61,7 +61,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Verify first collection has required STAC properties
             if (collectionCount > 0)
             {
-                StacCollectionResource firstCollection = collections.Collections[0];
+                StacCollection firstCollection = collections.Collections[0];
 
                 Assert.That(firstCollection.Id, Is.Not.Null, "Collection should have 'id' property");
                 string collectionId = firstCollection.Id;
@@ -70,7 +70,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
                 TestContext.WriteLine($"First collection ID: {collectionId}");
 
                 // Verify other STAC collection properties
-                Assert.That(firstCollection.Type, Is.Not.Null, "Collection should have 'type' property");
+                Assert.That(firstCollection.Kind, Is.Not.Null, "Collection should have 'type' property");
                 Assert.That(firstCollection.Links, Is.Not.Null, "Collection should have 'links' property");
                 Assert.That(firstCollection.StacVersion, Is.Not.Null, "Collection should have 'stac_version' property");
 
@@ -102,13 +102,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Testing GetCollection for collection: {collectionId}");
 
             // Act
-            Response<StacCollectionResource> response = await stacClient.GetCollectionAsync(collectionId);
+            Response<StacCollection> response = await stacClient.GetCollectionAsync(collectionId);
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetCollection");
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
-            StacCollectionResource collection = response.Value;
+            StacCollection collection = response.Value;
             Assert.That(collection, Is.Not.Null, "Collection should not be null");
 
             // Verify collection ID matches
@@ -117,8 +117,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             Assert.That(returnedId, Is.EqualTo(collectionId), "Returned collection ID should match requested ID");
 
             // Verify STAC collection required properties
-            Assert.That(collection.Type, Is.Not.Null, "Collection should have 'type' property");
-            Assert.That(collection.Type, Is.EqualTo("Collection"), "Type should be 'Collection'");
+            Assert.That(collection.Kind, Is.Not.Null, "Collection should have 'type' property");
+            Assert.That(collection.Kind, Is.EqualTo("Collection"), "Type should be 'Collection'");
 
             Assert.That(collection.StacVersion, Is.Not.Null, "Collection should have 'stac_version' property");
             ValidateNotNullOrEmpty(collection.StacVersion, "stac_version");
@@ -152,7 +152,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
         /// <summary>
         /// Test getting STAC conformance classes.
         /// Python equivalent: test_02_get_conformance_class
-        /// C# method: GetConformanceClass()
+        /// C# method: GetConformanceClasses()
         /// </summary>
         [Test]
         [Category("STAC")]
@@ -163,13 +163,13 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             PlanetaryComputerProClient client = GetTestClient();
             StacClient stacClient = client.GetStacClient();
 
-            TestContext.WriteLine("Testing GetConformanceClass");
+            TestContext.WriteLine("Testing GetConformanceClasses");
 
             // Act
-            Response<StacConformanceClasses> response = await stacClient.GetConformanceClassAsync();
+            Response<StacConformanceClasses> response = await stacClient.GetConformanceClassesAsync();
 
             // Assert
-            ValidateResponse(response.GetRawResponse(), "GetConformanceClass");
+            ValidateResponse(response.GetRawResponse(), "GetConformanceClasses");
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
             StacConformanceClasses conformance = response.Value;
@@ -207,14 +207,14 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Testing GetPartitionType for collection: {collectionId}");
 
             // Act
-            Response<PartitionType> response = await stacClient.GetPartitionTypeAsync(collectionId);
+            Response<PartitionKind> response = await stacClient.GetPartitionTypeAsync(collectionId);
 
             // Assert
             ValidateResponse(response.GetRawResponse(), "GetPartitionType");
             Assert.That(response.GetRawResponse().Status, Is.EqualTo(200), "Expected successful response");
 
-            PartitionType partitionType = response.Value;
-            Assert.That(partitionType, Is.Not.Null, "PartitionType should not be null");
+            PartitionKind partitionType = response.Value;
+            Assert.That(partitionType, Is.Not.Null, "PartitionKind should not be null");
             Assert.That(partitionType.Scheme, Is.Not.Null, "Partition scheme should not be null");
 
             TestContext.WriteLine($"Partition scheme: {partitionType.Scheme}");
@@ -492,8 +492,8 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             TestContext.WriteLine($"Testing GetCollectionThumbnail for collection: {collectionId}");
 
             // First check if collection has thumbnail asset
-            Response<StacCollectionResource> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
-            StacCollectionResource collection = collectionResponse.Value;
+            Response<StacCollection> collectionResponse = await stacClient.GetCollectionAsync(collectionId);
+            StacCollection collection = collectionResponse.Value;
 
             if (collection.Assets == null || !collection.Assets.ContainsKey("thumbnail"))
             {
@@ -503,7 +503,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             }
 
             // Act - Get thumbnail as streaming response
-            Response response = await stacClient.GetCollectionThumbnailAsync(collectionId, new RequestContext());
+            Response response = await stacClient.GetCollectionThumbnailAsync(new GetCollectionThumbnailOptions(collectionId), new RequestContext());
 
             // Assert
             ValidateResponse(response, "GetCollectionThumbnail");
@@ -577,7 +577,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Create render option
             var renderOption = new RenderConfiguration("test-natural-color", "Test Natural color")
             {
-                Type = RenderOptionType.RasterTile,
+                Kind = RenderOptionKind.RasterTile,
                 Options = "assets=image&asset_bidx=image|1,2,3",
                 MinZoom = 6
             };
@@ -651,7 +651,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             var renderOption = new RenderConfiguration("test-natural-color", "Test Natural color updated")
             {
                 Description = "RGB from visual assets - updated",
-                Type = RenderOptionType.RasterTile,
+                Kind = RenderOptionKind.RasterTile,
                 Options = "assets=image&asset_bidx=image|1,2,3",
                 MinZoom = 6
             };
@@ -692,7 +692,7 @@ namespace Azure.Analytics.PlanetaryComputer.Tests
             // Create a render option to be deleted
             var renderOption = new RenderConfiguration("test-render-opt-delete", "Test Render Option To Be Deleted")
             {
-                Type = RenderOptionType.RasterTile,
+                Kind = RenderOptionKind.RasterTile,
                 Options = "assets=image&asset_bidx=image|1,2,3",
                 MinZoom = 6
             };

@@ -98,84 +98,6 @@ namespace Azure.Provisioning.FrontDoor
             }
         }
 
-        /// <summary> Gets the ResourceState. </summary>
-        public BicepValue<FrontDoorResourceState> ResourceState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new FrontDoorProperties();
-                }
-                return Properties.ResourceState;
-            }
-        }
-
-        /// <summary> Gets the ProvisioningState. </summary>
-        public BicepValue<string> ProvisioningState
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new FrontDoorProperties();
-                }
-                return Properties.ProvisioningState;
-            }
-        }
-
-        /// <summary> Gets the Cname. </summary>
-        public BicepValue<string> Cname
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new FrontDoorProperties();
-                }
-                return Properties.Cname;
-            }
-        }
-
-        /// <summary> Gets the FrontdoorId. </summary>
-        public BicepValue<string> FrontdoorId
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new FrontDoorProperties();
-                }
-                return Properties.FrontdoorId;
-            }
-        }
-
-        /// <summary> Gets the RulesEngines. </summary>
-        public BicepList<FrontDoorRulesEngine> RulesEngines
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new FrontDoorProperties();
-                }
-                return Properties.RulesEngines;
-            }
-        }
-
-        /// <summary> Gets the ExtendedProperties. </summary>
-        public BicepDictionary<string> ExtendedProperties
-        {
-            get
-            {
-                if (Properties is null)
-                {
-                    Properties = new FrontDoorProperties();
-                }
-                return Properties.ExtendedProperties;
-            }
-        }
-
         /// <summary> Gets or sets the FriendlyName. </summary>
         public BicepValue<string> FriendlyName
         {
@@ -309,6 +231,84 @@ namespace Azure.Provisioning.FrontDoor
                     Properties = new FrontDoorProperties();
                 }
                 Properties.EnabledState = value;
+            }
+        }
+
+        /// <summary> Gets the ResourceState. </summary>
+        public BicepValue<FrontDoorResourceState> ResourceState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorProperties();
+                }
+                return Properties.ResourceState;
+            }
+        }
+
+        /// <summary> Gets the ProvisioningState. </summary>
+        public BicepValue<string> ProvisioningState
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorProperties();
+                }
+                return Properties.ProvisioningState;
+            }
+        }
+
+        /// <summary> Gets the Cname. </summary>
+        public BicepValue<string> Cname
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorProperties();
+                }
+                return Properties.Cname;
+            }
+        }
+
+        /// <summary> Gets the FrontdoorId. </summary>
+        public BicepValue<string> FrontdoorId
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorProperties();
+                }
+                return Properties.FrontdoorId;
+            }
+        }
+
+        /// <summary> Gets the RulesEngines. </summary>
+        public BicepList<FrontDoorRulesEngine> RulesEngines
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorProperties();
+                }
+                return Properties.RulesEngines;
+            }
+        }
+
+        /// <summary> Gets the ExtendedProperties. </summary>
+        public BicepDictionary<string> ExtendedProperties
+        {
+            get
+            {
+                if (Properties is null)
+                {
+                    Properties = new FrontDoorProperties();
+                }
+                return Properties.ExtendedProperties;
             }
         }
 

@@ -88,7 +88,7 @@ namespace Azure.Analytics.PlanetaryComputer
             }
             writer.WritePropertyName("value"u8);
             writer.WriteStartArray();
-            foreach (LongRunningOperation item in Value)
+            foreach (PlanetaryComputerOperation item in Value)
             {
                 writer.WriteObjectValue(item, options);
             }
@@ -140,17 +140,17 @@ namespace Azure.Analytics.PlanetaryComputer
             {
                 return null;
             }
-            IList<LongRunningOperation> value = default;
+            IList<PlanetaryComputerOperation> value = default;
             Uri nextLink = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("value"u8))
                 {
-                    List<LongRunningOperation> array = new List<LongRunningOperation>();
+                    List<PlanetaryComputerOperation> array = new List<PlanetaryComputerOperation>();
                     foreach (var item in prop.Value.EnumerateArray())
                     {
-                        array.Add(LongRunningOperation.DeserializeLongRunningOperation(item, options));
+                        array.Add(PlanetaryComputerOperation.DeserializePlanetaryComputerOperation(item, options));
                     }
                     value = array;
                     continue;

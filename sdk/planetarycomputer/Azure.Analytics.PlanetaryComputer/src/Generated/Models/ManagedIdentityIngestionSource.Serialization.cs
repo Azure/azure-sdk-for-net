@@ -109,8 +109,8 @@ namespace Azure.Analytics.PlanetaryComputer
                 return null;
             }
             Guid id = default;
-            DateTimeOffset? created = default;
-            IngestionSourceType kind = default;
+            DateTimeOffset? createdOn = default;
+            IngestionSourceKind kind = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             ManagedIdentityConnection connectionInfo = default;
             foreach (var prop in element.EnumerateObject())
@@ -126,12 +126,12 @@ namespace Azure.Analytics.PlanetaryComputer
                     {
                         continue;
                     }
-                    created = prop.Value.GetDateTimeOffset("O");
+                    createdOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("kind"u8))
                 {
-                    kind = new IngestionSourceType(prop.Value.GetString());
+                    kind = new IngestionSourceKind(prop.Value.GetString());
                     continue;
                 }
                 if (prop.NameEquals("connectionInfo"u8))
@@ -144,7 +144,7 @@ namespace Azure.Analytics.PlanetaryComputer
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
                 }
             }
-            return new ManagedIdentityIngestionSource(id, created, kind, additionalBinaryDataProperties, connectionInfo);
+            return new ManagedIdentityIngestionSource(id, createdOn, kind, additionalBinaryDataProperties, connectionInfo);
         }
     }
 }

@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             IList<BinaryData> annotations = default;
             DatasetFolder folder = default;
             IDictionary<string, BinaryData> additionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
-            MongoDbCollectionDatasetTypeProperties typeProperties = default;
+            MongoDBCollectionDatasetTypeProperties typeProperties = default;
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("type"u8))
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 }
                 if (prop.NameEquals("typeProperties"u8))
                 {
-                    typeProperties = MongoDbCollectionDatasetTypeProperties.DeserializeMongoDbCollectionDatasetTypeProperties(prop.Value, options);
+                    typeProperties = MongoDBCollectionDatasetTypeProperties.DeserializeMongoDBCollectionDatasetTypeProperties(prop.Value, options);
                     continue;
                 }
                 additionalProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));

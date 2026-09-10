@@ -201,3 +201,29 @@ Or in your project file:
   <NoWarn>$(NoWarn);SCME0005</NoWarn>
 </PropertyGroup>
 ```
+
+## SCME0006 - Long-Running Operation Methods
+
+### Description
+
+System.ClientModel long-running operation methods are experimental while the API shape for starting, polling, and rehydrating operations is finalized.
+
+### Affected APIs
+
+- Generated client methods that return `System.ClientModel.Primitives.OperationResult`
+
+### Suppression
+
+If you want to use these experimental APIs and accept the risk that they may change, you can suppress the warning:
+
+```csharp
+#pragma warning disable SCME0006 // API is for evaluation purposes only and is subject to change or removal in future updates.
+```
+
+Or in your project file:
+
+```xml
+<PropertyGroup>
+  <NoWarn>$(NoWarn);SCME0006</NoWarn>
+</PropertyGroup>
+```

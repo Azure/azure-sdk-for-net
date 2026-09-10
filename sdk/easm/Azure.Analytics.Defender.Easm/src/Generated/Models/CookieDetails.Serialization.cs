@@ -103,10 +103,10 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WritePropertyName("recent"u8);
                 writer.WriteBooleanValue(Recent.Value);
             }
-            if (Optional.IsDefined(CookieExpiryDate))
+            if (Optional.IsDefined(CookieExpiryOn))
             {
                 writer.WritePropertyName("cookieExpiryDate"u8);
-                writer.WriteStringValue(CookieExpiryDate.Value, "O");
+                writer.WriteStringValue(CookieExpiryOn.Value, "O");
             }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
@@ -156,7 +156,7 @@ namespace Azure.Analytics.Defender.Easm
             DateTimeOffset? lastSeen = default;
             long? count = default;
             bool? recent = default;
-            DateTimeOffset? cookieExpiryDate = default;
+            DateTimeOffset? cookieExpiryOn = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -212,7 +212,7 @@ namespace Azure.Analytics.Defender.Easm
                     {
                         continue;
                     }
-                    cookieExpiryDate = prop.Value.GetDateTimeOffset("O");
+                    cookieExpiryOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (options.Format != "W")
@@ -227,7 +227,7 @@ namespace Azure.Analytics.Defender.Easm
                 lastSeen,
                 count,
                 recent,
-                cookieExpiryDate,
+                cookieExpiryOn,
                 additionalBinaryDataProperties);
         }
     }

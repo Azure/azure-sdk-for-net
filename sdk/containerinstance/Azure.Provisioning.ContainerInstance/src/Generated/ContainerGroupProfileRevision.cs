@@ -469,7 +469,7 @@ namespace Azure.Provisioning.ContainerInstance
             _location = DefineProperty<AzureLocation>(nameof(Location), new string[] { "location" }, isRequired: true);
             _properties = DefineModelProperty<ContainerGroupProfileProperties>(nameof(Properties), new string[] { "properties" });
             _zones = DefineListProperty<string>(nameof(Zones), new string[] { "zones" });
-            _parent = DefineResource<ContainerGroupProfile>("Parent", new string[] { "parent" }, isRequired: true);
+            _parent = DefineResource<ContainerGroupProfile>(nameof(Parent), new string[] { "parent" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

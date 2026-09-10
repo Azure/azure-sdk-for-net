@@ -130,6 +130,11 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 writer.WritePropertyName("freshnessPolicy"u8);
                 writer.WriteObjectValue(FreshnessPolicy, options);
             }
+            if (Optional.IsDefined(NetworkAccessMode))
+            {
+                writer.WritePropertyName("networkAccessMode"u8);
+                writer.WriteStringValue(NetworkAccessMode.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -182,6 +187,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
             AIServices aiServices = default;
             AssetStore assetStore = default;
             FreshnessPolicy freshnessPolicy = default;
+            KnowledgeSourceNetworkAccessMode? networkAccessMode = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -286,6 +292,15 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                     freshnessPolicy = FreshnessPolicy.DeserializeFreshnessPolicy(prop.Value, options);
                     continue;
                 }
+                if (prop.NameEquals("networkAccessMode"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    networkAccessMode = new KnowledgeSourceNetworkAccessMode(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -302,6 +317,7 @@ namespace Azure.Search.Documents.KnowledgeBases.Models
                 aiServices,
                 assetStore,
                 freshnessPolicy,
+                networkAccessMode,
                 additionalBinaryDataProperties);
         }
     }

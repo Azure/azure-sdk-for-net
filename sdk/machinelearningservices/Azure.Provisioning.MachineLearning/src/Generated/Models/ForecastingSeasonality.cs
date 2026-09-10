@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Forecasting seasonality.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="AutoSeasonality"/> and <see cref="CustomSeasonality"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="AutoSeasonality"/> and <see cref="CustomSeasonality"/>.
     /// </summary>
     public partial class ForecastingSeasonality : ProvisionableConstruct
     {
+        private BicepValue<SeasonalityMode> _mode;
+
         /// <summary> Creates a new ForecastingSeasonality. </summary>
         public ForecastingSeasonality()
         {
+        }
+
+        /// <summary> [Required] Seasonality mode. </summary>
+        internal BicepValue<SeasonalityMode> Mode
+        {
+            get
+            {
+                Initialize();
+                return _mode;
+            }
         }
 
         /// <summary> Define all the provisionable properties for ForecastingSeasonality. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _mode = DefineProperty<SeasonalityMode>(nameof(Mode), new string[] { "mode" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

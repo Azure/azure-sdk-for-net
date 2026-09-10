@@ -1,8 +1,8 @@
 # State store guide
 
-`FoundryStateStore` is a durable, server-backed store for agent state. Each store holds items — keyed JSON values — that you read, write, and list by key. Use it to persist checkpoints, conversation state, counters, or any small state your agent needs to survive across requests and restarts.
+`FoundryStateStore` is a durable store for agent state. Each store holds items — keyed JSON values — that you read, write, and list by key. Use it to persist checkpoints, conversation state, counters, or any small state your agent needs to survive across requests and restarts.
 
-> **Note:** State store operations require a Foundry storage endpoint and a token credential. When running as a hosted agent in Azure AI Foundry, the endpoint is resolved from the `FOUNDRY_PROJECT_ENDPOINT` environment variable and the credential is typically a managed identity.
+> **Note:** Outside Foundry hosting, State Store always uses a local JSON file under `${AGENTSERVER_STATE_ROOT:-~/.agentserver}/state_stores`, even when an endpoint is supplied. In Foundry hosting, the endpoint is resolved from `FOUNDRY_PROJECT_ENDPOINT` and a token credential is required.
 
 ## Prerequisites
 
@@ -16,7 +16,7 @@ dotnet add package Azure.Identity
 A `FoundryStateStore` is **bound to one caller-chosen store name**. That store name is the main scoping tool for your data:
 
 - Use one store per conversation or thread when you need conversation isolation — encode the identity into the name, for example `checkpoints/thread-abc`.
-- Set `userIsolation: true` when the store name is shared across many users and the platform should partition items per user.
+- In Foundry hosting, set `userIsolation: true` when the store name is shared across many users and the platform should partition items per user. The local fallback does not support user isolation.
 - Set `itemTtlSeconds` once at store creation when you want idle items to age out automatically.
 
 ## Getting started
@@ -28,12 +28,11 @@ TokenCredential credential = new DefaultAzureCredential();
 
 // GetOrCreateAsync fetches the store, or creates it if it does not exist,
 // in a single call — so you can read and write items right away.
-// When endpoint is null it is resolved from the FOUNDRY_PROJECT_ENDPOINT
-// environment variable.
+// Outside Foundry hosting, the local file-backed fallback is always used.
+// In Foundry hosting, endpoint is resolved from FOUNDRY_PROJECT_ENDPOINT.
 FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
     "checkpoints/thread-abc",
     credential,
-    userIsolation: true,
     itemTtlSeconds: 3600,
     description: "Checkpoint store for thread abc");
 
@@ -48,6 +47,20 @@ if (item is not null)
     Console.WriteLine($"{item.Key}: done={done}, etag={item.Etag}");
 }
 ```
+
+## Local development fallback
+
+When `FOUNDRY_HOSTING_ENVIRONMENT` is unset, `GetOrCreateAsync` always uses a
+local file-backed store. Endpoint and credential arguments are ignored:
+
+```csharp
+FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
+    "checkpoints/thread-abc");
+```
+
+Set `AGENTSERVER_STATE_ROOT` to override the default `~/.agentserver` root. Local
+mode preserves the hosted API's item CRUD, tags, TTL, paging, conflicts, and ETag
+preconditions so the same application code runs locally and in Foundry.
 
 ## Typed models
 
@@ -107,7 +120,7 @@ Key points:
 
 ## User isolation and delegated user IDs
 
-Set `userIsolation: true` when the same store name should fan out per user:
+User isolation is available in Foundry hosting only. Set `userIsolation: true` when the same hosted store name should fan out per user:
 
 ```csharp
 FoundryStateStore store = await FoundryStateStore.GetOrCreateAsync(
@@ -153,6 +166,40 @@ if (item is not null)
 DeletedStateStoreItem deleted = await store.DeleteItemAsync("step-1");
 Console.WriteLine(deleted.Deleted);
 ```
+
+## Recovered task execution and call IDs
+
+Item methods accept an optional `callId`. When omitted, the client reads
+`FoundryAgentRequestContext.Current.CallId`. Include the inbound call ID in durable
+task input using the canonical JSON property `call_id`; the task engine restores it
+for every fresh, retried, steered, or recovered handler attempt. Pass it explicitly
+only when a specific storage operation must override the ambient value:
+
+```C# Snippet:Core_Sample3_RecoveredExecution
+// Resilient task inputs should persist the inbound call ID as "call_id".
+// The task engine restores it for each handler attempt. An explicit callId
+// can also be used to override the ambient value for a specific operation.
+StateStoreItem? checkpoint = await store.GetItemAsync(
+    "state",
+    callId: persistedCallId);
+
+await store.SetItemAsync(
+    "state",
+    new Dictionary<string, BinaryData>
+    {
+        ["phase"] = BinaryData.FromObjectAsJson("complete"),
+    },
+    tags: null,
+    ifMatch: null,
+    requireExists: false,
+    callId: persistedCallId);
+```
+
+An explicit `callId` overrides the ambient value. This parameter is available on
+`CreateItemAsync`, `SetItemAsync`, `GetItemAsync`, `DeleteItemAsync`, and
+`ListKeysAsync`; store lifecycle operations remain store-scoped. The overloads retain
+the original parameter order for source and binary compatibility, so explicit
+create/set/list calls also provide their preceding optional arguments.
 
 ## Values, tags, and TTL
 

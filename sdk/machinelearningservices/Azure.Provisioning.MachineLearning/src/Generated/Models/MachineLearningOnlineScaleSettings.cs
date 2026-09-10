@@ -5,25 +5,39 @@
 
 #nullable disable
 
+using Azure.Provisioning;
 using Azure.Provisioning.Primitives;
 
 namespace Azure.Provisioning.MachineLearning
 {
     /// <summary>
     /// Online deployment scaling configuration.
-    /// Please note this is the abstract base class. The derived classes available for instantiation are: <see cref="MachineLearningDefaultScaleSettings"/> and <see cref="MachineLearningTargetUtilizationScaleSettings"/>.
+    /// Please note this is the base class. The derived classes available for instantiation are: <see cref="MachineLearningDefaultScaleSettings"/> and <see cref="MachineLearningTargetUtilizationScaleSettings"/>.
     /// </summary>
     public partial class MachineLearningOnlineScaleSettings : ProvisionableConstruct
     {
+        private BicepValue<ScaleType> _scaleType;
+
         /// <summary> Creates a new MachineLearningOnlineScaleSettings. </summary>
         public MachineLearningOnlineScaleSettings()
         {
+        }
+
+        /// <summary> [Required] Type of deployment scaling algorithm. </summary>
+        internal BicepValue<ScaleType> ScaleType
+        {
+            get
+            {
+                Initialize();
+                return _scaleType;
+            }
         }
 
         /// <summary> Define all the provisionable properties for MachineLearningOnlineScaleSettings. </summary>
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
+            _scaleType = DefineProperty<ScaleType>(nameof(ScaleType), new string[] { "scaleType" }, isRequired: true);
             DefineAdditionalProperties();
         }
 

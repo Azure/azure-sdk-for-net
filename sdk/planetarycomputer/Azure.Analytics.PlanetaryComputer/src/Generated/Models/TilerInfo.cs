@@ -20,25 +20,25 @@ namespace Azure.Analytics.PlanetaryComputer
 
         /// <summary> Initializes a new instance of <see cref="TilerInfo"/>. </summary>
         /// <param name="bounds"> Bounds. </param>
-        /// <param name="dtype"> Data type. </param>
-        internal TilerInfo(IEnumerable<float> bounds, string dtype)
+        /// <param name="dataType"> Data type. </param>
+        internal TilerInfo(IEnumerable<float> bounds, string dataType)
         {
             Bounds = bounds.ToList();
             BandMetadata = new ChangeTrackingList<IList<BinaryData>>();
             BandDescriptions = new ChangeTrackingList<IList<string>>();
-            Dtype = dtype;
+            DataType = dataType;
             ColorInterpretation = new ChangeTrackingList<string>();
             Overviews = new ChangeTrackingList<int>();
             Scales = new ChangeTrackingList<int>();
             Offsets = new ChangeTrackingList<int>();
-            Colormap = new ChangeTrackingDictionary<string, IList<string>>();
+            ColorMap = new ChangeTrackingDictionary<string, IList<string>>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TilerInfo"/>. </summary>
         /// <param name="bounds"> Bounds. </param>
         /// <param name="bandMetadata"> Band Metadata. </param>
         /// <param name="bandDescriptions"> Band Descriptions. </param>
-        /// <param name="dtype"> Data type. </param>
+        /// <param name="dataType"> Data type. </param>
         /// <param name="noDataType"> NoData Type. </param>
         /// <param name="colorInterpretation"> Color interpretation. </param>
         /// <param name="driver"> Driver. </param>
@@ -48,17 +48,17 @@ namespace Azure.Analytics.PlanetaryComputer
         /// <param name="overviews"> Overviews. </param>
         /// <param name="scales"> Scales. </param>
         /// <param name="offsets"> Offsets. </param>
-        /// <param name="colormap"> Colormap. </param>
+        /// <param name="colorMap"> Colormap. </param>
         /// <param name="minZoom"> Minzoom. </param>
         /// <param name="maxZoom"> Maxzoom. </param>
         /// <param name="coordinateReferenceSystem"> Coordinate Reference System. </param>
         /// <param name="additionalBinaryDataProperties"> Keeps track of any properties unknown to the library. </param>
-        internal TilerInfo(IList<float> bounds, IList<IList<BinaryData>> bandMetadata, IList<IList<string>> bandDescriptions, string dtype, NoDataType? noDataType, IList<string> colorInterpretation, string driver, int? count, int? width, int? height, IList<int> overviews, IList<int> scales, IList<int> offsets, IDictionary<string, IList<string>> colormap, int? minZoom, int? maxZoom, string coordinateReferenceSystem, IDictionary<string, BinaryData> additionalBinaryDataProperties)
+        internal TilerInfo(IList<float> bounds, IList<IList<BinaryData>> bandMetadata, IList<IList<string>> bandDescriptions, string dataType, NoDataKind? noDataType, IList<string> colorInterpretation, string driver, int? count, int? width, int? height, IList<int> overviews, IList<int> scales, IList<int> offsets, IDictionary<string, IList<string>> colorMap, int? minZoom, int? maxZoom, string coordinateReferenceSystem, IDictionary<string, BinaryData> additionalBinaryDataProperties)
         {
             Bounds = bounds;
             BandMetadata = bandMetadata;
             BandDescriptions = bandDescriptions;
-            Dtype = dtype;
+            DataType = dataType;
             NoDataType = noDataType;
             ColorInterpretation = colorInterpretation;
             Driver = driver;
@@ -68,7 +68,7 @@ namespace Azure.Analytics.PlanetaryComputer
             Overviews = overviews;
             Scales = scales;
             Offsets = offsets;
-            Colormap = colormap;
+            ColorMap = colorMap;
             MinZoom = minZoom;
             MaxZoom = maxZoom;
             CoordinateReferenceSystem = coordinateReferenceSystem;
@@ -123,10 +123,10 @@ namespace Azure.Analytics.PlanetaryComputer
         public IList<IList<string>> BandDescriptions { get; }
 
         /// <summary> Data type. </summary>
-        public string Dtype { get; }
+        public string DataType { get; }
 
         /// <summary> NoData Type. </summary>
-        public NoDataType? NoDataType { get; }
+        public NoDataKind? NoDataType { get; }
 
         /// <summary> Color interpretation. </summary>
         public IList<string> ColorInterpretation { get; }
@@ -153,7 +153,7 @@ namespace Azure.Analytics.PlanetaryComputer
         public IList<int> Offsets { get; }
 
         /// <summary> Colormap. </summary>
-        public IDictionary<string, IList<string>> Colormap { get; }
+        public IDictionary<string, IList<string>> ColorMap { get; }
 
         /// <summary> Minzoom. </summary>
         public int? MinZoom { get; }

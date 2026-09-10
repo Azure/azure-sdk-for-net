@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
 
         private ClientDiagnostics VirtualMachineBulkOperationsClientDiagnostics => _virtualMachineBulkOperationsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.Compute.BulkActions.Mocking", ProviderConstants.DefaultProviderNamespace, Diagnostics);
 
-        private VirtualMachineBulkOperations VirtualMachineBulkOperationsRestClient => _virtualMachineBulkOperationsRestClient ??= new VirtualMachineBulkOperations(VirtualMachineBulkOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-07-06-preview");
+        private VirtualMachineBulkOperations VirtualMachineBulkOperationsRestClient => _virtualMachineBulkOperationsRestClient ??= new VirtualMachineBulkOperations(VirtualMachineBulkOperationsClientDiagnostics, Pipeline, Diagnostics.ApplicationId, Endpoint, "2026-08-06-preview");
 
         /// <summary> Gets a collection of LocationBasedLaunchBulkInstancesOperations in the <see cref="ResourceGroupResource"/>. </summary>
         /// <param name="location"> The location for the resource. </param>
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -597,7 +597,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -646,7 +646,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -695,7 +695,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -744,7 +744,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -793,7 +793,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -891,7 +891,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -940,7 +940,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -989,7 +989,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1038,7 +1038,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1087,7 +1087,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1136,7 +1136,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1173,7 +1173,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1210,7 +1210,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>
@@ -1259,7 +1259,7 @@ namespace Azure.ResourceManager.Compute.BulkActions.Mocking
         /// </item>
         /// <item>
         /// <term> Default Api Version. </term>
-        /// <description> 2026-07-06-preview. </description>
+        /// <description> 2026-08-06-preview. </description>
         /// </item>
         /// </list>
         /// </summary>

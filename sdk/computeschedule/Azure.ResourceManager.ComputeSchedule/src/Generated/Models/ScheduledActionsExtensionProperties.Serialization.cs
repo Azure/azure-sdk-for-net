@@ -84,11 +84,11 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
             writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartOn, "O");
-            if (Optional.IsDefined(EndOn))
+            writer.WriteStringValue(StartsOn, "O");
+            if (Optional.IsDefined(EndsOn))
             {
                 writer.WritePropertyName("endTime"u8);
-                writer.WriteStringValue(EndOn.Value, "O");
+                writer.WriteStringValue(EndsOn.Value, "O");
             }
             writer.WritePropertyName("schedule"u8);
             writer.WriteObjectValue(Schedule, options);
@@ -163,8 +163,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             }
             ScheduledActionResourceType resourceType = default;
             ScheduledActionType actionType = default;
-            DateTimeOffset startOn = default;
-            DateTimeOffset? endOn = default;
+            DateTimeOffset startsOn = default;
+            DateTimeOffset? endsOn = default;
             ScheduledActionsSchedule schedule = default;
             IList<NotificationSettings> notificationSettings = default;
             bool? disabled = default;
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                 }
                 if (prop.NameEquals("startTime"u8))
                 {
-                    startOn = prop.Value.GetDateTimeOffset("O");
+                    startsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("endTime"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
                     {
                         continue;
                     }
-                    endOn = prop.Value.GetDateTimeOffset("O");
+                    endsOn = prop.Value.GetDateTimeOffset("O");
                     continue;
                 }
                 if (prop.NameEquals("schedule"u8))
@@ -252,8 +252,8 @@ namespace Azure.ResourceManager.ComputeSchedule.Models
             return new ScheduledActionsExtensionProperties(
                 resourceType,
                 actionType,
-                startOn,
-                endOn,
+                startsOn,
+                endsOn,
                 schedule,
                 notificationSettings,
                 disabled,

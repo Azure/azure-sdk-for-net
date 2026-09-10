@@ -7,12 +7,14 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Azure.Generator.MgmtTypeSpec.Tests;
 
 namespace Azure.Generator.MgmtTypeSpec.Tests.Models
 {
+    [JsonConverter(typeof(MultiFlattenPropertiesConverter))]
     internal partial class MultiFlattenProperties : IJsonModel<MultiFlattenProperties>
     {
         /// <summary> Initializes a new instance of <see cref="MultiFlattenProperties"/> for deserialization. </summary>
@@ -30,7 +32,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 case "J":
                     using (JsonDocument document = JsonDocument.Parse(data, ModelSerializationExtensions.JsonDocumentOptions))
                     {
-                        return DeserializeMultiFlattenProperties(document.RootElement, options);
+                        return DeserializeMultiFlattenProperties(document.RootElement, data, options);
                     }
                 default:
                     throw new FormatException($"The model {nameof(MultiFlattenProperties)} does not support reading '{options.Format}' format.");
@@ -64,6 +66,14 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
         /// <param name="options"> The client options for reading and writing models. </param>
         void IJsonModel<MultiFlattenProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (Patch.Contains("$"u8))
+            {
+                writer.WriteRawValue(Patch.GetJson("$"u8));
+                return;
+            }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
             writer.WriteStartObject();
             JsonModelWriteCore(writer, options);
             writer.WriteEndObject();
@@ -78,33 +88,25 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             {
                 throw new FormatException($"The model {nameof(MultiFlattenProperties)} does not support writing '{format}' format.");
             }
-            writer.WritePropertyName("channel"u8);
-            writer.WriteStringValue(Channel.Value.ToString());
-            if (Optional.IsDefined(Inner))
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            if (!Patch.Contains("$.channel"u8))
+            {
+                writer.WritePropertyName("channel"u8);
+                writer.WriteStringValue(Channel.Value.ToString());
+            }
+            if (Optional.IsDefined(Inner) && !Patch.Contains("$.inner"u8))
             {
                 writer.WritePropertyName("inner"u8);
                 writer.WriteObjectValue(Inner, options);
             }
-            if (Optional.IsDefined(Disabled))
+            if (Optional.IsDefined(Disabled) && !Patch.Contains("$.disabled"u8))
             {
                 writer.WritePropertyName("disabled"u8);
                 writer.WriteBooleanValue(Disabled.Value);
             }
-            if (options.Format != "W" && _additionalBinaryDataProperties != null)
-            {
-                foreach (var item in _additionalBinaryDataProperties)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-                    writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
+
+            Patch.WriteTo(writer);
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
         }
 
         /// <param name="reader"> The JSON reader. </param>
@@ -121,12 +123,13 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                 throw new FormatException($"The model {nameof(MultiFlattenProperties)} does not support reading '{format}' format.");
             }
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeMultiFlattenProperties(document.RootElement, options);
+            return DeserializeMultiFlattenProperties(document.RootElement, null, options);
         }
 
         /// <param name="element"> The JSON element to deserialize. </param>
+        /// <param name="data"> The data to parse. </param>
         /// <param name="options"> The client options for reading and writing models. </param>
-        internal static MultiFlattenProperties DeserializeMultiFlattenProperties(JsonElement element, ModelReaderWriterOptions options)
+        internal static MultiFlattenProperties DeserializeMultiFlattenProperties(JsonElement element, BinaryData data, ModelReaderWriterOptions options)
         {
             if (element.ValueKind == JsonValueKind.Null)
             {
@@ -135,7 +138,9 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
             FlattenChannel? channel = default;
             SafeFlattenInner inner = default;
             bool? disabled = default;
-            IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+            JsonPatch patch = new JsonPatch(data is null ? ReadOnlyMemory<byte>.Empty : data.ToMemory());
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
             foreach (var prop in element.EnumerateObject())
             {
                 if (prop.NameEquals("channel"u8))
@@ -149,7 +154,7 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     {
                         continue;
                     }
-                    inner = SafeFlattenInner.DeserializeSafeFlattenInner(prop.Value, options);
+                    inner = SafeFlattenInner.DeserializeSafeFlattenInner(prop.Value, prop.Value.GetUtf8Bytes(), options);
                     continue;
                 }
                 if (prop.NameEquals("disabled"u8))
@@ -161,12 +166,67 @@ namespace Azure.Generator.MgmtTypeSpec.Tests.Models
                     disabled = prop.Value.GetBoolean();
                     continue;
                 }
-                if (options.Format != "W")
-                {
-                    additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
-                }
+                patch.Set([.. "$."u8, .. Encoding.UTF8.GetBytes(prop.Name)], prop.Value.GetUtf8Bytes());
             }
-            return new MultiFlattenProperties(channel, inner, disabled, additionalBinaryDataProperties);
+            return new MultiFlattenProperties(channel, inner, disabled, patch);
+        }
+
+        /// <summary></summary>
+        /// <param name="jsonPath"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        private bool PropagateGet(ReadOnlySpan<byte> jsonPath, out JsonPatch.EncodedValue value)
+        {
+            ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
+            value = default;
+
+            if (local.StartsWith("inner"u8))
+            {
+                return Inner.Patch.TryGetEncodedValue([.. "$"u8, .. local.Slice("inner"u8.Length)], out value);
+            }
+            return false;
+        }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        /// <summary></summary>
+        /// <param name="jsonPath"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+#pragma warning disable SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+        private bool PropagateSet(ReadOnlySpan<byte> jsonPath, JsonPatch.EncodedValue value)
+        {
+            ReadOnlySpan<byte> local = jsonPath.SliceToStartOfPropertyName();
+
+            if (local.StartsWith("inner"u8))
+            {
+                Inner.Patch.Set([.. "$"u8, .. local.Slice("inner"u8.Length)], value);
+                return true;
+            }
+            return false;
+        }
+#pragma warning restore SCME0001 // Type is for evaluation purposes only and is subject to change or removal in future updates.
+
+        internal partial class MultiFlattenPropertiesConverter : JsonConverter<MultiFlattenProperties>
+        {
+            /// <summary> Writes the JSON representation of the model. </summary>
+            /// <param name="writer"> The writer. </param>
+            /// <param name="model"> The model to write. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override void Write(Utf8JsonWriter writer, MultiFlattenProperties model, JsonSerializerOptions options)
+            {
+                writer.WriteObjectValue<IJsonModel<MultiFlattenProperties>>(model, ModelSerializationExtensions.WireOptions);
+            }
+
+            /// <summary> Reads the JSON representation and converts into the model. </summary>
+            /// <param name="reader"> The reader. </param>
+            /// <param name="typeToConvert"> The type to convert. </param>
+            /// <param name="options"> The serialization options. </param>
+            public override MultiFlattenProperties Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+            {
+                using JsonDocument document = JsonDocument.ParseValue(ref reader);
+                return DeserializeMultiFlattenProperties(document.RootElement, document.RootElement.GetUtf8Bytes(), ModelSerializationExtensions.WireOptions);
+            }
         }
     }
 }

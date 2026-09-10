@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.Authorization
     internal partial class AccessReviewInstanceContactedReviewersGetAllAsyncCollectionResultOfT : AsyncPageable<AccessReviewContactedReviewer>
     {
         private readonly AccessReviewInstanceContactedReviewers _client;
-        private readonly string _subscriptionId;
+        private readonly Guid _subscriptionId;
         private readonly string _scheduleDefinitionId;
         private readonly string _id;
         private readonly RequestContext _context;
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Authorization
         /// <param name="id"> The id of the access review instance. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public AccessReviewInstanceContactedReviewersGetAllAsyncCollectionResultOfT(AccessReviewInstanceContactedReviewers client, string subscriptionId, string scheduleDefinitionId, string id, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public AccessReviewInstanceContactedReviewersGetAllAsyncCollectionResultOfT(AccessReviewInstanceContactedReviewers client, Guid subscriptionId, string scheduleDefinitionId, string id, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _subscriptionId = subscriptionId;

@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewDefaultSettingsRestClient.CreatePutRequest(Id.SubscriptionId, AccessReviewScheduleSettings.ToRequestContent(properties), context);
+                HttpMessage message = _accessReviewDefaultSettingsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), AccessReviewScheduleSettings.ToRequestContent(properties), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewDefaultSettingsData> response = Response.FromValue(AccessReviewDefaultSettingsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewDefaultSettingsRestClient.CreatePutRequest(Id.SubscriptionId, AccessReviewScheduleSettings.ToRequestContent(properties), context);
+                HttpMessage message = _accessReviewDefaultSettingsRestClient.CreatePutRequest(Guid.Parse(Id.SubscriptionId), AccessReviewScheduleSettings.ToRequestContent(properties), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewDefaultSettingsData> response = Response.FromValue(AccessReviewDefaultSettingsData.FromResponse(result), result);
                 RequestUriBuilder uri = message.Request.Uri;
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewDefaultSettingsRestClient.CreateGetRequest(Id.SubscriptionId, context);
+                HttpMessage message = _accessReviewDefaultSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = await Pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
                 Response<AccessReviewDefaultSettingsData> response = Response.FromValue(AccessReviewDefaultSettingsData.FromResponse(result), result);
                 if (response.Value == null)
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Authorization
                 {
                     CancellationToken = cancellationToken
                 };
-                HttpMessage message = _accessReviewDefaultSettingsRestClient.CreateGetRequest(Id.SubscriptionId, context);
+                HttpMessage message = _accessReviewDefaultSettingsRestClient.CreateGetRequest(Guid.Parse(Id.SubscriptionId), context);
                 Response result = Pipeline.ProcessMessage(message, context);
                 Response<AccessReviewDefaultSettingsData> response = Response.FromValue(AccessReviewDefaultSettingsData.FromResponse(result), result);
                 if (response.Value == null)

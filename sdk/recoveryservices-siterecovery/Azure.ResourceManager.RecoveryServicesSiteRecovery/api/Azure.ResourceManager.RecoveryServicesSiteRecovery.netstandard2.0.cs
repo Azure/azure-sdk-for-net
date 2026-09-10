@@ -2211,7 +2211,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.MultiVmGroupCreateOption? MultiVmGroupCreateOption { get { throw null; } }
         public string MultiVmGroupId { get { throw null; } }
         public string MultiVmGroupName { get { throw null; } }
-        public string OsFamilyName { get { throw null; } }
+        public string OSFamilyName { get { throw null; } }
         public string OSType { get { throw null; } }
         public int? PlatformFaultDomain { get { throw null; } }
         public string PrimaryAvailabilityZone { get { throw null; } }
@@ -5820,7 +5820,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     }
     public partial class InMageRcmFabricCreationContent : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.FabricSpecificCreationContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmFabricCreationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmFabricCreationContent>
     {
-        public InMageRcmFabricCreationContent(Azure.Core.ResourceIdentifier vMwareSiteId, Azure.Core.ResourceIdentifier physicalSiteId, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IdentityProviderContent sourceAgentIdentity) { }
+        public InMageRcmFabricCreationContent(Azure.Core.ResourceIdentifier vmwareSiteId, Azure.Core.ResourceIdentifier physicalSiteId, Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IdentityProviderContent sourceAgentIdentity) { }
         public Azure.Core.ResourceIdentifier PhysicalSiteId { get { throw null; } }
         public Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.IdentityProviderContent SourceAgentIdentity { get { throw null; } }
         public Azure.Core.ResourceIdentifier VMwareSiteId { get { throw null; } }
@@ -6167,7 +6167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         public string LatestAgentReleaseDate { get { throw null; } }
         public string LatestUpgradableVersionWithoutReboot { get { throw null; } }
         public string LatestVersion { get { throw null; } }
-        public string OsFamilyName { get { throw null; } }
+        public string OSFamilyName { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AgentReinstallBlockedReason> ReasonsBlockingReinstall { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.InMageRcmAgentReinstallBlockingErrorDetails> ReasonsBlockingReinstallDetails { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.AgentUpgradeBlockedReason> ReasonsBlockingUpgrade { get { throw null; } }
@@ -11545,7 +11545,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
     }
     public partial class VMwareCbtEnableMigrationContent : Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.EnableMigrationProviderSpecificContent, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtEnableMigrationContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtEnableMigrationContent>
     {
-        public VMwareCbtEnableMigrationContent(Azure.Core.ResourceIdentifier vMwareMachineId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtDiskContent> disksToInclude, Azure.Core.ResourceIdentifier dataMoverRunAsAccountId, Azure.Core.ResourceIdentifier snapshotRunAsAccountId, Azure.Core.ResourceIdentifier targetResourceGroupId, Azure.Core.ResourceIdentifier targetNetworkId) { }
+        public VMwareCbtEnableMigrationContent(Azure.Core.ResourceIdentifier vmwareMachineId, System.Collections.Generic.IEnumerable<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtDiskContent> disksToInclude, Azure.Core.ResourceIdentifier dataMoverRunAsAccountId, Azure.Core.ResourceIdentifier snapshotRunAsAccountId, Azure.Core.ResourceIdentifier targetResourceGroupId, Azure.Core.ResourceIdentifier targetNetworkId) { }
         public Azure.Core.ResourceIdentifier ConfidentialVmKeyVaultId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier DataMoverRunAsAccountId { get { throw null; } }
         public System.Collections.Generic.IList<Azure.ResourceManager.RecoveryServicesSiteRecovery.Models.VMwareCbtDiskContent> DisksToInclude { get { throw null; } }

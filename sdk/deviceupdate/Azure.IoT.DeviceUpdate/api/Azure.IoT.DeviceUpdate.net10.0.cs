@@ -11,8 +11,6 @@ namespace Azure.IoT.DeviceUpdate
         protected DeviceManagementClient() { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
         public DeviceManagementClient(Azure.IoT.DeviceUpdate.DeviceManagementClientSettings settings) { }
-        public DeviceManagementClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
-        public DeviceManagementClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
         public DeviceManagementClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
         public DeviceManagementClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -107,7 +105,7 @@ namespace Azure.IoT.DeviceUpdate
     public partial class DeviceManagementClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public DeviceManagementClientSettings() { }
-        public string Endpoint { get { throw null; } set { } }
+        public System.Uri Endpoint { get { throw null; } set { } }
         public string InstanceId { get { throw null; } set { } }
         public Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions Options { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }
@@ -117,8 +115,6 @@ namespace Azure.IoT.DeviceUpdate
         protected DeviceUpdateClient() { }
         [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("SCME0002")]
         public DeviceUpdateClient(Azure.IoT.DeviceUpdate.DeviceUpdateClientSettings settings) { }
-        public DeviceUpdateClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
-        public DeviceUpdateClient(string endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
         public DeviceUpdateClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential) { }
         public DeviceUpdateClient(System.Uri endpoint, string instanceId, Azure.Core.TokenCredential credential, Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions options) { }
         public virtual Azure.Core.Pipeline.HttpPipeline Pipeline { get { throw null; } }
@@ -166,7 +162,7 @@ namespace Azure.IoT.DeviceUpdate
     public partial class DeviceUpdateClientSettings : System.ClientModel.Primitives.ClientSettings
     {
         public DeviceUpdateClientSettings() { }
-        public string Endpoint { get { throw null; } set { } }
+        public System.Uri Endpoint { get { throw null; } set { } }
         public string InstanceId { get { throw null; } set { } }
         public Azure.IoT.DeviceUpdate.DeviceUpdateClientOptions Options { get { throw null; } set { } }
         protected override void BindCore(Microsoft.Extensions.Configuration.IConfigurationSection section) { }

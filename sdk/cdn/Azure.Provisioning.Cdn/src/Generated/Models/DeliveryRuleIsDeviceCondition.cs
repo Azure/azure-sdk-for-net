@@ -15,6 +15,7 @@ namespace Azure.Provisioning.Cdn
         /// <summary> Creates a new DeliveryRuleIsDeviceCondition. </summary>
         public DeliveryRuleIsDeviceCondition()
         {
+            Name.Assign(DeliveryRuleMatchVariable.IsDevice);
         }
 
         /// <summary> Gets or sets the Properties. </summary>
@@ -36,7 +37,6 @@ namespace Azure.Provisioning.Cdn
         protected override void DefineProvisionableProperties()
         {
             base.DefineProvisionableProperties();
-            DefineProperty<string>("name", new string[] { "name" }, defaultValue: "IsDevice");
             _properties = DefineModelProperty<IsDeviceMatchCondition>(nameof(Properties), new string[] { "parameters" }, isRequired: true);
             DefineAdditionalProperties();
         }

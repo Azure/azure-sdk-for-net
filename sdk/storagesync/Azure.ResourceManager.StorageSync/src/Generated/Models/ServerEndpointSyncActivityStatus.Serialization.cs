@@ -114,6 +114,61 @@ namespace Azure.ResourceManager.StorageSync.Models
                 writer.WritePropertyName("sessionMinutesRemaining"u8);
                 writer.WriteNumberValue(SessionMinutesRemaining.Value);
             }
+            if (options.Format != "W" && Optional.IsDefined(RemainingFileCount))
+            {
+                writer.WritePropertyName("remainingFileCount"u8);
+                writer.WriteNumberValue(RemainingFileCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RemainingDirectoryCount))
+            {
+                writer.WritePropertyName("remainingDirectoryCount"u8);
+                writer.WriteNumberValue(RemainingDirectoryCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RemainingDeleteCount))
+            {
+                writer.WritePropertyName("remainingDeleteCount"u8);
+                writer.WriteNumberValue(RemainingDeleteCount.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RemainingLogicalSizeBytes))
+            {
+                writer.WritePropertyName("remainingLogicalSizeBytes"u8);
+                writer.WriteNumberValue(RemainingLogicalSizeBytes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(IsRemainingFinal))
+            {
+                writer.WritePropertyName("isRemainingFinal"u8);
+                writer.WriteBooleanValue(IsRemainingFinal.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RecentItemsPerSecond))
+            {
+                writer.WritePropertyName("recentItemsPerSecond"u8);
+                writer.WriteNumberValue(RecentItemsPerSecond.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RecentMegabytesPerSecond))
+            {
+                writer.WritePropertyName("recentMegabytesPerSecond"u8);
+                writer.WriteNumberValue(RecentMegabytesPerSecond.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InProgressLargeFilePath))
+            {
+                writer.WritePropertyName("inProgressLargeFilePath"u8);
+                writer.WriteStringValue(InProgressLargeFilePath);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InProgressLargeFileSizeBytes))
+            {
+                writer.WritePropertyName("inProgressLargeFileSizeBytes"u8);
+                writer.WriteNumberValue(InProgressLargeFileSizeBytes.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(InProgressLargeFilePercentComplete))
+            {
+                writer.WritePropertyName("inProgressLargeFilePercentComplete"u8);
+                writer.WriteNumberValue(InProgressLargeFilePercentComplete.Value);
+            }
+            if (options.Format != "W" && Optional.IsDefined(Warning))
+            {
+                writer.WritePropertyName("warning"u8);
+                writer.WriteStringValue(Warning.Value.ToString());
+            }
             if (options.Format != "W" && _additionalBinaryDataProperties != null)
             {
                 foreach (var item in _additionalBinaryDataProperties)
@@ -164,6 +219,17 @@ namespace Azure.ResourceManager.StorageSync.Models
             long? totalBytes = default;
             ServerEndpointSyncMode? syncMode = default;
             int? sessionMinutesRemaining = default;
+            long? remainingFileCount = default;
+            long? remainingDirectoryCount = default;
+            long? remainingDeleteCount = default;
+            long? remainingLogicalSizeBytes = default;
+            bool? isRemainingFinal = default;
+            double? recentItemsPerSecond = default;
+            double? recentMegabytesPerSecond = default;
+            string inProgressLargeFilePath = default;
+            long? inProgressLargeFileSizeBytes = default;
+            int? inProgressLargeFilePercentComplete = default;
+            ServerEndpointSyncSessionWarningType? warning = default;
             IDictionary<string, BinaryData> additionalBinaryDataProperties = new ChangeTrackingDictionary<string, BinaryData>();
             foreach (var prop in element.EnumerateObject())
             {
@@ -239,6 +305,101 @@ namespace Azure.ResourceManager.StorageSync.Models
                     sessionMinutesRemaining = prop.Value.GetInt32();
                     continue;
                 }
+                if (prop.NameEquals("remainingFileCount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    remainingFileCount = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("remainingDirectoryCount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    remainingDirectoryCount = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("remainingDeleteCount"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    remainingDeleteCount = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("remainingLogicalSizeBytes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    remainingLogicalSizeBytes = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("isRemainingFinal"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    isRemainingFinal = prop.Value.GetBoolean();
+                    continue;
+                }
+                if (prop.NameEquals("recentItemsPerSecond"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recentItemsPerSecond = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("recentMegabytesPerSecond"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    recentMegabytesPerSecond = prop.Value.GetDouble();
+                    continue;
+                }
+                if (prop.NameEquals("inProgressLargeFilePath"u8))
+                {
+                    inProgressLargeFilePath = prop.Value.GetString();
+                    continue;
+                }
+                if (prop.NameEquals("inProgressLargeFileSizeBytes"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    inProgressLargeFileSizeBytes = prop.Value.GetInt64();
+                    continue;
+                }
+                if (prop.NameEquals("inProgressLargeFilePercentComplete"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    inProgressLargeFilePercentComplete = prop.Value.GetInt32();
+                    continue;
+                }
+                if (prop.NameEquals("warning"u8))
+                {
+                    if (prop.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    warning = new ServerEndpointSyncSessionWarningType(prop.Value.GetString());
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalBinaryDataProperties.Add(prop.Name, BinaryData.FromString(prop.Value.GetRawText()));
@@ -253,6 +414,17 @@ namespace Azure.ResourceManager.StorageSync.Models
                 totalBytes,
                 syncMode,
                 sessionMinutesRemaining,
+                remainingFileCount,
+                remainingDirectoryCount,
+                remainingDeleteCount,
+                remainingLogicalSizeBytes,
+                isRemainingFinal,
+                recentItemsPerSecond,
+                recentMegabytesPerSecond,
+                inProgressLargeFilePath,
+                inProgressLargeFileSizeBytes,
+                inProgressLargeFilePercentComplete,
+                warning,
                 additionalBinaryDataProperties);
         }
     }

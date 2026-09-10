@@ -18,8 +18,8 @@ namespace Azure.ResourceManager.Billing
     {
         private readonly Invoices _client;
         private readonly string _billingAccountName;
-        private readonly DateTimeOffset? _periodStartDate;
-        private readonly DateTimeOffset? _periodEndDate;
+        private readonly DateTimeOffset? _periodStartsOn;
+        private readonly DateTimeOffset? _periodEndsOn;
         private readonly string _filter;
         private readonly string _orderBy;
         private readonly long? _maxCount;
@@ -32,8 +32,8 @@ namespace Azure.ResourceManager.Billing
         /// <summary> Initializes a new instance of InvoicesGetByBillingAccountCollectionResultOfT, which is used to iterate over the pages of a collection. </summary>
         /// <param name="client"> The Invoices client used to send requests. </param>
         /// <param name="billingAccountName"> The ID that uniquely identifies a billing account. </param>
-        /// <param name="periodStartDate"> The start date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
-        /// <param name="periodEndDate"> The end date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
+        /// <param name="periodStartsOn"> The start date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
+        /// <param name="periodEndsOn"> The end date of the billing period for which the invoice is generated. The date is in MM-DD-YYYY format. </param>
         /// <param name="filter"> The filter query option allows clients to filter a collection of resources that are addressed by a request URL. </param>
         /// <param name="orderBy"> The orderby query option allows clients to request resources in a particular order. </param>
         /// <param name="maxCount"> The top query option requests the number of items in the queried collection to be included in the result. The maximum supported value for top is 50. </param>
@@ -42,12 +42,12 @@ namespace Azure.ResourceManager.Billing
         /// <param name="search"> The search query option allows clients to request items within a collection matching a free-text search expression. search is only supported for string fields. </param>
         /// <param name="context"> The request options, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <param name="diagnosticScope"> The diagnostic scope name. </param>
-        public InvoicesGetByBillingAccountCollectionResultOfT(Invoices client, string billingAccountName, DateTimeOffset? periodStartDate, DateTimeOffset? periodEndDate, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
+        public InvoicesGetByBillingAccountCollectionResultOfT(Invoices client, string billingAccountName, DateTimeOffset? periodStartsOn, DateTimeOffset? periodEndsOn, string filter, string orderBy, long? maxCount, long? skip, bool? count, string search, RequestContext context, string diagnosticScope) : base(context?.CancellationToken ?? default)
         {
             _client = client;
             _billingAccountName = billingAccountName;
-            _periodStartDate = periodStartDate;
-            _periodEndDate = periodEndDate;
+            _periodStartsOn = periodStartsOn;
+            _periodEndsOn = periodEndsOn;
             _filter = filter;
             _orderBy = orderBy;
             _maxCount = maxCount;
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Billing
         /// <param name="nextLink"> The next link to use for the next page of results. </param>
         private Response GetNextResponse(int? pageSizeHint, Uri nextLink)
         {
-            HttpMessage message = nextLink != null ? _client.CreateNextGetByBillingAccountRequest(nextLink, _billingAccountName, _periodStartDate, _periodEndDate, _filter, _orderBy, _maxCount, _skip, _count, _search, _context) : _client.CreateGetByBillingAccountRequest(_billingAccountName, _periodStartDate, _periodEndDate, _filter, _orderBy, _maxCount, _skip, _count, _search, _context);
+            HttpMessage message = nextLink != null ? _client.CreateNextGetByBillingAccountRequest(nextLink, _billingAccountName, _periodStartsOn, _periodEndsOn, _filter, _orderBy, _maxCount, _skip, _count, _search, _context) : _client.CreateGetByBillingAccountRequest(_billingAccountName, _periodStartsOn, _periodEndsOn, _filter, _orderBy, _maxCount, _skip, _count, _search, _context);
             using DiagnosticScope scope = _client.ClientDiagnostics.CreateScope(_diagnosticScope);
             scope.Start();
             try

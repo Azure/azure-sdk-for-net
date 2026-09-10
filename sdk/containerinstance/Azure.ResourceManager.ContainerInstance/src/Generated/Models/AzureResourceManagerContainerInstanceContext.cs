@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.ContainerInstance.Models;
 using Azure.ResourceManager.Models;
 
@@ -59,6 +60,9 @@ namespace Azure.ResourceManager.ContainerInstance
     [ModelReaderWriterBuildable(typeof(ContainerGroupProfileStub))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupPropertiesProperties))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupResource))]
+    [ModelReaderWriterBuildable(typeof(ContainerGroupSandboxData))]
+    [ModelReaderWriterBuildable(typeof(ContainerGroupSandboxProperties))]
+    [ModelReaderWriterBuildable(typeof(ContainerGroupSandboxResource))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupSecretReference))]
     [ModelReaderWriterBuildable(typeof(ContainerGroupSubnetId))]
     [ModelReaderWriterBuildable(typeof(ContainerHttpGet))]
@@ -76,6 +80,9 @@ namespace Azure.ResourceManager.ContainerInstance
     [ModelReaderWriterBuildable(typeof(ContainerResourceLimits))]
     [ModelReaderWriterBuildable(typeof(ContainerResourceRequestsContent))]
     [ModelReaderWriterBuildable(typeof(ContainerResourceRequirements))]
+    [ModelReaderWriterBuildable(typeof(ContainerSandboxGroupAccessToken))]
+    [ModelReaderWriterBuildable(typeof(ContainerSandboxGroupPatch))]
+    [ModelReaderWriterBuildable(typeof(ContainerSandboxGroupSubnetReference))]
     [ModelReaderWriterBuildable(typeof(ContainerSecurityContextCapabilitiesDefinition))]
     [ModelReaderWriterBuildable(typeof(ContainerSecurityContextDefinition))]
     [ModelReaderWriterBuildable(typeof(ContainerState))]
@@ -104,6 +111,9 @@ namespace Azure.ResourceManager.ContainerInstance
     [ModelReaderWriterBuildable(typeof(NGroupsListResult))]
     [ModelReaderWriterBuildable(typeof(NGroupUpdateProfile))]
     [ModelReaderWriterBuildable(typeof(PlacementProfile))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
+    [ModelReaderWriterBuildable(typeof(SandboxGroupListResult))]
+    [ModelReaderWriterBuildable(typeof(SandboxGroupNetworkProfile))]
     [ModelReaderWriterBuildable(typeof(StandbyPoolProfileDefinition))]
     [ModelReaderWriterBuildable(typeof(StorageProfile))]
     [ModelReaderWriterBuildable(typeof(SystemData))]

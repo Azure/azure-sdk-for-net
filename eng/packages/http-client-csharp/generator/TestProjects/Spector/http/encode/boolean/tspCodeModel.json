@@ -145,6 +145,7 @@
       "$id": "17",
       "kind": "model",
       "name": "BoolAsStringProperty",
+      "apiVersions": [],
       "namespace": "Encode.Boolean.Property",
       "crossLanguageDefinitionId": "Encode.Boolean.Property.BoolAsStringProperty",
       "usage": "Input,Output,Json",
@@ -160,11 +161,13 @@
           "$id": "18",
           "kind": "property",
           "name": "value",
+          "apiVersions": [],
           "serializedName": "value",
           "type": {
             "$id": "19",
             "kind": "boolean",
             "name": "boolean",
+            "encode": "string",
             "crossLanguageDefinitionId": "TypeSpec.boolean",
             "decorators": []
           },

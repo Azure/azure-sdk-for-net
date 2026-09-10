@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.ClientModel.Primitives;
+using Azure;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Workspaces.Models;
 
@@ -56,6 +57,7 @@ namespace Azure.ResourceManager.Monitor.Workspaces
     [ModelReaderWriterBuildable(typeof(PagedRelatedAlert))]
     [ModelReaderWriterBuildable(typeof(PagedRelatedResource))]
     [ModelReaderWriterBuildable(typeof(PrivateEndpoint))]
+    [ModelReaderWriterBuildable(typeof(ResponseError))]
     [ModelReaderWriterBuildable(typeof(SystemData))]
     [ModelReaderWriterBuildable(typeof(TimeBasedUpdatesNotificationType))]
     [ModelReaderWriterBuildable(typeof(UnknownIssueNotificationType))]

@@ -143,23 +143,6 @@ namespace Azure.Provisioning.CostManagement
             }
         }
 
-        /// <summary> Gets or sets the Schedule. </summary>
-        public ExportSchedule Schedule
-        {
-            get
-            {
-                return Properties is null ? default : Properties.Schedule;
-            }
-            set
-            {
-                if (Properties is null)
-                {
-                    Properties = new ExportProperties();
-                }
-                Properties.Schedule = value;
-            }
-        }
-
         /// <summary> Gets or sets the Format. </summary>
         public BicepValue<ExportFormatType> Format
         {
@@ -311,6 +294,23 @@ namespace Azure.Provisioning.CostManagement
                     Properties = new ExportProperties();
                 }
                 return Properties.RunHistoryValue;
+            }
+        }
+
+        /// <summary> Gets or sets the Schedule. </summary>
+        public ExportSchedule Schedule
+        {
+            get
+            {
+                return Properties is null ? default : Properties.Schedule;
+            }
+            set
+            {
+                if (Properties is null)
+                {
+                    Properties = new ExportProperties();
+                }
+                Properties.Schedule = value;
             }
         }
 

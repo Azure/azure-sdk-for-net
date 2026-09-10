@@ -1,6 +1,7 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System;
 using System.Collections.Generic;
 using Microsoft.TypeSpec.Generator.Customizations;
 namespace Azure.AI.Translation.Document
@@ -15,6 +16,17 @@ namespace Azure.AI.Translation.Document
         /// <summary> Glossary-translation memory will be used during translation in the form. </summary>
         [CodeGenMember("Glossary")]
         public IList<MultipartFormFileData> MultipartGlossary { get; }
+
+        /// <summary> Initializes a new instance of <see cref="DocumentTranslateContent"/>. </summary>
+        /// <param name="document"> Document to be translated in the form. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="document"/> is null. </exception>
+        public DocumentTranslateContent(MultipartFormFileData document)
+        {
+            Argument.AssertNotNull(document, nameof(document));
+
+            MultipartDocument = document;
+            MultipartGlossary = new ChangeTrackingList<MultipartFormFileData>();
+        }
 
         /// <summary> Initializes a new instance of <see cref="DocumentTranslateContent"/>. </summary>
         /// <param name="document"> Document to be translated in the form. </param>

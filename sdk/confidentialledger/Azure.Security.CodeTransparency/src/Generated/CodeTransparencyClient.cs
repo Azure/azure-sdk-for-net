@@ -449,12 +449,15 @@ namespace Azure.Security.CodeTransparency
         /// <param name="waitForCommit"> If true, waits for the entry to be committed before returning. Returns 201 with receipt or 503 on rollback. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> CreateEntryV09(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<BinaryData> CreateEntryV09(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = CreateEntryV09(RequestContent.Create(body), waitForCommit, cancellationToken.ToRequestContext());
+            if (result.Status == 303)
+            {
+                return new NoValueResponse<BinaryData>(result);
+            }
             return Response.FromValue(result.Content, result);
         }
 
@@ -463,12 +466,15 @@ namespace Azure.Security.CodeTransparency
         /// <param name="waitForCommit"> If true, waits for the entry to be committed before returning. Returns 201 with receipt or 503 on rollback. </param>
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="body"/> is null. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> CreateEntryV09Async(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<BinaryData>> CreateEntryV09Async(BinaryData body, bool? waitForCommit = default, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(body, nameof(body));
 
             Response result = await CreateEntryV09Async(RequestContent.Create(body), waitForCommit, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            if (result.Status == 303)
+            {
+                return new NoValueResponse<BinaryData>(result);
+            }
             return Response.FromValue(result.Content, result);
         }
 
@@ -541,12 +547,15 @@ namespace Azure.Security.CodeTransparency
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetOperationV09(string operationId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<BinaryData> GetOperationV09(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             Response result = GetOperationV09(operationId, cancellationToken.ToRequestContext());
+            if (result.Status == 202)
+            {
+                return new NoValueResponse<BinaryData>(result);
+            }
             return Response.FromValue(result.Content, result);
         }
 
@@ -555,12 +564,15 @@ namespace Azure.Security.CodeTransparency
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="operationId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetOperationV09Async(string operationId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<BinaryData>> GetOperationV09Async(string operationId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(operationId, nameof(operationId));
 
             Response result = await GetOperationV09Async(operationId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            if (result.Status == 202)
+            {
+                return new NoValueResponse<BinaryData>(result);
+            }
             return Response.FromValue(result.Content, result);
         }
 
@@ -633,12 +645,15 @@ namespace Azure.Security.CodeTransparency
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual Response<BinaryData> GetEntryV09(string entryId, CancellationToken cancellationToken = default)
+        public virtual NullableResponse<BinaryData> GetEntryV09(string entryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
             Response result = GetEntryV09(entryId, cancellationToken.ToRequestContext());
+            if (result.Status == 302)
+            {
+                return new NoValueResponse<BinaryData>(result);
+            }
             return Response.FromValue(result.Content, result);
         }
 
@@ -647,12 +662,15 @@ namespace Azure.Security.CodeTransparency
         /// <param name="cancellationToken"> The cancellation token that can be used to cancel the operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="entryId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="entryId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
-        public virtual async Task<Response<BinaryData>> GetEntryV09Async(string entryId, CancellationToken cancellationToken = default)
+        public virtual async Task<NullableResponse<BinaryData>> GetEntryV09Async(string entryId, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(entryId, nameof(entryId));
 
             Response result = await GetEntryV09Async(entryId, cancellationToken.ToRequestContext()).ConfigureAwait(false);
+            if (result.Status == 302)
+            {
+                return new NoValueResponse<BinaryData>(result);
+            }
             return Response.FromValue(result.Content, result);
         }
 

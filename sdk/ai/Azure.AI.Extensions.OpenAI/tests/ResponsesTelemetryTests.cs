@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -12,6 +13,7 @@ using Azure.AI.Projects;
 using Azure.AI.Projects.Agents;
 using Microsoft.ClientModel.TestFramework;
 using NUnit.Framework;
+using OpenAI.Conversations;
 using OpenAI.Responses;
 using OpenTelemetry;
 using OpenTelemetry.Resources;
@@ -185,6 +187,39 @@ public partial class ResponsesTelemetryTests : ProjectsOpenAITestBase
         {
             await projectClient.AgentAdministrationClient.DeleteAgentAsync(agentName: agentName);
         }
+    }
+
+    [RecordedTest]
+    public async Task TestCreateConversationSpanAttributes()
+    {
+        Environment.SetEnvironmentVariable(TraceContentsEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        Environment.SetEnvironmentVariable(EnableOpenTelemetryEnvironmentVariable, "true", EnvironmentVariableTarget.Process);
+        ReinitializeResponseScopeConfiguration();
+
+        AIProjectClient projectClient = GetTestProjectClient();
+        var conversationsClient = projectClient.ProjectOpenAIClient.GetProjectConversationsClient();
+
+        ClientResult<ConversationResource> result = await conversationsClient.CreateProjectConversationAsync();
+        ConversationResource conversation = result.Value;
+
+        Assert.That(conversation, Is.Not.Null);
+        Assert.That(conversation.Id, Is.Not.Null.And.Not.Empty);
+
+        _exporter.ForceFlush();
+
+        var span = _exporter.GetExportedActivities().FirstOrDefault(s => s.DisplayName == "create_conversation");
+        Assert.That(span, Is.Not.Null, "Expected span 'create_conversation'");
+
+        var expectedAttributes = new Dictionary<string, object>
+        {
+            { "az.namespace", "Microsoft.CognitiveServices" },
+            { "gen_ai.provider.name", "microsoft.foundry" },
+            { "server.address", "*" },
+            { "gen_ai.operation.name", "create_conversation" },
+            { "gen_ai.conversation.id", conversation.Id },
+        };
+
+        GenAiTraceVerifier.ValidateSpanAttributes(span, expectedAttributes, allowUnexpected: false);
     }
 
     #region Helpers
